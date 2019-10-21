@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+    - "5432:5432"
+    volumes:
+    # - db_data:/var/lib/postgresql/data
+    # persistent data locally
+    - ./data:/var/lib/postgresql/data
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-beta.6
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: ip7itpC5L6R3RbNE4vkdZfsN
+      HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "88xmmBt4hhqjUrzFTAruvWQDh46HRUPe" }'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: 'anonymous'
+# volumes:
+#   db_data:
