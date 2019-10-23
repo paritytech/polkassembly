@@ -5,9 +5,9 @@ interface Props {
   data: LatestPostsQuery;
 }
 
-const className = 'MainPage';
+const className = 'Home';
 
-const MainPage: React.FC<Props> = ({ data }) => (
+const Home: React.FC<Props> = ({ data }) => (
   <div className={className}>
     <h3>Latest posts</h3>
     <ul className={`${className}__list`}>
@@ -24,4 +24,4 @@ const MainPage: React.FC<Props> = ({ data }) => (
   </div>
 );
 
-export default MainPage;
+export default Home;

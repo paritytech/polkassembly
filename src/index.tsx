@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_HASURA_GRAPHQL_URL,
+  uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
 });
 
 ReactDOM.render(

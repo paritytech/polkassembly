@@ -27,7 +27,7 @@ export const useMe = () => {
 // export const withAuth = (Component: React.ComponentType) => {
 //   return props => {
 //     const token = getAuthHeader()
-//     if (!token) return <Redirect to="/sign-in" />
+//     if (token) return <Redirect to="/profile" />
 //     const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
 //     // Get Hasura user info
 //     const fetchUser = useQuery<Me.Query, Me.Variables>(queries.me, { variables : { id } })
@@ -71,7 +71,7 @@ export const signIn = ({ username, password } : LoginObjectType) => {
     body: JSON.stringify({ username, password }),
     headers: {
       'Content-Type': 'application/json'
-    },
+    }
   })
   .then(res => {
     if (res.status < 400) {
@@ -94,7 +94,7 @@ export const signUp = ({ username, password }: LoginObjectType) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
-    },
+    }
   })
   // .then((response) => {
   //   res = response
@@ -125,6 +125,6 @@ export default {
   storeAuthHeader,
   getAuthHeader,
   signIn,
-  signUp,
+  signUp
   // signOut,
 }

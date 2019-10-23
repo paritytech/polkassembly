@@ -970,7 +970,7 @@ export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: Apo
       alias: 'latestPosts',
       ...operationOptions
     });
-};
+}
 
 /**
  * __useLatestPostsQuery__
