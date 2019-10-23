@@ -1,11 +1,13 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface LoginObjectType {
     username: String
     password: String
 }
 
-export interface ContextUserDetailsType {
+export interface UserDetailsContextType {
     id?: Number | null,
     picture?: String | null,
     username?: String | null,
-    setUserDetails?: (contextUserDetails:ContextUserDetailsType) => void
+    setUserDetailsContextState?: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
