@@ -44,9 +44,9 @@ const MenuBar: React.FC = () => {
       <Navbar.Brand as={Link} to="/">Governance Platform</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav>
+        <Nav className="ml-auto">
           {currentUser.username
-          ? <div>Hello {currentUser.username}</div>
+          ? <Navbar.Text>Hello {currentUser.username}</Navbar.Text>
           : <>
             <Nav.Link as={Link} to="/login">Login</Nav.Link >
             <Nav.Link as={Link} to="/signup">Sign-up</Nav.Link >
