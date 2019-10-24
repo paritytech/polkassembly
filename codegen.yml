@@ -6,7 +6,9 @@ schema:
     # - "${HASURA_GRAPHQL_URL}"":
     #     headers:
     #         X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
-documents: "./src/components/**/*.{ts,tsx}"
+documents: 
+  - ./src/**/*.tsx
+  - ./src/**/*.ts
 generates:
   src/generated/graphql.tsx:
     plugins:

@@ -5,6 +5,10 @@ export interface LoginObjectType {
     password: String
 }
 
+export interface SignupObjectType extends LoginObjectType {
+    email: String
+}
+
 export interface UserDetailsContextType {
     id?: Number | null,
     picture?: String | null,

@@ -941,7 +941,31 @@ export type LatestPostsQuery = (
   )> }
 );
 
+export type UserFragment = (
+  { __typename?: 'users' }
+  & Pick<Users, 'id' | 'name' | 'picture'>
+);
 
+export type MeQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type MeQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & UserFragment
+  )> }
+);
+
+export const UserFragmentDoc = gql`
+    fragment user on users {
+  id
+  name
+  picture
+}
+    `;
 export const LatestPostsDocument = gql`
     query LatestPosts {
   posts {
@@ -970,7 +994,7 @@ export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: Apo
       alias: 'latestPosts',
       ...operationOptions
     });
-}
+};
 
 /**
  * __useLatestPostsQuery__
@@ -996,3 +1020,53 @@ export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
 export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
 export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
+export const MeDocument = gql`
+    query Me($id: Int!) {
+  users(where: {id: {_eq: $id}}) {
+    ...user
+  }
+}
+    ${UserFragmentDoc}`;
+export type MeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>, 'query'> & ({ variables: MeQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const MeComponent = (props: MeComponentProps) => (
+      <ApolloReactComponents.Query<MeQuery, MeQueryVariables> query={MeDocument} {...props} />
+    );
+    
+export type MeProps<TChildProps = {}> = ApolloReactHoc.DataProps<MeQuery, MeQueryVariables> & TChildProps;
+export function withMe<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  MeQuery,
+  MeQueryVariables,
+  MeProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, MeQuery, MeQueryVariables, MeProps<TChildProps>>(MeDocument, {
+      alias: 'me',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+      }
+export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;

@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { useContext } from 'react'
-import { useQuery } from 'react-apollo-hooks'
-import { LoginObjectType } from '../types'
+// import { useMeQuery } from '../generated/graphql'
+import {Query} from 'react-apollo'
+import { MeDocument, MeQuery, MeQueryVariables, useMeQuery, useMeLazyQuery } from '../generated/graphql'
+import { LoginObjectType, SignupObjectType } from '../types'
 // import { Redirect } from 'react-router-dom'
 //import store from '../apollo-client'
 //import * as queries from '../graphql/queries'
@@ -21,13 +23,47 @@ const UserDetailsContext = React.createContext({
 })
 
 export const useMe = () => {
-  return useContext(UserDetailsContext)
+  let res;
+  const currentUser = useContext(UserDetailsContext)
+  const [getMe, { data, error, loading }] = useMeLazyQuery()
+
+  console.log('currentUser',currentUser)
+  // if the user info aren't in memory
+  if (!currentUser.id){
+    const token = getAuthHeader()
+    if (!token) {
+      // the user has never been authenticated we return an empty user object.
+      res = {};
+    } else {
+      // we found a token, let's get the associated user
+      const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+      // Get Hasura user info
+      getMe({ variables : { id } })
+      // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
+      console.log('user',data, 'error',error,'loading',loading)
+      console.log('fetchUser',data && data.users && data.users[0])
+      res = (data && data.users && data.users[0])
+    }    
+  }
+
+  return res;
 }
+
+// const queryCurrent = (token : string ) => {
+//   // we found a token, let's get the associated user
+//   const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+//   // Get Hasura user info
+//   // const { data, error, loading } = useMeQuery({ variables : { id } })
+//   const {data,loading,error} = useMeQuery({variables: { id }})
+//   console.log('user',data, 'error',error,'loading',loading)
+//   console.log('fetchUser',data && data.users && data.users[0])
+//   return (data && data.users && data.users[0])
+// }
 
 // export const withAuth = (Component: React.ComponentType) => {
 //   return props => {
 //     const token = getAuthHeader()
-//     if (token) return <Redirect to="/profile" />
+//     if (!token) return <Redirect to="/sign-up" />
 //     const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
 //     // Get Hasura user info
 //     const fetchUser = useQuery<Me.Query, Me.Variables>(queries.me, { variables : { id } })
@@ -66,7 +102,7 @@ const parseJwt = function (token : string) {
 
 export const signIn = ({ username, password } : LoginObjectType) => {
 
-  return fetch(`${process.env.REACT_APP_AUTH_URL}/login`, {
+  return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/login`, {
     method: 'POST',
     body: JSON.stringify({ username, password }),
     headers: {
@@ -85,31 +121,28 @@ export const signIn = ({ username, password } : LoginObjectType) => {
   })
 }
 
-export const signUp = ({ username, password }: LoginObjectType) => {
-  // let res;
-  return fetch(`${process.env.REACT_APP_AUTH_URL}/signup`, {
+export const signUp = (SignupData: SignupObjectType) => {
+  return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/signup`, {
     method: 'POST',
-    // FIXME doesn't make sense
-    body: JSON.stringify({ name, username, password, confirmPassword: password }),
+    body: JSON.stringify(SignupData),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     }
   })
-  // .then((response) => {
-  //   res = response
-  //   console.log('response',response)
-  //   if(response.ok) {
-  //     console.log('response',response)
-  //   } else {
-  //     alert('Could not signup now. Try again later');
-  //   }
-  // })
-  // .catch(error => {
-  //   res = error
-  //   console.log(error.message || error)
-  // })
-  // return res
+  .then((response) => {
+    console.log('response',response)
+    if(response.ok) {
+      return response
+    } else {
+      // FIXME we need to throw here and remove this ugly alert
+      alert('Could not signup now. Try again later');
+    }
+  })
+  .catch(error => {
+    console.log(error.message || error)
+    return error
+  })
 }
 
 // export const signOut = () => {

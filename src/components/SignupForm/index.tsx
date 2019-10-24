@@ -2,18 +2,25 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap';
-// import SignIn from '../../services/auth.service';
+import { signUp } from '../../services/auth.service';
 
-const LoginForm : React.FC = () => {
+const SignupForm : React.FC = () => {
+    const [email, setEmail] = useState<String | undefined>('');
     const [username, setUsername] = useState<String | undefined>('');
     const [password, setPassword] = useState<String | undefined>('');
 
+    const onEmailChange = (event: React.FormEvent<FormControlProps>) => setEmail(event.currentTarget.value);
     const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
     const onPasswordChange = (event: React.FormEvent<FormControlProps>) => setPassword(event.currentTarget.value);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
         event.preventDefault();
         event.stopPropagation();
         console.log('username',username,'password',password);
+        if (username && email && password){
+            const response = signUp({ username, email ,password })
+            console.log('signup response',response)
+        }
+
     }
 
     return (
@@ -25,6 +32,15 @@ const LoginForm : React.FC = () => {
                     placeholder="John"
                     type="text"
                 />
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                    onChange={onEmailChange}
+                    placeholder="john@doe.com"
+                    type="email"
+                />
+                <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="formSignInPassword">
@@ -40,10 +56,10 @@ const LoginForm : React.FC = () => {
                 type="submit"
                 variant="primary"
             >
-                Login
+                Sign-up
             </Button>
         </Form>
     )
 };
 
-export default LoginForm;
+export default SignupForm;
