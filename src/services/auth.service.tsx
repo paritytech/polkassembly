@@ -25,7 +25,7 @@ const UserDetailsContext = React.createContext({
 export const useMe = () => {
   let res;
   const currentUser = useContext(UserDetailsContext)
-  const [getMe, { data, error, loading }] = useMeLazyQuery()
+  // const [getMe, { data, error, loading }] = useMeLazyQuery()
 
   console.log('currentUser',currentUser)
   // if the user info aren't in memory
@@ -36,13 +36,13 @@ export const useMe = () => {
       res = {};
     } else {
       // we found a token, let's get the associated user
-      const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-      // Get Hasura user info
-      getMe({ variables : { id } })
-      // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
-      console.log('user',data, 'error',error,'loading',loading)
-      console.log('fetchUser',data && data.users && data.users[0])
-      res = (data && data.users && data.users[0])
+      // const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+      // // Get Hasura user info
+      // getMe({ variables : { id } })
+      // // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
+      // console.log('user',data, 'error',error,'loading',loading)
+      // console.log('fetchUser',data && data.users && data.users[0])
+      // res = (data && data.users && data.users[0])
     }    
   }
 
@@ -89,16 +89,6 @@ export const storeAuthHeader = (auth: string) => {
 export const getAuthHeader = (): string | null => {
   return localStorage.getItem('Authorization') || null
 }
-
-const parseJwt = function (token : string) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload);
-};
 
 export const signIn = ({ username, password } : LoginObjectType) => {
 

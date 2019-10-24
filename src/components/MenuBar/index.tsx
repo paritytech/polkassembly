@@ -1,12 +1,43 @@
 import * as React from 'react';
+import { useContext, useEffect } from 'react'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { useMe } from '../../services/auth.service' 
+
+import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { getAuthHeader } from '../../services/auth.service';
+import parseJwt from '../../util/ParseJWT'
 
 const MenuBar: React.FC = () => {
-  const me = useMe();
-  console.log('me',me)
+  const currentUser = useContext(UserDetailsContext)
+
+  // FIXME we need to use expiring JWT, Cookies for refreshtokens and no localstorage
+  // as explained clearly here https://blog.hasura.io/best-practices-of-using-jwt-with-graphql/
+
+  // effect responsible to get the token from localstorage if any
+  useEffect(() => {
+    if (!currentUser.id){
+      // no user stored in memory
+      // check in the local storage
+      const token = getAuthHeader()
+      const tokenPayload = token && parseJwt(token);
+
+      if (tokenPayload){
+        const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
+        const username =  tokenPayload.name
+
+        if (id && username){
+          currentUser.setUserDetailsContextState((prevState) => {
+            return {
+              ...prevState,
+              id,
+              username
+            }  
+          })
+        }
+      }
+    }   
+  },[currentUser.id]);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -14,8 +45,14 @@ const MenuBar: React.FC = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav>
+          {currentUser.username
+          ? <div>Hello {currentUser.username}</div>
+          : <>
             <Nav.Link as={Link} to="/login">Login</Nav.Link >
             <Nav.Link as={Link} to="/signup">Sign-up</Nav.Link >
+          </>
+          }
+            
         </Nav>
       </Navbar.Collapse>
     </Navbar>
