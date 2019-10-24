@@ -9,7 +9,7 @@ const getSignedToken= function ({id, username}) {
     name: username,
     iat: Date.now() / 1000,
     "https://hasura.io/jwt/claims": {
-      "x-hasura-allowed-roles": ["user"],
+      "x-hasura-allowed-roles": ["mine, user"],
       "x-hasura-user-id": '' + id,
       "x-hasura-default-role": "user",
       "x-hasura-role": "user"
@@ -51,8 +51,8 @@ exports.postLogin = async (req, res, next) => {
  */
 exports.postSignup = async (req, res, next) => {
   req.assert('email', 'Your email can\'t be empty.').notEmpty();
-  req.assert('username', 'Your username can\'t be empty.').notEmpty();
   req.assert('password', 'Your password must be at least 6 characters long.').len(6);
+  req.assert('username', 'Your username can\'t be empty.').notEmpty();
 
   const errors = req.validationErrors();
 
@@ -62,12 +62,11 @@ exports.postSignup = async (req, res, next) => {
 
   try {
     await User.query()
-    // .allowInsert('[name, username, password]')
-    .allowInsert('[username, password]')
+    .allowInsert('[email, password, username]')
     .insert({
-      // email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username
     });
   } catch (err) {
     errorHandler(err, res);
