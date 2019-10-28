@@ -35,12 +35,13 @@ exports.postLogin = async (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) { return handleResponse(res, 400, {'error': err})}
     if (user) {
-
       const token = getSignedToken(user)
+      const userInfo = user.getUser()
       
       handleResponse(res, 200, {
-        token
-      });
+        user: userInfo,
+        token 
+      })
     }
   })(req, res, next);
 };
