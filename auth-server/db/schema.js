@@ -20,6 +20,7 @@ class User extends Model {
 
   getUser() {
     return {
+      'email': this.email,
       'id': this.id,
       'username': this.username,
     }
@@ -39,6 +40,7 @@ class User extends Model {
       type: 'object',
       required: ['username'],
       properties: {
+        email: {type: 'string', minLength: 1, maxLength: 255},
         id: {type: 'integer'},
         username: {type: 'string', minLength: 1, maxLength: 255},
       }

@@ -7,12 +7,28 @@ const pg = require('pg');
 
 const connection_url = process.env.DATABASE_URL || `postgres://postgres:@localhost:5432/${databaseName}`;
 
-console.log("migration applied on ",connection_url);
+console.log("applying migration on ",connection_url);
 
 module.exports = {
-  client: 'pg',
+  client: 'postgresql',
   connection: connection_url,
   migrations: {
     directory: __dirname + '/db/migrations'
   }
 };
+
+// staging: {
+//   client: 'postgresql',
+//   connection: {
+//     database: 'my_db',
+//     user:     'username',
+//     password: 'password'
+//   },
+//   pool: {
+//     min: 2,
+//     max: 10
+//   },
+//   migrations: {
+//     tableName: 'knex_migrations'
+//   }
+// },

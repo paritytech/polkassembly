@@ -70,7 +70,7 @@ app.post('/upload-profile-pic', upload.single('file'), async (req, res, done) =>
   } catch (e) {
     done(e)
   }
-})
+})  
 
 /**
  * Start Express server.
