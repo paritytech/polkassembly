@@ -13,18 +13,9 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  timestamptz: any,
   timestamp: any,
   time: any,
 };
-
-/** conflict action */
-export enum Conflict_Action {
-  /** ignore the insert on this row */
-  Ignore = 'ignore',
-  /** update the row with the given values */
-  Update = 'update'
-}
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
@@ -274,6 +265,7 @@ export type Posts_Obj_Rel_Insert_Input = {
 export type Posts_On_Conflict = {
   constraint: Posts_Constraint,
   update_columns: Array<Posts_Update_Column>,
+  where?: Maybe<Posts_Bool_Exp>,
 };
 
 /** ordering options when selecting data from "posts" */
@@ -599,32 +591,18 @@ export type Timestamp_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamp']>>,
 };
 
-
-/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
-export type Timestamptz_Comparison_Exp = {
-  _eq?: Maybe<Scalars['timestamptz']>,
-  _gt?: Maybe<Scalars['timestamptz']>,
-  _gte?: Maybe<Scalars['timestamptz']>,
-  _in?: Maybe<Array<Scalars['timestamptz']>>,
-  _is_null?: Maybe<Scalars['Boolean']>,
-  _lt?: Maybe<Scalars['timestamptz']>,
-  _lte?: Maybe<Scalars['timestamptz']>,
-  _neq?: Maybe<Scalars['timestamptz']>,
-  _nin?: Maybe<Array<Scalars['timestamptz']>>,
-};
-
 /** columns and relationships of "users" */
 export type Users = {
    __typename?: 'users',
-  created_at: Scalars['timestamptz'],
+  created_at: Scalars['timestamp'],
   email?: Maybe<Scalars['String']>,
   id: Scalars['Int'],
-  name: Scalars['String'],
   picture?: Maybe<Scalars['String']>,
   /** An array relationship */
   user_posts: Array<Posts>,
   /** An aggregated array relationship */
   user_posts_aggregate: Posts_Aggregate,
+  username: Scalars['String'],
 };
 
 
@@ -714,12 +692,12 @@ export type Users_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>,
   _not?: Maybe<Users_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>,
-  created_at?: Maybe<Timestamptz_Comparison_Exp>,
+  created_at?: Maybe<Timestamp_Comparison_Exp>,
   email?: Maybe<String_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
-  name?: Maybe<String_Comparison_Exp>,
   picture?: Maybe<String_Comparison_Exp>,
   user_posts?: Maybe<Posts_Bool_Exp>,
+  username?: Maybe<String_Comparison_Exp>,
 };
 
 /** unique or primary key constraints on table "users" */
@@ -735,50 +713,46 @@ export type Users_Inc_Input = {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>,
+  created_at?: Maybe<Scalars['timestamp']>,
   email?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
   picture?: Maybe<Scalars['String']>,
   user_posts?: Maybe<Posts_Arr_Rel_Insert_Input>,
+  username?: Maybe<Scalars['String']>,
 };
 
 /** aggregate max on columns */
 export type Users_Max_Fields = {
    __typename?: 'users_max_fields',
-  created_at?: Maybe<Scalars['timestamptz']>,
   email?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
   picture?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
 };
 
 /** order by max() on columns of table "users" */
 export type Users_Max_Order_By = {
-  created_at?: Maybe<Order_By>,
   email?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
   picture?: Maybe<Order_By>,
+  username?: Maybe<Order_By>,
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
    __typename?: 'users_min_fields',
-  created_at?: Maybe<Scalars['timestamptz']>,
   email?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
   picture?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
 };
 
 /** order by min() on columns of table "users" */
 export type Users_Min_Order_By = {
-  created_at?: Maybe<Order_By>,
   email?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
   picture?: Maybe<Order_By>,
+  username?: Maybe<Order_By>,
 };
 
 /** response of any mutation on the table "users" */
@@ -800,6 +774,7 @@ export type Users_Obj_Rel_Insert_Input = {
 export type Users_On_Conflict = {
   constraint: Users_Constraint,
   update_columns: Array<Users_Update_Column>,
+  where?: Maybe<Users_Bool_Exp>,
 };
 
 /** ordering options when selecting data from "users" */
@@ -807,9 +782,9 @@ export type Users_Order_By = {
   created_at?: Maybe<Order_By>,
   email?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
   picture?: Maybe<Order_By>,
   user_posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
+  username?: Maybe<Order_By>,
 };
 
 /** select columns of table "users" */
@@ -821,18 +796,18 @@ export enum Users_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Name = 'name',
+  Picture = 'picture',
   /** column name */
-  Picture = 'picture'
+  Username = 'username'
 }
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>,
+  created_at?: Maybe<Scalars['timestamp']>,
   email?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
   picture?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
 };
 
 /** aggregate stddev on columns */
@@ -888,9 +863,9 @@ export enum Users_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Name = 'name',
+  Picture = 'picture',
   /** column name */
-  Picture = 'picture'
+  Username = 'username'
 }
 
 /** aggregate var_pop on columns */
@@ -936,14 +911,14 @@ export type LatestPostsQuery = (
     & Pick<Posts, 'content' | 'creation_date' | 'modification_date'>
     & { author: (
       { __typename?: 'users' }
-      & Pick<Users, 'name'>
+      & Pick<Users, 'username'>
     ) }
   )> }
 );
 
 export type UserFragment = (
   { __typename?: 'users' }
-  & Pick<Users, 'id' | 'name' | 'picture'>
+  & Pick<Users, 'id' | 'username' | 'picture'>
 );
 
 export type MeQueryVariables = {
@@ -959,10 +934,25 @@ export type MeQuery = (
   )> }
 );
 
+export type AddNewUserMutationVariables = {
+  email?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  username?: Maybe<Scalars['String']>
+};
+
+
+export type AddNewUserMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_users: Maybe<(
+    { __typename?: 'users_mutation_response' }
+    & Pick<Users_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export const UserFragmentDoc = gql`
     fragment user on users {
   id
-  name
+  username
   picture
 }
     `;
@@ -971,7 +961,7 @@ export const LatestPostsDocument = gql`
   posts {
     content
     author {
-      name
+      username
     }
     creation_date
     modification_date
@@ -1070,3 +1060,54 @@ export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptio
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
+export const AddNewUserDocument = gql`
+    mutation AddNewUser($email: String, $id: Int, $username: String) {
+  insert_users(objects: {email: $email, id: $id, username: $username}) {
+    affected_rows
+  }
+}
+    `;
+export type AddNewUserMutationFn = ApolloReactCommon.MutationFunction<AddNewUserMutation, AddNewUserMutationVariables>;
+export type AddNewUserComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddNewUserMutation, AddNewUserMutationVariables>, 'mutation'>;
+
+    export const AddNewUserComponent = (props: AddNewUserComponentProps) => (
+      <ApolloReactComponents.Mutation<AddNewUserMutation, AddNewUserMutationVariables> mutation={AddNewUserDocument} {...props} />
+    );
+    
+export type AddNewUserProps<TChildProps = {}> = ApolloReactHoc.MutateProps<AddNewUserMutation, AddNewUserMutationVariables> & TChildProps;
+export function withAddNewUser<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddNewUserMutation,
+  AddNewUserMutationVariables,
+  AddNewUserProps<TChildProps>>) {
+    return ApolloReactHoc.withMutation<TProps, AddNewUserMutation, AddNewUserMutationVariables, AddNewUserProps<TChildProps>>(AddNewUserDocument, {
+      alias: 'addNewUser',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useAddNewUserMutation__
+ *
+ * To run a mutation, you first call `useAddNewUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNewUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addNewUserMutation, { data, loading, error }] = useAddNewUserMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      id: // value for 'id'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useAddNewUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddNewUserMutation, AddNewUserMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddNewUserMutation, AddNewUserMutationVariables>(AddNewUserDocument, baseOptions);
+      }
+export type AddNewUserMutationHookResult = ReturnType<typeof useAddNewUserMutation>;
+export type AddNewUserMutationResult = ApolloReactCommon.MutationResult<AddNewUserMutation>;
+export type AddNewUserMutationOptions = ApolloReactCommon.BaseMutationOptions<AddNewUserMutation, AddNewUserMutationVariables>;

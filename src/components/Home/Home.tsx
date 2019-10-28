@@ -16,7 +16,7 @@ const Home: React.FC<Props> = ({ data }) => (
           (post, i) =>
             !!post && (
               <li key={i} className={`${className}__item`}>
-                {post.author.name} ({post.creation_date}): {post.content}
+                {post.author.username} ({post.creation_date}): {post.content}
               </li>
             ),
         )}

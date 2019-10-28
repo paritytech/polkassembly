@@ -18,7 +18,7 @@ import { LoginObjectType, SignupObjectType } from '../types'
 
 const UserDetailsContext = React.createContext({
   id: null,
-  name: '',
+  username: '',
   picture: null
 })
 
@@ -121,7 +121,6 @@ export const signUp = (SignupData: SignupObjectType) => {
     }
   })
   .then((response) => {
-    console.log('response',response)
     if(response.ok) {
       return response
     } else {

@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap';
-import { signUp } from '../../services/auth.service';
+import { signUp, storeAuthHeader } from '../../services/auth.service';
+import { SignupResponseObjectType } from '../../types';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-const SignupForm : React.FC = () => {
+const SignupForm = (props: RouteComponentProps): JSX.Element => {
     const [email, setEmail] = useState<String | undefined>('');
     const [username, setUsername] = useState<String | undefined>('');
     const [password, setPassword] = useState<String | undefined>('');
-
+    const currentUser = useContext(UserDetailsContext)
+    
     const onEmailChange = (event: React.FormEvent<FormControlProps>) => setEmail(event.currentTarget.value);
     const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
     const onPasswordChange = (event: React.FormEvent<FormControlProps>) => setPassword(event.currentTarget.value);
+    
     const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
         event.preventDefault();
         event.stopPropagation();
-        console.log('username',username,'password',password);
         if (username && email && password){
             const response = signUp({ username, email ,password })
-            console.log('signup response',response)
+            response
+                .then((data) => data.json())
+                .then((data) => {
+                    handleNewUser(data);
+                    // redirect to the home
+                    props.history.push('/');
+                })
         }
+    }
 
+    const handleNewUser = ({user, token}: SignupResponseObjectType) => {
+        storeAuthHeader(token);
+        currentUser.setUserDetailsContextState((prevState) => {
+            return {
+                ...prevState,
+                id: user.id,
+                username: user.username
+            }  
+        })       
     }
 
     return (
@@ -62,4 +82,4 @@ const SignupForm : React.FC = () => {
     )
 };
 
-export default SignupForm;
+export default withRouter(SignupForm);

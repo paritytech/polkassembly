@@ -16,6 +16,7 @@ const MenuBar: React.FC = () => {
 
   // effect responsible to get the token from localstorage if any
   useEffect(() => {
+    console.log('menubar useeffect')
     if (!currentUser.id){
       // no user stored in memory
       // check in the local storage
@@ -37,7 +38,7 @@ const MenuBar: React.FC = () => {
         }
       }
     }   
-  },[currentUser.id]);
+  },[currentUser]);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

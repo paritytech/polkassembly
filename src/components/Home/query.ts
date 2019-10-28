@@ -5,7 +5,7 @@ export const QUERY_LATEST_POSTS = gql`
         posts {
             content
             author {
-                name
+                username
             }
             creation_date
             modification_date
