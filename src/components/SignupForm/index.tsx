@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap';
-import { signUp, storeAuthHeader } from '../../services/auth.service';
-import { SignupResponseObjectType } from '../../types';
+import { signUp, loginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
@@ -21,26 +20,14 @@ const SignupForm = (props: RouteComponentProps): JSX.Element => {
         event.preventDefault();
         event.stopPropagation();
         if (username && email && password){
-            const response = signUp({ username, email ,password })
-            response
+            signUp({ username, email ,password })
                 .then((data) => data.json())
                 .then((data) => {
-                    handleNewUser(data);
+                    loginUser(data, currentUser);
                     // redirect to the home
                     props.history.push('/');
                 })
         }
-    }
-
-    const handleNewUser = ({user, token}: SignupResponseObjectType) => {
-        storeAuthHeader(token);
-        currentUser.setUserDetailsContextState((prevState) => {
-            return {
-                ...prevState,
-                id: user.id,
-                username: user.username
-            }  
-        })       
     }
 
     return (

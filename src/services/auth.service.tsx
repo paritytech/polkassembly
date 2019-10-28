@@ -3,7 +3,8 @@ import { useContext } from 'react'
 // import { useMeQuery } from '../generated/graphql'
 import {Query} from 'react-apollo'
 import { MeDocument, MeQuery, MeQueryVariables, useMeQuery, useMeLazyQuery } from '../generated/graphql'
-import { LoginObjectType, SignupObjectType } from '../types'
+import { LoginObjectType, SignupObjectType, SignupResponseObjectType, UserDetailsContextType } from '../types'
+import { UserDetailsContext } from '../context/UserDetailsContext'
 // import { Redirect } from 'react-router-dom'
 //import store from '../apollo-client'
 //import * as queries from '../graphql/queries'
@@ -16,38 +17,38 @@ import { LoginObjectType, SignupObjectType } from '../types'
 //   picture: string |null,
 // }
 
-const UserDetailsContext = React.createContext({
-  id: null,
-  username: '',
-  picture: null
-})
+// const UserDetailsContext = React.createContext({
+//   id: null,
+//   username: '',
+//   picture: null
+// })
 
-export const useMe = () => {
-  let res;
-  const currentUser = useContext(UserDetailsContext)
-  // const [getMe, { data, error, loading }] = useMeLazyQuery()
+// export const useMe = () => {
+//   let res;
+//   const currentUser = useContext(UserDetailsContext)
+//   // const [getMe, { data, error, loading }] = useMeLazyQuery()
 
-  console.log('currentUser',currentUser)
-  // if the user info aren't in memory
-  if (!currentUser.id){
-    const token = getAuthHeader()
-    if (!token) {
-      // the user has never been authenticated we return an empty user object.
-      res = {};
-    } else {
-      // we found a token, let's get the associated user
-      // const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-      // // Get Hasura user info
-      // getMe({ variables : { id } })
-      // // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
-      // console.log('user',data, 'error',error,'loading',loading)
-      // console.log('fetchUser',data && data.users && data.users[0])
-      // res = (data && data.users && data.users[0])
-    }    
-  }
+//   console.log('currentUser',currentUser)
+//   // if the user info aren't in memory
+//   if (!currentUser.id){
+//     const token = getAuthHeader()
+//     if (!token) {
+//       // the user has never been authenticated we return an empty user object.
+//       res = {};
+//     } else {
+//       // we found a token, let's get the associated user
+//       // const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+//       // // Get Hasura user info
+//       // getMe({ variables : { id } })
+//       // // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
+//       // console.log('user',data, 'error',error,'loading',loading)
+//       // console.log('fetchUser',data && data.users && data.users[0])
+//       // res = (data && data.users && data.users[0])
+//     }    
+//   }
 
-  return res;
-}
+//   return res;
+// }
 
 // const queryCurrent = (token : string ) => {
 //   // we found a token, let's get the associated user
@@ -90,7 +91,7 @@ export const getAuthHeader = (): string | null => {
   return localStorage.getItem('Authorization') || null
 }
 
-export const signIn = ({ username, password } : LoginObjectType) => {
+export const login = ({ username, password } : LoginObjectType) => {
 
   return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/login`, {
     method: 'POST',
@@ -99,16 +100,28 @@ export const signIn = ({ username, password } : LoginObjectType) => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => {
-    if (res.status < 400) {
-      return res.json().then((data) => {
-        const token = data.token;
-        storeAuthHeader(token);
-      });
+  .then(async (response) => {
+    if (response.status < 400 && response.ok) {
+      return response
+      // .json().then((data) => {
+      //   const token = data.token;
+        // storeAuthHeader(token);
+        // return data;
+      // });
     } else {
-      return Promise.reject(res.statusText)
+      // console.log('res.statusText',res.statusText)
+      const error = await response.json()
+        .then((data) => {
+          console.log('Authservice login error',data.error);
+          return data.error;
+        })
+
+        throw new Error(error);
+      //Promise.reject(
+       
+        //))
     }
-  })
+  });
 }
 
 export const signUp = (SignupData: SignupObjectType) => {
@@ -121,7 +134,7 @@ export const signUp = (SignupData: SignupObjectType) => {
     }
   })
   .then((response) => {
-    if(response.ok) {
+    if(response.status < 400 && response.ok) {
       return response
     } else {
       // FIXME we need to throw here and remove this ugly alert
@@ -134,6 +147,17 @@ export const signUp = (SignupData: SignupObjectType) => {
   })
 }
 
+export  const loginUser = ({user, token}: SignupResponseObjectType, currentUser:UserDetailsContextType) => {
+  storeAuthHeader(token);
+  currentUser.setUserDetailsContextState((prevState) => {
+      return {
+          ...prevState,
+          id: user.id,
+          username: user.username
+      }  
+  })       
+}
+
 // export const signOut = () => {
 //   localStorage.removeItem('Authorization')
 //   // window.location.href = '/sign-in'
@@ -142,11 +166,11 @@ export const signUp = (SignupData: SignupObjectType) => {
 // }
 
 export default {
-  useMe,
+  // useMe,
   // withAuth,
   storeAuthHeader,
   getAuthHeader,
-  signIn,
+  login,
   signUp
   // signOut,
 }
