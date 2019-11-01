@@ -1,0 +1,7 @@
+- args:
+    name: author
+    new_name: user
+    table:
+      name: replies
+      schema: public
+  type: rename_relationship

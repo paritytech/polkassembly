@@ -9,9 +9,12 @@ services:
     # - db_data:/var/lib/postgresql/data
     # persistent data locally
     - ./data:/var/lib/postgresql/data
+    # migration data
+    # - ./public:/hasura-migrations
   graphql-engine:
-    # image: hasura/graphql-engine:v1.0.0-beta.8
-   image: graphql-engine:pgdump12
+    image: hasura/graphql-engine:v1.0.0-beta.9
+    # image: hasura/graphql-engine:v1.0.0-beta.9.cli-migrations
+    # image: graphql-engine:pgdump12
 
     ports:
     - "8080:8080"

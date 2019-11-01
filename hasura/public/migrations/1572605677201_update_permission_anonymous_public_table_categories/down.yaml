@@ -1,0 +1,6 @@
+- args:
+    role: anonymous
+    table:
+      name: categories
+      schema: public
+  type: drop_select_permission

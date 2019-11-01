@@ -1,0 +1,22 @@
+- args:
+    permission:
+      allow_upsert: true
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - author_id
+      - category_id
+      - content
+      - creation_date
+      - modification_date
+      - title
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: user
+    table:
+      name: posts
+      schema: public
+  type: create_insert_permission
