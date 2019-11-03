@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { LatestPostsQuery } from '../../generated/graphql';
+import { Link } from 'react-router-dom';
 
 interface Props {
   data: LatestPostsQuery;
@@ -13,10 +14,12 @@ const Home: React.FC<Props> = ({ data }) => (
     <ul className={`${className}__list`}>
       {!!data.posts &&
         data.posts.map(
-          (post, i) =>
+          (post) =>
             !!post && (
-              <li key={i} className={`${className}__item`}>
-                {post.author.username} ({post.creation_date}): {post.content}
+              <li key={post.id} className={`${className}__item`}>
+                <Link to={`/post/${post.id}`}>
+                  {post.author.username} ({post.creation_date}): {post.title}
+                </Link>
               </li>
             ),
         )}

@@ -4,12 +4,13 @@ import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap';
 import { signUp, loginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const SignupForm = (props: RouteComponentProps): JSX.Element => {
+const SignupForm = (): JSX.Element => {
     const [email, setEmail] = useState<String | undefined>('');
     const [username, setUsername] = useState<String | undefined>('');
     const [password, setPassword] = useState<String | undefined>('');
+    const history = useHistory();
     const currentUser = useContext(UserDetailsContext)
     
     const onEmailChange = (event: React.FormEvent<FormControlProps>) => setEmail(event.currentTarget.value);
@@ -25,7 +26,7 @@ const SignupForm = (props: RouteComponentProps): JSX.Element => {
                 .then((data) => {
                     loginUser(data, currentUser);
                     // redirect to the home
-                    props.history.push('/');
+                    history.push('/');
                 })
         }
     }
@@ -69,4 +70,4 @@ const SignupForm = (props: RouteComponentProps): JSX.Element => {
     )
 };
 
-export default withRouter(SignupForm);
+export default SignupForm;

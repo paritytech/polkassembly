@@ -1,87 +1,9 @@
-import * as React from 'react'
-import { useContext } from 'react'
-// import { useMeQuery } from '../generated/graphql'
-import {Query} from 'react-apollo'
-import { MeDocument, MeQuery, MeQueryVariables, useMeQuery, useMeLazyQuery } from '../generated/graphql'
+// import * as React from 'react'
+// import { useContext } from 'react'
+// import {Query} from 'react-apollo'
+// import { MeDocument, MeQuery, MeQueryVariables, useMeQuery, useMeLazyQuery } from '../generated/graphql'
 import { LoginObjectType, SignupObjectType, SignupResponseObjectType, UserDetailsContextType } from '../types'
-import { UserDetailsContext } from '../context/UserDetailsContext'
-// import { Redirect } from 'react-router-dom'
-//import store from '../apollo-client'
-//import * as queries from '../graphql/queries'
-//import { Me } from '../graphql/types'
-//import { useSubscriptions } from './cache.service'
-
-// interface UserDetailsContextType {
-//   id: number | null,
-//   name: string,
-//   picture: string |null,
-// }
-
-// const UserDetailsContext = React.createContext({
-//   id: null,
-//   username: '',
-//   picture: null
-// })
-
-// export const useMe = () => {
-//   let res;
-//   const currentUser = useContext(UserDetailsContext)
-//   // const [getMe, { data, error, loading }] = useMeLazyQuery()
-
-//   console.log('currentUser',currentUser)
-//   // if the user info aren't in memory
-//   if (!currentUser.id){
-//     const token = getAuthHeader()
-//     if (!token) {
-//       // the user has never been authenticated we return an empty user object.
-//       res = {};
-//     } else {
-//       // we found a token, let's get the associated user
-//       // const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-//       // // Get Hasura user info
-//       // getMe({ variables : { id } })
-//       // // const {data,loading,error} = Query<MeQuery, MeQueryVariables>(MeDocument, { id })
-//       // console.log('user',data, 'error',error,'loading',loading)
-//       // console.log('fetchUser',data && data.users && data.users[0])
-//       // res = (data && data.users && data.users[0])
-//     }    
-//   }
-
-//   return res;
-// }
-
-// const queryCurrent = (token : string ) => {
-//   // we found a token, let's get the associated user
-//   const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-//   // Get Hasura user info
-//   // const { data, error, loading } = useMeQuery({ variables : { id } })
-//   const {data,loading,error} = useMeQuery({variables: { id }})
-//   console.log('user',data, 'error',error,'loading',loading)
-//   console.log('fetchUser',data && data.users && data.users[0])
-//   return (data && data.users && data.users[0])
-// }
-
-// export const withAuth = (Component: React.ComponentType) => {
-//   return props => {
-//     const token = getAuthHeader()
-//     if (!token) return <Redirect to="/sign-up" />
-//     const id = parseJwt(token)['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-//     // Get Hasura user info
-//     const fetchUser = useQuery<Me.Query, Me.Variables>(queries.me, { variables : { id } })
-//     console.log('fetchUser',fetchUser.data && fetchUser.data.users && fetchUser.data.users[0])
-//     // const myResult = fetchUser.data.users && fetchUser.data.users.length ? fetchUser.data.users[0] : {};
-//     // const fetchUser = { id }
-//     // console.log('currentUser',fetchUser)
-//     // Should probably be re-enabled
-//     // useSubscriptions(myResult)
-
-//     return (
-//        <UserDetailsContext.Provider value={fetchUser.data && fetchUser.data.users && fetchUser.data.users[0]}>
-//         <Component {...props} />
-//        </UserDetailsContext.Provider>
-//     )
-//   }
-// }
+// import { UserDetailsContext } from '../context/UserDetailsContext'
 
 export const storeAuthHeader = (auth: string) => {
   localStorage.setItem('Authorization', 'Bearer '+auth)
@@ -166,7 +88,6 @@ export  const loginUser = ({user, token}: SignupResponseObjectType, currentUser:
 // }
 
 export default {
-  // useMe,
   // withAuth,
   storeAuthHeader,
   getAuthHeader,

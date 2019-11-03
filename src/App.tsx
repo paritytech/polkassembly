@@ -2,24 +2,34 @@ import React from 'react';
 import Container from 'react-bootstrap/Container'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './components/Home';
-import MenuBar from './components/MenuBar';
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-import { UserDetailsProvider } from './context/UserDetailsContext'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserDetailsProvider } from './context/UserDetailsContext';
+import Home from './screens/Home';
+import Post from './screens/Post';
+import LoginForm from './screens/LoginForm';
+import MenuBar from './screens/MenuBar';
+import SignupForm from './screens/SignupForm';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (
     <Router>
     <UserDetailsProvider>
-      <MenuBar />
+      <MenuBar/>
       <Container fluid={true}>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/signup" component={SignupForm} />
+          <Route exact path="/">
+            <Home/>
+          </Route>
+          <Route path="/login">
+           <LoginForm/>
+          </Route>
+          <Route exact path="/post/:id" >
+           <Post/>
+          </Route>
+          <Route path="/signup">
+            <SignupForm/>
+          </Route>
         </Switch>
       </Container>
     </UserDetailsProvider>
