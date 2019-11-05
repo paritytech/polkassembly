@@ -1,6 +1,6 @@
 # JWT Authentication server
 
-JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode.
+JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode. We use symetric encryption for now. There's a shared secret between the hasura graphql-engine and the auth server (`ENCRYPTION_KEY` in `.env` file).
 
 ## Getting Started
 
