@@ -32,5 +32,5 @@ We use `@graphql-codegen` to generate types directly form the DB types (hasura).
 
 ### Run
 In the project directory, you can run:
-- `yarn start`
+- `yarn; yarn start`
 
