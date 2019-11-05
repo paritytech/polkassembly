@@ -1,6 +1,6 @@
-# JWT Authentication server Boilerplate
+# JWT Authentication server
 
-Sample JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode.
+JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode.
 
 ## Getting Started
 
@@ -8,31 +8,24 @@ Sample JWT Authentication server for generating a JWT to use in the `Authenticat
 
 #### Local Prerequisites
 
--   PostgreSQL up and accepting connections
--   Hasura GraphQL engine up and accepting connections
--   Node.js 8.9+ installed
+- `auth` postgreSQL up and accepting connections
+
 
 #### Local instructions
 
-Install NPM dependencies
+Install node dependencies
 
 ```bash
-npm install
+yarn install
 ```
-
-# Generate the RSA keys
-openssl genrsa -out private.pem 2048
-openssl rsa -in private.pem -pubout > public.pem
-
-# print the keys in an escaped format
-awk -v ORS='\\n' '1' private.pem
-awk -v ORS='\\n' '1' public.pem
 
 Set environment variables. Open `.env` file and add the following env
 
 ```bash
-ENCRYPTION_KEY=<replace_it_with_your_JWT_SECRET>
-DATABASE_URL=postgres://<username>:<password>@<host>:<port>/<database_name>
+ENCRYPTION_KEY="<JWT_ENCRYPTION_KEY>"
+DATABASE_URL="postgres://<DB_USER>:<DB_USER_PASSWORD>@localhost:5432/auth"
+REACT_APP_AUTH_URL="http://localhost:8010"
+REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
 ```
 
@@ -44,6 +37,7 @@ The following `users` table is assumed to be present in your schema. The table c
 | ---------- | ------- | -------- | ------ | ------- | ------- |
 | id         | Integer | no       | yes    |         | yes     |
 | username   | Text    | no       | yes    |         | no      |
+| email      | Text    | no       | yes    |         | no      |
 | password   | Text    | no       | no     |         | no      |
 | token      | Text    | no       | no     |         | no      |
 | created_at | Date    | no       | no     | now()   |         |
@@ -51,7 +45,7 @@ The following `users` table is assumed to be present in your schema. The table c
 Then start your app
 
 ```bash
-npm start
+yarn start
 ```
 
 ## Usage
@@ -70,8 +64,11 @@ On success, we get the response:
 
 ```json
 {
-  "id": 1,
-  "username": "test123"
+  "user": {
+    "id": 1,
+    "username": "test123"
+  },
+  "token": "eyJhbGciOiJ...I6IkpXVCJ"
 }
 ```
 
@@ -87,22 +84,10 @@ On success, we get the response:
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJ0ZXN0MTIzIiwiaWF0IjoxNTQwMjkyMzgyLjQwOSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbImVkaXRvciIsInVzZXIiLCJtb2QiXSwieC1oYXN1cmEtdXNlci1pZCI6MSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciJ9fQ.KtAUroqyBroBJL7O9og3Z4JnRkWNfr07cHQfeLarclU"
+  "user": {
+    "id": 1,
+    "username": "test123"
+  },
+  "token": "eyJhbGciOiJ...I6IkpXVCJ"
 }
-```
-
-### Authenticate JWT using GraphQL Engine
-
-The GraphQL engine comes with built in JWT authentication.  You will need to start the engine with the same secret/key as the JWT auth server using the environment variable `HASURA_GRAPHQL_JWT_SECRET`
-
-In your GraphQL engine you will need to add permissions for a user named `user` with read permissions on the table and columns.
-
-A sample CURL command using the above token would be:
-
-```bash
-curl -X POST \
-  http://localhost:8080/v1/graphql \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6InRlc3QxMjMiLCJpYXQiOjE1NDAzNzY4MTUuODUzLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiZWRpdG9yIiwidXNlciIsIm1vZCJdLCJ4LWhhc3VyYS11c2VyLWlkIjoiMSIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1yb2xlIjoidXNlciJ9fQ.w9uj0FtesZOFUnwYT2KOWHr6IKWsDRuOC9G2GakBgMI' \
-  -H 'Content-Type: application/json' \
-  -d '{ "query": "{ table { column } }" }'
 ```

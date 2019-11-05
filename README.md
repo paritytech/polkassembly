@@ -1,0 +1,3 @@
+This repo hosts the 2 building blocks needed for [governance platform](https://github.com/Tbaut/governance-platform/) application.
+- auth-server: the nodeJS backend and its DB responsible for user authentication
+- hasura: the docker that hosts both general DB `public` and authentication DB,`auth`, as well as the graphQL server that exposes the `public` db to the [governance platform](https://github.com/Tbaut/governance-platform/) application.
