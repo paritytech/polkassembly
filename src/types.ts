@@ -44,10 +44,10 @@ export enum Role {
 }
 
 export interface HasuraClaimPayload {
-    "x-hasura-allowed-roles": Array<Role>
-    "x-hasura-user-id": Number
-    "x-hasura-default-role": Role
-    "x-hasura-role": String
+    'x-hasura-allowed-roles': Array<Role>
+    'x-hasura-user-id': Number
+    'x-hasura-default-role': Role
+    'x-hasura-role': String
 }
 
 export interface JWTPayploadType {

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap';
 import { signUp, loginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const SignupForm = (): JSX.Element => {
     const [email, setEmail] = useState<String | undefined>('');

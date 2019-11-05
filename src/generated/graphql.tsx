@@ -1909,7 +1909,7 @@ export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: Apo
       alias: 'latestPosts',
       ...operationOptions
     });
-};
+}
 
 /**
  * __useLatestPostsQuery__
@@ -1973,7 +1973,7 @@ export function withPostAndReplies<TProps, TChildProps = {}>(operationOptions?: 
       alias: 'postAndReplies',
       ...operationOptions
     });
-};
+}
 
 /**
  * __usePostAndRepliesQuery__

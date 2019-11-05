@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { getAuthHeader } from '../../services/auth.service';
-import parseJwt from '../../util/ParseJWT'
+import parseJwt from '../../util/parseJWT'
 
 const MenuBar: React.FC = () => {
   const currentUser = useContext(UserDetailsContext)
@@ -33,11 +33,11 @@ const MenuBar: React.FC = () => {
               ...prevState,
               id,
               username
-            }  
+            }
           })
         }
       }
-    }   
+    }
   },[currentUser]);
 
   return (

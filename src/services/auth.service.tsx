@@ -69,7 +69,7 @@ export const signUp = (SignupData: SignupObjectType) => {
   })
 }
 
-export  const loginUser = ({user, token}: SignupResponseObjectType, currentUser:UserDetailsContextType) => {
+export  const loginUser = ({ user, token }: SignupResponseObjectType, currentUser:UserDetailsContextType) => {
   storeAuthHeader(token);
   currentUser.setUserDetailsContextState((prevState) => {
       return {

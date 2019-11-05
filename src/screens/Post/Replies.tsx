@@ -9,7 +9,7 @@ const Replies = ({ replies } : any) => {
             <div>Replies</div>
             {
                 replies.map((reply:any) => {
-                    const {author, content, created_at} = reply;
+                    const { author, content, created_at } = reply;
                     return (
                         <div className={className} key={created_at}>
                             <h3>{author.username} - {created_at}</h3>

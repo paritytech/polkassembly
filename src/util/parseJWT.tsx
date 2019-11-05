@@ -1,4 +1,4 @@
-import { JWTPayploadType } from "../types";
+import { JWTPayploadType } from '../types';
 
 const parseJwt = (token : string):JWTPayploadType => {
   var base64Url = token.split('.')[1];
