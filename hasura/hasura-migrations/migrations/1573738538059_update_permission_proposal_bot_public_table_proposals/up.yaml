@@ -1,0 +1,22 @@
+- args:
+    permission:
+      allow_upsert: true
+      check: {}
+      columns:
+      - created_at
+      - deposit
+      - method_arguments
+      - method_name
+      - onchain_id
+      - post_id
+      - referendum
+      - updated_at
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: proposal_bot
+    table:
+      name: proposals
+      schema: public
+  type: create_insert_permission

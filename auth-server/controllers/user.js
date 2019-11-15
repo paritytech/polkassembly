@@ -5,15 +5,23 @@ const jwt = require('jsonwebtoken');
 const { GraphQLClient } = require('graphql-request');
 
 const getSignedToken= function ({id, username}) {
+  const allowedRoles = ["user"];
+  let currentRole = "user";
+  
+  // if our user is the proposal bot, give additional role.
+  if (id == process.env.BOT_PROPOSAL_USER_ID) {
+    allowedRoles.push("proposal_bot");
+    currentRole = "proposal_bot"
+  }
+
   const tokenContent = {
     sub: '' + id,
     name: username,
     iat: Date.now() / 1000,
     "https://hasura.io/jwt/claims": {
-      "x-hasura-allowed-roles": ["user"],
+      "x-hasura-allowed-roles": allowedRoles,
+      "x-hasura-default-role": currentRole,
       "x-hasura-user-id": '' + id,
-      "x-hasura-default-role": "user",
-      "x-hasura-role": "user"
     }
   }
   return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY)

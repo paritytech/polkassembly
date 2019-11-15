@@ -1,0 +1,6 @@
+- args:
+    role: proposal_bot
+    table:
+      name: posts
+      schema: public
+  type: drop_insert_permission

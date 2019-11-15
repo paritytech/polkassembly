@@ -11,7 +11,8 @@ services:
     - ./data:/var/lib/postgresql/data
   graphql-engine:
     # image: hasura/graphql-engine:v1.0.0-beta.9
-    image: hasura/graphql-engine:v1.0.0-beta.9.cli-migrations
+    # image: hasura/graphql-engine:v1.0.0-beta.10.cli-migrations
+    image: hasura/graphql-engine:v1.0.0-beta.10
     # image: graphql-engine:pgdump12
     volumes:
     # migration data
