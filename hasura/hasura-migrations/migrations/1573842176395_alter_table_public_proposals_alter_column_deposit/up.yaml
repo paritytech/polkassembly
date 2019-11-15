@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE float8;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."proposals"."deposit" IS E''
+  type: run_sql

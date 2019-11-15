@@ -19,7 +19,7 @@ Install node dependencies
 yarn install
 ```
 
-Set environment variables. Open `.env` file and add the following env
+Set environment variables. Open/create a `.env` file and add the following env
 
 ```bash
 ENCRYPTION_KEY="<JWT_ENCRYPTION_KEY>"
@@ -27,8 +27,11 @@ DATABASE_URL="postgres://<DB_USER>:<DB_USER_PASSWORD>@localhost:5432/auth"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
+BOT_PROPOSAL_USER_ID=1234
 ```
 
+A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
+ 
 ##### User Schema
 
 The following `users` table is assumed to be present in your schema. The table can have additional fields too.
