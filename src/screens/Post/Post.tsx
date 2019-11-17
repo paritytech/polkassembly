@@ -1,12 +1,13 @@
 import * as React from 'react';
 import NoPostFound from './NoPostFound';
 import Replies from './Replies'
-import { PostAndRepliesQueryResult } from '../../generated/graphql';
+import { PostAndRepliesQueryResult, PostAndRepliesQueryHookResult } from '../../generated/graphql';
 // import { QueryResult } from 'react-apollo';
 
 const className = 'Post';
+type MyPost = PostAndRepliesQueryHookResult['data']
 // FIXME Should use the query result type
-const Post = ( { data }: any ) => {
+const Post = ( { data }: {data: MyPost}) => {
   const post =  data && data.posts && data.posts[0]
 
   return (
