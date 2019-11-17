@@ -8,23 +8,23 @@ interface Props {
 
 const className = 'Home';
 
-const Home: React.FC<Props> = ({ data }) => (
-  <div className={className}>
-    <h3>Latest posts</h3>
-    <ul className={`${className}__list`}>
-      {!!data.posts &&
-        data.posts.map(
-          (post) =>
-            !!post && (
-              <li key={post.id} className={`${className}__item`}>
-                <Link to={`/post/${post.id}`}>
-                  {post.author.username} ({post.creation_date}): {post.title}
-                </Link>
-              </li>
-            ),
-        )}
-    </ul>
-  </div>
+const Home: React.FC<Props> = ({ data }: Props) => (
+	<div className={className}>
+		<h3>Latest posts</h3>
+		<ul className={`${className}__list`}>
+			{!!data.posts &&
+				data.posts.map(
+					(post) =>
+						!!post && (
+							<li key={post.id} className={`${className}__item`}>
+								<Link to={`/post/${post.id}`}>
+									{post.author.username} ({post.creation_date}): {post.title}
+								</Link>
+							</li>
+						),
+				)}
+		</ul>
+	</div>
 );
 
 export default Home;

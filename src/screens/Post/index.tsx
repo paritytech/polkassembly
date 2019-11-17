@@ -4,20 +4,20 @@ import { usePostAndRepliesQuery } from '../../generated/graphql';
 import Post from './Post';
 
 const PostContainer = () => {
-  const { id } = useParams();
-  // cast id as a number or 0
-  const idNumber = Number(id) || 0;
-  const { data, error, loading } = usePostAndRepliesQuery({ variables: { 'id': idNumber } });
+	const { id } = useParams();
+	// cast id as a number or 0
+	const idNumber = Number(id) || 0;
+	const { data, error, loading } = usePostAndRepliesQuery({ variables: { 'id': idNumber } });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+	if (loading) {
+		return <div>Loading...</div>;
+	}
 
-  if (error || !data) {
-    return <div>ERROR</div>;
-  }
+	if (error || !data) {
+		return <div>ERROR</div>;
+	}
 
-  return <Post data={data} />;
+	return <Post data={data} />;
  
 };
 

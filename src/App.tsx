@@ -12,29 +12,29 @@ import SignupForm from './screens/SignupForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  return (
-    <Router>
-    <UserDetailsProvider>
-      <MenuBar/>
-      <Container fluid={true}>
-        <Switch>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-          <Route path="/login">
-           <LoginForm/>
-          </Route>
-          <Route exact path="/post/:id" >
-           <Post/>
-          </Route>
-          <Route path="/signup">
-            <SignupForm/>
-          </Route>
-        </Switch>
-      </Container>
-    </UserDetailsProvider>
-    </Router>
-  );
+	return (
+		<Router>
+			<UserDetailsProvider>
+				<MenuBar/>
+				<Container fluid={true}>
+					<Switch>
+						<Route exact path="/">
+							<Home/>
+						</Route>
+						<Route path="/login">
+							<LoginForm/>
+						</Route>
+						<Route exact path="/post/:id" >
+							<Post/>
+						</Route>
+						<Route path="/signup">
+							<SignupForm/>
+						</Route>
+					</Switch>
+				</Container>
+			</UserDetailsProvider>
+		</Router>
+	);
 };
 
 export default App;

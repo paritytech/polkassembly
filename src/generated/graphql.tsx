@@ -1895,9 +1895,9 @@ export const LatestPostsDocument = gql`
     `;
 export type LatestPostsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<LatestPostsQuery, LatestPostsQueryVariables>, 'query'>;
 
-    export const LatestPostsComponent = (props: LatestPostsComponentProps) => (
-      <ApolloReactComponents.Query<LatestPostsQuery, LatestPostsQueryVariables> query={LatestPostsDocument} {...props} />
-    );
+export const LatestPostsComponent = (props: LatestPostsComponentProps) => (
+	<ApolloReactComponents.Query<LatestPostsQuery, LatestPostsQueryVariables> query={LatestPostsDocument} {...props} />
+);
     
 export type LatestPostsProps<TChildProps = {}> = ApolloReactHoc.DataProps<LatestPostsQuery, LatestPostsQueryVariables> & TChildProps;
 export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
@@ -1905,10 +1905,10 @@ export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: Apo
   LatestPostsQuery,
   LatestPostsQueryVariables,
   LatestPostsProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, LatestPostsQuery, LatestPostsQueryVariables, LatestPostsProps<TChildProps>>(LatestPostsDocument, {
-      alias: 'latestPosts',
-      ...operationOptions
-    });
+	return ApolloReactHoc.withQuery<TProps, LatestPostsQuery, LatestPostsQueryVariables, LatestPostsProps<TChildProps>>(LatestPostsDocument, {
+		alias: 'latestPosts',
+		...operationOptions
+	});
 }
 
 /**
@@ -1927,11 +1927,11 @@ export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: Apo
  * });
  */
 export function useLatestPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-      }
+	return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+}
 export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-        }
+	return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+}
 export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
 export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
 export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
@@ -1959,9 +1959,9 @@ export const PostAndRepliesDocument = gql`
     `;
 export type PostAndRepliesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<PostAndRepliesQuery, PostAndRepliesQueryVariables>, 'query'> & ({ variables: PostAndRepliesQueryVariables; skip?: boolean; } | { skip: boolean; });
 
-    export const PostAndRepliesComponent = (props: PostAndRepliesComponentProps) => (
-      <ApolloReactComponents.Query<PostAndRepliesQuery, PostAndRepliesQueryVariables> query={PostAndRepliesDocument} {...props} />
-    );
+export const PostAndRepliesComponent = (props: PostAndRepliesComponentProps) => (
+	<ApolloReactComponents.Query<PostAndRepliesQuery, PostAndRepliesQueryVariables> query={PostAndRepliesDocument} {...props} />
+);
     
 export type PostAndRepliesProps<TChildProps = {}> = ApolloReactHoc.DataProps<PostAndRepliesQuery, PostAndRepliesQueryVariables> & TChildProps;
 export function withPostAndReplies<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
@@ -1969,10 +1969,10 @@ export function withPostAndReplies<TProps, TChildProps = {}>(operationOptions?: 
   PostAndRepliesQuery,
   PostAndRepliesQueryVariables,
   PostAndRepliesProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, PostAndRepliesQuery, PostAndRepliesQueryVariables, PostAndRepliesProps<TChildProps>>(PostAndRepliesDocument, {
-      alias: 'postAndReplies',
-      ...operationOptions
-    });
+	return ApolloReactHoc.withQuery<TProps, PostAndRepliesQuery, PostAndRepliesQueryVariables, PostAndRepliesProps<TChildProps>>(PostAndRepliesDocument, {
+		alias: 'postAndReplies',
+		...operationOptions
+	});
 }
 
 /**
@@ -1992,11 +1992,11 @@ export function withPostAndReplies<TProps, TChildProps = {}>(operationOptions?: 
  * });
  */
 export function usePostAndRepliesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostAndRepliesQuery, PostAndRepliesQueryVariables>) {
-        return ApolloReactHooks.useQuery<PostAndRepliesQuery, PostAndRepliesQueryVariables>(PostAndRepliesDocument, baseOptions);
-      }
+	return ApolloReactHooks.useQuery<PostAndRepliesQuery, PostAndRepliesQueryVariables>(PostAndRepliesDocument, baseOptions);
+}
 export function usePostAndRepliesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostAndRepliesQuery, PostAndRepliesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PostAndRepliesQuery, PostAndRepliesQueryVariables>(PostAndRepliesDocument, baseOptions);
-        }
+	return ApolloReactHooks.useLazyQuery<PostAndRepliesQuery, PostAndRepliesQueryVariables>(PostAndRepliesDocument, baseOptions);
+}
 export type PostAndRepliesQueryHookResult = ReturnType<typeof usePostAndRepliesQuery>;
 export type PostAndRepliesLazyQueryHookResult = ReturnType<typeof usePostAndRepliesLazyQuery>;
 export type PostAndRepliesQueryResult = ApolloReactCommon.QueryResult<PostAndRepliesQuery, PostAndRepliesQueryVariables>;
