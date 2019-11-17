@@ -8,5 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ESLint checks
-      uses: gimenete/eslint-action@1.0
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: yarn install
+    - run: yarn lint
