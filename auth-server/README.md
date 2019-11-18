@@ -34,7 +34,10 @@ A special user identified by its id is our proposal bot. We should grant it with
  
 ##### User Schema
 
-The following `users` table is assumed to be present in your schema. The table can have additional fields too.
+The following `users` table is assumed to be present in your schema. The table can have additional fields too. To create this table initially run
+```bash
+yarn migrate
+```
 
 | name       | type    | nullable | unique | default | primary |
 | ---------- | ------- | -------- | ------ | ------- | ------- |
