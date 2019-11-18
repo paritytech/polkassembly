@@ -15,7 +15,7 @@ The fact that we are using `image: hasura/graphql-engine:vx.y.z.cli-migrations` 
 ### Manual migration
 In case the `public` DB schema is empty, you'll need to run the migration manually:
 - Make sure to install [hasura-cli](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/index.html).
-- `cd ./public` go to the migration directory
+- `cd ./hasura-migrations` go to the migration directory
 - `hasura migrate apply --admin-secret <YOUR_HASURA_ADMIN_SECRET>` to apply the migration
 
 
