@@ -54,7 +54,7 @@ exports.addPostAndProposal = ({ authorId, depositAmount, onchainId, methodName, 
     const token = yield util_1.getToken();
     const proposalCategorieId = 3;
     const defaultProposalContent = "Post not yet edited by the proposal author";
-    const defaultProposalTitle = "#" + onchainId + "on chain proposal";
+    const defaultProposalTitle = `#${onchainId} on chain proposal`;
     const affectedRows = 2;
     if (!graphqlServerUrl)
         throw new Error("Please specify an environment variable for the REACT_APP_SERVER_URL");
