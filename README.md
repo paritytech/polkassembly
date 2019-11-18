@@ -25,6 +25,9 @@ REACT_APP_HASURA_GRAPHQL_ADMIN_SECRET: <YOUR_HASURA_ADMIN_SECRET>
 
 ## Init and Run
 
+### Install Dependencies
+- `yarn`
+
 ### Generate types
 
 We use `@graphql-codegen` to generate types directly form the DB types (hasura). You need to generate the types any time the DB structure is changed.
