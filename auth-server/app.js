@@ -13,6 +13,9 @@ const cors = require('cors');
 const cloudinary = require('cloudinary');
 const multer = require('multer');
 const tmp = require('tmp');
+const graphqlHTTP = require('express-graphql');
+
+const graphqlSchema = require('./controllers/graphql')
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -31,6 +34,18 @@ if(!process.env.ENCRYPTION_KEY) {
  * Create Express server.
  */
 const app = express();
+
+/**
+ * Graphql Configuration
+ */
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: graphqlSchema,
+    graphiql: true,
+  }),
+);
+
 /**
  * Express configuration.
  */
