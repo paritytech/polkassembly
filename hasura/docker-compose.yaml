@@ -5,8 +5,12 @@ services:
     restart: always
     ports:
     - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: governance-discussion
+      PGDATA: /var/lib/postgresql/data
     volumes:
-    # - db_data:/var/lib/postgresql/data
     # persistent data locally
     - ./data:/var/lib/postgresql/data
   graphql-engine:
@@ -23,7 +27,7 @@ services:
     - "postgres"
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/governance-discussion
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: ip7itpC5L6R3RbNE4vkdZfsN
