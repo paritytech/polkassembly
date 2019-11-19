@@ -13,6 +13,10 @@ JWT Authentication server for generating a JWT to use in the `Authentication` he
 
 #### Local instructions
 
+Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
+Run the postgres and graphql-engine in docker by running:
+- `docker-compose up`
+
 Install node dependencies
 
 ```bash
@@ -23,7 +27,7 @@ Set environment variables. Open/create a `.env` file and add the following env
 
 ```bash
 ENCRYPTION_KEY="<JWT_ENCRYPTION_KEY>"
-DATABASE_URL="postgres://<DB_USER>:<DB_USER_PASSWORD>@localhost:5432/auth"
+DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-auth"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
@@ -34,7 +38,7 @@ A special user identified by its id is our proposal bot. We should grant it with
  
 ##### User Schema
 
-The following `users` table is assumed to be present in your schema. The table can have additional fields too. To create this table initially run
+The following `users` table is assumed to be present in your schema. The table can have additional fields too. To create this table initially run:
 ```bash
 yarn migrate
 ```
