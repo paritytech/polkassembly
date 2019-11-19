@@ -2,10 +2,10 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
-const databaseName = "postgres";
+const databaseName = "governance-auth";
 const pg = require('pg');
 
-const connection_url = process.env.DATABASE_URL || `postgres://postgres:@localhost:5432/${databaseName}`;
+const connection_url = process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5431/${databaseName}`;
 
 console.log("applying migration on ",connection_url);
 
