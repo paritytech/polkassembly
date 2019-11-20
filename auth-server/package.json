@@ -1,11 +1,12 @@
 {
-  "name": "passport-js-auth-webhook",
+  "name": "auth-server",
   "version": "1.0.0",
-  "description": "A boilerplate for Hasura Graphql Engine auth webhook with passport js",
+  "description": "oauth 2.0 server for governance platform",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "lint": "eslint \"**/*.js\"",
+    "start": "yarn tsc && node build/src/index.js",
+    "lint": "eslint \"**/*.js|ts\"",
+    "tsc": "tsc",
     "migrate": "knex migrate:latest"
   },
   "repository": {
@@ -19,9 +20,10 @@
   },
   "homepage": "https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/auth-webhooks/passport-js#readme",
   "dependencies": {
+    "argon2": "^0.25.1",
     "bcrypt": "3.0.6",
     "body-parser": "^1.18.3",
-    "chalk": "^2.4.1",
+    "chalk": "^3.0.0",
     "cloudinary": "^1.13.2",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
@@ -29,7 +31,6 @@
     "express-graphql": "^0.9.0",
     "express-validator": "^5.3.0",
     "graphql": "^14.5.8",
-    "graphql-request": "^1.8.2",
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.19.5",
     "multer": "^1.4.1",
@@ -38,13 +39,16 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.5.0",
-    "tmp": "0.0.33",
+    "tmp": "^0.1.0",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.11",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
     "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",

@@ -7,10 +7,5 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
-
-[*.{js,jsx,ts,tsx,json,html}]
 indent_style = tab
-indent_size = 2
-
-[{package.json,.eslintrc.js}]
-indent_size = 2
+indent_size = 4

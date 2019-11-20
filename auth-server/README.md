@@ -66,7 +66,7 @@ Once deployed or started locally, we can create an user using `/signup` API like
 
 ```bash
 curl -H "Content-Type: application/json" \
-     -d'{"username": "test123", "password": "test123", "confirmPassword": "test123"}' \
+     -d'{"username": "test123", "email": "test@test.com", "name": "test1 test2", "password": "test123", "confirmPassword": "test123"}' \
      http://localhost:8010/signup
 ```
 
