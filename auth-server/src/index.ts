@@ -12,7 +12,7 @@ import * as cors from 'cors'
 import * as graphqlHTTP from 'express-graphql'
 
 import { upload, uploadController } from './controllers/upload'
-import { postLogin, postSignup } from './controllers/user'
+import { postLogin, postSignup, postToken } from './controllers/user'
 import graphqlSchema from './controllers/graphql'
 
 /**
@@ -56,6 +56,7 @@ app.use(expressValidator())
 
 app.post('/login', postLogin)
 app.post('/signup', postSignup)
+app.post('/token', postToken)
 // unused
 app.post('/upload-profile-pic', upload.single('file'), uploadController)
 

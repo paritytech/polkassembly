@@ -1,7 +1,10 @@
 import * as jwt from 'jsonwebtoken'
-import User from '../model/User'
 import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
+import { uuid } from 'uuidv4'
+
+import User from '../model/User'
+import RefreshToken from '../model/RefreshToken'
 
 export default class AuthService {
 	constructor(){}
@@ -27,7 +30,8 @@ export default class AuthService {
 				username: user.username,
 				name: user.name
 			},
-			token: this.getSignedToken(user)
+			token: this.getSignedToken(user),
+			refreshToken: await this.getRefreshToken(user)
 		}
 	}
 
@@ -47,8 +51,35 @@ export default class AuthService {
 				username: user.username,
 				name: user.name
 			},
-			token: this.getSignedToken(user)
+			token: this.getSignedToken(user),
+			refreshToken: await this.getRefreshToken(user)
 		}
+	}
+
+	public async RefreshToken(token: string) {
+		const refreshToken = await RefreshToken
+			.query()
+			.where('token', token)
+			.first()
+		
+		if (!refreshToken) { 
+			throw new NotFoundError('Refresh token not found')
+		}
+
+		if (!refreshToken.valid) {
+			throw new Error('Refresh token not valid')
+		}
+
+		if (refreshToken.expires < Math.floor(Date.now() / 1000)) {
+			throw new Error('Refresh token expired')
+		}
+
+		const user = await User
+			.query()
+			.where('id', refreshToken.user_id)
+			.first()
+
+		return this.getSignedToken(user)
 	}
 
 	private getSignedToken({ id, username, email }) {
@@ -74,5 +105,22 @@ export default class AuthService {
 		}
 
 		return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY, { expiresIn: '10d' })
+	}
+
+	private async getRefreshToken({ id }) {
+		const token = uuid()
+		const user_id = id
+		const valid = true
+		const expires = Math.floor(Date.now() / 1000) + (100 * 24 * 60 * 60)
+		const refreshToken = await RefreshToken.query()
+			.allowInsert('[token, user_id, valid, expires]')
+			.insert({
+				token, 
+				user_id, 
+				valid, 
+				expires
+			})
+
+		return refreshToken.token
 	}
 }

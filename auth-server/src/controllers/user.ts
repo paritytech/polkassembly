@@ -19,8 +19,8 @@ export const postLogin = async (req, res) => {
 	const password = req.body.password
 	try {
 		const authServiceInstance = new AuthService()
-		const { user, token } = await authServiceInstance.Login(username, password)
-		return res.status(200).json({ user, token }).end()
+		const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
+		return res.status(200).json({ user, token, refreshToken }).end()
 	} catch (err) {
 		return errorHandler(err, res)
 	}
@@ -44,8 +44,31 @@ export const postSignup = async (req, res) => {
 	try {
 		const { email, password, username, name } = req.body
 		const authServiceInstance = new AuthService()
-		const { user, token } = await authServiceInstance.SignUp(email, password, username, name)
-		return res.json({ user, token }).status(200).end()
+		const { user, token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name)
+		return res.status(200).json({ user, token, refreshToken }).end()
+	} catch (err) {
+		return errorHandler(err, res)
+	}
+}
+
+/**
+ * POST /token
+ * Get access token from refresh token.
+ */
+export const postToken = async (req, res) => {
+	req.assert('refreshToken', 'refreshToken can\'t be empty.').notEmpty()
+
+	const errors = req.validationErrors()
+
+	if (errors) {
+		return res.status(400).json({ errors })
+	}
+
+	try {
+		const { refreshToken } = req.body
+		const authServiceInstance = new AuthService()
+		const token = await authServiceInstance.RefreshToken(refreshToken)
+		return res.status(200).json({ token }).end()
 	} catch (err) {
 		return errorHandler(err, res)
 	}
