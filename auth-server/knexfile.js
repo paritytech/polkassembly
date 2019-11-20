@@ -1,21 +1,19 @@
 // Update with your config settings.
-var dotenv = require('dotenv');
-dotenv.load();
+var dotenv = require('dotenv')
+dotenv.load()
 
-const databaseName = "governance-auth";
-const pg = require('pg');
+const databaseName = 'governance-auth'
+const connectionUrl = process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5431/${databaseName}`
 
-const connection_url = process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5431/${databaseName}`;
-
-console.log("applying migration on ",connection_url);
+console.log('applying migration on ', connectionUrl)
 
 module.exports = {
   client: 'postgresql',
-  connection: connection_url,
+  connection: connectionUrl,
   migrations: {
-    directory: __dirname + '/db/migrations'
+    directory: `${__dirname}/db/migrations`
   }
-};
+}
 
 // staging: {
 //   client: 'postgresql',
