@@ -1,47 +1,30 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
+import { gql } from 'apollo-server-express'
 import User from '../model/User'
 
-const userType = new GraphQLObjectType({
-	name: 'User',
-	fields: {
-		id: {
-			type: GraphQLInt
+export const typeDefs = gql`
+  type User {
+	id: Int
+	username: String
+	name: String
+  }
+
+  type Query {
+	user(id: Int!): User
+	users: [User]
+  }
+`
+
+export const resolvers = {
+	Query: {
+		user(_, args) {
+			return User
+				.query()
+				.where('id', args.id)
+				.first()
 		},
-		username: {
-			type: GraphQLString
-		},
-		name: {
-			type: GraphQLString
+		async users() {
+			return User.query()
 		}
 	}
-})
+}
 
-const queryType = new GraphQLObjectType({
-	name: 'Query',
-	fields: {
-		user: {
-			type: userType,
-			args: {
-				id: { type: GraphQLInt }
-			},
-			resolve: async (source, { id }) => {
-				const user = await User
-					.query()
-					.where('id', id)
-					.first()
-				return user
-			}
-		},
-		users: {
-			type: new GraphQLList(userType),
-			resolve: async () => {
-				const users = await User.query()
-				return users
-			}
-		}
-	}
-})
-
-export default new GraphQLSchema({
-	query: queryType
-})

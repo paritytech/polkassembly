@@ -9,11 +9,11 @@ import * as chalk from 'chalk'
 import * as dotenv from 'dotenv'
 import * as expressValidator from 'express-validator'
 import * as cors from 'cors'
-import * as graphqlHTTP from 'express-graphql'
+import { ApolloServer } from 'apollo-server-express'
 
 import { upload, uploadController } from './controllers/upload'
 import { postLogin, postSignup, postToken } from './controllers/user'
-import graphqlSchema from './controllers/graphql'
+import { typeDefs, resolvers } from './controllers/graphql'
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -32,17 +32,7 @@ if (!process.env.ENCRYPTION_KEY) {
  * Create Express server.
  */
 const app = express()
-
-/**
- * Graphql Configuration
- */
-app.use(
-	'/graphql',
-	graphqlHTTP({
-		schema: graphqlSchema,
-		graphiql: true
-	})
-)
+const server = new ApolloServer({ typeDefs, resolvers });
 
 /**
  * Express configuration.
@@ -53,6 +43,8 @@ app.set('port', process.env.PORT || 8080)
 app.set('json spaces', 2) // number of spaces for indentation
 app.use(bodyParser.json())
 app.use(expressValidator())
+
+server.applyMiddleware({ app });
 
 app.post('/login', postLogin)
 app.post('/signup', postSignup)
