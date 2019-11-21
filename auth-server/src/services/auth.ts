@@ -3,13 +3,14 @@ import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
 
+import { AuthObjectType } from '../types'
 import User from '../model/User'
 import RefreshToken from '../model/RefreshToken'
 
 export default class AuthService {
 	constructor(){}
 
-	public async Login(username, password): Promise<any> {
+	public async Login(username, password): Promise<AuthObjectType> {
 		const user = await User
 			.query()
 			.where('username', username)
@@ -35,7 +36,7 @@ export default class AuthService {
 		}
 	}
 
-	public async SignUp(email, password, username, name): Promise<any> {
+	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
 		const user = await User.query()
 			.allowInsert('[email, password, username, name]')
 			.insert({
@@ -56,7 +57,7 @@ export default class AuthService {
 		}
 	}
 
-	public async RefreshToken(token: string) {
+	public async RefreshToken(token: string): Promise<string> {
 		const refreshToken = await RefreshToken
 			.query()
 			.where('token', token)
@@ -82,7 +83,7 @@ export default class AuthService {
 		return this.getSignedToken(user)
 	}
 
-	private getSignedToken({ id, username, email }) {
+	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
 	
@@ -107,7 +108,7 @@ export default class AuthService {
 		return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY, { expiresIn: '10d' })
 	}
 
-	private async getRefreshToken({ id }) {
+	private async getRefreshToken({ id }): Promise<string> {
 		const token = uuid()
 		const user_id = id
 		const valid = true
