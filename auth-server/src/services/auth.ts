@@ -15,8 +15,8 @@ export default class AuthService {
 			.query()
 			.where('username', username)
 			.first()
-      
-		if (!user) { 
+
+		if (!user) {
 			throw new NotFoundError('User not found')
 		}
 
@@ -45,7 +45,7 @@ export default class AuthService {
 				username,
 				name
 			})
-		
+
 		return {
 			user: {
 				email: user.email,
@@ -62,8 +62,8 @@ export default class AuthService {
 			.query()
 			.where('token', token)
 			.first()
-		
-		if (!refreshToken) { 
+
+		if (!refreshToken) {
 			throw new NotFoundError('Refresh token not found')
 		}
 
@@ -86,13 +86,13 @@ export default class AuthService {
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
-	
+
 		// if our user is the proposal bot, give additional role.
 		if (id == process.env.BOT_PROPOSAL_USER_ID) { // eslint-disable-line
 			allowedRoles.push('proposal_bot')
 			currentRole = 'proposal_bot'
 		}
-	
+
 		const tokenContent = {
 			sub: `${id}`,
 			name: username,
@@ -105,7 +105,7 @@ export default class AuthService {
 			}
 		}
 
-		return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY, { expiresIn: '10d' })
+		return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY, { expiresIn: '1h' })
 	}
 
 	private async getRefreshToken({ id }): Promise<string> {
@@ -116,9 +116,9 @@ export default class AuthService {
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({
-				token, 
-				user_id, 
-				valid, 
+				token,
+				user_id,
+				valid,
 				expires
 			})
 
