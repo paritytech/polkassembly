@@ -112,7 +112,7 @@ export default class AuthService {
 		const token = uuid()
 		const user_id = id
 		const valid = true
-		const expires = Math.floor(Date.now() / 1000) + (100 * 24 * 60 * 60)
+		const expires = Math.floor(Date.now() / 1000) + (6 * 30 * 24 * 60 * 60) // now + 6 months
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({
