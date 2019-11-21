@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn tsc && node build/src/index.js",
-    "lint": "eslint \"**/*.js|ts\"",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "eslint . --ext .js,.ts --fix",
     "tsc": "tsc",
     "migrate": "knex migrate:latest"
   },
