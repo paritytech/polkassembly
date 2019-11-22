@@ -107,7 +107,8 @@ export const postSignup = async (req, res) => {
 			refreshToken,
 			{
 				httpOnly: true,
-				maxAge: 6 * 30 * 24 * 60 * 60 * 1000 // 6 months
+				maxAge: 6 * 30 * 24 * 60 * 60 * 1000, // 6 months
+				sameSite: 'strict'
 			}
 		)
 		return res.status(200).json({ user, token }).end()

@@ -1,0 +1,8 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE FUNCTION replies_count(post_row posts)
+      RETURNS integer AS $$
+        SELECT CAST( COUNT(*) as integer) FROM replies WHERE post_id = post_row.id
+      $$ LANGUAGE sql STABLE;
+  type: run_sql
