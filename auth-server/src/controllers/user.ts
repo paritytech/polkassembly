@@ -35,6 +35,19 @@ export const postLogin = async (req, res) => {
 }
 
 /**
+ * POST /logout
+ * Logout user.
+ */
+export const postLogout = async (req, res) => {
+	res.cookie('refresh_token', '', {
+		maxAge: 0,
+		overwrite: true
+	})
+
+	res.status(200).json({ message: 'successfully logged out' }).end()
+}
+
+/**
  * POST /signup
  * Create a new local account.
  */

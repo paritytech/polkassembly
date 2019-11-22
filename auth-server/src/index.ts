@@ -13,7 +13,7 @@ import * as cookieParser from 'cookie-parser'
 import { ApolloServer } from 'apollo-server-express'
 
 import { upload, uploadController } from './controllers/upload'
-import { postLogin, postSignup, postToken } from './controllers/user'
+import { postLogin, postLogout, postSignup, postToken } from './controllers/user'
 import { typeDefs, resolvers } from './controllers/graphql'
 
 /**
@@ -49,6 +49,7 @@ app.use(expressValidator())
 server.applyMiddleware({ app });
 
 app.post('/login', postLogin)
+app.post('/logout', postLogout)
 app.post('/signup', postSignup)
 app.post('/token', postToken)
 // unused
