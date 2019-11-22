@@ -47,6 +47,10 @@ export const postLogout = async (req, res) => {
 	res.status(200).json({ message: 'successfully logged out' }).end()
 }
 
+/**
+ * POST /change-password
+ * Change password of user.
+ */
 export const postChangePassword = async (req, res) => {
 	req.assert('oldPassword', 'old password cannot be blank').notEmpty()
 	req.assert('newPassword', 'new password cannot be blank').notEmpty()
