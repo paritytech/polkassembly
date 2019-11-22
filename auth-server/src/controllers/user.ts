@@ -58,16 +58,13 @@ export const postSignup = async (req, res) => {
  * Get access token from refresh token.
  */
 export const postToken = async (req, res) => {
-	req.assert('refreshToken', 'refreshToken can\'t be empty.').notEmpty()
+	const refreshToken = req.cookies.refresh_token
 
-	const errors = req.validationErrors()
-
-	if (errors) {
-		return res.status(400).json({ errors })
+	if (!refreshToken) {
+		return res.status(400).json({ errors: 'Refresh token not found'})
 	}
 
 	try {
-		const { refreshToken } = req.body
 		const authServiceInstance = new AuthService()
 		const token = await authServiceInstance.RefreshToken(refreshToken)
 		return res.status(200).json({ token }).end()
