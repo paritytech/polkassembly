@@ -14,13 +14,11 @@ services:
     # persistent data locally
     - ./data:/var/lib/postgresql/data
   graphql-engine:
-    # image: hasura/graphql-engine:v1.0.0-beta.9
-    # image: hasura/graphql-engine:v1.0.0-beta.10.cli-migrations
-    image: hasura/graphql-engine:v1.0.0-beta.10
-    # image: graphql-engine:pgdump12
+    image: hasura/graphql-engine:v1.0.0-beta.10.cli-migrations
+    # image: hasura/graphql-engine:v1.0.0-beta.10
     volumes:
     # migration data
-    - ./hasura-migrations:/hasura-migrations
+    - ./hasura-migrations/migrations:/hasura-migrations
     ports:
     - "8080:8080"
     depends_on:
@@ -30,8 +28,6 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/governance-discussion
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: ip7itpC5L6R3RbNE4vkdZfsN
+      HASURA_GRAPHQL_ADMIN_SECRET: <YOUR_HASURA_ADMIN_SECRET>
       HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "88xmmBt4hhqjUrzFTAruvWQDh46HRUPe" }'
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: 'anonymous'
-# volumes:
-#   db_data:
