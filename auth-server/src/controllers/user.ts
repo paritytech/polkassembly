@@ -34,7 +34,6 @@ export const postLogin = async (req, res) => {
 	}
 }
 
-
 /**
  * POST /logout
  * Logout user.
