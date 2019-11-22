@@ -34,6 +34,10 @@ export const postLogin = async (req, res) => {
 	}
 }
 
+/**
+ * POST /logout
+ * Sign out for current user.
+ */
 export const postLogout = async (req, res) => {
 	res.cookie('refresh_token', '', {
 		maxAge: 0,
@@ -41,6 +45,38 @@ export const postLogout = async (req, res) => {
 	})
 
 	res.status(200).json({ message: 'successfully logged out' }).end()
+}
+
+export const postChangePassword = async (req, res) => {
+	req.assert('oldPassword', 'old password cannot be blank').notEmpty()
+	req.assert('newPassword', 'new password cannot be blank').notEmpty()
+
+	const errors = req.validationErrors()
+
+	if (errors) {
+		return res.status(400).json({ errors })
+	}
+
+	const authHeader = req.headers.Authorization
+
+	if (!authHeader) {
+		return res.status(403).json({ errors: 'Authorization header missing' })
+	}
+
+	const token = authHeader.split(' ')[1]
+
+	if (!token) {
+		return res.status(403).json({ errors: 'token missing' })
+	}
+
+	const { oldPassword, newPassword } = req.body
+	try {
+		const authServiceInstance = new AuthService()
+		await authServiceInstance.ChangePassword(token, oldPassword, newPassword)
+		return res.status(200).json({ message: 'Password succefully changed' }).end()
+	} catch (err) {
+		return errorHandler(err, res)
+	}
 }
 
 /**
