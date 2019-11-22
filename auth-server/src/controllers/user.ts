@@ -20,7 +20,14 @@ export const postLogin = async (req, res) => {
 	try {
 		const authServiceInstance = new AuthService()
 		const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
-		res.cookie('refresh_token', refreshToken, { expires: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000) })
+		res.cookie(
+			'refresh_token',
+			refreshToken,
+			{
+				httpOnly: true,
+				maxAge: 6 * 30 * 24 * 60 * 60 * 1000 // 6 months
+			}
+		)
 		return res.status(200).json({ user, token }).end()
 	} catch (err) {
 		return errorHandler(err, res)
