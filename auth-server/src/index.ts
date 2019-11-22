@@ -9,6 +9,7 @@ import * as chalk from 'chalk'
 import * as dotenv from 'dotenv'
 import * as expressValidator from 'express-validator'
 import * as cors from 'cors'
+import * as cookieParser from 'cookie-parser'
 import { ApolloServer } from 'apollo-server-express'
 
 import { upload, uploadController } from './controllers/upload'
@@ -42,6 +43,7 @@ app.set('host', '0.0.0.0')
 app.set('port', process.env.PORT || 8080)
 app.set('json spaces', 2) // number of spaces for indentation
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use(expressValidator())
 
 server.applyMiddleware({ app });
