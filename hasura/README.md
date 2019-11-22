@@ -5,6 +5,8 @@ The main application's backend is provided by [Hasura](https://github.com/hasura
 ## Setup
 
 Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
+
+Add a secret string to HASURA_GRAPHQL_ADMIN_SECRET: in docker-compose.yaml
 Run the postgres and graphql-engine in docker by running:
 - `docker-compose up`
 
