@@ -1,6 +1,7 @@
 import * as cloudinary from 'cloudinary'
 import * as multer from 'multer'
 import * as tmp from 'tmp'
+import { Request, Response } from 'express'
 import errorHandler from '../model/errors'
 
 const uploadProfilePic = (filePath) => {
@@ -19,7 +20,7 @@ export const upload = multer({
 	dest: tmp.dirSync({ unsafeCleanup: true }).name
 })
 
-export const uploadController = async (req, res) => {
+export const uploadController = async (req, res: Response) => {
 	try {
 		res.json(await uploadProfilePic(req.file.path))
 	} catch (err) {
