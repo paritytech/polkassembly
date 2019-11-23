@@ -1,4 +1,4 @@
-name: Lint
+name: Auth-server lint
 
 on:
   pull_request:
@@ -14,6 +14,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
+    - run: cd auth-server
     - run: yarn install
     - run: yarn lint
 
