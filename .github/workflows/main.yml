@@ -3,8 +3,8 @@ name: Auth-server lint
 on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
-    paths:
-      - 'auth-server/*'
+    # paths:
+    #  - 'auth-server/*'
 
 jobs:
   build:
