@@ -3,6 +3,8 @@ name: Auth-server lint
 on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
+    paths:
+      - 'auth-server/*'
 
 jobs:
   build:
@@ -15,6 +17,7 @@ jobs:
       with:
         node-version: '10.x'
     - run: cd auth-server
+    - run: pwd
     - run: yarn install
     - run: yarn lint
 
