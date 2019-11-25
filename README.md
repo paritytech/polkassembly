@@ -12,15 +12,14 @@ This app relies on a database for users, posts, etc. Those need to be in place b
 
 ### env variable
 
-Create a `.env` file with at least the following environmen variable 
+Create a `.env` file with the following environmen variable 
 ```
 REACT_APP_AUTH_SERVER_URL="http://localhost:8010"
-REACT_APP_ENV='dev'
-
-# FIXME not used
-# meant to be used in ./codegen.yml
+REACT_APP_ENV="dev"
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
-REACT_APP_HASURA_GRAPHQL_ADMIN_SECRET: <YOUR_HASURA_ADMIN_SECRET>
+
+# used for graphql type generation
+HASURA_GRAPHQL_ADMIN_SECRET= "<YOUR_HASURA_ADMIN_SECRET>"
 ```
 
 ## Init and Run
