@@ -116,3 +116,19 @@ On success, we get the response
 ```json
 { "message": "Password succefully changed" }
 ```
+
+We can use `/change-name` API to change user name
+
+```bash
+curl --header "Content-Type: application/json" \
+  --header "{'Authorization': 'Bearer <token>'}"\
+  --request POST \
+  --data '{"newName":"herewego"}' \
+  http://localhost:8010/change-name
+```
+
+On success, we get the response
+
+```json
+{ "message": "Name succefully changed" }
+```
