@@ -109,11 +109,11 @@ export default class AuthService {
 
 		await User
 			.query()
-			.where('id', userId)
-			.update({
+			.patch({
 				salt: salt.toString('hex'),
 				password
 			})
+			.findById(userId)
 	}
 
 	private getSignedToken({ id, username, email }): string {
