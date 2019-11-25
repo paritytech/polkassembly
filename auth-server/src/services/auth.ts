@@ -86,6 +86,10 @@ export default class AuthService {
 	}
 
 	public async ChangePassword(userId: number, oldPassword: string, newPassword: string) {
+		if (oldPassword === newPassword) {
+			throw new Error('Old password cannot be same as new password')
+		}
+
 		const user = await User
 			.query()
 			.where('id', userId)
