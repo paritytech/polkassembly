@@ -60,6 +60,7 @@ export const postLogout = async (req: Request, res: Response) => {
  * Change password of user.
  */
 export const postChangePassword = async (req: Request, res: Response) => {
+	req.assert('userId', 'user id cannot be blank').notEmpty()
 	req.assert('oldPassword', 'old password cannot be blank').notEmpty()
 	req.assert('newPassword', 'new password cannot be blank').notEmpty()
 
@@ -69,22 +70,10 @@ export const postChangePassword = async (req: Request, res: Response) => {
 		return res.status(400).json({ errors })
 	}
 
-	const authHeader = req.headers.Authorization
-
-	if (!authHeader) {
-		return res.status(403).json({ errors: 'Authorization header missing' })
-	}
-
-	const token = `${authHeader}`.split(' ')[1]
-
-	if (!token) {
-		return res.status(403).json({ errors: 'token missing' })
-	}
-
-	const { oldPassword, newPassword } = req.body
+	const { userId, oldPassword, newPassword } = req.body
 	try {
 		const authServiceInstance = new AuthService()
-		await authServiceInstance.ChangePassword(token, oldPassword, newPassword)
+		await authServiceInstance.ChangePassword(userId, oldPassword, newPassword)
 		return res.status(200).json({ message: 'Password succefully changed' }).end()
 	} catch (err) {
 		return errorHandler(err, res)

@@ -85,17 +85,10 @@ export default class AuthService {
 		return this.getSignedToken(user)
 	}
 
-	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
-		// verify a token symmetric - synchronous
-		const decoded = jwt.verify(token, process.env.ENCRYPTION_KEY)
-
-		if (isNaN(decoded.sub)) {
-			throw new Error('Invalid user id')
-		}
-
+	public async ChangePassword(userId: number, oldPassword: string, newPassword: string) {
 		const user = await User
 			.query()
-			.where('id', Number(decoded.sub))
+			.where('id', userId)
 			.first()
 
 		if (!user) {
@@ -112,7 +105,7 @@ export default class AuthService {
 
 		await User
 			.query()
-			.where('id', Number(decoded.sub))
+			.where('id', userId)
 			.update({
 				salt: salt.toString('hex'),
 				password
