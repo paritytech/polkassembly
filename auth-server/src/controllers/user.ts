@@ -2,7 +2,12 @@ import errorHandler from '../model/errors'
 import AuthService from '../services/auth'
 import { Request, Response } from 'express'
 
-const setCookie = (res: Response, refreshToken) => {
+/**
+ *
+ * @param res http response
+ * @param refreshToken refres token string
+ */
+const setRefreshTokenCookie = (res: Response, refreshToken: string) => {
 	res.cookie(
 		'refresh_token',
 		refreshToken,
@@ -33,7 +38,7 @@ export const postLogin = async (req: Request, res: Response) => {
 	try {
 		const authServiceInstance = new AuthService()
 		const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
-		setCookie(res, refreshToken)
+		setRefreshTokenCookie(res, refreshToken)
 		return res.status(200).json({ user, token }).end()
 	} catch (err) {
 		return errorHandler(err, res)
@@ -105,7 +110,7 @@ export const postSignup = async (req: Request, res: Response) => {
 		const { email, password, username, name } = req.body
 		const authServiceInstance = new AuthService()
 		const { user, token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name)
-		setCookie(res, refreshToken)
+		setRefreshTokenCookie(res, refreshToken)
 		return res.status(200).json({ user, token }).end()
 	} catch (err) {
 		return errorHandler(err, res)
