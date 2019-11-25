@@ -1,3 +1,14 @@
+import { Request } from 'express'
+
+interface FileType {
+    path: string
+}
+
+export interface FileRequestType extends Request {
+    UserId: string
+    file: FileType
+}
+
 export interface UserObjectType {
     email: string
     username: string

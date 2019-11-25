@@ -3,6 +3,7 @@ import * as multer from 'multer'
 import * as tmp from 'tmp'
 import { Request, Response } from 'express'
 import errorHandler from '../model/errors'
+import { FileRequestType } from '../types'
 
 const uploadProfilePic = (filePath) => {
 	return new Promise((resolve, reject) => {
@@ -20,7 +21,7 @@ export const upload = multer({
 	dest: tmp.dirSync({ unsafeCleanup: true }).name
 })
 
-export const uploadController = async (req, res: Response) => {
+export const uploadController = async (req: FileRequestType, res: Response) => {
 	try {
 		res.json(await uploadProfilePic(req.file.path))
 	} catch (err) {
