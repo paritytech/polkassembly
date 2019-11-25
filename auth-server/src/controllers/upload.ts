@@ -1,7 +1,7 @@
 import * as cloudinary from 'cloudinary'
 import * as multer from 'multer'
 import * as tmp from 'tmp'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import errorHandler from '../model/errors'
 import { FileRequestType } from '../types'
 

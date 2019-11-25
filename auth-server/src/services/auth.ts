@@ -101,7 +101,7 @@ export default class AuthService {
 
 		const correctPassword = await user.verifyPassword(oldPassword)
 		if (!correctPassword) {
-			throw new DataError('Incorrect password')
+			throw new Error('Incorrect password')
 		}
 
 		const salt = randomBytes(32)
