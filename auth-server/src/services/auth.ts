@@ -109,11 +109,11 @@ export default class AuthService {
 
 		await User
 			.query()
-			.where('id', userId)
-			.update({
+			.patch({
 				salt: salt.toString('hex'),
 				password
 			})
+			.findById(userId)
 	}
 
 	public async ChangeName(token: string, newName: string) {
@@ -135,10 +135,8 @@ export default class AuthService {
 
 		await User
 			.query()
-			.where('id', Number(decoded.sub))
-			.update({
-				name: newName
-			})
+			.patch({ name: newName })
+			.findById(Number(decoded.sub))
 	}
 
 	private getSignedToken({ id, username, email }): string {

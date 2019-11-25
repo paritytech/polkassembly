@@ -94,7 +94,7 @@ export const postChangeName = async (req: Request, res: Response) => {
 	}
 	// Authorization header is of format:
 	// Authorization: Bearer $asdnkjadj32j23kj@#adslkads
-	const authHeader = req.headers.Authorization
+	const authHeader = req.headers.authorization
 
 	if (!authHeader) {
 		return res.status(403).json({ errors: 'Authorization header missing' })
