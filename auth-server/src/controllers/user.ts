@@ -89,7 +89,7 @@ export const postToken = async (req, res) => {
 	const refreshToken = req.cookies.refresh_token
 
 	if (!refreshToken) {
-		return res.status(400).json({ errors: 'Refresh token not found'})
+		return res.status(400).json({ errors: 'Refresh token not found' })
 	}
 
 	try {

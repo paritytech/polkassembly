@@ -1,0 +1,20 @@
+name: Auth-server lint
+
+on:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+    paths:
+      - 'auth-server/*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: cd auth-server && yarn install && yarn lint
+
