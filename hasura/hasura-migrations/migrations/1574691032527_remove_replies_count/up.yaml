@@ -1,0 +1,4 @@
+- args:
+    cascade: true
+    sql: DROP FUNCTION replies_count
+  type: run_sql
