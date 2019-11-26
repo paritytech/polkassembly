@@ -116,6 +116,29 @@ export default class AuthService {
 			.findById(userId)
 	}
 
+	public async ChangeName(token: string, newName: string) {
+		// verify a token symmetric - synchronous
+		const decoded = jwt.verify(token, process.env.ENCRYPTION_KEY)
+
+		if (isNaN(decoded.sub)) {
+			throw new Error('Invalid user id')
+		}
+
+		const user = await User
+			.query()
+			.where('id', Number(decoded.sub))
+			.first()
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+
+		await User
+			.query()
+			.patch({ name: newName })
+			.findById(Number(decoded.sub))
+	}
+
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
