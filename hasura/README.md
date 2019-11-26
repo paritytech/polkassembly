@@ -10,7 +10,15 @@ Add a secret string to HASURA_GRAPHQL_ADMIN_SECRET: in docker-compose.yaml
 Run the postgres and graphql-engine in docker by running:
 - `docker-compose up`
 
-The fact that we are using `image: hasura/graphql-engine:vx.y.z.cli-migrations` in `docker-compose.yaml` should perform a migration automatically. Visiting the `http://localhost:8080/console` should show you the tables `users`, `posts`...
+The fact that we are using `image: hasura/graphql-engine:vx.y.z.cli-migrations` in `docker-compose.yaml` automatically performs a migration. Visiting the `http://localhost:8080/console` should show you the tables `users`, `posts`...
+
+### Update the schema, relashonships or permissions
+
+To make sure any change in the console is reflected in the `hasura-migrations` folder and available to push to github you need to disable the console for any other participant (so that no change are made). Then launch the console using the cli:
+- `cd ./hasura-migrations`
+- `hasura console --admin-secret <your admin secret>`
+
+This will open a new tab to localhost:<non-8080-port> where any change you do will be tracked.
 
 ### Manual migration
 In case the `public` DB schema is empty, you'll need to run the migration manually:
