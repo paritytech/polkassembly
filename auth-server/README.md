@@ -60,7 +60,7 @@ yarn start
 
 ## Usage
 
-### Signup/Login
+### Signup
 
 Once deployed or started locally, we can create an user using `/signup` API like below:
 
@@ -82,6 +82,7 @@ On success, we get the response:
 }
 ```
 
+### Login
 We can also use `/login` API to fetch the user token:
 
 ```bash
@@ -101,7 +102,35 @@ On success, we get the response:
   "token": "eyJhbGciOiJ...I6IkpXVCJ"
 }
 ```
+### Refresh token
+A long living "refresh token" is automatically stored in an `http only` cookie at signup or login. To refresh the short living JWT token (to use for front-end requests) you can call the `/token` endpoint.
 
+First login and store the cookie 
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"username":"xyzxyz","password":"xyzxyzxyz"}' \
+  --cookie 'cookie' \
+  http://localhost:8010/login
+```
+
+Using the same cookie, you can get a refreshed short living JWT token.
+```bash
+curl \                                          
+  --request POST \
+  --cookie 'cookie' \
+  --cookie-jar 'cookie' \
+  http://localhost:8010/token
+```
+on success, we get:
+
+```bash
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI...net__NZHeUaIyruV2Q"
+}
+```
+
+### Change password
 We can use `/change-password` API to change user password
 
 ```bash
@@ -117,6 +146,7 @@ On success, we get the response
 { "message": "Password succefully changed" }
 ```
 
+### Change name
 We can use `/change-name` API to change user name
 
 ```bash
