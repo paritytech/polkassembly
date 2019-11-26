@@ -2,7 +2,6 @@ import * as jwt from 'jsonwebtoken'
 import * as argon2 from 'argon2'
 import { randomBytes } from 'crypto'
 import { NotFoundError } from 'objection'
-import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
 
 import { AuthObjectType } from '../types'
@@ -24,7 +23,7 @@ export default class AuthService {
 
 		const correctPassword = await user.verifyPassword(password)
 		if (!correctPassword) {
-			throw new DataError('Incorrect password')
+			throw new Error('Incorrect password')
 		}
 
 		return {
