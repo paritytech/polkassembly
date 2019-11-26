@@ -945,6 +945,12 @@ export type LatestPostsQuery = (
     & { author: (
       { __typename?: 'users' }
       & Pick<Users, 'username'>
+    ), replies_aggregate: (
+      { __typename?: 'replies_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'replies_aggregate_fields' }
+        & Pick<Replies_Aggregate_Fields, 'count'>
+      )> }
     ) }
   )> }
 );
@@ -993,6 +999,11 @@ export const LatestPostsDocument = gql`
     }
     creation_date
     modification_date
+    replies_aggregate {
+      aggregate {
+        count
+      }
+    }
   }
 }
     `;
