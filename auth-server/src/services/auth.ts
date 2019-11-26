@@ -1,4 +1,6 @@
 import * as jwt from 'jsonwebtoken'
+import * as argon2 from 'argon2'
+import { randomBytes } from 'crypto'
 import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
@@ -81,6 +83,60 @@ export default class AuthService {
 			.first()
 
 		return this.getSignedToken(user)
+	}
+
+	public async ChangePassword(userId: number, oldPassword: string, newPassword: string) {
+		if (oldPassword === newPassword) {
+			throw new Error('Old password cannot be same as new password')
+		}
+
+		const user = await User
+			.query()
+			.where('id', userId)
+			.first()
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+
+		const correctPassword = await user.verifyPassword(oldPassword)
+		if (!correctPassword) {
+			throw new Error('Incorrect password')
+		}
+
+		const salt = randomBytes(32)
+		const password = await argon2.hash(newPassword, { salt })
+
+		await User
+			.query()
+			.patch({
+				salt: salt.toString('hex'),
+				password
+			})
+			.findById(userId)
+	}
+
+	public async ChangeName(token: string, newName: string) {
+		// verify a token symmetric - synchronous
+		const decoded = jwt.verify(token, process.env.ENCRYPTION_KEY)
+
+		if (isNaN(decoded.sub)) {
+			throw new Error('Invalid user id')
+		}
+
+		const user = await User
+			.query()
+			.where('id', Number(decoded.sub))
+			.first()
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+
+		await User
+			.query()
+			.patch({ name: newName })
+			.findById(Number(decoded.sub))
 	}
 
 	private getSignedToken({ id, username, email }): string {

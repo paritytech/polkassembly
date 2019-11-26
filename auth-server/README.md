@@ -35,7 +35,7 @@ BOT_PROPOSAL_USER_ID=1234
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
- 
+
 ##### User Schema
 
 The following `users` table is assumed to be present in your schema. The table can have additional fields too. To create this table initially run:
@@ -100,4 +100,31 @@ On success, we get the response:
   },
   "token": "eyJhbGciOiJ...I6IkpXVCJ"
 }
+```
+
+We can use `/change-password` API to change user password
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"userId":1,"newPassword":"xyzxyz", "oldPassword":"xyzxyzxyz"}' \
+  http://localhost:8010/change-password
+```
+
+On success, we get the response
+
+```json
+{ "message": "Password succefully changed" }
+```
+
+We can use `/change-name` API to change user name
+
+```bash
+curl --header "Authorization: Bearer <token>" --header "Content-Type: application/json" --request POST --data '{"newName":"herewegoa"}' http://localhost:8010/change-name
+```
+
+On success, we get the response
+
+```json
+{ "message": "Name succefully changed" }
 ```
