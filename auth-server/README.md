@@ -36,19 +36,19 @@ openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 ```
 
 Enter passphrase again. This will generate public.pem
-Note that you will need the private and public keys in an escaped format.
-Use the following commands to escape them:
+You will need the private and public keys in an escaped format in the next step.
+Use the following commands to print them in the right format:
 ```bash
 awk -v ORS='\\n' '1' private.pem
 awk -v ORS='\\n' '1' public.pem
 ```
 
-Set environment variables. Open/create a `.env` file and add the following env.
+Set environment variables. Open/create a `.env` file and add the following variables:
 
 ```bash
 JWT_KEY_PASSPHRASE="<JWT_KEY_PASSPHRASE>"
-JWT_PRIVATE_KEY="private.pem file seperated with \n"
-JWT_PUBLIC_KEY="public.pem file seperated with \n"
+JWT_PRIVATE_KEY="escaped private key"
+JWT_PUBLIC_KEY="escaped public key"
 DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-auth"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
