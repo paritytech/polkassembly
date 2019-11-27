@@ -23,10 +23,26 @@ Install node dependencies
 yarn install
 ```
 
+Generate a public private key pair for signing JWT token.
+
+```bash
+openssl genrsa -des3 -out private.pem 2048
+```
+
+Enter a passphrase. This will generate private.pem
+
+```bash
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+```
+
+Enter passphrase again. This will generate public.pem
+
 Set environment variables. Open/create a `.env` file and add the following env
 
 ```bash
-ENCRYPTION_KEY="<JWT_ENCRYPTION_KEY>"
+JWT_KEY_PASSPHRASE="<JWT_KEY_PASSPHRASE>"
+JWT_PRIVATE_KEY="private.pem file seperated with \n"
+JWT_PUBLIC_KEY="public.pem file seperated with \n"
 DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-auth"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
@@ -105,7 +121,7 @@ On success, we get the response:
 ### Refresh token
 A long living "refresh token" is automatically stored in an `http only` cookie at signup or login. To refresh the short living JWT token (to use for front-end requests) you can call the `/token` endpoint.
 
-First login and store the cookie 
+First login and store the cookie
 ```bash
 curl --header "Content-Type: application/json" \
   --request POST \
@@ -116,7 +132,7 @@ curl --header "Content-Type: application/json" \
 
 Using the same cookie, you can get a refreshed short living JWT token.
 ```bash
-curl \                                          
+curl \
   --request POST \
   --cookie 'cookie' \
   --cookie-jar 'cookie' \
