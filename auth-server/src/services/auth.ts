@@ -5,6 +5,7 @@ import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
 
+import { privateKey, publicKey } from '../keys'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
 import RefreshToken from '../model/RefreshToken'
@@ -118,7 +119,7 @@ export default class AuthService {
 
 	public async ChangeName(token: string, newName: string) {
 		// verify a token symmetric - synchronous
-		const decoded = jwt.verify(token, process.env.ENCRYPTION_KEY)
+		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
 			throw new Error('Invalid user id')
@@ -161,7 +162,7 @@ export default class AuthService {
 			}
 		}
 
-		return jwt.sign(tokenContent, process.env.ENCRYPTION_KEY, { expiresIn: '1h' })
+		return jwt.sign(tokenContent, privateKey, { algorithm: 'RS256', expiresIn: '1h' })
 	}
 
 	private async getRefreshToken({ id }): Promise<string> {
