@@ -192,7 +192,7 @@ export const postChangeEmail = async (req: Request, res: Response) => {
 	try {
 		const authServiceInstance = new AuthService()
 		await authServiceInstance.ChangeEmail(token, email)
-		return res.status(200).json({ message: 'Name succefully changed' }).end()
+		return res.status(200).json({ message: 'Email changed. Verification request sent to your email address.' }).end()
 	} catch (err) {
 		return errorHandler(err, res)
 	}
