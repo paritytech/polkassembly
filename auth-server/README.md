@@ -36,8 +36,14 @@ openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 ```
 
 Enter passphrase again. This will generate public.pem
+Note that you will need the private and public keys in an escaped format.
+Use the following commands to escape them:
+```bash
+awk -v ORS='\\n' '1' private.pem
+awk -v ORS='\\n' '1' public.pem
+```
 
-Set environment variables. Open/create a `.env` file and add the following env
+Set environment variables. Open/create a `.env` file and add the following env.
 
 ```bash
 JWT_KEY_PASSPHRASE="<JWT_KEY_PASSPHRASE>"
@@ -51,6 +57,7 @@ BOT_PROPOSAL_USER_ID=1234
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
+Note: you can delete the `private.pem` and `public.pem` files now.
 
 ##### User Schema
 
