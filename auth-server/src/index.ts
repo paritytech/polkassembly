@@ -21,8 +21,16 @@ import { typeDefs, resolvers } from './controllers/graphql'
  */
 dotenv.load({ path: '.env' })
 
-if (!process.env.ENCRYPTION_KEY) {
-	throw new Error('JWT encryption key required')
+if (!process.env.JWT_PRIVATE_KEY) {
+	throw new Error('JWT private key required')
+}
+
+if (!process.env.JWT_PUBLIC_KEY) {
+	throw new Error('JWT public key required')
+}
+
+if (!process.env.JWT_KEY_PASSPHRASE) {
+	throw new Error('JWT private key passphrase required')
 }
 
 /**
