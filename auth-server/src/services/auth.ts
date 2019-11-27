@@ -5,10 +5,13 @@ import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
 
-import { privateKey, publicKey } from '../keys'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
 import RefreshToken from '../model/RefreshToken'
+
+const privateKey = process.env.JWT_PRIVATE_KEY
+const publicKey = process.env.JWT_PUBLIC_KEY
+const passphrase = process.env.JWT_KEY_PASSPHRASE
 
 export default class AuthService {
 	constructor(){}
@@ -162,7 +165,11 @@ export default class AuthService {
 			}
 		}
 
-		return jwt.sign(tokenContent, privateKey, { algorithm: 'RS256', expiresIn: '1h' })
+		return jwt.sign(
+			tokenContent,
+			{ key: privateKey, passphrase },
+			{ algorithm: 'RS256', expiresIn: '1h' }
+		)
 	}
 
 	private async getRefreshToken({ id }): Promise<string> {
