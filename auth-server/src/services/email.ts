@@ -40,7 +40,7 @@ export const sendVerificationEmail = (user: User, token: VerifyToken) => {
 		from: FROM,
 		subject: 'Verify your email address',
 		text,
-		html: text,
+		html: text
 	}
 
 	console.log(`Sending verification email to ${user.email}`)
