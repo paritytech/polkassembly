@@ -13,7 +13,7 @@ import * as cookieParser from 'cookie-parser'
 import { ApolloServer } from 'apollo-server-express'
 
 import { upload, uploadController } from './controllers/upload'
-import { postLogin, postLogout, postChangePassword, postChangeName, getVerifyAccount, postSignup, postToken } from './controllers/user'
+import { postLogin, postLogout, postChangePassword, postChangeName, postChangeEmail, getVerifyAccount, postSignup, postToken } from './controllers/user'
 import { typeDefs, resolvers } from './controllers/graphql'
 
 /**
@@ -60,6 +60,7 @@ app.post('/login', postLogin)
 app.post('/logout', postLogout)
 app.post('/change-password', postChangePassword)
 app.post('/change-name', postChangeName)
+app.post('/change-email', postChangeEmail)
 app.get('/verify-account', getVerifyAccount)
 app.post('/signup', postSignup)
 app.post('/token', postToken)

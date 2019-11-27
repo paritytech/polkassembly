@@ -163,6 +163,42 @@ export const postToken = async (req: Request, res: Response) => {
 }
 
 /**
+ * POST /change-email
+ * Change user email
+ */
+export const postChangeEmail = async (req: Request, res: Response) => {
+	req.assert('email', 'email cannot be blank').notEmpty()
+
+	const errors = req.validationErrors()
+
+	if (errors) {
+		return res.status(400).json({ errors })
+	}
+	// Authorization header is of format:
+	// Authorization: Bearer $asdnkjadj32j23kj@#adslkads
+	const authHeader = req.headers.authorization
+
+	if (!authHeader) {
+		return res.status(403).json({ errors: 'Authorization header missing' })
+	}
+
+	const token = `${authHeader}`.split(' ')[1]
+
+	if (!token) {
+		return res.status(403).json({ errors: 'token missing' })
+	}
+
+	const { email } = req.body
+	try {
+		const authServiceInstance = new AuthService()
+		await authServiceInstance.ChangeEmail(token, email)
+		return res.status(200).json({ message: 'Name succefully changed' }).end()
+	} catch (err) {
+		return errorHandler(err, res)
+	}
+}
+
+/**
  * GET /verify-account
  * Verify user account.
  */

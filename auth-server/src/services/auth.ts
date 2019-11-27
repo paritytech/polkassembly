@@ -165,10 +165,62 @@ export default class AuthService {
 			.where('token', token)
 			.first()
 
+		if (!verifyToken) {
+			throw new Error('Verify token not found')
+		}
+
+		if (!verifyToken.valid) {
+			throw new Error('Verify token not valid')
+		}
+
 		await User
 			.query()
 			.patch({ verified: true })
 			.findById(verifyToken.id)
+
+		await VerifyToken
+			.query()
+			.patch({ valid: false })
+			.findById(verifyToken.id)
+	}
+
+	public async ChangeEmail(token: string, email: string) {
+		// verify a token symmetric - synchronous
+		const decoded = jwt.verify(token, publicKey)
+
+		if (isNaN(decoded.sub)) {
+			throw new Error('Invalid user id')
+		}
+
+		const user = await User
+			.query()
+			.where('id', Number(decoded.sub))
+			.first()
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+
+		await User
+			.query()
+			.patch({
+				email,
+				verified: false
+			})
+			.findById(Number(decoded.sub))
+
+		const verifyToken = await VerifyToken
+			.query()
+			.allowInsert('[token, user_id, valid]')
+			.insert({
+				token: uuid(),
+				user_id: user.id,
+				valid: true
+			})
+
+		// send verification email in background
+		sendVerificationEmail(user, verifyToken)
+
 	}
 
 	private getSignedToken({ id, username, email }): string {
