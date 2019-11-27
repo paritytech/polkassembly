@@ -5,8 +5,10 @@ import { NotFoundError } from 'objection'
 import { DataError } from 'objection-db-errors'
 import { uuid } from 'uuidv4'
 
+import { sendVerificationEmail } from './email'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
+import VerifyToken from '../model/VerifyToken'
 import RefreshToken from '../model/RefreshToken'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
@@ -43,14 +45,28 @@ export default class AuthService {
 	}
 
 	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
-		const user = await User.query()
+		const user = await User
+			.query()
 			.allowInsert('[email, password, username, name]')
 			.insert({
 				email,
 				password,
 				username,
-				name
+				name,
+				verified: false
 			})
+
+		const verifyToken = await VerifyToken
+			.query()
+			.allowInsert('[token, user_id, valid]')
+			.insert({
+				token: uuid(),
+				user_id: user.id,
+				valid: true
+			})
+
+		// send verification email in background
+		sendVerificationEmail(user, verifyToken)
 
 		return {
 			user: {

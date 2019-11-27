@@ -15,6 +15,7 @@ export default class User extends Model {
 	password!: string
 	salt!: string
 	name!: string
+	verified: boolean
 
 	static get tableName () {
 		return 'users'
@@ -29,7 +30,7 @@ export default class User extends Model {
 			email: this.email,
 			id: this.id,
 			name: this.name,
-			username: this.username  
+			username: this.username
 		}
 	}
 
