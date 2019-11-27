@@ -161,3 +161,23 @@ export const postToken = async (req: Request, res: Response) => {
 		return errorHandler(err, res)
 	}
 }
+
+/**
+ * GET /verify-account
+ * Verify user account.
+ */
+export const getVerifyAccount = async (req: Request, res: Response) => {
+	const token = req.query.token
+
+	if (!token) {
+		return res.status(400).json({ errors: 'token required' })
+	}
+
+	try {
+		const authServiceInstance = new AuthService()
+		await authServiceInstance.VerifyAccount(token)
+		return res.status(200).end('<p>Thankyou for verifying your account</p>')
+	} catch (err) {
+		return errorHandler(err, res)
+	}
+}

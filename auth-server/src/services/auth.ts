@@ -159,6 +159,18 @@ export default class AuthService {
 			.findById(Number(decoded.sub))
 	}
 
+	public async VerifyAccount(token: string) {
+		const verifyToken = await VerifyToken
+			.query()
+			.where('token', token)
+			.first()
+
+		await User
+			.query()
+			.patch({ verified: true })
+			.findById(verifyToken.id)
+	}
+
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
