@@ -55,6 +55,14 @@ export const GlobalStyle = createGlobalStyle`
         .container-fluid {
         padding:0;
         }
+
+        .row {
+            margin: 0px;
+        }
+
+        .col-sm-12 {
+            padding: 0;
+        }
     }
 
     h3 {
@@ -80,5 +88,16 @@ export const GlobalStyle = createGlobalStyle`
 
     .btn-primary:hover {
         background-color: #CC3D3D;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active,
+    .btn-primary:not(:disabled):not(.disabled):active {
+        background-color: #CC3D3D;
+    }
+
+    .btn-primary.focus,
+    .btn-primary:focus,
+    .btn-primary:not(:disabled):not(.disabled):active:focus {
+        box-shadow: none;
     }
 `;

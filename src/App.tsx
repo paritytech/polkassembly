@@ -10,7 +10,6 @@ import MenuBar from './screens/MenuBar';
 import Post from './screens/Post';
 import SignupForm from './screens/SignupForm';
 
-
 const App = () => {
 	return (
 		<React.Fragment>
