@@ -1,22 +1,61 @@
-// import * as React from 'react'
-// import { useContext } from 'react'
-// import {Query} from 'react-apollo'
-// import { MeDocument, MeQuery, MeQueryVariables, useMeQuery, useMeLazyQuery } from '../generated/graphql'
 import { LoginObjectType, SignupObjectType, SignupResponseObjectType, UserDetailsContextType } from '../types'
-// import { UserDetailsContext } from '../context/UserDetailsContext'
+import parseJwt from '../util/parseJWT';
 
-export const storeAuthHeader = (auth: string) => {
-	localStorage.setItem('Authorization', 'Bearer '+auth)
+/**
+ * Store the JWT token in localstorage
+ * @param token the token received from the authentication header 
+ */
+export const storeLocalStorageToken = (token: string) => {
+	localStorage.setItem('Authorization', token)
 }
 
-export const getAuthHeader = (): string | null => {
-	return localStorage.getItem('Authorization') || null
+/**
+ * Get the the jwt from localstorage
+ * if any. It might be expired
+ */
+export const getLocalStorageToken = (): string|null => {
+	return localStorage.getItem('Authorization') || null;
 }
 
-export const login = ({ username, password } : LoginObjectType) => {
+/**
+ * Tells whether the jwt token stored locally
+ * is set and not expired.
+ */
+export const isLocalStorageTokenValid = (): boolean => {
+	let token = localStorage.getItem('Authorization') || null;
+
+	if (token) {
+		const tokenPayload = parseJwt(token);
+		return tokenPayload.exp > Date.now() / 1000
+	} else {
+		return false
+	}
+};
+
+/**
+ * Performs a call to the auth server
+ * in the hope to get a new jwt token.
+ */
+export const getRefreshedToken = () => (
+	fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/token`, {
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST'
+	})
+)
+
+/**
+ * Sends a request to the authentication server to login a user
+ * given the username and password
+ * @param param0 Object with username and password
+ */
+export const login = ({ username, password }: LoginObjectType) => {
 
 	return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/login`, {
 		body: JSON.stringify({ password, username }),
+		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json'
 		},
@@ -25,38 +64,32 @@ export const login = ({ username, password } : LoginObjectType) => {
 		.then(async (response) => {
 			if (response.status < 400 && response.ok) {
 				return response
-				// .json().then((data) => {
-				//   const token = data.token;
-				// storeAuthHeader(token);
-				// return data;
-				// });
 			} else {
-				// console.log('res.statusText',res.statusText)
 				const error = await response.json()
 					.then((data) => {
-						console.log('Authservice login error',data.error);
-						return data.error;
+						console.error('Authservice login error', data.errors);
+						return data.errors;
 					})
-
 				throw new Error(error);
-				//Promise.reject(
-       
-				//))
 			}
 		});
 }
 
+/**
+ * Sends a request to the authentication server to sign the user in as well as login them in.
+ * @param SignupData Object with the data required to signup
+ */
 export const signUp = (SignupData: SignupObjectType) => {
 	return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/signup`, {
 		body: JSON.stringify(SignupData),
+		credentials: 'same-origin',
 		headers: {
-			Accept: 'application/json',
 			'Content-Type': 'application/json'
 		},
 		method: 'POST'
 	})
 		.then((response) => {
-			if(response.status < 400 && response.ok) {
+			if (response.status < 400 && response.ok) {
 				return response
 			} else {
 				// FIXME we need to throw here and remove this ugly alert
@@ -69,15 +102,20 @@ export const signUp = (SignupData: SignupObjectType) => {
 		})
 }
 
-export  const loginUser = ({ user, token }: SignupResponseObjectType, currentUser:UserDetailsContextType) => {
-	storeAuthHeader(token);
+/**
+ * Store the user information in local context and call the function to store the received token
+ * @param param0 user and token answered by the auth server
+ * @param currentUser context data on the user
+ */
+export const handleLoginUser = ({ user, token }: SignupResponseObjectType, currentUser: UserDetailsContextType) => {
+	storeLocalStorageToken(token);
 	currentUser.setUserDetailsContextState((prevState) => {
 		return {
 			...prevState,
 			id: user.id,
 			username: user.username
-		}  
-	})       
+		}
+	})
 }
 
 // export const signOut = () => {
@@ -86,12 +124,3 @@ export  const loginUser = ({ user, token }: SignupResponseObjectType, currentUse
 
 //   return store.clearStore()
 // }
-
-export default {
-	// withAuth,
-	getAuthHeader,
-	login,
-	signUp,
-	storeAuthHeader
-	// signOut,
-}

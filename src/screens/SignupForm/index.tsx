@@ -7,8 +7,8 @@ import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { signUp, handleLoginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { signUp, loginUser } from '../../services/auth.service';
 
 const Container = styled.div`
 	form {
@@ -52,9 +52,9 @@ const Container = styled.div`
 `;
 
 const SignupForm = (): JSX.Element => {
-	const [email, setEmail] = useState<String | undefined>('');
-	const [username, setUsername] = useState<String | undefined>('');
-	const [password, setPassword] = useState<String | undefined>('');
+	const [email, setEmail] = useState<string | undefined>('');
+	const [username, setUsername] = useState<string | undefined>('');
+	const [password, setPassword] = useState<string | undefined>('');
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
     
@@ -69,7 +69,7 @@ const SignupForm = (): JSX.Element => {
 			signUp({ email ,password, username })
 				.then((data) => data.json())
 				.then((data) => {
-					loginUser(data, currentUser);
+					handleLoginUser(data, currentUser);
 					// redirect to the home
 					history.push('/');
 				})

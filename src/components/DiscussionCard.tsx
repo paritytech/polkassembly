@@ -34,7 +34,6 @@ const DiscussionCard = styled.div`
   }
 `;
 
-
 export interface DiscussionProps {
   author: string
   creation_date: string

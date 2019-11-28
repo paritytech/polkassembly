@@ -5,36 +5,33 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { getAuthHeader } from '../../services/auth.service';
+import { getLocalStorageToken } from '../../services/auth.service';
 import parseJwt from '../../util/parseJWT'
 
 const MenuBar: React.FC = () => {
 	const currentUser = useContext(UserDetailsContext)
 
-	// FIXME we need to use expiring JWT, Cookies for refreshtokens and no localstorage
-	// as explained clearly here https://blog.hasura.io/best-practices-of-using-jwt-with-graphql/
-
-	// effect responsible to get the token from localstorage if any
 	useEffect(() => {
-		console.log('menubar useeffect')
 		if (!currentUser.id){
 			// no user stored in memory
 			// check in the local storage
-			const token = getAuthHeader()
-			const tokenPayload = token && parseJwt(token);
+			const token = getLocalStorageToken()
+			if (token) {
+				const tokenPayload = token && parseJwt(token);
 
-			if (tokenPayload){
-				const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
-				const username =  tokenPayload.name
-
-				if (id && username){
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							id,
-							username
-						}
-					})
+				if (tokenPayload){
+					const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
+					const username =  tokenPayload.name
+	
+					if (id && username){
+						currentUser.setUserDetailsContextState((prevState) => {
+							return {
+								...prevState,
+								id,
+								username
+							}
+						})
+					}
 				}
 			}
 		}
@@ -49,8 +46,8 @@ const MenuBar: React.FC = () => {
 					{currentUser.username
 						? <Navbar.Text>Hello {currentUser.username}</Navbar.Text>
 						: <>
-							<Nav.Link as={Link} to="/login">Login</Nav.Link >
-							<Nav.Link as={Link} to="/signup">Sign-up</Nav.Link >
+							<Nav.Link as={Link} to="/temp-login">Login</Nav.Link >
+							<Nav.Link as={Link} to="/temp-signup">Sign-up</Nav.Link >
 						</>
 					}
             

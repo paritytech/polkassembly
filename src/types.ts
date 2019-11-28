@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface LoginObjectType {
-    username: String
-    password: String
+    username: string
+    password: string
 }
 
 export interface SignupObjectType extends LoginObjectType {
-    email: String
+    email: string
 }
 
 /* Example:
@@ -31,9 +31,9 @@ export interface SignupUserObjectType extends LoginObjectType {
 }
 
 export interface UserDetailsContextType {
-    id?: Number | null,
-    picture?: String | null,
-    username?: String | null,
+    id?: number | null,
+    picture?: string | null,
+    username?: string | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
 
@@ -45,14 +45,15 @@ export enum Role {
 
 export interface HasuraClaimPayload {
     'x-hasura-allowed-roles': Array<Role>
-    'x-hasura-user-id': Number
+    'x-hasura-user-id': number
     'x-hasura-default-role': Role
-    'x-hasura-role': String
+    'x-hasura-role': string
 }
 
 export interface JWTPayploadType {
-    sub: Number
-    name: String
-    iat: String //rather a date
+    exp: number
+    sub: number
+    name: string
+    iat: string //rather a date
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }

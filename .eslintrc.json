@@ -31,6 +31,7 @@
         "indent": ["error", "tab"],
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "error",
-        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]
+        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+        "no-multiple-empty-lines": ["error", {"max": 1}]
     }
 }

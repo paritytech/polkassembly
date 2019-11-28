@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+
 import { useLatestPostsQuery } from '../../generated/graphql';
 import Home from './Home';
 
 const HomeContainer = () => {
+
 	const { data, error, loading } = useLatestPostsQuery();
 
 	if (loading) {

@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import DiscussionCard from '../../components/DiscussionCard'
 import { LatestPostsQuery } from '../../generated/graphql';
 
-
 interface Props {
   className?: string
   data: LatestPostsQuery
@@ -77,7 +76,7 @@ const Home = ({ data }: Props) => (
 						(post) =>
 							!!post && (
 								<li key={post.id} className='Home__item'>
-									{<Link to={`/post/${post.id}`}>
+									{<Link to={`/temp-post/${post.id}`}>
 										<DiscussionCard 
 											title={post.title}
 											author={post.author.username}

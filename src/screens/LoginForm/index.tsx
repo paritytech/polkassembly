@@ -7,7 +7,7 @@ import { FormControlProps, Row } from 'react-bootstrap';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { login, loginUser } from '../../services/auth.service';
+import { login, handleLoginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 const Container = styled.div`
@@ -64,7 +64,7 @@ const LoginForm = (props: RouteComponentProps): JSX.Element => {
 			login({ password, username })
 				.then((data) => data.json())
 				.then((data) => {
-					loginUser(data, currentUser);
+					handleLoginUser(data, currentUser);
 					// redirect to the home
 					props.history.push('/');
 				})

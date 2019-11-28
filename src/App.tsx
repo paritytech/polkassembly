@@ -12,7 +12,7 @@ import SignupForm from './screens/SignupForm';
 
 const App = () => {
 	return (
-		<React.Fragment>
+		<>
 			<GlobalStyle />
 			<Router>
 				<UserDetailsProvider>
@@ -22,20 +22,20 @@ const App = () => {
 							<Route exact path="/">
 								<Home/>
 							</Route>
-							<Route path="/login">
+							<Route path="/temp-login">
 								<LoginForm/>
 							</Route>
-							<Route exact path="/post/:id" >
+							<Route exact path="/temp-post/:id" >
 								<Post/>
 							</Route>
-							<Route path="/signup">
+							<Route path="/temp-signup">
 								<SignupForm/>
 							</Route>
 						</Switch>
 					</Container>
 				</UserDetailsProvider>
 			</Router>
-		</React.Fragment>
+		</>
 	);
 };
 

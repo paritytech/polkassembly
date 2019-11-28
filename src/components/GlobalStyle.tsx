@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../fonts.css' /* as createGlobalStyle is not importing fonts*/
 import { createGlobalStyle } from 'styled-components'
 
-
 export const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
