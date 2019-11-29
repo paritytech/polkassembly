@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken'
 import * as argon2 from 'argon2'
 import { randomBytes } from 'crypto'
 import { uuid } from 'uuidv4'
+import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server'
 
 import { sendVerificationEmail } from './email'
 import { AuthObjectType } from '../types'
@@ -23,12 +24,12 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new Error('User not found')
+			throw new AuthenticationError('User not found')
 		}
 
 		const correctPassword = await user.verifyPassword(password)
 		if (!correctPassword) {
-			throw new Error('Incorrect password')
+			throw new AuthenticationError('Incorrect password')
 		}
 
 		return {
@@ -86,15 +87,15 @@ export default class AuthService {
 			.first()
 
 		if (!refreshToken) {
-			throw new Error('Refresh token not found')
+			throw new ForbiddenError('Refresh token not found')
 		}
 
 		if (!refreshToken.valid) {
-			throw new Error('Refresh token not valid')
+			throw new ForbiddenError('Refresh token not valid')
 		}
 
 		if (refreshToken.expires < Math.floor(Date.now() / 1000)) {
-			throw new Error('Refresh token expired')
+			throw new ForbiddenError('Refresh token expired')
 		}
 
 		const user = await User
@@ -107,14 +108,14 @@ export default class AuthService {
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
 		if (oldPassword === newPassword) {
-			throw new Error('Old password cannot be same as new password')
+			throw new UserInputError('Old password cannot be same as new password')
 		}
 
 		// verify a token symmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new Error('Invalid user id')
+			throw new ForbiddenError('Invalid user id in token')
 		}
 
 		const userId = parseInt(decoded.sub)
@@ -124,12 +125,12 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new Error('User not found')
+			throw new ForbiddenError('User not found')
 		}
 
 		const correctPassword = await user.verifyPassword(oldPassword)
 		if (!correctPassword) {
-			throw new Error('Incorrect password')
+			throw new UserInputError('Incorrect password')
 		}
 
 		const salt = randomBytes(32)
@@ -149,7 +150,7 @@ export default class AuthService {
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new Error('Invalid user id')
+			throw new ForbiddenError('Invalid user id in token')
 		}
 
 		const userId = parseInt(decoded.sub)
@@ -159,7 +160,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new Error('User not found')
+			throw new ForbiddenError('User not found')
 		}
 
 		await User
@@ -198,16 +199,17 @@ export default class AuthService {
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new Error('Invalid user id')
+			throw new ForbiddenError('Invalid user id')
 		}
 
+		const userId = parseInt(decoded.sub)
 		const user = await User
 			.query()
-			.where('id', Number(decoded.sub))
+			.where('id', userId)
 			.first()
 
 		if (!user) {
-			throw new Error('User not found')
+			throw new ForbiddenError('User not found')
 		}
 
 		await User
@@ -216,7 +218,7 @@ export default class AuthService {
 				email,
 				verified: false
 			})
-			.findById(Number(decoded.sub))
+			.findById(userId)
 
 		const verifyToken = await VerifyToken
 			.query()
