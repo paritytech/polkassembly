@@ -1,15 +1,11 @@
 import { Router } from 'express'
 
 import { upload, uploadController } from './controllers/upload'
-import {
-	postLogout,
-	getVerifyAccount
-} from './controllers/user'
+import { getVerifyEmail } from './controllers/user'
 
 const auth = Router()
 
-auth.post('/logout', postLogout)
-auth.get('/verify-account', getVerifyAccount)
+auth.get('/verify-email', getVerifyEmail)
 // unused
 auth.post('/upload-profile-pic', upload.single('file'), uploadController)
 

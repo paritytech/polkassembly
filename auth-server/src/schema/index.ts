@@ -8,6 +8,7 @@ import userQuery from './query/user'
 import usersQuery from './query/users'
 import tokenQuery from './query/token'
 import loginMutation from './mutation/login'
+import logoutMutation from './mutation/logout'
 import signupMutation from './mutation/signup'
 import changeEmailMutation from './mutation/changeEmail'
 import changePasswordMutation from './mutation/changePassword'
@@ -27,6 +28,7 @@ export default gql`
 
 	type Mutation {
 		${loginMutation}
+		${logoutMutation}
 		${signupMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}

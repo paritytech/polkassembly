@@ -23,7 +23,7 @@ export const sendVerificationEmail = (user: User, token: VerifyToken) => {
 		return
 	}
 
-	const verifyUrl = `${DOMAIN}/verify-account?token=${token.token}`
+	const verifyUrl = `${DOMAIN}/auth/verify-email?token=${token.token}`
 	const text = `
 		<p>
 			Welcome aboard ${user.name}!<br/><br/>

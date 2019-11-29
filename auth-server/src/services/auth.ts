@@ -168,7 +168,7 @@ export default class AuthService {
 			.findById(userId)
 	}
 
-	public async VerifyAccount(token: string) {
+	public async VerifyEmail(token: string) {
 		const verifyToken = await VerifyToken
 			.query()
 			.where('token', token)
