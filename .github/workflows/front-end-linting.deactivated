@@ -1,10 +1,11 @@
-name: Auth-server lint
+# to activate rename this file into front-end-linting.yaml
+name: Front-end lint
 
 on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
     paths:
-      - 'auth-server/*'
+      - 'front-end/*'
 
 jobs:
   build:
@@ -16,5 +17,4 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - run: cd auth-server && yarn install && yarn lint
-
+    - run: cd front-end && yarn install && yarn lint
