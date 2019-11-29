@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const QUERY_LATEST_POSTS = gql`
     query LatestPosts {
-        posts {
+        posts (order_by: {creation_date: desc}){
             id
             title
             author {

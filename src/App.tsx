@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { GlobalStyle } from './components/GlobalStyle'
 import { UserDetailsProvider } from './context/UserDetailsContext';
+import CreatePost from './screens/CreatePost';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
@@ -24,6 +25,9 @@ const App = () => {
 							</Route>
 							<Route path="/temp-login">
 								<LoginForm/>
+							</Route>
+							<Route path="/temp-post/create" >
+								<CreatePost/>
 							</Route>
 							<Route exact path="/temp-post/:id" >
 								<Post/>
