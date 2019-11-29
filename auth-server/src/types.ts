@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import { Request, Response } from 'express'
 
 interface FileType {
     path: string
@@ -19,4 +19,9 @@ export interface AuthObjectType {
     user: UserObjectType
     token: string
     refreshToken: string
+}
+
+export interface Context {
+    req: Request
+    res: Response
 }

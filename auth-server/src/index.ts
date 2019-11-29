@@ -11,7 +11,8 @@ import * as expressValidator from 'express-validator'
 import * as cors from 'cors'
 import * as cookieParser from 'cookie-parser'
 import { ApolloServer } from 'apollo-server-express'
-import { typeDefs, resolvers } from './controllers/graphql'
+import schema from './schema'
+import resolvers from './resolvers'
 
 import routes from './routes'
 
@@ -40,7 +41,11 @@ if (!process.env.JWT_KEY_PASSPHRASE) {
  * Create Express server.
  */
 const app = express()
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+	typeDefs: schema,
+	resolvers,
+	context: ({ req, res }) => ({ req, res })
+});
 
 /**
  * Express configuration.
