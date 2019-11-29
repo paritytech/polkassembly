@@ -59,125 +59,216 @@ BOT_PROPOSAL_USER_ID=1234
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
 Note: you can delete the `private.pem` and `public.pem` files now.
 
-##### User Schema
+##### Run
 
-The following `users` table is assumed to be present in your schema. The table can have additional fields too. To create this table initially run:
+Some tables such as `users` and `refresh_tokens` are assumed to be present in your schema. To create this table initially run:
 ```bash
 yarn migrate
 ```
 
-| name       | type    | nullable | unique | default | primary |
-| ---------- | ------- | -------- | ------ | ------- | ------- |
-| id         | Integer | no       | yes    |         | yes     |
-| username   | Text    | no       | yes    |         | no      |
-| email      | Text    | no       | yes    |         | no      |
-| password   | Text    | no       | no     |         | no      |
-| token      | Text    | no       | no     |         | no      |
-| created_at | Date    | no       | no     | now()   |         |
-
-Then start your app
+To launch the server run
 
 ```bash
 yarn start
 ```
 
+You can no visit http://localhost:8010/auth/graphql 
+
 ## Usage
+
+### Get users
+
+We can get the public information available for all our users:
+
+```bash
+curl 'http://localhost:8010/auth/graphql'
+  -H "Content-Type: application/json" \
+  --request POST \
+  --data '{"operationName":null,"variables":{},"query":"{\n  users {\n    id\n    name\n    username\n  }\n}\n"}' \
+  
+```
+
+On success, we get the response:
+```json
+{
+  "data": {
+    "users": [
+      {
+        "id": 2,
+        "name": "John Doe",
+        "username": "john"
+      },
+      ...
+    ]
+  }
+}
+```
+
 
 ### Signup
 
-Once deployed or started locally, we can create an user using `/signup` API like below:
+We can create an user using the signup mutation like below:
+
+Using the following graphQL mutation:
+```gql
+mutation My_Sigup_function{
+  signup(email:"test@email.com" password:"sup3er5ecurePassw0rd" username:"john" name:"John Doe"){
+    user {
+      id
+    }
+    token
+  }
+}
+```
 
 ```bash
-curl -H "Content-Type: application/json" \
-     -d'{"username": "test123", "email": "test@test.com", "name": "test1 test2", "password": "test123", "confirmPassword": "test123"}' \
-     http://localhost:8010/signup
+curl 'http://localhost:8010/auth/graphql' \
+-H 'content-type: application/json' \
+--data '{"operationName":"My_Sigup_function","variables":{},"query":"mutation {\n  signup(email: \"test@email.com\", password: \"sup3er5ecurePassw0rd\", username: \"john\", name: \"John Doe\") {\n    user {\n      id\n    }\n    token\n  }\n}\n"}'
 ```
 
 On success, we get the response:
 
 ```json
 {
-  "user": {
-    "id": 1,
-    "username": "test123"
-  },
-  "token": "eyJhbGciOiJ...I6IkpXVCJ"
+  "data": {
+    "signup": {
+      "user": {
+        "id": 10
+      },
+      "token": "eyJhbGciOiJSUzI1...oP5tr_kaqb0073ysn1vzq74h7g"
+    }
+  }
 }
 ```
 
 ### Login
-We can also use `/login` API to fetch the user token:
+We can login a user using the login mutation like below:
 
-```bash
-curl -H "Content-Type: application/json" \
-     -d'{"username": "test123", "password": "test123"}' \
-     http://localhost:8010/login
+Using the following graphQL query:
+```gql
+mutation My_login_function{
+  login(username:"john" password:"sup3er5ecurePassw0rd"){
+    user {
+      id
+      username
+			name
+    }
+    token
+  }
+}
 ```
 
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H 'content-type: application/json' \
+--cookie 'cookie-file' \
+--cookie-jar 'cookie-file' \
+--data '{"operationName":"My_login_function","variables":{},"query":"mutation My_login_function {\n  login(username: \"john\", password: \"sup3er5ecurePassw0rd\") {\n    user {\n      id\n      username\n      name\n    }\n    token\n  }\n}\n"}'
+```
+
+Note that we need to support cookies as the refresh token (long living) will be set by the server.
 On success, we get the response:
 
 ```json
 {
-  "user": {
-    "id": 1,
-    "username": "test123"
-  },
-  "token": "eyJhbGciOiJ...I6IkpXVCJ"
+  "data": {
+    "login": {
+      "user": {
+        "id": 10,
+        "username": "john",
+        "name": "John Doe"
+      },
+      "token": "eyJhbGciOiJSUzI1Ni..DF9mD0e5ZtLr6If0g"
+    }
+  }
 }
 ```
 ### Refresh token
 A long living "refresh token" is automatically stored in an `http only` cookie at signup or login. To refresh the short living JWT token (to use for front-end requests) you can call the `/token` endpoint.
 
-First login and store the cookie
-```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"username":"xyzxyz","password":"xyzxyzxyz"}' \
-  --cookie 'cookie' \
-  http://localhost:8010/login
+First login and store the cookie (see above), then using the same cookie, you can get a refreshed short living JWT token.
+
+Using the following graphQL query:
+```gql
+query Get_new_token {
+  token {
+    token
+  }
+}
 ```
 
-Using the same cookie, you can get a refreshed short living JWT token.
 ```bash
-curl \
-  --request POST \
-  --cookie 'cookie' \
-  --cookie-jar 'cookie' \
-  http://localhost:8010/token
+curl 'http://localhost:8010/auth/graphql' \
+  -H 'content-type: application/json' \
+  --data '{"operationName":"Get_new_token","variables":{},"query":"query Get_new_token {\n  token {\n    token\n  }\n}\n"}' \
+  --cookie 'cookie-file' \
+  --cookie-jar 'cookie-file'
 ```
 on success, we get:
 
 ```bash
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI...net__NZHeUaIyruV2Q"
+  "data" :{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI...net__NZHeUaIyruV2Q"
+  }
 }
 ```
 
 ### Change password
-We can use `/change-password` API to change user password
+We can change a user password with the `changePassword` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Change_password{
+  changePassword(oldPassword:"sup3er5ecurePassw0rd" newPassword:"newSup3er5ecurePassw0rd"){
+    message
+  }
+}
+```
 
 ```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"userId":1,"newPassword":"xyzxyz", "oldPassword":"xyzxyzxyz"}' \
-  http://localhost:8010/change-password
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU...Hx0WG53yS4yhfRzxsQ2Q" \
+-H "Content-Type: application/json" \
+--data '{"operationName":"Change_password","variables":{},"query":"mutation Change_password {\n  changePassword(oldPassword: \"sup3er5ecurePassw0rd\", newPassword: \"newSup3er5ecurePassw0rd\") {\n    message\n  }\n}\n"}'
 ```
 
 On success, we get the response
 
 ```json
-{ "message": "Password succefully changed" }
+{
+  "data": {
+    "changePassword":{
+      "message":"Password succefully changed"
+    }
+  }
+}
 ```
 
 ### Change name
-We can use `/change-name` API to change user name
+We can change a user password with the `changeName` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Change_name{
+  changeName(newName:"Johnny Doe")
+}
+```
 
 ```bash
-curl --header "Authorization: Bearer <token>" --header "Content-Type: application/json" --request POST --data '{"newName":"herewegoa"}' http://localhost:8010/change-name
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMCIsIm5hbWUiOiJqb2huIiwiaWF0IjoxNTc1MDQ0NDU5LCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjEwIiwieC1oYXN1cmEtdXNlci1lbWFpbCI6InRlc3RAZW1haWwuY29tIn0sImV4cCI6MTU3NTA0ODA1OX0.KMScDA1cMtr5agye2b4N_NKRFPpBRgO-pmxOUtf0LAOfP7c3LY5lgK6ej0aNe2itKKYr3b-l9RoVAqptTWkkJabv1vMOCP_sVlXrFqbYljXHl7giLPudgxpsoEJ3JEmbxNqGh0Pm2rGsLo3Cv7Gx-a9ablSsSlbOdcAeJrEVncfpAtyb9HJ4Gw0ITT0UNv1_HBEEKud0BO_tbhGTQyXpyy60qpZH8j9W-eFORYfqmAaSNZhBfASaPT3ULYSU84lBeZwNzvFggTrPG6h8U7dUHz3EAgtwDacjcjrsEksb7E_f41eZOrPWKBmNiLqDwSS7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H "Content-Type: application/json" \
+--data '{"operationName":"Change_name","variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n    message\n  }\n}\n"}'
 ```
 
 On success, we get the response
 
 ```json
-{ "message": "Name succefully changed" }
+{
+  "data":{
+    "changeName":{
+      "message":"Name succefully changed"
+    }
+  }
+}
 ```
