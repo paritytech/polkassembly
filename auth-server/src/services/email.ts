@@ -1,5 +1,4 @@
 import * as sgMail from '@sendgrid/mail'
-import * as EmailValidator from 'email-validator'
 
 import User from '../model/User'
 import VerifyToken from '../model/VerifyToken'
@@ -15,11 +14,6 @@ if (apiKey) {
 export const sendVerificationEmail = (user: User, token: VerifyToken) => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key')
-		return
-	}
-
-	if (!EmailValidator.validate(user.email)) {
-		console.warn('Verification Email not sent due to invalid email')
 		return
 	}
 
