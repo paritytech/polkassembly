@@ -3,16 +3,6 @@ import AuthService from '../services/auth'
 import { Request, Response } from 'express'
 
 /**
- * POST /logout
- * Sign out for current user.
- */
-export const postLogout = async (req: Request, res: Response) => {
-	res.cookie('refresh_token', '', { maxAge: 0 })
-
-	res.status(200).json({ message: 'successfully logged out' }).end()
-}
-
-/**
  * GET /verify-email
  * Verify user email.
  */
