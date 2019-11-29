@@ -2,6 +2,8 @@ import errorHandler from '../model/errors'
 import AuthService from '../services/auth'
 import { Request, Response } from 'express'
 
+const authServiceInstance = new AuthService()
+
 /**
  *
  * @param res http response
@@ -36,7 +38,6 @@ export const postLogin = async (req: Request, res: Response) => {
 	const username = req.body.username
 	const password = req.body.password
 	try {
-		const authServiceInstance = new AuthService()
 		const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
 		setRefreshTokenCookie(res, refreshToken)
 		return res.status(200).json({ user, token }).end()
@@ -72,7 +73,6 @@ export const postChangePassword = async (req: Request, res: Response) => {
 
 	const { userId, oldPassword, newPassword } = req.body
 	try {
-		const authServiceInstance = new AuthService()
 		await authServiceInstance.ChangePassword(userId, oldPassword, newPassword)
 		return res.status(200).json({ message: 'Password succefully changed' }).end()
 	} catch (err) {
@@ -108,7 +108,6 @@ export const postChangeName = async (req: Request, res: Response) => {
 
 	const { newName } = req.body
 	try {
-		const authServiceInstance = new AuthService()
 		await authServiceInstance.ChangeName(token, newName)
 		return res.status(200).json({ message: 'Name succefully changed' }).end()
 	} catch (err) {
@@ -133,7 +132,6 @@ export const postSignup = async (req: Request, res: Response) => {
 
 	try {
 		const { email, password, username, name } = req.body
-		const authServiceInstance = new AuthService()
 		const { user, token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name)
 		setRefreshTokenCookie(res, refreshToken)
 		return res.status(200).json({ user, token }).end()
@@ -154,7 +152,6 @@ export const postToken = async (req: Request, res: Response) => {
 	}
 
 	try {
-		const authServiceInstance = new AuthService()
 		const token = await authServiceInstance.RefreshToken(refreshToken)
 		return res.status(200).json({ token }).end()
 	} catch (err) {
@@ -190,7 +187,6 @@ export const postChangeEmail = async (req: Request, res: Response) => {
 
 	const { email } = req.body
 	try {
-		const authServiceInstance = new AuthService()
 		await authServiceInstance.ChangeEmail(token, email)
 		return res.status(200).json({ message: 'Email changed. Verification request sent to your email address.' }).end()
 	} catch (err) {
@@ -210,7 +206,6 @@ export const getVerifyAccount = async (req: Request, res: Response) => {
 	}
 
 	try {
-		const authServiceInstance = new AuthService()
 		await authServiceInstance.VerifyAccount(token)
 		return res.status(200).end('<p>Thankyou for verifying your account</p>')
 	} catch (err) {
