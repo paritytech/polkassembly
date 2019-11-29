@@ -15,7 +15,7 @@ export default class User extends Model {
 	password!: string
 	salt!: string
 	name!: string
-	verified: boolean
+	email_verified: boolean
 
 	static get tableName () {
 		return 'users'
@@ -52,7 +52,8 @@ export default class User extends Model {
 				id: { type: 'integer' },
 				username: { type: 'string', minLength: 1, maxLength: 255 },
 				email: { type: 'string', minLength: 1, maxLength: 255 },
-				name: { type: 'string', minLength: 1, maxLength: 512 }
+				name: { type: 'string', minLength: 1, maxLength: 512 },
+				email_verified: { type: 'boolean' }
 			}
 		}
 	}

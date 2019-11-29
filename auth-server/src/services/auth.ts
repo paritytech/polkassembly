@@ -52,7 +52,7 @@ export default class AuthService {
 				password,
 				username,
 				name,
-				verified: false
+				email_verified: false
 			})
 
 		const verifyToken = await VerifyToken
@@ -184,7 +184,7 @@ export default class AuthService {
 
 		await User
 			.query()
-			.patch({ verified: true })
+			.patch({ email_verified: true })
 			.findById(verifyToken.id)
 
 		await VerifyToken
@@ -214,7 +214,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				email,
-				verified: false
+				email_verified: false
 			})
 			.findById(Number(decoded.sub))
 
