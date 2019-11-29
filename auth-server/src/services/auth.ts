@@ -33,6 +33,7 @@ export default class AuthService {
 
 		return {
 			user: {
+				id: user.id,
 				email: user.email,
 				username: user.username,
 				name: user.name
@@ -68,6 +69,7 @@ export default class AuthService {
 
 		return {
 			user: {
+				id: user.id,
 				email: user.email,
 				username: user.username,
 				name: user.name
@@ -103,11 +105,19 @@ export default class AuthService {
 		return this.getSignedToken(user)
 	}
 
-	public async ChangePassword(userId: number, oldPassword: string, newPassword: string) {
+	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
 		if (oldPassword === newPassword) {
 			throw new Error('Old password cannot be same as new password')
 		}
 
+		// verify a token symmetric - synchronous
+		const decoded = jwt.verify(token, publicKey)
+
+		if (isNaN(decoded.sub)) {
+			throw new Error('Invalid user id')
+		}
+
+		const userId = parseInt(decoded.sub)
 		const user = await User
 			.query()
 			.where('id', userId)
@@ -142,9 +152,10 @@ export default class AuthService {
 			throw new Error('Invalid user id')
 		}
 
+		const userId = parseInt(decoded.sub)
 		const user = await User
 			.query()
-			.where('id', Number(decoded.sub))
+			.where('id', userId)
 			.first()
 
 		if (!user) {
@@ -154,7 +165,7 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({ name: newName })
-			.findById(Number(decoded.sub))
+			.findById(userId)
 	}
 
 	public async VerifyAccount(token: string) {

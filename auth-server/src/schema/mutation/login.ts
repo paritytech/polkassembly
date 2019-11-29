@@ -1,3 +1,6 @@
 export default `
-    login(username: String!, password: String!): LoginResponse
+    login(
+        username: String!
+        password: String!
+    ): LoginResponse
 `

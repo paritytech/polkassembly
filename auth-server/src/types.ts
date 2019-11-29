@@ -10,6 +10,7 @@ export interface FileRequestType extends Request {
 }
 
 export interface UserObjectType {
+    id: number
     email: string
     username: string
     name: string
