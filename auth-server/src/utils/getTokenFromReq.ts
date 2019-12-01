@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { ForbiddenError } from 'apollo-server'
+import { AuthenticationError, ForbiddenError } from 'apollo-server'
 
 /**
  * Get Token from request
@@ -10,7 +10,7 @@ export default (req: Request): string => {
 	const authHeader = req.headers.authorization
 
 	if (!authHeader) {
-		throw new ForbiddenError('Authorization header missing')
+		throw new AuthenticationError('Authorization header missing')
 	}
 
 	const token = `${authHeader}`.split(' ')[1]
