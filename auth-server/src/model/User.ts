@@ -30,7 +30,8 @@ export default class User extends Model {
 			email: this.email,
 			id: this.id,
 			name: this.name,
-			username: this.username
+			username: this.username,
+			email_verified: this.email_verified
 		}
 	}
 

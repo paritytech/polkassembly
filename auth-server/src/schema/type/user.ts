@@ -3,5 +3,6 @@ export default `
 		id: Int
 		username: String
 		name: String
+		email_verified: String
 	}
 `

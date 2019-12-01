@@ -245,7 +245,7 @@ export default class AuthService {
 
 	}
 
-	private getSignedToken({ id, username, email }): string {
+	private getSignedToken({ id, username, email, email_verified }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
 
@@ -263,7 +263,8 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-user-id': `${id}`,
-				'x-hasura-user-email': email
+				'x-hasura-user-email': email,
+				'x-hasura-user-email-verified': email_verified
 			}
 		}
 
