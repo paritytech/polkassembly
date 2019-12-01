@@ -72,7 +72,7 @@ To launch the server run
 yarn start
 ```
 
-You can no visit http://localhost:8010/auth/graphql 
+You can now visit http://localhost:8010/auth/graphql where graphiql is running.
 
 ## Usage
 
@@ -85,7 +85,7 @@ curl 'http://localhost:8010/auth/graphql'
   -H "Content-Type: application/json" \
   --request POST \
   --data '{"operationName":null,"variables":{},"query":"{\n  users {\n    id\n    name\n    username\n  }\n}\n"}' \
-  
+
 ```
 
 On success, we get the response:
@@ -103,7 +103,6 @@ On success, we get the response:
   }
 }
 ```
-
 
 ### Signup
 
