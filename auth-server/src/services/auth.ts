@@ -115,7 +115,7 @@ export default class AuthService {
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new ForbiddenError('Invalid user id in token')
+			throw new AuthenticationError('Invalid user id in token')
 		}
 
 		const userId = parseInt(decoded.sub)
@@ -125,7 +125,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new ForbiddenError('User not found')
+			throw new AuthenticationError('User not found')
 		}
 
 		const correctPassword = await user.verifyPassword(oldPassword)
@@ -150,7 +150,7 @@ export default class AuthService {
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new ForbiddenError('Invalid user id in token')
+			throw new AuthenticationError('Invalid user id in token')
 		}
 
 		const userId = parseInt(decoded.sub)
@@ -198,11 +198,12 @@ export default class AuthService {
 		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
-		if (isNaN(decoded.sub)) {
-			throw new ForbiddenError('Invalid user id')
+		const userId = parseInt(decoded.sub)
+
+		if (isNaN(userId)) {
+			throw new AuthenticationError('Invalid user id')
 		}
 
-		const userId = parseInt(decoded.sub)
 		const user = await User
 			.query()
 			.where('id', userId)
