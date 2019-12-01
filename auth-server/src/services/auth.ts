@@ -175,11 +175,11 @@ export default class AuthService {
 			.first()
 
 		if (!verifyToken) {
-			throw new Error('Verify token not found')
+			throw new Error('email verification token not found')
 		}
 
 		if (!verifyToken.valid) {
-			throw new Error('Verify token not valid')
+			throw new Error('Invalid email verification token')
 		}
 
 		await User
