@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { AuthenticationError, ForbiddenError } from 'apollo-server'
+import { AuthenticationError } from 'apollo-server'
 
 /**
  * Get Token from request
