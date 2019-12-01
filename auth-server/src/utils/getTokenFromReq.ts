@@ -16,7 +16,7 @@ export default (req: Request): string => {
 	const token = `${authHeader}`.split(' ')[1]
 
 	if (!token) {
-		throw new ForbiddenError('token missing')
+		throw new AuthenticationError('token missing')
 	}
 
 	return token
