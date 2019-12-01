@@ -1,6 +1,6 @@
 # nginx config
 
-nginx will be used to proxy pass traffic to auth server, hasura, governance platform frontend and any other services if needed.
+nginx will be used to proxy pass traffic to the auth server, hasura, polkassembly front-end and any other services if needed.
 
 ## Local Setup Instructions
 
@@ -33,4 +33,3 @@ Reload nginx
 sudo nginx -t
 sudo ngix -s reload
 ```
-
