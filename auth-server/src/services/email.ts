@@ -1,7 +1,7 @@
 import * as sgMail from '@sendgrid/mail'
 
 import User from '../model/User'
-import VerifyToken from '../model/VerifyToken'
+import EmailVerificationToken from '../model/EmailVerificationToken'
 
 const apiKey = process.env.SENDGRID_API_KEY
 const FROM = 'noreply@polkassembly.io'
@@ -11,7 +11,7 @@ if (apiKey) {
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 }
 
-export const sendVerificationEmail = (user: User, token: VerifyToken) => {
+export const sendVerificationEmail = (user: User, token: EmailVerificationToken) => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key')
 		return

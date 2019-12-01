@@ -1,6 +1,6 @@
 // Table to store tokens for email verification
 exports.up = function(knex) {
-	return knex.schema.createTable('verify_tokens', (table) => {
+	return knex.schema.createTable('email_verification_token', (table) => {
 		table.increments('id').primary().notNullable()
 		table.string('token').unique().notNullable()
 		table.integer('user_id').notNullable()
@@ -11,5 +11,5 @@ exports.up = function(knex) {
 }
 
 exports.down = function(knex) {
-	return knex.schema.dropTable('verify_tokens')
+	return knex.schema.dropTable('email_verification_token')
 }

@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4'
 import { sendVerificationEmail } from './email'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
-import VerifyToken from '../model/VerifyToken'
+import EmailVerificationToken from '../model/EmailVerificationToken'
 import RefreshToken from '../model/RefreshToken'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
@@ -55,7 +55,7 @@ export default class AuthService {
 				email_verified: false
 			})
 
-		const verifyToken = await VerifyToken
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.allowInsert('[token, user_id, valid]')
 			.insert({
@@ -169,7 +169,7 @@ export default class AuthService {
 	}
 
 	public async VerifyEmail(token: string) {
-		const verifyToken = await VerifyToken
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
 			.first()
@@ -187,7 +187,7 @@ export default class AuthService {
 			.patch({ email_verified: true })
 			.findById(verifyToken.id)
 
-		await VerifyToken
+		await EmailVerificationToken
 			.query()
 			.patch({ valid: false })
 			.findById(verifyToken.id)
@@ -218,7 +218,7 @@ export default class AuthService {
 			})
 			.findById(Number(decoded.sub))
 
-		const verifyToken = await VerifyToken
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.allowInsert('[token, user_id, valid]')
 			.insert({
