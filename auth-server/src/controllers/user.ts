@@ -17,7 +17,7 @@ export const getVerifyEmail = async (req: Request, res: Response) => {
 		const authServiceInstance = new AuthService()
 		await authServiceInstance.VerifyEmail(token)
 		// TODO: change to res.redirect('/email-verify route from frontend')
-		return res.status(200).end('<p>Thankyou for verifying your account</p>')
+		return res.status(200).end('<p>Thank you for verifying your account</p>')
 	} catch (err) {
 		return errorHandler(err, res)
 	}
