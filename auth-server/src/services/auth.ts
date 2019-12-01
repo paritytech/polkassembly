@@ -110,7 +110,7 @@ export default class AuthService {
 			throw new Error('Old password cannot be same as new password')
 		}
 
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
@@ -145,7 +145,7 @@ export default class AuthService {
 	}
 
 	public async ChangeName(token: string, newName: string) {
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
@@ -194,16 +194,17 @@ export default class AuthService {
 	}
 
 	public async ChangeEmail(token: string, email: string) {
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
 			throw new Error('Invalid user id')
 		}
 
+		const userId = parseInt(decoded.sub)
 		const user = await User
 			.query()
-			.where('id', Number(decoded.sub))
+			.where('id', userId)
 			.first()
 
 		if (!user) {
@@ -216,7 +217,19 @@ export default class AuthService {
 				email,
 				email_verified: false
 			})
-			.findById(Number(decoded.sub))
+			.findById(userId)
+
+		// Invalidate all refresh token for user
+		await RefreshToken
+			.query()
+			.patch({ valid: false })
+			.where({ user_id: userId })
+
+		// Invalidate all email verification token for user
+		await EmailVerificationToken
+			.query()
+			.patch({ valid: false })
+			.where({ user_id: userId })
 
 		const verifyToken = await EmailVerificationToken
 			.query()
