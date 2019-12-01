@@ -7,7 +7,7 @@ import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-serv
 import { sendVerificationEmail } from './email'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
-import VerifyToken from '../model/VerifyToken'
+import EmailVerificationToken from '../model/EmailVerificationToken'
 import RefreshToken from '../model/RefreshToken'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
@@ -53,10 +53,10 @@ export default class AuthService {
 				password,
 				username,
 				name,
-				verified: false
+				email_verified: false
 			})
 
-		const verifyToken = await VerifyToken
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.allowInsert('[token, user_id, valid]')
 			.insert({
@@ -111,7 +111,7 @@ export default class AuthService {
 			throw new UserInputError('Old password cannot be same as new password')
 		}
 
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
@@ -146,7 +146,7 @@ export default class AuthService {
 	}
 
 	public async ChangeName(token: string, newName: string) {
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
@@ -170,32 +170,32 @@ export default class AuthService {
 	}
 
 	public async VerifyEmail(token: string) {
-		const verifyToken = await VerifyToken
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
 			.first()
 
 		if (!verifyToken) {
-			throw new Error('Verify token not found')
+			throw new Error('email verification token not found')
 		}
 
 		if (!verifyToken.valid) {
-			throw new Error('Verify token not valid')
+			throw new Error('Invalid email verification token')
 		}
 
 		await User
 			.query()
-			.patch({ verified: true })
+			.patch({ email_verified: true })
 			.findById(verifyToken.id)
 
-		await VerifyToken
+		await EmailVerificationToken
 			.query()
 			.patch({ valid: false })
 			.findById(verifyToken.id)
 	}
 
 	public async ChangeEmail(token: string, email: string) {
-		// verify a token symmetric - synchronous
+		// verify a token asymmetric - synchronous
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
@@ -216,11 +216,23 @@ export default class AuthService {
 			.query()
 			.patch({
 				email,
-				verified: false
+				email_verified: false
 			})
 			.findById(userId)
 
-		const verifyToken = await VerifyToken
+		// Invalidate all refresh token for user
+		await RefreshToken
+			.query()
+			.patch({ valid: false })
+			.where({ user_id: userId })
+
+		// Invalidate all email verification token for user
+		await EmailVerificationToken
+			.query()
+			.patch({ valid: false })
+			.where({ user_id: userId })
+
+		const verifyToken = await EmailVerificationToken
 			.query()
 			.allowInsert('[token, user_id, valid]')
 			.insert({

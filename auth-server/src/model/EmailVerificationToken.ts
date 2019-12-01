@@ -6,14 +6,14 @@ const knexConnection = Knex(connection)
 
 Model.knex(knexConnection)
 
-export default class VerifyToken extends Model {
+export default class EmailVerificationToken extends Model {
 	readonly id!: number
 	token!: string
 	user_id!: number
 	valid: boolean
 
 	static get tableName () {
-		return 'verify_tokens'
+		return 'email_verification_token'
 	}
 
 	static get idColumn () {
