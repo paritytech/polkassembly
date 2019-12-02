@@ -241,7 +241,7 @@ export default class AuthService {
 
 	}
 
-	private getSignedToken({ id, username, email, email_verified }): string {
+	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
 
