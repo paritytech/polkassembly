@@ -6,20 +6,28 @@ generates:
           headers:
             X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
     documents: 
-      - ./src/**/*.tsx
-      - ./src/**/*.ts
+      - "src/**/*.{ts,tsx}"
+      - "!src/services/*"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
+      withComponent: false
+      withHOC: false
       withHooks: true
+      withResultType: true
   src/generated/auth-graphql.tsx:
     schema:
       - ${REACT_APP_AUTH_SERVER_GRAPHQL_URL}
+    documents: 
+      - "src/services/**/*.{ts,tsx}"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
+      withComponent: false
+      withHOC: false
       withHooks: true
+      withResultType: true
