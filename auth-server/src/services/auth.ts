@@ -221,12 +221,6 @@ export default class AuthService {
 			})
 			.findById(userId)
 
-		// Invalidate all refresh token for user
-		await RefreshToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId })
-
 		// Invalidate all email verification token for user
 		await EmailVerificationToken
 			.query()
