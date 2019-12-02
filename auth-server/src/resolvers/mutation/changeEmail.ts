@@ -4,7 +4,6 @@ import { Context } from '../../types'
 
 export default async (_, args, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
-
 	const { email } = args
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.ChangeEmail(token, email)
