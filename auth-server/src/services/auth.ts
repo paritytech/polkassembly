@@ -259,8 +259,7 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-user-id': `${id}`,
-				'x-hasura-user-email': email,
-				'x-hasura-user-email-verified': email_verified
+				'x-hasura-user-email': email
 			}
 		}
 
