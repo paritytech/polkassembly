@@ -1,18 +1,13 @@
 import React, { useState, useContext } from 'react';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import { FormControlProps, Row } from 'react-bootstrap';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Form } from 'semantic-ui-react';
+// import Alert from 'react-bootstrap/Alert';
+import { FormControlProps } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { login, handleLoginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-
-interface Props {
-	className?: string
-}
+import { Button } from '../../components/Button';
 
 const Container = styled.div`
 	form {
@@ -61,13 +56,14 @@ const Container = styled.div`
 	}
 `;
 
-const LoginForm = (props: RouteComponentProps, { className }:Props): JSX.Element => {
+const LoginForm = (): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
-	const [showError, setShowError] = useState<boolean>(true)
-	const [error, setError] = useState('');
+	// const [showError, setShowError] = useState<boolean>(true)
+	// const [error, setError] = useState('');
 	const currentUser = useContext(UserDetailsContext)
-    
+	const history = useHistory();
+	
 	const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.FormEvent<FormControlProps>) => setPassword(event.currentTarget.value);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
@@ -80,61 +76,57 @@ const LoginForm = (props: RouteComponentProps, { className }:Props): JSX.Element
 				.then((data) => {
 					handleLoginUser(data, currentUser);
 					// redirect to the home
-					props.history.push('/');
+					history.push('/');
 				})
 				.catch((error: Error) => {
 					console.log('login error',error)
-					setError(error.message)
+					// setError(error.message)
 				});
 		}
 	}
 
 	return (
 		<>
-			{ showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> }
+			{/* { showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> } */}
 			<Container>
-				<Row className={className}>
-					<Col xs={0} sm={0} md={2} lg={2}/>
-					<Col xs={12} sm={12} md={8} lg={8}>
-						<Form>
-							<h3>Login</h3>
-							<Form.Group controlId="formSignIn">
-								<Form.Field>
-									<label>Username</label>
-									<input
-										onChange={onUserNameChange} 
-										placeholder='John'
-										type="text"
-									/>
-								</Form.Field>
-							</Form.Group>
+				<Grid centered columns={2}>
+					<Form>
+						<h3>Login</h3>
+						<Form.Group controlId="formSignIn">
+							<Form.Field>
+								<label>Username</label>
+								<input
+									onChange={onUserNameChange} 
+									placeholder='John'
+									type="text"
+								/>
+							</Form.Field>
+						</Form.Group>
 
-							<Form.Group controlId="formSignInPassword">
-								<Form.Field>
-									<label>Password</label>
-									<input
-										onChange={onPasswordChange} 
-										placeholder='Password'
-										type="password"
-									/>
-								</Form.Field>
-							</Form.Group>
-							<div className={'mainButtonContainer'}>
-								<Button
-									onClick={handleClick}
-									type='submit'
-									variant='primary'
-								>
+						<Form.Group controlId="formSignInPassword">
+							<Form.Field>
+								<label>Password</label>
+								<input
+									onChange={onPasswordChange} 
+									placeholder='Password'
+									type="password"
+								/>
+							</Form.Field>
+						</Form.Group>
+						<div className={'mainButtonContainer'}>
+							<Button
+								onClick={handleClick}
+								type='submit'
+								variant='primary'
+							>
 									Login
-								</Button>
-							</div>
-						</Form>
-					</Col>
-					<Col xs={0} sm={0} md={2} lg={2}/>
-				</Row>
+							</Button>
+						</div>
+					</Form>
+				</Grid>
 			</Container>
 		</>
 	)
 };
 
-export default withRouter(LoginForm);
+export default LoginForm;

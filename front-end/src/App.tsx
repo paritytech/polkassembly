@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { GlobalStyle } from './components/GlobalStyle'
@@ -18,25 +17,23 @@ const App = () => {
 			<Router>
 				<UserDetailsProvider>
 					<MenuBar/>
-					<Container fluid={true}>
-						<Switch>
-							<Route exact path="/">
-								<Home/>
-							</Route>
-							<Route path="/temp-login">
-								<LoginForm/>
-							</Route>
-							<Route path="/temp-post/create" >
-								<CreatePost/>
-							</Route>
-							<Route exact path="/temp-post/:id" >
-								<Post/>
-							</Route>
-							<Route path="/temp-signup">
-								<SignupForm/>
-							</Route>
-						</Switch>
-					</Container>
+					<Switch>
+						<Route exact path="/">
+							<Home/>
+						</Route>
+						<Route path="/temp-login">
+							<LoginForm/>
+						</Route>
+						<Route path="/temp-post/create" >
+							<CreatePost/>
+						</Route>
+						<Route exact path="/temp-post/:id" >
+							<Post/>
+						</Route>
+						<Route path="/temp-signup">
+							<SignupForm/>
+						</Route>
+					</Switch>
 				</UserDetailsProvider>
 			</Router>
 		</>
