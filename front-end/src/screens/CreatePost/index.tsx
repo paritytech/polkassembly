@@ -4,9 +4,9 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import { useHistory } from 'react-router-dom';
+import { Form } from 'semantic-ui-react';
 import styled from 'styled-components'
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
@@ -72,26 +72,25 @@ const CreatePost = ({ className }:Props) => {
 				<Form>
 					<h3>New Post</h3>
 					<Form.Group controlId="postTitle">
-						<Form.Label>Title</Form.Label>
-						<Form.Control
-							onChange={onTitleChange}
-							placeholder="Your title..."
-							type="text"
-						/>
+						<Form.Field>
+							<label>Title</label>
+							<input
+								onChange={onTitleChange} 
+								placeholder='Your title...'
+								type="text"
+							/>
+						</Form.Field>
 					</Form.Group>
 
 					<Form.Group controlId="formSignInPassword">
-						<Form.Label>Content</Form.Label>
-						<Form.Control
-							as="textarea"
+						<Form.TextArea 
+							label='Content' 
+							placeholder='The content of your post...'
 							onChange={onContentChange}
-							placeholder="The content of your post..."
-							type="password"
-							rows="3"
 						/>
 					</Form.Group>
 					{renderCategories()}
-					<div className={'mainButonContainer'}> 
+					<div className={'mainButtonContainer'}> 
 						<Button
 							onClick={handleSend}
 							disabled={isSending}
@@ -109,7 +108,49 @@ const CreatePost = ({ className }:Props) => {
 };
 
 export default styled(CreatePost)`
-	.mainButonContainer{
+	form {
+		background-color: #FFF;
+		padding: 1.25rem 1.875rem 2.5rem 1.875rem;
+		border: 1px solid #EEE;
+	}
+
+	form h3 {
+		margin-bottom: 1.875rem;
+	}
+
+	.field {
+		margin-bottom: 1.25rem;
+
+		label {
+			font-size:0.875rem;
+			font-weight: 500;
+		}
+	}
+
+	input, textarea {
+		font-size: 0.875rem;
+		color: #282828;
+		border: 1 px solid #EEE;
+		border-radius: 0rem;
+		text-indent: 0.626rem;	
+		padding: 0.375rem 0 0.25rem 0;
+		width: 100%;
+	}
+
+	textarea {
+		border-color: #EEE;
+	}
+
+	input:focus, textarea:focus {
+		outline: 0;
+	}
+	
+	.text-muted {
+		font-size: 0.75rem;
+		margin: 0.5rem 0 0 0;
+	}
+
+	.mainButtonContainer{
 		align-items: center;
 		display: flex;
 		flex-direction: column;

@@ -2,13 +2,17 @@ import React, { useState, useContext } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import { FormControlProps, Row } from 'react-bootstrap';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Form } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { login, handleLoginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+
+interface Props {
+	className?: string
+}
 
 const Container = styled.div`
 	form {
@@ -21,33 +25,43 @@ const Container = styled.div`
 		margin-bottom: 1.875rem;
 	}
 
-	.form-label {
-		font-size: 0.875rem;
-		font-weight: 500;
+	.field {
+		margin-bottom: 1.25rem;
+
+		label {
+			font-size:0.875rem;
+			font-weight: 500;
+		}
 	}
-	
-	.form-control {
+
+	input {
 		font-size: 0.875rem;
 		color: #282828;
 		border: 1 px solid #EEE;
 		border-radius: 0rem;
-		margin-bottom: 1.25rem;
+		text-indent: 0.626rem;	
+		padding: 0.375rem 0 0.25rem 0;
+		width: 100%;
 	}
-	
-	.form-control:focus {
-		color: #282828;
-		background-color: #fff;
-		border-color: #B5AEAE;
+
+	input:focus {
 		outline: 0;
-		box-shadow: none;
 	}
 	
-	::placeholder {
-		color: #AAA;
+	.text-muted {
+		font-size: 0.75rem;
+		margin: 0.5rem 0 0 0;
+	}
+
+	.mainButtonContainer{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 `;
 
-const LoginForm = (props: RouteComponentProps): JSX.Element => {
+const LoginForm = (props: RouteComponentProps, { className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
 	const [showError, setShowError] = useState<boolean>(true)
@@ -79,34 +93,33 @@ const LoginForm = (props: RouteComponentProps): JSX.Element => {
 		<>
 			{ showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> }
 			<Container>
-				<Row>
+				<Row className={className}>
 					<Col xs={0} sm={0} md={2} lg={2}/>
 					<Col xs={12} sm={12} md={8} lg={8}>
 						<Form>
 							<h3>Login</h3>
 							<Form.Group controlId="formSignIn">
-								<Form.Label>Username</Form.Label>
-								<Form.Control
-									onChange={onUserNameChange}
-									placeholder="John"
-									type="text"
-								/>
+								<Form.Field>
+									<label>Username</label>
+									<input
+										onChange={onUserNameChange} 
+										placeholder='John'
+										type="text"
+									/>
+								</Form.Field>
 							</Form.Group>
 
 							<Form.Group controlId="formSignInPassword">
-								<Form.Label>Password</Form.Label>
-								<Form.Control
-									onChange={onPasswordChange}
-									placeholder="Password"
-									type="password"
-								/>
+								<Form.Field>
+									<label>Password</label>
+									<input
+										onChange={onPasswordChange} 
+										placeholder='Password'
+										type="password"
+									/>
+								</Form.Field>
 							</Form.Group>
-							<div style={{
-								alignItems: 'center',
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center'
-							}}> 
+							<div className={'mainButtonContainer'}>
 								<Button
 									onClick={handleClick}
 									type='submit'
