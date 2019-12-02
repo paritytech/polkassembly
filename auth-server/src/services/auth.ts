@@ -186,7 +186,7 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({ email_verified: true })
-			.findById(verifyToken.id)
+			.findById(verifyToken.user_id)
 
 		await EmailVerificationToken
 			.query()
