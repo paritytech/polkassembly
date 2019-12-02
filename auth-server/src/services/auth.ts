@@ -4,11 +4,15 @@ import { randomBytes } from 'crypto'
 import { uuid } from 'uuidv4'
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server'
 
-import { sendVerificationEmail } from './email'
+import {
+	sendVerificationEmail,
+	sendResetPasswordEmail
+} from './email'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
 import EmailVerificationToken from '../model/EmailVerificationToken'
 import RefreshToken from '../model/RefreshToken'
+import PasswordResetToken from '../model/PasswordResetToken'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
 const publicKey = process.env.JWT_PUBLIC_KEY
@@ -245,6 +249,31 @@ export default class AuthService {
 		// send verification email in background
 		sendVerificationEmail(user, verifyToken)
 
+	}
+
+	public async ResetPassword(email: string) {
+		const user = await User
+			.query()
+			.where('email', email)
+			.first()
+
+		if (!user) {
+			throw new ForbiddenError('User not found')
+		}
+
+		const expires = Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+
+		const resetToken = await PasswordResetToken
+			.query()
+			.allowInsert('[token, user_id, valid, expires]')
+			.insert({
+				token: uuid(),
+				user_id: user.id,
+				valid: true,
+				expires
+			})
+
+		sendResetPasswordEmail(user, resetToken)
 	}
 
 	private getSignedToken({ id, username, email }): string {

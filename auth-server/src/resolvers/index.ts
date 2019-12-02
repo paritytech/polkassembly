@@ -7,6 +7,7 @@ import signup from './mutation/signup'
 import changeEmail from './mutation/changeEmail'
 import changePassword from './mutation/changePassword'
 import changeName from './mutation/changeName'
+import resetPassword from './mutation/resetPassword'
 
 export default {
 	Query: {
@@ -20,6 +21,7 @@ export default {
 		signup,
 		changeEmail,
 		changePassword,
-		changeName
+		changeName,
+		resetPassword
 	}
 }
