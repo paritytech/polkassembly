@@ -1,13 +1,22 @@
 overwrite: true
-schema: 
-  - ${REACT_APP_HASURA_GRAPHQL_URL}:
-      headers:
-        X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
-documents: 
-  - ./src/**/*.tsx
-  - ./src/**/*.ts
 generates:
   src/generated/graphql.tsx:
+    schema:
+      - ${REACT_APP_HASURA_GRAPHQL_URL}:
+          headers:
+            X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
+    documents: 
+      - ./src/**/*.tsx
+      - ./src/**/*.ts
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+  src/generated/auth-graphql.tsx:
+    schema:
+      - ${REACT_APP_AUTH_SERVER_GRAPHQL_URL}
     plugins:
       - "typescript"
       - "typescript-operations"

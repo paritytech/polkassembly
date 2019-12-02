@@ -37,7 +37,7 @@ export const isLocalStorageTokenValid = (): boolean => {
  * in the hope to get a new jwt token.
  */
 export const getRefreshedToken = () => (
-	fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/token`, {
+	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/token`, {
 		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ export const getRefreshedToken = () => (
  */
 export const login = ({ username, password }: LoginObjectType) => {
 
-	return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/login`, {
+	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/login`, {
 		body: JSON.stringify({ password, username }),
 		credentials: 'same-origin',
 		headers: {
@@ -80,7 +80,7 @@ export const login = ({ username, password }: LoginObjectType) => {
  * @param SignupData Object with the data required to signup
  */
 export const signUp = (SignupData: SignupObjectType) => {
-	return fetch(`${process.env.REACT_APP_AUTH_SERVER_URL}/signup`, {
+	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/signup`, {
 		body: JSON.stringify(SignupData),
 		credentials: 'same-origin',
 		headers: {
