@@ -6,15 +6,14 @@ const knexConnection = Knex(connection)
 
 Model.knex(knexConnection)
 
-export default class RefreshToken extends Model {
+export default class EmailVerificationToken extends Model {
 	readonly id!: number
 	token!: string
 	user_id!: number
-	valid!: boolean
-	expires!: number
+	valid: boolean
 
 	static get tableName () {
-		return 'refresh_tokens'
+		return 'email_verification_token'
 	}
 
 	static get idColumn () {
@@ -25,8 +24,7 @@ export default class RefreshToken extends Model {
 		return {
 			token: this.token,
 			user_id: this.user_id,
-			valid: this.valid,
-			expires: this.expires
+			valid: this.valid
 		}
 	}
 
@@ -38,8 +36,7 @@ export default class RefreshToken extends Model {
 				id: { type: 'integer' },
 				token: { type: 'string' },
 				user_id: { type: 'integer' },
-				valid: { type: 'boolean' },
-				expires: { type: 'integer' }
+				valid: { type: 'boolean' }
 			}
 		}
 	}
