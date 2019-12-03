@@ -18,6 +18,9 @@ const privateKey = process.env.JWT_PRIVATE_KEY
 const publicKey = process.env.JWT_PUBLIC_KEY
 const passphrase = process.env.JWT_KEY_PASSPHRASE
 
+const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000
+const ONE_DAY = 24 * 60 * 60 * 1000
+
 export default class AuthService {
 	constructor(){}
 
@@ -102,7 +105,7 @@ export default class AuthService {
 			throw new ForbiddenError('Refresh token not valid')
 		}
 
-		if (refreshToken.expires < Math.floor(Date.now() / 1000)) {
+		if (new Date(refreshToken.expires).getTime() < Math.floor(Date.now() / 1000)) {
 			throw new ForbiddenError('Refresh token expired')
 		}
 
@@ -259,7 +262,7 @@ export default class AuthService {
 			throw new ForbiddenError('User not found')
 		}
 
-		const expires = Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+		const expires = new Date(Date.now() + ONE_DAY).toISOString() // 24 hours
 
 		const resetToken = await PasswordResetToken
 			.query()
@@ -288,7 +291,7 @@ export default class AuthService {
 			throw new Error('Invalid password reset token')
 		}
 
-		if (resetToken.expires < Date.now()) {
+		if (new Date(resetToken.expires).getTime() < Date.now()) {
 			throw new Error('Password reset token expired')
 		}
 
@@ -344,7 +347,7 @@ export default class AuthService {
 		const token = uuid()
 		const user_id = id
 		const valid = true
-		const expires = Math.floor(Date.now() / 1000) + (6 * 30 * 24 * 60 * 60) // now + 6 months
+		const expires = new Date(Date.now() + SIX_MONTHS).toISOString() // now + 6 months
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({

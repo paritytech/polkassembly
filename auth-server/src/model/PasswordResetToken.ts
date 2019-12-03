@@ -11,7 +11,7 @@ export default class PasswordResetToken extends Model {
 	token!: string
 	user_id!: number
 	valid: boolean
-	expires: number
+	expires: string
 
 	static get tableName () {
 		return 'password_reset_token'
@@ -39,7 +39,7 @@ export default class PasswordResetToken extends Model {
 				token: { type: 'string' },
 				user_id: { type: 'integer' },
 				valid: { type: 'boolean' },
-				expires: { type: 'integer' }
+				expires: { type: 'string' }
 			}
 		}
 	}

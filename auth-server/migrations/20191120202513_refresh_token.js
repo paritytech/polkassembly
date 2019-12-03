@@ -5,7 +5,7 @@ exports.up = function(knex) {
 		table.string('token').unique().notNullable()
 		table.integer('user_id').notNullable()
 		table.boolean('valid').notNullable()
-		table.bigInteger('expires').notNullable()
+		table.datetime('expires').notNullable()
 		table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'))
 		table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('RESTRICT')
 	})
