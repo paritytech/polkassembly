@@ -24,6 +24,6 @@ export interface JWTPayploadType {
     exp: number
     sub: number
     name: string
-    iat: string //rather a date
+    iat: Date
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }

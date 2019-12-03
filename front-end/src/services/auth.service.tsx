@@ -1,5 +1,6 @@
-import { UserDetailsContextType } from '../types'
-import parseJwt from '../util/parseJWT';
+import jwt from 'jsonwebtoken'
+
+import { UserDetailsContextType, JWTPayploadType } from '../types'
 import { LoginResponse } from '../generated/auth-graphql';
 
 /**
@@ -19,6 +20,14 @@ export const getLocalStorageToken = (): string|null => {
 }
 
 /**
+ * Remove the the jwt from localstorage
+ * if any.
+ */
+export const deleteLocalStorageToken = (): void => {
+	return localStorage.removeItem('Authorization');
+}
+
+/**
  * Tells whether the jwt token stored locally
  * is set and not expired.
  */
@@ -26,7 +35,7 @@ export const isLocalStorageTokenValid = (): boolean => {
 	let token = localStorage.getItem('Authorization') || null;
 
 	if (token) {
-		const tokenPayload = parseJwt(token);
+		const tokenPayload = jwt.decode(token) as JWTPayploadType;
 		return tokenPayload.exp > Date.now() / 1000
 	} else {
 		return false
@@ -39,7 +48,7 @@ export const isLocalStorageTokenValid = (): boolean => {
  */
 export const getRefreshedToken = () => (
 	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
-		body: JSON.stringify({ 'operationName':null,'query':'query Get_new_token {  token {    token  }}' }),
+		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
 		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json'
@@ -64,9 +73,13 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 	})
 }
 
-// export const signOut = () => {
-//   localStorage.removeItem('Authorization')
-//   // window.location.href = '/sign-in'
-
-//   return store.clearStore()
-// }
+export const logout = (currentUser: UserDetailsContextType) => {
+	deleteLocalStorageToken();
+	currentUser.setUserDetailsContextState((prevState) => {
+		return {
+			...prevState,
+			id: null,
+			username: null
+		}
+	})
+}
