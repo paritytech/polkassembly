@@ -26,7 +26,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		if (data && data.signup && data.signup.token && data.signup.user) {
-			console.log('iin')
 			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
 			history.push('/');
 		}

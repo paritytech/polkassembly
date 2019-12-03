@@ -24,7 +24,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		if (data && data.login && data.login.token && data.login.user) {
-			console.log('iin')
 			handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
 			history.push('/');
 		}
@@ -46,55 +45,52 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	}
 
 	return (
-		<>
-			{/* { showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> } */}
-			<Grid className={className}>
-				<Grid.Column width={2}/>
-				<Grid.Column width={12}>
-					<Form>
-						<h3>Login</h3>
-						<Form.Group controlId="formSignIn">
-							<Form.Field width={16}>
-								<label>Username</label>
-								<input
-									onChange={onUserNameChange}
-									placeholder='John'
-									type="text"
-								/>
-							</Form.Field>
-						</Form.Group>
+		<Grid className={className}>
+			<Grid.Column width={2}/>
+			<Grid.Column width={12}>
+				<Form>
+					<h3>Login</h3>
+					<Form.Group controlId="formSignIn">
+						<Form.Field width={16}>
+							<label>Username</label>
+							<input
+								onChange={onUserNameChange}
+								placeholder='John'
+								type="text"
+							/>
+						</Form.Field>
+					</Form.Group>
 
-						<Form.Group controlId="formSignInPassword">
-							<Form.Field width={16}>
-								<label>Password</label>
-								<input
-									onChange={onPasswordChange}
-									placeholder='Password'
-									type="password"
-								/>
-							</Form.Field>
-						</Form.Group>
-						<div className={'mainButtonContainer'}>
-							<Button
-								className="primary"
-								disabled={loading}
-								onClick={handleClick}
-								type="submit"
-								variant="primary"
-							>
+					<Form.Group controlId="formSignInPassword">
+						<Form.Field width={16}>
+							<label>Password</label>
+							<input
+								onChange={onPasswordChange}
+								placeholder='Password'
+								type="password"
+							/>
+						</Form.Field>
+					</Form.Group>
+					<div className={'mainButtonContainer'}>
+						<Button
+							className="primary"
+							disabled={loading}
+							onClick={handleClick}
+							type="submit"
+							variant="primary"
+						>
 							Login
-							</Button>
-							{error &&
+						</Button>
+						{error &&
 						<>
 							<br/><div> Error: {error} </div>
 						</>
-							}
-						</div>
-					</Form>
-				</Grid.Column>
-				<Grid.Column width={2}/>
-			</Grid>
-		</>
+						}
+					</div>
+				</Form>
+			</Grid.Column>
+			<Grid.Column width={2}/>
+		</Grid>
 	)
 };
 
