@@ -7,8 +7,9 @@ import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { signUp, handleLoginUser } from '../../services/auth.service';
+import { handleLoginUser } from '../../services/auth.service';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useSignupMutation } from '../../generated/auth-graphql';
 
 const Container = styled.div`
 	form {
@@ -57,6 +58,7 @@ const SignupForm = (): JSX.Element => {
 	const [password, setPassword] = useState<string | undefined>('');
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
+	const [signupMutation, { data, loading, error }] = useSignupMutation();
     
 	const onEmailChange = (event: React.FormEvent<FormControlProps>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
@@ -66,13 +68,18 @@ const SignupForm = (): JSX.Element => {
 		event.preventDefault();
 		event.stopPropagation();
 		if (username && email && password){
-			signUp({ email ,password, username })
-				.then((data) => data.json())
-				.then((data) => {
-					handleLoginUser(data, currentUser);
-					// redirect to the home
-					history.push('/');
-				})
+			signupMutation({
+				variables: {
+					email,
+					password
+				}
+			})
+			// .then((data) => data.json())
+			// .then((data) => {
+			// 	handleLoginUser(data, currentUser);
+			// 	// redirect to the home
+			// 	history.push('/');
+			// })
 		}
 	}
 

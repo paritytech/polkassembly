@@ -80,6 +80,9 @@ export const login = ({ username, password }: LoginObjectType) => {
  * @param SignupData Object with the data required to signup
  */
 export const signUp = (SignupData: SignupObjectType) => {
+
+	SignupMutationFn
+
 	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/signup`, {
 		body: JSON.stringify(SignupData),
 		credentials: 'same-origin',
