@@ -2,22 +2,25 @@ import { Button as SemanticButton } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 export const Button = styled(SemanticButton).attrs({
-	variant: 'primary'
+	className: 'button'
 })`
-    font-family: 'Roboto Mono';
-    font-size: 1.125rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    border-radius: 0.188rem;
-    border: none;
-    padding: 0.313rem 0.625rem;
-    color: #fff;
+	
+	&.ui.button {   
+        font-family: 'Roboto Mono';
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		border-radius: 0.188rem;
+		border: none;
+		padding: 0.625rem 0.938rem;
+		color: #fff;
+    }
 
-    &.primary {
+    &.ui.primary.button {   
         background-color: #EB5757;
     }
 
-    &.primary:hover, &.primary:focus {
+    &.ui.primary.button:hover, &.ui.primary.button:focus {
         background-color: #CC3D3D;
         outline: none;
     }
