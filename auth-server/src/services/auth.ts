@@ -270,6 +270,43 @@ export default class AuthService {
 		sendResetPasswordEmail(user, resetToken)
 	}
 
+	public async ResetPassword(token: string, newPassword: string) {
+		const resetToken = await PasswordResetToken
+			.query()
+			.where('token', token)
+			.first()
+
+		if (!resetToken) {
+			throw new Error('password reset token not found')
+		}
+
+		if (!resetToken.valid) {
+			throw new Error('Invalid password reset token')
+		}
+
+		if (resetToken.expires < Date.now()) {
+			throw new Error('Password reset token expired')
+		}
+
+		const salt = randomBytes(32)
+		const password = await argon2.hash(newPassword, { salt })
+
+		await User
+			.query()
+			.patch({
+				salt: salt.toString('hex'),
+				password
+			})
+			.findById(resetToken.user_id)
+
+
+		await PasswordResetToken
+			.query()
+			.patch({ valid: false })
+			.findById(resetToken.id)
+	}
+
+
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
