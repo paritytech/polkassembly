@@ -24,19 +24,20 @@ const httpLink = new HttpLink({
 	uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
 });
 
-const link = ApolloLink.from([
-	new TokenRefreshLink({
-		accessTokenField: 'token',
-		fetchAccessToken: getRefreshedToken,
-		handleError: (err:any) => {
-			console.warn('Your refresh token is invalid. Try to login again');
-			console.error(err);
+const tokenRefreshLink = new TokenRefreshLink({
+	accessTokenField: 'token',
+	fetchAccessToken: getRefreshedToken,
+	handleError: (err:any) => {
+		console.warn('Your refresh token is invalid. Try to login again');
+		console.error(err);
 
-			// FIXME logout user and redirect to login
-		},
-		handleFetch: (accessToken: string) => storeLocalStorageToken(accessToken),
-		isTokenValidOrUndefined:  isLocalStorageTokenValid
-	}),
+		// FIXME logout user and redirect to login
+	},
+	handleFetch: (accessToken: string) => storeLocalStorageToken(accessToken),
+	isTokenValidOrUndefined:  isLocalStorageTokenValid
+})
+
+const link = ApolloLink.from([
 	setAuthorizationLink,
 	httpLink
 ])

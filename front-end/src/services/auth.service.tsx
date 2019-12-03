@@ -1,5 +1,6 @@
-import { LoginObjectType, SignupObjectType, SignupResponseObjectType, UserDetailsContextType } from '../types'
+import { LoginObjectType, SignupObjectType, UserDetailsContextType } from '../types'
 import parseJwt from '../util/parseJWT';
+import { LoginResponse } from '../generated/auth-graphql';
 
 /**
  * Store the JWT token in localstorage
@@ -80,9 +81,6 @@ export const login = ({ username, password }: LoginObjectType) => {
  * @param SignupData Object with the data required to signup
  */
 export const signUp = (SignupData: SignupObjectType) => {
-
-	SignupMutationFn
-
 	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/signup`, {
 		body: JSON.stringify(SignupData),
 		credentials: 'same-origin',
@@ -110,9 +108,9 @@ export const signUp = (SignupData: SignupObjectType) => {
  * @param param0 user and token answered by the auth server
  * @param currentUser context data on the user
  */
-export const handleLoginUser = ({ user, token }: SignupResponseObjectType, currentUser: UserDetailsContextType) => {
-	storeLocalStorageToken(token);
-	currentUser.setUserDetailsContextState((prevState) => {
+export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: UserDetailsContextType) => {
+	token && storeLocalStorageToken(token);
+	user && currentUser.setUserDetailsContextState((prevState) => {
 		return {
 			...prevState,
 			id: user.id,

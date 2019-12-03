@@ -18,15 +18,21 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [password, setPassword] = useState<string | undefined>('');
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
-	const [signupMutation, { data, loading, error }] = useSignupMutation();
+	const [signupMutation, { data, loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
 	useEffect(() => {
+		console.log('data',data)
+		if (data && data.signup && data.signup.token && data.signup.user) {
+			console.log('iin')
+			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
+			history.push('/');
+		}
 
-	})
+	},[data])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -84,13 +90,19 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group >
 					<div className={'mainButtonContainer'}>
 						<Button
+							className="primary"
+							disabled={loading}
 							onClick={handleClick}
 							type="submit"
 							variant="primary"
-							className="primary"
 						>
 							Sign-up
 						</Button>
+						{error &&
+						<>
+							<br/><div> Error: {error} </div>
+						</>
+						}
 					</div>
 				</Form>
 			</Grid.Column>

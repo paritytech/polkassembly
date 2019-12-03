@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { SignupMutationResult, LoginResponse } from './generated/auth-graphql';
 
 export interface LoginObjectType {
     username: string
@@ -19,16 +20,16 @@ export interface SignupObjectType extends LoginObjectType {
 * }
 */
 
-export interface SignupResponseObjectType {
-    token: string
-    user: SignupUserObjectType
-}
+// export interface SignupResponseObjectType {
+//     token: string
+//     user: SignupUserObjectType
+// }
 
-export interface SignupUserObjectType extends LoginObjectType {
-    id: number
-    email: string
-    username: string
-}
+// Fixme, this should never be null.
+// export interface SignupUserObjectType {
+//     id?: number | null
+//     username?: string | null
+// }
 
 export interface UserDetailsContextType {
     id?: number | null,

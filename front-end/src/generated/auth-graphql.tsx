@@ -117,7 +117,7 @@ export type SignupMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id'>
+      & Pick<User, 'id' | 'username'>
     )> }
   )> }
 );
@@ -128,6 +128,7 @@ export const SignupDocument = gql`
   signup(email: $email, password: $password, username: $username, name: $name) {
     user {
       id
+      username
     }
     token
   }
