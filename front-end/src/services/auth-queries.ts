@@ -32,19 +32,3 @@ export const LOGIN = gql`
     ${user_fragment}
 `;
 
-// const categorie_fragment = gql`
-//     fragment catfragment on categories {
-//         id
-//         name
-//     }
-// `
-
-// export const GET_CATEGORIES = gql`
-//     query Categories {
-//         categories {
-//         ...catfragment
-//         }
-//     }
-//     ${categorie_fragment}
-// `;
-
