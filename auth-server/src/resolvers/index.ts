@@ -7,7 +7,7 @@ import signup from './mutation/signup'
 import changeEmail from './mutation/changeEmail'
 import changePassword from './mutation/changePassword'
 import changeName from './mutation/changeName'
-import resetPassword from './mutation/resetPassword'
+import requestResetPassword from './mutation/requestResetPassword'
 import verifyEmail from './mutation/verifyEmail'
 
 export default {
@@ -23,7 +23,7 @@ export default {
 		changeEmail,
 		changePassword,
 		changeName,
-		resetPassword,
+		requestResetPassword,
 		verifyEmail
 	}
 }

@@ -245,7 +245,7 @@ export default class AuthService {
 
 	}
 
-	public async ResetPassword(email: string) {
+	public async RequestResetPassword(email: string) {
 		const user = await User
 			.query()
 			.where('email', email)

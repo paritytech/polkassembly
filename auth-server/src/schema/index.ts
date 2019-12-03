@@ -13,7 +13,7 @@ import signupMutation from './mutation/signup'
 import changeEmailMutation from './mutation/changeEmail'
 import changePasswordMutation from './mutation/changePassword'
 import changeNameMutation from './mutation/changeName'
-import resetPassword from './mutation/resetPassword'
+import requestResetPassword from './mutation/requestResetPassword'
 import verifyEmail from './mutation/verifyEmail'
 
 export default gql`
@@ -35,7 +35,7 @@ export default gql`
 		${changeEmailMutation}
 		${changePasswordMutation}
 		${changeNameMutation}
-		${resetPassword}
+		${requestResetPassword}
 		${verifyEmail}
 	}
 `
