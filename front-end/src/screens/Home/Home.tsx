@@ -77,7 +77,7 @@ const Home = ({ data }: Props) => {
 		history.push('/temp-post/create')
 	};
 
-	return ( 
+	return (
 		<Container className='Home'>
 			<h3>Latest Discussions</h3>
 			<Row>
@@ -89,7 +89,7 @@ const Home = ({ data }: Props) => {
 								!!post && (
 									<li key={post.id} className='Home__item'>
 										{<Link to={`/temp-post/${post.id}`}>
-											<DiscussionCard 
+											<DiscussionCard
 												title={post.title}
 												author={post.author.username}
 												creation_date={post.creation_date}
@@ -110,9 +110,9 @@ const Home = ({ data }: Props) => {
 						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
 						<div className='info_text'><h6>New to Polkadot Governance?</h6> Polkadot uses a sophisticated governance mechanism to let the network evolve gracefully. The stated goal is to ensure that the majority of the stake can always command the network.</div>
 						<div className='ex_link'>
-							<a  
+							<a
 								href='https://wiki.polkadot.network/docs/en/learn-governance'
-								rel='noopener noreferrer' 
+								rel='noopener noreferrer'
 								target='_blank'>
 								Find out more about Polkadot Governance »
 							</a>

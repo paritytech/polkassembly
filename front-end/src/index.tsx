@@ -17,7 +17,7 @@ const setAuthorizationLink = setContext(() => {
 		return { headers: { authorization: `Bearer ${token}` } }
 	} else {
 		return null
-	}	
+	}
 });
 
 const httpLink = new HttpLink({
@@ -40,7 +40,7 @@ const link = ApolloLink.from([
 	setAuthorizationLink,
 	httpLink
 ])
-  
+
 export const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	link
@@ -50,6 +50,6 @@ ReactDOM.render(
 	<ApolloProvider client={client}>
 		<App />
 	</ApolloProvider>,
-	
+
 	document.getElementById('root'),
 );

@@ -18,7 +18,7 @@ const PostContainer = () => {
 	}
 
 	return <Post data={data} />;
- 
+
 };
 
 export default PostContainer;

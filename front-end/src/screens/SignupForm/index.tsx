@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -16,15 +16,18 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
-	const [username, setUsername] = useState<string | undefined>('');
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
 	const [signupMutation, { data, loading, error }] = useSignupMutation();
-    
+
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
-    
+
+	useEffect(() => {
+
+	})
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -37,12 +40,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					username
 				}
 			})
-			// .then((data) => data.json())
-			// .then((data) => {
-			// 	handleLoginUser(data, currentUser);
-			// 	// redirect to the home
-			// 	history.push('/');
-			// })
 		}
 	}
 
@@ -56,7 +53,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
-								onChange={onUserNameChange} 
+								onChange={onUserNameChange}
 								placeholder='John'
 								type="text"
 							/>
@@ -66,7 +63,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Email</label>
 							<input
-								onChange={onEmailChange} 
+								onChange={onEmailChange}
 								placeholder='john@doe.com'
 								type="email"
 							/>
@@ -79,7 +76,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
-								onChange={onPasswordChange} 
+								onChange={onPasswordChange}
 								placeholder='Password'
 								type='password'
 							/>

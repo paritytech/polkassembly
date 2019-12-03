@@ -3,7 +3,7 @@ import parseJwt from '../util/parseJWT';
 
 /**
  * Store the JWT token in localstorage
- * @param token the token received from the authentication header 
+ * @param token the token received from the authentication header
  */
 export const storeLocalStorageToken = (token: string) => {
 	localStorage.setItem('Authorization', token)

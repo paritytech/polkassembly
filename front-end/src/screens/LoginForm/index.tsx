@@ -19,7 +19,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	// const [error, setError] = useState('');
 	const currentUser = useContext(UserDetailsContext)
 	const history = useHistory();
-	
+
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
@@ -53,7 +53,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							<Form.Field width={16}>
 								<label>Username</label>
 								<input
-									onChange={onUserNameChange} 
+									onChange={onUserNameChange}
 									placeholder='John'
 									type="text"
 								/>
@@ -64,7 +64,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							<Form.Field width={16}>
 								<label>Password</label>
 								<input
-									onChange={onPasswordChange} 
+									onChange={onPasswordChange}
 									placeholder='Password'
 									type="password"
 								/>

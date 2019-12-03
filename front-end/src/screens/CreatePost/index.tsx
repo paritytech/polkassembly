@@ -44,13 +44,13 @@ const CreatePost = ({ className }:Props) => {
 
 	const renderCategories = () => {
 		if (!catData || !catData.categories) return null
-		
+
 		return (
 			<ButtonGroup aria-label="Categorie" size="sm">
 				{ catData.categories.map(({ id, name } : {name: string, id:number}) => {
 					return <Button key={id} variant="secondary" onClick={() => setSetlectedCategorie(id)}>{name}</Button>
 				})}
-			</ButtonGroup>			
+			</ButtonGroup>
 		);
 	}
 
@@ -75,7 +75,7 @@ const CreatePost = ({ className }:Props) => {
 						<Form.Field>
 							<label>Title</label>
 							<input
-								onChange={onTitleChange} 
+								onChange={onTitleChange}
 								placeholder='Your title...'
 								type="text"
 							/>
@@ -83,14 +83,14 @@ const CreatePost = ({ className }:Props) => {
 					</Form.Group>
 
 					<Form.Group>
-						<Form.TextArea 
-							label='Content' 
+						<Form.TextArea
+							label='Content'
 							placeholder='The content of your post...'
 							onChange={onContentChange}
 						/>
 					</Form.Group>
 					{renderCategories()}
-					<div className={'mainButtonContainer'}> 
+					<div className={'mainButtonContainer'}>
 						<Button
 							onClick={handleSend}
 							disabled={isSending}

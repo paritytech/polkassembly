@@ -43,7 +43,7 @@ const MenuBar: React.FC = () => {
 				if (tokenPayload){
 					const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
 					const username =  tokenPayload.name
-	
+
 					if (id && username){
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
@@ -70,7 +70,7 @@ const MenuBar: React.FC = () => {
 							<Menu.Item  as={Link} to="/temp-signup">Sign-up</Menu.Item >
 						</>
 					}
-				</Menu.Menu>   
+				</Menu.Menu>
 			</Menu>
 		</Container>
 	);
