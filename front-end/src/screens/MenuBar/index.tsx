@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react'
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { getLocalStorageToken } from '../../services/auth.service';
@@ -38,22 +37,19 @@ const MenuBar: React.FC = () => {
 	},[currentUser]);
 
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-			<Navbar.Brand as={Link} to="/">Governance Platform</Navbar.Brand>
-			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-			<Navbar.Collapse id="responsive-navbar-nav">
-				<Nav className="ml-auto">
-					{currentUser.username
-						? <Navbar.Text>Hello {currentUser.username}</Navbar.Text>
-						: <>
-							<Nav.Link as={Link} to="/temp-login">Login</Nav.Link >
-							<Nav.Link as={Link} to="/temp-signup">Sign-up</Nav.Link >
-						</>
-					}
+		<Menu stackable inverted borderless>
+			<Menu.Item as={Link} to="/">Polkassembly</Menu.Item>
+			<Menu.Menu position="right">
+				{currentUser.username
+					? <Menu.Item >Hello {currentUser.username}</Menu.Item>
+					: <>
+						<Menu.Item  as={Link} to="/temp-login">Login</Menu.Item >
+						<Menu.Item  as={Link} to="/temp-signup">Sign-up</Menu.Item >
+					</>
+				}
+			</Menu.Menu>
             
-				</Nav>
-			</Navbar.Collapse>
-		</Navbar>
+		</Menu>
 	);
 }
 
