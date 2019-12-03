@@ -25,7 +25,7 @@ const httpLink = new HttpLink({
 });
 
 const tokenRefreshLink = new TokenRefreshLink({
-	accessTokenField: 'token',
+	accessTokenField: 'data.token',
 	fetchAccessToken: getRefreshedToken,
 	handleError: (err:any) => {
 		console.warn('Your refresh token is invalid. Try to login again');
@@ -38,6 +38,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 })
 
 const link = ApolloLink.from([
+	tokenRefreshLink,
 	setAuthorizationLink,
 	httpLink
 ])

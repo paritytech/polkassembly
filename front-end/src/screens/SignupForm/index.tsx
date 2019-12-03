@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { handleLoginUser } from '../../services/auth.service';
-import { Button } from '../../components/Button'
+import { Button } from '../../components/Button';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/auth-graphql';
+import { handleLoginUser } from '../../services/auth.service';
 
 interface Props {
 	className?: string
@@ -29,8 +29,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
 			history.push('/');
 		}
-
-	},[data])
+	},[currentUser, data, history])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();

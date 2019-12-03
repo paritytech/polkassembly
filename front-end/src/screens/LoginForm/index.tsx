@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { handleLoginUser } from '../../services/auth.service';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { Button } from '../../components/Button';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
+import { handleLoginUser } from '../../services/auth.service';
 
 interface Props {
 	className?: string
@@ -27,8 +27,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
 			history.push('/');
 		}
-
-	},[data])
+	},[currentUser, data, history])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -50,7 +49,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			<Grid.Column width={12}>
 				<Form>
 					<h3>Login</h3>
-					<Form.Group controlId="formSignIn">
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
@@ -61,7 +60,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						</Form.Field>
 					</Form.Group>
 
-					<Form.Group controlId="formSignInPassword">
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input

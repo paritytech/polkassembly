@@ -38,7 +38,8 @@ export const isLocalStorageTokenValid = (): boolean => {
  * in the hope to get a new jwt token.
  */
 export const getRefreshedToken = () => (
-	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/token`, {
+	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
+		body: JSON.stringify({ 'operationName':null,'variables':{},'query':'query Get_new_token {  token {    token  }}' }),
 		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json'
