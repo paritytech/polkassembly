@@ -1,12 +1,33 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react'
+import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { getLocalStorageToken } from '../../services/auth.service';
 import parseJwt from '../../util/parseJWT'
+
+const Container = styled.div`
+	.ui.menu {
+		font-family: 'Roboto Mono';
+		letter-spacing: 0.1rem;
+		border-radius: 0;
+		padding: 1.25rem 2.5rem;
+	}
+
+	.ui.menu .item {
+		padding: 0 0;
+	}
+
+	.ui.inverted.menu {
+		background-color: #282828;
+	}
+
+	#title {
+		text-transform: uppercase;
+	}
+`;
 
 const MenuBar: React.FC = () => {
 	const currentUser = useContext(UserDetailsContext)
@@ -38,22 +59,20 @@ const MenuBar: React.FC = () => {
 	},[currentUser]);
 
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-			<Navbar.Brand as={Link} to="/">Governance Platform</Navbar.Brand>
-			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-			<Navbar.Collapse id="responsive-navbar-nav">
-				<Nav className="ml-auto">
+		<Container>
+			<Menu stackable inverted borderless>
+				<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+				<Menu.Menu position="right">
 					{currentUser.username
-						? <Navbar.Text>Hello {currentUser.username}</Navbar.Text>
+						? <Menu.Item >Hello {currentUser.username}</Menu.Item>
 						: <>
-							<Nav.Link as={Link} to="/temp-login">Login</Nav.Link >
-							<Nav.Link as={Link} to="/temp-signup">Sign-up</Nav.Link >
+							<Menu.Item  as={Link} to="/temp-login">Login</Menu.Item >
+							<Menu.Item  as={Link} to="/temp-signup">Sign-up</Menu.Item >
 						</>
 					}
-            
-				</Nav>
-			</Navbar.Collapse>
-		</Navbar>
+				</Menu.Menu>   
+			</Menu>
+		</Container>
 	);
 }
 
