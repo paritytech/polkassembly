@@ -55,7 +55,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 		if (error) console.error(error)
 
-	},[data, error, history])
+	},[data, error, history, setUserDetailsContextState])
 
 	const handleLogout = () => {
 		logoutMutation();
