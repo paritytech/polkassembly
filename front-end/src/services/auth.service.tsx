@@ -1,4 +1,4 @@
-import { LoginObjectType, SignupObjectType, UserDetailsContextType } from '../types'
+import { UserDetailsContextType } from '../types'
 import parseJwt from '../util/parseJWT';
 import { LoginResponse } from '../generated/auth-graphql';
 
@@ -46,62 +46,6 @@ export const getRefreshedToken = () => (
 		method: 'POST'
 	})
 )
-
-/**
- * Sends a request to the authentication server to login a user
- * given the username and password
- * @param param0 Object with username and password
- */
-export const login = ({ username, password }: LoginObjectType) => {
-
-	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/login`, {
-		body: JSON.stringify({ password, username }),
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		method: 'POST'
-	})
-		.then(async (response) => {
-			if (response.status < 400 && response.ok) {
-				return response
-			} else {
-				const error = await response.json()
-					.then((data) => {
-						console.error('Authservice login error', data.errors);
-						return data.errors;
-					})
-				throw new Error(error);
-			}
-		});
-}
-
-/**
- * Sends a request to the authentication server to sign the user in as well as login them in.
- * @param SignupData Object with the data required to signup
- */
-export const signUp = (SignupData: SignupObjectType) => {
-	return fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}/signup`, {
-		body: JSON.stringify(SignupData),
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		method: 'POST'
-	})
-		.then((response) => {
-			if (response.status < 400 && response.ok) {
-				return response
-			} else {
-				// FIXME we need to throw here and remove this ugly alert
-				alert('Could not signup now. Try again later');
-			}
-		})
-		.catch(error => {
-			console.log(error.message || error)
-			return error
-		})
-}
 
 /**
  * Store the user information in local context and call the function to store the received token

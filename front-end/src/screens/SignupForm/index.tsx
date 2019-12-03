@@ -25,7 +25,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
 	useEffect(() => {
-		console.log('data',data)
 		if (data && data.signup && data.signup.token && data.signup.user) {
 			console.log('iin')
 			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)

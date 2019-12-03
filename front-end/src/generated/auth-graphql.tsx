@@ -102,6 +102,11 @@ export type User = {
   email_verified?: Maybe<Scalars['String']>,
 };
 
+export type UserFragmentFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'name' | 'username'>
+);
+
 export type SignupMutationVariables = {
   email: Scalars['String'],
   password: Scalars['String'],
@@ -117,23 +122,46 @@ export type SignupMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & UserFragmentFragment
     )> }
   )> }
 );
 
+export type LoginMutationVariables = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
 
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & UserFragmentFragment
+    )> }
+  )> }
+);
+
+export const UserFragmentFragmentDoc = gql`
+    fragment userFragment on User {
+  id
+  name
+  username
+}
+    `;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
     user {
-      id
-      username
+      ...userFragment
     }
     token
   }
 }
-    `;
+    ${UserFragmentFragmentDoc}`;
 export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
 
 /**
@@ -162,3 +190,39 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const LoginDocument = gql`
+    mutation LOGIN($password: String!, $username: String!) {
+  login(password: $password, username: $username) {
+    user {
+      ...userFragment
+    }
+    token
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
