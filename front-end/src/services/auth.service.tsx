@@ -29,16 +29,17 @@ export const deleteLocalStorageToken = (): void => {
 
 /**
  * Tells whether the jwt token stored locally
- * is set and not expired.
+ * is expired. It returns true if the token isn't set.
  */
-export const isLocalStorageTokenValid = (): boolean => {
+export const isLocalStorageTokenValidOrUndefined = (): boolean => {
 	let token = localStorage.getItem('Authorization') || null;
 
 	if (token) {
 		const tokenPayload = jwt.decode(token) as JWTPayploadType;
 		return tokenPayload.exp > Date.now() / 1000
 	} else {
-		return false
+		// if there's no token we shouldn't ask for a refresh token
+		return true
 	}
 };
 
