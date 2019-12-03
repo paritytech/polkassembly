@@ -49,12 +49,16 @@ export default class AuthService {
 	}
 
 	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
+		const salt = randomBytes(32)
+		password = await argon2.hash(password, { salt })
+
 		const user = await User
 			.query()
 			.allowInsert('[email, password, username, name]')
 			.insert({
 				email,
 				password,
+				salt: salt.toString('hex'),
 				username,
 				name,
 				email_verified: false

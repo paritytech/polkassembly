@@ -1,7 +1,6 @@
 import * as Knex from 'knex'
 import * as argon2 from 'argon2'
 import { Model } from 'objection'
-import { randomBytes } from 'crypto'
 import * as connection from '../../knexfile'
 
 const knexConnection = Knex(connection)
@@ -33,12 +32,6 @@ export default class User extends Model {
 			username: this.username,
 			email_verified: this.email_verified
 		}
-	}
-
-	async $beforeInsert () {
-		const salt = randomBytes(32)
-		this.password = await argon2.hash(this.password, { salt })
-		this.salt = salt.toString('hex')
 	}
 
 	verifyPassword (password) {
