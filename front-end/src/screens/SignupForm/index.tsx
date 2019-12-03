@@ -39,11 +39,11 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column width={2}></Grid.Column>
+			<Grid.Column width={2}/>
 			<Grid.Column width={12}>
 				<Form>
 					<h3>Sign Up</h3>
-					<Form.Group controlId="formSignIn">
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
@@ -52,6 +52,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								type="text"
 							/>
 						</Form.Field>
+					</Form.Group>
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Email</label>
 							<input
@@ -64,8 +66,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							</div>
 						</Form.Field>
 					</Form.Group>
-
-					<Form.Group controlId="formSignInPassword">
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
@@ -87,7 +88,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column width={2}></Grid.Column>
+			<Grid.Column width={2}/>
 		</Grid>
 	)
 };
