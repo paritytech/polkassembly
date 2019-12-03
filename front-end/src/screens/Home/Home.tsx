@@ -74,7 +74,7 @@ const Home = ({ data }: Props) => {
 	const history = useHistory();
 
 	const handleCreatePost = () => {
-		history.push('/temp-post/create')
+		history.push('/post/create')
 	};
 
 	return (
@@ -88,7 +88,7 @@ const Home = ({ data }: Props) => {
 							(post) =>
 								!!post && (
 									<li key={post.id} className='Home__item'>
-										{<Link to={`/temp-post/${post.id}`}>
+										{<Link to={`/post/${post.id}`}>
 											<DiscussionCard
 												title={post.title}
 												author={post.author.username}

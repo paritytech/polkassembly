@@ -21,16 +21,16 @@ const App = () => {
 						<Route exact path="/">
 							<Home/>
 						</Route>
-						<Route path="/temp-login">
+						<Route path="/login">
 							<LoginForm/>
 						</Route>
-						<Route path="/temp-post/create" >
+						<Route path="/post/create" >
 							<CreatePost/>
 						</Route>
-						<Route exact path="/temp-post/:id" >
+						<Route exact path="/post/:id" >
 							<Post/>
 						</Route>
-						<Route path="/temp-signup">
+						<Route path="/signup">
 							<SignupForm/>
 						</Route>
 					</Switch>

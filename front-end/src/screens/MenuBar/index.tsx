@@ -66,8 +66,8 @@ const MenuBar: React.FC = () => {
 					{currentUser.username
 						? <Menu.Item >Hello {currentUser.username}</Menu.Item>
 						: <>
-							<Menu.Item  as={Link} to="/temp-login">Login</Menu.Item >
-							<Menu.Item  as={Link} to="/temp-signup">Sign-up</Menu.Item >
+							<Menu.Item  as={Link} to="/login">Login</Menu.Item >
+							<Menu.Item  as={Link} to="/signup">Sign-up</Menu.Item >
 						</>
 					}
 				</Menu.Menu>
