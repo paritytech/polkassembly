@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { FormControlProps } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
-import { Form } from 'semantic-ui-react';
+import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button'
@@ -40,13 +38,13 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	}
 
 	return (
-		<Row className={className}>
-			<Col xs={0} sm={0} md={2} lg={2}></Col>
-			<Col xs={12} sm={12} md={8} lg={8}>
+		<Grid className={className}>
+			<Grid.Column width={2}></Grid.Column>
+			<Grid.Column width={12}>
 				<Form>
 					<h3>Sign Up</h3>
 					<Form.Group controlId="formSignIn">
-						<Form.Field>
+						<Form.Field width={16}>
 							<label>Username</label>
 							<input
 								onChange={onUserNameChange} 
@@ -54,7 +52,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								type="text"
 							/>
 						</Form.Field>
-						<Form.Field>
+						<Form.Field width={16}>
 							<label>Email</label>
 							<input
 								onChange={onEmailChange} 
@@ -68,7 +66,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group>
 
 					<Form.Group controlId="formSignInPassword">
-						<Form.Field>
+						<Form.Field width={16}>
 							<label>Password</label>
 							<input
 								onChange={onPasswordChange} 
@@ -76,7 +74,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								type='password'
 							/>
 						</Form.Field>
-					</Form.Group>
+					</Form.Group >
 					<div className={'mainButtonContainer'}>
 						<Button
 							onClick={handleClick}
@@ -88,15 +86,17 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						</Button>
 					</div>
 				</Form>
-			</Col>
-			<Col xs={0} sm={0} md={2} lg={2}></Col>
-		</Row>
+			</Grid.Column>
+			<Grid.Column width={2}></Grid.Column>
+		</Grid>
 	)
 };
 
 export default styled(SignupForm)`
+
 	form {
 		padding: 1.25rem 1.875rem 2.5rem 1.875rem;
+		margin-top: 2.5rem;
 		background-color: #FFF;
 		border: 1px solid #EEE;
 	}
@@ -112,6 +112,15 @@ export default styled(SignupForm)`
 			font-size:0.875rem;
 			font-weight: 500;
 		}
+
+		> label {
+			font-weight: 500;
+		}
+	}
+
+	.ui.form .field>label {
+		font-size:0.875rem;
+		font-weight: 500;
 	}
 
 	input {
@@ -126,6 +135,20 @@ export default styled(SignupForm)`
 
 	input:focus {
 		outline: 0;
+	}
+
+	.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url] {
+		font-family: 'Roboto';
+		font-size: 0.875rem;
+		color: #282828;
+		border: 1 px solid #EEE;
+		border-radius: 0rem;
+		text-indent: 0.626rem;
+		padding: 0.625rem 0 0.5rem 0;
+		&:focus {
+			outline: 0;
+			border-color: #EEE;
+		}	
 	}
 
 	.text-muted {
