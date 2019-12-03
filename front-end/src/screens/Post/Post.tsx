@@ -22,7 +22,7 @@ const Post = ( { data }: {data: MyPost}) => {
 	);
 }
 
-// FIXME Should be typed  
+// FIXME Should be typed
 const PostContent = ({ post } : any) => {
 	const { author, category, content, title } = post;
 

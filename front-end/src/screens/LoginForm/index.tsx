@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
-// import Alert from 'react-bootstrap/Alert';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { login, handleLoginUser } from '../../services/auth.service';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { Button } from '../../components/Button';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useLoginMutation } from '../../generated/auth-graphql';
+import { handleLoginUser } from '../../services/auth.service';
 
 interface Props {
 	className?: string
@@ -15,76 +15,81 @@ interface Props {
 const LoginForm = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
-	// const [showError, setShowError] = useState<boolean>(true)
-	// const [error, setError] = useState('');
 	const currentUser = useContext(UserDetailsContext)
 	const history = useHistory();
-	
+	const [loginMutation, { data, loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
+
+	useEffect(() => {
+		if (data && data.login && data.login.token && data.login.user) {
+			handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
+			history.push('/');
+		}
+	},[currentUser, data, history])
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
 
 		if (username && password){
-			login({ password, username })
-				.then((data) => data.json())
-				.then((data) => {
-					handleLoginUser(data, currentUser);
-					// redirect to the home
-					history.push('/');
-				})
-				.catch((error: Error) => {
-					console.log('login error',error)
-					// setError(error.message)
-				});
+			loginMutation({
+				variables: {
+					password,
+					username
+				}
+			})
 		}
 	}
 
 	return (
-		<>
-			{/* { showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> } */}
-			<Grid className={className}>
-				<Grid.Column width={2}/>
-				<Grid.Column width={12}>
-					<Form>
-						<h3>Login</h3>
-						<Form.Group controlId="formSignIn">
-							<Form.Field width={16}>
-								<label>Username</label>
-								<input
-									onChange={onUserNameChange} 
-									placeholder='John'
-									type="text"
-								/>
-							</Form.Field>
-						</Form.Group>
+		<Grid className={className}>
+			<Grid.Column width={2}/>
+			<Grid.Column width={12}>
+				<Form>
+					<h3>Login</h3>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label>Username</label>
+							<input
+								onChange={onUserNameChange}
+								placeholder='John'
+								type="text"
+							/>
+						</Form.Field>
+					</Form.Group>
 
-						<Form.Group controlId="formSignInPassword">
-							<Form.Field width={16}>
-								<label>Password</label>
-								<input
-									onChange={onPasswordChange} 
-									placeholder='Password'
-									type="password"
-								/>
-							</Form.Field>
-						</Form.Group>
-						<div className={'mainButtonContainer'}>
-							<Button
-								onClick={handleClick}
-								type='submit'
-								variant='primary'
-								className='primary'
-							>
-									Login
-							</Button>
-						</div>
-					</Form>
-				</Grid.Column>
-				<Grid.Column width={2}/>
-			</Grid>
-		</>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label>Password</label>
+							<input
+								onChange={onPasswordChange}
+								placeholder='Password'
+								type="password"
+							/>
+						</Form.Field>
+					</Form.Group>
+					<div className={'mainButtonContainer'}>
+						<Button
+							className="primary"
+							disabled={loading}
+							onClick={handleClick}
+							type="submit"
+							variant="primary"
+						>
+							Login
+						</Button>
+						{error &&
+						<>
+							<br/><div> Error: {error} </div>
+						</>
+						}
+					</div>
+				</Form>
+			</Grid.Column>
+			<Grid.Column width={2}/>
+		</Grid>
 	)
 };
 

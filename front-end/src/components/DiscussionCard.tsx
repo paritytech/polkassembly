@@ -39,7 +39,7 @@ export interface DiscussionProps {
   creation_date: string
   replies?: string
   title: string
-} 
+}
 
 export default function Discussion ({
 	author,
@@ -53,7 +53,7 @@ export default function Discussion ({
 			<h4>{title}</h4>
 			<div className="authorAndDate">posted by <span>{author}</span> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
 			<ul>
-				<li><FaComment/> {replies} replies</li>                 
+				<li><FaComment/> {replies} replies</li>
 			</ul>
 		</DiscussionCard>
 	)

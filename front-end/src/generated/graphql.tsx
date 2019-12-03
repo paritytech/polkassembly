@@ -1,11 +1,7 @@
 import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
-import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string,
@@ -2456,23 +2452,6 @@ export const CreatePostDocument = gql`
 }
     `;
 export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
-export type CreatePostComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreatePostMutation, CreatePostMutationVariables>, 'mutation'>;
-
-    export const CreatePostComponent = (props: CreatePostComponentProps) => (
-      <ApolloReactComponents.Mutation<CreatePostMutation, CreatePostMutationVariables> mutation={CreatePostDocument} {...props} />
-    );
-    
-export type CreatePostProps<TChildProps = {}> = ApolloReactHoc.MutateProps<CreatePostMutation, CreatePostMutationVariables> & TChildProps;
-export function withCreatePost<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  CreatePostMutation,
-  CreatePostMutationVariables,
-  CreatePostProps<TChildProps>>) {
-    return ApolloReactHoc.withMutation<TProps, CreatePostMutation, CreatePostMutationVariables, CreatePostProps<TChildProps>>(CreatePostDocument, {
-      alias: 'createPost',
-      ...operationOptions
-    });
-};
 
 /**
  * __useCreatePostMutation__
@@ -2507,23 +2486,6 @@ export const CategoriesDocument = gql`
   }
 }
     ${CatfragmentFragmentDoc}`;
-export type CategoriesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CategoriesQuery, CategoriesQueryVariables>, 'query'>;
-
-    export const CategoriesComponent = (props: CategoriesComponentProps) => (
-      <ApolloReactComponents.Query<CategoriesQuery, CategoriesQueryVariables> query={CategoriesDocument} {...props} />
-    );
-    
-export type CategoriesProps<TChildProps = {}> = ApolloReactHoc.DataProps<CategoriesQuery, CategoriesQueryVariables> & TChildProps;
-export function withCategories<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  CategoriesQuery,
-  CategoriesQueryVariables,
-  CategoriesProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, CategoriesQuery, CategoriesQueryVariables, CategoriesProps<TChildProps>>(CategoriesDocument, {
-      alias: 'categories',
-      ...operationOptions
-    });
-};
 
 /**
  * __useCategoriesQuery__
@@ -2567,23 +2529,6 @@ export const LatestPostsDocument = gql`
   }
 }
     `;
-export type LatestPostsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<LatestPostsQuery, LatestPostsQueryVariables>, 'query'>;
-
-    export const LatestPostsComponent = (props: LatestPostsComponentProps) => (
-      <ApolloReactComponents.Query<LatestPostsQuery, LatestPostsQueryVariables> query={LatestPostsDocument} {...props} />
-    );
-    
-export type LatestPostsProps<TChildProps = {}> = ApolloReactHoc.DataProps<LatestPostsQuery, LatestPostsQueryVariables> & TChildProps;
-export function withLatestPosts<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  LatestPostsQuery,
-  LatestPostsQueryVariables,
-  LatestPostsProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, LatestPostsQuery, LatestPostsQueryVariables, LatestPostsProps<TChildProps>>(LatestPostsDocument, {
-      alias: 'latestPosts',
-      ...operationOptions
-    });
-};
 
 /**
  * __useLatestPostsQuery__
@@ -2631,23 +2576,6 @@ export const PostAndRepliesDocument = gql`
   }
 }
     `;
-export type PostAndRepliesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<PostAndRepliesQuery, PostAndRepliesQueryVariables>, 'query'> & ({ variables: PostAndRepliesQueryVariables; skip?: boolean; } | { skip: boolean; });
-
-    export const PostAndRepliesComponent = (props: PostAndRepliesComponentProps) => (
-      <ApolloReactComponents.Query<PostAndRepliesQuery, PostAndRepliesQueryVariables> query={PostAndRepliesDocument} {...props} />
-    );
-    
-export type PostAndRepliesProps<TChildProps = {}> = ApolloReactHoc.DataProps<PostAndRepliesQuery, PostAndRepliesQueryVariables> & TChildProps;
-export function withPostAndReplies<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  PostAndRepliesQuery,
-  PostAndRepliesQueryVariables,
-  PostAndRepliesProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, PostAndRepliesQuery, PostAndRepliesQueryVariables, PostAndRepliesProps<TChildProps>>(PostAndRepliesDocument, {
-      alias: 'postAndReplies',
-      ...operationOptions
-    });
-};
 
 /**
  * __usePostAndRepliesQuery__

@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { Button } from '../../components/Button'
-import { signUp, handleLoginUser } from '../../services/auth.service';
+import { Button } from '../../components/Button';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useSignupMutation } from '../../generated/auth-graphql';
+import { handleLoginUser } from '../../services/auth.service';
 
 interface Props {
 	className?: string
@@ -17,23 +18,31 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [password, setPassword] = useState<string | undefined>('');
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
-    
+	const [signupMutation, { data, loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
-    
+
+	useEffect(() => {
+		if (data && data.signup && data.signup.token && data.signup.user) {
+			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
+			history.push('/');
+		}
+	},[currentUser, data, history])
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
 
 		if (username && email && password){
-			signUp({ email ,password, username })
-				.then((data) => data.json())
-				.then((data) => {
-					handleLoginUser(data, currentUser);
-					// redirect to the home
-					history.push('/');
-				})
+			signupMutation({
+				variables: {
+					email,
+					password,
+					username
+				}
+			})
 		}
 	}
 
@@ -47,7 +56,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
-								onChange={onUserNameChange} 
+								onChange={onUserNameChange}
 								placeholder='John'
 								type="text"
 							/>
@@ -57,7 +66,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Email</label>
 							<input
-								onChange={onEmailChange} 
+								onChange={onEmailChange}
 								placeholder='john@doe.com'
 								type="email"
 							/>
@@ -70,7 +79,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
-								onChange={onPasswordChange} 
+								onChange={onPasswordChange}
 								placeholder='Password'
 								type='password'
 							/>
@@ -78,13 +87,19 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group >
 					<div className={'mainButtonContainer'}>
 						<Button
+							className="primary"
+							disabled={loading}
 							onClick={handleClick}
 							type="submit"
 							variant="primary"
-							className="primary"
 						>
 							Sign-up
 						</Button>
+						{error &&
+						<>
+							<br/><div> Error: {error} </div>
+						</>
+						}
 					</div>
 				</Form>
 			</Grid.Column>
