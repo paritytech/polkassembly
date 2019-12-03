@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import jwt from 'jsonwebtoken'
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react'
@@ -30,7 +31,8 @@ const Container = styled.div`
 `;
 
 const MenuBar: React.FC = () => {
-	const currentUser = useContext(UserDetailsContext)
+	const currentUser = useContext(UserDetailsContext);
+	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
 
 	useEffect(() => {
 		if (!currentUser.id){
@@ -38,7 +40,8 @@ const MenuBar: React.FC = () => {
 			// check in the local storage
 			const token = getLocalStorageToken()
 			if (token) {
-				const tokenPayload = token && parseJwt(token);
+				const tokenPayload:any = token && publicKey && jwt.verify(token, publicKey);
+				console.log('tokenPayload',tokenPayload);
 
 				if (tokenPayload){
 					const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
