@@ -71,7 +71,7 @@ const CreatePost = ({ className }:Props) => {
 			<Col xs={12} sm={12} md={8} lg={8}>
 				<Form>
 					<h3>New Post</h3>
-					<Form.Group controlId="postTitle">
+					<Form.Group>
 						<Form.Field>
 							<label>Title</label>
 							<input
@@ -82,7 +82,7 @@ const CreatePost = ({ className }:Props) => {
 						</Form.Field>
 					</Form.Group>
 
-					<Form.Group controlId="formSignInPassword">
+					<Form.Group>
 						<Form.TextArea 
 							label='Content' 
 							placeholder='The content of your post...'

@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { FormControlProps } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -19,13 +18,14 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext)
     
-	const onEmailChange = (event: React.FormEvent<FormControlProps>) => setEmail(event.currentTarget.value);
-	const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
-	const onPasswordChange = (event: React.FormEvent<FormControlProps>) => setPassword(event.currentTarget.value);
+	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
+	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
+	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
     
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
+
 		if (username && email && password){
 			signUp({ email ,password, username })
 				.then((data) => data.json())

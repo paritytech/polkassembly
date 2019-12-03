@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 // import Alert from 'react-bootstrap/Alert';
-import { FormControlProps } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Form, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -21,12 +20,12 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext)
 	const history = useHistory();
 	
-	const onUserNameChange = (event: React.FormEvent<FormControlProps>) => setUsername(event.currentTarget.value);
-	const onPasswordChange = (event: React.FormEvent<FormControlProps>) => setPassword(event.currentTarget.value);
+	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
+	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
-        
+
 		if (username && password){
 			login({ password, username })
 				.then((data) => data.json())
