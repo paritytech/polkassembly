@@ -14,8 +14,7 @@ services:
     # persistent data locally
     - ./data:/var/lib/postgresql/data
   graphql-engine:
-    image: hasura/graphql-engine:v1.0.0-beta.10.cli-migrations
-    # image: hasura/graphql-engine:v1.0.0-beta.10
+    image: hasura/graphql-engine:v1.0.0-rc.1.cli-migrations
     volumes:
     # migration data
     - ./hasura-migrations/migrations:/hasura-migrations

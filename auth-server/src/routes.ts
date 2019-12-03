@@ -1,16 +1,10 @@
 import { Router } from 'express'
 
 import { upload, uploadController } from './controllers/upload'
-import { getVerifyEmail } from './controllers/user'
-
-const auth = Router()
-
-auth.get('/verify-email', getVerifyEmail)
-// unused
-auth.post('/upload-profile-pic', upload.single('file'), uploadController)
 
 const router = Router()
 
-router.use('/auth', auth)
+// unused
+router.post('/auth/upload-profile-pic', upload.single('file'), uploadController)
 
 export default router

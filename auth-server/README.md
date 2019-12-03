@@ -123,7 +123,7 @@ mutation My_Sigup_function{
 ```bash
 curl 'http://localhost:8010/auth/graphql' \
 -H 'content-type: application/json' \
---data '{"operationName":"My_Sigup_function","variables":{},"query":"mutation {\n  signup(email: \"test@email.com\", password: \"sup3er5ecurePassw0rd\", username: \"john\", name: \"John Doe\") {\n    user {\n      id\n    }\n    token\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  signup(email: \"test@email.com\", password: \"sup3er5ecurePassw0rd\", username: \"john\", name: \"John Doe\") {\n    user {\n      id\n    }\n    token\n  }\n}\n"}'
 ```
 
 On success, we get the response:
@@ -163,7 +163,7 @@ curl 'http://localhost:8010/auth/graphql' \
 -H 'content-type: application/json' \
 --cookie 'cookie-file' \
 --cookie-jar 'cookie-file' \
---data '{"operationName":"My_login_function","variables":{},"query":"mutation My_login_function {\n  login(username: \"john\", password: \"sup3er5ecurePassw0rd\") {\n    user {\n      id\n      username\n      name\n    }\n    token\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation My_login_function {\n  login(username: \"john\", password: \"sup3er5ecurePassw0rd\") {\n    user {\n      id\n      username\n      name\n    }\n    token\n  }\n}\n"}'
 ```
 
 Note that we need to support cookies as the refresh token (long living) will be set by the server.
@@ -200,7 +200,7 @@ query Get_new_token {
 ```bash
 curl 'http://localhost:8010/auth/graphql' \
   -H 'content-type: application/json' \
-  --data '{"operationName":"Get_new_token","variables":{},"query":"query Get_new_token {\n  token {\n    token\n  }\n}\n"}' \
+  --data '{"operationName":null,"variables":{},"query":"query Get_new_token {\n  token {\n    token\n  }\n}\n"}' \
   --cookie 'cookie-file' \
   --cookie-jar 'cookie-file'
 ```
@@ -229,7 +229,7 @@ mutation Change_password{
 curl 'http://localhost:8010/auth/graphql' \
 -H "Authorization: Bearer eyJhbGciOiJSU...Hx0WG53yS4yhfRzxsQ2Q" \
 -H "Content-Type: application/json" \
---data '{"operationName":"Change_password","variables":{},"query":"mutation Change_password {\n  changePassword(oldPassword: \"sup3er5ecurePassw0rd\", newPassword: \"newSup3er5ecurePassw0rd\") {\n    message\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation Change_password {\n  changePassword(oldPassword: \"sup3er5ecurePassw0rd\", newPassword: \"newSup3er5ecurePassw0rd\") {\n    message\n  }\n}\n"}'
 ```
 
 On success, we get the response
@@ -255,9 +255,9 @@ mutation Change_name{
 
 ```bash
 curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMCIsIm5hbWUiOiJqb2huIiwiaWF0IjoxNTc1MDQ0NDU5LCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjEwIiwieC1oYXN1cmEtdXNlci1lbWFpbCI6InRlc3RAZW1haWwuY29tIn0sImV4cCI6MTU3NTA0ODA1OX0.KMScDA1cMtr5agye2b4N_NKRFPpBRgO-pmxOUtf0LAOfP7c3LY5lgK6ej0aNe2itKKYr3b-l9RoVAqptTWkkJabv1vMOCP_sVlXrFqbYljXHl7giLPudgxpsoEJ3JEmbxNqGh0Pm2rGsLo3Cv7Gx-a9ablSsSlbOdcAeJrEVncfpAtyb9HJ4Gw0ITT0UNv1_HBEEKud0BO_tbhGTQyXpyy60qpZH8j9W-eFORYfqmAaSNZhBfASaPT3ULYSU84lBeZwNzvFggTrPG6h8U7dUHz3EAgtwDacjcjrsEksb7E_f41eZOrPWKBmNiLqDwSS7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
 -H "Content-Type: application/json" \
---data '{"operationName":"Change_name","variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n    message\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n    message\n  }\n}\n"}'
 ```
 
 On success, we get the response
@@ -267,6 +267,35 @@ On success, we get the response
   "data":{
     "changeName":{
       "message":"Name succefully changed"
+    }
+  }
+}
+```
+
+### Email verification
+We can verify a user email by calling the `verifyEmail` mutation and pass the verification token:
+
+```gql
+mutation {
+  verifyEmail(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  verifyEmail(token: \"1a068d3f-4260-4538-b0ef-2a6c91d562f4\") {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "verifyEmail": {
+      "message": "Thank you for verifying your account"
     }
   }
 }

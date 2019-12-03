@@ -190,7 +190,7 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({ email_verified: true })
-			.findById(verifyToken.id)
+			.findById(verifyToken.user_id)
 
 		await EmailVerificationToken
 			.query()
@@ -224,12 +224,6 @@ export default class AuthService {
 				email_verified: false
 			})
 			.findById(userId)
-
-		// Invalidate all refresh token for user
-		await RefreshToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId })
 
 		// Invalidate all email verification token for user
 		await EmailVerificationToken
