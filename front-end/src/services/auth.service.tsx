@@ -74,9 +74,9 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 	})
 }
 
-export const logout = (currentUser: UserDetailsContextType) => {
+export const logout = (setUserDetailsContextState: UserDetailsContextType['setUserDetailsContextState']) => {
 	deleteLocalStorageToken();
-	currentUser.setUserDetailsContextState((prevState) => {
+	setUserDetailsContextState((prevState) => {
 		return {
 			...prevState,
 			id: null,
