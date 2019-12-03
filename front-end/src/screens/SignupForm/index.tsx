@@ -8,52 +8,11 @@ import { Button } from '../../components/Button'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/auth-graphql';
 
-// const Container = styled.div`
-// 	form {
-// 		padding: 1.25rem 1.875rem 2.5rem 1.875rem;
-// 		background-color: #FFF;
-// 		border: 1px solid #EEE;
-// 	}
-
-// 	form h3 {
-// 		margin-bottom: 1.875rem;
-// 	}
-
-// 	.form-label {
-// 		font-size:0.875rem;
-// 		font-weight: 500;
-// 	}
-	
-// 	.form-control {
-// 		font-size:0.875rem;
-// 		color: #282828;
-// 		border: 1 px solid #EEE;
-// 		border-radius: 0rem;
-// 		margin-bottom: 1.25rem;
-// 	}
-	
-// 	.form-control:focus {
-// 		color: #282828;
-// 		background-color: #fff;
-// 		border-color: #B5AEAE;
-// 		outline: 0;
-// 		box-shadow: none;
-// 	}
-
-// 	.form-text {
-// 		margin-top: -0.625rem;
-// 	}
-	
-// 	::placeholder {
-// 		color: #AAA;
-// 	}
-// `;
-
 interface Props {
 	className?: string
 }
 
-const SignupForm = ({ className }: Props): JSX.Element => {
+const SignupForm = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
@@ -69,6 +28,7 @@ const SignupForm = ({ className }: Props): JSX.Element => {
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
+
 		if (username && email && password){
 			signupMutation({
 				variables: {
@@ -92,7 +52,7 @@ const SignupForm = ({ className }: Props): JSX.Element => {
 			<Grid.Column width={12}>
 				<Form>
 					<h3>Sign Up</h3>
-					<Form.Group controlId="formSignIn">
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
@@ -101,6 +61,8 @@ const SignupForm = ({ className }: Props): JSX.Element => {
 								type="text"
 							/>
 						</Form.Field>
+					</Form.Group>
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Email</label>
 							<input
@@ -109,10 +71,11 @@ const SignupForm = ({ className }: Props): JSX.Element => {
 								type="email"
 							/>
 							<div className="text-muted">
-									We&apos;ll never share your email with anyone else.
+								We&apos;ll never share your email with anyone else.
 							</div>
 						</Form.Field>
-
+					</Form.Group>
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
@@ -121,17 +84,17 @@ const SignupForm = ({ className }: Props): JSX.Element => {
 								type='password'
 							/>
 						</Form.Field>
-						
-						<div className={'mainButtonContainer'}>
-							<Button
-								onClick={handleClick}
-								type="submit"
-								variant="primary"
-							>
-									Sign-up
-							</Button>
-						</div>
 					</Form.Group >
+					<div className={'mainButtonContainer'}>
+						<Button
+							onClick={handleClick}
+							type="submit"
+							variant="primary"
+							className="primary"
+						>
+							Sign-up
+						</Button>
+					</div>
 				</Form>
 			</Grid.Column>
 			<Grid.Column width={2}/>

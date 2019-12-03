@@ -45,7 +45,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		<>
 			{/* { showError && error && <Alert variant='danger' onClose={() => setShowError(false)} dismissible>{error}</Alert> } */}
 			<Grid className={className}>
-				<Grid.Column width={2}></Grid.Column>
+				<Grid.Column width={2}/>
 				<Grid.Column width={12}>
 					<Form>
 						<h3>Login</h3>
@@ -82,7 +82,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						</div>
 					</Form>
 				</Grid.Column>
-				<Grid.Column width={2}></Grid.Column>
+				<Grid.Column width={2}/>
 			</Grid>
 		</>
 	)
