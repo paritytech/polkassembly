@@ -1,0 +1,44 @@
+{
+	"name": "stiched-graphql-schema",
+	"version": "1.0.0",
+	"description": "oauth 2.0 server for governance platform",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "yarn tsc && node build/index.js",
+		"lint": "eslint . --ext .js,.ts",
+		"lint:fix": "eslint . --ext .js,.ts --fix",
+		"tsc": "tsc",
+		"migrate": "knex migrate:latest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/paritytech/polkassembly.git"
+	},
+	"author": "Aravind Shankar",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/paritytech/polkassembly/issues"
+	},
+	"homepage": "https://github.com/paritytech/polkassembly/tree/master#readme",
+	"dependencies": {
+		"apollo-link-http": "^1.5.16",
+		"apollo-server": "^2.9.12",
+		"apollo-server-express": "^2.9.12",
+		"cors": "^2.8.5",
+		"graphql": "^14.5.8",
+		"typescript": "^3.7.2"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.2",
+		"@types/node": "^12.12.14",
+		"@typescript-eslint/eslint-plugin": "^2.8.0",
+		"@typescript-eslint/parser": "^2.8.0",
+		"eslint": "^6.6.0",
+		"eslint-config-prettier": "^6.7.0",
+		"eslint-config-standard": "^14.1.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1"
+	}
+}
