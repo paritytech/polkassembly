@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const className = 'Reply';
-// FIXME Should be typed  
+// FIXME Should be typed
 const Replies = ({ replies } : any) => {
 	return (
 		<div className='Replies'>

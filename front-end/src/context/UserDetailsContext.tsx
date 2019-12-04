@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react'
 import { UserDetailsContextType } from '../types'
 
 const initialUserDetailsContext : UserDetailsContextType = {
-	id: null, 
+	id: null,
 	picture: null,
 	setUserDetailsContextState : (): void => {
 		throw new Error('setUserDetailsContextState function must be overridden');
