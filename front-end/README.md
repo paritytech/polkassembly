@@ -17,6 +17,7 @@ Create a `.env` file with the following environmen variable
 REACT_APP_AUTH_SERVER_GRAPHQL_URL="http://localhost:8010/auth/graphql"
 REACT_APP_ENV="dev"
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
+REACT_APP_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIIBI...wIDAQAB\n-----END PUBLIC KEY-----"
 
 # used for graphql type generation
 HASURA_GRAPHQL_ADMIN_SECRET= "<YOUR_HASURA_ADMIN_SECRET>"
@@ -35,4 +36,3 @@ We use `@graphql-codegen` to generate types directly form the DB types (hasura).
 ### Run
 In the project directory, you can run:
 - `yarn; yarn start`
-

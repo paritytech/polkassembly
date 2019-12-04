@@ -9,7 +9,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { getLocalStorageToken, isLocalStorageTokenValid, getRefreshedToken, storeLocalStorageToken } from './services/auth.service';
+import {
+	isLocalStorageTokenValidOrUndefined,
+	getLocalStorageToken,
+	getRefreshedToken,
+	storeLocalStorageToken
+} from './services/auth.service';
 
 const setAuthorizationLink = setContext(() => {
 	const token = getLocalStorageToken()
@@ -34,7 +39,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 		// FIXME logout user and redirect to login
 	},
 	handleFetch: (accessToken: string) => storeLocalStorageToken(accessToken),
-	isTokenValidOrUndefined:  isLocalStorageTokenValid
+	isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
 })
 
 const link = ApolloLink.from([

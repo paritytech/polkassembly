@@ -32,3 +32,11 @@ export const LOGIN = gql`
     ${user_fragment}
 `;
 
+export const LOGOUT = gql`
+    mutation LOGOUT {
+        logout {
+            message
+        }
+    }
+`;
+

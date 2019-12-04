@@ -1,5 +1,6 @@
-import { UserDetailsContextType } from '../types'
-import parseJwt from '../util/parseJWT';
+import jwt from 'jsonwebtoken'
+
+import { UserDetailsContextType, JWTPayploadType } from '../types'
 import { LoginResponse } from '../generated/auth-graphql';
 
 /**
@@ -19,17 +20,26 @@ export const getLocalStorageToken = (): string|null => {
 }
 
 /**
- * Tells whether the jwt token stored locally
- * is set and not expired.
+ * Remove the the jwt from localstorage
+ * if any.
  */
-export const isLocalStorageTokenValid = (): boolean => {
+export const deleteLocalStorageToken = (): void => {
+	return localStorage.removeItem('Authorization');
+}
+
+/**
+ * Tells whether the jwt token stored locally
+ * is expired. It returns true if the token isn't set.
+ */
+export const isLocalStorageTokenValidOrUndefined = (): boolean => {
 	let token = localStorage.getItem('Authorization') || null;
 
 	if (token) {
-		const tokenPayload = parseJwt(token);
+		const tokenPayload = jwt.decode(token) as JWTPayploadType;
 		return tokenPayload.exp > Date.now() / 1000
 	} else {
-		return false
+		// if there's no token we shouldn't ask for a refresh token
+		return true
 	}
 };
 
@@ -39,7 +49,7 @@ export const isLocalStorageTokenValid = (): boolean => {
  */
 export const getRefreshedToken = () => (
 	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
-		body: JSON.stringify({ 'operationName':null,'query':'query Get_new_token {  token {    token  }}' }),
+		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
 		credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json'
@@ -64,9 +74,13 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 	})
 }
 
-// export const signOut = () => {
-//   localStorage.removeItem('Authorization')
-//   // window.location.href = '/sign-in'
-
-//   return store.clearStore()
-// }
+export const logout = (setUserDetailsContextState: UserDetailsContextType['setUserDetailsContextState']) => {
+	deleteLocalStorageToken();
+	setUserDetailsContextState((prevState) => {
+		return {
+			...prevState,
+			id: null,
+			username: null
+		}
+	})
+}
