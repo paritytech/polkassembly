@@ -37,13 +37,8 @@ export const isLocalStorageTokenValidOrUndefined = (): boolean => {
 	if (token) {
 		const tokenPayload = jwt.decode(token) as JWTPayploadType | null;
 
-		if(tokenPayload){
-			return tokenPayload.exp > Date.now() / 1000
-		} else {
-			// the token couldn't be decoded
-			// ask for a new one.
-			return false
-		}
+		// if the token couldn't be decoded (tokenPayload is null) ask for a new one.
+		return tokenPayload ? tokenPayload.exp > Date.now() / 1000 : false
 	} else {
 		// if there's no token we shouldn't ask for a refresh token
 		return true
