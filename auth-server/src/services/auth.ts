@@ -259,7 +259,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new AuthenticationError('User not found')
+			return
 		}
 
 		const expires = new Date(Date.now() + ONE_DAY).toISOString() // 24 hours
