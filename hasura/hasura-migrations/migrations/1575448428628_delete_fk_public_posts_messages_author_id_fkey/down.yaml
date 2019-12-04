@@ -1,0 +1,4 @@
+- args:
+    sql: alter table "public"."posts" add foreign key ("author_id") references "public"."users"("id")
+      on update restrict on delete cascade;
+  type: run_sql
