@@ -1,13 +1,7 @@
 import React, { useState, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { FormControlProps } from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Spinner from 'react-bootstrap/Spinner';
 import { useHistory } from 'react-router-dom';
-import { Form } from 'semantic-ui-react';
-import styled from 'styled-components'
+import { Button, Form, Grid } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
@@ -16,7 +10,7 @@ interface Props {
 	className?: string
 }
 
-const CreatePost = ({ className }:Props) => {
+const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState<string | undefined>('');
 	const [content, setContent] = useState<string | undefined>('');
 	const [selectedCategory, setSetlectedCategorie] = useState<number | null>(null);
@@ -39,25 +33,25 @@ const CreatePost = ({ className }:Props) => {
 
 	}
 
-	const onTitleChange = (event: React.FormEvent<FormControlProps>) => setTitle(event.currentTarget.value);
-	const onContentChange = (event: React.FormEvent<FormControlProps>) => setContent(event.currentTarget.value);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
+	const onContentChange = (event: React.FormEvent<HTMLTextAreaElement>) => setContent(event.currentTarget.value);
 
 	const renderCategories = () => {
 		if (!catData || !catData.categories) return null
 
 		return (
-			<ButtonGroup aria-label="Categorie" size="sm">
+			<Button.Group size="small">
 				{ catData.categories.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} variant="secondary" onClick={() => setSetlectedCategorie(id)}>{name}</Button>
+					return <Button key={id} onClick={() => setSetlectedCategorie(id)}>{name}</Button>
 				})}
-			</ButtonGroup>
+			</Button.Group>
 		);
 	}
 
 	if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
 
 	if (loading) {
-		return <Spinner animation="grow" />;
+		return <div>Loading...</div>;
 	}
 
 	if (error || catError) {
@@ -66,9 +60,9 @@ const CreatePost = ({ className }:Props) => {
 	}
 
 	return (
-		<Row className={className}>
-			<Col className={'bla'} xs={0} sm={0} md={2} lg={2}/>
-			<Col xs={12} sm={12} md={8} lg={8}>
+		<Grid className={className}>
+			<Grid.Column width={2}/>
+			<Grid.Column width={12}>
 				<Form>
 					<h3>New Post</h3>
 					<Form.Group>
@@ -101,9 +95,9 @@ const CreatePost = ({ className }:Props) => {
 						</Button>
 					</div>
 				</Form>
-			</Col>
-			<Col xs={0} sm={0} md={2} lg={2}/>
-		</Row>
+			</Grid.Column>
+			<Grid.Column width={2}/>
+		</Grid>
 	);
 };
 

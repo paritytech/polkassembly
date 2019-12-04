@@ -30,15 +30,20 @@ const httpLink = new HttpLink({
 });
 
 const tokenRefreshLink = new TokenRefreshLink({
-	accessTokenField: 'data.token',
+	accessTokenField: 'token',
 	fetchAccessToken: getRefreshedToken,
 	handleError: (err:any) => {
-		console.warn('Your refresh token is invalid. Try to login again');
-		console.error(err);
-
-		// FIXME logout user and redirect to login
+		console.error('There has been a problem with your fetch operation: ', err);
 	},
-	handleFetch: (accessToken: string) => storeLocalStorageToken(accessToken),
+	handleFetch: (accessToken) => storeLocalStorageToken(accessToken),
+	handleResponse: () => async (response:any) => {
+		if(response.ok) {
+			const res = await response.json()
+			return res.data.token
+		}
+
+		throw new Error('Network response was not ok.')
+	},
 	isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
 })
 
