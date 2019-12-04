@@ -9,8 +9,8 @@ import {
 
   // graphql API metadata
   const graphqlApis = [
-    { uri: 'http://localhost:8010/auth/graphql' },
-    { uri: 'http://localhost:8080/v1/graphql' }
+    { uri: 'http://localhost:8080/v1/graphql' },
+    { uri: 'http://localhost:8010/auth/graphql' }
   ]
 
   // create executable schemas from remote GraphQL APIs
