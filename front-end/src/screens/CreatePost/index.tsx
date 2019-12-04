@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { FormControlProps } from 'react-bootstrap/FormControl';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid } from 'semantic-ui-react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
 import { Form } from '../../components/Form';
@@ -12,7 +11,7 @@ interface Props {
 	className?: string
 }
 
-const CreatePost = ({ className }:Props) => {
+const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState<string | undefined>('');
 	const [content, setContent] = useState<string | undefined>('');
 	const [selectedCategory, setSetlectedCategorie] = useState<number | null>(null);
@@ -35,8 +34,8 @@ const CreatePost = ({ className }:Props) => {
 
 	}
 
-	const onTitleChange = (event: React.FormEvent<FormControlProps>) => setTitle(event.currentTarget.value);
-	const onContentChange = (event: React.FormEvent<FormControlProps>) => setContent(event.currentTarget.value);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
+	const onContentChange = (event: React.FormEvent<HTMLTextAreaElement>) => setContent(event.currentTarget.value);
 
 	const renderCategories = () => {
 		if (!catData || !catData.categories) return null
