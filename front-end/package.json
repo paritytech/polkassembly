@@ -4,6 +4,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
+    "@substrate/ui-components": "^0.2.4",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link-context": "^1.0.19",
