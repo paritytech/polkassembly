@@ -45,7 +45,7 @@ import {
     const server = new ApolloServer({
       schema
     })
-    server.listen().then(({url}) => {
+    server.listen(9010).then(({url}) => {
       console.log(`Running at ${url}`)
     })
   }
