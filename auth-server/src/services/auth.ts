@@ -51,7 +51,14 @@ export default class AuthService {
 		}
 	}
 
-	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
+	public async Logout(token: string) {
+		await RefreshToken
+			.query()
+			.patch({ valid: false })
+			.where({ token })
+	}
+
+	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		const salt = randomBytes(32)
 		password = await argon2.hash(password, { salt })
 
