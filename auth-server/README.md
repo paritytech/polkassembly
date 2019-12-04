@@ -300,3 +300,64 @@ On success, we get the response
   }
 }
 ```
+
+### Reset Password
+Reset password is a two step process. We can send reset password link to email by calling the `requestResetPassword` mutation and pass the email:
+
+```gql
+mutation {
+  requestResetPassword(email: "test@example.com"){
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  requestResetPassword(email: \"test@example.com\") {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "requestResetPassword": {
+      "message": "The reset password link was sent to this email, if it exists in our database."
+    }
+  }
+}
+```
+
+Next on receiving the reset password token in email we have to call `resetPassword` mutation with token
+and new Password.
+
+```gql
+mutation {
+  resetPassword(
+    token: "23ads-asd-asda-asd"
+    newPassword: "superSecret"
+  ) {
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  resetPassword(token: \"23ads-asd-asda-asd\", newPassword: \"superSecret\" \n) {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "resetPassword": {
+      "message": "Password successfully reset."
+    }
+  }
+}
+```

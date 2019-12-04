@@ -4,15 +4,22 @@ import { randomBytes } from 'crypto'
 import { uuid } from 'uuidv4'
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server'
 
-import { sendVerificationEmail } from './email'
+import {
+	sendVerificationEmail,
+	sendResetPasswordEmail
+} from './email'
 import { AuthObjectType } from '../types'
 import User from '../model/User'
 import EmailVerificationToken from '../model/EmailVerificationToken'
 import RefreshToken from '../model/RefreshToken'
+import PasswordResetToken from '../model/PasswordResetToken'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
 const publicKey = process.env.JWT_PUBLIC_KEY
 const passphrase = process.env.JWT_KEY_PASSPHRASE
+
+const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000
+const ONE_DAY = 24 * 60 * 60 * 1000
 
 export default class AuthService {
 	constructor(){}
@@ -45,12 +52,16 @@ export default class AuthService {
 	}
 
 	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
+		const salt = randomBytes(32)
+		password = await argon2.hash(password, { salt })
+
 		const user = await User
 			.query()
 			.allowInsert('[email, password, username, name]')
 			.insert({
 				email,
 				password,
+				salt: salt.toString('hex'),
 				username,
 				name,
 				email_verified: false
@@ -94,7 +105,7 @@ export default class AuthService {
 			throw new ForbiddenError('Refresh token not valid')
 		}
 
-		if (refreshToken.expires < Math.floor(Date.now() / 1000)) {
+		if (new Date(refreshToken.expires).getTime() < Math.floor(Date.now() / 1000)) {
 			throw new ForbiddenError('Refresh token expired')
 		}
 
@@ -241,6 +252,68 @@ export default class AuthService {
 
 	}
 
+	public async RequestResetPassword(email: string) {
+		const user = await User
+			.query()
+			.where('email', email)
+			.first()
+
+		if (!user) {
+			return
+		}
+
+		const expires = new Date(Date.now() + ONE_DAY).toISOString() // 24 hours
+
+		const resetToken = await PasswordResetToken
+			.query()
+			.allowInsert('[token, user_id, valid, expires]')
+			.insert({
+				token: uuid(),
+				user_id: user.id,
+				valid: true,
+				expires
+			})
+
+		sendResetPasswordEmail(user, resetToken)
+	}
+
+	public async ResetPassword(token: string, newPassword: string) {
+		const resetToken = await PasswordResetToken
+			.query()
+			.where('token', token)
+			.first()
+
+		if (!resetToken) {
+			throw new Error('password reset token not found')
+		}
+
+		if (!resetToken.valid) {
+			throw new Error('Invalid password reset token')
+		}
+
+		if (new Date(resetToken.expires).getTime() < Date.now()) {
+			throw new Error('Password reset token expired')
+		}
+
+		const salt = randomBytes(32)
+		const password = await argon2.hash(newPassword, { salt })
+
+		await User
+			.query()
+			.patch({
+				salt: salt.toString('hex'),
+				password
+			})
+			.findById(resetToken.user_id)
+
+
+		await PasswordResetToken
+			.query()
+			.patch({ valid: false })
+			.findById(resetToken.id)
+	}
+
+
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']
 		let currentRole = 'user'
@@ -274,7 +347,7 @@ export default class AuthService {
 		const token = uuid()
 		const user_id = id
 		const valid = true
-		const expires = Math.floor(Date.now() / 1000) + (6 * 30 * 24 * 60 * 60) // now + 6 months
+		const expires = new Date(Date.now() + SIX_MONTHS).toISOString() // now + 6 months
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({

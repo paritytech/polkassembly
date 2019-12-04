@@ -6,15 +6,15 @@ const knexConnection = Knex(connection)
 
 Model.knex(knexConnection)
 
-export default class RefreshToken extends Model {
+export default class PasswordResetToken extends Model {
 	readonly id!: number
 	token!: string
 	user_id!: number
-	valid!: boolean
-	expires!: string
+	valid: boolean
+	expires: string
 
 	static get tableName () {
-		return 'refresh_tokens'
+		return 'password_reset_token'
 	}
 
 	static get idColumn () {

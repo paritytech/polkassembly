@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-	return knex.schema.createTable('refresh_tokens', (table) => {
+	return knex.schema.createTable('password_reset_token', (table) => {
 		table.increments('id').primary().notNullable()
 		table.string('token').unique().notNullable()
 		table.integer('user_id').notNullable()
@@ -12,5 +12,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-	return knex.schema.dropTable('refresh_tokens')
+	return knex.schema.dropTable('password_reset_token')
 };
