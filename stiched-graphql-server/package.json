@@ -7,8 +7,7 @@
 		"start": "yarn tsc && node build/index.js",
 		"lint": "eslint . --ext .js,.ts",
 		"lint:fix": "eslint . --ext .js,.ts --fix",
-		"tsc": "tsc",
-		"migrate": "knex migrate:latest"
+		"tsc": "tsc"
 	},
 	"repository": {
 		"type": "git",
