@@ -324,7 +324,7 @@ On success, we get the response
 {
   "data": {
     "requestResetPassword": {
-      "message": "Reset Password link sent to your email."
+      "message": "The reset password link was sent to this email, if it exists in our database."
     }
   }
 }
