@@ -35,7 +35,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 	handleError: (err:any) => {
 		console.error('There has been a problem with your fetch operation: ', err);
 	},
-	handleFetch: (accessToken) => {console.log('access token',accessToken) ;storeLocalStorageToken(accessToken)},
+	handleFetch: (accessToken) => storeLocalStorageToken(accessToken),
 	handleResponse: () => async (response:any) => {
 		if(response.ok) {
 			const res = await response.json()
