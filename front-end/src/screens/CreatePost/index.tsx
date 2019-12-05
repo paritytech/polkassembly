@@ -112,4 +112,36 @@ export default styled(CreatePost)`
 		flex-direction: column;
 		justify-content: center;
 	}
+
+	.ui.button {
+		font-family: 'Roboto Mono';
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		border-radius: 0.188rem;
+		border: none;
+		padding: 0.625rem 0.938rem;
+		color: #fff;
+		background-color: #EB5757;
+		&:focus, &:hover {
+			background-color: #CC3D3D;
+        	outline: none;
+		}
+	}
+
+	.ui.small.buttons {
+		margin: 0 0 1.875rem 0;
+
+		.ui.button {
+			font-size: 0.75rem;
+			background-color: #CCC;
+			padding: 0.313rem 0.5rem;
+			border-radius: 0.125rem;
+			letter-spacing: 0.031rem;
+			&:focus, &:hover {
+				background-color: #282828;
+				outline: none;
+			}
+		}
+	}
 `
