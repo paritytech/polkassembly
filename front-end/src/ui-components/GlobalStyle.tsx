@@ -38,9 +38,18 @@ export const GlobalStyle = createGlobalStyle`
         margin: 3.75rem auto 0 auto;
     }
 
+    .ui.container {
+        margin: 3.75rem auto 0 auto;
+    }
+
     @media (max-width: 1200px) {
         .container-fluid {
         padding: 0 2.5rem 0 2.5rem;
+        }
+
+        .ui.grid {
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
@@ -49,6 +58,11 @@ export const GlobalStyle = createGlobalStyle`
         margin: 2.5rem auto 0 auto;
         padding: 0 1.25rem 0 1.25rem;
         }
+
+        .ui.grid {
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
 
     @media (max-width: 576px) {
@@ -56,12 +70,9 @@ export const GlobalStyle = createGlobalStyle`
         padding:0;
         }
 
-        .row {
-            margin: 0px;
-        }
-
-        .col-sm-12 {
-            padding: 0;
+        .ui.grid {
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
@@ -71,6 +82,11 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 500;
         color: #222;
         margin-bottom: 1.25rem;
+    }
+
+    h4, h5, h6 {
+        font-family: 'Roboto';
+        font-weight: 500;   
     }
 
     .btn {

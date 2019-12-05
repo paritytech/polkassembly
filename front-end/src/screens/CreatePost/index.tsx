@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Grid } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
+import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 
 interface Props {
@@ -61,12 +62,12 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column width={2}/>
-			<Grid.Column width={12}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
 				<Form>
 					<h3>New Post</h3>
 					<Form.Group>
-						<Form.Field>
+						<Form.Field width={16}>
 							<label>Title</label>
 							<input
 								onChange={onTitleChange}
@@ -81,6 +82,8 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							label='Content'
 							placeholder='The content of your post...'
 							onChange={onContentChange}
+							rows={8}
+							width={16}
 						/>
 					</Form.Group>
 					{renderCategories()}
@@ -96,58 +99,49 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column width={2}/>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
 	);
 };
 
 export default styled(CreatePost)`
-	form {
-		background-color: #FFF;
-		padding: 1.25rem 1.875rem 2.5rem 1.875rem;
-		border: 1px solid #EEE;
-	}
-
-	form h3 {
-		margin-bottom: 1.875rem;
-	}
-
-	.field {
-		margin-bottom: 1.25rem;
-
-		label {
-			font-size:0.875rem;
-			font-weight: 500;
-		}
-	}
-
-	input, textarea {
-		font-size: 0.875rem;
-		color: #282828;
-		border: 1 px solid #EEE;
-		border-radius: 0rem;
-		text-indent: 0.626rem;	
-		padding: 0.375rem 0 0.25rem 0;
-		width: 100%;
-	}
-
-	textarea {
-		border-color: #EEE;
-	}
-
-	input:focus, textarea:focus {
-		outline: 0;
-	}
-	
-	.text-muted {
-		font-size: 0.75rem;
-		margin: 0.5rem 0 0 0;
-	}
 
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+	}
+
+	.ui.button {
+		font-family: 'Roboto Mono';
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		border-radius: 0.188rem;
+		border: none;
+		padding: 0.625rem 0.938rem;
+		color: #fff;
+		background-color: #EB5757;
+		&:focus, &:hover {
+			background-color: #CC3D3D;
+        	outline: none;
+		}
+	}
+
+	.ui.small.buttons {
+		margin: 0 0 1.875rem 0;
+
+		.ui.button {
+			font-size: 0.75rem;
+			background-color: #CCC;
+			padding: 0.313rem 0.5rem;
+			border-radius: 0.125rem;
+			letter-spacing: 0.031rem;
+			&:focus, &:hover {
+				background-color: #282828;
+				outline: none;
+			}
+		}
 	}
 `

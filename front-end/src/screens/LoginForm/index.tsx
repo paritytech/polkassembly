@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { Button } from '../../components/Button';
+import { Button } from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { handleLoginUser } from '../../services/auth.service';
@@ -45,8 +46,8 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column width={2}/>
-			<Grid.Column width={12}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
 				<Form>
 					<h3>Login</h3>
 					<Form.Group>
@@ -88,68 +89,12 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column width={2}/>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
 	)
 };
 
 export default styled(LoginForm)`
-
-	form {
-		padding: 1.25rem 1.875rem 2.5rem 1.875rem;
-		margin-top: 2.5rem;
-		background-color: #FFF;
-		border: 1px solid #EEE;
-		& h3 {
-			margin-bottom: 1.875rem;
-		}
-	}
-
-	.field {
-		margin-bottom: 1.25rem;
-
-		label {
-			font-size:0.875rem;
-			font-weight: 500;
-		}
-	}
-
-	.ui.form .field>label {
-		font-size:0.875rem;
-		font-weight: 500;
-	}
-
-	input {
-		font-size: 0.875rem;
-		color: #282828;
-		border: 1 px solid #EEE;
-		border-radius: 0rem;
-		text-indent: 0.626rem;	
-		padding: 0.375rem 0 0.25rem 0;
-		width: 100%;
-		& :focus {
-			outline: 0;
-		}
-	}
-
-	.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url] {
-		font-family: 'Roboto';
-		font-size: 0.875rem;
-		color: #282828;
-		border: 1 px solid #EEE;
-		border-radius: 0rem;
-		text-indent: 0.626rem;
-		padding: 0.625rem 0 0.5rem 0;
-		&:focus {
-			outline: 0;
-			border-color: #EEE;
-		}	
-	}
-
-	.text-muted {
-		font-size: 0.75rem;
-		margin: 0.5rem 0 0 0;
-	}
 
 	.mainButtonContainer{
 		align-items: center;

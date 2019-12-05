@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { GlobalStyle } from './components/GlobalStyle'
+import { GlobalStyle } from './ui-components/GlobalStyle'
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
 import Home from './screens/Home';
