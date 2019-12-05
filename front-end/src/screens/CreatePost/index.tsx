@@ -41,9 +41,9 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		if (!catData || !catData.categories) return null
 
 		return (
-			<Button.Group aria-label="Categorie" size="small">
+			<Button.Group size="small">
 				{ catData.categories.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} variant="secondary" onClick={() => setSetlectedCategorie(id)}>{name}</Button>
+					return <Button key={id} onClick={() => setSetlectedCategorie(id)}>{name}</Button>
 				})}
 			</Button.Group>
 		);

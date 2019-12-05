@@ -27,21 +27,26 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			// check in the local storage
 			const token = getLocalStorageToken()
 			if (token) {
-				const tokenPayload = token && publicKey && jwt.verify(token, publicKey) as JWTPayploadType;
+				try {
+					const tokenPayload = token && publicKey && jwt.verify(token, publicKey) as JWTPayploadType;
 
-				if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
-					const id = tokenPayload.sub
-					const username =  tokenPayload.name
+					if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
+						const id = tokenPayload.sub
+						const username =  tokenPayload.name
 
-					if (id && username){
-						setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								id,
-								username
-							}
-						})
+						if (id && username){
+							setUserDetailsContextState((prevState) => {
+								return {
+									...prevState,
+									id,
+									username
+								}
+							})
+						}
 					}
+				} catch (e) {
+					// the jwt isn't valid
+					console.log('error jwt verify',e)
 				}
 			}
 		}
