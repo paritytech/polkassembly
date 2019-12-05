@@ -4,7 +4,7 @@ import { Button, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
-import { Form } from '../../components/Form';
+import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 
 interface Props {

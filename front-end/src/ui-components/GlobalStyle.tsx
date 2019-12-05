@@ -38,6 +38,10 @@ export const GlobalStyle = createGlobalStyle`
         margin: 3.75rem auto 0 auto;
     }
 
+    .ui.container {
+        margin: 3.75rem auto 0 auto;
+    }
+
     @media (max-width: 1200px) {
         .container-fluid {
         padding: 0 2.5rem 0 2.5rem;

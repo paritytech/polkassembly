@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { Button } from '../../components/Button';
-import { Form } from '../../components/Form';
+import { Button } from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { handleLoginUser } from '../../services/auth.service';
