@@ -13,8 +13,10 @@ import {
 	isLocalStorageTokenValidOrUndefined,
 	getLocalStorageToken,
 	getRefreshedToken,
-	storeLocalStorageToken
+	storeLocalStorageToken,
+	deleteLocalStorageToken
 } from './services/auth.service';
+import { Get_Refresh_TokenQueryResult } from './generated/auth-graphql';
 
 const setAuthorizationLink = setContext(() => {
 	const token = getLocalStorageToken()
@@ -32,17 +34,23 @@ const httpLink = new HttpLink({
 const tokenRefreshLink = new TokenRefreshLink({
 	accessTokenField: 'token',
 	fetchAccessToken: getRefreshedToken,
-	handleError: (err:any) => {
-		console.error('There has been a problem with your fetch operation: ', err);
+	handleError: (err:Error) => {
+		deleteLocalStorageToken();
+		console.error('There has been a problem getting a new access token: ', err);
+		// FIXME probably redirect user to login with an error "you've been logged out"?
 	},
 	handleFetch: (accessToken) => storeLocalStorageToken(accessToken),
-	handleResponse: () => async (response:any) => {
+	handleResponse: () => async (response:Response) => {
 		if(response.ok) {
-			const res = await response.json()
-			return res.data.token
+			const res: Get_Refresh_TokenQueryResult = await response.json()
+			if(res && res.data){
+				return res.data.token
+			} else {
+				throw new Error('The auth server did not answer with an expected refreshed token.')
+			}
 		}
 
-		throw new Error('Network response was not ok.')
+		throw new Error('The auth server did not answer successfully to the refresh token call.')
 	},
 	isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
 })
