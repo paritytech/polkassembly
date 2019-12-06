@@ -17,6 +17,12 @@ The fact that we are using `image: hasura/graphql-engine:vx.y.z.cli-migrations` 
 
 ### Update the schema, relationships or permissions
 
+Install hasura cli.
+
+```bash
+curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+```
+
 To make sure any change in the console is reflected in the `hasura-migrations` folder and available to push to github you need to disable the console for any other participant (so that no change are made). Then launch the console using the cli:
 - `cd ./hasura-migrations`
 - `hasura console --admin-secret <your admin secret>`

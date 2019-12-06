@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "GPL-3.0",
   "private": true,
+  "homepage": "http://polkassembly.io/",
   "dependencies": {
     "@substrate/ui-components": "^0.2.4",
     "apollo-cache-inmemory": "^1.6.3",

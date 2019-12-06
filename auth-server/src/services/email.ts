@@ -21,7 +21,7 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 	const verifyUrl = `${DOMAIN}/auth/verify-email?token=${token.token}`
 	const text = `
 		<p>
-			Welcome aboard ${user.name}!<br/><br/>
+			Welcome aboard ${user.name || ''}!<br/><br/>
 
 			For security purposes, please confirm your email address here - <a target="_blank" href=${verifyUrl}>verify your account</a><br/><br/>
 
@@ -52,7 +52,7 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 	const resetUrl = `${DOMAIN}/auth/reset-password?token=${token.token}`
 	const text = `
 		<p>
-			Hi ${user.name}!<br/><br/>
+			Hi ${user.name || ''}!<br/><br/>
 
 			It looks like you need to reset your password.<br />
 			Your secret is safe with us, and this will be a breeze.<br /><br />
