@@ -6,13 +6,13 @@
 This app relies on a database for users, posts, etc. Those need to be in place before the app is started in order to have information to display and users to login.
 
 ### Databases
-2 different databases are required to run this app. They are explained here, but the files needed to run them live in the [hasura-auth](https://github.com/Tbaut/hasura-auth/) repo.
+2 different databases are required to run this app. They are explained here, but the files needed to run them live in the hasura and auth-server folders.
 - Hausra: A general DB to store posts, some user information (anything that isn't used for authentication). It's a Postgres, based on Hasura, exposing a graphQL interface that this `Government platform` will talk to.
 - Auth: a DB dedicated for user authentication that is accessed by the `auth` server.
 
 ### env variable
 
-Create a `.env` file with the following environmen variable 
+Create a `.env` file with the following environmen variable
 ```
 REACT_APP_AUTH_SERVER_GRAPHQL_URL="http://localhost:8010/auth/graphql"
 REACT_APP_ENV="dev"
