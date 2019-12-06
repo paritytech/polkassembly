@@ -4,34 +4,40 @@ import { FaComment } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const DiscussionCard = styled.div`
-    padding: 1.25rem 1.875rem;
+    padding: 2rem 3rem 1.5rem 3rem;
     background-color: #FFF;
     border: 1px solid #EEE;
     h4 {
         color: #282828;
         font-weight: 500;
-        font-size: 1.125rem;
-        margin-bottom: 0.125rem; 
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem; 
     }
     .authorAndDate {
         color: #555;
         font-weight: 400;
-        font-size: 0.875rem;
-        margin-bottom: 0.625rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.6rem;
         span {
             font-weight: 500;
         }
     }
     ul {
         color: #B5AEAE;
-        font-size: 0.75rem;
+        font-size: 1rem;
         font-family: 'Roboto Mono';
         font-weight: 500;
         li {
             display: inline;
-            margin-right: 0.938rem;
+            margin-right: 1.5rem;
         }
-  }
+    }
+
+    @media only screen and (max-width: 576px) {
+        & {
+            padding: 1.25rem 0.938rem;       
+        }
+    }
 `;
 
 export interface DiscussionProps {
