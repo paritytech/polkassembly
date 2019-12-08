@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import NoPostFound from './NoPostFound';
-import Replies from './Replies'
+import RepliesBlocks from './Replies'
 import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
 
 const className = 'Post';
@@ -17,7 +17,7 @@ const Post = ( { data }: {data: MyPost}) => {
 				? <PostContent post={post}/>
 				: <NoPostFound/> }
 			{ post && post.replies && post.replies.length
-				? <Replies replies={post.replies}/>
+				? <RepliesBlocks replies={post.replies}/>
 				: null }
 		</div>
 	);

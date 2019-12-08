@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Replies } from '../../generated/graphql';
 
-const Replies = ({ replies }:{replies: Replies[]}) => {
+const RepliesBlocks = ({ replies }:{replies: Replies[]}) => {
 	return (
 		<div className='Replies'>
 			<hr/>
@@ -24,4 +24,4 @@ const Replies = ({ replies }:{replies: Replies[]}) => {
 	)
 }
 
-export default Replies;
+export default RepliesBlocks;
