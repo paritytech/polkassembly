@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const className = 'Reply';
 // FIXME Should be typed
@@ -13,7 +14,7 @@ const Replies = ({ replies } : any) => {
 					return (
 						<div className={className} key={created_at}>
 							<h3>{author.username} - {created_at}</h3>
-							<div>{content}</div>
+							<ReactMarkdown source={content} />
 						</div>
 					);
 				})
