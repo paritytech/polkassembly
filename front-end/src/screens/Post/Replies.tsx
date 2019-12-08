@@ -8,9 +8,10 @@ const Replies = ({ replies }:{replies: Replies[]}) => {
 			<hr/>
 			<div>Replies</div>
 			{
-				replies.map((reply:any) => {
+				replies.map((reply:Replies) => {
 					const { author, content, created_at } = reply;
 
+					if (!author || !author.username || !content) return null;
 					return (
 						<div key={created_at}>
 							<h3>{author.username} - {created_at}</h3>

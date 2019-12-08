@@ -2162,7 +2162,7 @@ export type PostAndRepliesQuery = (
       & Pick<Categories, 'name'>
     ), replies: Array<(
       { __typename?: 'replies' }
-      & Pick<Replies, 'content' | 'created_at'>
+      & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
       & { author: Maybe<(
         { __typename?: 'User' }
         & Pick<User, 'username'>
@@ -2308,11 +2308,13 @@ export const PostAndRepliesDocument = gql`
       name
     }
     replies(order_by: {created_at: asc}) {
-      content
-      created_at
       author {
         username
       }
+      id
+      content
+      created_at
+      updated_at
     }
   }
 }
