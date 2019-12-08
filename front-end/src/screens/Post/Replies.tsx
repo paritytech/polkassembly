@@ -11,7 +11,8 @@ const RepliesBlocks = ({ replies }:{replies: Replies[]}) => {
 				replies.map((reply:Replies) => {
 					const { author, content, created_at } = reply;
 
-					if (!author || !author.username || !content) return null;
+					if (!author || !author.username || !content) return <div>Reply not available</div>;
+
 					return (
 						<div key={created_at}>
 							<h3>{author.username} - {created_at}</h3>

@@ -2144,6 +2144,25 @@ export type LatestPostsQuery = (
   )> }
 );
 
+export type PostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'id' | 'modification_date' | 'content' | 'creation_date' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'username'>
+  )>, category: (
+    { __typename?: 'categories' }
+    & Pick<Categories, 'name'>
+  ), replies: Array<(
+    { __typename?: 'replies' }
+    & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )> }
+  )> }
+);
+
 export type PostAndRepliesQueryVariables = {
   id: Scalars['Int']
 };
@@ -2153,21 +2172,7 @@ export type PostAndRepliesQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'content' | 'creation_date' | 'title'>
-    & { author: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'username'>
-    )>, category: (
-      { __typename?: 'categories' }
-      & Pick<Categories, 'name'>
-    ), replies: Array<(
-      { __typename?: 'replies' }
-      & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
-      & { author: Maybe<(
-        { __typename?: 'User' }
-        & Pick<User, 'username'>
-      )> }
-    )> }
+    & PostFragment
   )> }
 );
 
@@ -2182,6 +2187,30 @@ export const CatfragmentFragmentDoc = gql`
     fragment catfragment on categories {
   id
   name
+}
+    `;
+export const PostFragmentDoc = gql`
+    fragment post on posts {
+  id
+  modification_date
+  content
+  creation_date
+  title
+  author {
+    username
+  }
+  category {
+    name
+  }
+  replies(order_by: {created_at: asc}) {
+    author {
+      username
+    }
+    id
+    content
+    created_at
+    updated_at
+  }
 }
     `;
 export const CreatePostDocument = gql`
@@ -2298,27 +2327,10 @@ export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQu
 export const PostAndRepliesDocument = gql`
     query PostAndReplies($id: Int!) {
   posts(where: {id: {_eq: $id}}) {
-    content
-    creation_date
-    title
-    author {
-      username
-    }
-    category {
-      name
-    }
-    replies(order_by: {created_at: asc}) {
-      author {
-        username
-      }
-      id
-      content
-      created_at
-      updated_at
-    }
+    ...post
   }
 }
-    `;
+    ${PostFragmentDoc}`;
 
 /**
  * __usePostAndRepliesQuery__

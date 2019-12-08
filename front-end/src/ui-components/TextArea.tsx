@@ -25,11 +25,12 @@ export function TextArea(props: Props): React.ReactElement {
 				commands.headerCommand,
 				commands.linkCommand,
 				commands.quoteCommand,
+				commands.strikeThroughCommand,
 				commands.codeCommand,
 				commands.imageCommand,
 				commands.checkedListCommand,
-				commands.orderedListCommand
-				// commands.unorderedListCommand
+				commands.orderedListCommand,
+				commands.unorderedListCommand
 			]
 		}
 	]
