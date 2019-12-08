@@ -13,11 +13,13 @@ export const QUERY_POST_AND_REPLIES = gql`
                 name
             }
             replies(order_by: {created_at: asc}) {
-                content
-                created_at
                 author {
                     username
                 }
+                id
+                content
+                created_at
+                updated_at
             }
         }
     }

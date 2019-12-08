@@ -1,9 +1,8 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Replies } from '../../generated/graphql';
 
-const className = 'Reply';
-// FIXME Should be typed
-const Replies = ({ replies } : any) => {
+const Replies = ({ replies }:{replies: Replies[]}) => {
 	return (
 		<div className='Replies'>
 			<hr/>
@@ -11,8 +10,9 @@ const Replies = ({ replies } : any) => {
 			{
 				replies.map((reply:any) => {
 					const { author, content, created_at } = reply;
+
 					return (
-						<div className={className} key={created_at}>
+						<div key={created_at}>
 							<h3>{author.username} - {created_at}</h3>
 							<ReactMarkdown source={content} />
 						</div>
