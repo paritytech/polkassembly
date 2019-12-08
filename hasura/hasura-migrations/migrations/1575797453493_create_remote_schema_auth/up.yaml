@@ -1,0 +1,8 @@
+- args:
+    definition:
+      forward_client_headers: false
+      headers: []
+      timeout_seconds: 60
+      url: http://localhost:8010/auth/graphql
+    name: auth
+  type: add_remote_schema

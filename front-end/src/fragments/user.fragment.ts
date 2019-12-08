@@ -1,9 +1,9 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  fragment user on users {
-    id
-    username
-    picture
+  fragment userFragment on User {
+      id
+      name
+      username
   }
 `

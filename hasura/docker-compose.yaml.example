@@ -14,6 +14,7 @@ services:
     # persistent data locally
     - ./data:/var/lib/postgresql/data
   graphql-engine:
+    network_mode: "host"
     image: hasura/graphql-engine:v1.0.0-rc.1.cli-migrations
     volumes:
     # migration data
