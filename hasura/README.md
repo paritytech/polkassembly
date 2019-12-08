@@ -13,7 +13,23 @@ Add JWT public key generated in auth server to HASURA_GRAPHQL_JWT_SECRET
 Run the postgres and graphql-engine in docker by running:
 - `docker-compose up`
 
-The fact that we are using `image: hasura/graphql-engine:vx.y.z.cli-migrations` in `docker-compose.yaml` automatically performs a migration. Visiting the `http://localhost:8080/console` should show you the tables `users`, `posts`...
+### Migration
+
+We are using a [preview of hasura](https://github.com/hasura/graphql-engine/pull/2395#issuecomment-547378585), migration must therefore be applied manually with the `hasura-dev` cli.
+
+In a separate directory, clone the hasura cli and copy it in a directory in your PATH.
+
+```bash
+git clone https://github.com/hasura/preview-remote-joins.git
+mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
+chmod +x /usr/local/bin/hasura-dev
+```
+
+from there you can apply the migration:
+```bash
+cd hasura-migrations
+hasura-dev migrate apply --admin-secret <your_admin_secret>
+```
 
 ### Update the schema, relationships or permissions
 
