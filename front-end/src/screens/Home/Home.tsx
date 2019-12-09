@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
