@@ -29,7 +29,7 @@ const Home = ({ className, data }: Props) => {
 						{!!data.posts &&
 						data.posts.map(
 							(post) =>
-								!!post && (
+								!!post && !!post.author && !!post.author.username && (
 									<li key={post.id} className='Home__item'>
 										{<Link to={`/post/${post.id}`}>
 											<DiscussionCard

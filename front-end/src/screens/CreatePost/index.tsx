@@ -4,16 +4,17 @@ import { Button, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
-import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { Form } from '../../ui-components/Form';
+import { TextArea } from '../../ui-components/TextArea';
 
 interface Props {
 	className?: string
 }
 
 const CreatePost = ({ className }:Props): JSX.Element => {
-	const [title, setTitle] = useState<string | undefined>('');
-	const [content, setContent] = useState<string | undefined>('');
+	const [title, setTitle] = useState('');
+	const [content, setContent] = useState('');
 	const [selectedCategory, setSetlectedCategorie] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
 	const { data: catData, error: catError } = useCategoriesQuery()
@@ -31,12 +32,9 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				userId: currentUser.id
 			} })
 		}
-
 	}
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
-	const onContentChange = (event: React.FormEvent<HTMLTextAreaElement>) => setContent(event.currentTarget.value);
-
 	const renderCategories = () => {
 		if (!catData || !catData.categories) return null
 
@@ -78,12 +76,9 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 					</Form.Group>
 
 					<Form.Group>
-						<Form.TextArea
-							label='Content'
-							placeholder='The content of your post...'
-							onChange={onContentChange}
-							rows={8}
-							width={16}
+						<TextArea
+							onChange={setContent}
+							value={content}
 						/>
 					</Form.Group>
 					{renderCategories()}

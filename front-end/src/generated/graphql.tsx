@@ -10,9 +10,11 @@ export type Scalars = {
   Int: number,
   Float: number,
   timestamp: any,
-  timestamptz: any,
   time: any,
+  timestamptz: any,
   float8: any,
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any,
 };
 
 /** expression to compare columns of type Boolean. All fields are combined with logical 'AND'. */
@@ -27,6 +29,11 @@ export type Boolean_Comparison_Exp = {
   _neq?: Maybe<Scalars['Boolean']>,
   _nin?: Maybe<Array<Scalars['Boolean']>>,
 };
+
+export enum CacheControlScope {
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
 
 /** columns and relationships of "categories" */
 export type Categories = {
@@ -332,9 +339,82 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>,
 };
 
+export type LoginResponse = {
+   __typename?: 'LoginResponse',
+  token?: Maybe<Scalars['String']>,
+  user?: Maybe<User>,
+};
+
+export type Message = {
+   __typename?: 'Message',
+  message?: Maybe<Scalars['String']>,
+};
+
+export type Mutation = {
+   __typename?: 'Mutation',
+  changeEmail?: Maybe<Message>,
+  changeName?: Maybe<Message>,
+  changePassword?: Maybe<Message>,
+  login?: Maybe<LoginResponse>,
+  logout?: Maybe<Message>,
+  requestResetPassword?: Maybe<Message>,
+  resetPassword?: Maybe<Message>,
+  signup?: Maybe<LoginResponse>,
+  verifyEmail?: Maybe<Message>,
+};
+
+
+export type MutationChangeEmailArgs = {
+  email: Scalars['String']
+};
+
+
+export type MutationChangeNameArgs = {
+  newName: Scalars['String']
+};
+
+
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars['String'],
+  oldPassword: Scalars['String']
+};
+
+
+export type MutationLoginArgs = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type MutationRequestResetPasswordArgs = {
+  email: Scalars['String']
+};
+
+
+export type MutationResetPasswordArgs = {
+  newPassword: Scalars['String'],
+  token: Scalars['String']
+};
+
+
+export type MutationSignupArgs = {
+  email: Scalars['String'],
+  name?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type MutationVerifyEmailArgs = {
+  token: Scalars['String']
+};
+
 /** mutation root */
 export type Mutation_Root = {
    __typename?: 'mutation_root',
+  changeEmail?: Maybe<Message>,
+  changeName?: Maybe<Message>,
+  changePassword?: Maybe<Message>,
   /** delete data from the table: "categories" */
   delete_categories?: Maybe<Categories_Mutation_Response>,
   /** delete data from the table: "posts" */
@@ -343,8 +423,6 @@ export type Mutation_Root = {
   delete_proposals?: Maybe<Proposals_Mutation_Response>,
   /** delete data from the table: "replies" */
   delete_replies?: Maybe<Replies_Mutation_Response>,
-  /** delete data from the table: "users" */
-  delete_users?: Maybe<Users_Mutation_Response>,
   /** insert data into the table: "categories" */
   insert_categories?: Maybe<Categories_Mutation_Response>,
   /** insert data into the table: "posts" */
@@ -353,8 +431,11 @@ export type Mutation_Root = {
   insert_proposals?: Maybe<Proposals_Mutation_Response>,
   /** insert data into the table: "replies" */
   insert_replies?: Maybe<Replies_Mutation_Response>,
-  /** insert data into the table: "users" */
-  insert_users?: Maybe<Users_Mutation_Response>,
+  login?: Maybe<LoginResponse>,
+  logout?: Maybe<Message>,
+  requestResetPassword?: Maybe<Message>,
+  resetPassword?: Maybe<Message>,
+  signup?: Maybe<LoginResponse>,
   /** update data of the table: "categories" */
   update_categories?: Maybe<Categories_Mutation_Response>,
   /** update data of the table: "posts" */
@@ -363,8 +444,26 @@ export type Mutation_Root = {
   update_proposals?: Maybe<Proposals_Mutation_Response>,
   /** update data of the table: "replies" */
   update_replies?: Maybe<Replies_Mutation_Response>,
-  /** update data of the table: "users" */
-  update_users?: Maybe<Users_Mutation_Response>,
+  verifyEmail?: Maybe<Message>,
+};
+
+
+/** mutation root */
+export type Mutation_RootChangeEmailArgs = {
+  email: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootChangeNameArgs = {
+  newName: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootChangePasswordArgs = {
+  newPassword: Scalars['String'],
+  oldPassword: Scalars['String']
 };
 
 
@@ -389,12 +488,6 @@ export type Mutation_RootDelete_ProposalsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_RepliesArgs = {
   where: Replies_Bool_Exp
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_UsersArgs = {
-  where: Users_Bool_Exp
 };
 
 
@@ -427,9 +520,31 @@ export type Mutation_RootInsert_RepliesArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_UsersArgs = {
-  objects: Array<Users_Insert_Input>,
-  on_conflict?: Maybe<Users_On_Conflict>
+export type Mutation_RootLoginArgs = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootRequestResetPasswordArgs = {
+  email: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootResetPasswordArgs = {
+  newPassword: Scalars['String'],
+  token: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootSignupArgs = {
+  email: Scalars['String'],
+  name?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  username: Scalars['String']
 };
 
 
@@ -466,10 +581,8 @@ export type Mutation_RootUpdate_RepliesArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_UsersArgs = {
-  _inc?: Maybe<Users_Inc_Input>,
-  _set?: Maybe<Users_Set_Input>,
-  where: Users_Bool_Exp
+export type Mutation_RootVerifyEmailArgs = {
+  token: Scalars['String']
 };
 
 /** column ordering options */
@@ -491,8 +604,8 @@ export enum Order_By {
 /** columns and relationships of "posts" */
 export type Posts = {
    __typename?: 'posts',
-  /** An object relationship */
-  author: Users,
+  /** Remote relationship field */
+  author?: Maybe<User>,
   author_id: Scalars['Int'],
   /** An object relationship */
   category: Categories,
@@ -601,7 +714,6 @@ export type Posts_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Posts_Bool_Exp>>>,
   _not?: Maybe<Posts_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Posts_Bool_Exp>>>,
-  author?: Maybe<Users_Bool_Exp>,
   author_id?: Maybe<Int_Comparison_Exp>,
   category?: Maybe<Categories_Bool_Exp>,
   category_id?: Maybe<Int_Comparison_Exp>,
@@ -629,7 +741,6 @@ export type Posts_Inc_Input = {
 
 /** input type for inserting data into table "posts" */
 export type Posts_Insert_Input = {
-  author?: Maybe<Users_Obj_Rel_Insert_Input>,
   author_id?: Maybe<Scalars['Int']>,
   category?: Maybe<Categories_Obj_Rel_Insert_Input>,
   category_id?: Maybe<Scalars['Int']>,
@@ -704,7 +815,6 @@ export type Posts_On_Conflict = {
 
 /** ordering options when selecting data from "posts" */
 export type Posts_Order_By = {
-  author?: Maybe<Users_Order_By>,
   author_id?: Maybe<Order_By>,
   category?: Maybe<Categories_Order_By>,
   category_id?: Maybe<Order_By>,
@@ -1268,6 +1378,18 @@ export type Proposals_Variance_Order_By = {
   post_id?: Maybe<Order_By>,
 };
 
+export type Query = {
+   __typename?: 'Query',
+  token?: Maybe<Token>,
+  user?: Maybe<User>,
+  users?: Maybe<Array<Maybe<User>>>,
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['Int']
+};
+
 /** query root */
 export type Query_Root = {
    __typename?: 'query_root',
@@ -1295,12 +1417,9 @@ export type Query_Root = {
   replies_aggregate: Replies_Aggregate,
   /** fetch data from the table: "replies" using primary key columns */
   replies_by_pk?: Maybe<Replies>,
-  /** fetch data from the table: "users" */
-  users: Array<Users>,
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate,
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>,
+  token?: Maybe<Token>,
+  user?: Maybe<User>,
+  users?: Maybe<Array<Maybe<User>>>,
 };
 
 
@@ -1409,27 +1528,7 @@ export type Query_RootReplies_By_PkArgs = {
 
 
 /** query root */
-export type Query_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Users_Order_By>>,
-  where?: Maybe<Users_Bool_Exp>
-};
-
-
-/** query root */
-export type Query_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Users_Order_By>>,
-  where?: Maybe<Users_Bool_Exp>
-};
-
-
-/** query root */
-export type Query_RootUsers_By_PkArgs = {
+export type Query_RootUserArgs = {
   id: Scalars['Int']
 };
 
@@ -1441,8 +1540,8 @@ export type Query_RootUsers_By_PkArgs = {
  **/
 export type Replies = {
    __typename?: 'replies',
-  /** An object relationship */
-  author?: Maybe<Users>,
+  /** Remote relationship field */
+  author?: Maybe<User>,
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at: Scalars['timestamptz'],
@@ -1524,7 +1623,6 @@ export type Replies_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Replies_Bool_Exp>>>,
   _not?: Maybe<Replies_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Replies_Bool_Exp>>>,
-  author?: Maybe<Users_Bool_Exp>,
   author_id?: Maybe<Int_Comparison_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
@@ -1549,7 +1647,6 @@ export type Replies_Inc_Input = {
 
 /** input type for inserting data into table "replies" */
 export type Replies_Insert_Input = {
-  author?: Maybe<Users_Obj_Rel_Insert_Input>,
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
@@ -1625,7 +1722,6 @@ export type Replies_On_Conflict = {
 
 /** ordering options when selecting data from "replies" */
 export type Replies_Order_By = {
-  author?: Maybe<Users_Order_By>,
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
@@ -1828,12 +1924,6 @@ export type Subscription_Root = {
   replies_aggregate: Replies_Aggregate,
   /** fetch data from the table: "replies" using primary key columns */
   replies_by_pk?: Maybe<Replies>,
-  /** fetch data from the table: "users" */
-  users: Array<Users>,
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate,
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>,
 };
 
 
@@ -1941,32 +2031,6 @@ export type Subscription_RootReplies_By_PkArgs = {
 };
 
 
-/** subscription root */
-export type Subscription_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Users_Order_By>>,
-  where?: Maybe<Users_Bool_Exp>
-};
-
-
-/** subscription root */
-export type Subscription_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Users_Order_By>>,
-  where?: Maybe<Users_Bool_Exp>
-};
-
-
-/** subscription root */
-export type Subscription_RootUsers_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
 /** expression to compare columns of type time. All fields are combined with logical 'AND'. */
 export type Time_Comparison_Exp = {
   _eq?: Maybe<Scalars['time']>,
@@ -2008,346 +2072,23 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>,
 };
 
-/** columns and relationships of "users" */
-export type Users = {
-   __typename?: 'users',
-  created_at: Scalars['timestamp'],
-  email?: Maybe<Scalars['String']>,
-  id: Scalars['Int'],
-  picture?: Maybe<Scalars['String']>,
-  /** An array relationship */
-  replies: Array<Replies>,
-  /** An aggregated array relationship */
-  replies_aggregate: Replies_Aggregate,
-  /** An array relationship */
-  user_posts: Array<Posts>,
-  /** An aggregated array relationship */
-  user_posts_aggregate: Posts_Aggregate,
-  username: Scalars['String'],
+export type Token = {
+   __typename?: 'Token',
+  token?: Maybe<Scalars['String']>,
 };
 
 
-/** columns and relationships of "users" */
-export type UsersRepliesArgs = {
-  distinct_on?: Maybe<Array<Replies_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Replies_Order_By>>,
-  where?: Maybe<Replies_Bool_Exp>
-};
-
-
-/** columns and relationships of "users" */
-export type UsersReplies_AggregateArgs = {
-  distinct_on?: Maybe<Array<Replies_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Replies_Order_By>>,
-  where?: Maybe<Replies_Bool_Exp>
-};
-
-
-/** columns and relationships of "users" */
-export type UsersUser_PostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Posts_Order_By>>,
-  where?: Maybe<Posts_Bool_Exp>
-};
-
-
-/** columns and relationships of "users" */
-export type UsersUser_Posts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Posts_Order_By>>,
-  where?: Maybe<Posts_Bool_Exp>
-};
-
-/** aggregated selection of "users" */
-export type Users_Aggregate = {
-   __typename?: 'users_aggregate',
-  aggregate?: Maybe<Users_Aggregate_Fields>,
-  nodes: Array<Users>,
-};
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_Fields = {
-   __typename?: 'users_aggregate_fields',
-  avg?: Maybe<Users_Avg_Fields>,
-  count?: Maybe<Scalars['Int']>,
-  max?: Maybe<Users_Max_Fields>,
-  min?: Maybe<Users_Min_Fields>,
-  stddev?: Maybe<Users_Stddev_Fields>,
-  stddev_pop?: Maybe<Users_Stddev_Pop_Fields>,
-  stddev_samp?: Maybe<Users_Stddev_Samp_Fields>,
-  sum?: Maybe<Users_Sum_Fields>,
-  var_pop?: Maybe<Users_Var_Pop_Fields>,
-  var_samp?: Maybe<Users_Var_Samp_Fields>,
-  variance?: Maybe<Users_Variance_Fields>,
-};
-
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Users_Select_Column>>,
-  distinct?: Maybe<Scalars['Boolean']>
-};
-
-/** order by aggregate values of table "users" */
-export type Users_Aggregate_Order_By = {
-  avg?: Maybe<Users_Avg_Order_By>,
-  count?: Maybe<Order_By>,
-  max?: Maybe<Users_Max_Order_By>,
-  min?: Maybe<Users_Min_Order_By>,
-  stddev?: Maybe<Users_Stddev_Order_By>,
-  stddev_pop?: Maybe<Users_Stddev_Pop_Order_By>,
-  stddev_samp?: Maybe<Users_Stddev_Samp_Order_By>,
-  sum?: Maybe<Users_Sum_Order_By>,
-  var_pop?: Maybe<Users_Var_Pop_Order_By>,
-  var_samp?: Maybe<Users_Var_Samp_Order_By>,
-  variance?: Maybe<Users_Variance_Order_By>,
-};
-
-/** input type for inserting array relation for remote table "users" */
-export type Users_Arr_Rel_Insert_Input = {
-  data: Array<Users_Insert_Input>,
-  on_conflict?: Maybe<Users_On_Conflict>,
-};
-
-/** aggregate avg on columns */
-export type Users_Avg_Fields = {
-   __typename?: 'users_avg_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by avg() on columns of table "users" */
-export type Users_Avg_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
-export type Users_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>,
-  _not?: Maybe<Users_Bool_Exp>,
-  _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>,
-  created_at?: Maybe<Timestamp_Comparison_Exp>,
-  email?: Maybe<String_Comparison_Exp>,
-  id?: Maybe<Int_Comparison_Exp>,
-  picture?: Maybe<String_Comparison_Exp>,
-  replies?: Maybe<Replies_Bool_Exp>,
-  user_posts?: Maybe<Posts_Bool_Exp>,
-  username?: Maybe<String_Comparison_Exp>,
-};
-
-/** unique or primary key constraints on table "users" */
-export enum Users_Constraint {
-  /** unique or primary key constraint */
-  UsersPkey1 = 'users_pkey1'
-}
-
-/** input type for incrementing integer columne in table "users" */
-export type Users_Inc_Input = {
+export type User = {
+   __typename?: 'User',
+  email_verified?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
-};
-
-/** input type for inserting data into table "users" */
-export type Users_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamp']>,
-  email?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  picture?: Maybe<Scalars['String']>,
-  replies?: Maybe<Replies_Arr_Rel_Insert_Input>,
-  user_posts?: Maybe<Posts_Arr_Rel_Insert_Input>,
+  name?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
 };
 
-/** aggregate max on columns */
-export type Users_Max_Fields = {
-   __typename?: 'users_max_fields',
-  email?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  picture?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-};
-
-/** order by max() on columns of table "users" */
-export type Users_Max_Order_By = {
-  email?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  picture?: Maybe<Order_By>,
-  username?: Maybe<Order_By>,
-};
-
-/** aggregate min on columns */
-export type Users_Min_Fields = {
-   __typename?: 'users_min_fields',
-  email?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  picture?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-};
-
-/** order by min() on columns of table "users" */
-export type Users_Min_Order_By = {
-  email?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  picture?: Maybe<Order_By>,
-  username?: Maybe<Order_By>,
-};
-
-/** response of any mutation on the table "users" */
-export type Users_Mutation_Response = {
-   __typename?: 'users_mutation_response',
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'],
-  /** data of the affected rows by the mutation */
-  returning: Array<Users>,
-};
-
-/** input type for inserting object relation for remote table "users" */
-export type Users_Obj_Rel_Insert_Input = {
-  data: Users_Insert_Input,
-  on_conflict?: Maybe<Users_On_Conflict>,
-};
-
-/** on conflict condition type for table "users" */
-export type Users_On_Conflict = {
-  constraint: Users_Constraint,
-  update_columns: Array<Users_Update_Column>,
-  where?: Maybe<Users_Bool_Exp>,
-};
-
-/** ordering options when selecting data from "users" */
-export type Users_Order_By = {
-  created_at?: Maybe<Order_By>,
-  email?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  picture?: Maybe<Order_By>,
-  replies_aggregate?: Maybe<Replies_Aggregate_Order_By>,
-  user_posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
-  username?: Maybe<Order_By>,
-};
-
-/** select columns of table "users" */
-export enum Users_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Email = 'email',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Picture = 'picture',
-  /** column name */
-  Username = 'username'
-}
-
-/** input type for updating data in table "users" */
-export type Users_Set_Input = {
-  created_at?: Maybe<Scalars['timestamp']>,
-  email?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  picture?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-};
-
-/** aggregate stddev on columns */
-export type Users_Stddev_Fields = {
-   __typename?: 'users_stddev_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev() on columns of table "users" */
-export type Users_Stddev_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_pop on columns */
-export type Users_Stddev_Pop_Fields = {
-   __typename?: 'users_stddev_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_pop() on columns of table "users" */
-export type Users_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_samp on columns */
-export type Users_Stddev_Samp_Fields = {
-   __typename?: 'users_stddev_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_samp() on columns of table "users" */
-export type Users_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate sum on columns */
-export type Users_Sum_Fields = {
-   __typename?: 'users_sum_fields',
-  id?: Maybe<Scalars['Int']>,
-};
-
-/** order by sum() on columns of table "users" */
-export type Users_Sum_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** update columns of table "users" */
-export enum Users_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Email = 'email',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Picture = 'picture',
-  /** column name */
-  Username = 'username'
-}
-
-/** aggregate var_pop on columns */
-export type Users_Var_Pop_Fields = {
-   __typename?: 'users_var_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_pop() on columns of table "users" */
-export type Users_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate var_samp on columns */
-export type Users_Var_Samp_Fields = {
-   __typename?: 'users_var_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_samp() on columns of table "users" */
-export type Users_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate variance on columns */
-export type Users_Variance_Fields = {
-   __typename?: 'users_variance_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by variance() on columns of table "users" */
-export type Users_Variance_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type UserFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'id' | 'username' | 'picture'>
+export type UserFragmentFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'name' | 'username'>
 );
 
 export type CreatePostMutationVariables = {
@@ -2390,16 +2131,35 @@ export type LatestPostsQuery = (
   & { posts: Array<(
     { __typename?: 'posts' }
     & Pick<Posts, 'id' | 'title' | 'creation_date' | 'modification_date'>
-    & { author: (
-      { __typename?: 'users' }
-      & Pick<Users, 'username'>
-    ), replies_aggregate: (
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )>, replies_aggregate: (
       { __typename?: 'replies_aggregate' }
       & { aggregate: Maybe<(
         { __typename?: 'replies_aggregate_fields' }
         & Pick<Replies_Aggregate_Fields, 'count'>
       )> }
     ) }
+  )> }
+);
+
+export type PostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'creation_date' | 'id' | 'modification_date' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'username'>
+  )>, category: (
+    { __typename?: 'categories' }
+    & Pick<Categories, 'name'>
+  ), replies: Array<(
+    { __typename?: 'replies' }
+    & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )> }
   )> }
 );
 
@@ -2412,35 +2172,45 @@ export type PostAndRepliesQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'content' | 'creation_date' | 'title'>
-    & { author: (
-      { __typename?: 'users' }
-      & Pick<Users, 'username'>
-    ), category: (
-      { __typename?: 'categories' }
-      & Pick<Categories, 'name'>
-    ), replies: Array<(
-      { __typename?: 'replies' }
-      & Pick<Replies, 'content' | 'created_at'>
-      & { author: Maybe<(
-        { __typename?: 'users' }
-        & Pick<Users, 'username'>
-      )> }
-    )> }
+    & PostFragment
   )> }
 );
 
-export const UserFragmentDoc = gql`
-    fragment user on users {
+export const UserFragmentFragmentDoc = gql`
+    fragment userFragment on User {
   id
+  name
   username
-  picture
 }
     `;
 export const CatfragmentFragmentDoc = gql`
     fragment catfragment on categories {
   id
   name
+}
+    `;
+export const PostFragmentDoc = gql`
+    fragment post on posts {
+  author {
+    username
+  }
+  category {
+    name
+  }
+  content
+  creation_date
+  id
+  modification_date
+  replies(order_by: {created_at: asc}) {
+    author {
+      username
+    }
+    id
+    content
+    created_at
+    updated_at
+  }
+  title
 }
     `;
 export const CreatePostDocument = gql`
@@ -2557,25 +2327,10 @@ export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQu
 export const PostAndRepliesDocument = gql`
     query PostAndReplies($id: Int!) {
   posts(where: {id: {_eq: $id}}) {
-    content
-    creation_date
-    title
-    author {
-      username
-    }
-    category {
-      name
-    }
-    replies(order_by: {created_at: asc}) {
-      content
-      created_at
-      author {
-        username
-      }
-    }
+    ...post
   }
 }
-    `;
+    ${PostFragmentDoc}`;
 
 /**
  * __usePostAndRepliesQuery__

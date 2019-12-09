@@ -1,22 +1,20 @@
 import * as moment from 'moment'
 import * as React from 'react';
+
+import ReactMarkdown from 'react-markdown';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
 import NoPostFound from './NoPostFound';
-import Replies from './Replies'
-import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
+import RepliesBlocks from './Replies'
+import { PostAndRepliesQueryHookResult, PostFragment } from '../../generated/graphql';
 import { Tag } from '../../ui-components/Tag';
-// import { QueryResult } from 'react-apollo';
 
 interface Props {
 	className?: string;
 	data: PostAndRepliesQueryHookResult['data']
-} 
+}
 
-// const className = 'Post';
-// type MyPost = PostAndRepliesQueryHookResult['data']
-// FIXME Should use the query result type
 const Post = ( { className, data }: Props ) => {
 	const post =  data && data.posts && data.posts[0]
 
@@ -29,7 +27,7 @@ const Post = ( { className, data }: Props ) => {
 							? <PostContent post={post}/>
 							: <NoPostFound/> }
 						{ post && post.replies && post.replies.length
-							? <Replies replies={post.replies}/>
+							? <RepliesBlocks replies={post.replies}/>
 							: null }
 					</div>
 				</Grid.Column>
@@ -39,17 +37,17 @@ const Post = ( { className, data }: Props ) => {
 	);
 }
 
-// FIXME Should be typed
-const PostContent = ({ post } : any) => {
-	const { author, category, content, title, creation_date } = post;
+const PostContent = ({ post } : {post: PostFragment}) => {
+	const { author, category, content, creation_date, title } = post;
+
+	if (!author || !author.username || !content) return <div>Post not available</div>
 
 	return (
 		<>
 			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
 			<div className='text_muted divider'>&nbsp;&nbsp;|&nbsp;&nbsp;</div>
-			<div className='text_muted'>All discussions are off-chain.</div>
 			<h3>{title}</h3>
-			<div className='post_content'>{content}</div>
+			<ReactMarkdown className='post_content' source={content} />
 			<div className='post_tags'><Tag>{category && category.name}</Tag></div>
 		</>
 	);
@@ -66,13 +64,6 @@ export default styled(Post)`
 
 	.divider {
 		float: left;
-	}
-
-	.text_muted {
-		color: #B5AEAE;
-		font-size: 1.2rem;
-		margin-bottom: 2rem;	
-		clear: none;
 	}
 
 	.PostContent {
