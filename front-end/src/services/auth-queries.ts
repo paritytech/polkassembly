@@ -40,3 +40,11 @@ export const LOGOUT = gql`
     }
 `;
 
+export const GET_REFRESH_TOKEN = gql`
+    query GET_REFRESH_TOKEN {
+        token {
+            token
+        }
+    }
+`
+

@@ -4,6 +4,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 import { Button } from '../../ui-components/Button';
 
@@ -14,7 +15,7 @@ interface Props {
 
 const Home = ({ className, data }: Props) => {
 	const history = useHistory();
-
+	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
 		history.push('/post/create')
 	};
@@ -50,7 +51,7 @@ const Home = ({ className, data }: Props) => {
 						<h4>About Polkassembly</h4>
 						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
 						<div className='mainButtonContainer'>
-							<Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>
+							{currentUser.id && <Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 						</div>
 					</div>
 				</Grid.Column>
