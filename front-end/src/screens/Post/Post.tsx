@@ -46,6 +46,8 @@ const PostContent = ({ post } : any) => {
 	return (
 		<>
 			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<div className='text_muted divider'>&nbsp;&nbsp;|&nbsp;&nbsp;</div>
+			<div className='text_muted'>All discussions are off-chain.</div>
 			<h3>{title}</h3>
 			<div className='post_content'>{content}</div>
 			<div className='post_tags'><Tag>{category && category.name}</Tag></div>
@@ -58,6 +60,13 @@ export default styled(Post)`
 		color: #555;
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
+		float: left;
+	}
+
+	.text_muted {
+		color: #B5AEAE;
+		font-size: 1.2rem;
+		margin-bottom: 2rem;	
 	}
 
 	.PostContent {
@@ -68,7 +77,7 @@ export default styled(Post)`
 
 	h3 {
 		font-family: 'Roboto';
-		margin-bottom: 1.5srem;
+		margin-bottom: 1.5rem;
 	}
 
 	.post_content {
@@ -76,5 +85,22 @@ export default styled(Post)`
 		font-size: 1.45rem;
 		line-height: 150%;
 		margin-bottom: 1.25rem;	
+	}
+
+	@media only screen and (max-width: 576px) {
+		.post_info {
+			font-size: 1.3rem;
+			clear: both;
+			margin-bottom: 0rem;
+		}
+
+		.text_muted {
+			font-size: 1.3rem;
+			clear: both;	
+		}
+
+		.divider {
+			display: none;
+		}
 	}
 `;

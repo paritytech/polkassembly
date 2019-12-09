@@ -115,12 +115,12 @@ export default styled(CreatePost)`
 
 	.ui.button {
 		font-family: 'Roboto Mono';
-		font-size: 1.125rem;
+		font-size: 1.6rem;
 		font-weight: 500;
 		text-transform: uppercase;
-		border-radius: 0.188rem;
+		border-radius: 0.3rem;
 		border: none;
-		padding: 0.625rem 0.938rem;
+		padding: 0.5rem 1rem;
 		color: #fff;
 		background-color: #EB5757;
 		&:focus, &:hover {
@@ -133,11 +133,13 @@ export default styled(CreatePost)`
 		margin: 0 0 1.875rem 0;
 
 		.ui.button {
-			font-size: 0.75rem;
-			background-color: #CCC;
-			padding: 0.313rem 0.5rem;
-			border-radius: 0.125rem;
-			letter-spacing: 0.031rem;
+			font-size: 1rem;
+			background-color: #B5AEAE;
+			padding: 0.5rem 0.8rem;
+			border-radius: 0.2rem;
+			letter-spacing: 0.05rem;
+			line-height: 100%;
+			text-transform: none;
 			&:focus, &:hover {
 				background-color: #282828;
 				outline: none;

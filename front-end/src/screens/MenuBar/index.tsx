@@ -88,14 +88,25 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 export default styled(MenuBar)`
 	&.ui.menu {
 		border-radius: 0;
-		padding: 1.5rem 3rem;
+		padding: 1.5rem 2rem;
 		font-family: 'Roboto Mono';
 		font-size: 1.4rem;
 		letter-spacing: 0.1rem;
 		.item {
 			font-weight: 500;
 			padding: 0.5rem 0.5rem;
+			margin: 0 1.5rem;
 			color: #B5AEAE;
+		}
+	}
+
+	@media only screen and (max-width: 576px) {
+		&.ui.menu {
+			padding: 1.5rem 1rem;
+			.item {
+				padding: 0.5rem 0.5rem;
+				margin: 0rem 0rem;
+			}
 		}
 	}
 

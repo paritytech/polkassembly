@@ -60,6 +60,27 @@ const Home = ({ className, data }: Props) => {
 }
 
 export default styled(Home)`
+
+	@media only screen and (max-width: 768px) {
+		h3 {
+			margin-left: 3rem;
+		}
+
+		.info_box {
+			padding: 2rem 3rem;
+		}
+	}
+
+	@media only screen and (max-width: 576px) {
+		h3 {
+			margin-left: 1.5rem;
+		}
+
+		.info_box {
+			padding: 2rem 1.5rem;
+		}
+	}
+
 	.Home__item {
 		margin: 0 0 1rem 0;
 		border: 1px solid #EEE;
@@ -81,8 +102,8 @@ export default styled(Home)`
 	}
 
 	.info_box {
-		padding: 2rem 3rem;
 		background-color: #FFF;
+		padding: 2rem 3rem;
 		margin: 0 0 0.625rem 0;
 		border: 1px solid #EEE;
 		h4 {
@@ -107,12 +128,6 @@ export default styled(Home)`
 			color: #EB5757;
 			&:hover {
 			border-bottom: 1px solid #EB5757;
-		}
-	}
-
-	@media only screen and (max-width: 576px) {
-		h3 {
-			margin-left: 15px;
 		}
 	}
 `;

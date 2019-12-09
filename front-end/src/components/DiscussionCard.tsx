@@ -35,7 +35,7 @@ const DiscussionCard = styled.div`
 
     @media only screen and (max-width: 576px) {
         & {
-            padding: 1.25rem 0.938rem;       
+            padding: 1.2rem 1.5rem;       
         }
     }
 `;
