@@ -98,7 +98,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						</Button>
 						{error &&
 						<>
-							<br/><div> Error: {error} </div>
+							<br/><div>{error.message}</div>
 						</>
 						}
 					</div>

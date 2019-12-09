@@ -169,8 +169,19 @@ export type LogoutMutation = (
   )> }
 );
 
+export type Get_Refresh_TokenQueryVariables = {};
+
+
+export type Get_Refresh_TokenQuery = (
+  { __typename?: 'Query' }
+  & { token: Maybe<(
+    { __typename?: 'Token' }
+    & Pick<Token, 'token'>
+  )> }
+);
+
 export const UserFragmentDoc = gql`
-    fragment user on User {
+fragment user on User {
   id
   name
   username
@@ -281,3 +292,35 @@ export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const Get_Refresh_TokenDocument = gql`
+    query GET_REFRESH_TOKEN {
+  token {
+    token
+  }
+}
+    `;
+
+/**
+ * __useGet_Refresh_TokenQuery__
+ *
+ * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_Refresh_TokenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGet_Refresh_TokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+      }
+export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+        }
+export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
+export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
+export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;

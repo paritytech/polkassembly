@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 
 interface Props {
@@ -72,7 +73,7 @@ const Container = styled.div`
 
 const Home = ({ data }: Props) => {
 	const history = useHistory();
-
+	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
 		history.push('/post/create')
 	};
@@ -104,7 +105,7 @@ const Home = ({ data }: Props) => {
 					</ul>
 				</Col>
 				<Col md={6} lg={5}>
-					<Button className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+					{currentUser.id && <Button className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					<div className='info_box'>
 						<h5>Hello</h5>
 						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
