@@ -24,13 +24,13 @@ const Post = ( { data }: {data: DataType}) => {
 }
 
 const PostContent = ({ post } : {post: PostFragment}) => {
-	const { author, topic, content, title } = post;
+	const { author, category, content, title } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>
 
 	return (
 		<>
-			<h3>{title} - {topic && topic.name}</h3>
+			<h3>{title} - {category && category.name}</h3>
 			<div>by {author.username}</div>
 			<br/>
 			<ReactMarkdown source={content} />

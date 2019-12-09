@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { useCreatePostMutation, useTopicsQuery } from '../../generated/graphql';
+import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { Form } from '../../ui-components/Form';
 import { TextArea } from '../../ui-components/TextArea';
@@ -15,33 +15,33 @@ interface Props {
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
-	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
+	const [selectedCategory, setSetlectedCategorie] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
-	const { data: topicData, error: topicError } = useTopicsQuery()
+	const { data: catData, error: catError } = useCategoriesQuery()
 	const [createPostMutation, { data, loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
 	const history = useHistory();
 
 	const handleSend = () => {
-		if (currentUser.id && title && content && selectedTopic){
+		if (currentUser.id && title && content && selectedCategory){
 			setIsSending(true);
 			createPostMutation({ variables: {
+				cat: selectedCategory,
 				content,
 				title,
-				topicId: selectedTopic,
 				userId: currentUser.id
 			} })
 		}
 	}
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
-	const renderTopics = () => {
-		if (!topicData || !topicData.topics) return null
+	const renderCategories = () => {
+		if (!catData || !catData.categories) return null
 
 		return (
 			<Button.Group size="small">
-				{ topicData.topics.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} onClick={() => setSetlectedTopic(id)}>{name}</Button>
+				{ catData.categories.map(({ id, name } : {name: string, id:number}) => {
+					return <Button key={id} onClick={() => setSetlectedCategorie(id)}>{name}</Button>
 				})}
 			</Button.Group>
 		);
@@ -53,9 +53,9 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		return <div>Loading...</div>;
 	}
 
-	if (error || topicError) {
+	if (error || catError) {
 		error && console.error('Post creatioin error',error)
-		topicError && console.error('Topic loading error',error)
+		catError && console.error('Categories loading error',error)
 	}
 
 	return (
@@ -81,7 +81,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							value={content}
 						/>
 					</Form.Group>
-					{renderTopics()}
+					{renderCategories()}
 					<div className={'mainButtonContainer'}>
 						<Button
 							onClick={handleSend}
