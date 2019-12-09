@@ -115,7 +115,7 @@ export type User = {
   email_verified?: Maybe<Scalars['String']>,
 };
 
-export type UserFragmentFragment = (
+export type UserFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'name' | 'username'>
 );
@@ -135,7 +135,7 @@ export type SignupMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & UserFragmentFragment
+      & UserFragment
     )> }
   )> }
 );
@@ -153,7 +153,7 @@ export type LoginMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & UserFragmentFragment
+      & UserFragment
     )> }
   )> }
 );
@@ -169,19 +169,8 @@ export type LogoutMutation = (
   )> }
 );
 
-export type Get_Refresh_TokenQueryVariables = {};
-
-
-export type Get_Refresh_TokenQuery = (
-  { __typename?: 'Query' }
-  & { token: Maybe<(
-    { __typename?: 'Token' }
-    & Pick<Token, 'token'>
-  )> }
-);
-
-export const UserFragmentFragmentDoc = gql`
-    fragment userFragment on User {
+export const UserFragmentDoc = gql`
+    fragment user on User {
   id
   name
   username
@@ -191,12 +180,12 @@ export const SignupDocument = gql`
     mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
     user {
-      ...userFragment
+      ...user
     }
     token
   }
 }
-    ${UserFragmentFragmentDoc}`;
+    ${UserFragmentDoc}`;
 export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
 
 /**
@@ -229,12 +218,12 @@ export const LoginDocument = gql`
     mutation LOGIN($password: String!, $username: String!) {
   login(password: $password, username: $username) {
     user {
-      ...userFragment
+      ...user
     }
     token
   }
 }
-    ${UserFragmentFragmentDoc}`;
+    ${UserFragmentDoc}`;
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**

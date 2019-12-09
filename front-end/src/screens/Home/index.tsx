@@ -3,7 +3,7 @@ import React from 'react';
 import { useLatestPostsQuery } from '../../generated/graphql';
 import Home from './Home';
 
-const HomeContainer = () => {
+export default () => {
 
 	const { data, error, loading } = useLatestPostsQuery();
 
@@ -17,5 +17,3 @@ const HomeContainer = () => {
 
 	return <Home data={data} />;
 };
-
-export default HomeContainer;
