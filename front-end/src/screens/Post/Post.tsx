@@ -61,12 +61,18 @@ export default styled(Post)`
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
 		float: left;
+		clear: none;
+	}
+
+	.divider {
+		float: left;
 	}
 
 	.text_muted {
 		color: #B5AEAE;
 		font-size: 1.2rem;
 		margin-bottom: 2rem;	
+		clear: none;
 	}
 
 	.PostContent {

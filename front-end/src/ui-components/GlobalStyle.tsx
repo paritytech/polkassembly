@@ -89,12 +89,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0 1.25rem 0 1.25rem;
         }
 
-        .ui.grid, .ui.container {
-            margin-top: 0!important;
-            margin-left: 0!important;
-            margin-right: 0!important;
-        }
-
         .ui.container, .ui.grid>.column:not(.row) {
             padding-left: 0;
             padding-right: 0;
