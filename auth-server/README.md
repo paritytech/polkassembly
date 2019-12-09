@@ -10,7 +10,6 @@ JWT Authentication server for generating a JWT to use in the `Authentication` he
 
 - `auth` postgreSQL up and accepting connections
 
-
 #### Local instructions
 
 Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.

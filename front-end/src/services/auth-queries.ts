@@ -1,35 +1,35 @@
 import gql from 'graphql-tag';
 
-const user_fragment = gql`
-    fragment userFragment on User {
-        id
-        name
-        username
-    }
+const USER_FRAGMENT = gql`
+  fragment user on User {
+      id
+      name
+      username
+  }
 `
 
 export const SIGNUP = gql`
     mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
         signup(email: $email, password: $password, username:$username, name:$name){
             user {
-                ...userFragment
+                ...user
             }
             token
         }
     }
-    ${user_fragment}
+    ${USER_FRAGMENT}
 `;
 
 export const LOGIN = gql`
     mutation LOGIN($password: String!, $username: String!) {
         login(password: $password, username:$username){
             user {
-                ...userFragment
+                ...user
             }
             token
         }
     }
-    ${user_fragment}
+    ${USER_FRAGMENT}
 `;
 
 export const LOGOUT = gql`
