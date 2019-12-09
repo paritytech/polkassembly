@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
-import { Dimmer, Loader, Segment, Header, Icon } from 'semantic-ui-react'
+import { Loader, Segment, Header, Icon, Grid } from 'semantic-ui-react'
+import styled from 'styled-components';
 
 import { useVerifyEmailMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 
-export default () => {
+interface Props {
+	className?: string
+}
+
+const VerifyEmail = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
 	const [verifyEmailMutation, { data, error }] = useVerifyEmailMutation({
 		variables: {
@@ -21,7 +26,7 @@ export default () => {
 
 		return (
 			<Header as='h2' icon>
-				<Icon name='frown' />
+				<Icon name='bug' />
 				{error && error.message ? error.message : errorMessage}
 			</Header>
 		)
@@ -39,22 +44,27 @@ export default () => {
 			renderError('Unexpected data')
 		}
 	}
-	
+
 	const renderLoading = () => {
 		if (data || error) return null
 
-		return <Loader>Loading</Loader>
+		return <Loader>Verifying</Loader>
 	}
 
 	return   (
-		<div>
-			<Segment>
-				<Dimmer active>
+		<Grid className={className}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
+				<Segment>
 					{renderSuccess()}
 					{renderError()}
 					{renderLoading()}
-				</Dimmer>
-			</Segment>
-		</div>
+				</Segment>
+			</Grid.Column>
+		</Grid>
 	);
 }
+
+export default styled(VerifyEmail)`
+	text-align: center
+`

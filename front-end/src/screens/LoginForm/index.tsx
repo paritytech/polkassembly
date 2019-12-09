@@ -95,7 +95,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(LoginForm)`
-
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
