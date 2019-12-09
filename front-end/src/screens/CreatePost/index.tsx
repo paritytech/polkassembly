@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
+import { useRouter } from '../../hooks';
 import { Form } from '../../ui-components/Form';
 import { TextArea } from '../../ui-components/TextArea';
 
@@ -20,7 +20,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { data: catData, error: catError } = useCategoriesQuery()
 	const [createPostMutation, { data, loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
-	const history = useHistory();
+	const { history } = useRouter();
 
 	const handleSend = () => {
 		if (currentUser.id && title && content && selectedCategory){
