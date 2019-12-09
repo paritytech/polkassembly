@@ -11,6 +11,7 @@ import MenuBar from './screens/MenuBar';
 import Post from './screens/Post';
 import Proposals from './screens/Proposals';
 import SignupForm from './screens/SignupForm';
+import VerifyEmail from './screens/VerifyEmail';
 
 const App = () => {
 	return (
@@ -40,6 +41,9 @@ const App = () => {
 						</Route>
 						<Route path="/signup">
 							<SignupForm/>
+						</Route>
+						<Route path="/verify-email/:token">
+							<VerifyEmail/>
 						</Route>
 					</Switch>
 				</UserDetailsProvider>

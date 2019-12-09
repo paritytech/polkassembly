@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
+import { useRouter } from '../../hooks';
 
 interface Props {
   className?: string
@@ -71,8 +72,8 @@ const Container = styled.div`
 }
 `;
 
-const Home = ({ data }: Props) => {
-	const history = useHistory();
+const HomeContent = ({ data }: Props) => {
+	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
 		history.push('/post/create')
@@ -125,4 +126,4 @@ const Home = ({ data }: Props) => {
 	);
 }
 
-export default Home;
+export default HomeContent;
