@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { useLatestPostsQuery } from '../../generated/graphql';
-import Home from './Home';
+import HomeContent from './HomeContent';
 
-export default () => {
-
+const Home = () => {
 	const { data, error, loading } = useLatestPostsQuery();
 
 	if (loading) {
@@ -15,5 +14,7 @@ export default () => {
 		return <div>ERROR</div>;
 	}
 
-	return <Home data={data} />;
+	return <HomeContent data={data} />;
 };
+
+export default Home;

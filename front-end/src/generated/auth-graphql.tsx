@@ -169,6 +169,17 @@ export type LogoutMutation = (
   )> }
 );
 
+export type Get_Refresh_TokenQueryVariables = {};
+
+
+export type Get_Refresh_TokenQuery = (
+  { __typename?: 'Query' }
+  & { token: Maybe<(
+    { __typename?: 'Token' }
+    & Pick<Token, 'token'>
+  )> }
+);
+
 export const UserFragmentDoc = gql`
     fragment user on User {
   id

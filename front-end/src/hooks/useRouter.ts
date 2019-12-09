@@ -4,33 +4,28 @@ import queryString from 'query-string';
 
 export default function () {
 
-    const params = useParams();
-    const location = useLocation();
-    const history = useHistory();
-    const match = useRouteMatch();
-  
-    // Return our custom router object
-    // Memoize so that a new object is only returned if something changes
-    return useMemo(() => {
-        const query: {[index: string]:any} = {
-            ...queryString.parse(location.search), // Convert string to object
-            ...params
-          }
+	const params = useParams();
+	const location = useLocation();
+	const history = useHistory();
+	const match = useRouteMatch();
 
-      return {
-        // For convenience add push(), replace(), pathname at top level
-        push: history.push,
-        replace: history.replace,
-        pathname: location.pathname,
-        // Merge params and parsed query string into single "query" object
-        // so that they can be used interchangeably.
-        // Example: /:topic?sort=popular -> { topic: "react", sort: "popular" }
-        query,
-        // Include match, location, history objects so we have
-        // access to extra React Router functionality if needed.
-        match,
-        location,
-        history
-      };
-    }, [params, match, location, history]);
+	// Return a custom router object
+	// Memoize so that a new object is only returned if something changes
+	return useMemo(() => {
+		// Merge params and parsed query string into single "query" object
+		// so that they can be used interchangeably.
+		// Example: /:topic?sort=popular -> { topic: "react", sort: "popular" }
+		const query: {[index: string]:any} = {
+			...queryString.parse(location.search), // Convert string to object
+			...params
+		}
+
+		return {
+			history,
+			location,
+			match,
+			pathname: location.pathname,
+			query
+		};
+	}, [params, match, location, history]);
 }
