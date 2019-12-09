@@ -2004,6 +2004,30 @@ export type TopicsQuery = (
   )> }
 );
 
+export type LatestDiscussionPostsQueryVariables = {};
+
+
+export type LatestDiscussionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'creation_date' | 'modification_date'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )>, replies_aggregate: (
+      { __typename?: 'replies_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'replies_aggregate_fields' }
+        & Pick<Replies_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
+  )> }
+);
+
 export type LatestPostsQueryVariables = {};
 
 
@@ -2057,6 +2081,30 @@ export type PostAndRepliesQuery = (
   & { posts: Array<(
     { __typename?: 'posts' }
     & PostFragment
+  )> }
+);
+
+export type LatestProposalPostsQueryVariables = {};
+
+
+export type LatestProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'creation_date' | 'modification_date'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )>, replies_aggregate: (
+      { __typename?: 'replies_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'replies_aggregate_fields' }
+        & Pick<Replies_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
   )> }
 );
 
@@ -2168,6 +2216,53 @@ export function useTopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookO
 export type TopicsQueryHookResult = ReturnType<typeof useTopicsQuery>;
 export type TopicsLazyQueryHookResult = ReturnType<typeof useTopicsLazyQuery>;
 export type TopicsQueryResult = ApolloReactCommon.QueryResult<TopicsQuery, TopicsQueryVariables>;
+export const LatestDiscussionPostsDocument = gql`
+    query LatestDiscussionPosts {
+  posts(order_by: {creation_date: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
+    id
+    title
+    author {
+      username
+    }
+    creation_date
+    modification_date
+    replies_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDiscussionPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDiscussionPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+      }
+export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+        }
+export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
+export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
+export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
 export const LatestPostsDocument = gql`
     query LatestPosts {
   posts(order_by: {creation_date: desc}) {
@@ -2244,3 +2339,50 @@ export function usePostAndRepliesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type PostAndRepliesQueryHookResult = ReturnType<typeof usePostAndRepliesQuery>;
 export type PostAndRepliesLazyQueryHookResult = ReturnType<typeof usePostAndRepliesLazyQuery>;
 export type PostAndRepliesQueryResult = ApolloReactCommon.QueryResult<PostAndRepliesQuery, PostAndRepliesQueryVariables>;
+export const LatestProposalPostsDocument = gql`
+    query LatestProposalPosts {
+  posts(order_by: {creation_date: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {
+    id
+    title
+    author {
+      username
+    }
+    creation_date
+    modification_date
+    replies_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestProposalPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>(LatestProposalPostsDocument, baseOptions);
+      }
+export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>(LatestProposalPostsDocument, baseOptions);
+        }
+export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
+export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
+export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;

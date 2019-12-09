@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
-import { LatestPostsQuery } from '../../generated/graphql';
+import { LatestProposalPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestPostsQuery
+  data: LatestProposalPostsQuery
 }
 
 const Container = styled.div`

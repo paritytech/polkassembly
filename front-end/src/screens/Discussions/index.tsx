@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useLatestPostsQuery } from '../../generated/graphql';
+import { useLatestDiscussionPostsQuery } from '../../generated/graphql';
 import Discussions from './Discussions';
 
 const DiscussionsContainer = () => {
 
-	const { data, error } = useLatestPostsQuery();
+	const { data, error } = useLatestDiscussionPostsQuery();
 
 	if (error) {
 		return <div>{error}</div>;

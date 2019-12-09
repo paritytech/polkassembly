@@ -7,11 +7,11 @@ import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { LatestPostsQuery } from '../../generated/graphql';
+import { LatestDiscussionPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestPostsQuery
+  data: LatestDiscussionPostsQuery
 }
 
 const Container = styled.div`

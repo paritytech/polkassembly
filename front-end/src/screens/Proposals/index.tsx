@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useLatestPostsQuery } from '../../generated/graphql';
+import { useLatestProposalPostsQuery } from '../../generated/graphql';
 import Proposals from './Proposals';
 
 const ProposalsContainer = () => {
 
-	const { data, error } = useLatestPostsQuery();
+	const { data, error } = useLatestProposalPostsQuery();
 
 	if (error) {
 		return <div>{error}</div>;

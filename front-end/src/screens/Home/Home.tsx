@@ -80,7 +80,7 @@ const Home = ({ data }: Props) => {
 
 	return (
 		<Container className='Home'>
-			<h3>Latest Discussions</h3>
+			<h3>Latest Posts</h3>
 			<Row>
 				<Col sm={12} md={6} lg={7}>
 					<ul className='Home__list'>
