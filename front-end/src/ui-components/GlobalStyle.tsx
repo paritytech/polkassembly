@@ -24,10 +24,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
 
-    li {
-        list-style-type: none;
-    }
-
     a:hover {
         text-decoration: none;
     }
