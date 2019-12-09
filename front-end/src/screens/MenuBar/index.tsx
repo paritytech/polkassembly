@@ -69,6 +69,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	return (
 		<Menu className={className} stackable inverted borderless>
 			<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+			<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
+			<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
 			<Menu.Menu position="right">
 				{username
 					? <>
