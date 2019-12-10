@@ -1,32 +1,32 @@
 import gql from 'graphql-tag';
 
 export const CREATE_POST = gql`
-    mutation createPost($userId: Int! $content: String! $cat: Int! $title: String!) {
+    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!) {
         __typename
         insert_posts(objects: {
             author_id: $userId,
-            category_id: $cat,
             content: $content,
-            title: $title
+            title: $title,
+            topic_id: $topicId
         }) {
             affected_rows
         }
     }
 `;
 
-const categorie_fragment = gql`
-    fragment catfragment on categories {
+const topic_fragment = gql`
+    fragment topic on topics {
         id
         name
     }
 `
 
-export const GET_CATEGORIES = gql`
-    query Categories {
-        categories {
-        ...catfragment
+export const GET_TOPICS = gql`
+    query Topics {
+        topics {
+            ...topic
         }
     }
-    ${categorie_fragment}
+    ${topic_fragment}
 `;
 

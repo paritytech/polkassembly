@@ -19,7 +19,7 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		verifyEmailMutation();
-	},[])
+	},[verifyEmailMutation])
 
 	const renderError = (errorMessage?:string) => {
 		if (!error && !errorMessage) return null

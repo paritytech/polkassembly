@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { GlobalStyle } from './ui-components/GlobalStyle'
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
+import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
 import Post from './screens/Post';
+import Proposals from './screens/Proposals';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
 
@@ -22,6 +24,9 @@ const App = () => {
 						<Route exact path="/">
 							<Home/>
 						</Route>
+						<Route path="/discussions">
+							<Discussions/>
+						</Route>
 						<Route path="/login">
 							<LoginForm/>
 						</Route>
@@ -30,6 +35,9 @@ const App = () => {
 						</Route>
 						<Route exact path="/post/:id" >
 							<Post/>
+						</Route>
+						<Route path="/proposals" >
+							<Proposals/>
 						</Route>
 						<Route path="/signup">
 							<SignupForm/>

@@ -1,18 +1,15 @@
-import React, { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
-import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { LatestPostsQuery } from '../../generated/graphql';
-import { useRouter } from '../../hooks';
+import { LatestProposalPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestPostsQuery
+  data: LatestProposalPostsQuery
 }
 
 const Container = styled.div`
@@ -20,17 +17,17 @@ const Container = styled.div`
 		margin-bottom: 10px
 	}
 
-	.Home__item {
+	.proposals__item {
 		margin: 0 0 0.625rem 0;
 		border: 1px solid #EEE;
 	}
 
-	.Home__item:hover {
+	.proposals__item:hover {
 		border: 1px solid #BBB;
 		text-decoration: none;
 	}
 
-	.Home__item a:hover {
+	.proposals__item a:hover {
 		tex	t-decoration: none;
 	}
 
@@ -72,24 +69,18 @@ const Container = styled.div`
 }
 `;
 
-const HomeContent = ({ data }: Props) => {
-	const { history } = useRouter();
-	const currentUser = useContext(UserDetailsContext);
-	const handleCreatePost = () => {
-		history.push('/post/create')
-	};
-
+const Proposals = ({ data }: Props) => {
 	return (
-		<Container className='Home'>
-			<h3>Latest Posts</h3>
+		<Container className='proposals'>
+			<h3>Latest Proposals</h3>
 			<Row>
 				<Col sm={12} md={6} lg={7}>
-					<ul className='Home__list'>
+					<ul className='proposals__list'>
 						{!!data.posts &&
 						data.posts.map(
 							(post) =>
 								!!post && !!post.author && !!post.author.username && (
-									<li key={post.id} className='Home__item'>
+									<li key={post.id} className='proposals__item'>
 										{<Link to={`/post/${post.id}`}>
 											<DiscussionCard
 												title={post.title}
@@ -106,24 +97,10 @@ const HomeContent = ({ data }: Props) => {
 					</ul>
 				</Col>
 				<Col md={6} lg={5}>
-					{currentUser.id && <Button className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					<div className='info_box'>
-						<h5>Hello</h5>
-						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
-						<div className='info_text'><h6>New to Polkadot Governance?</h6> Polkadot uses a sophisticated governance mechanism to let the network evolve gracefully. The stated goal is to ensure that the majority of the stake can always command the network.</div>
-						<div className='ex_link'>
-							<a
-								href='https://wiki.polkadot.network/docs/en/learn-governance'
-								rel='noopener noreferrer'
-								target='_blank'>
-								Find out more about Polkadot Governance »
-							</a>
-						</div>
-					</div>
 				</Col>
 			</Row>
 		</Container>
 	);
 }
 
-export default HomeContent;
+export default Proposals;

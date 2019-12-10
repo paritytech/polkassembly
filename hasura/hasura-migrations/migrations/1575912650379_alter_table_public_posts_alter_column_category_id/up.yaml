@@ -1,0 +1,13 @@
+- args:
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "category_id" TYPE int4;
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "category_id" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."posts"."category_id" IS E'Define the main suject
+      of the post'
+  type: run_sql
+- args:
+    sql: alter table "public"."posts" rename column "category_id" to "topic_id";
+  type: run_sql

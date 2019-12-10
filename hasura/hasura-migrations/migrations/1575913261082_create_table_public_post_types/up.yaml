@@ -1,0 +1,8 @@
+- args:
+    sql: CREATE TABLE "public"."post_types"("id" serial NOT NULL, "name" text NOT
+      NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("name"));
+  type: run_sql
+- args:
+    name: post_types
+    schema: public
+  type: add_existing_table_or_view
