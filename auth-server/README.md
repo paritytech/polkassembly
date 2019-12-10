@@ -381,7 +381,7 @@ Then run the file
 
 ```bash
 chmod +x ./test.sh
-./start.sh
+./test.sh
 ```
 
 =============IMPORTANT===============
