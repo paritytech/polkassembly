@@ -51,7 +51,41 @@ export default class AuthService {
 		}
 	}
 
-	public async SignUp(email, password, username, name): Promise<AuthObjectType> {
+	public async Logout(token: string, refreshToken: string) {
+		if (!refreshToken) {
+			throw new AuthenticationError('refresh token not provided')
+		}
+
+		const refreshTokenObj = await RefreshToken
+			.query()
+			.where('token', refreshToken)
+			.first()
+
+		if (!refreshTokenObj) {
+			throw new ForbiddenError('Refresh token not found')
+		}
+
+		// verify a token asymmetric - synchronous
+		const decoded = jwt.verify(token, publicKey)
+
+		if (isNaN(decoded.sub)) {
+			throw new AuthenticationError('Invalid user id in token')
+		}
+
+		const userId = parseInt(decoded.sub)
+
+		if (refreshTokenObj.user_id !== userId) {
+			throw new Error('JWT token user not matching refresh token user')
+		}
+
+
+		await RefreshToken
+			.query()
+			.patch({ valid: false })
+			.where({ token: refreshToken })
+	}
+
+	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		const salt = randomBytes(32)
 		password = await argon2.hash(password, { salt })
 
