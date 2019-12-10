@@ -3,20 +3,21 @@ const dotenv = require('dotenv')
 
 dotenv.load()
 
-const databaseName = 'governance-auth'
-const connectionUrl = process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5431/${databaseName}`
+// e.g. 'postgres://postgres:postgres@localhost:5431/governance-auth'
+const devConnectionUrl = process.env.DATABASE_URL
+const testConnectionUrl = process.env.TEST_DATABASE_URL
 
 const config = {
-	test: {
+	development: {
 		client: 'postgresql',
-		connection: 'postgres://postgres:postgres@localhost:5431/governance-auth-test',
+		connection: devConnectionUrl,
 		migrations: {
 			directory: `${__dirname}/migrations`
 		}
 	},
-	development: {
+	test: {
 		client: 'postgresql',
-		connection: connectionUrl,
+		connection: testConnectionUrl,
 		migrations: {
 			directory: `${__dirname}/migrations`
 		}
@@ -24,8 +25,13 @@ const config = {
 }
 
 const env = process.env.NODE_ENV || 'development'
+const connection = config[env]
 
-module.exports = config[env]
+if (!connection || !connection.connection) {
+	throw new Error(`DB Connection not provided for env ${env}`)
+}
+
+module.exports = connection
 
 // staging: {
 //   client: 'postgresql',

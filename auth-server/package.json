@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "oauth 2.0 server for governance platform",
   "scripts": {
-    "test": "NODE_ENV=test knex migrate:latest && NODE_ENV=test mocha -r ts-node/register test/**/*.spec.ts",
+    "test": "knex migrate:latest && mocha -r ts-node/register test/**/*.spec.ts",
     "start": "yarn tsc && node build/src/index.js",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",

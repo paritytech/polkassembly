@@ -364,10 +364,23 @@ On success, we get the response
 
 ## Testing
 
-To test create a database governance-auth-test in postgres. To start test suite run:
+To test create a database governance-auth-test in postgres. To start test suite create a test.sh file:
 
 ```bash
+#!/usr/bin/env bash
+
+export NODE_ENV=test
+export TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
+
 yarn test
 ```
 
-Test database will be cleaned before starting test suite.
+Then run the file
+
+```bash
+chmod +x ./start.sh
+./start.sh
+```
+
+=============IMPORTANT===============
+Please note: TEST DATABASE WILL BE CLEANED BEFORE STARTING TEST SUITE.
