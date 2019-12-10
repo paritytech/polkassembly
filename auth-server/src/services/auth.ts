@@ -78,11 +78,10 @@ export default class AuthService {
 			throw new Error('JWT token user not matching refresh token user')
 		}
 
-
 		await RefreshToken
 			.query()
 			.patch({ valid: false })
-			.where({ token: refreshToken })
+			.where({ user_id: userId })
 	}
 
 	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
