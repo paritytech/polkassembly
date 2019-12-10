@@ -13,9 +13,9 @@ export default () => {
 		return <div>Loading...</div>;
 	}
 
-	if (error || !data) {
-		return <div>ERROR</div>;
-	}
+	if (error) return <div> Error: {error.message}</div>;
 
-	return <Post data={data} />;
+	if (data) return <Post data={data} />;
+
+	return <div>Loading...</div>
 };

@@ -11,6 +11,7 @@ const post = gql`
         modification_date
         replies(order_by: {created_at: asc}) {
             author {
+                id
                 username
             }
             id
@@ -20,9 +21,11 @@ const post = gql`
         }
         title
         topic {
+            id
             name
         }
         type {
+            id
             name
         }
     }
