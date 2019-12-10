@@ -55,7 +55,7 @@ const StyledForm = styled(SUIForm)`
 
         textarea {
             font-family: 'Roboto';
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #282828;
             border: 1 px solid #EEE;
             border-color: #EEE;
@@ -75,7 +75,7 @@ const StyledInput = styled(SUIForm.Input).attrs({
 	type: 'text'
 })`
     font-family: 'Roboto';
-    font-size: 0.875rem;
+    font-size: 1.2rem;
     color: #282828;
     border: 1 px solid #EEE;
     border-radius: 0rem;

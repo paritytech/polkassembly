@@ -74,7 +74,6 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							/>
 						</Form.Field>
 					</Form.Group>
-
 					<Form.Group>
 						<TextArea
 							onChange={setContent}
@@ -139,6 +138,13 @@ export default styled(CreatePost)`
 				background-color: #282828;
 				outline: none;
 			}
+		}
+	}
+
+	.fields {
+		.container {
+			padding-right: 5px;
+			padding-left: 5px;
 		}
 	}
 `
