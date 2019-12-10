@@ -53,7 +53,7 @@ export default class AuthService {
 
 	public async Logout(token: string, refreshToken: string) {
 		if (!refreshToken) {
-			throw new Error('refresh token not provided')
+			throw new AuthenticationError('refresh token not provided')
 		}
 
 		const refreshTokenObj = await RefreshToken
