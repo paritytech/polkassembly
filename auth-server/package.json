@@ -14,7 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/hasura/graphql-engine.git"
   },
-  "author": "Parity",
+  "author": "Parity Team <admin@parity.io>",
+  "maintainers": [
+    "Nikhil Rajan",
+    "Thibaut Sardan"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hasura/graphql-engine/issues"
