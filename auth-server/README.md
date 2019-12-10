@@ -372,7 +372,7 @@ To test create a database governance-auth-test in postgres. To start test suite 
 #!/usr/bin/env bash
 
 export NODE_ENV=test
-export TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
+export TEST_DATABASE_URL="postgres://user:password@localhost:5431/governance-test-auth"
 
 yarn test
 ```
