@@ -380,7 +380,7 @@ yarn test
 Then run the file
 
 ```bash
-chmod +x ./start.sh
+chmod +x ./test.sh
 ./start.sh
 ```
 
