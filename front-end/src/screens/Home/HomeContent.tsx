@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
+import { useRouter } from '../../hooks';
 import { Button } from '../../ui-components/Button';
 
 interface Props {
@@ -13,8 +14,8 @@ interface Props {
   data: LatestPostsQuery
 }
 
-const Home = ({ className, data }: Props) => {
-	const history = useHistory();
+const HomeContent = ({ className, data }: Props) => {
+	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
 		history.push('/post/create')
@@ -56,7 +57,7 @@ const Home = ({ className, data }: Props) => {
 	);
 }
 
-export default styled(Home)`
+export default styled(HomeContent)`
 
 	@media only screen and (max-width: 768px) {
 		h3 {

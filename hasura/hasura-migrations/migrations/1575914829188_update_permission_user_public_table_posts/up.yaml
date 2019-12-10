@@ -1,0 +1,24 @@
+- args:
+    role: user
+    table:
+      name: posts
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - author_id
+      - content
+      - creation_date
+      - modification_date
+      - title
+      - topic_id
+      - type_id
+      filter: {}
+    role: user
+    table:
+      name: posts
+      schema: public
+  type: create_select_permission

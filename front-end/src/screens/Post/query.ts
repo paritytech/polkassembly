@@ -5,9 +5,6 @@ const post = gql`
         author {
             username
         }
-        category {
-            name
-        }
         content
         creation_date
         id
@@ -22,6 +19,12 @@ const post = gql`
             updated_at
         }
         title
+        topic {
+            name
+        }
+        type {
+            name
+        }
     }
 `
 
