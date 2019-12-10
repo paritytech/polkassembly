@@ -1,97 +1,88 @@
 import React, { useState, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { FormControlProps } from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components'
+import { Button, Grid } from 'semantic-ui-react';
+import styled from 'styled-components';
 
-import { useCreatePostMutation, useCategoriesQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { useCreatePostMutation, useTopicsQuery } from '../../generated/graphql';
+import { useRouter } from '../../hooks';
+import { Form } from '../../ui-components/Form';
+import { TextArea } from '../../ui-components/TextArea';
 
 interface Props {
 	className?: string
 }
 
-const CreatePost = ({ className }:Props) => {
-	const [title, setTitle] = useState<string | undefined>('');
-	const [content, setContent] = useState<string | undefined>('');
-	const [selectedCategory, setSetlectedCategorie] = useState<number | null>(null);
+const CreatePost = ({ className }:Props): JSX.Element => {
+	const [title, setTitle] = useState('');
+	const [content, setContent] = useState('');
+	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
-	const { data: catData, error: catError } = useCategoriesQuery()
+	const { data: topicData, error: topicError } = useTopicsQuery()
 	const [createPostMutation, { data, loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
-	const history = useHistory();
+	const { history } = useRouter();
 
 	const handleSend = () => {
-		if (currentUser.id && title && content && selectedCategory){
+		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
-				cat: selectedCategory,
 				content,
 				title,
+				topicId: selectedTopic,
 				userId: currentUser.id
 			} })
 		}
-
 	}
 
-	const onTitleChange = (event: React.FormEvent<FormControlProps>) => setTitle(event.currentTarget.value);
-	const onContentChange = (event: React.FormEvent<FormControlProps>) => setContent(event.currentTarget.value);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
+	const renderTopics = () => {
+		if (!topicData || !topicData.topics) return null
 
-	const renderCategories = () => {
-		if (!catData || !catData.categories) return null
-		
 		return (
-			<ButtonGroup aria-label="Categorie" size="sm">
-				{ catData.categories.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} variant="secondary" onClick={() => setSetlectedCategorie(id)}>{name}</Button>
+			<Button.Group size="small">
+				{ topicData.topics.map(({ id, name } : {name: string, id:number}) => {
+					return <Button key={id} onClick={() => setSetlectedTopic(id)}>{name}</Button>
 				})}
-			</ButtonGroup>			
+			</Button.Group>
 		);
 	}
 
 	if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
 
 	if (loading) {
-		return <Spinner animation="grow" />;
+		return <div>Loading...</div>;
 	}
 
-	if (error || catError) {
+	if (error || topicError) {
 		error && console.error('Post creatioin error',error)
-		catError && console.error('Categories loading error',error)
+		topicError && console.error('Topic loading error',error)
 	}
 
 	return (
-		<Row className={className}>
-			<Col className={'bla'} xs={0} sm={0} md={2} lg={2}/>
-			<Col xs={12} sm={12} md={8} lg={8}>
+		<Grid className={className}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
 				<Form>
 					<h3>New Post</h3>
-					<Form.Group controlId="postTitle">
-						<Form.Label>Title</Form.Label>
-						<Form.Control
-							onChange={onTitleChange}
-							placeholder="Your title..."
-							type="text"
-						/>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label>Title</label>
+							<input
+								onChange={onTitleChange}
+								placeholder='Your title...'
+								type="text"
+							/>
+						</Form.Field>
 					</Form.Group>
 
-					<Form.Group controlId="formSignInPassword">
-						<Form.Label>Content</Form.Label>
-						<Form.Control
-							as="textarea"
-							onChange={onContentChange}
-							placeholder="The content of your post..."
-							type="password"
-							rows="3"
+					<Form.Group>
+						<TextArea
+							onChange={setContent}
+							value={content}
 						/>
 					</Form.Group>
-					{renderCategories()}
-					<div className={'mainButonContainer'}> 
+					{renderTopics()}
+					<div className={'mainButtonContainer'}>
 						<Button
 							onClick={handleSend}
 							disabled={isSending}
@@ -102,17 +93,50 @@ const CreatePost = ({ className }:Props) => {
 						</Button>
 					</div>
 				</Form>
-			</Col>
-			<Col xs={0} sm={0} md={2} lg={2}/>
-		</Row>
+			</Grid.Column>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+		</Grid>
 	);
 };
 
 export default styled(CreatePost)`
-	.mainButonContainer{
+
+	.mainButtonContainer{
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+	}
+
+	.ui.button {
+		font-family: 'Roboto Mono';
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		border-radius: 0.188rem;
+		border: none;
+		padding: 0.625rem 0.938rem;
+		color: #fff;
+		background-color: #EB5757;
+		&:focus, &:hover {
+			background-color: #CC3D3D;
+        	outline: none;
+		}
+	}
+
+	.ui.small.buttons {
+		margin: 0 0 1.875rem 0;
+
+		.ui.button {
+			font-size: 0.75rem;
+			background-color: #CCC;
+			padding: 0.313rem 0.5rem;
+			border-radius: 0.125rem;
+			letter-spacing: 0.031rem;
+			&:focus, &:hover {
+				background-color: #282828;
+				outline: none;
+			}
+		}
 	}
 `

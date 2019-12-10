@@ -1,0 +1,6 @@
+- args:
+    name: author
+    table:
+      name: replies
+      schema: public
+  type: delete_remote_relationship

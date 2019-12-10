@@ -1,60 +1,110 @@
-import * as React from 'react';
+import jwt from 'jsonwebtoken'
+import React from 'react';
 import { useContext, useEffect } from 'react'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react'
+import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { getLocalStorageToken } from '../../services/auth.service';
-import parseJwt from '../../util/parseJWT'
+import { useLogoutMutation } from '../../generated/auth-graphql';
+import { useRouter } from '../../hooks';
+import { getLocalStorageToken, logout } from '../../services/auth.service';
+import { JWTPayploadType } from '../../types';
 
-const MenuBar: React.FC = () => {
-	const currentUser = useContext(UserDetailsContext)
+interface Props {
+	className?: string
+}
+
+const MenuBar = ({ className } : Props): JSX.Element => {
+	const currentUser = useContext(UserDetailsContext);
+	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
+	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { history } = useRouter();
+	const { id, setUserDetailsContextState, username } = currentUser;
 
 	useEffect(() => {
-		if (!currentUser.id){
+		if (!id){
 			// no user stored in memory
 			// check in the local storage
 			const token = getLocalStorageToken()
 			if (token) {
-				const tokenPayload = token && parseJwt(token);
+				try {
+					const tokenPayload = token && publicKey && jwt.verify(token, publicKey) as JWTPayploadType;
 
-				if (tokenPayload){
-					const id = tokenPayload && tokenPayload['https://hasura.io/jwt/claims']['x-hasura-user-id']
-					const username =  tokenPayload.name
-	
-					if (id && username){
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								id,
-								username
-							}
-						})
+					if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
+						const id = tokenPayload.sub
+						const username =  tokenPayload.name
+
+						if (id && username){
+							setUserDetailsContextState((prevState) => {
+								return {
+									...prevState,
+									id,
+									username
+								}
+							})
+						}
 					}
+				} catch (e) {
+					// the jwt isn't valid
+					console.log('error jwt verify',e)
 				}
 			}
 		}
-	},[currentUser]);
+	},[id, setUserDetailsContextState, publicKey]);
+
+	useEffect(() => {
+		if (data && data.logout && data.logout.message) {
+			logout(setUserDetailsContextState);
+			history.push('/');
+		}
+
+		if (error) console.error(error)
+
+	},[data, error, history, setUserDetailsContextState])
+
+	const handleLogout = () => {
+		logoutMutation();
+	}
 
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-			<Navbar.Brand as={Link} to="/">Governance Platform</Navbar.Brand>
-			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-			<Navbar.Collapse id="responsive-navbar-nav">
-				<Nav className="ml-auto">
-					{currentUser.username
-						? <Navbar.Text>Hello {currentUser.username}</Navbar.Text>
-						: <>
-							<Nav.Link as={Link} to="/temp-login">Login</Nav.Link >
-							<Nav.Link as={Link} to="/temp-signup">Sign-up</Nav.Link >
-						</>
-					}
-            
-				</Nav>
-			</Navbar.Collapse>
-		</Navbar>
+		<Menu className={className} stackable inverted borderless>
+			<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+			<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
+			<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
+			<Menu.Menu position="right">
+				{username
+					? <>
+						<Menu.Item>Hello {username}</Menu.Item>
+						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+					</>
+					: <>
+						<Menu.Item as={Link} to="/login">Login</Menu.Item >
+						<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
+					</>
+				}
+			</Menu.Menu>
+		</Menu>
 	);
 }
 
-export default MenuBar;
+export default styled(MenuBar)`
+.ui.menu {
+	font-family: 'Roboto Mono';
+	letter-spacing: 0.1rem;
+	border-radius: 0;
+	padding: 1.25rem 2.5rem;
+}
+
+.ui.menu .item {
+	padding: 0 0;
+}
+
+.ui.inverted.menu {
+	background-color: #282828;
+}
+
+#title {
+	text-transform: uppercase;
+}
+`;

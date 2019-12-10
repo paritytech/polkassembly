@@ -194,7 +194,7 @@ export default class AuthService {
 		const decoded = jwt.verify(token, publicKey)
 
 		if (isNaN(decoded.sub)) {
-			throw new AuthenticationError('Invalid user id in token')
+			throw new AuthenticationError('Invalid user id in token.')
 		}
 
 		const userId = parseInt(decoded.sub)
@@ -204,7 +204,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new ForbiddenError('User not found')
+			throw new ForbiddenError('User not found.')
 		}
 
 		await User
@@ -220,11 +220,11 @@ export default class AuthService {
 			.first()
 
 		if (!verifyToken) {
-			throw new Error('email verification token not found')
+			throw new ForbiddenError('Email verification token not found.')
 		}
 
 		if (!verifyToken.valid) {
-			throw new Error('Invalid email verification token')
+			throw new ForbiddenError('Invalid email verification token.')
 		}
 
 		await User
@@ -245,7 +245,7 @@ export default class AuthService {
 		const userId = parseInt(decoded.sub)
 
 		if (isNaN(userId)) {
-			throw new AuthenticationError('Invalid user id')
+			throw new AuthenticationError('Invalid user id.')
 		}
 
 		const user = await User
@@ -254,7 +254,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new ForbiddenError('User not found')
+			throw new ForbiddenError('User not found.')
 		}
 
 		await User
@@ -317,15 +317,15 @@ export default class AuthService {
 			.first()
 
 		if (!resetToken) {
-			throw new Error('password reset token not found')
+			throw new Error('Password reset token not found.')
 		}
 
 		if (!resetToken.valid) {
-			throw new Error('Invalid password reset token')
+			throw new Error('Invalid password reset token.')
 		}
 
 		if (new Date(resetToken.expires).getTime() < Date.now()) {
-			throw new Error('Password reset token expired')
+			throw new Error('Password reset token expired.')
 		}
 
 		const salt = randomBytes(32)

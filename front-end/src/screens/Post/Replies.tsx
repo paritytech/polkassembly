@@ -1,19 +1,22 @@
 import * as React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { Replies } from '../../generated/graphql';
 
-const className = 'Reply';
-// FIXME Should be typed  
-const Replies = ({ replies } : any) => {
+const RepliesBlocks = ({ replies }:{replies: Replies[]}) => {
 	return (
 		<div className='Replies'>
 			<hr/>
 			<div>Replies</div>
 			{
-				replies.map((reply:any) => {
+				replies.map((reply:Replies) => {
 					const { author, content, created_at } = reply;
+
+					if (!author || !author.username || !content) return <div>Reply not available</div>;
+
 					return (
-						<div className={className} key={created_at}>
+						<div key={created_at}>
 							<h3>{author.username} - {created_at}</h3>
-							<div>{content}</div>
+							<ReactMarkdown source={content} />
 						</div>
 					);
 				})
@@ -22,4 +25,4 @@ const Replies = ({ replies } : any) => {
 	)
 }
 
-export default Replies;
+export default RepliesBlocks;

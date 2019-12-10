@@ -9,7 +9,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { getLocalStorageToken, isLocalStorageTokenValid, getRefreshedToken, storeLocalStorageToken } from './services/auth.service';
+import {
+	isLocalStorageTokenValidOrUndefined,
+	getLocalStorageToken,
+	getRefreshedToken,
+	storeLocalStorageToken,
+	deleteLocalStorageToken
+} from './services/auth.service';
+import { Get_Refresh_TokenQueryResult } from './generated/auth-graphql';
 
 const setAuthorizationLink = setContext(() => {
 	const token = getLocalStorageToken()
@@ -17,30 +24,43 @@ const setAuthorizationLink = setContext(() => {
 		return { headers: { authorization: `Bearer ${token}` } }
 	} else {
 		return null
-	}	
+	}
 });
 
 const httpLink = new HttpLink({
 	uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
 });
 
-const link = ApolloLink.from([
-	new TokenRefreshLink({
-		accessTokenField: 'token',
-		fetchAccessToken: getRefreshedToken,
-		handleError: (err:any) => {
-			console.warn('Your refresh token is invalid. Try to login again');
-			console.error(err);
+const tokenRefreshLink = new TokenRefreshLink({
+	accessTokenField: 'token',
+	fetchAccessToken: getRefreshedToken,
+	handleError: (err:Error) => {
+		deleteLocalStorageToken();
+		console.error('There has been a problem getting a new access token: ', err);
+		// FIXME probably redirect user to login with an error "you've been logged out"?
+	},
+	handleFetch: (accessToken) => storeLocalStorageToken(accessToken),
+	handleResponse: () => async (response:Response) => {
+		if(response.ok) {
+			const res: Get_Refresh_TokenQueryResult = await response.json()
+			if(res && res.data){
+				return res.data.token
+			} else {
+				throw new Error('The auth server did not answer with an expected refreshed token.')
+			}
+		}
 
-			// FIXME logout user and redirect to login
-		},
-		handleFetch: (accessToken: string) => storeLocalStorageToken(accessToken),
-		isTokenValidOrUndefined:  isLocalStorageTokenValid
-	}),
+		throw new Error('The auth server did not answer successfully to the refresh token call.')
+	},
+	isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
+})
+
+const link = ApolloLink.from([
+	tokenRefreshLink,
 	setAuthorizationLink,
 	httpLink
 ])
-  
+
 export const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	link
@@ -50,6 +70,6 @@ ReactDOM.render(
 	<ApolloProvider client={client}>
 		<App />
 	</ApolloProvider>,
-	
+
 	document.getElementById('root'),
 );

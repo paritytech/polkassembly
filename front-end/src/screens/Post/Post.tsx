@@ -1,13 +1,14 @@
 import * as React from 'react';
+import ReactMarkdown from 'react-markdown';
+
 import NoPostFound from './NoPostFound';
-import Replies from './Replies'
-import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
-// import { QueryResult } from 'react-apollo';
+import RepliesBlocks from './Replies'
+import { PostAndRepliesQueryHookResult, PostFragment } from '../../generated/graphql';
 
 const className = 'Post';
-type MyPost = PostAndRepliesQueryHookResult['data']
-// FIXME Should use the query result type
-const Post = ( { data }: {data: MyPost}) => {
+type DataType = PostAndRepliesQueryHookResult['data']
+
+const Post = ( { data }: {data: DataType}) => {
 	const post =  data && data.posts && data.posts[0]
 
 	return (
@@ -16,22 +17,23 @@ const Post = ( { data }: {data: MyPost}) => {
 				? <PostContent post={post}/>
 				: <NoPostFound/> }
 			{ post && post.replies && post.replies.length
-				? <Replies replies={post.replies}/>
+				? <RepliesBlocks replies={post.replies}/>
 				: null }
 		</div>
 	);
 }
 
-// FIXME Should be typed  
-const PostContent = ({ post } : any) => {
-	const { author, category, content, title } = post;
+const PostContent = ({ post } : {post: PostFragment}) => {
+	const { author, topic, content, title } = post;
+
+	if (!author || !author.username || !content) return <div>Post not available</div>
 
 	return (
 		<>
-			<h3>{title} - {category && category.name}</h3>
+			<h3>{title} - {topic && topic.name}</h3>
 			<div>by {author.username}</div>
 			<br/>
-			<div>{content}</div>
+			<ReactMarkdown source={content} />
 		</>
 	);
 }

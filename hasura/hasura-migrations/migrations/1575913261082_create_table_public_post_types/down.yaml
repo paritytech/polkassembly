@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."post_types"
+  type: run_sql

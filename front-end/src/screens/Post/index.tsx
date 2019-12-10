@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { usePostAndRepliesQuery } from '../../generated/graphql';
 import Post from './Post';
 
-const PostContainer = () => {
+export default () => {
 	const { id } = useParams();
 	// cast id as a number or 0
 	const idNumber = Number(id) || 0;
@@ -18,7 +18,4 @@ const PostContainer = () => {
 	}
 
 	return <Post data={data} />;
- 
 };
-
-export default PostContainer;

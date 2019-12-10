@@ -1,15 +1,17 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { GlobalStyle } from './components/GlobalStyle'
+import { GlobalStyle } from './ui-components/GlobalStyle'
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
+import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
 import Post from './screens/Post';
+import Proposals from './screens/Proposals';
 import SignupForm from './screens/SignupForm';
+import VerifyEmail from './screens/VerifyEmail';
 
 const App = () => {
 	return (
@@ -18,25 +20,32 @@ const App = () => {
 			<Router>
 				<UserDetailsProvider>
 					<MenuBar/>
-					<Container fluid={true}>
-						<Switch>
-							<Route exact path="/">
-								<Home/>
-							</Route>
-							<Route path="/temp-login">
-								<LoginForm/>
-							</Route>
-							<Route path="/temp-post/create" >
-								<CreatePost/>
-							</Route>
-							<Route exact path="/temp-post/:id" >
-								<Post/>
-							</Route>
-							<Route path="/temp-signup">
-								<SignupForm/>
-							</Route>
-						</Switch>
-					</Container>
+					<Switch>
+						<Route exact path="/">
+							<Home/>
+						</Route>
+						<Route path="/discussions">
+							<Discussions/>
+						</Route>
+						<Route path="/login">
+							<LoginForm/>
+						</Route>
+						<Route path="/post/create" >
+							<CreatePost/>
+						</Route>
+						<Route exact path="/post/:id" >
+							<Post/>
+						</Route>
+						<Route path="/proposals" >
+							<Proposals/>
+						</Route>
+						<Route path="/signup">
+							<SignupForm/>
+						</Route>
+						<Route path="/verify-email/:token">
+							<VerifyEmail/>
+						</Route>
+					</Switch>
 				</UserDetailsProvider>
 			</Router>
 		</>
