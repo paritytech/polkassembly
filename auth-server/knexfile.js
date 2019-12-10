@@ -6,15 +6,26 @@ dotenv.load()
 const databaseName = 'governance-auth'
 const connectionUrl = process.env.DATABASE_URL || `postgres://postgres:postgres@localhost:5431/${databaseName}`
 
-console.log('applying migration on ', connectionUrl)
-
-module.exports = {
-	client: 'postgresql',
-	connection: connectionUrl,
-	migrations: {
-		directory: `${__dirname}/migrations`
+const config = {
+	test: {
+		client: 'postgresql',
+		connection: 'postgres://postgres:postgres@localhost:5431/governance-auth-test',
+		migrations: {
+			directory: `${__dirname}/migrations`
+		}
+	},
+	development: {
+		client: 'postgresql',
+		connection: connectionUrl,
+		migrations: {
+			directory: `${__dirname}/migrations`
+		}
 	}
 }
+
+const env = process.env.NODE_ENV || 'development'
+
+module.exports = config[env]
 
 // staging: {
 //   client: 'postgresql',

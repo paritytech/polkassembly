@@ -53,6 +53,7 @@ REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
 BOT_PROPOSAL_USER_ID=1234
+NODE_ENV=development
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
@@ -360,3 +361,13 @@ On success, we get the response
   }
 }
 ```
+
+## Testing
+
+To test create a database governance-auth-test in postgres. To start test suite run:
+
+```bash
+yarn test
+```
+
+Test database will be cleaned before starting test suite.
