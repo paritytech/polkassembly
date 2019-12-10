@@ -45,7 +45,6 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 	return (
 		<>
 			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
-			<div className='text_muted divider'>&nbsp;&nbsp;|&nbsp;&nbsp;</div>
 			<h3>{title}</h3>
 			<ReactMarkdown className='post_content' source={content} />
 			<div className='post_tags'><Tag>{category && category.name}</Tag></div>
@@ -58,12 +57,6 @@ export default styled(Post)`
 		color: #555;
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
-		float: left;
-		clear: none;
-	}
-
-	.divider {
-		float: left;
 	}
 
 	.PostContent {
@@ -79,25 +72,97 @@ export default styled(Post)`
 
 	.post_content {
 		color: #555;
+		font-family: 'Roboto';
 		font-size: 1.45rem;
 		line-height: 150%;
-		margin-bottom: 1.25rem;	
+		margin-bottom: 2rem;
+
+		p, blockquote, ul, ol, dl, table {
+			margin: 0 0 1.5rem 0;
+		}
+
+		h1, h2 {
+			margin: 2rem 0 1.5rem 0;
+		}
+
+		h3, h4 {
+			margin: 1.5rem 0 0.5rem 0;
+		}
+		
+		h1 {
+			font-size: 2.4rem;	
+		}
+
+		h2 {
+			font-size: 1.8rem;	
+		}
+
+		h3 {
+			font-size: 1.45rem;
+		}
+
+		h4 {
+			font-size: 1.45rem;
+			font-family: 'Roboto Mono';
+		}
+
+		h5, h6 {
+			font-size: 1.2rem;
+		}
+
+		ul, ol {
+			padding-left: 2rem;
+		}
+		
+		a {
+			color: #EB5757;
+
+			&:hover {
+				text-decoration: none;
+				color: #CC3D3D;
+				border-bottom: 1px solid #CC3D3D;
+			}
+		}
+
+		blockquote {
+			margin-left: 0;
+			padding: 0 1em;
+			color: #7E7A7A;
+			border-left: 0.25rem solid #B5AEAE;
+			font-size: 1.6rem;
+				& > :first-child {
+					margin-top: 0;
+				}
+				& > :last-child {
+					margin-bottom: 0;
+				}
+		}
+
+		img {
+			max-width: 100%;
+			margin: 2rem 0;
+		}
+
+		code {
+			padding: 0.2em 0 0.2em 0;
+			margin: 0;
+			font-size: 1.2rem;
+			background-color: rgba(0, 0, 0, 0.04);
+			border-radius: 3px;
+			color: #555252;
+			&::before, &::after {
+			  letter-spacing: -0.2em;
+			}
+		  }
 	}
 
 	@media only screen and (max-width: 576px) {
 		.post_info {
 			font-size: 1.3rem;
-			clear: both;
-			margin-bottom: 0rem;
 		}
 
-		.text_muted {
-			font-size: 1.3rem;
-			clear: both;	
-		}
-
-		.divider {
-			display: none;
+		.PostContent {
+			padding: 2rem 2rem 2rem 2rem;
 		}
 	}
 `;

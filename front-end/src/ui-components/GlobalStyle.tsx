@@ -44,6 +44,7 @@ export const GlobalStyle = createGlobalStyle`
 
     h1, h2, h3, h4, h5, h6 {
         color: #282828;
+        font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;
         margin-top: 0;
@@ -98,8 +99,8 @@ export const GlobalStyle = createGlobalStyle`
 
         .ui.grid, .ui.container {
             margin-top: 0!important;
-            margin-left: 0;
-            margin-right: 0;
+            margin-left: 0!important;
+            margin-right: 0!important;
         }
 
         h3 {

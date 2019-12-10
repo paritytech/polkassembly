@@ -47,12 +47,8 @@ const Home = ({ className, data }: Props) => {
 					</ul>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={8}>
-					<div className='info_box'>
-						<h4>About Polkassembly</h4>
-						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
-						<div className='mainButtonContainer'>
-							{currentUser.id && <Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-						</div>
+					<div className='mainButtonContainer'>
+						{currentUser.id && <Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
 				</Grid.Column>
 			</Grid>
@@ -82,6 +78,10 @@ export default styled(Home)`
 		}
 	}
 
+	li {
+        list-style-type: none;
+    }
+
 	.Home__item {
 		margin: 0 0 1rem 0;
 		border: 1px solid #EEE;
@@ -100,35 +100,5 @@ export default styled(Home)`
 		flex-direction: column;
 		justify-content: center;
 		margin-top: 20px;
-	}
-
-	.info_box {
-		background-color: #FFF;
-		padding: 2rem 3rem;
-		margin: 0 0 0.625rem 0;
-		border: 1px solid #EEE;
-		h4 {
-			font-family: 'Roboto Mono';
-			font-size: 1.6rem;
-		}
-	}
-
-	.info_text {
-		font-size: 1.2rem;
-		h6 {
-			font-size: 1.2rem;
-			margin-top: 1rem;
-		}
-	}
-
-	.ex_link {
-		padding-top: 0.625rem;
-		a {
-			font-size: 0.75rem;
-			font-weight: 500;
-			color: #EB5757;
-			&:hover {
-			border-bottom: 1px solid #EB5757;
-		}
 	}
 `;
