@@ -216,6 +216,35 @@ on success, we get:
 }
 ```
 
+### Logout
+We can logout user with `logout` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Logout_function{
+  logout {
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU...Hx0WG53yS4yhfRzxsQ2Q" \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation Logout_function {\n  logout {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "logout":{
+      "message":"Successfully logged out"
+    }
+  }
+}
+
 ### Change password
 We can change a user password with the `changePassword` mutation. Note that it needs an authorization header:
 

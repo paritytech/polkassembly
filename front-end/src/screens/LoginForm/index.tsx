@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -7,6 +6,7 @@ import { Button } from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
+import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
 
 interface Props {
@@ -17,7 +17,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
 	const currentUser = useContext(UserDetailsContext)
-	const history = useHistory();
+	const { history } = useRouter();
 	const [loginMutation, { data, loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
@@ -95,7 +95,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(LoginForm)`
-
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;

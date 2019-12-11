@@ -12,319 +12,14 @@ export type Scalars = {
   timestamp: any,
   time: any,
   timestamptz: any,
-  float8: any,
   /** The `Upload` scalar type represents a file upload. */
   Upload: any,
-};
-
-/** expression to compare columns of type Boolean. All fields are combined with logical 'AND'. */
-export type Boolean_Comparison_Exp = {
-  _eq?: Maybe<Scalars['Boolean']>,
-  _gt?: Maybe<Scalars['Boolean']>,
-  _gte?: Maybe<Scalars['Boolean']>,
-  _in?: Maybe<Array<Scalars['Boolean']>>,
-  _is_null?: Maybe<Scalars['Boolean']>,
-  _lt?: Maybe<Scalars['Boolean']>,
-  _lte?: Maybe<Scalars['Boolean']>,
-  _neq?: Maybe<Scalars['Boolean']>,
-  _nin?: Maybe<Array<Scalars['Boolean']>>,
 };
 
 export enum CacheControlScope {
   Private = 'PRIVATE',
   Public = 'PUBLIC'
 }
-
-/** columns and relationships of "categories" */
-export type Categories = {
-   __typename?: 'categories',
-  id: Scalars['Int'],
-  name: Scalars['String'],
-  /** An array relationship */
-  posts: Array<Posts>,
-  /** An aggregated array relationship */
-  posts_aggregate: Posts_Aggregate,
-};
-
-
-/** columns and relationships of "categories" */
-export type CategoriesPostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Posts_Order_By>>,
-  where?: Maybe<Posts_Bool_Exp>
-};
-
-
-/** columns and relationships of "categories" */
-export type CategoriesPosts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Posts_Order_By>>,
-  where?: Maybe<Posts_Bool_Exp>
-};
-
-/** aggregated selection of "categories" */
-export type Categories_Aggregate = {
-   __typename?: 'categories_aggregate',
-  aggregate?: Maybe<Categories_Aggregate_Fields>,
-  nodes: Array<Categories>,
-};
-
-/** aggregate fields of "categories" */
-export type Categories_Aggregate_Fields = {
-   __typename?: 'categories_aggregate_fields',
-  avg?: Maybe<Categories_Avg_Fields>,
-  count?: Maybe<Scalars['Int']>,
-  max?: Maybe<Categories_Max_Fields>,
-  min?: Maybe<Categories_Min_Fields>,
-  stddev?: Maybe<Categories_Stddev_Fields>,
-  stddev_pop?: Maybe<Categories_Stddev_Pop_Fields>,
-  stddev_samp?: Maybe<Categories_Stddev_Samp_Fields>,
-  sum?: Maybe<Categories_Sum_Fields>,
-  var_pop?: Maybe<Categories_Var_Pop_Fields>,
-  var_samp?: Maybe<Categories_Var_Samp_Fields>,
-  variance?: Maybe<Categories_Variance_Fields>,
-};
-
-
-/** aggregate fields of "categories" */
-export type Categories_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Categories_Select_Column>>,
-  distinct?: Maybe<Scalars['Boolean']>
-};
-
-/** order by aggregate values of table "categories" */
-export type Categories_Aggregate_Order_By = {
-  avg?: Maybe<Categories_Avg_Order_By>,
-  count?: Maybe<Order_By>,
-  max?: Maybe<Categories_Max_Order_By>,
-  min?: Maybe<Categories_Min_Order_By>,
-  stddev?: Maybe<Categories_Stddev_Order_By>,
-  stddev_pop?: Maybe<Categories_Stddev_Pop_Order_By>,
-  stddev_samp?: Maybe<Categories_Stddev_Samp_Order_By>,
-  sum?: Maybe<Categories_Sum_Order_By>,
-  var_pop?: Maybe<Categories_Var_Pop_Order_By>,
-  var_samp?: Maybe<Categories_Var_Samp_Order_By>,
-  variance?: Maybe<Categories_Variance_Order_By>,
-};
-
-/** input type for inserting array relation for remote table "categories" */
-export type Categories_Arr_Rel_Insert_Input = {
-  data: Array<Categories_Insert_Input>,
-  on_conflict?: Maybe<Categories_On_Conflict>,
-};
-
-/** aggregate avg on columns */
-export type Categories_Avg_Fields = {
-   __typename?: 'categories_avg_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by avg() on columns of table "categories" */
-export type Categories_Avg_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** Boolean expression to filter rows from the table "categories". All fields are combined with a logical 'AND'. */
-export type Categories_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Categories_Bool_Exp>>>,
-  _not?: Maybe<Categories_Bool_Exp>,
-  _or?: Maybe<Array<Maybe<Categories_Bool_Exp>>>,
-  id?: Maybe<Int_Comparison_Exp>,
-  name?: Maybe<String_Comparison_Exp>,
-  posts?: Maybe<Posts_Bool_Exp>,
-};
-
-/** unique or primary key constraints on table "categories" */
-export enum Categories_Constraint {
-  /** unique or primary key constraint */
-  CategoriesNameKey = 'categories_name_key',
-  /** unique or primary key constraint */
-  CategoriesPkey = 'categories_pkey'
-}
-
-/** input type for incrementing integer columne in table "categories" */
-export type Categories_Inc_Input = {
-  id?: Maybe<Scalars['Int']>,
-};
-
-/** input type for inserting data into table "categories" */
-export type Categories_Insert_Input = {
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-  posts?: Maybe<Posts_Arr_Rel_Insert_Input>,
-};
-
-/** aggregate max on columns */
-export type Categories_Max_Fields = {
-   __typename?: 'categories_max_fields',
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-};
-
-/** order by max() on columns of table "categories" */
-export type Categories_Max_Order_By = {
-  id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
-};
-
-/** aggregate min on columns */
-export type Categories_Min_Fields = {
-   __typename?: 'categories_min_fields',
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-};
-
-/** order by min() on columns of table "categories" */
-export type Categories_Min_Order_By = {
-  id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
-};
-
-/** response of any mutation on the table "categories" */
-export type Categories_Mutation_Response = {
-   __typename?: 'categories_mutation_response',
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'],
-  /** data of the affected rows by the mutation */
-  returning: Array<Categories>,
-};
-
-/** input type for inserting object relation for remote table "categories" */
-export type Categories_Obj_Rel_Insert_Input = {
-  data: Categories_Insert_Input,
-  on_conflict?: Maybe<Categories_On_Conflict>,
-};
-
-/** on conflict condition type for table "categories" */
-export type Categories_On_Conflict = {
-  constraint: Categories_Constraint,
-  update_columns: Array<Categories_Update_Column>,
-  where?: Maybe<Categories_Bool_Exp>,
-};
-
-/** ordering options when selecting data from "categories" */
-export type Categories_Order_By = {
-  id?: Maybe<Order_By>,
-  name?: Maybe<Order_By>,
-  posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
-};
-
-/** select columns of table "categories" */
-export enum Categories_Select_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-/** input type for updating data in table "categories" */
-export type Categories_Set_Input = {
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-};
-
-/** aggregate stddev on columns */
-export type Categories_Stddev_Fields = {
-   __typename?: 'categories_stddev_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev() on columns of table "categories" */
-export type Categories_Stddev_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_pop on columns */
-export type Categories_Stddev_Pop_Fields = {
-   __typename?: 'categories_stddev_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_pop() on columns of table "categories" */
-export type Categories_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_samp on columns */
-export type Categories_Stddev_Samp_Fields = {
-   __typename?: 'categories_stddev_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_samp() on columns of table "categories" */
-export type Categories_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate sum on columns */
-export type Categories_Sum_Fields = {
-   __typename?: 'categories_sum_fields',
-  id?: Maybe<Scalars['Int']>,
-};
-
-/** order by sum() on columns of table "categories" */
-export type Categories_Sum_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** update columns of table "categories" */
-export enum Categories_Update_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-/** aggregate var_pop on columns */
-export type Categories_Var_Pop_Fields = {
-   __typename?: 'categories_var_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_pop() on columns of table "categories" */
-export type Categories_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate var_samp on columns */
-export type Categories_Var_Samp_Fields = {
-   __typename?: 'categories_var_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_samp() on columns of table "categories" */
-export type Categories_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-/** aggregate variance on columns */
-export type Categories_Variance_Fields = {
-   __typename?: 'categories_variance_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-/** order by variance() on columns of table "categories" */
-export type Categories_Variance_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-
-/** expression to compare columns of type float8. All fields are combined with logical 'AND'. */
-export type Float8_Comparison_Exp = {
-  _eq?: Maybe<Scalars['float8']>,
-  _gt?: Maybe<Scalars['float8']>,
-  _gte?: Maybe<Scalars['float8']>,
-  _in?: Maybe<Array<Scalars['float8']>>,
-  _is_null?: Maybe<Scalars['Boolean']>,
-  _lt?: Maybe<Scalars['float8']>,
-  _lte?: Maybe<Scalars['float8']>,
-  _neq?: Maybe<Scalars['float8']>,
-  _nin?: Maybe<Array<Scalars['float8']>>,
-};
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
@@ -415,35 +110,35 @@ export type Mutation_Root = {
   changeEmail?: Maybe<Message>,
   changeName?: Maybe<Message>,
   changePassword?: Maybe<Message>,
-  /** delete data from the table: "categories" */
-  delete_categories?: Maybe<Categories_Mutation_Response>,
+  /** delete data from the table: "post_types" */
+  delete_post_types?: Maybe<Post_Types_Mutation_Response>,
   /** delete data from the table: "posts" */
   delete_posts?: Maybe<Posts_Mutation_Response>,
-  /** delete data from the table: "proposals" */
-  delete_proposals?: Maybe<Proposals_Mutation_Response>,
   /** delete data from the table: "replies" */
   delete_replies?: Maybe<Replies_Mutation_Response>,
-  /** insert data into the table: "categories" */
-  insert_categories?: Maybe<Categories_Mutation_Response>,
+  /** delete data from the table: "topics" */
+  delete_topics?: Maybe<Topics_Mutation_Response>,
+  /** insert data into the table: "post_types" */
+  insert_post_types?: Maybe<Post_Types_Mutation_Response>,
   /** insert data into the table: "posts" */
   insert_posts?: Maybe<Posts_Mutation_Response>,
-  /** insert data into the table: "proposals" */
-  insert_proposals?: Maybe<Proposals_Mutation_Response>,
   /** insert data into the table: "replies" */
   insert_replies?: Maybe<Replies_Mutation_Response>,
+  /** insert data into the table: "topics" */
+  insert_topics?: Maybe<Topics_Mutation_Response>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  /** update data of the table: "categories" */
-  update_categories?: Maybe<Categories_Mutation_Response>,
+  /** update data of the table: "post_types" */
+  update_post_types?: Maybe<Post_Types_Mutation_Response>,
   /** update data of the table: "posts" */
   update_posts?: Maybe<Posts_Mutation_Response>,
-  /** update data of the table: "proposals" */
-  update_proposals?: Maybe<Proposals_Mutation_Response>,
   /** update data of the table: "replies" */
   update_replies?: Maybe<Replies_Mutation_Response>,
+  /** update data of the table: "topics" */
+  update_topics?: Maybe<Topics_Mutation_Response>,
   verifyEmail?: Maybe<Message>,
 };
 
@@ -468,8 +163,8 @@ export type Mutation_RootChangePasswordArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_CategoriesArgs = {
-  where: Categories_Bool_Exp
+export type Mutation_RootDelete_Post_TypesArgs = {
+  where: Post_Types_Bool_Exp
 };
 
 
@@ -480,21 +175,21 @@ export type Mutation_RootDelete_PostsArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_ProposalsArgs = {
-  where: Proposals_Bool_Exp
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_RepliesArgs = {
   where: Replies_Bool_Exp
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_CategoriesArgs = {
-  objects: Array<Categories_Insert_Input>,
-  on_conflict?: Maybe<Categories_On_Conflict>
+export type Mutation_RootDelete_TopicsArgs = {
+  where: Topics_Bool_Exp
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Post_TypesArgs = {
+  objects: Array<Post_Types_Insert_Input>,
+  on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
 
@@ -506,16 +201,16 @@ export type Mutation_RootInsert_PostsArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_ProposalsArgs = {
-  objects: Array<Proposals_Insert_Input>,
-  on_conflict?: Maybe<Proposals_On_Conflict>
+export type Mutation_RootInsert_RepliesArgs = {
+  objects: Array<Replies_Insert_Input>,
+  on_conflict?: Maybe<Replies_On_Conflict>
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_RepliesArgs = {
-  objects: Array<Replies_Insert_Input>,
-  on_conflict?: Maybe<Replies_On_Conflict>
+export type Mutation_RootInsert_TopicsArgs = {
+  objects: Array<Topics_Insert_Input>,
+  on_conflict?: Maybe<Topics_On_Conflict>
 };
 
 
@@ -549,10 +244,10 @@ export type Mutation_RootSignupArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_CategoriesArgs = {
-  _inc?: Maybe<Categories_Inc_Input>,
-  _set?: Maybe<Categories_Set_Input>,
-  where: Categories_Bool_Exp
+export type Mutation_RootUpdate_Post_TypesArgs = {
+  _inc?: Maybe<Post_Types_Inc_Input>,
+  _set?: Maybe<Post_Types_Set_Input>,
+  where: Post_Types_Bool_Exp
 };
 
 
@@ -565,18 +260,18 @@ export type Mutation_RootUpdate_PostsArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_ProposalsArgs = {
-  _inc?: Maybe<Proposals_Inc_Input>,
-  _set?: Maybe<Proposals_Set_Input>,
-  where: Proposals_Bool_Exp
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_RepliesArgs = {
   _inc?: Maybe<Replies_Inc_Input>,
   _set?: Maybe<Replies_Set_Input>,
   where: Replies_Bool_Exp
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_TopicsArgs = {
+  _inc?: Maybe<Topics_Inc_Input>,
+  _set?: Maybe<Topics_Set_Input>,
+  where: Topics_Bool_Exp
 };
 
 
@@ -601,26 +296,305 @@ export enum Order_By {
   DescNullsLast = 'desc_nulls_last'
 }
 
+/** columns and relationships of "post_types" */
+export type Post_Types = {
+   __typename?: 'post_types',
+  id: Scalars['Int'],
+  name: Scalars['String'],
+  /** An array relationship */
+  posts: Array<Posts>,
+  /** An aggregated array relationship */
+  posts_aggregate: Posts_Aggregate,
+};
+
+
+/** columns and relationships of "post_types" */
+export type Post_TypesPostsArgs = {
+  distinct_on?: Maybe<Array<Posts_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Posts_Order_By>>,
+  where?: Maybe<Posts_Bool_Exp>
+};
+
+
+/** columns and relationships of "post_types" */
+export type Post_TypesPosts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Posts_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Posts_Order_By>>,
+  where?: Maybe<Posts_Bool_Exp>
+};
+
+/** aggregated selection of "post_types" */
+export type Post_Types_Aggregate = {
+   __typename?: 'post_types_aggregate',
+  aggregate?: Maybe<Post_Types_Aggregate_Fields>,
+  nodes: Array<Post_Types>,
+};
+
+/** aggregate fields of "post_types" */
+export type Post_Types_Aggregate_Fields = {
+   __typename?: 'post_types_aggregate_fields',
+  avg?: Maybe<Post_Types_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Post_Types_Max_Fields>,
+  min?: Maybe<Post_Types_Min_Fields>,
+  stddev?: Maybe<Post_Types_Stddev_Fields>,
+  stddev_pop?: Maybe<Post_Types_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Post_Types_Stddev_Samp_Fields>,
+  sum?: Maybe<Post_Types_Sum_Fields>,
+  var_pop?: Maybe<Post_Types_Var_Pop_Fields>,
+  var_samp?: Maybe<Post_Types_Var_Samp_Fields>,
+  variance?: Maybe<Post_Types_Variance_Fields>,
+};
+
+
+/** aggregate fields of "post_types" */
+export type Post_Types_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Types_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+/** order by aggregate values of table "post_types" */
+export type Post_Types_Aggregate_Order_By = {
+  avg?: Maybe<Post_Types_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Post_Types_Max_Order_By>,
+  min?: Maybe<Post_Types_Min_Order_By>,
+  stddev?: Maybe<Post_Types_Stddev_Order_By>,
+  stddev_pop?: Maybe<Post_Types_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Post_Types_Stddev_Samp_Order_By>,
+  sum?: Maybe<Post_Types_Sum_Order_By>,
+  var_pop?: Maybe<Post_Types_Var_Pop_Order_By>,
+  var_samp?: Maybe<Post_Types_Var_Samp_Order_By>,
+  variance?: Maybe<Post_Types_Variance_Order_By>,
+};
+
+/** input type for inserting array relation for remote table "post_types" */
+export type Post_Types_Arr_Rel_Insert_Input = {
+  data: Array<Post_Types_Insert_Input>,
+  on_conflict?: Maybe<Post_Types_On_Conflict>,
+};
+
+/** aggregate avg on columns */
+export type Post_Types_Avg_Fields = {
+   __typename?: 'post_types_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by avg() on columns of table "post_types" */
+export type Post_Types_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** Boolean expression to filter rows from the table "post_types". All fields are combined with a logical 'AND'. */
+export type Post_Types_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Types_Bool_Exp>>>,
+  _not?: Maybe<Post_Types_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Post_Types_Bool_Exp>>>,
+  id?: Maybe<Int_Comparison_Exp>,
+  name?: Maybe<String_Comparison_Exp>,
+  posts?: Maybe<Posts_Bool_Exp>,
+};
+
+/** unique or primary key constraints on table "post_types" */
+export enum Post_Types_Constraint {
+  /** unique or primary key constraint */
+  PostTypesNameKey = 'post_types_name_key',
+  /** unique or primary key constraint */
+  PostTypesPkey = 'post_types_pkey'
+}
+
+/** input type for incrementing integer columne in table "post_types" */
+export type Post_Types_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+};
+
+/** input type for inserting data into table "post_types" */
+export type Post_Types_Insert_Input = {
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  posts?: Maybe<Posts_Arr_Rel_Insert_Input>,
+};
+
+/** aggregate max on columns */
+export type Post_Types_Max_Fields = {
+   __typename?: 'post_types_max_fields',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** order by max() on columns of table "post_types" */
+export type Post_Types_Max_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+};
+
+/** aggregate min on columns */
+export type Post_Types_Min_Fields = {
+   __typename?: 'post_types_min_fields',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** order by min() on columns of table "post_types" */
+export type Post_Types_Min_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+};
+
+/** response of any mutation on the table "post_types" */
+export type Post_Types_Mutation_Response = {
+   __typename?: 'post_types_mutation_response',
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'],
+  /** data of the affected rows by the mutation */
+  returning: Array<Post_Types>,
+};
+
+/** input type for inserting object relation for remote table "post_types" */
+export type Post_Types_Obj_Rel_Insert_Input = {
+  data: Post_Types_Insert_Input,
+  on_conflict?: Maybe<Post_Types_On_Conflict>,
+};
+
+/** on conflict condition type for table "post_types" */
+export type Post_Types_On_Conflict = {
+  constraint: Post_Types_Constraint,
+  update_columns: Array<Post_Types_Update_Column>,
+  where?: Maybe<Post_Types_Bool_Exp>,
+};
+
+/** ordering options when selecting data from "post_types" */
+export type Post_Types_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+  posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
+};
+
+/** select columns of table "post_types" */
+export enum Post_Types_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "post_types" */
+export type Post_Types_Set_Input = {
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** aggregate stddev on columns */
+export type Post_Types_Stddev_Fields = {
+   __typename?: 'post_types_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev() on columns of table "post_types" */
+export type Post_Types_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_pop on columns */
+export type Post_Types_Stddev_Pop_Fields = {
+   __typename?: 'post_types_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_pop() on columns of table "post_types" */
+export type Post_Types_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_samp on columns */
+export type Post_Types_Stddev_Samp_Fields = {
+   __typename?: 'post_types_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_samp() on columns of table "post_types" */
+export type Post_Types_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate sum on columns */
+export type Post_Types_Sum_Fields = {
+   __typename?: 'post_types_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+};
+
+/** order by sum() on columns of table "post_types" */
+export type Post_Types_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** update columns of table "post_types" */
+export enum Post_Types_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** aggregate var_pop on columns */
+export type Post_Types_Var_Pop_Fields = {
+   __typename?: 'post_types_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_pop() on columns of table "post_types" */
+export type Post_Types_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate var_samp on columns */
+export type Post_Types_Var_Samp_Fields = {
+   __typename?: 'post_types_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_samp() on columns of table "post_types" */
+export type Post_Types_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate variance on columns */
+export type Post_Types_Variance_Fields = {
+   __typename?: 'post_types_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by variance() on columns of table "post_types" */
+export type Post_Types_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
 /** columns and relationships of "posts" */
 export type Posts = {
    __typename?: 'posts',
   /** Remote relationship field */
   author?: Maybe<User>,
   author_id: Scalars['Int'],
-  /** An object relationship */
-  category: Categories,
-  category_id: Scalars['Int'],
   content?: Maybe<Scalars['String']>,
   creation_date: Scalars['timestamp'],
   id: Scalars['Int'],
   modification_date: Scalars['time'],
-  /** An object relationship */
-  proposal?: Maybe<Proposals>,
   /** An array relationship */
   replies: Array<Replies>,
   /** An aggregated array relationship */
   replies_aggregate: Replies_Aggregate,
   title: Scalars['String'],
+  /** An object relationship */
+  topic?: Maybe<Topics>,
+  /** Define the main suject of the post */
+  topic_id?: Maybe<Scalars['Int']>,
+  /** An object relationship */
+  type: Post_Types,
+  type_id: Scalars['Int'],
 };
 
 
@@ -698,15 +672,17 @@ export type Posts_Arr_Rel_Insert_Input = {
 export type Posts_Avg_Fields = {
    __typename?: 'posts_avg_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by avg() on columns of table "posts" */
 export type Posts_Avg_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
@@ -715,15 +691,16 @@ export type Posts_Bool_Exp = {
   _not?: Maybe<Posts_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Posts_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
-  category?: Maybe<Categories_Bool_Exp>,
-  category_id?: Maybe<Int_Comparison_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   creation_date?: Maybe<Timestamp_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   modification_date?: Maybe<Time_Comparison_Exp>,
-  proposal?: Maybe<Proposals_Bool_Exp>,
   replies?: Maybe<Replies_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
+  topic?: Maybe<Topics_Bool_Exp>,
+  topic_id?: Maybe<Int_Comparison_Exp>,
+  type?: Maybe<Post_Types_Bool_Exp>,
+  type_id?: Maybe<Int_Comparison_Exp>,
 };
 
 /** unique or primary key constraints on table "posts" */
@@ -735,60 +712,66 @@ export enum Posts_Constraint {
 /** input type for incrementing integer columne in table "posts" */
 export type Posts_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  category_id?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** input type for inserting data into table "posts" */
 export type Posts_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  category?: Maybe<Categories_Obj_Rel_Insert_Input>,
-  category_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   creation_date?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   modification_date?: Maybe<Scalars['time']>,
-  proposal?: Maybe<Proposals_Obj_Rel_Insert_Input>,
   replies?: Maybe<Replies_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
+  topic?: Maybe<Topics_Obj_Rel_Insert_Input>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type?: Maybe<Post_Types_Obj_Rel_Insert_Input>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** aggregate max on columns */
 export type Posts_Max_Fields = {
    __typename?: 'posts_max_fields',
   author_id?: Maybe<Scalars['Int']>,
-  category_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** order by max() on columns of table "posts" */
 export type Posts_Max_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   title?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate min on columns */
 export type Posts_Min_Fields = {
    __typename?: 'posts_min_fields',
   author_id?: Maybe<Scalars['Int']>,
-  category_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** order by min() on columns of table "posts" */
 export type Posts_Min_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   title?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** response of any mutation on the table "posts" */
@@ -816,15 +799,16 @@ export type Posts_On_Conflict = {
 /** ordering options when selecting data from "posts" */
 export type Posts_Order_By = {
   author_id?: Maybe<Order_By>,
-  category?: Maybe<Categories_Order_By>,
-  category_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   creation_date?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   modification_date?: Maybe<Order_By>,
-  proposal?: Maybe<Proposals_Order_By>,
   replies_aggregate?: Maybe<Replies_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
+  topic?: Maybe<Topics_Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type?: Maybe<Post_Types_Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** select columns of table "posts" */
@@ -832,8 +816,6 @@ export enum Posts_Select_Column {
   /** column name */
   AuthorId = 'author_id',
   /** column name */
-  CategoryId = 'category_id',
-  /** column name */
   Content = 'content',
   /** column name */
   CreationDate = 'creation_date',
@@ -842,78 +824,91 @@ export enum Posts_Select_Column {
   /** column name */
   ModificationDate = 'modification_date',
   /** column name */
-  Title = 'title'
+  Title = 'title',
+  /** column name */
+  TopicId = 'topic_id',
+  /** column name */
+  TypeId = 'type_id'
 }
 
 /** input type for updating data in table "posts" */
 export type Posts_Set_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  category_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   creation_date?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   modification_date?: Maybe<Scalars['time']>,
   title?: Maybe<Scalars['String']>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** aggregate stddev on columns */
 export type Posts_Stddev_Fields = {
    __typename?: 'posts_stddev_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev() on columns of table "posts" */
 export type Posts_Stddev_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate stddev_pop on columns */
 export type Posts_Stddev_Pop_Fields = {
    __typename?: 'posts_stddev_pop_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev_pop() on columns of table "posts" */
 export type Posts_Stddev_Pop_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate stddev_samp on columns */
 export type Posts_Stddev_Samp_Fields = {
    __typename?: 'posts_stddev_samp_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev_samp() on columns of table "posts" */
 export type Posts_Stddev_Samp_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate sum on columns */
 export type Posts_Sum_Fields = {
    __typename?: 'posts_sum_fields',
   author_id?: Maybe<Scalars['Int']>,
-  category_id?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
+  topic_id?: Maybe<Scalars['Int']>,
+  type_id?: Maybe<Scalars['Int']>,
 };
 
 /** order by sum() on columns of table "posts" */
 export type Posts_Sum_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** update columns of table "posts" */
@@ -921,8 +916,6 @@ export enum Posts_Update_Column {
   /** column name */
   AuthorId = 'author_id',
   /** column name */
-  CategoryId = 'category_id',
-  /** column name */
   Content = 'content',
   /** column name */
   CreationDate = 'creation_date',
@@ -931,451 +924,62 @@ export enum Posts_Update_Column {
   /** column name */
   ModificationDate = 'modification_date',
   /** column name */
-  Title = 'title'
+  Title = 'title',
+  /** column name */
+  TopicId = 'topic_id',
+  /** column name */
+  TypeId = 'type_id'
 }
 
 /** aggregate var_pop on columns */
 export type Posts_Var_Pop_Fields = {
    __typename?: 'posts_var_pop_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by var_pop() on columns of table "posts" */
 export type Posts_Var_Pop_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate var_samp on columns */
 export type Posts_Var_Samp_Fields = {
    __typename?: 'posts_var_samp_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by var_samp() on columns of table "posts" */
 export type Posts_Var_Samp_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 /** aggregate variance on columns */
 export type Posts_Variance_Fields = {
    __typename?: 'posts_variance_fields',
   author_id?: Maybe<Scalars['Float']>,
-  category_id?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  topic_id?: Maybe<Scalars['Float']>,
+  type_id?: Maybe<Scalars['Float']>,
 };
 
 /** order by variance() on columns of table "posts" */
 export type Posts_Variance_Order_By = {
   author_id?: Maybe<Order_By>,
-  category_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-};
-
-/** 
- * on chain proposal or referendum
- * 
- * 
- * columns and relationships of "proposals"
- **/
-export type Proposals = {
-   __typename?: 'proposals',
-  created_at: Scalars['timestamptz'],
-  deposit: Scalars['float8'],
-  id: Scalars['Int'],
-  method_arguments?: Maybe<Scalars['String']>,
-  method_name: Scalars['String'],
-  onchain_id: Scalars['Int'],
-  /** An object relationship */
-  post: Posts,
-  post_id: Scalars['Int'],
-  referendum: Scalars['Boolean'],
-  updated_at: Scalars['timestamptz'],
-};
-
-/** aggregated selection of "proposals" */
-export type Proposals_Aggregate = {
-   __typename?: 'proposals_aggregate',
-  aggregate?: Maybe<Proposals_Aggregate_Fields>,
-  nodes: Array<Proposals>,
-};
-
-/** aggregate fields of "proposals" */
-export type Proposals_Aggregate_Fields = {
-   __typename?: 'proposals_aggregate_fields',
-  avg?: Maybe<Proposals_Avg_Fields>,
-  count?: Maybe<Scalars['Int']>,
-  max?: Maybe<Proposals_Max_Fields>,
-  min?: Maybe<Proposals_Min_Fields>,
-  stddev?: Maybe<Proposals_Stddev_Fields>,
-  stddev_pop?: Maybe<Proposals_Stddev_Pop_Fields>,
-  stddev_samp?: Maybe<Proposals_Stddev_Samp_Fields>,
-  sum?: Maybe<Proposals_Sum_Fields>,
-  var_pop?: Maybe<Proposals_Var_Pop_Fields>,
-  var_samp?: Maybe<Proposals_Var_Samp_Fields>,
-  variance?: Maybe<Proposals_Variance_Fields>,
-};
-
-
-/** aggregate fields of "proposals" */
-export type Proposals_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Proposals_Select_Column>>,
-  distinct?: Maybe<Scalars['Boolean']>
-};
-
-/** order by aggregate values of table "proposals" */
-export type Proposals_Aggregate_Order_By = {
-  avg?: Maybe<Proposals_Avg_Order_By>,
-  count?: Maybe<Order_By>,
-  max?: Maybe<Proposals_Max_Order_By>,
-  min?: Maybe<Proposals_Min_Order_By>,
-  stddev?: Maybe<Proposals_Stddev_Order_By>,
-  stddev_pop?: Maybe<Proposals_Stddev_Pop_Order_By>,
-  stddev_samp?: Maybe<Proposals_Stddev_Samp_Order_By>,
-  sum?: Maybe<Proposals_Sum_Order_By>,
-  var_pop?: Maybe<Proposals_Var_Pop_Order_By>,
-  var_samp?: Maybe<Proposals_Var_Samp_Order_By>,
-  variance?: Maybe<Proposals_Variance_Order_By>,
-};
-
-/** input type for inserting array relation for remote table "proposals" */
-export type Proposals_Arr_Rel_Insert_Input = {
-  data: Array<Proposals_Insert_Input>,
-  on_conflict?: Maybe<Proposals_On_Conflict>,
-};
-
-/** aggregate avg on columns */
-export type Proposals_Avg_Fields = {
-   __typename?: 'proposals_avg_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by avg() on columns of table "proposals" */
-export type Proposals_Avg_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** Boolean expression to filter rows from the table "proposals". All fields are combined with a logical 'AND'. */
-export type Proposals_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Proposals_Bool_Exp>>>,
-  _not?: Maybe<Proposals_Bool_Exp>,
-  _or?: Maybe<Array<Maybe<Proposals_Bool_Exp>>>,
-  created_at?: Maybe<Timestamptz_Comparison_Exp>,
-  deposit?: Maybe<Float8_Comparison_Exp>,
-  id?: Maybe<Int_Comparison_Exp>,
-  method_arguments?: Maybe<String_Comparison_Exp>,
-  method_name?: Maybe<String_Comparison_Exp>,
-  onchain_id?: Maybe<Int_Comparison_Exp>,
-  post?: Maybe<Posts_Bool_Exp>,
-  post_id?: Maybe<Int_Comparison_Exp>,
-  referendum?: Maybe<Boolean_Comparison_Exp>,
-  updated_at?: Maybe<Timestamptz_Comparison_Exp>,
-};
-
-/** unique or primary key constraints on table "proposals" */
-export enum Proposals_Constraint {
-  /** unique or primary key constraint */
-  ProposalsOnchainIdKey = 'proposals_onchain_id_key',
-  /** unique or primary key constraint */
-  ProposalsPkey = 'proposals_pkey',
-  /** unique or primary key constraint */
-  ProposalsPostIdKey = 'proposals_post_id_key'
-}
-
-/** input type for incrementing integer columne in table "proposals" */
-export type Proposals_Inc_Input = {
-  id?: Maybe<Scalars['Int']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post_id?: Maybe<Scalars['Int']>,
-};
-
-/** input type for inserting data into table "proposals" */
-export type Proposals_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>,
-  deposit?: Maybe<Scalars['float8']>,
-  id?: Maybe<Scalars['Int']>,
-  method_arguments?: Maybe<Scalars['String']>,
-  method_name?: Maybe<Scalars['String']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post?: Maybe<Posts_Obj_Rel_Insert_Input>,
-  post_id?: Maybe<Scalars['Int']>,
-  referendum?: Maybe<Scalars['Boolean']>,
-  updated_at?: Maybe<Scalars['timestamptz']>,
-};
-
-/** aggregate max on columns */
-export type Proposals_Max_Fields = {
-   __typename?: 'proposals_max_fields',
-  created_at?: Maybe<Scalars['timestamptz']>,
-  deposit?: Maybe<Scalars['float8']>,
-  id?: Maybe<Scalars['Int']>,
-  method_arguments?: Maybe<Scalars['String']>,
-  method_name?: Maybe<Scalars['String']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamptz']>,
-};
-
-/** order by max() on columns of table "proposals" */
-export type Proposals_Max_Order_By = {
-  created_at?: Maybe<Order_By>,
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  method_arguments?: Maybe<Order_By>,
-  method_name?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
-};
-
-/** aggregate min on columns */
-export type Proposals_Min_Fields = {
-   __typename?: 'proposals_min_fields',
-  created_at?: Maybe<Scalars['timestamptz']>,
-  deposit?: Maybe<Scalars['float8']>,
-  id?: Maybe<Scalars['Int']>,
-  method_arguments?: Maybe<Scalars['String']>,
-  method_name?: Maybe<Scalars['String']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamptz']>,
-};
-
-/** order by min() on columns of table "proposals" */
-export type Proposals_Min_Order_By = {
-  created_at?: Maybe<Order_By>,
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  method_arguments?: Maybe<Order_By>,
-  method_name?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
-};
-
-/** response of any mutation on the table "proposals" */
-export type Proposals_Mutation_Response = {
-   __typename?: 'proposals_mutation_response',
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'],
-  /** data of the affected rows by the mutation */
-  returning: Array<Proposals>,
-};
-
-/** input type for inserting object relation for remote table "proposals" */
-export type Proposals_Obj_Rel_Insert_Input = {
-  data: Proposals_Insert_Input,
-  on_conflict?: Maybe<Proposals_On_Conflict>,
-};
-
-/** on conflict condition type for table "proposals" */
-export type Proposals_On_Conflict = {
-  constraint: Proposals_Constraint,
-  update_columns: Array<Proposals_Update_Column>,
-  where?: Maybe<Proposals_Bool_Exp>,
-};
-
-/** ordering options when selecting data from "proposals" */
-export type Proposals_Order_By = {
-  created_at?: Maybe<Order_By>,
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  method_arguments?: Maybe<Order_By>,
-  method_name?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post?: Maybe<Posts_Order_By>,
-  post_id?: Maybe<Order_By>,
-  referendum?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
-};
-
-/** select columns of table "proposals" */
-export enum Proposals_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Deposit = 'deposit',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MethodArguments = 'method_arguments',
-  /** column name */
-  MethodName = 'method_name',
-  /** column name */
-  OnchainId = 'onchain_id',
-  /** column name */
-  PostId = 'post_id',
-  /** column name */
-  Referendum = 'referendum',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "proposals" */
-export type Proposals_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>,
-  deposit?: Maybe<Scalars['float8']>,
-  id?: Maybe<Scalars['Int']>,
-  method_arguments?: Maybe<Scalars['String']>,
-  method_name?: Maybe<Scalars['String']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post_id?: Maybe<Scalars['Int']>,
-  referendum?: Maybe<Scalars['Boolean']>,
-  updated_at?: Maybe<Scalars['timestamptz']>,
-};
-
-/** aggregate stddev on columns */
-export type Proposals_Stddev_Fields = {
-   __typename?: 'proposals_stddev_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev() on columns of table "proposals" */
-export type Proposals_Stddev_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_pop on columns */
-export type Proposals_Stddev_Pop_Fields = {
-   __typename?: 'proposals_stddev_pop_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_pop() on columns of table "proposals" */
-export type Proposals_Stddev_Pop_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** aggregate stddev_samp on columns */
-export type Proposals_Stddev_Samp_Fields = {
-   __typename?: 'proposals_stddev_samp_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by stddev_samp() on columns of table "proposals" */
-export type Proposals_Stddev_Samp_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** aggregate sum on columns */
-export type Proposals_Sum_Fields = {
-   __typename?: 'proposals_sum_fields',
-  deposit?: Maybe<Scalars['float8']>,
-  id?: Maybe<Scalars['Int']>,
-  onchain_id?: Maybe<Scalars['Int']>,
-  post_id?: Maybe<Scalars['Int']>,
-};
-
-/** order by sum() on columns of table "proposals" */
-export type Proposals_Sum_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** update columns of table "proposals" */
-export enum Proposals_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Deposit = 'deposit',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MethodArguments = 'method_arguments',
-  /** column name */
-  MethodName = 'method_name',
-  /** column name */
-  OnchainId = 'onchain_id',
-  /** column name */
-  PostId = 'post_id',
-  /** column name */
-  Referendum = 'referendum',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** aggregate var_pop on columns */
-export type Proposals_Var_Pop_Fields = {
-   __typename?: 'proposals_var_pop_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_pop() on columns of table "proposals" */
-export type Proposals_Var_Pop_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** aggregate var_samp on columns */
-export type Proposals_Var_Samp_Fields = {
-   __typename?: 'proposals_var_samp_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by var_samp() on columns of table "proposals" */
-export type Proposals_Var_Samp_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
-};
-
-/** aggregate variance on columns */
-export type Proposals_Variance_Fields = {
-   __typename?: 'proposals_variance_fields',
-  deposit?: Maybe<Scalars['Float']>,
-  id?: Maybe<Scalars['Float']>,
-  onchain_id?: Maybe<Scalars['Float']>,
-  post_id?: Maybe<Scalars['Float']>,
-};
-
-/** order by variance() on columns of table "proposals" */
-export type Proposals_Variance_Order_By = {
-  deposit?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
-  onchain_id?: Maybe<Order_By>,
-  post_id?: Maybe<Order_By>,
+  topic_id?: Maybe<Order_By>,
+  type_id?: Maybe<Order_By>,
 };
 
 export type Query = {
@@ -1393,24 +997,18 @@ export type QueryUserArgs = {
 /** query root */
 export type Query_Root = {
    __typename?: 'query_root',
-  /** fetch data from the table: "categories" */
-  categories: Array<Categories>,
-  /** fetch aggregated fields from the table: "categories" */
-  categories_aggregate: Categories_Aggregate,
-  /** fetch data from the table: "categories" using primary key columns */
-  categories_by_pk?: Maybe<Categories>,
+  /** fetch data from the table: "post_types" */
+  post_types: Array<Post_Types>,
+  /** fetch aggregated fields from the table: "post_types" */
+  post_types_aggregate: Post_Types_Aggregate,
+  /** fetch data from the table: "post_types" using primary key columns */
+  post_types_by_pk?: Maybe<Post_Types>,
   /** fetch data from the table: "posts" */
   posts: Array<Posts>,
   /** fetch aggregated fields from the table: "posts" */
   posts_aggregate: Posts_Aggregate,
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>,
-  /** fetch data from the table: "proposals" */
-  proposals: Array<Proposals>,
-  /** fetch aggregated fields from the table: "proposals" */
-  proposals_aggregate: Proposals_Aggregate,
-  /** fetch data from the table: "proposals" using primary key columns */
-  proposals_by_pk?: Maybe<Proposals>,
   /** fetch data from the table: "replies" */
   replies: Array<Replies>,
   /** fetch aggregated fields from the table: "replies" */
@@ -1418,33 +1016,39 @@ export type Query_Root = {
   /** fetch data from the table: "replies" using primary key columns */
   replies_by_pk?: Maybe<Replies>,
   token?: Maybe<Token>,
+  /** fetch data from the table: "topics" */
+  topics: Array<Topics>,
+  /** fetch aggregated fields from the table: "topics" */
+  topics_aggregate: Topics_Aggregate,
+  /** fetch data from the table: "topics" using primary key columns */
+  topics_by_pk?: Maybe<Topics>,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
 };
 
 
 /** query root */
-export type Query_RootCategoriesArgs = {
-  distinct_on?: Maybe<Array<Categories_Select_Column>>,
+export type Query_RootPost_TypesArgs = {
+  distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Categories_Order_By>>,
-  where?: Maybe<Categories_Bool_Exp>
+  order_by?: Maybe<Array<Post_Types_Order_By>>,
+  where?: Maybe<Post_Types_Bool_Exp>
 };
 
 
 /** query root */
-export type Query_RootCategories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Categories_Select_Column>>,
+export type Query_RootPost_Types_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Categories_Order_By>>,
-  where?: Maybe<Categories_Bool_Exp>
+  order_by?: Maybe<Array<Post_Types_Order_By>>,
+  where?: Maybe<Post_Types_Bool_Exp>
 };
 
 
 /** query root */
-export type Query_RootCategories_By_PkArgs = {
+export type Query_RootPost_Types_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -1476,32 +1080,6 @@ export type Query_RootPosts_By_PkArgs = {
 
 
 /** query root */
-export type Query_RootProposalsArgs = {
-  distinct_on?: Maybe<Array<Proposals_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Proposals_Order_By>>,
-  where?: Maybe<Proposals_Bool_Exp>
-};
-
-
-/** query root */
-export type Query_RootProposals_AggregateArgs = {
-  distinct_on?: Maybe<Array<Proposals_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Proposals_Order_By>>,
-  where?: Maybe<Proposals_Bool_Exp>
-};
-
-
-/** query root */
-export type Query_RootProposals_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
-/** query root */
 export type Query_RootRepliesArgs = {
   distinct_on?: Maybe<Array<Replies_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -1523,6 +1101,32 @@ export type Query_RootReplies_AggregateArgs = {
 
 /** query root */
 export type Query_RootReplies_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+/** query root */
+export type Query_RootTopicsArgs = {
+  distinct_on?: Maybe<Array<Topics_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Topics_Order_By>>,
+  where?: Maybe<Topics_Bool_Exp>
+};
+
+
+/** query root */
+export type Query_RootTopics_AggregateArgs = {
+  distinct_on?: Maybe<Array<Topics_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Topics_Order_By>>,
+  where?: Maybe<Topics_Bool_Exp>
+};
+
+
+/** query root */
+export type Query_RootTopics_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -1900,55 +1504,55 @@ export type String_Comparison_Exp = {
 /** subscription root */
 export type Subscription_Root = {
    __typename?: 'subscription_root',
-  /** fetch data from the table: "categories" */
-  categories: Array<Categories>,
-  /** fetch aggregated fields from the table: "categories" */
-  categories_aggregate: Categories_Aggregate,
-  /** fetch data from the table: "categories" using primary key columns */
-  categories_by_pk?: Maybe<Categories>,
+  /** fetch data from the table: "post_types" */
+  post_types: Array<Post_Types>,
+  /** fetch aggregated fields from the table: "post_types" */
+  post_types_aggregate: Post_Types_Aggregate,
+  /** fetch data from the table: "post_types" using primary key columns */
+  post_types_by_pk?: Maybe<Post_Types>,
   /** fetch data from the table: "posts" */
   posts: Array<Posts>,
   /** fetch aggregated fields from the table: "posts" */
   posts_aggregate: Posts_Aggregate,
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>,
-  /** fetch data from the table: "proposals" */
-  proposals: Array<Proposals>,
-  /** fetch aggregated fields from the table: "proposals" */
-  proposals_aggregate: Proposals_Aggregate,
-  /** fetch data from the table: "proposals" using primary key columns */
-  proposals_by_pk?: Maybe<Proposals>,
   /** fetch data from the table: "replies" */
   replies: Array<Replies>,
   /** fetch aggregated fields from the table: "replies" */
   replies_aggregate: Replies_Aggregate,
   /** fetch data from the table: "replies" using primary key columns */
   replies_by_pk?: Maybe<Replies>,
+  /** fetch data from the table: "topics" */
+  topics: Array<Topics>,
+  /** fetch aggregated fields from the table: "topics" */
+  topics_aggregate: Topics_Aggregate,
+  /** fetch data from the table: "topics" using primary key columns */
+  topics_by_pk?: Maybe<Topics>,
 };
 
 
 /** subscription root */
-export type Subscription_RootCategoriesArgs = {
-  distinct_on?: Maybe<Array<Categories_Select_Column>>,
+export type Subscription_RootPost_TypesArgs = {
+  distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Categories_Order_By>>,
-  where?: Maybe<Categories_Bool_Exp>
+  order_by?: Maybe<Array<Post_Types_Order_By>>,
+  where?: Maybe<Post_Types_Bool_Exp>
 };
 
 
 /** subscription root */
-export type Subscription_RootCategories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Categories_Select_Column>>,
+export type Subscription_RootPost_Types_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Categories_Order_By>>,
-  where?: Maybe<Categories_Bool_Exp>
+  order_by?: Maybe<Array<Post_Types_Order_By>>,
+  where?: Maybe<Post_Types_Bool_Exp>
 };
 
 
 /** subscription root */
-export type Subscription_RootCategories_By_PkArgs = {
+export type Subscription_RootPost_Types_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -1980,32 +1584,6 @@ export type Subscription_RootPosts_By_PkArgs = {
 
 
 /** subscription root */
-export type Subscription_RootProposalsArgs = {
-  distinct_on?: Maybe<Array<Proposals_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Proposals_Order_By>>,
-  where?: Maybe<Proposals_Bool_Exp>
-};
-
-
-/** subscription root */
-export type Subscription_RootProposals_AggregateArgs = {
-  distinct_on?: Maybe<Array<Proposals_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Proposals_Order_By>>,
-  where?: Maybe<Proposals_Bool_Exp>
-};
-
-
-/** subscription root */
-export type Subscription_RootProposals_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
-/** subscription root */
 export type Subscription_RootRepliesArgs = {
   distinct_on?: Maybe<Array<Replies_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -2027,6 +1605,32 @@ export type Subscription_RootReplies_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootReplies_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+/** subscription root */
+export type Subscription_RootTopicsArgs = {
+  distinct_on?: Maybe<Array<Topics_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Topics_Order_By>>,
+  where?: Maybe<Topics_Bool_Exp>
+};
+
+
+/** subscription root */
+export type Subscription_RootTopics_AggregateArgs = {
+  distinct_on?: Maybe<Array<Topics_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Topics_Order_By>>,
+  where?: Maybe<Topics_Bool_Exp>
+};
+
+
+/** subscription root */
+export type Subscription_RootTopics_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -2077,6 +1681,283 @@ export type Token = {
   token?: Maybe<Scalars['String']>,
 };
 
+/** columns and relationships of "topics" */
+export type Topics = {
+   __typename?: 'topics',
+  id: Scalars['Int'],
+  name: Scalars['String'],
+  /** An array relationship */
+  posts: Array<Posts>,
+  /** An aggregated array relationship */
+  posts_aggregate: Posts_Aggregate,
+};
+
+
+/** columns and relationships of "topics" */
+export type TopicsPostsArgs = {
+  distinct_on?: Maybe<Array<Posts_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Posts_Order_By>>,
+  where?: Maybe<Posts_Bool_Exp>
+};
+
+
+/** columns and relationships of "topics" */
+export type TopicsPosts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Posts_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Posts_Order_By>>,
+  where?: Maybe<Posts_Bool_Exp>
+};
+
+/** aggregated selection of "topics" */
+export type Topics_Aggregate = {
+   __typename?: 'topics_aggregate',
+  aggregate?: Maybe<Topics_Aggregate_Fields>,
+  nodes: Array<Topics>,
+};
+
+/** aggregate fields of "topics" */
+export type Topics_Aggregate_Fields = {
+   __typename?: 'topics_aggregate_fields',
+  avg?: Maybe<Topics_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Topics_Max_Fields>,
+  min?: Maybe<Topics_Min_Fields>,
+  stddev?: Maybe<Topics_Stddev_Fields>,
+  stddev_pop?: Maybe<Topics_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Topics_Stddev_Samp_Fields>,
+  sum?: Maybe<Topics_Sum_Fields>,
+  var_pop?: Maybe<Topics_Var_Pop_Fields>,
+  var_samp?: Maybe<Topics_Var_Samp_Fields>,
+  variance?: Maybe<Topics_Variance_Fields>,
+};
+
+
+/** aggregate fields of "topics" */
+export type Topics_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Topics_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+/** order by aggregate values of table "topics" */
+export type Topics_Aggregate_Order_By = {
+  avg?: Maybe<Topics_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Topics_Max_Order_By>,
+  min?: Maybe<Topics_Min_Order_By>,
+  stddev?: Maybe<Topics_Stddev_Order_By>,
+  stddev_pop?: Maybe<Topics_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Topics_Stddev_Samp_Order_By>,
+  sum?: Maybe<Topics_Sum_Order_By>,
+  var_pop?: Maybe<Topics_Var_Pop_Order_By>,
+  var_samp?: Maybe<Topics_Var_Samp_Order_By>,
+  variance?: Maybe<Topics_Variance_Order_By>,
+};
+
+/** input type for inserting array relation for remote table "topics" */
+export type Topics_Arr_Rel_Insert_Input = {
+  data: Array<Topics_Insert_Input>,
+  on_conflict?: Maybe<Topics_On_Conflict>,
+};
+
+/** aggregate avg on columns */
+export type Topics_Avg_Fields = {
+   __typename?: 'topics_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by avg() on columns of table "topics" */
+export type Topics_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** Boolean expression to filter rows from the table "topics". All fields are combined with a logical 'AND'. */
+export type Topics_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Topics_Bool_Exp>>>,
+  _not?: Maybe<Topics_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Topics_Bool_Exp>>>,
+  id?: Maybe<Int_Comparison_Exp>,
+  name?: Maybe<String_Comparison_Exp>,
+  posts?: Maybe<Posts_Bool_Exp>,
+};
+
+/** unique or primary key constraints on table "topics" */
+export enum Topics_Constraint {
+  /** unique or primary key constraint */
+  CategoriesNameKey = 'categories_name_key',
+  /** unique or primary key constraint */
+  CategoriesPkey = 'categories_pkey'
+}
+
+/** input type for incrementing integer columne in table "topics" */
+export type Topics_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+};
+
+/** input type for inserting data into table "topics" */
+export type Topics_Insert_Input = {
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  posts?: Maybe<Posts_Arr_Rel_Insert_Input>,
+};
+
+/** aggregate max on columns */
+export type Topics_Max_Fields = {
+   __typename?: 'topics_max_fields',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** order by max() on columns of table "topics" */
+export type Topics_Max_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+};
+
+/** aggregate min on columns */
+export type Topics_Min_Fields = {
+   __typename?: 'topics_min_fields',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** order by min() on columns of table "topics" */
+export type Topics_Min_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+};
+
+/** response of any mutation on the table "topics" */
+export type Topics_Mutation_Response = {
+   __typename?: 'topics_mutation_response',
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'],
+  /** data of the affected rows by the mutation */
+  returning: Array<Topics>,
+};
+
+/** input type for inserting object relation for remote table "topics" */
+export type Topics_Obj_Rel_Insert_Input = {
+  data: Topics_Insert_Input,
+  on_conflict?: Maybe<Topics_On_Conflict>,
+};
+
+/** on conflict condition type for table "topics" */
+export type Topics_On_Conflict = {
+  constraint: Topics_Constraint,
+  update_columns: Array<Topics_Update_Column>,
+  where?: Maybe<Topics_Bool_Exp>,
+};
+
+/** ordering options when selecting data from "topics" */
+export type Topics_Order_By = {
+  id?: Maybe<Order_By>,
+  name?: Maybe<Order_By>,
+  posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
+};
+
+/** select columns of table "topics" */
+export enum Topics_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "topics" */
+export type Topics_Set_Input = {
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+/** aggregate stddev on columns */
+export type Topics_Stddev_Fields = {
+   __typename?: 'topics_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev() on columns of table "topics" */
+export type Topics_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_pop on columns */
+export type Topics_Stddev_Pop_Fields = {
+   __typename?: 'topics_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_pop() on columns of table "topics" */
+export type Topics_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_samp on columns */
+export type Topics_Stddev_Samp_Fields = {
+   __typename?: 'topics_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_samp() on columns of table "topics" */
+export type Topics_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate sum on columns */
+export type Topics_Sum_Fields = {
+   __typename?: 'topics_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+};
+
+/** order by sum() on columns of table "topics" */
+export type Topics_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** update columns of table "topics" */
+export enum Topics_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** aggregate var_pop on columns */
+export type Topics_Var_Pop_Fields = {
+   __typename?: 'topics_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_pop() on columns of table "topics" */
+export type Topics_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate var_samp on columns */
+export type Topics_Var_Samp_Fields = {
+   __typename?: 'topics_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_samp() on columns of table "topics" */
+export type Topics_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
+/** aggregate variance on columns */
+export type Topics_Variance_Fields = {
+   __typename?: 'topics_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+};
+
+/** order by variance() on columns of table "topics" */
+export type Topics_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+};
+
 
 export type User = {
    __typename?: 'User',
@@ -2094,7 +1975,7 @@ export type UserFragmentFragment = (
 export type CreatePostMutationVariables = {
   userId: Scalars['Int'],
   content: Scalars['String'],
-  cat: Scalars['Int'],
+  topicId: Scalars['Int'],
   title: Scalars['String']
 };
 
@@ -2107,19 +1988,43 @@ export type CreatePostMutation = (
   )> }
 );
 
-export type CatfragmentFragment = (
-  { __typename?: 'categories' }
-  & Pick<Categories, 'id' | 'name'>
+export type TopicFragment = (
+  { __typename?: 'topics' }
+  & Pick<Topics, 'id' | 'name'>
 );
 
-export type CategoriesQueryVariables = {};
+export type TopicsQueryVariables = {};
 
 
-export type CategoriesQuery = (
+export type TopicsQuery = (
   { __typename?: 'query_root' }
-  & { categories: Array<(
-    { __typename?: 'categories' }
-    & CatfragmentFragment
+  & { topics: Array<(
+    { __typename?: 'topics' }
+    & TopicFragment
+  )> }
+);
+
+export type LatestDiscussionPostsQueryVariables = {};
+
+
+export type LatestDiscussionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'creation_date' | 'modification_date'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )>, replies_aggregate: (
+      { __typename?: 'replies_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'replies_aggregate_fields' }
+        & Pick<Replies_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
   )> }
 );
 
@@ -2146,21 +2051,24 @@ export type LatestPostsQuery = (
 
 export type PostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'id' | 'modification_date' | 'content' | 'creation_date' | 'title'>
+  & Pick<Posts, 'content' | 'creation_date' | 'id' | 'modification_date' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'username'>
-  )>, category: (
-    { __typename?: 'categories' }
-    & Pick<Categories, 'name'>
-  ), replies: Array<(
+  )>, replies: Array<(
     { __typename?: 'replies' }
     & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'username'>
     )> }
-  )> }
+  )>, topic: Maybe<(
+    { __typename?: 'topics' }
+    & Pick<Topics, 'name'>
+  )>, type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'name'>
+  ) }
 );
 
 export type PostAndRepliesQueryVariables = {
@@ -2176,6 +2084,43 @@ export type PostAndRepliesQuery = (
   )> }
 );
 
+export type LatestProposalPostsQueryVariables = {};
+
+
+export type LatestProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'creation_date' | 'modification_date'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    )>, replies_aggregate: (
+      { __typename?: 'replies_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'replies_aggregate_fields' }
+        & Pick<Replies_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
+  )> }
+);
+
+export type VerifyEmailMutationVariables = {
+  token: Scalars['String']
+};
+
+
+export type VerifyEmailMutation = (
+  { __typename?: 'mutation_root' }
+  & { verifyEmail: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export const UserFragmentFragmentDoc = gql`
     fragment userFragment on User {
   id
@@ -2183,25 +2128,21 @@ export const UserFragmentFragmentDoc = gql`
   username
 }
     `;
-export const CatfragmentFragmentDoc = gql`
-    fragment catfragment on categories {
+export const TopicFragmentDoc = gql`
+    fragment topic on topics {
   id
   name
 }
     `;
 export const PostFragmentDoc = gql`
     fragment post on posts {
-  id
-  modification_date
-  content
-  creation_date
-  title
   author {
     username
   }
-  category {
-    name
-  }
+  content
+  creation_date
+  id
+  modification_date
   replies(order_by: {created_at: asc}) {
     author {
       username
@@ -2211,12 +2152,19 @@ export const PostFragmentDoc = gql`
     created_at
     updated_at
   }
+  title
+  topic {
+    name
+  }
+  type {
+    name
+  }
 }
     `;
 export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $cat: Int!, $title: String!) {
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename
-  insert_posts(objects: {author_id: $userId, category_id: $cat, content: $content, title: $title}) {
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
     affected_rows
   }
 }
@@ -2238,7 +2186,7 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePost
  *   variables: {
  *      userId: // value for 'userId'
  *      content: // value for 'content'
- *      cat: // value for 'cat'
+ *      topicId: // value for 'topicId'
  *      title: // value for 'title'
  *   },
  * });
@@ -2249,38 +2197,85 @@ export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
-export const CategoriesDocument = gql`
-    query Categories {
-  categories {
-    ...catfragment
+export const TopicsDocument = gql`
+    query Topics {
+  topics {
+    ...topic
   }
 }
-    ${CatfragmentFragmentDoc}`;
+    ${TopicFragmentDoc}`;
 
 /**
- * __useCategoriesQuery__
+ * __useTopicsQuery__
  *
- * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
- * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useTopicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCategoriesQuery({
+ * const { data, loading, error } = useTopicsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useCategoriesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
-        return ApolloReactHooks.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+export function useTopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TopicsQuery, TopicsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TopicsQuery, TopicsQueryVariables>(TopicsDocument, baseOptions);
       }
-export function useCategoriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+export function useTopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TopicsQuery, TopicsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TopicsQuery, TopicsQueryVariables>(TopicsDocument, baseOptions);
         }
-export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
-export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
-export type CategoriesQueryResult = ApolloReactCommon.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export type TopicsQueryHookResult = ReturnType<typeof useTopicsQuery>;
+export type TopicsLazyQueryHookResult = ReturnType<typeof useTopicsLazyQuery>;
+export type TopicsQueryResult = ApolloReactCommon.QueryResult<TopicsQuery, TopicsQueryVariables>;
+export const LatestDiscussionPostsDocument = gql`
+    query LatestDiscussionPosts {
+  posts(order_by: {creation_date: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
+    id
+    title
+    author {
+      username
+    }
+    creation_date
+    modification_date
+    replies_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDiscussionPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDiscussionPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+      }
+export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+        }
+export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
+export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
+export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
 export const LatestPostsDocument = gql`
     query LatestPosts {
   posts(order_by: {creation_date: desc}) {
@@ -2357,3 +2352,82 @@ export function usePostAndRepliesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type PostAndRepliesQueryHookResult = ReturnType<typeof usePostAndRepliesQuery>;
 export type PostAndRepliesLazyQueryHookResult = ReturnType<typeof usePostAndRepliesLazyQuery>;
 export type PostAndRepliesQueryResult = ApolloReactCommon.QueryResult<PostAndRepliesQuery, PostAndRepliesQueryVariables>;
+export const LatestProposalPostsDocument = gql`
+    query LatestProposalPosts {
+  posts(order_by: {creation_date: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {
+    id
+    title
+    author {
+      username
+    }
+    creation_date
+    modification_date
+    replies_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestProposalPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>(LatestProposalPostsDocument, baseOptions);
+      }
+export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>(LatestProposalPostsDocument, baseOptions);
+        }
+export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
+export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
+export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
+export const VerifyEmailDocument = gql`
+    mutation verifyEmail($token: String!) {
+  verifyEmail(token: $token) {
+    message
+  }
+}
+    `;
+export type VerifyEmailMutationFn = ApolloReactCommon.MutationFunction<VerifyEmailMutation, VerifyEmailMutationVariables>;
+
+/**
+ * __useVerifyEmailMutation__
+ *
+ * To run a mutation, you first call `useVerifyEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyEmailMutation, { data, loading, error }] = useVerifyEmailMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useVerifyEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<VerifyEmailMutation, VerifyEmailMutationVariables>) {
+        return ApolloReactHooks.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, baseOptions);
+      }
+export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
+export type VerifyEmailMutationResult = ApolloReactCommon.MutationResult<VerifyEmailMutation>;
+export type VerifyEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;

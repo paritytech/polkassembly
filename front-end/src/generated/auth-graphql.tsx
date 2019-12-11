@@ -181,7 +181,7 @@ export type Get_Refresh_TokenQuery = (
 );
 
 export const UserFragmentDoc = gql`
-fragment user on User {
+    fragment user on User {
   id
   name
   username

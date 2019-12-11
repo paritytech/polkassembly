@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken'
 import React from 'react';
 import { useContext, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { useLogoutMutation } from '../../generated/auth-graphql';
+import { useRouter } from '../../hooks';
 import { getLocalStorageToken, logout } from '../../services/auth.service';
 import { JWTPayploadType } from '../../types';
 
@@ -18,7 +19,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
 	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const history = useHistory();
+	const { history } = useRouter();
 	const { id, setUserDetailsContextState, username } = currentUser;
 
 	useEffect(() => {
@@ -69,6 +70,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	return (
 		<Menu className={className} stackable inverted borderless>
 			<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+			<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
+			<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
 			<Menu.Menu position="right">
 				{username
 					? <>
