@@ -1,15 +1,13 @@
-import jwt from 'jsonwebtoken'
 import React from 'react';
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
-import { getLocalStorageToken, logout } from '../../services/auth.service';
-import { JWTPayploadType } from '../../types';
+import { logout } from '../../services/auth.service';
 
 interface Props {
 	className?: string
@@ -17,41 +15,9 @@ interface Props {
 
 const MenuBar = ({ className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
-	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
 	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { history } = useRouter();
-	const { id, setUserDetailsContextState, username } = currentUser;
-
-	useEffect(() => {
-		if (!id){
-			// no user stored in memory
-			// check in the local storage
-			const token = getLocalStorageToken()
-			if (token) {
-				try {
-					const tokenPayload = token && publicKey && jwt.verify(token, publicKey) as JWTPayploadType;
-
-					if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
-						const id = tokenPayload.sub
-						const username =  tokenPayload.name
-
-						if (id && username){
-							setUserDetailsContextState((prevState) => {
-								return {
-									...prevState,
-									id,
-									username
-								}
-							})
-						}
-					}
-				} catch (e) {
-					// the jwt isn't valid
-					console.log('error jwt verify',e)
-				}
-			}
-		}
-	},[id, setUserDetailsContextState, publicKey]);
+	const { setUserDetailsContextState, username } = currentUser;
 
 	useEffect(() => {
 		if (data && data.logout && data.logout.message) {
@@ -75,7 +41,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Menu.Menu position="right">
 				{username
 					? <>
-						<Menu.Item>Hello {username}</Menu.Item>
+						<Menu.Item><Icon name='user circle' inverted /> {username}</Menu.Item>
 						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 					</>
 					: <>

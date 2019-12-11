@@ -5,7 +5,8 @@ import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
-import React from 'react';
+import jwt from 'jsonwebtoken';
+import React, { useContext } from 'react';
 
 import {
 	isLocalStorageTokenValidOrUndefined,
@@ -15,87 +16,91 @@ import {
 	deleteLocalStorageToken
 } from '../services/auth.service';
 import { Get_Refresh_TokenQueryResult } from '../generated/auth-graphql';
-
-const setAuthorizationLink = setContext(() => {
-	const token = getLocalStorageToken()
-	if (token) {
-		return { headers: { authorization: `Bearer ${token}` } }
-	} else {
-		return null
-	}
-});
-
-const httpLink = new HttpLink({
-	uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
-});
-
-// const currentUser = useContext(UserDetailsContext);
-// const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
-
-const handleFetch = (accessToken : string) => {
-	// try {
-	// 	const tokenPayload = accessToken && publicKey && jwt.verify(accessToken, publicKey) as JWTPayploadType;
-	storeLocalStorageToken(accessToken)
-	// 	if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
-	// 		const id = tokenPayload.sub
-	// 		const username =  tokenPayload.name
-
-	// 		if (id && username){
-	// 			setUserDetailsContextState((prevState) => {
-	// 				return {
-	// 					...prevState,
-	// 					id,
-	// 					username
-	// 				}
-	// 			})
-	// 		}
-	// 	}
-	// } catch (e) {
-	// 	// the jwt isn't valid
-	// 	console.log('error jwt verify',e)
-	// }
-}
-
-const tokenRefreshLink = new TokenRefreshLink({
-	accessTokenField: 'token',
-	fetchAccessToken: getRefreshedToken,
-	handleError: (err:Error) => {
-		deleteLocalStorageToken();
-		console.error('There has been a problem getting a new access token: ', err);
-		// FIXME probably redirect user to login with an error "you've been logged out"?
-	},
-	handleFetch,
-	handleResponse: () => async (response:Response) => {
-		if(response.ok) {
-			const res: Get_Refresh_TokenQueryResult = await response.json()
-			if(res && res.data){
-				return res.data.token
-			} else {
-				throw new Error('The auth server did not answer with an expected refreshed token.')
-			}
-		}
-
-		throw new Error('The auth server did not answer successfully to the refresh token call.')
-	},
-	isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
-})
-
-const link = ApolloLink.from([
-	tokenRefreshLink,
-	setAuthorizationLink,
-	httpLink
-])
-
-const client = new ApolloClient({
-	cache: new InMemoryCache(),
-	link
-});
+import { UserDetailsContext } from '../context/UserDetailsContext';
+import { JWTPayploadType } from '../types';
 
 interface Props {
 	children: JSX.Element[] | JSX.Element
   }
 
 const Apollo = ( { children }:Props ) => {
+	const currentUser = useContext(UserDetailsContext);
+	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
+
+	const handleFetch = (accessToken : string) => {
+		try {
+			const tokenPayload = accessToken && publicKey && jwt.verify(accessToken, publicKey) as JWTPayploadType;
+
+			storeLocalStorageToken(accessToken)
+
+			if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
+				const id = tokenPayload.sub
+				const username =  tokenPayload.name
+
+				if (id && username){
+					currentUser.setUserDetailsContextState((prevState) => {
+						return {
+							...prevState,
+							id,
+							username
+						}
+					})
+				}
+			}
+		} catch (e) {
+			// the jwt isn't valid
+			console.log('Invalid jwt received.',e)
+		}
+	}
+
+	const setAuthorizationLink = setContext(() => {
+		const token = getLocalStorageToken()
+		if (token) {
+			return { headers: { authorization: `Bearer ${token}` } }
+		} else {
+			return null
+		}
+	});
+
+	const httpLink = new HttpLink({
+		uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
+	});
+
+	const tokenRefreshLink = new TokenRefreshLink({
+		accessTokenField: 'token',
+		fetchAccessToken: getRefreshedToken,
+		handleError: (err:Error) => {
+			deleteLocalStorageToken();
+			console.error('There has been a problem getting a new access token: ', err);
+			// FIXME redirect user to login with an error "you've been logged out"?
+		},
+		handleFetch,
+		handleResponse: () => async (response:Response) => {
+			if(response.ok) {
+				const res: Get_Refresh_TokenQueryResult = await response.json()
+				if(res && res.data){
+					return res.data.token
+				} else {
+					throw new Error('The auth server did not answer with an expected refreshed token.')
+				}
+			}
+
+			throw new Error('The auth server did not answer successfully to the refresh token call.')
+		},
+		isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
+	})
+
+	const link = ApolloLink.from([
+		tokenRefreshLink,
+		setAuthorizationLink,
+		httpLink
+	])
+
+	const client = new ApolloClient({
+		cache: new InMemoryCache(),
+		link
+	});
+
 	return (
 		<ApolloProvider client={client}>
 			{children}
