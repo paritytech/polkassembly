@@ -9,14 +9,17 @@ const StyledForm = styled(SUIForm)`
     padding: 2rem 3rem 3rem 3rem;
     margin-top: 4rem;
     border: 1px solid #EEE;
+
     h3 {
         margin-bottom: 3rem;
     }
+    
     .field {
         label {
             font-weight: 500;
         }
     }
+
     &.ui.form {
         .field {
             > label {
@@ -55,9 +58,8 @@ const StyledForm = styled(SUIForm)`
 
         textarea {
             font-family: 'Roboto';
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: #282828;
-            border: 1 px solid #EEE;
             border-color: #EEE;
             border-radius: 0rem;
             text-indent: 0rem;
@@ -66,6 +68,7 @@ const StyledForm = styled(SUIForm)`
                 border-color: #EEE;     
             }
         }
+        
     @media only screen and (max-width: 576px) {
         margin-top: 0rem;
     }

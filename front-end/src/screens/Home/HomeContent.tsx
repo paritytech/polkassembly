@@ -63,19 +63,11 @@ export default styled(HomeContent)`
 		h3 {
 			margin-left: 3rem;
 		}
-
-		.info_box {
-			padding: 2rem 3rem;
-		}
 	}
 
 	@media only screen and (max-width: 576px) {
 		h3 {
 			margin-left: 1.5rem;
-		}
-
-		.info_box {
-			padding: 2rem 1.5rem;
 		}
 	}
 
@@ -101,5 +93,9 @@ export default styled(HomeContent)`
 		flex-direction: column;
 		justify-content: center;
 		margin-top: 20px;
+	}
+
+	Button.newPostButton {
+		margin-bottom: 10px
 	}
 `;
