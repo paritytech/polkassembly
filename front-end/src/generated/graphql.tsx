@@ -2060,14 +2060,14 @@ export type PostFragment = (
     & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username'>
+      & Pick<User, 'id' | 'username'>
     )> }
   )>, topic: Maybe<(
     { __typename?: 'topics' }
-    & Pick<Topics, 'name'>
+    & Pick<Topics, 'id' | 'name'>
   )>, type: (
     { __typename?: 'post_types' }
-    & Pick<Post_Types, 'name'>
+    & Pick<Post_Types, 'id' | 'name'>
   ) }
 );
 
@@ -2145,6 +2145,7 @@ export const PostFragmentDoc = gql`
   modification_date
   replies(order_by: {created_at: asc}) {
     author {
+      id
       username
     }
     id
@@ -2154,9 +2155,11 @@ export const PostFragmentDoc = gql`
   }
   title
   topic {
+    id
     name
   }
   type {
+    id
     name
   }
 }

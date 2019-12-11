@@ -26,7 +26,7 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 		return (
 			<Header as='h2' icon>
-				<Icon name='bug' />
+				<Icon name='ambulance' />
 				{error && error.message ? error.message : errorMessage}
 			</Header>
 		)

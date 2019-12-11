@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken'
-
-import { UserDetailsContextType, JWTPayploadType } from '../types'
+import { UserDetailsContextType } from '../types'
 import { LoginResponse } from '../generated/auth-graphql';
 
 /**
@@ -26,39 +24,6 @@ export const getLocalStorageToken = (): string|null => {
 export const deleteLocalStorageToken = (): void => {
 	return localStorage.removeItem('Authorization');
 }
-
-/**
- * Tells whether the jwt token stored locally
- * is expired. It returns true if the token isn't set.
- */
-export const isLocalStorageTokenValidOrUndefined = (): boolean => {
-	let token = localStorage.getItem('Authorization') || null;
-
-	if (token) {
-		const tokenPayload = jwt.decode(token) as JWTPayploadType | null;
-
-		// if the token couldn't be decoded (tokenPayload is null) ask for a new one.
-		return tokenPayload ? tokenPayload.exp > Date.now() / 1000 : false
-	} else {
-		// if there's no token we shouldn't ask for a refresh token
-		return true
-	}
-};
-
-/**
- * Performs a call to the auth server
- * in the hope to get a new jwt token.
- */
-export const getRefreshedToken = () => (
-	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
-		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		method: 'POST'
-	})
-)
 
 /**
  * Store the user information in local context and call the function to store the received token
