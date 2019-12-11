@@ -4,7 +4,6 @@ import React, { createContext, useState } from 'react';
 import { getLocalStorageToken } from '../services/auth.service';
 import { UserDetailsContextType, JWTPayploadType } from '../types';
 
-const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
 const initialUserDetailsContext : UserDetailsContextType = {
 	id: null,
 	picture: null,
@@ -15,15 +14,19 @@ const initialUserDetailsContext : UserDetailsContextType = {
 }
 
 const accessToken = getLocalStorageToken();
-const tokenPayload = accessToken && publicKey && jwt.verify(accessToken, publicKey) as JWTPayploadType;
+try {
+	const tokenPayload = accessToken && jwt.decode(accessToken) as JWTPayploadType;
 
-if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
-	const { sub:id, name:username } = tokenPayload
+	if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
+		const { sub:id, name:username } = tokenPayload
 
-	if (id && username){
-		initialUserDetailsContext.id = id;
-		initialUserDetailsContext.username = username;
+		if (id && username){
+			initialUserDetailsContext.id = id;
+			initialUserDetailsContext.username = username;
+		}
 	}
+} catch {
+	//do nothing, the user will be authenticated as soon as there's a new call to the server.
 }
 
 export const UserDetailsContext = createContext(initialUserDetailsContext)

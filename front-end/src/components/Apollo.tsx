@@ -9,15 +9,76 @@ import jwt from 'jsonwebtoken';
 import React, { useContext } from 'react';
 
 import {
-	isLocalStorageTokenValidOrUndefined,
+	logout,
 	getLocalStorageToken,
-	getRefreshedToken,
-	storeLocalStorageToken,
-	deleteLocalStorageToken
+	storeLocalStorageToken
 } from '../services/auth.service';
 import { Get_Refresh_TokenQueryResult } from '../generated/auth-graphql';
 import { UserDetailsContext } from '../context/UserDetailsContext';
 import { JWTPayploadType } from '../types';
+
+/**
+ * Performs a call to the auth server
+ * to get a new jwt token.
+ */
+const fetchAccessToken = () => (
+	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
+		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST'
+	})
+)
+
+/**
+ * Read the data from the answer
+ * and pass along the new jwt token.
+ */
+const handleResponse = () => async (response:Response) => {
+	if(response.ok) {
+		const res: Get_Refresh_TokenQueryResult = await response.json()
+		if(res && res.data){
+			return res.data.token
+		} else {
+			throw new Error('The auth server did not answer with an expected refreshed token.')
+		}
+	}
+
+	throw new Error('The auth server did not answer successfully to the refresh token call.')
+}
+
+/**
+ * Tells whether the jwt token stored locally
+ * is expired. It returns true if the token isn't set.
+ */
+const isTokenValidOrUndefined = (): boolean => {
+	let token = localStorage.getItem('Authorization') || null;
+
+	if (token) {
+		const tokenPayload = jwt.decode(token) as JWTPayploadType | null;
+
+		// if the token couldn't be decoded (tokenPayload is null) ask for a new one.
+		return tokenPayload ? tokenPayload.exp > Date.now() / 1000 : false
+	} else {
+		// if there's no token we shouldn't ask for a refresh token
+		return true
+	}
+};
+
+/**
+ * Apollo link that will get the token from
+ * local storage and set the Authorization accordingly.
+ */
+const setAuthorizationLink = setContext(() => {
+	const token = getLocalStorageToken()
+	if (token) {
+		return { headers: { authorization: `Bearer ${token}` } }
+	} else {
+		return null
+	}
+});
 
 interface Props {
 	children: JSX.Element[] | JSX.Element
@@ -26,6 +87,11 @@ interface Props {
 const Apollo = ( { children }:Props ) => {
 	const currentUser = useContext(UserDetailsContext);
 	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
+
+	const handleError = (err:Error) => {
+		logout(currentUser.setUserDetailsContextState)
+		console.error('There has been a problem getting a new access token: ', err);
+	}
 
 	const handleFetch = (accessToken : string) => {
 		try {
@@ -53,41 +119,17 @@ const Apollo = ( { children }:Props ) => {
 		}
 	}
 
-	const setAuthorizationLink = setContext(() => {
-		const token = getLocalStorageToken()
-		if (token) {
-			return { headers: { authorization: `Bearer ${token}` } }
-		} else {
-			return null
-		}
-	});
-
 	const httpLink = new HttpLink({
 		uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
 	});
 
 	const tokenRefreshLink = new TokenRefreshLink({
 		accessTokenField: 'token',
-		fetchAccessToken: getRefreshedToken,
-		handleError: (err:Error) => {
-			deleteLocalStorageToken();
-			console.error('There has been a problem getting a new access token: ', err);
-			// FIXME redirect user to login with an error "you've been logged out"?
-		},
+		fetchAccessToken,
+		handleError,
 		handleFetch,
-		handleResponse: () => async (response:Response) => {
-			if(response.ok) {
-				const res: Get_Refresh_TokenQueryResult = await response.json()
-				if(res && res.data){
-					return res.data.token
-				} else {
-					throw new Error('The auth server did not answer with an expected refreshed token.')
-				}
-			}
-
-			throw new Error('The auth server did not answer successfully to the refresh token call.')
-		},
-		isTokenValidOrUndefined:  isLocalStorageTokenValidOrUndefined
+		handleResponse,
+		isTokenValidOrUndefined
 	})
 
 	const link = ApolloLink.from([
