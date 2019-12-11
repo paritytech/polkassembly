@@ -11,6 +11,8 @@ services:
       POSTGRES_DB: governance-auth-test
   auth-test:
     image: paritytech/polkassembly-test
+    depends_on:
+      - "postgres"
     environment:
       NODE_ENV: test
-      DATABASE_URL: "postgres://postgres:postgres@localhost:5431/governance-auth-test"
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5431/governance-auth-test"
