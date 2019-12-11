@@ -6,20 +6,24 @@ type FormProps = SUIFormProps;
 
 const StyledForm = styled(SUIForm)`
     background-color: #FFF;
-    padding: 1.25rem 1.875rem 2.5rem 1.875rem;
-    margin-top: 2.5rem;
+    padding: 2rem 3rem 3rem 3rem;
+    margin-top: 4rem;
     border: 1px solid #EEE;
+
     h3 {
-        margin-bottom: 1.875rem;
+        margin-bottom: 3rem;
     }
+    
     .field {
         label {
             font-weight: 500;
         }
     }
+
     &.ui.form {
         .field {
             > label {
+                font-size: 1.2rem;
                 font-weight: 500;
             }
         }
@@ -36,7 +40,7 @@ const StyledForm = styled(SUIForm)`
         input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
         input[type=text], input[type=time], input[type=url] {
             font-family: 'Roboto';
-            font-size: 0.875rem;
+            font-size: 1.2rem;
             color: #282828;
             border: 1 px solid #EEE;
             border-color: #EEE;
@@ -45,7 +49,7 @@ const StyledForm = styled(SUIForm)`
             padding: 0.625rem 0.625 0.5rem 0.625;
             &:focus {
                 font-family: 'Roboto';
-                font-size: 0.875rem;
+                font-size: 1.2rem;
                 color: #282828;
                 border: 1 px solid #EEE;
                 border-radius: 0rem;
@@ -54,9 +58,8 @@ const StyledForm = styled(SUIForm)`
 
         textarea {
             font-family: 'Roboto';
-            font-size: 0.875rem;
+            font-size: 1.4rem;
             color: #282828;
-            border: 1 px solid #EEE;
             border-color: #EEE;
             border-radius: 0rem;
             text-indent: 0rem;
@@ -65,6 +68,9 @@ const StyledForm = styled(SUIForm)`
                 border-color: #EEE;     
             }
         }
+        
+    @media only screen and (max-width: 576px) {
+        margin-top: 0rem;
     }
 `;
 
@@ -72,7 +78,7 @@ const StyledInput = styled(SUIForm.Input).attrs({
 	type: 'text'
 })`
     font-family: 'Roboto';
-    font-size: 0.875rem;
+    font-size: 1.2rem;
     color: #282828;
     border: 1 px solid #EEE;
     border-radius: 0rem;
@@ -87,7 +93,7 @@ const StyledField = styled(SUIForm.Field)`
     margin-bottom: 1.25rem;
 
     .text-muted {
-		font-size: 0.75rem;
+		font-size: 1.2rem;
 		margin: 0.5rem 0 0 0;
 	}
 `;

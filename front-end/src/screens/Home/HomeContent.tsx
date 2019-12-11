@@ -1,78 +1,20 @@
 import React, { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
+import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
+import { Button } from '../../ui-components/Button';
 
 interface Props {
   className?: string
   data: LatestPostsQuery
 }
 
-const Container = styled.div`
-	Button.newPostButton {
-		margin-bottom: 10px
-	}
-
-	.Home__item {
-		margin: 0 0 0.625rem 0;
-		border: 1px solid #EEE;
-	}
-
-	.Home__item:hover {
-		border: 1px solid #BBB;
-		text-decoration: none;
-	}
-
-	.Home__item a:hover {
-		tex	t-decoration: none;
-	}
-
-	.info_box {
-		padding: 1.25rem 1.875rem;
-		background-color: #FFF;
-		margin: 0 0 0.625rem 0;
-		border: 1px solid #EEE;
-	}
-
-	.info_text {
-		fo	nt-size: 0.875rem;
-		h6 {
-			font-size: 0.875rem;
-			margin-top: 1rem;
-		}
-	}
-
-	.ex_link {
-		padding-top: 0.625rem;
-		a {
-			font-size: 0.75rem;
-			font-weight: 500;
-			color: #EB5757;
-			&:hover {
-			border-bottom: 1px solid #EB5757;
-		}
-	} 
-}
-
-@media (max-width: 576px) {
-	.welcomebox {
-		padding:1.25rem 15px;
-	}
-
-	h3 {
-		margin: 0 0 1.25rem 0.938rem;
-	}
-}
-`;
-
-const HomeContent = ({ data }: Props) => {
+const HomeContent = ({ className, data }: Props) => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
@@ -80,10 +22,10 @@ const HomeContent = ({ data }: Props) => {
 	};
 
 	return (
-		<Container className='Home'>
-			<h3>Latest Posts</h3>
-			<Row>
-				<Col sm={12} md={6} lg={7}>
+		<Container className={className}>
+			<Grid stackable reversed='mobile tablet'>
+				<Grid.Column mobile={16} tablet={16} computer={8}>
+					<h3>Latest Discussions</h3>
 					<ul className='Home__list'>
 						{!!data.posts &&
 						data.posts.map(
@@ -104,26 +46,56 @@ const HomeContent = ({ data }: Props) => {
 								),
 						)}
 					</ul>
-				</Col>
-				<Col md={6} lg={5}>
-					{currentUser.id && <Button className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					<div className='info_box'>
-						<h5>Hello</h5>
-						<div className='info_text'>Discuss all things Polkadot governance, signal your intentions, back on-chain proposals and vote on referenda.</div>
-						<div className='info_text'><h6>New to Polkadot Governance?</h6> Polkadot uses a sophisticated governance mechanism to let the network evolve gracefully. The stated goal is to ensure that the majority of the stake can always command the network.</div>
-						<div className='ex_link'>
-							<a
-								href='https://wiki.polkadot.network/docs/en/learn-governance'
-								rel='noopener noreferrer'
-								target='_blank'>
-								Find out more about Polkadot Governance »
-							</a>
-						</div>
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={8}>
+					<div className='mainButtonContainer'>
+						{currentUser.id && <Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
-				</Col>
-			</Row>
+				</Grid.Column>
+			</Grid>
 		</Container>
 	);
 }
 
-export default HomeContent;
+export default styled(HomeContent)`
+
+	@media only screen and (max-width: 768px) {
+		h3 {
+			margin-left: 3rem;
+		}
+	}
+
+	@media only screen and (max-width: 576px) {
+		h3 {
+			margin-left: 1.5rem;
+		}
+	}
+
+	li {
+        list-style-type: none;
+    }
+
+	.Home__item {
+		margin: 0 0 1rem 0;
+		border: 1px solid #EEE;
+		&:hover {
+			border: 1px solid #BBB;
+			text-decoration: none;
+		}
+		a:hover {
+			tex	t-decoration: none;
+		}
+	}
+
+	.mainButtonContainer {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-top: 20px;
+	}
+
+	Button.newPostButton {
+		margin-bottom: 10px
+	}
+`;

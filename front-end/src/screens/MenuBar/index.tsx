@@ -55,22 +55,39 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 }
 
 export default styled(MenuBar)`
-.ui.menu {
-	font-family: 'Roboto Mono';
-	letter-spacing: 0.1rem;
-	border-radius: 0;
-	padding: 1.25rem 2.5rem;
-}
+	&.ui.menu {
+		border-radius: 0;
+		padding: 1.5rem 2rem;
+		font-family: 'Roboto Mono';
+		font-size: 1.4rem;
+		letter-spacing: 0.1rem;
+		.item {
+			font-weight: 500;
+			padding: 0.5rem 0.5rem;
+			margin: 0 1.5rem;
+			color: #B5AEAE;
+		}
+	}
 
-.ui.menu .item {
-	padding: 0 0;
-}
+	@media only screen and (max-width: 576px) {
+		&.ui.menu {
+			padding: 1.5rem 1rem;
+			.item {
+				padding: 0.5rem 0.5rem;
+				margin: 0rem 0rem;
+			}
+		}
+	}
 
-.ui.inverted.menu {
-	background-color: #282828;
-}
+	.ui.inverted.menu {
+		background-color: #282828;
+	}
 
-#title {
-	text-transform: uppercase;
-}
+	&.ui.inverted.menu a.item:hover {
+		border-radius: 0.5rem;
+	}
+
+	#title {
+		text-transform: uppercase;
+	}
 `;

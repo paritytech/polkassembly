@@ -7,12 +7,12 @@ export const Button = styled(SemanticButton).attrs({
 	
 	&.ui.button {   
         font-family: 'Roboto Mono';
-		font-size: 1.125rem;
+		font-size: 1.6rem;
 		font-weight: 500;
 		text-transform: uppercase;
-		border-radius: 0.188rem;
+		border-radius: 0.3rem;
 		border: none;
-		padding: 0.625rem 0.938rem;
+		padding: 0.5rem 1rem;
 		color: #fff;
     }
 

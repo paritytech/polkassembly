@@ -1,6 +1,5 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,69 +11,12 @@ interface Props {
   data: LatestProposalPostsQuery
 }
 
-const Container = styled.div`
-	Button.newPostButton {
-		margin-bottom: 10px
-	}
-
-	.proposals__item {
-		margin: 0 0 0.625rem 0;
-		border: 1px solid #EEE;
-	}
-
-	.proposals__item:hover {
-		border: 1px solid #BBB;
-		text-decoration: none;
-	}
-
-	.proposals__item a:hover {
-		tex	t-decoration: none;
-	}
-
-	.info_box {
-		padding: 1.25rem 1.875rem;
-		background-color: #FFF;
-		margin: 0 0 0.625rem 0;
-		border: 1px solid #EEE;
-	}
-
-	.info_text {
-		fo	nt-size: 0.875rem;
-		h6 {
-			font-size: 0.875rem;
-			margin-top: 1rem;
-		}
-	}
-
-	.ex_link {
-		padding-top: 0.625rem;
-		a {
-			font-size: 0.75rem;
-			font-weight: 500;
-			color: #EB5757;
-			&:hover {
-			border-bottom: 1px solid #EB5757;
-		}
-	} 
-}
-
-@media (max-width: 576px) {
-	.welcomebox {
-		padding:1.25rem 15px;
-	}
-
-	h3 {
-		margin: 0 0 1.25rem 0.938rem;
-	}
-}
-`;
-
-const Proposals = ({ data }: Props) => {
+const Proposals = ({ className, data }: Props) => {
 	return (
-		<Container className='proposals'>
+		<Container className={className}>
 			<h3>Latest Proposals</h3>
-			<Row>
-				<Col sm={12} md={6} lg={7}>
+			<Grid stackable reversed='mobile tablet'>
+				<Grid.Column mobile={16} tablet={16} computer={8}>
 					<ul className='proposals__list'>
 						{!!data.posts &&
 						data.posts.map(
@@ -95,12 +37,41 @@ const Proposals = ({ data }: Props) => {
 								),
 						)}
 					</ul>
-				</Col>
-				<Col md={6} lg={5}>
-				</Col>
-			</Row>
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={8}>
+				</Grid.Column>
+			</Grid>
 		</Container>
 	);
 }
 
-export default Proposals;
+export default styled(Proposals)`
+
+	@media only screen and (max-width: 768px) {
+		h3 {
+			margin-left: 3rem;
+		}
+	}
+
+	@media only screen and (max-width: 576px) {
+		h3 {
+			margin-left: 1.5rem;
+		}
+	}
+
+	li {
+		list-style-type: none;
+	}
+
+	.proposals__item {
+		margin: 0 0 1rem 0;
+		border: 1px solid #EEE;
+		&:hover {
+			border: 1px solid #BBB;
+			text-decoration: none;
+		}
+		a:hover {
+			tex	t-decoration: none;
+		}
+	}
+`;

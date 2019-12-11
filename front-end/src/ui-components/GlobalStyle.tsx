@@ -4,6 +4,10 @@ import '../fonts.css' /* as createGlobalStyle is not importing fonts*/
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+    html {
+        font-size: 62.5%;
+    }
+
     body {
         margin: 0;
         font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         background-color: #F1F3F2;
-        color: #282828;
+        color: #555252;
     }
 
     code {
@@ -38,6 +42,33 @@ export const GlobalStyle = createGlobalStyle`
         margin: 3.75rem auto 0 auto;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+        color: #282828;
+        font-family: 'Roboto';
+        font-weight: 500;
+        line-height: 100%;
+        margin-top: 0;
+    }
+
+    h3 {
+        font-family: 'Roboto Mono';
+        font-size: 2.4rem;
+        margin-bottom: 1.25rem;
+    }
+
+    h4, h5, h6 {
+        font-family: 'Roboto';   
+    }
+
+    strong {
+        font-weight: 500;
+    }
+
+    ::selection {
+        background-color: #282828;
+        color: #FFF;
+    }
+
     @media (max-width: 1200px) {
         .container-fluid {
         padding: 0 2.5rem 0 2.5rem;
@@ -49,40 +80,32 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    @media (max-width: 768px) {
+    @media only screen and (max-width: 768px) {
         .container-fluid {
         margin: 2.5rem auto 0 auto;
         padding: 0 1.25rem 0 1.25rem;
         }
 
-        .ui.grid {
-            margin-left: 0;
-            margin-right: 0;
+        .ui.container, .ui.grid>.column:not(.row) {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 
-    @media (max-width: 576px) {
+    @media only screen and (max-width: 576px) {
         .container-fluid {
         padding:0;
         }
 
-        .ui.grid {
-            margin-left: 0;
-            margin-right: 0;
+        .ui.grid, .ui.container {
+            margin-top: 0!important;
+            margin-left: 0!important;
+            margin-right: 0!important;
         }
-    }
 
-    h3 {
-        font-family: 'Roboto Mono';
-        font-size: 1.875rem;
-        font-weight: 500;
-        color: #222;
-        margin-bottom: 1.25rem;
-    }
-
-    h4, h5, h6 {
-        font-family: 'Roboto';
-        font-weight: 500;   
+        h3 {
+            font-size: 2.1rem;
+        }
     }
 
     .btn {

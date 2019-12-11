@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
@@ -59,47 +59,53 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	}
 
 	return (
-		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
-				<Form>
-					<h3>New Post</h3>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Title</label>
-							<input
-								onChange={onTitleChange}
-								placeholder='Your title...'
-								type="text"
+		<Container className={className}>
+			<Grid>
+				<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10} widescreen={8}>
+					<Form>
+						<h3>New Post</h3>
+						<Form.Group>
+							<Form.Field width={16}>
+								<label>Title</label>
+								<input
+									onChange={onTitleChange}
+									placeholder='Your title...'
+									type="text"
+								/>
+							</Form.Field>
+						</Form.Group>
+						<Form.Group>
+							<TextArea
+								onChange={setContent}
+								value={content}
 							/>
-						</Form.Field>
-					</Form.Group>
-
-					<Form.Group>
-						<TextArea
-							onChange={setContent}
-							value={content}
-						/>
-					</Form.Group>
-					{renderTopics()}
-					<div className={'mainButtonContainer'}>
-						<Button
-							onClick={handleSend}
-							disabled={isSending}
-							type='submit'
-							variant='primary'
-						>
-							{isSending ? 'Creating...' : 'Create'}
-						</Button>
-					</div>
-				</Form>
-			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-		</Grid>
+						</Form.Group>
+						{renderTopics()}
+						<div className={'mainButtonContainer'}>
+							<Button
+								onClick={handleSend}
+								disabled={isSending}
+								type='submit'
+								variant='primary'
+							>
+								{isSending ? 'Creating...' : 'Create'}
+							</Button>
+						</div>
+					</Form>
+				</Grid.Column>
+				<Grid.Column only='computer' computer={6} largeScreen={6} widescreen={8}/>
+			</Grid>
+		</Container>
 	);
 };
 
 export default styled(CreatePost)`
+
+	@media (min-width: 576px) {
+		.container {
+			max-width: 100%;
+		}
+	}
 
 	.mainButtonContainer{
 		align-items: center;
@@ -110,12 +116,12 @@ export default styled(CreatePost)`
 
 	.ui.button {
 		font-family: 'Roboto Mono';
-		font-size: 1.125rem;
+		font-size: 1.6rem;
 		font-weight: 500;
 		text-transform: uppercase;
-		border-radius: 0.188rem;
+		border-radius: 0.3rem;
 		border: none;
-		padding: 0.625rem 0.938rem;
+		padding: 0.5rem 1rem;
 		color: #fff;
 		background-color: #EB5757;
 		&:focus, &:hover {
@@ -128,15 +134,28 @@ export default styled(CreatePost)`
 		margin: 0 0 1.875rem 0;
 
 		.ui.button {
-			font-size: 0.75rem;
-			background-color: #CCC;
-			padding: 0.313rem 0.5rem;
-			border-radius: 0.125rem;
-			letter-spacing: 0.031rem;
+			font-size: 1rem;
+			background-color: #B5AEAE;
+			padding: 0.5rem 0.8rem;
+			border-radius: 0.2rem;
+			letter-spacing: 0.05rem;
+			line-height: 100%;
+			text-transform: none;
 			&:focus, &:hover {
 				background-color: #282828;
 				outline: none;
 			}
 		}
+	}
+
+	.fields {
+		.container {
+			padding-right: 5px;
+			padding-left: 5px;
+		}
+	}
+
+	textarea {
+		font-size: 1.4rem;
 	}
 `
