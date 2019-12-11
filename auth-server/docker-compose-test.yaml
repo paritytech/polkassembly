@@ -1,0 +1,16 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+    - "5431:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: governance-auth-test
+  auth-test:
+    image: paritytech/polkassembly-test
+    environment:
+      NODE_ENV: test
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5431/governance-auth-test"
