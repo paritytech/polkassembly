@@ -15,4 +15,4 @@ services:
       - "postgres"
     environment:
       NODE_ENV: test
-      DATABASE_URL: "postgres://postgres:postgres@postgres:5431/governance-auth-test"
+      TEST_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/governance-auth-test"
