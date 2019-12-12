@@ -61,7 +61,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	return (
 		<Container className={className}>
 			<Grid>
-				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={8}>
+				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<Form>
 						<h3>New Post</h3>
 						<Form.Group>
