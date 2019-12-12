@@ -12,7 +12,7 @@ export const Button = styled(SemanticButton).attrs({
 		text-transform: uppercase;
 		border-radius: 0.3rem;
 		border: none;
-		padding: 0.5rem 1rem;
+		padding: 0.7rem 1rem;
 		color: #fff;
     }
 
