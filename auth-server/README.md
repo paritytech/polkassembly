@@ -400,7 +400,7 @@ To run tests:
 Build the docker container for test:
 
 ```bash
-docker build -t paritytech/polkassembly-auth-test .
+docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test .
 ```
 
 Run test
