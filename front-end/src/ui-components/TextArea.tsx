@@ -15,13 +15,42 @@ const StyledTextArea = styled.div`
 		line-height: 1.4!important;
 	}
 
-	@media only screen and (max-width: 576px) {
+	@media only screen and (max-width: 768px) {
 		.react-mde {
 			.mde-header {
 				.mde-header-group {
+					border-top: 1px solid #DED7D7;
+					border-bottom-color: #DED7D7;
+					margin-left: 0!important;
+					padding: 1rem 0.5rem;
+					background-color: #FFF;
+					width: 100%;
+
+					&.hidden {
+						visibility: hidden;
+						display: none;
+					  }
+
 					.mde-header-item {
 						button {
-							font-size: 1rem!important;
+							font-size: 1.3rem!important;
+						}
+					}
+				}
+
+				.mde-tabs {
+					margin: 0rem 0rem!important;
+					width: 100%;
+
+					button {
+						margin: 0 auto;
+						width: 48%;
+						border-bottom-right-radius: 0!important;
+						border-bottom-left-radius: 0!important;
+
+						&.selected {
+							border-bottom-color: #FFF!important;
+							z-index: 1;
 						}
 					}
 				}
@@ -126,7 +155,7 @@ const StyledTextArea = styled.div`
 				.mde-header-item {
 					button {
 						color: #706D6D;
-						font-size: 1.2rem;
+						font-size: 1.4rem;
 
 						&:hover, &:active, &:focus {
 							color: #282828;
@@ -148,6 +177,7 @@ const StyledTextArea = styled.div`
 									color: #282828;
 								}
 							}
+						}
 					}
 				}
 			}
