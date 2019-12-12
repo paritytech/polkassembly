@@ -42,14 +42,14 @@ const DiscussionCard = styled.div`
 
 export interface DiscussionProps {
   author: string
-  creation_date: string
+  created_at: string
   replies?: string
   title: string
 }
 
 export default function Discussion ({
 	author,
-	creation_date,
+	created_at,
 	replies,
 	title
 }:DiscussionProps) {
@@ -57,7 +57,7 @@ export default function Discussion ({
 	return (
 		<DiscussionCard>
 			<h4>{title}</h4>
-			<div className="authorAndDate">posted by <span>{author}</span> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<div className="authorAndDate">posted by <span>{author}</span> {moment.default(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
 			<ul>
 				<li><FaComment/> {replies} replies</li>
 			</ul>

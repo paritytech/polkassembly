@@ -6,9 +6,9 @@ const post = gql`
             username
         }
         content
-        creation_date
+        created_at
         id
-        modification_date
+        updated_at
         replies(order_by: {created_at: asc}) {
             author {
                 id
