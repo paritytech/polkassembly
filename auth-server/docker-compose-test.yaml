@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: governance-auth-test
   auth-test:
-    image: paritytech/polkassembly-test
+    image: paritytech/polkassembly-auth-test
     depends_on:
       - "postgres"
     environment:

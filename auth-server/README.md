@@ -397,6 +397,12 @@ On success, we get the response
 
 To run tests run:
 
+Build the docker container for test:
+
+```bash
+docker build -t paritytech/polkassembly-auth-test .
+```
+
 ```bash
 docker-compose-test.yaml up --abort-on-container-exit
 ```
