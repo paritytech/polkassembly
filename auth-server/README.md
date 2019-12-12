@@ -53,6 +53,9 @@ REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
 BOT_PROPOSAL_USER_ID=1234
+NODE_ENV=development
+DATABASE_URL="postgres://user:password@localhost:5431/governance-auth"
+TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
@@ -389,3 +392,24 @@ On success, we get the response
   }
 }
 ```
+
+## Testing
+
+To run tests:
+
+Build the docker container for test:
+
+```bash
+docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test .
+```
+
+Run test
+
+```bash
+docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
+```
+
+It will create a local postgres and test will run on top of that.
+
+=============IMPORTANT===============
+Please note: TEST DATABASE WILL BE CLEANED BEFORE STARTING TEST SUITE.

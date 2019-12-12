@@ -1,11 +1,8 @@
-import * as Knex from 'knex'
 import * as argon2 from 'argon2'
 import { Model } from 'objection'
-import * as connection from '../../knexfile'
+import connection from './connection'
 
-const knexConnection = Knex(connection)
-
-Model.knex(knexConnection)
+Model.knex(connection)
 
 export default class User extends Model {
 	readonly id!: number

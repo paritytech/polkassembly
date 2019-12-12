@@ -1,10 +1,7 @@
-import * as Knex from 'knex'
 import { Model } from 'objection'
-import * as connection from '../../knexfile'
+import connection from './connection'
 
-const knexConnection = Knex(connection)
-
-Model.knex(knexConnection)
+Model.knex(connection)
 
 export default class RefreshToken extends Model {
 	readonly id!: number
