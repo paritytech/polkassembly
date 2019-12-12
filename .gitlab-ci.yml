@@ -28,11 +28,10 @@ lint-front-end:
   after_script:
     - echo "debug!"
     - pwd
-    - ls node_modules
-    - ls packages/*/node_modules/
-  rules:
-    - changes:
-      - "front-end/*"
+    - find ~ -iname "*node_modules*"
+  # rules:
+  #   - changes:
+  #     - "front-end/*"
   tags:
     - linux-docker
 
