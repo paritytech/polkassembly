@@ -406,7 +406,7 @@ docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test .
 Run test
 
 ```bash
-docker-compose up -f docker-compose-test.yaml --abort-on-container-exit
+docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
 ```
 
 It will create a local postgres and test will run on top of that.
