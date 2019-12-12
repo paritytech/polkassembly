@@ -12,6 +12,8 @@ cache:
     - node_modules/
     - packages/*/node_modules/
 
+#### stage:                        test
+
 lint-front-end:
   stage: test
   image: node:12
