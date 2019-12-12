@@ -59,15 +59,40 @@ const HomeContent = ({ className, data }: Props) => {
 
 export default styled(HomeContent)`
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (max-width: 576px) {
 		h3 {
-			margin-left: 3rem;
+			margin-left: 1.5rem!important;
+		}
+
+		.mainButtonContainer {
+			align-items: stretch!important;
+			margin: 1rem!important;
+
+			.newPostButton {
+				padding: 0.8rem 1rem;
+				border-radius: 0.5rem;
+			}
 		}
 	}
 
-	@media only screen and (max-width: 576px) {
+	@media only screen and (max-width: 768px) {
 		h3 {
-			margin-left: 1.5rem;
+			margin-left: 0rem;
+		}
+
+		.mainButtonContainer {
+			margin: 1rem 0;
+			margin-top: 1rem!important;
+		}
+	}
+
+	@media only screen and (max-width: 991px) and (min-width: 768px) {
+		.ui[class*="tablet reversed"].grid {
+			flex-direction: column-reverse;
+		}
+
+		.mainButtonContainer {
+			margin-top: 1rem!important;
 		}
 	}
 
@@ -93,9 +118,5 @@ export default styled(HomeContent)`
 		flex-direction: column;
 		justify-content: center;
 		margin-top: 4rem;
-	}
-
-	Button.newPostButton {
-		margin-bottom: 10px
 	}
 `;

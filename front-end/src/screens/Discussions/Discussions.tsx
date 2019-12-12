@@ -60,7 +60,7 @@ export default styled(Discussions)`
 
 	@media only screen and (max-width: 576px) {
 		h3 {
-			margin-left: 1.5rem;
+			margin-left: 1.5rem!important;
 		}
 
 		.mainButtonContainer {
@@ -76,13 +76,22 @@ export default styled(Discussions)`
 
 	@media only screen and (max-width: 768px) {
 		h3 {
-			margin-left: 3rem;
+			margin-left: 0rem;
+		}
+
+		.mainButtonContainer {
+			margin: 1rem 0;
+			margin-top: 1rem!important;
 		}
 	}
 
 	@media only screen and (max-width: 991px) and (min-width: 768px) {
 		.ui[class*="tablet reversed"].grid {
 			flex-direction: column-reverse;
+		}
+
+		.mainButtonContainer {
+			margin-top: 1rem!important;
 		}
 	}
 
