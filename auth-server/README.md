@@ -55,7 +55,7 @@ PORT=8010
 BOT_PROPOSAL_USER_ID=1234
 NODE_ENV=development
 DATABASE_URL="postgres://user:password@localhost:5431/governance-auth"
-TEST_DATABASE_URL="postgres://user:password@localhost:5431/governance-test-auth"
+TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
