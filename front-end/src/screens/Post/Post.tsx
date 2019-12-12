@@ -44,10 +44,10 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 
 	return (
 		<>
-			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
-			<h3>{title}</h3>
-			<ReactMarkdown className='post_content' source={content} />
 			<div className='post_tags'><Tag>{topic && topic.name}</Tag></div>
+			<h3>{title}</h3>
+			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<ReactMarkdown className='post_content' source={content} />
 		</>
 	);
 }
@@ -56,7 +56,9 @@ export default styled(Post)`
 	.post_info {
 		color: #555;
 		font-size: 1.2rem;
+		padding-bottom: 2rem;
 		margin-bottom: 2rem;
+		border-bottom: 1px solid #EEE;
 	}
 
 	.PostContent {
@@ -65,9 +67,14 @@ export default styled(Post)`
 		border: 1px solid #EEE;
 	}
 
+	.post_tags {
+		margin-bottom: 1.5rem;		
+	}
+
 	h3 {
 		font-family: 'Roboto';
-		margin-bottom: 1.5rem;
+		font-size: 2.4rem;
+		margin-bottom: 0.4rem;
 	}
 
 	.post_content {
