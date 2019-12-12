@@ -29,7 +29,7 @@ lint-front-end:
     - echo "debug!"
     - pwd
     - ls node_modules
-    - ls packages/*/node_modules/ 
+    - ls packages/*/node_modules/
   rules:
     - changes:
       - "front-end/*"
