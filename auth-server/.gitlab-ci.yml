@@ -1,0 +1,53 @@
+stages:
+  - test
+  - build
+
+variables:
+  GIT_DEPTH: '3'
+  SIMPLECOV: 'true'
+  RUST_BACKTRACE: '1'
+  RUSTFLAGS: ''
+  CARGOFLAGS: ''
+
+cache:
+  key: '${CI_JOB_NAME}'
+  paths:
+    - node_modules/
+    - packages/*/node_modules/
+
+.branches: &branches
+  only:
+    - beta
+    - tags
+    - stable
+    - triggers
+    - master
+
+lint-front-end:
+  stage: test
+  image: node:12
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd front-end
+    - yarn install
+    - yarn lint
+  rules:
+    - changes: # Will include the job and set to when:manual if any of the follow paths match a modified file.
+      - "front-end/*"
+  tags:
+    - linux-docker
+lint-back-end:
+  stage: test
+  image: node:12
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd auth-server
+    - yarn install
+    - yarn lint
+  rules:
+    - changes: # Will include the job and set to when:manual if any of the follow paths match a modified file.
+      - "auth-server/*"
+  tags:
+    - linux-docker
