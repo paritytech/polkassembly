@@ -12,15 +12,45 @@ const StyledTextArea = styled.div`
 		border: none!important;
 		color: #555!important;
 		padding: 1rem 1.2rem!important;
+		line-height: 1.4!important;
 	}
 
-	@media only screen and (max-width: 576px) {
+	@media only screen and (max-width: 768px) {
 		.react-mde {
 			.mde-header {
 				.mde-header-group {
+					border-top: 1px solid #DED7D7;
+					border-bottom-color: #DED7D7;
+					margin-left: 0!important;
+					padding: 1rem 0.5rem;
+					background-color: #FFF;
+					width: 100%;
+
+					&.hidden {
+						visibility: hidden;
+						display: none;
+					  }
+
 					.mde-header-item {
 						button {
-							font-size: 1rem!important;
+							font-size: 1.3rem!important;
+						}
+					}
+				}
+
+				.mde-tabs {
+					margin: 0rem 0rem!important;
+					width: 100%;
+
+					button {
+						margin: 0 auto;
+						width: 48%;
+						border-bottom-right-radius: 0!important;
+						border-bottom-left-radius: 0!important;
+
+						&.selected {
+							border-bottom-color: #FFF!important;
+							z-index: 1;
 						}
 					}
 				}
@@ -83,27 +113,38 @@ const StyledTextArea = styled.div`
 		}
 
 		.mde-header {
-			background: #FFF;
-			border-bottom: 1px solid #EEE;
+			background: #FBFAFA;
+			border-bottom: 1px solid #DED7D7;
 
 			.mde-tabs {
 				margin: 0rem 0.5rem;
 
 				button {
 					font-family: 'Roboto Mono';
-					font-size: 1rem;
+					font-size: 1.2rem;
 					font-weight: 500;
-					padding: 0.5rem 1rem;
+					padding: 0.8rem 1.6rem;
+					color: #706D6D;
+					background: #FBFAFA;
 					border-radius: 0.3em;
-					border: 1px solid #B5AEAE;
-					color: #B5AEAE;
-					background: #FFF;
-					transition: opacity .1s ease, background-color .1s ease, color .1s ease, border .1s ease, background .1s ease;
+					border-bottom-color: #DED7D7;
+					margin-bottom: -1px;
+					margin-top: 1rem;
 
-					&.selected, &:hover, &:focus {
-						border: 1px solid #282828;
+					&.selected, &:focus {
+						background: #FFF;
 						color: #282828;
+						border: 1px solid #DED7D7;
 						outline: none;
+						border-bottom-color: #fffdfd;
+						margin-bottom: -1px;
+						border-bottom-right-radius: 0;
+						border-bottom-left-radius: 0;
+						margin-top: 1rem;
+					}
+
+					&:hover {
+						color: #282828;
 					}
 				}
 			}
@@ -113,8 +154,8 @@ const StyledTextArea = styled.div`
 
 				.mde-header-item {
 					button {
-						color: #B5AEAE;
-						font-size: 1.2rem;
+						color: #706D6D;
+						font-size: 1.4rem;
 
 						&:hover, &:active, &:focus {
 							color: #282828;
@@ -129,13 +170,14 @@ const StyledTextArea = styled.div`
 
 							button {
 								p {
-									color: #B5AEAE;
+									color: #706D6D;
 								}
 
 								p:hover {
-									color: #555252;
+									color: #282828;
 								}
 							}
+						}
 					}
 				}
 			}

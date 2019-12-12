@@ -71,6 +71,7 @@ const StyledForm = styled(SUIForm)`
         
     @media only screen and (max-width: 576px) {
         margin-top: 0rem;
+        padding: 2rem;
     }
 `;
 
@@ -94,7 +95,7 @@ const StyledField = styled(SUIForm.Field)`
 
     .text-muted {
 		font-size: 1.2rem;
-		margin: 0.5rem 0 0 0;
+        margin: 0.5rem 0 0 0;
 	}
 `;
 

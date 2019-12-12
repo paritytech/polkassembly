@@ -61,7 +61,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	return (
 		<Container className={className}>
 			<Grid>
-				<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10} widescreen={8}>
+				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<Form>
 						<h3>New Post</h3>
 						<Form.Group>
@@ -93,7 +93,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						</div>
 					</Form>
 				</Grid.Column>
-				<Grid.Column only='computer' computer={6} largeScreen={6} widescreen={8}/>
+				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
 			</Grid>
 		</Container>
 	);
