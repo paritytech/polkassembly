@@ -88,11 +88,11 @@ export default styled(HomeContent)`
 	}
 
 	.mainButtonContainer {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		margin-top: 20px;
+		margin-top: 4rem;
 	}
 
 	Button.newPostButton {

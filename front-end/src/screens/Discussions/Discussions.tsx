@@ -58,15 +58,31 @@ const Discussions = ({ className, data }: Props) => {
 
 export default styled(Discussions)`
 
+	@media only screen and (max-width: 576px) {
+		h3 {
+			margin-left: 1.5rem;
+		}
+
+		.mainButtonContainer {
+			align-items: stretch!important;
+			margin: 1rem!important;
+
+			.newPostButton {
+				padding: 0.8rem 1rem;
+				border-radius: 0.5rem;
+			}
+		}
+	}
+
 	@media only screen and (max-width: 768px) {
 		h3 {
 			margin-left: 3rem;
 		}
 	}
 
-	@media only screen and (max-width: 576px) {
-		h3 {
-			margin-left: 1.5rem;
+	@media only screen and (max-width: 991px) and (min-width: 768px) {
+		.ui[class*="tablet reversed"].grid {
+			flex-direction: column-reverse;
 		}
 	}
 
@@ -87,10 +103,10 @@ export default styled(Discussions)`
 	}
 
 	.mainButtonContainer {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		margin-top: 20px;
+		margin-top: 4rem;
 	}
 `;
