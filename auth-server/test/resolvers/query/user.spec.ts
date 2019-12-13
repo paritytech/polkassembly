@@ -24,6 +24,14 @@ describe('user query', () => {
 				name,
 				email_verified
 			})
+			.returning('*')
+	})
+
+	after(async () => {
+		await User
+			.query()
+			.where({ id: dbUser.id })
+			.del()
 	})
 
 	it('should return user with id', async () => {
