@@ -3,4 +3,3 @@ export default (email: string): boolean => {
 
 	return regexp.test(email)
 }
-//dumb commit
