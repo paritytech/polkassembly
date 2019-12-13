@@ -27,7 +27,7 @@ lint-front-end:
     - yarn lint
   rules:
     - changes:
-      - "front-end/**"
+      - "front-end/**/*"
   tags:
     - linux-docker
 
@@ -44,6 +44,6 @@ lint-back-end:
     - yarn lint
   rules:
     - changes:
-      - "auth-server/**"
+      - "auth-server/**/*"
   tags:
     - linux-docker
