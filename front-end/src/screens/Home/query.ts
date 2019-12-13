@@ -2,14 +2,14 @@ import gql from 'graphql-tag';
 
 export const QUERY_LATEST_POSTS = gql`
     query LatestPosts {
-        posts (order_by: {creation_date: desc}){
+        posts (order_by: {created_at: desc}){
             id
             title
             author {
                 username
             }
-            creation_date
-            modification_date
+            created_at
+            updated_at
             replies_aggregate {
                 aggregate {
                     count

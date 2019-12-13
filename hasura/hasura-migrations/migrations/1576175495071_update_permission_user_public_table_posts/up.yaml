@@ -1,0 +1,19 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - author_id
+      - id
+      - type_id
+      - content
+      - title
+      - created_at
+      - updated_at
+      - topic_id
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: posts
+      schema: public
+  type: create_select_permission

@@ -38,7 +38,7 @@ const Post = ( { className, data }: Props ) => {
 }
 
 const PostContent = ({ post } : {post: PostFragment}) => {
-	const { author, topic, content, creation_date, title } = post;
+	const { author, topic, content, created_at, title } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>
 
@@ -46,7 +46,7 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 		<>
 			<div className='post_tags'><Tag>{topic && topic.name}</Tag></div>
 			<h3>{title}</h3>
-			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(creation_date, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
 			<ReactMarkdown className='post_content' source={content} />
 		</>
 	);

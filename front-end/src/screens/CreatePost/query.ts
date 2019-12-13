@@ -15,15 +15,15 @@ export const CREATE_POST = gql`
 `;
 
 const topic_fragment = gql`
-    fragment topic on topics {
+    fragment topic on post_topics {
         id
         name
     }
 `
 
-export const GET_TOPICS = gql`
-    query Topics {
-        topics {
+export const GET_POST_TOPICS = gql`
+    query Post_topics {
+        post_topics {
             ...topic
         }
     }

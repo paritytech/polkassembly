@@ -3,7 +3,7 @@ import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { useCreatePostMutation, useTopicsQuery } from '../../generated/graphql';
+import { useCreatePostMutation, usePost_TopicsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { Form } from '../../ui-components/Form';
 import { TextArea } from '../../ui-components/TextArea';
@@ -17,7 +17,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [content, setContent] = useState('');
 	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
-	const { data: topicData, error: topicError } = useTopicsQuery()
+	const { data: topicData, error: topicError } = usePost_TopicsQuery()
 	const [createPostMutation, { data, loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
 	const { history } = useRouter();
@@ -36,11 +36,11 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
 	const renderTopics = () => {
-		if (!topicData || !topicData.topics) return null
+		if (!topicData || !topicData.post_topics) return null
 
 		return (
 			<Button.Group size="small">
-				{ topicData.topics.map(({ id, name } : {name: string, id:number}) => {
+				{ topicData.post_topics.map(({ id, name } : {name: string, id:number}) => {
 					return <Button key={id} onClick={() => setSetlectedTopic(id)}>{name}</Button>
 				})}
 			</Button.Group>

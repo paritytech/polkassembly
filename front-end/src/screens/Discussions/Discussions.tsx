@@ -35,7 +35,7 @@ const Discussions = ({ className, data }: Props) => {
 												<DiscussionCard
 													title={post.title}
 													author={post.author.username}
-													creation_date={post.creation_date}
+													created_at={post.created_at}
 													replies={post.replies_aggregate.aggregate === null || post.replies_aggregate.aggregate!.count === null || post.replies_aggregate.aggregate!.count! === 0
 														? 'no'
 														: post.replies_aggregate.aggregate!.count!.toString()}

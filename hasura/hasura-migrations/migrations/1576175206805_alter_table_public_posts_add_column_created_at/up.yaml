@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."posts" ADD COLUMN "created_at" timestamptz NULL DEFAULT
+      now();
+  type: run_sql
