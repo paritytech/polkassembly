@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -22,6 +22,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [isSending, setIsSending] = useState(false)
 	const { history } = useRouter();
 
+	useEffect(() => {
+		if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
+	},[data, history])
+
 	const handleSend = () => {
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
@@ -35,26 +39,26 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	}
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
+	const onContentChange = (content: string) => setContent(content);
+	const onTopicSelection = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => setSetlectedTopic(Number(event.currentTarget.value))
 	const renderTopics = () => {
 		if (!topicData || !topicData.post_topics) return null
 
 		return (
 			<Button.Group size="small">
 				{ topicData.post_topics.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} onClick={() => setSetlectedTopic(id)}>{name}</Button>
+					return <Button key={id} onClick={onTopicSelection} value={id}>{name}</Button>
 				})}
 			</Button.Group>
 		);
 	}
-
-	if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
 
 	if (loading) {
 		return <div>Loading...</div>;
 	}
 
 	if (error || topicError) {
-		error && console.error('Post creatioin error',error)
+		error && console.error('Post creation error',error)
 		topicError && console.error('Topic loading error',error)
 	}
 
@@ -76,7 +80,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						</Form.Group>
 						<Form.Group>
 							<TextArea
-								onChange={setContent}
+								onChange={onContentChange}
 								value={content}
 							/>
 						</Form.Group>

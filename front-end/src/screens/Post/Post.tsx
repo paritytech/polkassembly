@@ -1,14 +1,12 @@
-import * as moment from 'moment'
-import * as React from 'react';
+import React from 'react';
 
-import ReactMarkdown from 'react-markdown';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
-import NoPostFound from './NoPostFound';
+import NoPostFound from '../../components/NoPostFound';
 import RepliesBlocks from './Replies'
-import { PostAndRepliesQueryHookResult, PostFragment } from '../../generated/graphql';
-import { Tag } from '../../ui-components/Tag';
+import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
+import PostContent from '../../components/PostContent';
 
 interface Props {
 	className?: string;
@@ -34,21 +32,6 @@ const Post = ( { className, data }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}></Grid.Column>
 			</Grid>
 		</Container>
-	);
-}
-
-const PostContent = ({ post } : {post: PostFragment}) => {
-	const { author, topic, content, created_at, title } = post;
-
-	if (!author || !author.username || !content) return <div>Post not available</div>
-
-	return (
-		<>
-			<div className='post_tags'><Tag>{topic && topic.name}</Tag></div>
-			<h3>{title}</h3>
-			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.default(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
-			<ReactMarkdown className='post_content' source={content} />
-		</>
 	);
 }
 

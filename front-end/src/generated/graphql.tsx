@@ -1992,7 +1992,7 @@ export type LatestDiscussionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username'>
+      & Pick<User, 'id' | 'username'>
     )>, replies_aggregate: (
       { __typename?: 'replies_aggregate' }
       & { aggregate: Maybe<(
@@ -2032,7 +2032,7 @@ export type PostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'username'>
+    & Pick<User, 'id' | 'username'>
   )>, replies: Array<(
     { __typename?: 'replies' }
     & Pick<Replies, 'id' | 'content' | 'created_at' | 'updated_at'>
@@ -2115,6 +2115,7 @@ export const TopicFragmentDoc = gql`
 export const PostFragmentDoc = gql`
     fragment post on posts {
   author {
+    id
     username
   }
   content
@@ -2216,6 +2217,7 @@ export const LatestDiscussionPostsDocument = gql`
     id
     title
     author {
+      id
       username
     }
     created_at
