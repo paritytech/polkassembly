@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import signup from '../../../src/resolvers/mutation/signup'
 import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
+import { ForbiddenError } from 'apollo-server'
 
 describe('signup mutation', () => {
 	let fakectx: Context = {
@@ -50,6 +51,16 @@ describe('signup mutation', () => {
 			await signup(null, { email, password, username, name }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
+			expect(error).to.be.an.instanceof(ForbiddenError)
+			expect(error.message).to.equal(`User with username: ${username} already exist. Please choose a different username or login.`)
+		}
+
+		try {
+			await signup(null, { email, password, username: 'newuser', name }, fakectx)
+		} catch (error) {
+			expect(error).to.exist
+			expect(error).to.be.an.instanceof(ForbiddenError)
+			expect(error.message).to.equal(`User with email: ${email} already exist. Please choose a different email or login.`)
 		}
 
 		await User
