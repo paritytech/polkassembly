@@ -13,7 +13,7 @@ JWT Authentication server for generating a JWT to use in the `Authentication` he
 #### Local instructions
 
 - Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
-- Copy and adapt the content of `docker-compose.yaml.example` into a file called `docker-compose.yaml`
+- Copy and adapt the content of `docker-compose.yaml.example` into a file called `docker-compose.yaml`.
 - Run the postgres and graphql-engine in docker by running: 
 ```bash
 docker-compose up
