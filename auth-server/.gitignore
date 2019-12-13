@@ -5,3 +5,5 @@ build
 private.pem
 public.pem
 *.sh
+*.log
+docker-compose.yaml
