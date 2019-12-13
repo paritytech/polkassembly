@@ -19,7 +19,7 @@ cd auth-server && yarn start &> auth.log &
 sleep 5
 
 printf "\n\n-- migrating auth-server\n" 
-cd auth-server && knex migrate:latest && cd ..;
+cd auth-server && yarn migrate &> auth-migration.log &
 
 sleep 5
 
