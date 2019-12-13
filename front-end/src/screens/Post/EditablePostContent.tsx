@@ -59,7 +59,7 @@ const EditablePostContent = ({ post } : {post: PostFragment}) => {
 					</>
 					:
 					<>
-						<PostContent post={post}/>
+						<PostContent post={{ ...post, content: newContent, title: newTitle }}/>
 						{/* FIXME id from the context is a string.. */}
 						{post.author && id == post.author.id && <Button onClick={handleEdit}>edit <Icon name='edit'/></Button>}
 					</>
