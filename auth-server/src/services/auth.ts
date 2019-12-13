@@ -86,6 +86,24 @@ export default class AuthService {
 	}
 
 	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+		let existing = await User
+			.query()
+			.where('username', username)
+			.first()
+
+		if (existing) {
+			throw new ForbiddenError(`User with username: ${username} already exist. Please choose a different username or login.`)
+		}
+
+		existing = await User
+			.query()
+			.where('email', email)
+			.first()
+
+		if (existing) {
+			throw new ForbiddenError(`User with email: ${email} already exist. Please choose a different email or login.`)
+		}
+
 		const salt = randomBytes(32)
 		password = await argon2.hash(password, { salt })
 

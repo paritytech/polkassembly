@@ -12,29 +12,29 @@ JWT Authentication server for generating a JWT to use in the `Authentication` he
 
 #### Local instructions
 
-Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
-Run the postgres and graphql-engine in docker by running:
-- `docker-compose up`
+- Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
+- Copy and adapt the content of `docker-compose.yaml.example` into a file called `docker-compose.yaml`.
+- Run the postgres and graphql-engine in docker by running: 
+```bash
+docker-compose up
+```
 
-Install node dependencies
-
+- Install node dependencies
 ```bash
 yarn install
 ```
 
-Generate a public private key pair for signing JWT token.
-
+- Generate a public private key pair for signing JWT token.
 ```bash
 openssl genrsa -des3 -out private.pem 2048
 ```
-
-Enter a passphrase. This will generate private.pem
-
+- Enter a passphrase. This will generate private.pem
+- Generate the public key for it now running:
 ```bash
 openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 ```
+- Enter the passphrase again. This will generate public.pem  
 
-Enter passphrase again. This will generate public.pem
 You will need the private and public keys in an escaped format in the next step.
 Use the following commands to print them in the right format:
 ```bash
@@ -42,19 +42,18 @@ awk -v ORS='\\n' '1' private.pem
 awk -v ORS='\\n' '1' public.pem
 ```
 
-Set environment variables. Open/create a `.env` file and add the following variables:
+Set the needed environment variables. Open/create a `.env` file and add the following variables:
 
 ```bash
-JWT_KEY_PASSPHRASE="<JWT_KEY_PASSPHRASE>"
-JWT_PRIVATE_KEY="escaped private key"
-JWT_PUBLIC_KEY="escaped public key"
-DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-auth"
+JWT_KEY_PASSPHRASE="<passphrase use to generate the private key>"
+JWT_PRIVATE_KEY="<escaped private key>"
+JWT_PUBLIC_KEY="<escaped public key>"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
 BOT_PROPOSAL_USER_ID=1234
 NODE_ENV=development
-DATABASE_URL="postgres://user:password@localhost:5431/governance-auth"
+DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
 TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
 ```
 
