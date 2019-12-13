@@ -92,7 +92,7 @@ export default class AuthService {
 			.first()
 
 		if (existing) {
-			throw new Error(`User with username: ${username} already exist. Please choose a different username or login.`)
+			throw new ForbiddenError(`User with username: ${username} already exist. Please choose a different username or login.`)
 		}
 
 		existing = await User
@@ -101,7 +101,7 @@ export default class AuthService {
 			.first()
 
 		if (existing) {
-			throw new Error(`User with email: ${email} already exist. Please choose a different email or login.`)
+			throw new ForbiddenError(`User with email: ${email} already exist. Please choose a different email or login.`)
 		}
 
 		const salt = randomBytes(32)
