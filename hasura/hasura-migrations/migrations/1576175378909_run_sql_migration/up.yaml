@@ -1,0 +1,6 @@
+- args:
+    cascade: true
+    sql: |-
+      ALTER TABLE posts
+      DROP COLUMN creation_date;
+  type: run_sql

@@ -1,0 +1,9 @@
+- args:
+    sql: "ALTER TABLE \"public\".\"posts\" ADD COLUMN \"updated_at\" timestamptz NULL
+      DEFAULT now();\n\nCREATE OR REPLACE FUNCTION \"public\".\"set_current_timestamp_updated_at\"()\nRETURNS
+      TRIGGER AS $$\nDECLARE\n  _new record;\nBEGIN\n  _new := NEW;\n  _new.\"updated_at\"
+      = NOW();\n  RETURN _new;\nEND;\n$$ LANGUAGE plpgsql;\nCREATE TRIGGER \"set_public_posts_updated_at\"\nBEFORE
+      UPDATE ON \"public\".\"posts\"\nFOR EACH ROW\nEXECUTE PROCEDURE \"public\".\"set_current_timestamp_updated_at\"();\nCOMMENT
+      ON TRIGGER \"set_public_posts_updated_at\" ON \"public\".\"posts\" \nIS 'trigger
+      to set value of column \"updated_at\" to current timestamp on row update';\n"
+  type: run_sql
