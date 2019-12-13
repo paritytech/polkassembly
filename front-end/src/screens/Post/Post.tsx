@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import NoPostFound from '../../components/NoPostFound';
 import RepliesBlocks from './Replies'
 import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
-import PostContent from '../../components/PostContent';
+import EditablePostContent from './EditablePostContent';
 
 interface Props {
 	className?: string;
@@ -22,7 +22,7 @@ const Post = ( { className, data }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
 						{ post
-							? <PostContent post={post}/>
+							? <EditablePostContent post={post}/>
 							: <NoPostFound/> }
 						{ post && post.replies && post.replies.length
 							? <RepliesBlocks replies={post.replies}/>

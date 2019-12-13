@@ -2,11 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
+import PostForm from '../../components/PostForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { useCreatePostMutation, usePost_TopicsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { Form } from '../../ui-components/Form';
-import { TextArea } from '../../ui-components/TextArea';
 
 interface Props {
 	className?: string
@@ -23,6 +22,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { history } = useRouter();
 
 	useEffect(() => {
+		// redirect to the home page if we're successful at creating the post
 		if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
 	},[data, history])
 
@@ -53,10 +53,6 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		);
 	}
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
 	if (error || topicError) {
 		error && console.error('Post creation error',error)
 		topicError && console.error('Topic loading error',error)
@@ -66,36 +62,24 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
-					<Form>
-						<h3>New Post</h3>
-						<Form.Group>
-							<Form.Field width={16}>
-								<label>Title</label>
-								<input
-									onChange={onTitleChange}
-									placeholder='Your title...'
-									type="text"
-								/>
-							</Form.Field>
-						</Form.Group>
-						<Form.Group>
-							<TextArea
-								onChange={onContentChange}
-								value={content}
-							/>
-						</Form.Group>
-						{renderTopics()}
-						<div className={'mainButtonContainer'}>
-							<Button
-								onClick={handleSend}
-								disabled={isSending}
-								type='submit'
-								variant='primary'
-							>
-								{isSending ? 'Creating...' : 'Create'}
-							</Button>
-						</div>
-					</Form>
+					<h3>New Post</h3>
+					<PostForm
+						content={content}
+						onContentChange={onContentChange}
+						onTitleChange={onTitleChange}
+						title={title}
+					/>
+					{renderTopics()}
+					<div className={'mainButtonContainer'}>
+						<Button
+							onClick={handleSend}
+							disabled={isSending || loading}
+							type='submit'
+							variant='primary'
+						>
+							{isSending || loading ? 'Creating...' : 'Create'}
+						</Button>
+					</div>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
 			</Grid>
@@ -104,12 +88,6 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(CreatePost)`
-
-	@media (min-width: 576px) {
-		.container {
-			max-width: 100%;
-		}
-	}
 
 	.mainButtonContainer{
 		align-items: center;
