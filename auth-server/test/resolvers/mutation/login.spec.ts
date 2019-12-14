@@ -18,7 +18,6 @@ describe('signup mutation', () => {
 	const password = 'testpass'
 	const username = 'testuser'
 	const name = 'test name'
-	// const salt = 'testsalt'
 
 	before(async () => {
 		signupResult = await signup(null, { email, password, username, name }, fakectx)
