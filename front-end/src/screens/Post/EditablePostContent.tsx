@@ -37,7 +37,8 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 				title: newTitle
 			} }
 		)
-		refetch();
+			.then(() => refetch())
+			.catch((e) => console.error('Error saving post',e))
 	}
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setNewContent(content);
