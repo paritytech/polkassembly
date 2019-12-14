@@ -17,14 +17,9 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
 	const { data: topicData, error: topicError } = usePost_TopicsQuery()
-	const [createPostMutation, { data, loading, error }] = useCreatePostMutation();
+	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
 	const { history } = useRouter();
-
-	useEffect(() => {
-		// redirect to the home page if we're successful at creating the post
-		if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) history.push('/')
-	},[data, history])
 
 	const handleSend = () => {
 		if (currentUser.id && title && content && selectedTopic){
@@ -34,7 +29,13 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id
-			} })
+			} }).then(({ data }) => {
+				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) {
+					history.push('/')
+				} else {
+					throw Error('Error in post creation')
+				}
+			}).catch( e => console.error(e))
 		}
 	}
 
