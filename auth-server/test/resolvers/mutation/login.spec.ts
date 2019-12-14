@@ -49,7 +49,6 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
-			expect(error.message).to.equal('User not found')
 		}
 	})
 
@@ -59,7 +58,6 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
-			expect(error.message).to.equal('Incorrect password')
 		}
 	})
 
