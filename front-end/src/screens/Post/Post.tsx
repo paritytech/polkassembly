@@ -5,15 +5,17 @@ import styled from 'styled-components'
 
 import NoPostFound from '../../components/NoPostFound';
 import RepliesBlocks from './Replies'
-import { PostAndRepliesQueryHookResult } from '../../generated/graphql';
+import { PostAndRepliesQueryHookResult, PostAndRepliesQueryVariables, PostAndRepliesQuery } from '../../generated/graphql';
 import EditablePostContent from './EditablePostContent';
+import { ApolloQueryResult } from 'apollo-client';
 
 interface Props {
-	className?: string;
+	className?: string
 	data: PostAndRepliesQueryHookResult['data']
+	refetch: (variables?: PostAndRepliesQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndRepliesQuery>>
 }
 
-const Post = ( { className, data }: Props ) => {
+const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0]
 
 	return (
@@ -22,7 +24,7 @@ const Post = ( { className, data }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
 						{ post
-							? <EditablePostContent post={post}/>
+							? <EditablePostContent post={post} refetch={refetch}/>
 							: <NoPostFound/> }
 						{ post && post.replies && post.replies.length
 							? <RepliesBlocks replies={post.replies}/>
