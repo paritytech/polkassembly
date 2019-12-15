@@ -52,7 +52,6 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)
-			expect(error.message).to.equal(`User with username: ${username} already exist. Please choose a different username or login.`)
 		}
 
 		try {
@@ -60,7 +59,6 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)
-			expect(error.message).to.equal(`User with email: ${email} already exist. Please choose a different email or login.`)
 		}
 
 		await User
