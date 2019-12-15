@@ -1,0 +1,13 @@
+- args:
+    cascade: false
+    sql: |-
+      CREATE TABLE comments (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        content text NOT NULL,
+        parent_message UUID REFERENCES comments(id)
+      );
+  type: run_sql
+- args:
+    name: comments
+    schema: public
+  type: add_existing_table_or_view
