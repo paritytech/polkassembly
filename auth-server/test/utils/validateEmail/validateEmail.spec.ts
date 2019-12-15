@@ -1,6 +1,6 @@
 import 'mocha'
 import { expect } from 'chai'
-import validateEmail from '../../src/utils/validateEmail'
+import validateEmail from '../../../src/utils/validateEmail'
 
 describe('Validate Email Util', () => {
 	it('should validate a correct email', () => {

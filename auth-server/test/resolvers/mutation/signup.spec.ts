@@ -6,7 +6,7 @@ import { Context } from '../../../src/types'
 import { ForbiddenError } from 'apollo-server'
 
 describe('signup mutation', () => {
-	let fakectx: Context = {
+	const fakectx: Context = {
 		req: {},
 		res: {
 			cookie: () => {}

@@ -6,7 +6,7 @@ import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
 import { AuthenticationError } from 'apollo-server'
 
-describe('signup mutation', () => {
+describe('login mutation', () => {
 	let signupResult
 	let fakectx: Context = {
 		req: {},
