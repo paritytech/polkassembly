@@ -37,9 +37,9 @@ const HomeContent = ({ className, data }: Props) => {
 												title={post.title}
 												author={post.author.username}
 												created_at={post.created_at}
-												replies={post.replies_aggregate.aggregate === null || post.replies_aggregate.aggregate!.count === null || post.replies_aggregate.aggregate!.count! === 0
+												comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
 													? 'no'
-													: post.replies_aggregate.aggregate!.count!.toString()}
+													: post.comments_aggregate.aggregate!.count!.toString()}
 											/>
 										</Link>}
 									</li>

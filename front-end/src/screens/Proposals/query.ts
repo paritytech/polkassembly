@@ -10,7 +10,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
             }
             created_at
             updated_at
-            replies_aggregate {
+            comments_aggregate {
                 aggregate {
                     count
                 }

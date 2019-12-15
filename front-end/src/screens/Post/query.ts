@@ -1,23 +1,40 @@
 import gql from 'graphql-tag';
 
-const post = gql`
-    fragment post on posts {
+const commentFields = gql`
+    fragment commentFields on comments {
         author {
+            id
             username
         }
         content
         created_at
         id
         updated_at
-        replies(order_by: {created_at: asc}) {
-            author {
-                id
-                username
-            }
+    }
+`
+
+const commentRecursive = gql`
+    fragment commentRecursive on comments {       
+        ...commentFields
+        comments {
+            ...commentFields
+        }
+    }
+    ${commentFields}
+`
+
+const post = gql`
+    fragment post on posts {
+        author {
             id
-            content
-            created_at
-            updated_at
+            username
+        }
+        content
+        created_at
+        id
+        updated_at
+        comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+            ...commentRecursive
         }
         title
         topic {
@@ -29,10 +46,11 @@ const post = gql`
             name
         }
     }
+    ${commentRecursive}
 `
 
-export const QUERY_POST_AND_REPLIES = gql`
-    query PostAndReplies ($id:Int!) {
+export const QUERY_POST_AND_COMMENTS = gql`
+    query PostAndComments ($id:Int!) {
         posts(where: {id: {_eq: $id}}) {
             ...post
         }

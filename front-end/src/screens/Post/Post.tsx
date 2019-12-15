@@ -5,14 +5,14 @@ import ReactMarkdown from 'react-markdown';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
+import Comments from './Comments'
 import NoPostFound from './NoPostFound';
-import RepliesBlocks from './Replies'
-import { PostAndRepliesQueryHookResult, PostFragment } from '../../generated/graphql';
+import { PostAndCommentsQueryHookResult, PostFragment } from '../../generated/graphql';
 import { Tag } from '../../ui-components/Tag';
 
 interface Props {
 	className?: string;
-	data: PostAndRepliesQueryHookResult['data']
+	data: PostAndCommentsQueryHookResult['data']
 }
 
 const Post = ( { className, data }: Props ) => {
@@ -26,8 +26,8 @@ const Post = ( { className, data }: Props ) => {
 						{ post
 							? <PostContent post={post}/>
 							: <NoPostFound/> }
-						{ post && post.replies && post.replies.length
-							? <RepliesBlocks replies={post.replies}/>
+						{ post && post.comments && post.comments.length
+							? <Comments comments={post.comments}/>
 							: null }
 					</div>
 				</Grid.Column>
