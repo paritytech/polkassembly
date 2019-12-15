@@ -13,8 +13,8 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 		<>
 			<h3>{title}</h3>
 			<div className='post_info'>
-				posted by <strong>{author.username}</strong> {moment.default(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
-				{updated_at === created_at ? null : <Popup content={moment.default(updated_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()} trigger={<span> (edited)</span>}/>}
+				posted by <strong>{author.username}</strong> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
+				{updated_at === created_at ? null : <Popup content={moment.utc(updated_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()} trigger={<span> (edited)</span>}/>}
 			</div>
 			<ReactMarkdown className='post_content' source={content} />
 		</>
