@@ -57,7 +57,7 @@ export default function Discussion ({
 	return (
 		<DiscussionCard>
 			<h4>{title}</h4>
-			<div className="authorAndDate">posted by <span>{author}</span> {moment.default(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<div className="authorAndDate">posted by <span>{author}</span> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
 			<ul>
 				<li><FaComment/> {replies} replies</li>
 			</ul>
