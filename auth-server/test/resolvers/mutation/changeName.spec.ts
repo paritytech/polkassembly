@@ -4,7 +4,6 @@ import signup from '../../../src/resolvers/mutation/signup'
 import changeName from '../../../src/resolvers/mutation/changeName'
 import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
-import { ForbiddenError } from 'apollo-server'
 
 describe('changeName mutation', () => {
 	let signupResult
