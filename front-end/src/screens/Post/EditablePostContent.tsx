@@ -69,19 +69,20 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 							title={newTitle}
 
 						/>
-						<Button onClick={handleCancel}>Cancel <Icon name='cancel'/></Button>
-						<Button onClick={handleSave}>Save <Icon name='save'/></Button>
+						<Button className={'secondary'} onClick={handleCancel}>Cancel <Icon name='cancel'/></Button>
+						<Button className={'secondary'} onClick={handleSave}>Save <Icon name='save'/></Button>
 					</>
 					:
 					<>
 						<PostContent post={post}/>
 						{/* FIXME id from the context is a string.. */}
-						{post.author && id == post.author.id && <Button onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
-						{data && data.update_posts && data.update_posts.affected_rows > 0 && <DisapearingLabel
-							color='green'
-							iconName='check'
-							labelText='Saved'
-						/>}
+						{post.author && id == post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
+						{data && data.update_posts && data.update_posts.affected_rows > 0 &&
+							<DisapearingLabel
+								iconColor='green'
+								iconName='check circle'
+								text='Saved'
+							/> }
 					</>
 			}
 		</>

@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Icon, Label, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react'
+import { Icon, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 interface Props {
     className?: string
-    color: SemanticCOLORS
+    iconColor: SemanticCOLORS
     disapearAfter?: number
     iconName: SemanticICONS
-    labelText: string
+    text: string
 }
 
-const DisapearingLabel = ({ className, color, disapearAfter = 2000 ,iconName, labelText }:Props) => {
+const DisapearingLabel = ({ className, iconColor, disapearAfter = 2000 ,iconName, text }:Props) => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
 		setTimeout(() => setIsVisible(false), disapearAfter)
 	})
 	return (isVisible
-		? <Label className={className} color={color} size={'large'}>
-			<Icon name={iconName} size={'large'} />
-			<Label.Detail>{labelText}</Label.Detail>
-		</Label>
+		? <div className={className} >
+			<Icon color={iconColor} name={iconName} size={'large'} />{text}
+		</div>
 		: null)
 }
 
 export default styled(DisapearingLabel)`
+	display: inline-block;
+
     &.ui.label > .detail {
         margin-left: 0;
         vertical-align: middle;
