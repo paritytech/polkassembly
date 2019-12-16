@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 const post = gql`
     fragment post on posts {
         author {
+            id
             username
         }
         content
@@ -39,3 +40,11 @@ export const QUERY_POST_AND_REPLIES = gql`
     }
     ${post}
 `;
+
+export const EDIT_POST= gql`
+    mutation EditPost ($id: Int!, $content: String!, $title: String!) {
+        update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
+        affected_rows
+        }
+  }
+`
