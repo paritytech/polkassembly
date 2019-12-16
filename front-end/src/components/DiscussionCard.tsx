@@ -33,7 +33,7 @@ const DiscussionCard = styled.div`
 
 export interface DiscussionProps {
   authorUsername: string
-  created_at: string
+  created_at: Date
   comments?: string
   title: string
 }

@@ -4,13 +4,15 @@ import styled from 'styled-components';
 
 interface Props{
     className?: string
-    created_at: string
+    created_at: Date
     text?: string
     username: string
 }
 
 const CreationLabel = ({ className, created_at, text='posted', username } : Props) => {
-	return <div className={className}>{text} by <span>{username}</span> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+	return <span className={className}>
+		{text} by <span>{username}</span> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
+	</span>
 }
 
 export default styled(CreationLabel)`

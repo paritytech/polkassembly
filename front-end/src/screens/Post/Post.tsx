@@ -1,21 +1,20 @@
-import * as React from 'react';
-
-import ReactMarkdown from 'react-markdown';
+import { ApolloQueryResult } from 'apollo-client';
+import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
 import Comments from './Comments'
-import CreationLabel from '../../ui-components/CreationLabel';
-import NoPostFound from './NoPostFound';
-import { PostAndCommentsQueryHookResult, PostFragment } from '../../generated/graphql';
-import { Tag } from '../../ui-components/Tag';
+import EditablePostContent from './EditablePostContent';
+import NoPostFound from '../../components/NoPostFound';
+import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 
 interface Props {
 	className?: string;
 	data: PostAndCommentsQueryHookResult['data']
+	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const Post = ( { className, data }: Props ) => {
+const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0]
 
 	return (
@@ -24,7 +23,7 @@ const Post = ( { className, data }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
 						{ post
-							? <PostContent post={post}/>
+							? <EditablePostContent post={post} refetch={refetch}/>
 							: <NoPostFound/> }
 						{ post && post.comments && post.comments.length
 							? <Comments comments={post.comments}/>
@@ -34,24 +33,6 @@ const Post = ( { className, data }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}></Grid.Column>
 			</Grid>
 		</Container>
-	);
-}
-
-const PostContent = ({ post } : {post: PostFragment}) => {
-	const { author, topic, content, created_at, title } = post;
-
-	if (!author || !author.username || !content) return <div>Post not available</div>
-
-	return (
-		<>
-			<div className='post_tags'><Tag>{topic && topic.name}</Tag></div>
-			<h3>{title}</h3>
-			<CreationLabel
-				username={author.username}
-				created_at={created_at}
-			/>
-			<ReactMarkdown className='post_content' source={content} />
-		</>
 	);
 }
 

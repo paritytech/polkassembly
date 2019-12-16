@@ -6,6 +6,7 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
             id
             title
             author {
+                id
                 username
             }
             created_at

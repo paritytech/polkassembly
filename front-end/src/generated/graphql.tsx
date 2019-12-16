@@ -2110,6 +2110,21 @@ export type PostAndCommentsQuery = (
   )> }
 );
 
+export type EditPostMutationVariables = {
+  id: Scalars['Int'],
+  content: Scalars['String'],
+  title: Scalars['String']
+};
+
+
+export type EditPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_posts: Maybe<(
+    { __typename?: 'posts_mutation_response' }
+    & Pick<Posts_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type LatestProposalPostsQueryVariables = {};
 
 
@@ -2281,6 +2296,7 @@ export const LatestDiscussionPostsDocument = gql`
     id
     title
     author {
+      id
       username
     }
     created_at
@@ -2328,6 +2344,7 @@ export const LatestPostsDocument = gql`
     id
     title
     author {
+      id
       username
     }
     created_at
@@ -2398,6 +2415,41 @@ export function usePostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type PostAndCommentsQueryHookResult = ReturnType<typeof usePostAndCommentsQuery>;
 export type PostAndCommentsLazyQueryHookResult = ReturnType<typeof usePostAndCommentsLazyQuery>;
 export type PostAndCommentsQueryResult = ApolloReactCommon.QueryResult<PostAndCommentsQuery, PostAndCommentsQueryVariables>;
+
+export const EditPostDocument = gql`
+    mutation EditPost($id: Int!, $content: String!, $title: String!) {
+  update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
+    affected_rows
+  }
+}
+    `;
+export type EditPostMutationFn = ApolloReactCommon.MutationFunction<EditPostMutation, EditPostMutationVariables>;
+
+/**
+ * __useEditPostMutation__
+ *
+ * To run a mutation, you first call `useEditPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostMutation, { data, loading, error }] = useEditPostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostMutation, EditPostMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, baseOptions);
+      }
+export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
+export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
+export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {

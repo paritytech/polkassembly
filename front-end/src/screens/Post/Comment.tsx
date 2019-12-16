@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Comments from './Comments';
 import { CommentRecursiveFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
+import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props{
 	comment: CommentRecursiveFragment
@@ -12,7 +13,6 @@ interface Props{
 
 export const Comment = ({ comment } : Props) => {
 	const { author, comments:c2, content, created_at, updated_at } = comment;
-	const isEdited = created_at === updated_at;
 
 	if (!author || !author.username || !content) return <div>Comment not available</div>;
 
@@ -23,7 +23,10 @@ export const Comment = ({ comment } : Props) => {
 				text={'commented'}
 				username={author.username}
 			/>
-			{ isEdited && <div>(edited - {updated_at})</div>}
+			<UpdateLabel
+				created_at={created_at}
+				updated_at={updated_at}
+			/>
 			<ReactMarkdown source={content} />
 			{
 				c2 && c2.length
