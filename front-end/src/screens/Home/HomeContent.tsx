@@ -34,12 +34,12 @@ const HomeContent = ({ className, data }: Props) => {
 									<li key={post.id} className='Home__item'>
 										{<Link to={`/post/${post.id}`}>
 											<DiscussionCard
-												title={post.title}
-												author={post.author.username}
-												created_at={post.created_at}
+												authorUsername={post.author.username}
 												comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
 													? 'no'
 													: post.comments_aggregate.aggregate!.count!.toString()}
+												created_at={post.created_at}
+												title={post.title}
 											/>
 										</Link>}
 									</li>

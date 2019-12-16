@@ -1,7 +1,7 @@
-import * as moment from 'moment'
 import * as React from 'react'
 import { FaComment } from 'react-icons/fa';
 import styled from 'styled-components';
+import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
     padding: 2rem 3rem 1.5rem 3rem;
@@ -12,15 +12,6 @@ const DiscussionCard = styled.div`
         font-weight: 500;
         font-size: 1.6rem;
         margin-bottom: 0.3rem; 
-    }
-    .authorAndDate {
-        color: #555;
-        font-weight: 400;
-        font-size: 1.2rem;
-        margin-bottom: 0.6rem;
-        span {
-            font-weight: 500;
-        }
     }
     ul {
         color: #B5AEAE;
@@ -41,14 +32,14 @@ const DiscussionCard = styled.div`
 `;
 
 export interface DiscussionProps {
-  author: string
+  authorUsername: string
   created_at: string
   comments?: string
   title: string
 }
 
 export default function Discussion ({
-	author,
+	authorUsername,
 	created_at,
 	comments,
 	title
@@ -57,7 +48,10 @@ export default function Discussion ({
 	return (
 		<DiscussionCard>
 			<h4>{title}</h4>
-			<div className="authorAndDate">posted by <span>{author}</span> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<CreationLabel
+				created_at={created_at}
+				username={authorUsername}
+			/>
 			<ul>
 				<li><FaComment/> {comments} comments</li>
 			</ul>

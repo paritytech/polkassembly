@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Comments from './Comments';
 import { CommentRecursiveFragment } from '../../generated/graphql';
+import CreationLabel from '../../ui-components/CreationLabel';
 
 interface Props{
 	comment: CommentRecursiveFragment
@@ -17,7 +18,11 @@ export const Comment = ({ comment } : Props) => {
 
 	return (
 		<>
-			<div>{author.username} - {created_at}</div>
+			<CreationLabel
+				created_at={created_at}
+				text={'commented'}
+				username={author.username}
+			/>
 			{ isEdited && <div>(edited - {updated_at})</div>}
 			<ReactMarkdown source={content} />
 			{

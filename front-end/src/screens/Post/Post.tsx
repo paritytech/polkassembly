@@ -1,4 +1,3 @@
-import * as moment from 'moment'
 import * as React from 'react';
 
 import ReactMarkdown from 'react-markdown';
@@ -6,6 +5,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
 import Comments from './Comments'
+import CreationLabel from '../../ui-components/CreationLabel';
 import NoPostFound from './NoPostFound';
 import { PostAndCommentsQueryHookResult, PostFragment } from '../../generated/graphql';
 import { Tag } from '../../ui-components/Tag';
@@ -46,7 +46,10 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 		<>
 			<div className='post_tags'><Tag>{topic && topic.name}</Tag></div>
 			<h3>{title}</h3>
-			<div className='post_info'>posted by <strong>{author.username}</strong> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</div>
+			<CreationLabel
+				username={author.username}
+				created_at={created_at}
+			/>
 			<ReactMarkdown className='post_content' source={content} />
 		</>
 	);
