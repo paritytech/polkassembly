@@ -2022,7 +2022,7 @@ export type LatestDiscussionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username'>
+      & Pick<User, 'id' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -2046,7 +2046,7 @@ export type LatestPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username'>
+      & Pick<User, 'id' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -2415,7 +2415,6 @@ export function usePostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type PostAndCommentsQueryHookResult = ReturnType<typeof usePostAndCommentsQuery>;
 export type PostAndCommentsLazyQueryHookResult = ReturnType<typeof usePostAndCommentsLazyQuery>;
 export type PostAndCommentsQueryResult = ApolloReactCommon.QueryResult<PostAndCommentsQuery, PostAndCommentsQueryVariables>;
-
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
