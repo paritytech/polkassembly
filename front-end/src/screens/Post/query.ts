@@ -18,6 +18,9 @@ const commentRecursive = gql`
         ...commentFields
         comments {
             ...commentFields
+            comments {
+                ...commentFields
+            }
         }
     }
     ${commentFields}

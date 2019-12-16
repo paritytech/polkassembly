@@ -2070,6 +2070,10 @@ export type CommentRecursiveFragment = (
   { __typename?: 'comments' }
   & { comments: Array<(
     { __typename?: 'comments' }
+    & { comments: Array<(
+      { __typename?: 'comments' }
+      & CommentFieldsFragment
+    )> }
     & CommentFieldsFragment
   )> }
   & CommentFieldsFragment
@@ -2173,6 +2177,9 @@ export const CommentRecursiveFragmentDoc = gql`
   ...commentFields
   comments {
     ...commentFields
+    comments {
+      ...commentFields
+    }
   }
 }
     ${CommentFieldsFragmentDoc}`;
