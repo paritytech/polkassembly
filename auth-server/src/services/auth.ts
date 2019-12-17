@@ -331,14 +331,14 @@ export default class AuthService {
 		}
 
 		const tokenContent : JWTPayploadType = {
-			sub: id,
+			sub: `${id}`,
 			name: username,
 			iat: Math.floor(Date.now() / 1000),
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-user-email': email,
-				'x-hasura-user-id': id
+				'x-hasura-user-id': `${id}`
 			}
 		}
 

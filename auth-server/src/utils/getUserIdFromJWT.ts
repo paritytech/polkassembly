@@ -16,9 +16,9 @@ export default async (token: string, publicKey: string) => {
 		throw new AuthenticationError(messages.INVALID_JWT)
 	}
 
-	if (isNaN(decoded.sub)) {
+	if (!decoded.sub) {
 		throw new AuthenticationError(messages.INVALID_USER_ID_IN_JWT)
 	}
 
-	return decoded.sub
+	return Number(decoded.sub)
 }

@@ -39,15 +39,16 @@ export enum Role {
     USER = 'user',
 }
 
+// these are enforced by Hasura
 export interface HasuraClaimPayload {
     'x-hasura-allowed-roles': Array<Role>
     'x-hasura-default-role': Role
     'x-hasura-user-email': string
-    'x-hasura-user-id': number
+    'x-hasura-user-id': string
 }
 
 export interface JWTPayploadType {
-    sub: number
+    sub: string
     name: string
     iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
