@@ -1,18 +1,17 @@
+import { ApolloQueryResult } from 'apollo-client';
 import React from 'react';
-
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
-import NoPostFound from '../../components/NoPostFound';
-import RepliesBlocks from './Replies'
-import { PostAndRepliesQueryHookResult, PostAndRepliesQueryVariables, PostAndRepliesQuery } from '../../generated/graphql';
+import Comments from './Comments'
 import EditablePostContent from './EditablePostContent';
-import { ApolloQueryResult } from 'apollo-client';
+import NoPostFound from '../../components/NoPostFound';
+import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 
 interface Props {
-	className?: string
-	data: PostAndRepliesQueryHookResult['data']
-	refetch: (variables?: PostAndRepliesQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndRepliesQuery>>
+	className?: string;
+	data: PostAndCommentsQueryHookResult['data']
+	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
 const Post = ( { className, data, refetch }: Props ) => {
@@ -26,8 +25,8 @@ const Post = ( { className, data, refetch }: Props ) => {
 						{ post
 							? <EditablePostContent post={post} refetch={refetch}/>
 							: <NoPostFound/> }
-						{ post && post.replies && post.replies.length
-							? <RepliesBlocks replies={post.replies}/>
+						{ post && post.comments && post.comments.length
+							? <Comments comments={post.comments}/>
 							: null }
 					</div>
 				</Grid.Column>

@@ -1,0 +1,6 @@
+- args:
+    sql: "\n           alter table \"public\".\"comments\"\n           add constraint
+      \"comments_post_id_fkey\" \n           foreign key (\"post_id\") \n           references
+      \"public\".\"posts\"\n           (\"id\") on update restrict on delete restrict;\n
+      \     "
+  type: run_sql

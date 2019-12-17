@@ -1,0 +1,12 @@
+- args:
+    name: comments
+    table:
+      name: comments
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: parent_message
+        table:
+          name: comments
+          schema: public
+  type: create_array_relationship

@@ -1,0 +1,8 @@
+- args:
+    name: post
+    table:
+      name: comments
+      schema: public
+    using:
+      foreign_key_constraint_on: post_id
+  type: create_object_relationship

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import * as moment from 'moment'
 
+import CreationLabel from '../ui-components/CreationLabel';
 import { PostFragment } from '../generated/graphql';
-import { Popup } from 'semantic-ui-react';
+import UpdateLabel from '../ui-components/UpdateLabel';
 
 const PostContent = ({ post } : {post: PostFragment}) => {
 	const { author, content, created_at, title, updated_at } = post;
@@ -13,8 +13,14 @@ const PostContent = ({ post } : {post: PostFragment}) => {
 		<>
 			<h3>{title}</h3>
 			<div className='post_info'>
-				posted by <strong>{author.username}</strong> {moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
-				{updated_at === created_at ? null : <Popup content={moment.utc(updated_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()} trigger={<span> (edited)</span>}/>}
+				<CreationLabel
+					created_at={created_at}
+					username={author.username}
+				/>
+				<UpdateLabel
+					created_at={created_at}
+					updated_at={updated_at}
+				/>
 			</div>
 			<ReactMarkdown className='post_content' source={content} />
 		</>
