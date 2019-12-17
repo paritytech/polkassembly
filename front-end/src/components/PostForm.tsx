@@ -39,6 +39,7 @@ const PostForm = ({ className, content, onContentChange, onTitleChange, title }:
 
 export default styled(PostForm)`
 	margin-top: 0;
+	padding: 0!important;
 	border: none;
 		.fields {
 			padding: 0;
@@ -50,5 +51,6 @@ export default styled(PostForm)`
 
 		.container {
 			max-width: 100%;
+			padding: 0 0.5rem;
 		}
 `

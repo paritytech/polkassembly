@@ -1,6 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
-import { Icon } from 'semantic-ui-react';
+import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -16,7 +17,7 @@ interface Props {
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditablePostContent = ({ post, refetch }: Props) => {
+const EditablePostContent = ({ className, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
@@ -54,39 +55,85 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 
 	return (
 		<>
-			{error && error.message && <div>{error.message}</div>}
-			<div className='post_tags'>
-				<Tag>{topic && topic.name}</Tag>
-			</div>
-			{
-				isEditing
-					?
-					<>
-						<PostForm
-							content={newContent}
-							onContentChange={onContentChange}
-							onTitleChange={onTitleChange}
-							title={newTitle}
+			<div className={className}>
+				{error && error.message && <div>{error.message}</div>}
+				<div className='post_tags'>
+					<Tag>{topic && topic.name}</Tag>
+				</div>
+				{
+					isEditing
+						?
+						<>
+							<PostForm
+								content={newContent}
+								onContentChange={onContentChange}
+								onTitleChange={onTitleChange}
+								title={newTitle}
 
-						/>
-						<Button className={'secondary'} onClick={handleCancel}>Cancel <Icon name='cancel'/></Button>
-						<Button className={'secondary'} onClick={handleSave}>Save <Icon name='save'/></Button>
-					</>
-					:
-					<>
-						<PostContent post={post}/>
-						{/* FIXME id from the context is a string.. */}
-						{post.author && id == post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
-						{data && data.update_posts && data.update_posts.affected_rows > 0 &&
-							<DisapearingLabel
-								iconColor='green'
-								iconName='check circle'
-								text='Saved'
-							/> }
-					</>
-			}
+							/>
+							<div className='button-container'>
+								<Button className={'secondary'} id="cancel-btn" onClick={handleCancel}><FaTimes className='icon' /> Cancel</Button>
+								<Button className={'secondary'} id="save-btn" onClick={handleSave}><FaCheck className='icon' /> Save</Button>
+							</div>
+						</>
+						:
+						<>
+							<PostContent post={post}/>
+							{/* FIXME id from the context is a string.. */}
+							{post.author && id == post.author.id && <Button className={'secondary'} onClick={toggleEdit}><FaEdit className='icon'/> Edit</Button>}
+							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
+								<DisapearingLabel
+									iconColor='green'
+									iconName='check circle'
+									text='Saved'
+								/> }
+						</>
+				}
+			</div>
 		</>
 	);
 }
 
-export default EditablePostContent;
+export default styled(EditablePostContent)`
+	.button {
+		background-color: #FFF!important;
+		color: #706D6D!important;
+		font-size: 1.2rem!important;
+		border: none!important;
+		&:hover{
+			background-color: #EEE!important;
+			border: none!important;
+		}
+	}
+
+	.button-container {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;	
+	}
+
+	#cancel-btn {
+		background-color: #EB5757!important;
+		color: #FFF!important;
+		margin: 0 0 0 1rem!important;
+		&:hover {
+			background-color: #CC3D3D!important;
+			border: none!important;
+		}
+	}
+
+	#save-btn {
+		background-color: #4DD18F!important;
+		color: #FFF!important;
+		margin: 0 0 0 1rem!important;
+		&:hover {
+			background-color: #42B37A!important;
+			border: none!important;
+		}
+	}
+
+	.icon {
+		margin-top: -0.2rem!important;
+		margin-right: -0.2rem!important;
+	}
+}`;
