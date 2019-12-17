@@ -8,11 +8,14 @@ import {
 	sendVerificationEmail,
 	sendResetPasswordEmail
 } from './email'
-import { AuthObjectType } from '../types'
-import User from '../model/User'
 import EmailVerificationToken from '../model/EmailVerificationToken'
-import RefreshToken from '../model/RefreshToken'
 import PasswordResetToken from '../model/PasswordResetToken'
+import RefreshToken from '../model/RefreshToken'
+import User from '../model/User'
+import { AuthObjectType } from '../types'
+import getUserFromUserId from '../utils/getUserFromUserId'
+import getUserIdFromJWT from '../utils/getUserIdFromJWT'
+import messages from '../utils/messages'
 
 const privateKey = process.env.JWT_PRIVATE_KEY
 const publicKey = process.env.JWT_PUBLIC_KEY
@@ -31,12 +34,12 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new AuthenticationError('User not found')
+			throw new AuthenticationError(messages.INVALID_USER_ID_IN_JWT)
 		}
 
 		const correctPassword = await user.verifyPassword(password)
 		if (!correctPassword) {
-			throw new AuthenticationError('Incorrect password')
+			throw new AuthenticationError(messages.INCORRECT_PASSWORD)
 		}
 
 		return {
@@ -53,7 +56,7 @@ export default class AuthService {
 
 	public async Logout(token: string, refreshToken: string) {
 		if (!refreshToken) {
-			throw new AuthenticationError('refresh token not provided')
+			throw new AuthenticationError(messages.REFRESH_TOKEN_NOT_PROVIDED)
 		}
 
 		const refreshTokenObj = await RefreshToken
@@ -62,22 +65,14 @@ export default class AuthService {
 			.first()
 
 		if (!refreshTokenObj) {
-			throw new ForbiddenError('Refresh token not found')
+			throw new ForbiddenError(messages.NO_CORRESPONDING_REFRESH_TOKEN)
 		}
 
-		// verify a token asymmetric - synchronous
-		const decoded = jwt.verify(token, publicKey)
-
-		if (isNaN(decoded.sub)) {
-			throw new AuthenticationError('Invalid user id in token')
-		}
-
-		const userId = parseInt(decoded.sub)
+		const userId = await getUserIdFromJWT(token, publicKey)
 
 		if (refreshTokenObj.user_id !== userId) {
-			throw new Error('JWT token user not matching refresh token user')
+			throw new AuthenticationError(messages.JWT_REFRESH_TOKEN_USER_MISMATCH)
 		}
-
 
 		await RefreshToken
 			.query()
@@ -92,7 +87,7 @@ export default class AuthService {
 			.first()
 
 		if (existing) {
-			throw new ForbiddenError(`User with username: ${username} already exist. Please choose a different username or login.`)
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS)
 		}
 
 		existing = await User
@@ -101,7 +96,7 @@ export default class AuthService {
 			.first()
 
 		if (existing) {
-			throw new ForbiddenError(`User with email: ${email} already exist. Please choose a different email or login.`)
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS)
 		}
 
 		const salt = randomBytes(32)
@@ -150,15 +145,15 @@ export default class AuthService {
 			.first()
 
 		if (!refreshToken) {
-			throw new ForbiddenError('Refresh token not found')
+			throw new ForbiddenError(messages.REFRESH_TOKEN_NOT_PROVIDED)
 		}
 
 		if (!refreshToken.valid) {
-			throw new ForbiddenError('Refresh token not valid')
+			throw new ForbiddenError(messages.INVALID_REFRESH_TOKEN)
 		}
 
 		if (new Date(refreshToken.expires).getTime() < Math.floor(Date.now() / 1000)) {
-			throw new ForbiddenError('Refresh token expired')
+			throw new ForbiddenError(messages.REFRESH_TOKEN_EXPIRED)
 		}
 
 		const user = await User
@@ -171,29 +166,15 @@ export default class AuthService {
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
 		if (oldPassword === newPassword) {
-			throw new UserInputError('Old password cannot be same as new password')
+			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER)
 		}
 
-		// verify a token asymmetric - synchronous
-		const decoded = jwt.verify(token, publicKey)
-
-		if (isNaN(decoded.sub)) {
-			throw new AuthenticationError('Invalid user id in token')
-		}
-
-		const userId = parseInt(decoded.sub)
-		const user = await User
-			.query()
-			.where('id', userId)
-			.first()
-
-		if (!user) {
-			throw new AuthenticationError('User not found')
-		}
+		const userId= await getUserIdFromJWT(token, publicKey)
+		const user = await getUserFromUserId(userId);
 
 		const correctPassword = await user.verifyPassword(oldPassword)
 		if (!correctPassword) {
-			throw new UserInputError('Incorrect password')
+			throw new UserInputError(messages.INCORRECT_PASSWORD)
 		}
 
 		const salt = randomBytes(32)
@@ -209,22 +190,10 @@ export default class AuthService {
 	}
 
 	public async ChangeName(token: string, newName: string) {
-		// verify a token asymmetric - synchronous
-		const decoded = jwt.verify(token, publicKey)
-
-		if (isNaN(decoded.sub)) {
-			throw new AuthenticationError('Invalid user id in token.')
-		}
-
-		const userId = parseInt(decoded.sub)
-		const user = await User
-			.query()
-			.where('id', userId)
-			.first()
-
-		if (!user) {
-			throw new ForbiddenError('User not found.')
-		}
+		const userId= await getUserIdFromJWT(token, publicKey);
+		
+		//verify that the user exists
+		await getUserFromUserId(userId);
 
 		await User
 			.query()
@@ -239,11 +208,11 @@ export default class AuthService {
 			.first()
 
 		if (!verifyToken) {
-			throw new ForbiddenError('Email verification token not found.')
+			throw new AuthenticationError(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
 		}
 
 		if (!verifyToken.valid) {
-			throw new ForbiddenError('Invalid email verification token.')
+			throw new AuthenticationError(messages.INVALID_EMAIL_VERIFICATION_TOKEN)
 		}
 
 		await User
@@ -258,23 +227,8 @@ export default class AuthService {
 	}
 
 	public async ChangeEmail(token: string, email: string) {
-		// verify a token asymmetric - synchronous
-		const decoded = jwt.verify(token, publicKey)
-
-		const userId = parseInt(decoded.sub)
-
-		if (isNaN(userId)) {
-			throw new AuthenticationError('Invalid user id.')
-		}
-
-		const user = await User
-			.query()
-			.where('id', userId)
-			.first()
-
-		if (!user) {
-			throw new ForbiddenError('User not found.')
-		}
+		const userId= await getUserIdFromJWT(token, publicKey);
+		const user= await getUserFromUserId(userId);
 
 		await User
 			.query()
@@ -336,15 +290,15 @@ export default class AuthService {
 			.first()
 
 		if (!resetToken) {
-			throw new Error('Password reset token not found.')
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND)
 		}
 
 		if (!resetToken.valid) {
-			throw new Error('Invalid password reset token.')
+			throw new AuthenticationError(messages.INVALID_PASSWORD_RESET_TOKEN)
 		}
 
 		if (new Date(resetToken.expires).getTime() < Date.now()) {
-			throw new Error('Password reset token expired.')
+			throw new AuthenticationError(messages.INVALID_PASSWORD_RESET_TOKEN)
 		}
 
 		const salt = randomBytes(32)

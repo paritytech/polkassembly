@@ -16,6 +16,11 @@ export interface UserObjectType {
     name: string
 }
 
+export interface SignUpResultType {
+    user: UserObjectType,
+    token: string
+}
+
 export interface AuthObjectType {
     user: UserObjectType
     token: string
