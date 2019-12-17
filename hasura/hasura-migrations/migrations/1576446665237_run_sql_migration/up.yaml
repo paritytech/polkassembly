@@ -1,0 +1,4 @@
+- args:
+    cascade: false
+    sql: drop table replies;
+  type: run_sql

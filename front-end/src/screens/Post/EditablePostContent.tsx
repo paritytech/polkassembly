@@ -2,7 +2,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 
-import { PostFragment, useEditPostMutation, PostAndRepliesQueryVariables, PostAndRepliesQuery } from '../../generated/graphql';
+import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostForm from '../../components/PostForm';
@@ -13,7 +13,7 @@ import { Tag } from '../../ui-components/Tag';
 interface Props {
 	className?: string
 	post: PostFragment
-	refetch: (variables?: PostAndRepliesQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndRepliesQuery>>
+	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
 const EditablePostContent = ({ post, refetch }: Props) => {
@@ -50,7 +50,7 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 		}
 	});
 
-	if (!author || !author.username || !content) return <div>Post not available</div>
+	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>
 
 	return (
 		<>
