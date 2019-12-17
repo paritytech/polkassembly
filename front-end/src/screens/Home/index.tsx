@@ -4,17 +4,15 @@ import { useLatestPostsQuery } from '../../generated/graphql';
 import HomeContent from './HomeContent';
 
 const Home = () => {
-	const { data, error, loading } = useLatestPostsQuery();
+	const { data, error } = useLatestPostsQuery();
 
-	if (loading) {
-		return <div>Loading...</div>;
+	if (error) {
+		return <div>{error.message}</div>;
 	}
 
-	if (error || !data) {
-		return <div>ERROR</div>;
-	}
+	if (data) return <HomeContent data={data} />;
 
-	return <HomeContent data={data} />;
+	return <div>Loading</div>
 };
 
 export default Home;
