@@ -1,13 +1,13 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
-import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostForm from '../../components/PostForm';
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 import DisapearingLabel from '../../ui-components/DisapearingLabel';
 import { Tag } from '../../ui-components/Tag';
 
@@ -72,15 +72,15 @@ const EditablePostContent = ({ className, post, refetch }: Props) => {
 
 							/>
 							<div className='button-container'>
-								<Button className={'secondary'} id="cancel-btn" onClick={handleCancel}><FaTimes className='icon' /> Cancel</Button>
-								<Button className={'secondary'} id="save-btn" onClick={handleSave}><FaCheck className='icon' /> Save</Button>
+								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</>
 						:
 						<>
 							<PostContent post={post}/>
 							{/* FIXME id from the context is a string.. */}
-							{post.author && id == post.author.id && <Button className={'secondary'} onClick={toggleEdit}><FaEdit className='icon'/> Edit</Button>}
+							{post.author && id == post.author.id && <Button secondary id="edit-btn" onClick={toggleEdit}><Icon name='edit outline' className='icon'/> Edit</Button>}
 							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
 								<DisapearingLabel
 									iconColor='green'
@@ -95,7 +95,7 @@ const EditablePostContent = ({ className, post, refetch }: Props) => {
 }
 
 export default styled(EditablePostContent)`
-	.button {
+	#edit-btn {
 		background-color: #FFF!important;
 		color: #706D6D!important;
 		font-size: 1.2rem!important;
@@ -112,28 +112,9 @@ export default styled(EditablePostContent)`
 		justify-content: flex-end;	
 	}
 
-	#cancel-btn {
-		background-color: #EB5757!important;
-		color: #FFF!important;
-		margin: 0 0 0 1rem!important;
-		&:hover {
-			background-color: #CC3D3D!important;
-			border: none!important;
-		}
-	}
-
-	#save-btn {
-		background-color: #4DD18F!important;
-		color: #FFF!important;
-		margin: 0 0 0 1rem!important;
-		&:hover {
-			background-color: #42B37A!important;
-			border: none!important;
-		}
-	}
-
 	.icon {
 		margin-top: -0.2rem!important;
-		margin-right: -0.2rem!important;
+		margin-right: -0.3rem!important;
+		opacity: 1;
 	}
 }`;

@@ -1,11 +1,13 @@
-import { Button as SemanticButton } from 'semantic-ui-react'
+import React from 'react';
+import { Button as SemanticButton, ButtonProps as SUIButtonProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-export const Button = styled(SemanticButton).attrs({
-	className: 'button'
+type ButtonProps = SUIButtonProps;
+
+const PrimaryButton = styled(SemanticButton).attrs({
+	className: 'primary'
 })`
-	
-	&.ui.button {   
+	&.ui.button, &.ui.primary.button, &.active, &:active  {   
         font-family: 'Roboto Mono';
 		font-size: 1.45rem;
 		font-weight: 500;
@@ -13,35 +15,42 @@ export const Button = styled(SemanticButton).attrs({
 		border-radius: 0.3rem;
 		border: none;
 		padding: 0.7rem 1rem;
-		color: #fff;
-    }
-
-    &.ui.primary.button {   
+        color: #fff;
         background-color: #EB5757;
     }
 
-    &.ui.primary.button:hover, &.ui.primary.button:focus {
+    &:hover, &:focus, &.ui.primary.button:hover, &.ui.primary.button:focus {
         background-color: #CC3D3D;
+        color: #FFF;
         outline: none;
     }
+`;
 
-    &.secondary {
-        background-color: #FFF;
-        color: #EB5757;
+const SecondaryButton = styled(SemanticButton).attrs({
+	className: 'secondary'
+})`
+    &.ui.button, &.active, &:active {   
+        font-family: 'Roboto Mono';
+        font-size: 1.45rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        border-radius: 0.3rem;
         border: 2px solid #EB5757;
+        padding: 0.7rem 1rem;
+		color: #EB5757;
+		background-color: #FFF;
     }
-    
-    &.secondary:hover, &.secondary:focus {
+
+    &:hover, &:focus, &.ui.secondary.button:hover, &.ui.secondary.button:focus {
         background-color: #CC3D3D;
         color: #FFF;
         border: 2px solid #CC3D3D;
-    }
-
-    &.active, &:active {
-        background-color: #EB5757;
-    }
-
-    &.disabled, &:disabled {
-        background-color: #D1A1A1;
+        outline: none;
     }
 `;
+
+export default function Button (props: ButtonProps): React.ReactElement {
+	return (
+		props.primary ? <PrimaryButton {...props} /> : <SecondaryButton {...props} />
+	)
+}
