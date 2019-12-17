@@ -12,7 +12,7 @@ import EmailVerificationToken from '../model/EmailVerificationToken'
 import PasswordResetToken from '../model/PasswordResetToken'
 import RefreshToken from '../model/RefreshToken'
 import User from '../model/User'
-import { AuthObjectType } from '../types'
+import { AuthObjectType, JWTPayploadType, Role } from '../types'
 import getUserFromUserId from '../utils/getUserFromUserId'
 import getUserIdFromJWT from '../utils/getUserIdFromJWT'
 import messages from '../utils/messages'
@@ -34,7 +34,7 @@ export default class AuthService {
 			.first()
 
 		if (!user) {
-			throw new AuthenticationError(messages.INVALID_USER_ID_IN_JWT)
+			throw new AuthenticationError(messages.NO_USER_FOUND_WITH_USERNAME)
 		}
 
 		const correctPassword = await user.verifyPassword(password)
@@ -191,7 +191,7 @@ export default class AuthService {
 
 	public async ChangeName(token: string, newName: string) {
 		const userId= await getUserIdFromJWT(token, publicKey);
-		
+
 		//verify that the user exists
 		await getUserFromUserId(userId);
 
@@ -321,24 +321,24 @@ export default class AuthService {
 
 
 	private getSignedToken({ id, username, email }): string {
-		const allowedRoles = ['user']
-		let currentRole = 'user'
+		const allowedRoles: Role[] = [Role.USER]
+		let currentRole: Role = Role.USER
 
 		// if our user is the proposal bot, give additional role.
 		if (id == process.env.BOT_PROPOSAL_USER_ID) { // eslint-disable-line
-			allowedRoles.push('proposal_bot')
-			currentRole = 'proposal_bot'
+			allowedRoles.push(Role.PROPOSAL_BOT)
+			currentRole = Role.PROPOSAL_BOT
 		}
 
-		const tokenContent = {
-			sub: `${id}`,
+		const tokenContent : JWTPayploadType = {
+			sub: id,
 			name: username,
 			iat: Math.floor(Date.now() / 1000),
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
-				'x-hasura-user-id': `${id}`,
-				'x-hasura-user-email': email
+				'x-hasura-user-email': email,
+				'x-hasura-user-id': id
 			}
 		}
 

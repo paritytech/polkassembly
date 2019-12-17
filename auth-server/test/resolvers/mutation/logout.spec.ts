@@ -1,10 +1,11 @@
+import { ForbiddenError, AuthenticationError } from 'apollo-server'
 import 'mocha'
 import { expect } from 'chai'
+
+import User from '../../../src/model/User'
 import logout from '../../../src/resolvers/mutation/logout'
 import signup from '../../../src/resolvers/mutation/signup'
-import User from '../../../src/model/User'
 import { Context, SignUpResultType } from '../../../src/types'
-import { ForbiddenError } from 'apollo-server'
 import messages from '../../../src/utils/messages'
 
 describe('logout mutation', () => {
@@ -57,6 +58,8 @@ describe('logout mutation', () => {
 			await logout(null, {}, fakectx)
 		} catch (error) {
 			expect(error).to.exist
+			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.INVALID_JWT)
 		}
 	})
 

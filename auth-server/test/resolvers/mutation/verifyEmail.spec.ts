@@ -1,11 +1,14 @@
-import 'mocha'
+import { AuthenticationError } from 'apollo-server'
 import { expect } from 'chai'
+import 'mocha'
 import { uuid } from 'uuidv4'
+
+import EmailVerificationToken from '../../../src/model/EmailVerificationToken'
+import User from '../../../src/model/User'
 import signup from '../../../src/resolvers/mutation/signup'
 import verifyEmail from '../../../src/resolvers/mutation/verifyEmail'
-import User from '../../../src/model/User'
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken'
 import { Context } from '../../../src/types'
+import messages from '../../../src/utils/messages'
 
 describe('verifyEmail mutation', () => {
 	let signupResult
@@ -62,6 +65,8 @@ describe('verifyEmail mutation', () => {
 			await verifyEmail(null, { token: 'fake' })
 		} catch (error) {
 			expect(error).to.exist
+			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
 		}
 	})
 })

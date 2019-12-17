@@ -1,9 +1,12 @@
-import 'mocha'
 import { expect } from 'chai'
-import signup from '../../../src/resolvers/mutation/signup'
-import changeName from '../../../src/resolvers/mutation/changeName'
+import { AuthenticationError } from 'apollo-server'
+import 'mocha'
+
 import User from '../../../src/model/User'
+import changeName from '../../../src/resolvers/mutation/changeName'
+import signup from '../../../src/resolvers/mutation/signup'
 import { Context } from '../../../src/types'
+import messages from '../../../src/utils/messages'
 
 describe('changeName mutation', () => {
 	let signupResult
@@ -45,13 +48,15 @@ describe('changeName mutation', () => {
 		expect(dbUser.name).to.be.equal(newName)
 	})
 
-	it('should not be able to change name with fake token', async () => {
+	it('should not be able to change name with wrong jwt', async () => {
 		const newName = 'new name'
-		fakectx.req.headers.authorization = 'Bearer fake'
+		fakectx.req.headers.authorization = 'Bearer wrong'
 		try {
 			await changeName(null, { newName }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
+			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.INVALID_JWT)
 		}
 	})
 })
