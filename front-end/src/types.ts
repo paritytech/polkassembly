@@ -8,22 +8,23 @@ export interface UserDetailsContextType {
 }
 
 export enum Role {
-    'user',
-    'anonymous',
-    'admin'
+    ANOONYMOUS = 'anonymous',
+    ADMIN = 'admin',
+    PROPOSAL_BOT = 'proposal_bot',
+    USER = 'user',
 }
 
 export interface HasuraClaimPayload {
     'x-hasura-allowed-roles': Array<Role>
-    'x-hasura-user-id': number
     'x-hasura-default-role': Role
-    'x-hasura-role': string
+    'x-hasura-user-email': string
+    'x-hasura-user-id': number
 }
 
 export interface JWTPayploadType {
     exp: number
     sub: number
     name: string
-    iat: Date
+    iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
