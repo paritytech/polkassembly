@@ -15,7 +15,7 @@ describe('logout mutation', () => {
 	let fakectx: Context = {
 		req: {
 			headers: {},
-			cookies:{}
+			cookies: {}
 		},
 		res: {
 			header: { 'refresh_token' : '' },
