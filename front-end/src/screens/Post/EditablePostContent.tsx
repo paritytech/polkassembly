@@ -12,11 +12,12 @@ import { Tag } from '../../ui-components/Tag';
 
 interface Props {
 	className?: string
+	onReply: () => void
 	post: PostFragment
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditablePostContent = ({ post, refetch }: Props) => {
+const EditablePostContent = ({ onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
@@ -76,6 +77,7 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 					<>
 						<PostContent post={post}/>
 						{post.author && id === post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
+						{id && <Button className={'secondary'} onClick={onReply}>reply <Icon name='reply'/></Button>}
 						{data && data.update_posts && data.update_posts.affected_rows > 0 &&
 							<DisapearingLabel
 								iconColor='green'
