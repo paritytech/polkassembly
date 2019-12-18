@@ -56,7 +56,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 
 	return (
 		<>
-				<div className={className}>
+			<div className={className}>
 				{error && error.message && <div>{error.message}</div>}
 				<div className='post_tags'>
 					<Tag>{topic && topic.name}</Tag>
@@ -72,14 +72,16 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 								title={newTitle}
 
 							/>
-							<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-							<Button className={'primary'} onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+							<div className='button-container'>
+								<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button className={'primary'} onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+							</div>
 						</>
 						:
 						<>
 							<PostContent post={post}/>
-							{post.author && id === post.author.id && <Button className={'secondary'} id="edit-btn" onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
-							{id && <Button className={'secondary'} onClick={onReply}>reply <Icon name='reply'/></Button>}
+							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
+							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
 							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
 								<DisapearingLabel
 									iconColor='green'
@@ -94,16 +96,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 }
 
 export default styled(EditablePostContent)`
-	#edit-btn {
-		background-color: #FFF!important;
-		color: #706D6D!important;
-		font-size: 1.2rem!important;
-		border: none!important;
-		&:hover{
-			background-color: #EEE!important;
-			border: none!important;
-		}
-	}
+	margin: 2rem 0;
 
 	.button-container {
 		width: 100%;

@@ -26,13 +26,15 @@ const Comments = ({ className, comments, firstComment=true }: Props) => {
 export default styled(Comments)`
 	.comment {
 		padding-left: 2rem;
-		border-left: lightgray 2px solid;
+		border-left: #EEE 2px solid;
+		margin-top: 1rem;
 
 		p {
 			color:#555;
 			font-family: 'Roboto';
 			font-size: 1.45rem;
 		}
+
 		p:last-child {
 			margin-bottom: 1rem;
 		}

@@ -1,10 +1,11 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddRootCommentMutation } from '../../generated/graphql';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 interface Props {
@@ -58,11 +59,27 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 					onContentChange={onContentChange}
 					withTitle={false}
 				/>
-				<Button className={'secondary'} onClick={handleCancel}>Cancel <Icon name='cancel'/></Button>
-				<Button className={'secondary'} onClick={handleSave}>Save <Icon name='save'/></Button>
+				<div className='button-container'>
+					<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
+					<Button className={'primary'} onClick={handleSave}><Icon name='reply'/> Reply</Button>
+				</div>
 			</>
 		</div>
 	);
 }
 
-export default CreateRootComment;
+export default styled(CreateRootComment)`
+	margin: 2rem 0;
+
+	.button-container {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;	
+	}
+
+	.icon {
+		margin-top: -0.2rem!important;
+		margin-right: -0.3rem!important;
+		opacity: 1;
+	}
+`;
