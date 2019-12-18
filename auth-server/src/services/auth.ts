@@ -78,7 +78,6 @@ export default class AuthService {
 			throw new Error('JWT token user not matching refresh token user')
 		}
 
-
 		await RefreshToken
 			.query()
 			.patch({ valid: false })
@@ -358,13 +357,11 @@ export default class AuthService {
 			})
 			.findById(resetToken.user_id)
 
-
 		await PasswordResetToken
 			.query()
 			.patch({ valid: false })
 			.findById(resetToken.id)
 	}
-
 
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles = ['user']

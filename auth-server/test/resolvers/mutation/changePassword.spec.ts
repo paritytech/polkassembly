@@ -41,7 +41,6 @@ describe('changePassword mutation', () => {
 
 		await changePassword(null, { oldPassword: password, newPassword }, fakectx)
 
-
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
