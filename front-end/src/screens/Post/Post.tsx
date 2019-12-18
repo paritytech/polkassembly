@@ -16,16 +16,15 @@ interface Props {
 
 const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0]
+	if (!post) return <NoPostFound/>
 
 	return (
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
-						{ post
-							? <EditablePostContent post={post} refetch={refetch}/>
-							: <NoPostFound/> }
-						{ post && post.comments && post.comments.length
+						<EditablePostContent post={post} refetch={refetch}/>
+						{ post.comments && post.comments.length
 							? <Comments comments={post.comments}/>
 							: null }
 					</div>

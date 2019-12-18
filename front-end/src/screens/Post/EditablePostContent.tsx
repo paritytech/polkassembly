@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
-import PostForm from '../../components/PostForm';
+import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { Button } from '../../ui-components/Button';
 import DisapearingLabel from '../../ui-components/DisapearingLabel';
 import { Tag } from '../../ui-components/Tag';
@@ -62,7 +62,7 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 				isEditing
 					?
 					<>
-						<PostForm
+						<PostOrCommentForm
 							content={newContent}
 							onContentChange={onContentChange}
 							onTitleChange={onTitleChange}
@@ -75,8 +75,7 @@ const EditablePostContent = ({ post, refetch }: Props) => {
 					:
 					<>
 						<PostContent post={post}/>
-						{/* FIXME id from the context is a string.. */}
-						{post.author && id == post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
+						{post.author && id === post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
 						{data && data.update_posts && data.update_posts.affected_rows > 0 &&
 							<DisapearingLabel
 								iconColor='green'
