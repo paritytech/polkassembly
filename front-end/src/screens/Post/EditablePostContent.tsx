@@ -80,7 +80,7 @@ const EditablePostContent = ({ className, post, refetch }: Props) => {
 						<>
 							<PostContent post={post}/>
 							{/* FIXME id from the context is a string.. */}
-							{post.author && id == post.author.id && <Button secondary id="edit-btn" onClick={toggleEdit}><Icon name='edit outline' className='icon'/> Edit</Button>}
+							{post.author && id == post.author.id && <Button secondary id="edit-btn" onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
 								<DisapearingLabel
 									iconColor='green'

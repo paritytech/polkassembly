@@ -1,35 +1,35 @@
 import React from 'react';
-import { Button as SemanticButton, ButtonProps as SUIButtonProps } from 'semantic-ui-react';
+import { Button as SUIButton, ButtonProps, SemanticICONS } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-type ButtonProps = SUIButtonProps;
+interface Props extends ButtonProps {
+	iconName?: SemanticICONS;
+}
 
-const PrimaryButton = styled(SemanticButton).attrs({
-	className: 'primary'
-})`
+const Button = (props : Props) => {
+	return <SUIButton {...props} />
+}
+
+export default styled(Button)`
 	&.ui.button, &.ui.primary.button, &.active, &:active  {   
-        font-family: 'Roboto Mono';
+		font-family: 'Roboto Mono';
 		font-size: 1.45rem;
 		font-weight: 500;
 		text-transform: uppercase;
 		border-radius: 0.3rem;
 		border: none;
 		padding: 0.7rem 1rem;
-        color: #fff;
-        background-color: #EB5757;
-    }
+		color: #fff;
+		background-color: #EB5757;
+	}
 
-    &:hover, &:focus, &.ui.primary.button:hover, &.ui.primary.button:focus {
+	&:hover, &:focus, &.ui.primary.button:hover, &.ui.primary.button:focus {
         background-color: #CC3D3D;
         color: #FFF;
         outline: none;
     }
-`;
 
-const SecondaryButton = styled(SemanticButton).attrs({
-	className: 'secondary'
-})`
-    &.ui.button, &.active, &:active {   
+    &.ui.secondary.button, &.active, &:active {   
         font-family: 'Roboto Mono';
         font-size: 1.45rem;
         font-weight: 500;
@@ -48,9 +48,3 @@ const SecondaryButton = styled(SemanticButton).attrs({
         outline: none;
     }
 `;
-
-export default function Button (props: ButtonProps): React.ReactElement {
-	return (
-		props.primary ? <PrimaryButton {...props} /> : <SecondaryButton {...props} />
-	)
-}
