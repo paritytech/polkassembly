@@ -11,7 +11,7 @@ const Button = (props : Props) => {
 }
 
 export default styled(Button)`
-	&.ui.button, &.ui.primary.button, &.active, &:active  {   
+	&.ui.button, &.active, &:active  {   
 		font-family: 'Roboto Mono';
 		font-size: 1.45rem;
 		font-weight: 500;
@@ -19,7 +19,7 @@ export default styled(Button)`
 		border-radius: 0.3rem;
 		border: none;
 		padding: 0.7rem 1rem;
-		&.ui.primary.button, &.active, &:active {
+		&.ui.primary.button {
 			color: #fff;
 			background-color: #EB5757;
 			&:hover, &:focus {
@@ -28,7 +28,7 @@ export default styled(Button)`
 				outline: none;
 			}
 		}
-		&.ui.secondary.button, &.active, &:active {
+		&.ui.secondary.button {
 			color: #EB5757;
 			background-color: #FFF;
 			border: 2px solid #EB5757;
