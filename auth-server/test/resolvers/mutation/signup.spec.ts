@@ -4,6 +4,7 @@ import signup from '../../../src/resolvers/mutation/signup'
 import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
 import { ForbiddenError } from 'apollo-server'
+import messages from '../../../src/utils/messages'
 
 describe('signup mutation', () => {
 	const fakectx: Context = {
@@ -52,6 +53,7 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)
+			expect(error.message).to.eq(messages.USERNAME_ALREADY_EXISTS)
 		}
 
 		try {
@@ -59,6 +61,7 @@ describe('signup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)
+			expect(error.message).to.eq(messages.USER_EMAIL_ALREADY_EXISTS)
 		}
 
 		await User

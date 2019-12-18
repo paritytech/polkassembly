@@ -1,9 +1,12 @@
-import 'mocha'
+import { AuthenticationError } from 'apollo-server'
 import { expect } from 'chai'
+import 'mocha'
+
+import User from '../../../src/model/User'
 import signup from '../../../src/resolvers/mutation/signup'
 import changePassword from '../../../src/resolvers/mutation/changePassword'
-import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
+import messages from '../../../src/utils/messages'
 
 describe('changePassword mutation', () => {
 	let signupResult
@@ -50,13 +53,15 @@ describe('changePassword mutation', () => {
 		expect(dbUser.password).to.not.equal(oldDbUser.password)
 	})
 
-	it('should not be able to change password with fake token', async () => {
+	it('should not be able to change password with an invalid jwt', async () => {
 		const newPassword = 'newpass'
-		fakectx.req.headers.authorization = 'Bearer fake'
+		fakectx.req.headers.authorization = 'Bearer wrong'
 		try {
 			await changePassword(null, { oldPassword: password, newPassword }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
+			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.INVALID_JWT)
 		}
 	})
 })

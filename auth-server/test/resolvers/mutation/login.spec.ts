@@ -5,6 +5,7 @@ import login from '../../../src/resolvers/mutation/login'
 import User from '../../../src/model/User'
 import { Context } from '../../../src/types'
 import { AuthenticationError } from 'apollo-server'
+import messages from '../../../src/utils/messages'
 
 describe('login mutation', () => {
 	let signupResult
@@ -48,6 +49,7 @@ describe('login mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.NO_USER_FOUND_WITH_USERNAME)
 		}
 	})
 
@@ -57,6 +59,7 @@ describe('login mutation', () => {
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.INCORRECT_PASSWORD)
 		}
 	})
 
