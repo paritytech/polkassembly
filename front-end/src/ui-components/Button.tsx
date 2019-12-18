@@ -1,12 +1,8 @@
 import React from 'react';
-import { Button as SUIButton, ButtonProps, SemanticICONS } from 'semantic-ui-react';
+import { Button as SUIButton, ButtonProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-interface Props extends ButtonProps {
-	iconName?: SemanticICONS;
-}
-
-const Button = (props : Props) => {
+const Button = (props : ButtonProps) => {
 	return <SUIButton {...props} />
 }
 
