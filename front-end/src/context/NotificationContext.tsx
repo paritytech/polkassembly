@@ -4,7 +4,7 @@ import { NotificationContextType, NotificationType } from '../types';
 
 const initialNotificationContext : NotificationContextType = {
 	notificationsQueue : [],
-	queueNotification: (): void => {
+	queueNotification: () => {
 		throw new Error('setNotificationContextState function must be overridden');
 	}
 }

@@ -35,8 +35,14 @@ export interface NotificationContextType {
     queueNotification: (notification: NotificationType) => void;
 }
 
+export enum NotificationStatus {
+    SUCCESS,
+    ERROR,
+    WARNING
+}
+
 export interface NotificationType {
     header: string
     message: string
-    status: string
+    status: NotificationStatus
 }

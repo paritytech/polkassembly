@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -9,6 +9,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
+import { NotificationStatus } from '../../types';
 
 interface Props {
 	className?: string
@@ -19,18 +20,11 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const [password, setPassword] = useState<string | undefined>('');
 	const currentUser = useContext(UserDetailsContext)
 	const { history } = useRouter();
-	const [loginMutation, { data, loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [loginMutation, { loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { queueNotification } = useContext(NotificationContext)
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
-
-	useEffect(() => {
-		if (data && data.login && data.login.token && data.login.user) {
-			handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
-			history.push('/');
-		}
-	},[currentUser, data, history])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -42,6 +36,28 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					password,
 					username
 				}
+			}).then(({ data }) => {
+				if (data && data.login && data.login.token && data.login.user) {
+					handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
+					history.push('/');
+					queueNotification({
+						header: 'Login sucessful',
+						message: 'Welcom back!',
+						status: NotificationStatus.SUCCESS
+					})
+				} else {
+					queueNotification({
+						header: 'Login error',
+						message: 'Unexpected login data',
+						status: NotificationStatus.ERROR
+					})
+				}
+			}).catch((e) => {
+				queueNotification({
+					header: 'Login error',
+					message: e,
+					status: NotificationStatus.ERROR
+				})
 			})
 		}
 	}
@@ -83,13 +99,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						>
 							Login
 						</Button>
-						<Button onClick={() => {
-							queueNotification({
-								header: 'head',
-								message: 'bla',
-								status: 'blou'
-							})
-						}}>Queue</Button>
 						{error &&
 						<>
 							<br/><div>{error.message}</div>

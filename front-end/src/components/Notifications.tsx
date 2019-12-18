@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { NotificationContext } from '../context/NotificationContext'
-import DismissableNotification from './DismissableNotification'
+import DismissableNotification from '../ui-components/DismissableNotification'
 
 interface Props{
     className?: string
@@ -10,7 +10,7 @@ interface Props{
 
 const Notifications = ({ className }: Props) => {
 	const { notificationsQueue } = useContext(NotificationContext)
-
+	console.log('queue', notificationsQueue)
 	return (
 		<div className={className}>
 			{
