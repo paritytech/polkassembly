@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
+import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
@@ -19,6 +20,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext)
 	const { history } = useRouter();
 	const [loginMutation, { data, loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { queueNotification } = useContext(NotificationContext)
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
@@ -81,6 +83,13 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						>
 							Login
 						</Button>
+						<Button onClick={() => {
+							queueNotification({
+								header: 'head',
+								message: 'bla',
+								status: 'blou'
+							})
+						}}>Queue</Button>
 						{error &&
 						<>
 							<br/><div>{error.message}</div>
