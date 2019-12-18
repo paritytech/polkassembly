@@ -13,7 +13,7 @@ interface Props{
 const Comments = ({ className, comments, firstComment=true }: Props) => {
 	return (
 		<div className={className}>
-			{ firstComment &&	<hr/> }
+			{firstComment &&	<hr/> }
 			<div className={firstComment ? '' : 'comment'} >
 				{comments.map((comment:CommentRecursiveFragment) =>
 					<Comment key={comment.id} comment={comment}/>
