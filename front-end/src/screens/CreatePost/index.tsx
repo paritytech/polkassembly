@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostForm from '../../components/PostForm';
+import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { useCreatePostMutation, usePost_TopicsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
@@ -65,7 +65,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<div className={className}>
 						<h3>New Post</h3>
-						<PostForm
+						<PostOrCommentForm
 							content={content}
 							onContentChange={onContentChange}
 							onTitleChange={onTitleChange}

@@ -1,6 +1,7 @@
 import { Context } from '../../types'
 import AuthService from '../../services/auth'
 import getTokenFromReq from '../../utils/getTokenFromReq'
+import messages from '../../utils/messages'
 
 export default async (_, args, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
@@ -11,5 +12,5 @@ export default async (_, args, ctx: Context) => {
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.Logout(token, refreshToken)
 
-	return { message: 'successfully logged out' }
+	return { message: messages.LOGOUT_SUCCESSFUL }
 }

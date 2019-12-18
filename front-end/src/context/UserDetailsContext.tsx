@@ -21,7 +21,7 @@ try {
 		const { sub:id, name:username } = tokenPayload
 
 		if (id && username){
-			initialUserDetailsContext.id = id;
+			initialUserDetailsContext.id = Number(id);
 			initialUserDetailsContext.username = username;
 		}
 	}

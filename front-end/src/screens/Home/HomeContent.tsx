@@ -29,21 +29,27 @@ const HomeContent = ({ className, data }: Props) => {
 					<ul className='Home__list'>
 						{!!data.posts &&
 						data.posts.map(
-							(post) =>
-								!!post && !!post.author && !!post.author.username && (
-									<li key={post.id} className='Home__item'>
-										{<Link to={`/post/${post.id}`}>
-											<DiscussionCard
-												authorUsername={post.author.username}
-												comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-													? 'no'
-													: post.comments_aggregate.aggregate!.count!.toString()}
-												created_at={post.created_at}
-												title={post.title}
-											/>
-										</Link>}
-									</li>
-								),
+							(post) => {
+								if (!post.author || !post.author.username) {
+									console.error('Author not found')
+									return null
+								} else {
+									return !!post && (
+										<li key={post.id} className='Home__item'>
+											{<Link to={`/post/${post.id}`}>
+												<DiscussionCard
+													authorUsername={post.author.username}
+													comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
+														? 'no'
+														: post.comments_aggregate.aggregate!.count!.toString()}
+													created_at={post.created_at}
+													title={post.title}
+												/>
+											</Link>}
+										</li>
+									)}
+							}
+
 						)}
 					</ul>
 				</Grid.Column>

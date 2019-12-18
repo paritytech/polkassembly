@@ -2125,6 +2125,21 @@ export type EditPostMutation = (
   )> }
 );
 
+export type AddRootCommentMutationVariables = {
+  authorId: Scalars['Int'],
+  content: Scalars['String'],
+  postId: Scalars['Int']
+};
+
+
+export type AddRootCommentMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_comments: Maybe<(
+    { __typename?: 'comments_mutation_response' }
+    & Pick<Comments_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type LatestProposalPostsQueryVariables = {};
 
 
@@ -2449,6 +2464,41 @@ export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
+export const AddRootCommentDocument = gql`
+    mutation AddRootComment($authorId: Int!, $content: String!, $postId: Int!) {
+  __typename
+  insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
+    affected_rows
+  }
+}
+    `;
+export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRootCommentMutation, AddRootCommentMutationVariables>;
+
+/**
+ * __useAddRootCommentMutation__
+ *
+ * To run a mutation, you first call `useAddRootCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRootCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addRootCommentMutation, { data, loading, error }] = useAddRootCommentMutation({
+ *   variables: {
+ *      authorId: // value for 'authorId'
+ *      content: // value for 'content'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useAddRootCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRootCommentMutation, AddRootCommentMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddRootCommentMutation, AddRootCommentMutationVariables>(AddRootCommentDocument, baseOptions);
+      }
+export type AddRootCommentMutationHookResult = ReturnType<typeof useAddRootCommentMutation>;
+export type AddRootCommentMutationResult = ApolloReactCommon.MutationResult<AddRootCommentMutation>;
+export type AddRootCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRootCommentMutation, AddRootCommentMutationVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {

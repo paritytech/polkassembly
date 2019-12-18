@@ -9,24 +9,27 @@ interface Props {
 	content: string
 	onContentChange?: (content: string) => void
 	onTitleChange?: (event: ChangeEvent<HTMLInputElement>) => void
-	title: string
+	title?: string
+	withTitle?: boolean
 }
 
-const PostForm = ({ className, content, onContentChange, onTitleChange, title }:Props): JSX.Element => {
+const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange, title='', withTitle=true }:Props): JSX.Element => {
 
 	return (
 		<Form className={className}>
-			<Form.Group>
-				<Form.Field width={16}>
-					<label>Title</label>
-					<input
-						onChange={onTitleChange}
-						placeholder='Your title...'
-						type="text"
-						value={title}
-					/>
-				</Form.Field>
-			</Form.Group>
+			{
+				withTitle && <Form.Group>
+					<Form.Field width={16}>
+						<label>Title</label>
+						<input
+							onChange={onTitleChange}
+							placeholder='Your title...'
+							type="text"
+							value={title}
+						/>
+					</Form.Field>
+				</Form.Group>
+			}
 			<Form.Group>
 				<TextArea
 					onChange={onContentChange}
@@ -37,7 +40,7 @@ const PostForm = ({ className, content, onContentChange, onTitleChange, title }:
 	);
 };
 
-export default styled(PostForm)`
+export default styled(PostOrCommentForm)`
 	margin-top: 0;
 	padding: 0!important;
 	border: none;
