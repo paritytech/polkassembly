@@ -47,7 +47,7 @@ export default styled(Button)`
 			&:hover{
 				background-color: #EEE;
 				border: none;
-		}
+			}
 		}
 	}
 `;
