@@ -100,7 +100,7 @@ const Apollo = ( { children }:Props ) => {
 			storeLocalStorageToken(accessToken)
 
 			if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
-				const id = tokenPayload.sub
+				const id = Number(tokenPayload.sub)
 				const username =  tokenPayload.name
 
 				if (id && username){

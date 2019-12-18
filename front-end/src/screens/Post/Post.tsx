@@ -1,11 +1,13 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components'
 
 import Comments from './Comments'
-import EditablePostContent from './EditablePostContent';
 import NoPostFound from '../../components/NoPostFound';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import CreateRootComment from './CreateRootComment';
+import EditablePostContent from './EditablePostContent';
 import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 
 interface Props {
@@ -16,16 +18,30 @@ interface Props {
 
 const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0]
+	const { id } = useContext(UserDetailsContext);
+	const [isRootCommentFormVisible, setRootCommentFormVisibility] = useState(false)
+	const toggleRootContentForm = () => {
+		setRootCommentFormVisibility(!isRootCommentFormVisible)
+	}
+
+	if (!post) return <NoPostFound/>
 
 	return (
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
-						{ post
-							? <EditablePostContent post={post} refetch={refetch}/>
-							: <NoPostFound/> }
-						{ post && post.comments && post.comments.length
+						<EditablePostContent
+							onReply={toggleRootContentForm}
+							post={post}
+							refetch={refetch}
+						/>
+						{ id && isRootCommentFormVisible && <CreateRootComment
+							onHide={toggleRootContentForm}
+							postId={post.id}
+							refetch={refetch}
+						/>}
+						{ post.comments && post.comments.length
 							? <Comments comments={post.comments}/>
 							: null }
 					</div>
