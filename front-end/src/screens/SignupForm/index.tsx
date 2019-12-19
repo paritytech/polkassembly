@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/auth-graphql';
@@ -88,11 +88,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group >
 					<div className={'mainButtonContainer'}>
 						<Button
-							className="primary"
+							primary
 							disabled={loading}
 							onClick={handleClick}
 							type="submit"
-							variant="primary"
 						>
 							Sign-up
 						</Button>

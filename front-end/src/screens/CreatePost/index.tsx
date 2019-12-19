@@ -60,26 +60,28 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	}
 
 	return (
-		<Container className={className}>
+		<Container>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
-					<h3>New Post</h3>
-					<PostOrCommentForm
-						content={content}
-						onContentChange={onContentChange}
-						onTitleChange={onTitleChange}
-						title={title}
-					/>
-					{renderTopics()}
-					<div className={'mainButtonContainer'}>
-						<Button
-							onClick={handleSend}
-							disabled={isSending || loading}
-							type='submit'
-							variant='primary'
-						>
-							{isSending || loading ? 'Creating...' : 'Create'}
-						</Button>
+					<div className={className}>
+						<h3>New Post</h3>
+						<PostOrCommentForm
+							content={content}
+							onContentChange={onContentChange}
+							onTitleChange={onTitleChange}
+							title={title}
+						/>
+						{renderTopics()}
+						<div className={'mainButtonContainer'}>
+							<Button
+								onClick={handleSend}
+								disabled={isSending || loading}
+								type='submit'
+								variant='primary'
+							>
+								{isSending || loading ? 'Creating...' : 'Create'}
+							</Button>
+						</div>
 					</div>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
@@ -89,6 +91,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(CreatePost)`
+	background-color: #FFF;
+	padding: 2rem 3rem 3rem 3rem;
+	margin-top: 4rem;
+	border: 1px solid #EEE;
 
 	.mainButtonContainer{
 		align-items: center;
@@ -106,10 +112,10 @@ export default styled(CreatePost)`
 		border: none;
 		padding: 0.5rem 1rem;
 		color: #fff;
-		background-color: #EB5757;
+		background-color: #FF5A47;
 		&:focus, &:hover {
-			background-color: #CC3D3D;
-        	outline: none;
+			background-color: #D94C3D;
+			outline: none;
 		}
 	}
 

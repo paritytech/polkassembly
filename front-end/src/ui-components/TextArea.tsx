@@ -78,12 +78,12 @@ const StyledTextArea = styled.div`
 				}
 
 				a {
-					color: #EB5757;
+					color: #FF5A47;
 
 					&:hover {
 						text-decoration: none;
-						color: #CC3D3D;
-						border-bottom: 1px solid #CC3D3D;
+						color: #D94C3D;
+						border-bottom: 1px solid #D94C3D;
 					}
 				}
 
@@ -99,6 +99,11 @@ const StyledTextArea = styled.div`
 				blockquote {
 					color: #7E7A7A;
 					font-size: 1.6rem;
+				}
+
+				input[type=checkbox] {
+					vertical-align: baseline;
+					list-style-type: none;
 				}
 			}
 		}

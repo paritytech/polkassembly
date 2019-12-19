@@ -1,12 +1,13 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 import DisapearingLabel from '../../ui-components/DisapearingLabel';
 import { Tag } from '../../ui-components/Tag';
 
@@ -17,7 +18,7 @@ interface Props {
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditablePostContent = ({ onReply, post, refetch }: Props) => {
+const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
@@ -55,39 +56,57 @@ const EditablePostContent = ({ onReply, post, refetch }: Props) => {
 
 	return (
 		<>
-			{error && error.message && <div>{error.message}</div>}
-			<div className='post_tags'>
-				<Tag>{topic && topic.name}</Tag>
-			</div>
-			{
-				isEditing
-					?
-					<>
-						<PostOrCommentForm
-							content={newContent}
-							onContentChange={onContentChange}
-							onTitleChange={onTitleChange}
-							title={newTitle}
+			<div className={className}>
+				{error && error.message && <div>{error.message}</div>}
+				<div className='post_tags'>
+					<Tag>{topic && topic.name}</Tag>
+				</div>
+				{
+					isEditing
+						?
+						<>
+							<PostOrCommentForm
+								content={newContent}
+								onContentChange={onContentChange}
+								onTitleChange={onTitleChange}
+								title={newTitle}
 
-						/>
-						<Button className={'secondary'} onClick={handleCancel}>Cancel <Icon name='cancel'/></Button>
-						<Button className={'secondary'} onClick={handleSave}>Save <Icon name='save'/></Button>
-					</>
-					:
-					<>
-						<PostContent post={post}/>
-						{post.author && id === post.author.id && <Button className={'secondary'} onClick={toggleEdit}>edit <Icon name='edit'/></Button>}
-						{id && <Button className={'secondary'} onClick={onReply}>reply <Icon name='reply'/></Button>}
-						{data && data.update_posts && data.update_posts.affected_rows > 0 &&
-							<DisapearingLabel
-								iconColor='green'
-								iconName='check circle'
-								text='Saved'
-							/> }
-					</>
-			}
+							/>
+							<div className='button-container'>
+								<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button className={'primary'} onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+							</div>
+						</>
+						:
+						<>
+							<PostContent post={post}/>
+							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
+							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
+							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
+								<DisapearingLabel
+									iconColor='green'
+									iconName='check circle'
+									text='Saved'
+								/> }
+						</>
+				}
+			</div>
 		</>
 	);
 }
 
-export default EditablePostContent;
+export default styled(EditablePostContent)`
+	margin: 2rem 0;
+
+	.button-container {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;	
+	}
+
+	.icon {
+		margin-top: -0.2rem!important;
+		margin-right: -0.3rem!important;
+		opacity: 1;
+	}
+}`;
