@@ -122,12 +122,12 @@ export default styled(Post)`
 		}
 		
 		a {
-			color: #EB5757;
+			color: #FF5A47;
 
 			&:hover {
 				text-decoration: none;
-				color: #CC3D3D;
-				border-bottom: 1px solid #CC3D3D;
+				color: #D94C3D;
+				border-bottom: 1px solid #D94C3D;
 			}
 		}
 

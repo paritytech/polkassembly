@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -91,11 +91,10 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					</Form.Group>
 					<div className={'mainButtonContainer'}>
 						<Button
-							className="primary"
+							primary
 							disabled={loading}
 							onClick={handleClick}
 							type="submit"
-							variant="primary"
 						>
 							Login
 						</Button>

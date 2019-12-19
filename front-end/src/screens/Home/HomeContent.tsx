@@ -7,7 +7,7 @@ import DiscussionCard from '../../components/DiscussionCard'
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { Button } from '../../ui-components/Button';
+import Button from '../../ui-components/Button';
 
 interface Props {
   className?: string
@@ -55,7 +55,7 @@ const HomeContent = ({ className, data }: Props) => {
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={8}>
 					<div className='mainButtonContainer'>
-						{currentUser.id && <Button className={'primary newPostButton'} onClick={handleCreatePost}>New Post</Button>}
+						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
 				</Grid.Column>
 			</Grid>
