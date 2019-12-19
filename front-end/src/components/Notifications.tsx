@@ -10,7 +10,7 @@ interface Props{
 
 const Notifications = ({ className }: Props) => {
 	const { notificationsQueue } = useContext(NotificationContext)
-	console.log('queue', notificationsQueue)
+
 	return (
 		<div className={className}>
 			{

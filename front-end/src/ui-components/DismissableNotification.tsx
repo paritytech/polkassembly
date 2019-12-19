@@ -13,8 +13,12 @@ const DismissableNotification = ({ className, notification }: Props) => {
 	const [dismissed, setDismissed] = useState(false)
 	const dismiss = () => setDismissed(true)
 
-	let color: SemanticCOLORS
-	let icon: SemanticICONS
+	useEffect(() => {
+		setTimeout(dismiss, 5000)
+	},[])
+
+	let color: SemanticCOLORS  = 'green'
+	let icon: SemanticICONS = 'check'
 
 	switch (notification.status){
 	case NotificationStatus.ERROR:
@@ -30,8 +34,6 @@ const DismissableNotification = ({ className, notification }: Props) => {
 		icon = 'check';
 		break;
 	}
-
-	useEffect(() => {setTimeout(dismiss, 5000)},[])
 
 	return (
 		<div className={className}>
