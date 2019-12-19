@@ -112,9 +112,9 @@ export default styled(CreatePost)`
 		border: none;
 		padding: 0.5rem 1rem;
 		color: #fff;
-		background-color: #EB5757;
+		background-color: #FF5A47;
 		&:focus, &:hover {
-			background-color: #CC3D3D;
+			background-color: #D94C3D;
 			outline: none;
 		}
 	}

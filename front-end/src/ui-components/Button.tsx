@@ -17,21 +17,21 @@ export default styled(Button)`
 		padding: 0.7rem 1rem;
 		&.ui.primary.button {
 			color: #fff;
-			background-color: #EB5757;
+			background-color: #FF5A47;
 			&:hover, &:focus {
-				background-color: #CC3D3D;
+				background-color: #D94C3D;
 				color: #FFF;
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
-			color: #EB5757;
+			color: #FF5A47;
 			background-color: #FFF;
-			border: 2px solid #EB5757;
+			border: 0.15rem solid #FF5A47;
 			&:hover, &:focus {
-				background-color: #CC3D3D;
+				background-color: #D94C3D;
 				color: #FFF;
-				border: 2px solid #CC3D3D;
+				border: 0.15rem solid #D94C3D;
 				outline: none;
 			}
 		}
