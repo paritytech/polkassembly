@@ -26,6 +26,14 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
+	const handleQueue = () => {
+		queueNotification({
+			header: 'Login sucessful',
+			message: 'Welcom back!',
+			status: NotificationStatus.SUCCESS
+		})
+	}
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -97,6 +105,13 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							type="submit"
 						>
 							Login
+						</Button>
+						<Button
+							primary
+							onClick={handleQueue}
+							type="submit"
+						>
+							Queue
 						</Button>
 						{error &&
 						<>

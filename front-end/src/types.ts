@@ -31,6 +31,7 @@ export interface JWTPayploadType {
 }
 
 export interface NotificationContextType {
+    deQueueNotification: (id: number) => void;
     notificationsQueue: NotificationType[]
     queueNotification: (notification: NotificationType) => void;
 }
@@ -42,6 +43,7 @@ export enum NotificationStatus {
 }
 
 export interface NotificationType {
+    dismissed: boolean
     header: string
     message: string
     status: NotificationStatus

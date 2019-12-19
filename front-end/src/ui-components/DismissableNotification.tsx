@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Message, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react'
@@ -6,17 +6,19 @@ import { NotificationStatus, NotificationType } from '../types'
 
 interface Props{
 	className?: string
+	key? : number
 	notification: NotificationType
+	onDismiss: () => void
 }
 
-const DismissableNotification = ({ className, notification }: Props) => {
-	const [dismissed, setDismissed] = useState(false)
-	const dismiss = () => setDismissed(true)
+const DismissableNotification = ({ className, notification, onDismiss }: Props) => {
+	// const [dismissed, setDismissed] = useState(false)
+	// const dismiss = () => setDismissed(true)
 	const { ERROR, SUCCESS, WARNING } = NotificationStatus
 	const { header,message,status } = notification
 
 	useEffect(() => {
-		setTimeout(dismiss, 5000)
+		setTimeout(onDismiss, 5000)
 	},[])
 
 	let color: SemanticCOLORS  = 'green'
@@ -39,16 +41,18 @@ const DismissableNotification = ({ className, notification }: Props) => {
 
 	return (
 		<div className={className}>
-			{dismissed
+			{/* {dismissed
 				? null
-				: <Message
-					color={color}
-					icon={icon}
-					content={message}
-					header={header}
-					onClick={dismiss}
-					onDismiss={dismiss}
-				/>}
+				:*/}
+				 <Message
+				color={color}
+				icon={icon}
+				content={message}
+				header={header}
+				onClick={onDismiss}
+				onDismiss={onDismiss}
+			/>
+			{/* } */}
 		</div>
 	)
 }

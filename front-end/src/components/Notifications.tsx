@@ -9,13 +9,17 @@ interface Props{
 }
 
 const Notifications = ({ className }: Props) => {
-	const { notificationsQueue } = useContext(NotificationContext)
+	const { deQueueNotification, notificationsQueue } = useContext(NotificationContext)
+
+	const onDismiss = (key: number) => {
+		deQueueNotification(key)
+	}
 
 	return (
 		<div className={className}>
 			{
 				notificationsQueue.length
-					? notificationsQueue.map((notification, index) => <DismissableNotification key={index} notification={notification}/>)
+					? notificationsQueue.map((notification, index) => {return <DismissableNotification key={index} notification={notification} onDismiss={() => onDismiss(index)}/>})
 					: null
 			}
 		</div>
