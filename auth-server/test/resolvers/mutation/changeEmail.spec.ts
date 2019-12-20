@@ -34,6 +34,11 @@ describe('changeEmail mutation', () => {
 			.query()
 			.where({ id: signupResult.user.id })
 			.del()
+		
+		await EmailVerificationToken
+			.query()
+			.where({ user_id: signupResult.user.id })
+			.del()
 	})
 
 	it('should allow to change an email', async () => {
@@ -43,33 +48,33 @@ describe('changeEmail mutation', () => {
 
 		const verifyToken = await EmailVerificationToken
 			.query()
-			.where({ user_id: signupResult.user.id })
-		console.log(verifyToken)
+			.where({ user_id: signupResult.user.id, valid: true })
 
-		expect(verifyToken).not.be.undefined
-		// expect(dbUser.password).to.not.equal(oldDbUser.password)
+		expect(verifyToken.length).to.eq(1)
+		expect(verifyToken[0].token).to.not.be.empty;
 	})
 
-	// it('should not be able to change password with an invalid jwt', async () => {
-	// 	const newPassword = 'newpass'
-	// 	fakectx.req.headers.authorization = 'Bearer wrong'
-	// 	try {
-	// 		await changePassword(null, { oldPassword: password, newPassword }, fakectx)
-	// 	} catch (error) {
-	// 		expect(error).to.exist
-	// 		expect(error).to.be.an.instanceof(AuthenticationError)
-	// 		expect(error.message).to.eq(messages.INVALID_JWT)
-	// 	}
-	// })
+	it('should not be able to change email with an invalid jwt', async () => {
+		const email = 'blabla@blou.de'
+		fakectx.req.headers.authorization = 'Bearer wrong'
+		try {
+			await changeEmail(null, { email }, fakectx)
+		} catch (error) {
+			expect(error).to.exist
+			expect(error).to.be.an.instanceof(AuthenticationError)
+			expect(error.message).to.eq(messages.INVALID_JWT)
+		}
+	})
 
-	// it('should not be able to change for a short password', async () => {
-	// 	const newPassword = 'newpa'
-	// 	try {
-	// 		await changePassword(null, { oldPassword: password, newPassword }, fakectx)
-	// 	} catch (error) {
-	// 		expect(error).to.exist
-	// 		expect(error).to.be.an.instanceof(UserInputError)
-	// 		expect(error.message).to.eq(messages.PASSWORD_LENGTH_ERROR)
-	// 	}
-	// })
+	it('should not be able to change email with an invalid email', async () => {
+		const email = 'wrong@email'
+
+		try {
+			await changeEmail(null, { email }, fakectx)
+		} catch (error) {
+			expect(error).to.exist
+			expect(error).to.be.an.instanceof(UserInputError)
+			expect(error.message).to.eq(messages.INVALID_EMAIL)
+		}
+	})
 })
