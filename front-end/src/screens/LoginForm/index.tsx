@@ -4,12 +4,10 @@ import styled from 'styled-components';
 
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
-import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
-import { NotificationStatus } from '../../types';
 
 interface Props {
 	className?: string
@@ -21,7 +19,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext)
 	const { history } = useRouter();
 	const [loginMutation, { loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const { queueNotification } = useContext(NotificationContext)
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
@@ -42,11 +39,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					history.push('/');
 				}
 			}).catch((e) => {
-				queueNotification({
-					header: 'Login error',
-					message: e,
-					status: NotificationStatus.ERROR
-				})
+				console.error('Login error', e)
 			})
 		}
 	}
