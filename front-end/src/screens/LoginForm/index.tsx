@@ -40,11 +40,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 				if (data && data.login && data.login.token && data.login.user) {
 					handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
 					history.push('/');
-					queueNotification({
-						header: 'Login sucessful',
-						message: 'Welcome back!',
-						status: NotificationStatus.SUCCESS
-					})
 				}
 			}).catch((e) => {
 				queueNotification({
