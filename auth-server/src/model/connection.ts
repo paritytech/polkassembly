@@ -3,5 +3,3 @@ import * as connection from '../../knexfile'
 
 export default Knex(connection)
 
-
-

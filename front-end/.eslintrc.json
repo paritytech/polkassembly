@@ -40,6 +40,7 @@
         "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "single",  { "avoidEscape": true }],
-        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]       
+        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+        "switch-colon-spacing": ["error", {"after": true, "before": false}]       
     }
 }

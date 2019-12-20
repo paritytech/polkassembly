@@ -39,7 +39,6 @@ describe('changeName mutation', () => {
 		const newName = 'new name'
 		await changeName(null, { newName }, fakectx)
 
-
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
