@@ -312,13 +312,11 @@ export default class AuthService {
 			})
 			.findById(resetToken.user_id)
 
-
 		await PasswordResetToken
 			.query()
 			.patch({ valid: false })
 			.findById(resetToken.id)
 	}
-
 
 	private getSignedToken({ id, username, email }): string {
 		const allowedRoles: Role[] = [Role.USER]

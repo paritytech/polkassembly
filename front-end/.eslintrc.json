@@ -43,6 +43,7 @@
         "quotes": ["error", "single",  { "avoidEscape": true }],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]
+        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+        "switch-colon-spacing": ["error", {"after": true, "before": false}]       
     }
 }
