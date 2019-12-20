@@ -8,8 +8,6 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
 
 interface Props {
 	className?: string
@@ -22,7 +20,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext)
 	const [signupMutation, { data, loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const { queueNotification } = useContext(NotificationContext)
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
@@ -35,13 +32,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 		}
 	},[currentUser, data, history])
 
-	const handleQueue = () => {
-		queueNotification({
-			header: 'Signup sucessful',
-			message: 'Welcom back!',
-			status: NotificationStatus.ERROR
-		})
-	}
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -104,13 +94,6 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							type="submit"
 						>
 							Sign-up
-						</Button>
-						<Button
-							secondary
-							onClick={handleQueue}
-							type="submit"
-						>
-							Queue
 						</Button>
 						{error &&
 						<>

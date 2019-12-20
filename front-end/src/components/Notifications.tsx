@@ -11,17 +11,16 @@ interface Props{
 const Notifications = ({ className }: Props) => {
 	const { deQueueNotification, notificationsQueue } = useContext(NotificationContext)
 
-	const onDismiss = (key: number) => {
-		deQueueNotification(key)
+	const renderNotifications = () => {
+		if (!notificationsQueue.size) return null
+
+		return Array.from(notificationsQueue).map(([key, notification]) =>
+			<DismissableNotification key={key} notification={notification} onDismiss={() => deQueueNotification(key)}/>)
 	}
 
 	return (
 		<div className={className}>
-			{
-				notificationsQueue.length
-					? notificationsQueue.map((notification, index) => {return <DismissableNotification key={index} notification={notification} onDismiss={() => onDismiss(index)}/>})
-					: null
-			}
+			{renderNotifications()}
 		</div>
 	)
 }
@@ -39,9 +38,4 @@ export default styled(Notifications)`
         right: 1rem;
         width: 40rem;
     }
-
-
-
-
-
 `

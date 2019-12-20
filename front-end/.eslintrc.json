@@ -22,6 +22,7 @@
     },
     "plugins": [
         "react",
+        "react-hooks",
         "@typescript-eslint"
     ],
     "settings": {
@@ -40,6 +41,8 @@
         "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "single",  { "avoidEscape": true }],
-        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]       
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]
     }
 }

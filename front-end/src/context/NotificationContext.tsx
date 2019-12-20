@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useRef } from 'react';
 
 import { NotificationContextType, NotificationType } from '../types';
 
@@ -6,7 +6,7 @@ const initialNotificationContext : NotificationContextType = {
 	deQueueNotification: () => {
 		throw new Error('setNotificationContextState function must be overridden');
 	},
-	notificationsQueue : [],
+	notificationsQueue : new Map(),
 	queueNotification: () => {
 		throw new Error('setNotificationContextState function must be overridden');
 	}
@@ -15,22 +15,23 @@ const initialNotificationContext : NotificationContextType = {
 export const NotificationContext = createContext(initialNotificationContext)
 
 export const NotificationProvider = ({ children }: React.PropsWithChildren<{}>) => {
-
-	const [notificationsQueue, setNotificationsQueue] = useState<NotificationType[]>([])
+	const [globalIndex, setGlobalIndex] = useState(0)
+	const [notificationsQueue, setNotificationsQueue] = useState<NotificationContextType['notificationsQueue']>(new Map())
+	const queue = useRef(new Map());
 
 	const queueNotification = (notification : NotificationType) => {
-		console.log('queueNotification +1')
-		setNotificationsQueue([...notificationsQueue, notification])
+		queue.current.set(globalIndex, notification)
+		setNotificationsQueue(new Map(queue.current))
+		setTimeout(() => deQueueNotification(globalIndex), 5000)
+		setGlobalIndex(globalIndex+1)
 	}
 
-	const deQueueNotification = ( removeIndex: number ) => {
-		console.log('deQueueNotification',removeIndex)
-		const buff = notificationsQueue
-		buff.splice(removeIndex, 1)
-		setNotificationsQueue(buff)
+	const deQueueNotification = ( removeKey: number ) => {
+		if (queue.current.has(removeKey)){
+			queue.current.delete(removeKey)
+			setNotificationsQueue(new Map(queue.current))
+		}
 	}
-
-	console.log('notificationsQueue',notificationsQueue)
 
 	return (
 		<NotificationContext.Provider value={{ deQueueNotification, notificationsQueue, queueNotification }}>
