@@ -1,4 +1,4 @@
-import { AuthenticationError } from 'apollo-server'
+import { AuthenticationError, UserInputError } from 'apollo-server'
 import { expect } from 'chai'
 import 'mocha'
 
@@ -62,6 +62,17 @@ describe('changePassword mutation', () => {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
 			expect(error.message).to.eq(messages.INVALID_JWT)
+		}
+	})
+
+	it('should not be able to change for a short password', async () => {
+		const newPassword = 'newpa'
+		try {
+			await changePassword(null, { oldPassword: password, newPassword }, fakectx)
+		} catch (error) {
+			expect(error).to.exist
+			expect(error).to.be.an.instanceof(UserInputError)
+			expect(error.message).to.eq(messages.PASSWORD_LENGTH_ERROR)
 		}
 	})
 })
