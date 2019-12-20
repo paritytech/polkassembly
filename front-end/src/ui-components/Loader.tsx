@@ -15,4 +15,4 @@ const Loader = ({ className }: Props) => {
 
 export default styled(Loader)`
     background-color: inherit!important;
-    `
+`
