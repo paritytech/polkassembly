@@ -3,9 +3,11 @@ import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import PostOrCommentForm from '../../components/PostOrCommentForm';
+import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { useCreatePostMutation, usePost_TopicsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
+import { NotificationStatus } from '../../types';
 
 interface Props {
 	className?: string
@@ -14,6 +16,7 @@ interface Props {
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
 	const currentUser = useContext(UserDetailsContext);
 	const { data: topicData, error: topicError } = usePost_TopicsQuery()
@@ -30,8 +33,14 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				topicId: selectedTopic,
 				userId: currentUser.id
 			} }).then(({ data }) => {
-				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0) {
-					history.push('/')
+				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0 && data.insert_posts.returning.length && data.insert_posts.returning[0].id) {
+					const postId = data.insert_posts.returning.length && data.insert_posts.returning[0].id
+					history.push(`/post/${postId}`)
+					queueNotification({
+						header: 'Thanks for sharing!',
+						message: 'Post created successfully.',
+						status: NotificationStatus.SUCCESS
+					})
 				} else {
 					throw Error('Error in post creation')
 				}

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -19,18 +19,11 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [password, setPassword] = useState<string | undefined>('');
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext)
-	const [signupMutation, { data, loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [signupMutation, { loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
-
-	useEffect(() => {
-		if (data && data.signup && data.signup.token && data.signup.user) {
-			handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
-			history.push('/');
-		}
-	},[currentUser, data, history])
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -44,6 +37,15 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					username
 				}
 			})
+				.then(({ data }) => {
+					if (data && data.signup && data.signup.token && data.signup.user) {
+						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
+						history.push('/');
+					}}
+
+				).catch((e) => {
+					console.error('Login error', e)
+				})
 		}
 	}
 
