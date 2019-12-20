@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useLatestDiscussionPostsQuery } from '../../generated/graphql';
 import Discussions from './Discussions';
+import Loader from '../../ui-components/Loader';
 
 const DiscussionsContainer = () => {
 
@@ -13,7 +14,7 @@ const DiscussionsContainer = () => {
 
 	if (data) return <Discussions data={data} />;
 
-	return <div>Loading</div>
+	return <Loader/>
 
 };
 
