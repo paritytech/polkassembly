@@ -10,6 +10,7 @@ import validateEmail from '../../utils/validateEmail'
 export default async (_, args, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 	const { email } = args
+	console.log('email',email)
 	
 	if (!validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL)
