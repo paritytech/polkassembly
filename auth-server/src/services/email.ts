@@ -38,11 +38,9 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 		html: text
 	}
 
-	try {
-		sgMail.send(msg);
-	} catch (e) {
-		console.error('Verification Email not sent',e)
-	}
+	sgMail.send(msg).catch(e =>
+		console.error('Verification Email not sent',e))
+
 	
 }
 
@@ -79,9 +77,6 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 		html: text
 	}
 
-	try {
-		sgMail.send(msg);
-	} catch (e) {
-		console.error('Password reset email not sent',e)
-	}
+	sgMail.send(msg).catch(e =>
+		console.error('Password reset email not sent',e))
 }
