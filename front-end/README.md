@@ -7,7 +7,7 @@ This app relies on a database for users, posts, etc. Those need to be in place b
 
 ### Databases
 2 different databases are required to run this app. They are explained here, but the files needed to run them live in the hasura and auth-server folders.
-- Hausra: A general DB to store posts, some user information (anything that isn't used for authentication). It's a Postgres, based on Hasura, exposing a graphQL interface that this `Government platform` will talk to.
+- Hausra: A general DB to store posts, some user information (anything that isn't used for authentication). It's a Postgres, based on Hasura, exposing a graphQL interface that this `Governance platform` will talk to.
 - Auth: a DB dedicated for user authentication that is accessed by the `auth` server.
 
 ### env variable

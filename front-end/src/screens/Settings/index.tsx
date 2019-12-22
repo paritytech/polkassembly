@@ -5,9 +5,10 @@ import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { useSignupMutation } from '../../generated/auth-graphql'
+import {
+	useChangeUsernameMutation
+} from '../../generated/auth-graphql'
 import { useRouter } from '../../hooks';
-import { handleLoginUser } from '../../services/auth.service'
 
 interface Props {
 	className?: string
@@ -21,13 +22,33 @@ const Settings = ({ className }:Props): JSX.Element => {
 	const [newPassword, setNewPassword] = useState<string | undefined>('')
 	const { history } = useRouter()
 	const currentUser = useContext(UserDetailsContext)
-	const [signupMutation, { data, loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
+	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value)
 	const onDisplayNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setDisplayName(event.currentTarget.value)
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
 	const onCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(event.currentTarget.value)
 	const onNewPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewPassword(event.currentTarget.value)
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (username) {
+			changeUsernameMutation({
+				variables: {
+					username
+				}
+			})
+				.then(({ data }) => {
+					if (data && data.changeUsername && data.changeUsername.message) {
+						console.log(data.changeUsername.message)
+					}
+				}).catch((e) => {
+					console.error('Login error', e)
+				})
+		}
+	}
 
 	return (
 		<Grid className={className}>
@@ -44,11 +65,18 @@ const Settings = ({ className }:Props): JSX.Element => {
 								placeholder='username'
 								type="text"
 							/>
+							{error &&
+							<>
+								<br/><div>{error.message}</div>
+							</>
+							}
 						</Form.Field>
 						<Form.Field width={2}>
 							<label>&nbsp;</label>
 							<Button
 								primary
+								disabled={loading}
+								onClick={handleClick}
 								type="submit"
 							>
 								Change

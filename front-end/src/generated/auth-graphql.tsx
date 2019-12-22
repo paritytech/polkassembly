@@ -35,6 +35,7 @@ export type Mutation = {
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
+  changeUsername?: Maybe<Message>,
   changeEmail?: Maybe<Message>,
   changePassword?: Maybe<Message>,
   changeName?: Maybe<Message>,
@@ -55,6 +56,11 @@ export type MutationSignupArgs = {
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
+};
+
+
+export type MutationChangeUsernameArgs = {
+  username: Scalars['String']
 };
 
 
@@ -127,7 +133,6 @@ export type SignupMutationVariables = {
   name?: Maybe<Scalars['String']>
 };
 
-
 export type SignupMutation = (
   { __typename?: 'Mutation' }
   & { signup: Maybe<(
@@ -137,6 +142,18 @@ export type SignupMutation = (
       { __typename?: 'User' }
       & UserFragment
     )> }
+  )> }
+);
+
+export type ChangeUsernameMutationVariables = {
+  username: Scalars['String']
+};
+
+export type ChangeUsernameMutation = (
+  { __typename?: 'Mutation' }
+  & { changeUsername: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
   )> }
 );
 
@@ -304,7 +321,7 @@ export const Get_Refresh_TokenDocument = gql`
  * __useGet_Refresh_TokenQuery__
  *
  * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -324,3 +341,35 @@ export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
+export const Change_Username_Document = gql`
+    mutation CHANGEUSERNAME($username: String!) {
+  changeUsername(username: $username) {
+    message
+  }
+}
+  `;
+export type ChangeUsernameMutationFn = ApolloReactCommon.MutationFunction<ChangeUsernameMutation, ChangeUsernameMutationVariables>;
+
+/**
+ * __useChangeUsernameMutation__
+ *
+ * To run a mutation, you first call `useChangeUsernameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeUsernameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [ChangeUsernameMutation, { data, loading, error }] = useChangeUsernameMutation({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useChangeUsernameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeUsernameMutation, ChangeUsernameMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeUsernameMutation, ChangeUsernameMutationVariables>(Change_Username_Document, baseOptions);
+      }
+export type ChangeUsernameMutationHookResult = ReturnType<typeof useChangeUsernameMutation>;
+export type ChangeUsernameMutationResult = ApolloReactCommon.MutationResult<ChangeUsernameMutation>;
+export type ChangeUsernameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeUsernameMutation, ChangeUsernameMutationVariables>;
