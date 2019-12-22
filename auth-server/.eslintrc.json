@@ -20,11 +20,15 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "arrow-spacing":["warn",{ "before": true, "after": true }],
         "comma-dangle": ["error", "never"],
+        "indent": ["error", "tab"],
+        "no-multiple-empty-lines": ["error", {"max": 1}],
+        "no-trailing-spaces": ["warn"],
+        "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "single",  { "avoidEscape": true }],
-        "indent": ["error", "tab"],
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "error"
+        "switch-colon-spacing": ["error", {"after": true, "before": false}]  
     }
 }

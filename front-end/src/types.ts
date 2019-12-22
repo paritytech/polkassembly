@@ -29,3 +29,21 @@ export interface JWTPayploadType {
     iat: string
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
+
+export interface NotificationContextType {
+    deQueueNotification: (id: number) => void;
+    notificationsQueue: Map<number, NotificationType>
+    queueNotification: (notification: NotificationType) => void;
+}
+
+export enum NotificationStatus {
+    SUCCESS,
+    ERROR,
+    WARNING
+}
+
+export interface NotificationType {
+    header: string
+    message: string
+    status: NotificationStatus
+}

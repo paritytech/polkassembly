@@ -10,6 +10,9 @@ export const CREATE_POST = gql`
             topic_id: $topicId
         }) {
             affected_rows
+            returning {
+                id
+            }
         }
     }
 `;

@@ -1993,6 +1993,10 @@ export type CreatePostMutation = (
   & { insert_posts: Maybe<(
     { __typename?: 'posts_mutation_response' }
     & Pick<Posts_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'id'>
+    )> }
   )> }
 );
 
@@ -2242,6 +2246,9 @@ export const CreatePostDocument = gql`
   __typename
   insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
     affected_rows
+    returning {
+      id
+    }
   }
 }
     `;

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useLatestProposalPostsQuery } from '../../generated/graphql';
 import Proposals from './Proposals';
+import Loader from '../../ui-components/Loader';
 
 const ProposalsContainer = () => {
 
@@ -13,7 +14,7 @@ const ProposalsContainer = () => {
 
 	if (data) return <Proposals data={data} />;
 
-	return <div>Loading...</div>;
+	return <Loader/>
 };
 
 export default ProposalsContainer;
