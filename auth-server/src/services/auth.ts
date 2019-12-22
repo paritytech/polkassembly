@@ -169,8 +169,8 @@ export default class AuthService {
 			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER)
 		}
 
-		const userId= await getUserIdFromJWT(token, publicKey)
-		const user = await getUserFromUserId(userId);
+		const userId = await getUserIdFromJWT(token, publicKey)
+		const user = await getUserFromUserId(userId)
 
 		const correctPassword = await user.verifyPassword(oldPassword)
 		if (!correctPassword) {
@@ -190,10 +190,10 @@ export default class AuthService {
 	}
 
 	public async ChangeName(token: string, newName: string) {
-		const userId= await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, publicKey)
 
 		//verify that the user exists
-		await getUserFromUserId(userId);
+		await getUserFromUserId(userId)
 
 		await User
 			.query()
@@ -226,9 +226,37 @@ export default class AuthService {
 			.findById(verifyToken.id)
 	}
 
+	public async ChangeUsername(token: string, username: string) {
+		const userId = await getUserIdFromJWT(token, publicKey)
+		const existing = await User
+			.query()
+			.where('username', username)
+			.first()
+
+		if (existing) {
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS)
+		}
+
+		await User
+			.query()
+			.patch({
+				username
+			})
+			.findById(userId)
+	}
+
 	public async ChangeEmail(token: string, email: string) {
-		const userId= await getUserIdFromJWT(token, publicKey);
-		const user= await getUserFromUserId(userId);
+		const userId = await getUserIdFromJWT(token, publicKey)
+		const user = await getUserFromUserId(userId)
+
+		const existing = await User
+			.query()
+			.where('email', email)
+			.first()
+
+		if (existing) {
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS)
+		}
 
 		await User
 			.query()

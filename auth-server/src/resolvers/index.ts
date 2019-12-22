@@ -4,6 +4,7 @@ import token from './query/token'
 import login from './mutation/login'
 import logout from './mutation/logout'
 import signup from './mutation/signup'
+import changeUsername from './mutation/changeUsername'
 import changeEmail from './mutation/changeEmail'
 import changePassword from './mutation/changePassword'
 import changeName from './mutation/changeName'
@@ -21,6 +22,7 @@ export default {
 		login,
 		logout,
 		signup,
+		changeUsername,
 		changeEmail,
 		changePassword,
 		changeName,
