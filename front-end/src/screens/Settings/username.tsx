@@ -4,11 +4,14 @@ import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeUsernameMutation } from '../../generated/graphql'
 import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { NotificationContext } from '../../context/NotificationContext'
+import { NotificationStatus } from '../../types'
 
 const Username = (): JSX.Element => {
 	const [username, setUsername] = useState<string | null | undefined>('')
 	const currentUser = useContext(UserDetailsContext)
 	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
+	const { queueNotification } = useContext(NotificationContext)
 
 	useEffect(() => {
 		setUsername(currentUser.username)
@@ -28,6 +31,11 @@ const Username = (): JSX.Element => {
 			})
 				.then(({ data }) => {
 					if (data && data.changeUsername && data.changeUsername.message) {
+						queueNotification({
+							header: 'Success!',
+							message: data.changeUsername.message,
+							status: NotificationStatus.SUCCESS
+						})
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
 								...prevState,
@@ -36,6 +44,11 @@ const Username = (): JSX.Element => {
 						})
 					}
 				}).catch((e) => {
+					queueNotification({
+						header: 'Failed!',
+						message: e.message,
+						status: NotificationStatus.ERROR
+					})
 					console.error('change username error', e)
 				})
 		}
