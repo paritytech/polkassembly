@@ -15,6 +15,7 @@ interface Props {
 
 const SignupForm = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
+	const [name, setName] = useState<string | undefined>('');
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
 	const { history } = useRouter();
@@ -22,6 +23,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [signupMutation, { loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
+	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
@@ -33,6 +35,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 			signupMutation({
 				variables: {
 					email,
+					name,
 					password,
 					username
 				}
@@ -60,7 +63,17 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							<label>Username</label>
 							<input
 								onChange={onUserNameChange}
-								placeholder='John'
+								placeholder='john'
+								type="text"
+							/>
+						</Form.Field>
+					</Form.Group>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label>Full Name</label>
+							<input
+								onChange={onNameChange}
+								placeholder='Firstname Lastname'
 								type="text"
 							/>
 						</Form.Field>
@@ -111,7 +124,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(SignupForm)`
-	
+
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;

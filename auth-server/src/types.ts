@@ -50,6 +50,8 @@ export interface HasuraClaimPayload {
 export interface JWTPayploadType {
     sub: string
     name: string
+    username: string,
+    email: string
     iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }

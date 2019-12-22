@@ -346,7 +346,7 @@ export default class AuthService {
 			.findById(resetToken.id)
 	}
 
-	private getSignedToken({ id, username, email }): string {
+	private getSignedToken({ id, name, username, email }): string {
 		const allowedRoles: Role[] = [Role.USER]
 		let currentRole: Role = Role.USER
 
@@ -358,7 +358,9 @@ export default class AuthService {
 
 		const tokenContent : JWTPayploadType = {
 			sub: `${id}`,
-			name: username,
+			name,
+			username,
+			email,
 			iat: Math.floor(Date.now() / 1000),
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,

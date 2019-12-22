@@ -2,41 +2,41 @@ import React, { useState, useContext, useEffect } from 'react'
 
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
-import { useChangeUsernameMutation } from '../../generated/graphql'
+import { useChangeEmailMutation } from '../../generated/graphql'
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 
-const Username = (): JSX.Element => {
-	const [username, setUsername] = useState<string | null | undefined>('')
+const Email = (): JSX.Element => {
+	const [email, setEmail] = useState<string | null | undefined>('')
 	const currentUser = useContext(UserDetailsContext)
-	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
+	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 
 	useEffect(() => {
-		setUsername(currentUser.username)
-	}, [currentUser.username])
+		setEmail(currentUser.email)
+	}, [currentUser.email])
 
-	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value)
+	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (username) {
-			changeUsernameMutation({
+		if (email) {
+			changeEmailMutation({
 				variables: {
-					username
+					email
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeUsername && data.changeUsername.message) {
+					if (data && data.changeEmail && data.changeEmail.message) {
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
 								...prevState,
-								username
+								email
 							}
 						})
 					}
 				}).catch((e) => {
-					console.error('change username error', e)
+					console.error('change email error', e)
 				})
 		}
 	}
@@ -44,12 +44,12 @@ const Username = (): JSX.Element => {
 	return (
 		<Form.Group>
 			<Form.Field width={10}>
-				<label>Username</label>
+				<label>Email</label>
 				<input
-					value={username || ''}
-					onChange={onUserNameChange}
-					placeholder='username'
-					type='text'
+					value={email || ''}
+					onChange={onEmailChange}
+					placeholder='mail@example.com'
+					type='email'
 				/>
 				{error &&
 				<>
@@ -63,7 +63,7 @@ const Username = (): JSX.Element => {
 					primary
 					disabled={loading}
 					onClick={handleClick}
-					type="submit"
+					type='submit'
 				>
 					Change
 				</Button>
@@ -72,4 +72,4 @@ const Username = (): JSX.Element => {
 	)
 }
 
-export default Username
+export default Email

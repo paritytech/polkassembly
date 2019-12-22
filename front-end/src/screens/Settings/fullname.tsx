@@ -2,41 +2,41 @@ import React, { useState, useContext, useEffect } from 'react'
 
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
-import { useChangeUsernameMutation } from '../../generated/graphql'
+import { useChangeNameMutation } from '../../generated/graphql'
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 
-const Username = (): JSX.Element => {
-	const [username, setUsername] = useState<string | null | undefined>('')
+const Fullname = (): JSX.Element => {
+	const [name, setName] = useState<string | null | undefined>('')
 	const currentUser = useContext(UserDetailsContext)
-	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
+	const [changeNameMutation, { loading, error }] = useChangeNameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 
 	useEffect(() => {
-		setUsername(currentUser.username)
-	}, [currentUser.username])
+		setName(currentUser.name)
+	}, [currentUser.name])
 
-	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value)
+	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value)
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (username) {
-			changeUsernameMutation({
+		if (name) {
+			changeNameMutation({
 				variables: {
-					username
+					newName: name
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeUsername && data.changeUsername.message) {
+					if (data && data.changeName && data.changeName.message) {
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
 								...prevState,
-								username
+								name
 							}
 						})
 					}
 				}).catch((e) => {
-					console.error('change username error', e)
+					console.error('change name error', e)
 				})
 		}
 	}
@@ -44,10 +44,10 @@ const Username = (): JSX.Element => {
 	return (
 		<Form.Group>
 			<Form.Field width={10}>
-				<label>Username</label>
+				<label>Full Name</label>
 				<input
-					value={username || ''}
-					onChange={onUserNameChange}
+					value={name || ''}
+					onChange={onNameChange}
 					placeholder='username'
 					type='text'
 				/>
@@ -72,4 +72,4 @@ const Username = (): JSX.Element => {
 	)
 }
 
-export default Username
+export default Fullname

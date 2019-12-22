@@ -36,6 +36,7 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 		return {
 			...prevState,
 			id: user.id,
+			name: user.name,
 			username: user.username
 		}
 	})

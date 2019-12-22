@@ -3,12 +3,14 @@ import { Dispatch, SetStateAction } from 'react';
 export interface UserDetailsContextType {
     id?: number | null,
     picture?: string | null,
+    name?: string | null,
     username?: string | null,
+    email?: string | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
 
 export enum Role {
-    ANOONYMOUS = 'anonymous',
+    ANONYMOUS = 'anonymous',
     ADMIN = 'admin',
     PROPOSAL_BOT = 'proposal_bot',
     USER = 'user',
@@ -26,6 +28,8 @@ export interface JWTPayploadType {
     exp: number
     sub: string
     name: string
+    username: string
+    email: string
     iat: string
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
