@@ -15,6 +15,7 @@ import Post from './screens/Post';
 import Proposals from './screens/Proposals';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
+import Settings from './screens/Settings'
 
 const App = () => {
 
@@ -51,6 +52,9 @@ const App = () => {
 								</Route>
 								<Route path="/verify-email/:token">
 									<VerifyEmail/>
+								</Route>
+								<Route path="/settings">
+									<Settings/>
 								</Route>
 							</Switch>
 						</Apollo>

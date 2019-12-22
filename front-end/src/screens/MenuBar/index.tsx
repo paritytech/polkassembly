@@ -41,7 +41,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Menu.Menu position="right">
 				{username
 					? <>
-						<Menu.Item><Icon name='user circle' inverted /> {username}</Menu.Item>
+						<Menu.Item as={Link} to="/settings"><Icon name='user circle' inverted /> {username}</Menu.Item>
 						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 					</>
 					: <>
