@@ -3,52 +3,28 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Grid, Divider } from 'semantic-ui-react'
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
+import Username from './username'
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import {
-	useChangeUsernameMutation
-} from '../../generated/auth-graphql'
-import { useRouter } from '../../hooks';
 
 interface Props {
 	className?: string
 }
 
 const Settings = ({ className }:Props): JSX.Element => {
-	const [username, setUsername] = useState<string | undefined>('')
 	const [displayName, setDisplayName] = useState<string | undefined>('')
 	const [email, setEmail] = useState<string | undefined>('')
 	const [currentPassword, setCurrentPassword] = useState<string | undefined>('')
 	const [newPassword, setNewPassword] = useState<string | undefined>('')
-	const { history } = useRouter()
-	const currentUser = useContext(UserDetailsContext)
-	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 
-	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value)
+	const currentUser = useContext(UserDetailsContext)
+
 	const onDisplayNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setDisplayName(event.currentTarget.value)
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
 	const onCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(event.currentTarget.value)
 	const onNewPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewPassword(event.currentTarget.value)
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (username) {
-			changeUsernameMutation({
-				variables: {
-					username
-				}
-			})
-				.then(({ data }) => {
-					if (data && data.changeUsername && data.changeUsername.message) {
-						console.log(data.changeUsername.message)
-					}
-				}).catch((e) => {
-					console.error('Login error', e)
-				})
-		}
-	}
+	console.log(currentUser)
 
 	return (
 		<Grid className={className}>
@@ -57,32 +33,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<Form>
 					<h3>Settings</h3>
 					<Divider/>
-					<Form.Group>
-						<Form.Field width={10}>
-							<label>Username</label>
-							<input
-								onChange={onUserNameChange}
-								placeholder='username'
-								type="text"
-							/>
-							{error &&
-							<>
-								<br/><div>{error.message}</div>
-							</>
-							}
-						</Form.Field>
-						<Form.Field width={2}>
-							<label>&nbsp;</label>
-							<Button
-								primary
-								disabled={loading}
-								onClick={handleClick}
-								type="submit"
-							>
-								Change
-							</Button>
-						</Form.Field>
-					</Form.Group>
+					<Username/>
 					<Form.Group>
 						<Form.Field width={10}>
 							<label>Display Name</label>
