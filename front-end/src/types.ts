@@ -47,3 +47,14 @@ export interface NotificationType {
     message: string
     status: NotificationStatus
 }
+
+export interface ModalType {
+    content?: string,
+    title?: string
+}
+
+export interface ModalContextType {
+    dismissModal: () => void,
+    modal: ModalType,
+    setModal: (modal: ModalType) => void;
+}

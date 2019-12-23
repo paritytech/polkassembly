@@ -8,6 +8,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	className?: string
@@ -71,6 +72,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							/>
 						</Form.Field>
 					</Form.Group>
+					<Link to='/reset-password'>Forgot your password?</Link>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary

@@ -35,6 +35,7 @@ export type Mutation = {
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
+  changeUsername?: Maybe<Message>,
   changeEmail?: Maybe<Message>,
   changePassword?: Maybe<Message>,
   changeName?: Maybe<Message>,
@@ -55,6 +56,11 @@ export type MutationSignupArgs = {
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
+};
+
+
+export type MutationChangeUsernameArgs = {
+  username: Scalars['String']
 };
 
 
