@@ -47,7 +47,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 					router.history.push('/login');
 				}
 			}).catch((e) => {
-				console.error('Login error', e)
+				console.error('Reset password error', e)
 			})
 		}
 	}
