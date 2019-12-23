@@ -77,9 +77,12 @@ You can now visit http://localhost:8010/auth/graphql where graphiql is running.
 ## Tests
 
 ### Docker
-To run tests in a docker and prevent your local db to be reset, run 
+To run tests in a docker and prevent your local db to be reset, make sure you adapt the envitonment variables from `docker-compose-test.yaml`.
+It's important to create new keys that will be only used there.
+
+You can then run
 ```bash
-yarn test:docker
+yarn test
 ```
 Or do it manuall by building the docker container for test:
 

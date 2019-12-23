@@ -21,16 +21,30 @@ import routes from './routes'
  */
 dotenv.load({ path: '.env' })
 
-if (!process.env.JWT_PRIVATE_KEY) {
-	throw new Error('JWT private key required')
-}
+if (process.env.NODE_ENV === 'test') {
+	if (!process.env.JWT_PRIVATE_KEY_TEST) {
+		throw new Error('JWT_PRIVATE_KEY_TEST private key required')
+	}
 
-if (!process.env.JWT_PUBLIC_KEY) {
-	throw new Error('JWT public key required')
-}
+	if (!process.env.JWT_PUBLIC_KEY_TEST) {
+		throw new Error('JWT_PUBLIC_KEY_TEST public key required')
+	}
 
-if (!process.env.JWT_KEY_PASSPHRASE) {
-	throw new Error('JWT private key passphrase required')
+	if (!process.env.JWT_KEY_PASSPHRASE_TEST) {
+		throw new Error('JWT_KEY_PASSPHRASE_TEST private key passphrase required')
+	}
+} else {
+	if (!process.env.JWT_PRIVATE_KEY) {
+		throw new Error('JWT_PRIVATE_KEY private key required')
+	}
+
+	if (!process.env.JWT_PUBLIC_KEY) {
+		throw new Error('JWT_PUBLIC_KEY public key required')
+	}
+
+	if (!process.env.JWT_KEY_PASSPHRASE) {
+		throw new Error('JWT_KEY_PASSPHRASE private key passphrase required')
+	}
 }
 
 /**
