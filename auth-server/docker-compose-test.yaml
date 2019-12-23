@@ -4,15 +4,29 @@ services:
     image: postgres
     restart: always
     ports:
-    - "5431:5432"
+      - target: 5433
+        published: 5433
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      PGPORT: 5433
       POSTGRES_DB: governance-auth-test
+    container_name: governance-auth-test
   auth-test:
     image: paritytech/polkassembly-auth-test
     depends_on:
       - "postgres"
     environment:
       NODE_ENV: test
-      TEST_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/governance-auth-test"
+      TEST_DATABASE_URL: "postgres://postgres:postgres@postgres:5433/governance-auth-test"
+      SENDGRID_API_KEY: ""
+      REACT_APP_AUTH_URL: "http://localhost:8010"
+      REACT_APP_SERVER_URL: "http://localhost:8080/v1/graphql"
+      PORT: 8010
+      BOT_PROPOSAL_USER_ID: 7
+      JWT_KEY_PASSPHRASE_TEST: "pass"
+      # Intentionally checking in private key for running transient docker container.
+      # This private key is only used here and nowhere else.
+      JWT_PRIVATE_KEY_TEST: "-----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\nDEK-Info: DES-EDE3-CBC,26EDF23FB0F8D73B\n\n1HaFzxKRyMOBi2wfTGlLRM+kAGm7jJ68uDfwxiir1+4ehljB99JSs9fqOeZbOeGD\ntBOCWvG+oSwzFA79zBVZMzu11BlffWe+Uh14xPIKoh+9cF6oDmDbC/yrQssmBsxP\nZRR1TSDbNK7rTFufT2+QZ6th4XOK7ff5P+I6cXpmfFMjmkAQksPmJgmMJKqt14fP\nVy4qbvreqW05Umf4cvSFdhMo8F3qe2RpbX8gffdSlSVv9aC0kp49TqQvB7GcTiBK\n7hOPDw5NQ0m/9r0yvU42VKnwz5f1CSSZNo4yON4L4r6a3a7n0zkeJJ6kwde3AgGX\nY9Pwx3mQ0W6WfnffPZ7nxTsZ+e5xWWSLNNQNk4oMdbpgvC7hV9w4LwOIgseV9QY+\nHjplLkrJMWtX16YiGEq5QC70EHjpb9EQLtE3NNTRR7Gz+EVOzPNyrpNqgzwh6T3v\nRPs7goRPQpiory7xWJBinn0LOH7PHjSrLfcHeepX2pjPoUofwB1RcSX2xPXyAXEs\nqmE52LXfNjWMgu5tMTiAODo/Rzafg7ICPVnoURX04USfctIlXH5qJ7wRMWCOFanW\ni3Z6Bj7tWunF0lU/8ZQOuh9FTSmRcV8ykB778FM3vIFCV5bKM77ycy66JkVGH07P\nEZkeZ0+xEKgF88OXyN/8U8AdO8s42Clo6fJ+EfwM3MZs5UN3EUbArLgoTUlc77rE\nnkgHb5QUewgsA6EWgKR3RQugVhL51Qe00rL5tZ6ADkb3H7PuWRI0sp/nXmoWhQZy\nLmjGt8GUrorIDjiQyWvP7uztXkdJzP48jknUgtQnSNbIpiOzf835/mFfHo4XkbYU\nZEHxBaCn7Qx7eVSW+vq3vJqqOpQWQRJV0i8lSOOvm2MG93WfeBijMZIy8U1tLkEV\nDSe+2A3VMk7Nn7k5Xl/eZa5NWGcSAF8SXN1gQ1dv2buG8mSJ0/McgnPogvsghjXA\nNQcEDfW19Pa9k3CoD1MGwBGHJr/jiBFsX4Pgyn1zOWVYXjh4tSMC8K9Ep01EakmR\nUHO1R2zFE2QtkZZe+Pu8WbX+ZJB/gXvFWz6MO/6wF7Brmn40MwdapW/UZ6qdmjJF\nhuktfzztUALzizLwOckqDB7JtyeR3zknjHwFhM3OMay7ja5LJhDbowqb3bzSj4HH\nnL08MCHxtPrwdM40o7rneysfSrTeTkmVetRww/X3G/bm5C9cP64ZD6/+UV2s1mAG\nTTAGU8WW0YZsAeu2Ggoro/NPnieIwD1uAhp4Hu1zPDfGXSk90oSMAhDBE+G11FoN\ng91mS9q3MtatgTMcpfZrwOW/HZmxh4J+3th7bdcb6DuBRZp3eWb9y3qiYXb35gF/\nTu3l2FLcdgbLhtZwnYOZOzINZ4AqdqoeeBkxoeJFznb2B3OKJ61BUQMeyj1muLHX\nFLp0AlXSeDUbQkleI+uN9XTdqB5Xlyj3xEQVJI5Tpm6+Q5Pp1ht1E1gjKVWXgciy\nv8FrFzjyVMQtVdFJ8k6tPfgkA7BNsB9x/wggUtgZdSkwCmaWEw4792dCAuVjGSYO\nysdzkYSpRwDWvnCNXcvGuJG9tq39wX3ziz3gXDk8ZPTSqPekV+qR9g==\n-----END RSA PRIVATE KEY-----\n"
+      JWT_PUBLIC_KEY_TEST: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo242GsjBcsaDPApzENyE\nFON38kjq10ow8X+/Vv4Xlj6oYgkD1bmJOqloIobQIpb90Z+ru171BhsTYW2kPBnT\n/6jlRm9g+0F2HjJe/3rXmQTjp0QJBm0MQVwOes3KL0vumGXx4t1B9pUnSM4DRRZr\naBz2Vbn76VTUoYUbMQfgIAkIeumIV4/A3+WyiNlDfs7RLEkOVF3x4n/pYNR5VzPM\nyXl2perTJtBhGZzwgzCgfNhTA5eRflojo8bwyxXB7Z4Sw46xhFkvUAVIDw1U5tgX\nIVQXp4OVUuqOxTbGALFXE6osRfm+pqAcD7qknz/38xS3nBjYTm/tqRa/aNcmaoaa\n8wIDAQAB\n-----END PUBLIC KEY-----\n"
+

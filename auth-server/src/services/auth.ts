@@ -17,9 +17,9 @@ import getUserFromUserId from '../utils/getUserFromUserId'
 import getUserIdFromJWT from '../utils/getUserIdFromJWT'
 import messages from '../utils/messages'
 
-const privateKey = process.env.JWT_PRIVATE_KEY
-const publicKey = process.env.JWT_PUBLIC_KEY
-const passphrase = process.env.JWT_KEY_PASSPHRASE
+const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY
+const publicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY
+const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000
 const ONE_DAY = 24 * 60 * 60 * 1000
