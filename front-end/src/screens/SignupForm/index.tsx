@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
+import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
+import Button from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -24,6 +25,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
 	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
+	const { setModal } = useContext(ModalContext);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -40,6 +42,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 				.then(({ data }) => {
 					if (data && data.signup && data.signup.token && data.signup.user) {
 						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
+						setModal({ content: 'We sent you an email to verify your address.' ,title: 'You\'ve some mail' })
 						history.push('/');
 					}}
 

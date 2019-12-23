@@ -20,9 +20,6 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 
-	const handleModal = () => {
-		setModal({ content: 'Modal conteeeeeent' ,title: 'Check your emails' })
-	}
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -69,7 +66,6 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 						>
 							Request reset
 						</Button>
-						<Button onClick={handleModal}>Modal</Button>
 						{error &&
 						<>
 							<br/><div>{error.message}</div>

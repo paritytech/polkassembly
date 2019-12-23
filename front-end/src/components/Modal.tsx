@@ -1,14 +1,15 @@
-import React, { useContext } from 'react'
-import { Modal as SUIModal, Button } from 'semantic-ui-react'
-import styled from 'styled-components'
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 
-import { ModalContext } from '../context/ModalContext'
+import { ModalContext } from '../context/ModalContext';
+import Button from '../ui-components/Button';
+import Modal from '../ui-components/Modal';
 
 interface Props{
     className?: string
 }
 
-const Modal = ({ className }: Props) => {
+const MyModal = ({ className }: Props) => {
 	const { modal, dismissModal } = useContext(ModalContext)
 	const { content, title } = modal;
 
@@ -18,30 +19,23 @@ const Modal = ({ className }: Props) => {
 		if (!content) return null
 
 		return (
-			<SUIModal
+			<Modal
+				buttons={<Button
+					primary
+					icon='check'
+					onClick={dismissModal}
+				>Got it</Button>}
+				className={className}
+				centered
+				content={content}
 				dimmer='inverted'
 				open
-			>
-				<SUIModal.Header>{title}</SUIModal.Header>
-				{content}
-				{renderButtons()}
-			</SUIModal>
+				onClose={dismissModal}
+				size='tiny'
+				title={title}
+			/>
 
 		)
-	}
-
-	const renderButtons = (): React.ReactNode => {
-		return (
-			<SUIModal.Actions>
-				<Button.Group>
-					<Button
-						icon='cancel'
-						label={'Got it'}
-						onClick={dismissModal}
-					/>
-				</Button.Group>
-			</SUIModal.Actions>
-		);
 	}
 
 	return (
@@ -51,6 +45,6 @@ const Modal = ({ className }: Props) => {
 	)
 }
 
-export default styled(Modal)`
+export default styled(MyModal)`
 
 `
