@@ -35,7 +35,6 @@ describe('logout mutation', () => {
 		refresh_token = fakectx.res.header['refresh_token'];
 		fakectx.req.cookies['refresh_token'] = refresh_token; // eslint-disable-line
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
- 
 	})
 
 	after(async () => {

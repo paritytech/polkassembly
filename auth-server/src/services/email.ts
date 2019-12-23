@@ -40,8 +40,6 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 
 	sgMail.send(msg).catch(e =>
 		console.error('Verification Email not sent',e))
-
-	
 }
 
 export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) => {
