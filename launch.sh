@@ -9,7 +9,7 @@ printf "\n\n-- killing any node running\n"
 pkill -f node;
 
 printf "\n\n-- launching auth-server docker\n"
-cd auth-server && docker-compose up -d && cd ..;
+cd auth-server && docker-compose --file docker-compose.yam up -d && cd ..;
 
 sleep 5
 
