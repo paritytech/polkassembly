@@ -12,7 +12,7 @@ interface Props {
 	className?: string
 }
 
-const ResetPassword = ({ className }:Props): JSX.Element => {
+const RequestResetPassword = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
 	const { history } = useRouter();
 	const { setModal } = useContext(ModalContext)
@@ -83,7 +83,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 	)
 };
 
-export default styled(ResetPassword)`
+export default styled(RequestResetPassword)`
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;

@@ -15,7 +15,8 @@ import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
 import Post from './screens/Post';
 import Proposals from './screens/Proposals';
-import ResetPassword from './screens/ResetPassword';
+import RequestResetPassword from './screens/RequestResetPassword';
+import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
 
@@ -51,7 +52,10 @@ const App = () => {
 									<Route path="/proposals" >
 										<Proposals/>
 									</Route>
-									<Route path="/reset-password">
+									<Route path="/request-reset-password">
+										<RequestResetPassword/>
+									</Route>
+									<Route path="/reset-password/:token">
 										<ResetPassword/>
 									</Route>
 									<Route path="/signup">
