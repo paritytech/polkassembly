@@ -14,7 +14,7 @@ JWT Authentication server for generating a JWT to use in the `Authentication` he
 
 - Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
 - Copy and adapt the content of `docker-compose.yaml.example` into a file called `docker-compose.yaml`.
-- Run the postgres and graphql-engine in docker by running: 
+- Run the postgres and graphql-engine in docker by running:
 ```bash
 docker-compose up
 ```
@@ -33,7 +33,7 @@ openssl genrsa -des3 -out private.pem 2048
 ```bash
 openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 ```
-- Enter the passphrase again. This will generate public.pem  
+- Enter the passphrase again. This will generate public.pem
 
 You will need the private and public keys in an escaped format in the next step.
 Use the following commands to print them in the right format:
@@ -275,7 +275,7 @@ On success, we get the response
 ```
 
 ### Change name
-We can change a user password with the `changeName` mutation. Note that it needs an authorization header:
+We can change a user name with the `changeName` mutation. Note that it needs an authorization header:
 
 ```gql
 mutation Change_name{
@@ -387,6 +387,34 @@ On success, we get the response
   "data": {
     "resetPassword": {
       "message": "Password successfully reset."
+    }
+  }
+}
+```
+
+### Change username
+We can change a user username with the `changeUsername` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Change_username{
+  changeUsername(username:"johnny")
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation Change_username {\n  changeUsername(username: \"johnny\") {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data":{
+    "changeUsername":{
+      "message":"Username changed successfully"
     }
   }
 }
