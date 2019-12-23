@@ -62,7 +62,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						</Form.Field>
 					</Form.Group>
 
-					<Form.Group className={'password'}>
+					<Form.Group>
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
@@ -70,9 +70,11 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 								placeholder='Password'
 								type="password"
 							/>
+							<div className="text-muted">
+								<Link to='/request-reset-password'>Forgot your password?</Link>
+							</div>
 						</Form.Field>
 					</Form.Group>
-					<Link to='/request-reset-password'>Forgot your password?</Link>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -96,9 +98,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(LoginForm)`
-	.password {
-		margin-bottom: 0!important;
-	}
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;

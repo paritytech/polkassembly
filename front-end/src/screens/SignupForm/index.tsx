@@ -42,7 +42,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 				.then(({ data }) => {
 					if (data && data.signup && data.signup.token && data.signup.user) {
 						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
-						setModal({ content: 'We sent you an email to verify your address.' ,title: 'You\'ve some mail' })
+						setModal({ content: 'We sent you an email to verify your address. Click on the link in the email' ,title: 'You\'ve some some mail' })
 						history.push('/');
 					}}
 
