@@ -34,7 +34,7 @@ describe('changeEmail mutation', () => {
 			.query()
 			.where({ id: signupResult.user.id })
 			.del()
-		
+
 		await EmailVerificationToken
 			.query()
 			.where({ user_id: signupResult.user.id })
