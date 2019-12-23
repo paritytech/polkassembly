@@ -54,7 +54,6 @@ PORT=8010
 BOT_PROPOSAL_USER_ID=1234
 NODE_ENV=development
 DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
-TEST_DATABASE_URL="postgres://postgres:postgres@localhost:5431/governance-test-auth"
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
@@ -74,6 +73,38 @@ yarn start
 ```
 
 You can now visit http://localhost:8010/auth/graphql where graphiql is running.
+
+## Tests
+
+### Docker
+To run tests in a docker and prevent your local db to be reset, make sure you adapt the envitonment variables from `docker-compose-test.yaml`.
+It's important to create new keys that will be only used there.
+
+You can then run
+```bash
+yarn test
+```
+Or do it manuall by building the docker container for test:
+
+```bash
+docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test .
+```
+
+Then run this docker:
+
+```bash
+docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
+```
+It will create a local postgres and test will run on top of that.  
+
+### Locally
+**=============DANGER===============**
+The DB will be deleted at the end of the tests. If you run this on a live DB, it will be deleted.
+Make sure you know what you are doing. This will run the tests locally on the test DB.
+
+```bash
+yarn test:dangerous
+```
 
 ## Usage
 

@@ -1,9 +1,10 @@
 {
   "name": "auth-server",
   "version": "1.0.0",
-  "description": "oauth 2.0 server for governance platform",
+  "description": "oauth 2.0 server for polkassembly",
   "scripts": {
-    "test": "knex migrate:latest && mocha -r ts-node/register test/**/*.spec.ts",
+    "test": "./test.sh",
+    "test:dangerous": "knex migrate:latest && mocha -r ts-node/register test/**/*.spec.ts",
     "start": "yarn tsc && node build/src/index.js",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",
