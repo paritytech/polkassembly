@@ -34,13 +34,30 @@ export default styled(Modal)`
 	height: auto;
 	top: auto;
 	font-size: 1.2rem;
+	border-radius: 0rem;
 
 	> .actions {
-		border-top:0px
+		border-top: 0px!important;
+		background-color: #FFF!important;
+		padding: 0 3rem 3rem 3rem;
+		margin-top: 2rem;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
-	> .header	{
-		border-bottom:0px
+	> .header {
+		border-bottom:0px!important;
+		font-family: 'Roboto Mono';
+		font-weight: 500!important;
+		font-size: 1.8rem!important;
+		padding: 2rem 3rem 0 3rem!important;
+	}
+
+	> .content {
+		padding: 0 3rem;
+		margin-top: 2rem;
 	}
 }
 `;

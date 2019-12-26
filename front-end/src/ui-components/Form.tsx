@@ -100,6 +100,9 @@ const StyledField = styled(SUIForm.Field)`
         & > a {
             font-size: 1.0rem;
             color: #6c757d !important;
+            &:hover {
+                border-bottom: none!important;
+            }
         }
     }
 `;

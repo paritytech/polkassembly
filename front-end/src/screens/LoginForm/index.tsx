@@ -98,19 +98,10 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(LoginForm)`
-	.mainButtonContainer{
+	.mainButtonContainer {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-	}
-	a {
-		color: #FF5A47;
-
-		&:hover {
-			text-decoration: none;
-			color: #D94C3D;
-			border-bottom: 1px solid #D94C3D;
-		}
 	}
 `;
