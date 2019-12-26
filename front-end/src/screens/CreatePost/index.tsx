@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, Container, Grid, Form } from 'semantic-ui-react';
+import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import PostOrCommentForm from '../../components/PostOrCommentForm';
@@ -9,6 +9,7 @@ import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import TopicsRadio from './TopicsRadio';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -58,19 +59,17 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		<Container>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
-					<div className={className}>
+					<Form className={className}>
 						<h3>New Post</h3>
-						<Form>
-							<PostOrCommentForm
-								content={content}
-								onContentChange={onContentChange}
-								onTitleChange={onTitleChange}
-								title={title}
-							/>
-							<TopicsRadio
-								onTopicSelection={(id) => setSetlectedTopic(id)}
-							/>
-						</Form>
+						<PostOrCommentForm
+							content={content}
+							onContentChange={onContentChange}
+							onTitleChange={onTitleChange}
+							title={title}
+						/>
+						<TopicsRadio
+							onTopicSelection={(id) => setSetlectedTopic(id)}
+						/>
 
 						<div className={'mainButtonContainer'}>
 							<Button
@@ -82,7 +81,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 								{isSending || loading ? 'Creating...' : 'Create'}
 							</Button>
 						</div>
-					</div>
+					</Form>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
 			</Grid>
@@ -91,11 +90,6 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(CreatePost)`
-	background-color: #FFF;
-	padding: 2rem 3rem 3rem 3rem;
-	margin-top: 4rem;
-	border: 1px solid #EEE;
-
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
