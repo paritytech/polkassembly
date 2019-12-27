@@ -128,11 +128,13 @@ export type User = {
   id?: Maybe<Scalars['Int']>,
   username?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  email_verified?: Maybe<Scalars['Boolean']>,
 };
 
 export type UserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'username'>
+  & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
 );
 
 export type SignupMutationVariables = {
@@ -200,6 +202,8 @@ export const UserFragmentDoc = gql`
   id
   name
   username
+  email
+  email_verified
 }
     `;
 export const SignupDocument = gql`
