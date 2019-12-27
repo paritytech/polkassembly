@@ -1640,18 +1640,8 @@ export type Posts_Variance_Order_By = {
   type_id?: Maybe<Order_By>,
 };
 
-export type Profile = {
-   __typename?: 'Profile',
-  email?: Maybe<Scalars['String']>,
-  email_verified?: Maybe<Scalars['Boolean']>,
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-};
-
 export type Query = {
    __typename?: 'Query',
-  profile?: Maybe<Profile>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
@@ -1689,7 +1679,6 @@ export type Query_Root = {
   posts_aggregate: Posts_Aggregate,
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>,
-  profile?: Maybe<Profile>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
@@ -1979,6 +1968,8 @@ export type Token = {
 
 export type User = {
    __typename?: 'User',
+  email?: Maybe<Scalars['String']>,
+  email_verified?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
@@ -2241,17 +2232,6 @@ export type ChangePasswordMutation = (
   & { changePassword: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
-  )> }
-);
-
-export type ProfileQueryVariables = {};
-
-
-export type ProfileQuery = (
-  { __typename?: 'query_root' }
-  & { profile: Maybe<(
-    { __typename?: 'Profile' }
-    & Pick<Profile, 'id' | 'username' | 'name' | 'email' | 'email_verified'>
   )> }
 );
 
@@ -2769,42 +2749,6 @@ export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
-export const ProfileDocument = gql`
-    query Profile {
-  profile {
-    id
-    username
-    name
-    email
-    email_verified
-  }
-}
-    `;
-
-/**
- * __useProfileQuery__
- *
- * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProfileQuery({
- *   variables: {
- *   },
- * });
- */
-export function useProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
-        return ApolloReactHooks.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, baseOptions);
-      }
-export function useProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, baseOptions);
-        }
-export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
-export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
-export type ProfileQueryResult = ApolloReactCommon.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
