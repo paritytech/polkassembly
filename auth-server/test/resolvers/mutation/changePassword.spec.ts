@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import 'mocha'
 
 import User from '../../../src/model/User'
+import login from '../../../src/resolvers/mutation/login'
 import signup from '../../../src/resolvers/mutation/signup'
 import changePassword from '../../../src/resolvers/mutation/changePassword'
 import { Context } from '../../../src/types'
@@ -50,6 +51,25 @@ describe('changePassword mutation', () => {
 			.first()
 
 		expect(dbUser.password).to.not.equal(oldDbUser.password)
+	})
+
+	it('should be able to login with the new password', async () => {
+		const newPassword = 'newpass'
+
+		const result = await login(null, { password: newPassword, username }, fakectx)
+		expect(result.user.id).to.exist
+		expect(result.user.id).to.a('number')
+		expect(result.user.email).to.equal(email)
+		expect(result.user.name).to.equal(name)
+		expect(result.user.username).to.equal(username)
+		expect(result.token).to.exist
+		expect(result.token).to.be.a('string')
+
+		await User
+			.query()
+			.where({ id: result.user.id })
+			.del()
+
 	})
 
 	it('should not be able to change password with an invalid jwt', async () => {
