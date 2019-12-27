@@ -31,15 +31,3 @@ export const MUTATION_CHANGE_PASSWORD = gql`
         }
     }
 `
-
-export const QUERY_PROFILE = gql`
-    query Profile {
-        profile {
-            id
-            username
-            name
-            email
-            email_verified
-        }
-    }
-`;
