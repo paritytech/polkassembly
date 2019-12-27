@@ -8,6 +8,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import Button from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
 import DisapearingLabel from '../../ui-components/DisapearingLabel';
 import { Tag } from '../../ui-components/Tag';
 
@@ -64,7 +65,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 				{
 					isEditing
 						?
-						<>
+						<Form standAlone={false}>
 							<PostOrCommentForm
 								content={newContent}
 								onContentChange={onContentChange}
@@ -76,7 +77,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 								<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
 								<Button className={'primary'} onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
 							</div>
-						</>
+						</Form>
 						:
 						<>
 							<PostContent post={post}/>
