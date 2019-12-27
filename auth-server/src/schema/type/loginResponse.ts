@@ -1,6 +1,6 @@
 export default `
     type LoginResponse {
-        user: Profile
+        user: User
         token: String
     }
 `

@@ -46,9 +46,9 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						<Dropdown text={username} icon={icon} item={true}>
 							<Dropdown.Menu>
 								<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
+								<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 							</Dropdown.Menu>
 						</Dropdown>
-						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 					</>
 					: <>
 						<Menu.Item as={Link} to="/login">Login</Menu.Item >
