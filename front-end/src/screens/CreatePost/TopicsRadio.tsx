@@ -34,11 +34,11 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 				{ data.post_topics.length
 					? data.post_topics.map(({ id, name } : {name: string, id:number}) => {
 						return <Radio
-								checked = {id === selectedTopic ? true : false}
-								key={id}
-								label={name}
-								onChange={handleTopicSelection}
-								value={id}
+							checked = {id === selectedTopic ? true : false}
+							key={id}
+							label={name}
+							onChange={handleTopicSelection}
+							value={id}
 						/>
 					})
 					: 'No topic found'}
