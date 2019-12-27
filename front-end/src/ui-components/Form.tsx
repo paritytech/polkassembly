@@ -2,18 +2,36 @@ import React from 'react';
 import { Form as SUIForm, FormProps as SUIFormProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-type FormProps = SUIFormProps;
+import Input from './Input'
+import Field from './Field';
+import Group from './Group';
+
+type FormProps = SUIFormProps & {
+    className? : string,
+    standalone? : boolean
+};
+
+Form.Input = Input;
+Form.Field = Field;
+Form.Group = Group;
+
+let _standalone=true;
+
+export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
+	_standalone = standalone
+	return <StyledForm {...props} />;
+}
 
 const StyledForm = styled(SUIForm)`
-    background-color: #FFF;
-    padding: 2rem 3rem 3rem 3rem;
-    margin-top: 4rem;
-    border: 1px solid #EEE;
+    background-color: ${(): string => _standalone ? '#FFF' : 'default'};
+    padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
+    margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
+    border: ${(): string => _standalone ? '1px solid #EEE' : 'none'};
 
     h3 {
         margin-bottom: 3rem;
     }
-    
+
     .field {
         label {
             font-weight: 500;
@@ -53,19 +71,6 @@ const StyledForm = styled(SUIForm)`
                 color: #282828;
                 border: 1 px solid #EEE;
                 border-radius: 0rem;
-		    }
-        }
-
-        textarea {
-            font-family: 'Roboto';
-            font-size: 1.4rem;
-            color: #282828;
-            border-color: #EEE;
-            border-radius: 0rem;
-            text-indent: 0rem;
-            padding: 0.625rem 0.625 0.5rem 0.625;
-            &:focus {
-                border-color: #EEE;     
             }
         }
         
@@ -74,54 +79,3 @@ const StyledForm = styled(SUIForm)`
         padding: 2rem;
     }
 `;
-
-const StyledInput = styled(SUIForm.Input).attrs({
-	type: 'text'
-})`
-    font-family: 'Roboto';
-    font-size: 1.2rem;
-    color: #282828;
-    border: 1 px solid #EEE;
-    border-radius: 0rem;
-    padding: 0.625rem 0 0.5rem 0;
-    &:focus {
-        outline: 0;
-        border-color: #EEE;
-    }	
-`;
-
-const StyledField = styled(SUIForm.Field)`
-    margin-bottom: 1.25rem;
-
-    .text-muted {
-		font-size: 1.2rem;
-        margin: 0;
-
-        & > a {
-            font-size: 1.0rem;
-            color: #6c757d !important;
-            &:hover {
-                border-bottom: none!important;
-            }
-        }
-    }
-`;
-
-const StyledGroup = styled(SUIForm.Group)`
-    margin-bottom: 1.25rem;
-`;
-
-const StyledTextArea = styled(SUIForm.TextArea)`
-    textarea {
-        border-radius: 0rem;
-    }
-`;
-
-export function Form(props: FormProps): React.ReactElement {
-	return <StyledForm {...props} />;
-}
-
-Form.Input = StyledInput;
-Form.Field = StyledField;
-Form.Group = StyledGroup;
-Form.TextArea = StyledTextArea;

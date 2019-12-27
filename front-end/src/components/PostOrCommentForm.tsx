@@ -16,7 +16,7 @@ interface Props {
 const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange, title='', withTitle=true }:Props): JSX.Element => {
 
 	return (
-		<Form className={className}>
+		<div className={className}>
 			{
 				withTitle && <Form.Group>
 					<Form.Field width={16}>
@@ -36,24 +36,21 @@ const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange,
 					value={content}
 				/>
 			</Form.Group>
-		</Form>
+		</div>
 	);
 };
 
 export default styled(PostOrCommentForm)`
-	margin-top: 0;
-	padding: 0!important;
-	border: none;
-		.fields {
-			padding: 0;
-		}
+	.fields {
+		padding: 0;
+	}
 
-		textarea {
-			font-size: 1.4rem;
-		}
+	textarea {
+		font-size: 1.4rem;
+	}
 
-		.container {
-			max-width: 100%;
-			padding: 0 0.5rem;
-		}
+	.container {
+		max-width: 100%;
+		padding: 0 0.5rem;
+	}
 `
