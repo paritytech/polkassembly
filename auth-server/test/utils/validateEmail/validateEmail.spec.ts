@@ -2,7 +2,7 @@ import 'mocha'
 import { expect } from 'chai'
 import validateEmail from '../../../src/utils/validateEmail'
 
-describe('Validate Email Util', () => {
+describe('validateEmail util', () => {
 	it('should validate a correct email', () => {
 		expect(validateEmail('test@example.com')).to.be.true
 	})

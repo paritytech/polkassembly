@@ -1,9 +1,17 @@
+import { UserInputError } from 'apollo-server'
+
 import AuthService from '../../services/auth'
+import validateEmail from '../../utils/validateEmail'
+import messages from '../../utils/messages'
 
 export default async (_, args) => {
-	const { email } = args
+	const { email } : {email : string} = args
 	const authServiceInstance = new AuthService()
-	await authServiceInstance.RequestResetPassword(email)
 
-	return { message: 'The reset password link was sent to this email, if it exists in our database.' }
+	if (!validateEmail(email)) {
+		throw new UserInputError(messages.INVALID_EMAIL)
+	}
+
+	await authServiceInstance.RequestResetPassword(email)
+	return { message: messages.RESET_PASSWORD_RETURN_MESSAGE }
 }
