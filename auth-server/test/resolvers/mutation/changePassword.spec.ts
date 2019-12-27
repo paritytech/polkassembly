@@ -69,7 +69,6 @@ describe('changePassword mutation', () => {
 			.query()
 			.where({ id: result.user.id })
 			.del()
-
 	})
 
 	it('should not be able to change password with an invalid jwt', async () => {

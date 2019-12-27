@@ -37,7 +37,7 @@ describe('changeName mutation', () => {
 
 	it('should be able to change name', async () => {
 		const newName = 'new name'
-		await changeName(null, { newName }, fakectx)
+		const res = await changeName(null, { newName }, fakectx)
 
 		const dbUser = await User
 			.query()
@@ -45,6 +45,7 @@ describe('changeName mutation', () => {
 			.first()
 
 		expect(dbUser.name).to.be.equal(newName)
+		expect(res.message).to.eq(messages.NAME_CHANGED_SUCCESSFULLY)
 	})
 
 	it('should not be able to change name with wrong jwt', async () => {

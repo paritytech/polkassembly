@@ -50,7 +50,7 @@ describe('verifyEmail mutation', () => {
 	})
 
 	it('should be able to verify email with valid token', async () => {
-		await verifyEmail(null, { token: verifyToken.token })
+		const res = await verifyEmail(null, { token: verifyToken.token })
 
 		const dbUser = await User
 			.query()
@@ -58,6 +58,7 @@ describe('verifyEmail mutation', () => {
 			.first()
 
 		expect(dbUser.email_verified).to.be.true
+		expect(res.message).to.eq(messages.EMAIL_VERIFICATION_SUCCESSFUL)
 	})
 
 	it('should throw an error if token is invalid', async () => {
