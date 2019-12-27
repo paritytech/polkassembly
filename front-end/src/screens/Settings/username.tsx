@@ -3,19 +3,21 @@ import React, { useState, useContext, useEffect } from 'react'
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeUsernameMutation } from '../../generated/graphql'
-import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { NotificationContext } from '../../context/NotificationContext'
 import { NotificationStatus } from '../../types'
 
-const Username = (): JSX.Element => {
+interface Props {
+	profileUsername?: string | null | undefined
+}
+
+const Username = ({ profileUsername }: Props): JSX.Element => {
 	const [username, setUsername] = useState<string | null | undefined>('')
-	const currentUser = useContext(UserDetailsContext)
 	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 	const { queueNotification } = useContext(NotificationContext)
 
 	useEffect(() => {
-		setUsername(currentUser.username)
-	}, [currentUser.username])
+		setUsername(profileUsername)
+	}, [profileUsername])
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value)
 
@@ -35,12 +37,6 @@ const Username = (): JSX.Element => {
 							header: 'Success!',
 							message: data.changeUsername.message,
 							status: NotificationStatus.SUCCESS
-						})
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								username
-							}
 						})
 					}
 				}).catch((e) => {

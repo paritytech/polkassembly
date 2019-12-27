@@ -9,6 +9,8 @@ export default (req: Request): string => {
 	// Authorization: Bearer $asdnkjadj32j23kj@#adslkads
 	const authHeader = req.headers.authorization
 
+	console.log(req.headers)
+
 	if (!authHeader) {
 		throw new AuthenticationError('Authorization header missing')
 	}

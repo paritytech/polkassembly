@@ -1,21 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react'
 
+import { Icon } from 'semantic-ui-react'
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeEmailMutation } from '../../generated/graphql'
-import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { NotificationContext } from '../../context/NotificationContext'
+import { NotificationStatus } from '../../types'
 
-const Email = (): JSX.Element => {
+interface Props {
+	profileEmail?: string | null | undefined
+	profileEmailVerified: boolean | null | undefined
+}
+
+const Email = ({ profileEmail, profileEmailVerified }: Props): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('')
-	const currentUser = useContext(UserDetailsContext)
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
-		setEmail(currentUser.email)
-	}, [currentUser.email])
+		setEmail(profileEmail)
+	}, [profileEmail])
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
 
@@ -35,12 +39,6 @@ const Email = (): JSX.Element => {
 							header: 'Success!',
 							message: data.changeEmail.message,
 							status: NotificationStatus.SUCCESS
-						})
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								email
-							}
 						})
 					}
 				}).catch((e) => {
@@ -64,6 +62,11 @@ const Email = (): JSX.Element => {
 					placeholder='mail@example.com'
 					type='email'
 				/>
+				{!profileEmailVerified &&
+					<>
+						<br/><div><Icon name='warning circle' />Email is unverified.</div>
+					</>
+				}
 				{error &&
 				<>
 					<br/><div>{error.message}</div>

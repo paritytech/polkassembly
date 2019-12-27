@@ -95,11 +95,21 @@ export type MutationVerifyEmailArgs = {
   token: Scalars['String']
 };
 
+export type Profile = {
+   __typename?: 'Profile',
+  id?: Maybe<Scalars['Int']>,
+  username?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  email_verified?: Maybe<Scalars['Boolean']>,
+};
+
 export type Query = {
    __typename?: 'Query',
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
   token?: Maybe<Token>,
+  profile?: Maybe<Profile>,
 };
 
 
@@ -118,7 +128,6 @@ export type User = {
   id?: Maybe<Scalars['Int']>,
   username?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
-  email_verified?: Maybe<Scalars['String']>,
 };
 
 export type UserFragment = (
