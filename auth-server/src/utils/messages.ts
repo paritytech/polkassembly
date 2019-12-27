@@ -1,6 +1,7 @@
 export default {
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
+	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',
 	INCORRECT_PASSWORD: 'Your password is incorrect.',
 	INVALID_EMAIL: 'Please enter a valid email.',
 	INVALID_EMAIL_VERIFICATION_TOKEN: 'Invalid email verification token.',
@@ -9,6 +10,7 @@ export default {
 	INVALID_USER_ID_IN_JWT: 'Invalid user id in token.',
 	JWT_REFRESH_TOKEN_USER_MISMATCH: 'User don\'t match between the JWT and the refresh-token.',
 	LOGOUT_SUCCESSFUL: 'Successfully logged out.',
+	NAME_CHANGED_SUCCESSFULLY: 'Name changed succefully.',
 	NO_CORRESPONDING_REFRESH_TOKEN: 'No corresponding refresh-token found.',
 	NO_USER_FOUND_WITH_USERNAME: 'No user found with this username',
 	OLD_AND_NEW_PASSWORD_MUST_DIFFER: 'Your new password must be different from your old one.',
