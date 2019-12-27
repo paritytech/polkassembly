@@ -19,6 +19,10 @@ server {
       # production server
       # root /mnt/q/app/client/public;
       # try_files $uri $uri/ /index.html;
+      # WebSocket support added
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
     }
 }
 
