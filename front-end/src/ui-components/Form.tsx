@@ -5,27 +5,28 @@ import styled from 'styled-components';
 import Input from './Input'
 import Field from './Field';
 import Group from './Group';
-import TextArea from './Form-TextArea';
 
 type FormProps = SUIFormProps & {
     className? : string,
-    standAlone? : boolean
+    standalone? : boolean
 };
-
-export function Form({ standAlone = true, ...props }: FormProps): React.ReactElement{
-	return <StyledForm standAlone={standAlone} {...props} />;
-}
 
 Form.Input = Input;
 Form.Field = Field;
 Form.Group = Group;
-Form.TextArea = TextArea;
+
+let _standalone=true;
+
+export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
+	_standalone = standalone
+	return <StyledForm {...props} />;
+}
 
 const StyledForm = styled(SUIForm)`
-    background-color: ${(props: FormProps): string => props.standAlone ? '#FFF' : 'default'};
-    padding: ${(props: FormProps): string => props.standAlone ? '2rem 3rem 3rem 3rem' : '0'};
-    margin-top: ${(props: FormProps): string => props.standAlone ? ' 4rem' : '0'};
-    border: ${(props: FormProps): string => props.standAlone ? '1px solid #EEE' : 'none'};
+    background-color: ${(): string => _standalone ? '#FFF' : 'default'};
+    padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
+    margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
+    border: ${(): string => _standalone ? '1px solid #EEE' : 'none'};
 
     h3 {
         margin-bottom: 3rem;
@@ -70,19 +71,6 @@ const StyledForm = styled(SUIForm)`
                 color: #282828;
                 border: 1 px solid #EEE;
                 border-radius: 0rem;
-            }
-        }
-
-        textarea {
-            font-family: 'Roboto';
-            font-size: 1.4rem;
-            color: #282828;
-            border-color: #EEE;
-            border-radius: 0rem;
-            text-indent: 0rem;
-            padding: 0.625rem 0.625 0.5rem 0.625;
-            &:focus {
-                border-color: #EEE;     
             }
         }
         

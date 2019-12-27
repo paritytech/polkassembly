@@ -65,7 +65,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 				{
 					isEditing
 						?
-						<Form standAlone={false}>
+						<Form standalone={false}>
 							<PostOrCommentForm
 								content={newContent}
 								onContentChange={onContentChange}
