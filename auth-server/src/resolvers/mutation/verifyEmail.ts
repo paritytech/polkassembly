@@ -5,7 +5,7 @@ interface argsType {
 	token: string
 }
 
-export default async (_, { token }: argsType) => {
+export default async ({ token }: argsType) => {
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.VerifyEmail(token)
 

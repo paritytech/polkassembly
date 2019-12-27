@@ -24,7 +24,7 @@ describe('changePassword mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx)
+		signupResult = await signup( { email, password, username, name }, fakectx)
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	})
 
@@ -42,7 +42,7 @@ describe('changePassword mutation', () => {
 			.where({ id: signupResult.user.id })
 			.first()
 
-		await changePassword(null, { oldPassword: password, newPassword }, fakectx)
+		await changePassword( { oldPassword: password, newPassword }, fakectx)
 
 		const dbUser = await User
 			.query()
@@ -56,7 +56,7 @@ describe('changePassword mutation', () => {
 		const newPassword = 'newpass'
 		fakectx.req.headers.authorization = 'Bearer wrong'
 		try {
-			await changePassword(null, { oldPassword: password, newPassword }, fakectx)
+			await changePassword( { oldPassword: password, newPassword }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
@@ -67,7 +67,7 @@ describe('changePassword mutation', () => {
 	it('should not be able to change for a short password', async () => {
 		const newPassword = 'newpa'
 		try {
-			await changePassword(null, { oldPassword: password, newPassword }, fakectx)
+			await changePassword( { oldPassword: password, newPassword }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)

@@ -13,7 +13,7 @@ interface argsType {
 	username: string
 }
 
-export default async (_, { email, password, username, name }: argsType, ctx: Context) => {
+export default async ({ email, password, username, name }: argsType, ctx: Context) => {
 
 	if (!validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL)

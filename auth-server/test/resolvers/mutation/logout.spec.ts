@@ -31,7 +31,7 @@ describe('logout mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup( { email, password, username, name }, fakectx);
 		refresh_token = fakectx.res.header['refresh_token'];
 		fakectx.req.cookies['refresh_token'] = refresh_token; // eslint-disable-line
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
@@ -45,7 +45,7 @@ describe('logout mutation', () => {
 	})
 
 	it('should be able to logout', async () => {
-		const result = await logout(null, {}, fakectx)
+		const result = await logout(fakectx)
 
 		expect(result.message).to.exist
 		expect(result.message).to.eq(messages.LOGOUT_SUCCESSFUL)
@@ -54,7 +54,7 @@ describe('logout mutation', () => {
 	it('should throw an error if the JWT is invalid', async () => {
 		fakectx.req.headers.authorization = 'Bearer wrong-jwt'
 		try {
-			await logout(null, {}, fakectx)
+			await (fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
@@ -65,7 +65,7 @@ describe('logout mutation', () => {
 	it('should throw an error if the refresh token is not matching', async () => {
 		fakectx.req.cookies['refresh_token'] = 'wrong-refresh-tokken'
 		try {
-			await logout(null, {}, fakectx)
+			await (fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)

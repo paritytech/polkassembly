@@ -7,7 +7,7 @@ interface LoginArgsType{
 	password: string
 }
 
-export default async (_, { username, password }:LoginArgsType, ctx: Context) => {
+export default async ({ username, password }:LoginArgsType, ctx: Context) => {
 	const authServiceInstance = new AuthService()
 	const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
 	setRefreshTokenCookie(ctx.res, refreshToken)

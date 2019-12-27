@@ -10,7 +10,7 @@ interface argsType {
 	email: string
 }
 
-export default async (_, { email }: argsType, ctx: Context) => {
+export default async ({ email }: argsType, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 
 	if (!validateEmail(email)) {
