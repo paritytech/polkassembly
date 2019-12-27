@@ -64,12 +64,6 @@ describe('changePassword mutation', () => {
 		expect(result.user.username).to.equal(username)
 		expect(result.token).to.exist
 		expect(result.token).to.be.a('string')
-
-		await User
-			.query()
-			.where({ id: result.user.id })
-			.del()
-
 	})
 
 	it('should not be able to change password with an invalid jwt', async () => {
