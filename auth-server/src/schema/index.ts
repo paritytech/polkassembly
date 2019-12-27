@@ -2,11 +2,13 @@ import { gql } from 'apollo-server-express'
 
 import userType from './type/user'
 import tokenType from './type/token'
+import profileType from './type/profile'
 import messageType from './type/message'
 import loginResponseType from './type/loginResponse'
 import userQuery from './query/user'
 import usersQuery from './query/users'
 import tokenQuery from './query/token'
+import profileQuery from './query/profile'
 import loginMutation from './mutation/login'
 import logoutMutation from './mutation/logout'
 import signupMutation from './mutation/signup'
@@ -21,6 +23,7 @@ import verifyEmail from './mutation/verifyEmail'
 export default gql`
 	${userType}
 	${tokenType}
+	${profileType}
 	${loginResponseType}
 	${messageType}
 
@@ -28,6 +31,7 @@ export default gql`
 		${userQuery}
 		${usersQuery}
 		${tokenQuery}
+		${profileQuery}
 	}
 
 	type Mutation {

@@ -14,6 +14,7 @@ export interface UserObjectType {
     email: string
     username: string
     name: string
+    email_verified: boolean
 }
 
 export interface SignUpResultType {

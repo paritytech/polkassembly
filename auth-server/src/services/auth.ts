@@ -12,7 +12,7 @@ import EmailVerificationToken from '../model/EmailVerificationToken'
 import PasswordResetToken from '../model/PasswordResetToken'
 import RefreshToken from '../model/RefreshToken'
 import User from '../model/User'
-import { AuthObjectType, JWTPayploadType, Role } from '../types'
+import { AuthObjectType, JWTPayploadType, UserObjectType, Role } from '../types'
 import getUserFromUserId from '../utils/getUserFromUserId'
 import getUserIdFromJWT from '../utils/getUserIdFromJWT'
 import messages from '../utils/messages'
@@ -47,7 +47,8 @@ export default class AuthService {
 				id: user.id,
 				email: user.email,
 				username: user.username,
-				name: user.name
+				name: user.name,
+				email_verified: user.email_verified
 			},
 			token: this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
@@ -131,10 +132,24 @@ export default class AuthService {
 				id: user.id,
 				email: user.email,
 				username: user.username,
-				name: user.name
+				name: user.name,
+				email_verified: user.email_verified
 			},
 			token: this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
+		}
+	}
+
+	public async GetUserProfile(token: string): Promise<UserObjectType> {
+		const userId = await getUserIdFromJWT(token, publicKey)
+		const user = await getUserFromUserId(userId)
+
+		return {
+			id: user.id,
+			email: user.email,
+			username: user.username,
+			name: user.name,
+			email_verified: user.email_verified
 		}
 	}
 
