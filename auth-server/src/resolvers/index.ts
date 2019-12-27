@@ -1,7 +1,6 @@
 import user from './query/user'
 import users from './query/users'
 import token from './query/token'
-import profile from './query/profile'
 import login from './mutation/login'
 import logout from './mutation/logout'
 import signup from './mutation/signup'
@@ -17,8 +16,7 @@ export default {
 	Query: {
 		user,
 		users,
-		token,
-		profile
+		token
 	},
 	Mutation: {
 		login,
