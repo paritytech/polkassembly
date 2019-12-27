@@ -25,7 +25,7 @@ describe('verifyEmail mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup( { email, password, username, name }, fakectx)
+		signupResult = await signup({ email, password, username, name }, fakectx)
 
 		verifyToken = await EmailVerificationToken
 			.query()
@@ -50,7 +50,7 @@ describe('verifyEmail mutation', () => {
 	})
 
 	it('should be able to verify email with valid token', async () => {
-		const res = await verifyEmail( { token: verifyToken.token })
+		const res = await verifyEmail({ token: verifyToken.token })
 
 		const dbUser = await User
 			.query()
@@ -63,7 +63,7 @@ describe('verifyEmail mutation', () => {
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await verifyEmail( { token: 'fake' })
+			await verifyEmail({ token: 'fake' })
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)

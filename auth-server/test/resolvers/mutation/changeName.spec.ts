@@ -24,7 +24,7 @@ describe('changeName mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup( { email, password, username, name }, fakectx)
+		signupResult = await signup({ email, password, username, name }, fakectx)
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	})
 
@@ -37,7 +37,7 @@ describe('changeName mutation', () => {
 
 	it('should be able to change name', async () => {
 		const newName = 'new name'
-		const res = await changeName( { newName }, fakectx)
+		const res = await changeName({ newName }, fakectx)
 
 		const dbUser = await User
 			.query()
@@ -52,7 +52,7 @@ describe('changeName mutation', () => {
 		const newName = 'new name'
 		fakectx.req.headers.authorization = 'Bearer wrong'
 		try {
-			await changeName( { newName }, fakectx)
+			await changeName({ newName }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)

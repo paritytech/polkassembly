@@ -25,7 +25,7 @@ describe('changeEmail mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup( { email, password, username, name }, fakectx)
+		signupResult = await signup({ email, password, username, name }, fakectx)
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	})
 
