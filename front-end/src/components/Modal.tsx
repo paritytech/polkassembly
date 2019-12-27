@@ -28,7 +28,7 @@ const MyModal = ({ className }: Props) => {
 				className={className}
 				centered
 				content={content}
-				dimmer='default'
+				dimmer='inverted'
 				open
 				onClose={dismissModal}
 				size='tiny'
