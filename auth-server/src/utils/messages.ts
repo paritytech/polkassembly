@@ -1,5 +1,6 @@
 export default {
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
+	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	INCORRECT_PASSWORD: 'Your password is incorrect.',
 	INVALID_EMAIL: 'Please enter a valid email.',
 	INVALID_EMAIL_VERIFICATION_TOKEN: 'Invalid email verification token.',

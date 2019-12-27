@@ -17,5 +17,5 @@ export default async (_, args, ctx: Context) => {
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.ChangeEmail(token, email)
 
-	return { message: 'Email changed. Verification request sent to your email address.' }
+	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL }
 }
