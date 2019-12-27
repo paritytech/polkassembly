@@ -3,7 +3,7 @@ import { UserInputError } from 'apollo-server'
 import AuthService from '../../services/auth'
 import messages from '../../utils/messages'
 
-export default async (_, args) => {
+export default async (_, args : {token: string, newPassword: string}) => {
 	const { token, newPassword } = args
 
 	if (newPassword.length < 6) {

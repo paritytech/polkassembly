@@ -322,11 +322,11 @@ export default class AuthService {
 		}
 
 		if (!resetToken.valid) {
-			throw new AuthenticationError(messages.INVALID_PASSWORD_RESET_TOKEN)
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID)
 		}
 
 		if (new Date(resetToken.expires).getTime() < Date.now()) {
-			throw new AuthenticationError(messages.INVALID_PASSWORD_RESET_TOKEN)
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID)
 		}
 
 		const salt = randomBytes(32)
