@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { Grid, Divider } from 'semantic-ui-react'
+
 import { Form } from '../../ui-components/Form'
 import Loader from '../../ui-components/Loader';
 import Username from './username'

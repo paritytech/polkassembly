@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
-
 import { Icon } from 'semantic-ui-react'
+
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeEmailMutation } from '../../generated/graphql'
