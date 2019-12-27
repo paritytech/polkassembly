@@ -6,8 +6,14 @@ import AuthService from '../../services/auth'
 import { Context } from '../../types'
 import messages from '../../utils/messages'
 
-export default async (_, args, ctx: Context) => {
-	const { email, password, username, name } = args
+interface argsType {
+	email: string,
+	name: string,
+	password: string,
+	username: string
+}
+
+export default async (_, { email, password, username, name }: argsType, ctx: Context) => {
 
 	if (!validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL)

@@ -3,8 +3,12 @@ import { UserInputError } from 'apollo-server'
 import AuthService from '../../services/auth'
 import messages from '../../utils/messages'
 
-export default async (_, args : {token: string, newPassword: string}) => {
-	const { token, newPassword } = args
+interface argsType {
+	newPassword: string,
+	token: string
+}
+
+export default async (_, { token, newPassword }: argsType) => {
 
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR)

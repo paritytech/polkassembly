@@ -5,9 +5,13 @@ import AuthService from '../../services/auth'
 import { Context } from '../../types'
 import messages from '../../utils/messages'
 
-export default async (_, args, ctx: Context) => {
+interface argsType {
+	newPassword: string,
+	oldPassword: string
+}
+
+export default async (_, { oldPassword, newPassword }: argsType, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
-	const { oldPassword, newPassword } = args
 
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR)

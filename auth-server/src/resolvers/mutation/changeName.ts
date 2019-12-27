@@ -1,11 +1,14 @@
 import AuthService from '../../services/auth'
 import { Context } from '../../types'
-import getTokenFromReq from '../../utils/getTokenFromReq'
 import messages from '../../utils/messages'
+import getTokenFromReq from '../../utils/getTokenFromReq'
 
-export default async (_, args, ctx: Context) => {
+interface argsType {
+	newName: string
+}
+
+export default async (_, { newName }: argsType, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
-	const { newName } = args
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.ChangeName(token, newName)
 

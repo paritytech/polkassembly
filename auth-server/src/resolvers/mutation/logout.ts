@@ -1,9 +1,9 @@
-import { Context } from '../../types'
 import AuthService from '../../services/auth'
+import { Context } from '../../types'
 import getTokenFromReq from '../../utils/getTokenFromReq'
 import messages from '../../utils/messages'
 
-export default async (_, args, ctx: Context) => {
+export default async (_, __, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 	const refreshToken = ctx.req.cookies.refresh_token
 

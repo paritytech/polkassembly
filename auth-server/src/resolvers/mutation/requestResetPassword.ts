@@ -1,11 +1,14 @@
 import { UserInputError } from 'apollo-server'
 
 import AuthService from '../../services/auth'
-import validateEmail from '../../utils/validateEmail'
 import messages from '../../utils/messages'
+import validateEmail from '../../utils/validateEmail'
 
-export default async (_, args) => {
-	const { email } : {email : string} = args
+interface argsType {
+	email: string
+}
+
+export default async (_, { email }: argsType) => {
 	const authServiceInstance = new AuthService()
 
 	if (!validateEmail(email)) {
