@@ -8,6 +8,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	className?: string
@@ -69,6 +70,9 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 								placeholder='Password'
 								type="password"
 							/>
+							<div className="text-muted">
+								<Link to='/request-reset-password'>Forgot your password?</Link>
+							</div>
 						</Form.Field>
 					</Form.Group>
 					<div className={'mainButtonContainer'}>
@@ -94,7 +98,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(LoginForm)`
-	.mainButtonContainer{
+	.mainButtonContainer {
 		align-items: center;
 		display: flex;
 		flex-direction: column;

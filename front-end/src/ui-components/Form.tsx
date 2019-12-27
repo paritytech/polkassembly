@@ -95,8 +95,16 @@ const StyledField = styled(SUIForm.Field)`
 
     .text-muted {
 		font-size: 1.2rem;
-        margin: 0.5rem 0 0 0;
-	}
+        margin: 0;
+
+        & > a {
+            font-size: 1.0rem;
+            color: #6c757d !important;
+            &:hover {
+                border-bottom: none!important;
+            }
+        }
+    }
 `;
 
 const StyledGroup = styled(SUIForm.Group)`

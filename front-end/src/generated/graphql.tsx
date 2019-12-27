@@ -410,6 +410,7 @@ export type Mutation = {
   changeEmail?: Maybe<Message>,
   changeName?: Maybe<Message>,
   changePassword?: Maybe<Message>,
+  changeUsername?: Maybe<Message>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
@@ -432,6 +433,11 @@ export type MutationChangeNameArgs = {
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'],
   oldPassword: Scalars['String']
+};
+
+
+export type MutationChangeUsernameArgs = {
+  username: Scalars['String']
 };
 
 
@@ -470,6 +476,7 @@ export type Mutation_Root = {
   changeEmail?: Maybe<Message>,
   changeName?: Maybe<Message>,
   changePassword?: Maybe<Message>,
+  changeUsername?: Maybe<Message>,
   /** delete data from the table: "comments" */
   delete_comments?: Maybe<Comments_Mutation_Response>,
   /** delete data from the table: "post_topics" */
@@ -519,6 +526,12 @@ export type Mutation_RootChangeNameArgs = {
 export type Mutation_RootChangePasswordArgs = {
   newPassword: Scalars['String'],
   oldPassword: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootChangeUsernameArgs = {
+  username: Scalars['String']
 };
 
 
@@ -2168,6 +2181,33 @@ export type LatestProposalPostsQuery = (
   )> }
 );
 
+export type ResetPasswordMutationVariables = {
+  newPassword: Scalars['String'],
+  token: Scalars['String']
+};
+
+
+export type ResetPasswordMutation = (
+  { __typename?: 'mutation_root' }
+  & { resetPassword: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type RequestResetPasswordMutationVariables = {
+  email: Scalars['String']
+};
+
+
+export type RequestResetPasswordMutation = (
+  { __typename?: 'mutation_root' }
+  & { requestResetPassword: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type VerifyEmailMutationVariables = {
   token: Scalars['String']
 };
@@ -2553,6 +2593,71 @@ export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
 export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
 export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
+export const ResetPasswordDocument = gql`
+    mutation resetPassword($newPassword: String!, $token: String!) {
+  resetPassword(newPassword: $newPassword, token: $token) {
+    message
+  }
+}
+    `;
+export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+
+/**
+ * __useResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
+      }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
+export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const RequestResetPasswordDocument = gql`
+    mutation requestResetPassword($email: String!) {
+  requestResetPassword(email: $email) {
+    message
+  }
+}
+    `;
+export type RequestResetPasswordMutationFn = ApolloReactCommon.MutationFunction<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
+
+/**
+ * __useRequestResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useRequestResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestResetPasswordMutation, { data, loading, error }] = useRequestResetPasswordMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useRequestResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>(RequestResetPasswordDocument, baseOptions);
+      }
+export type RequestResetPasswordMutationHookResult = ReturnType<typeof useRequestResetPasswordMutation>;
+export type RequestResetPasswordMutationResult = ApolloReactCommon.MutationResult<RequestResetPasswordMutation>;
+export type RequestResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
