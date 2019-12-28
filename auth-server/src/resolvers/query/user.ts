@@ -1,9 +1,12 @@
 import User from '../../model/User'
 
-export default async (_, args) => {
+interface argsType {
+	id: number
+}
+export default async ({ id }: argsType) => {
 	const user = await User
 		.query()
-		.where('id', args.id)
+		.where('id', id)
 		.first()
 
 	if (!user) {

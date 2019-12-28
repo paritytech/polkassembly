@@ -22,7 +22,7 @@ describe('signup mutation', () => {
 	const salt = 'testsalt'
 
 	it('should be able to signup', async () => {
-		const result = await signup(null, { email, password, username, name }, fakectx)
+		const result = await signup({ email, password, username, name }, fakectx)
 		expect(result.user.id).to.exist
 		expect(result.user.id).to.a('number')
 		expect(result.user.email).to.equal(email)
@@ -33,7 +33,18 @@ describe('signup mutation', () => {
 	})
 
 	it('should be able to subsequently login', async () => {
-		const result = await login(null, { password, username }, fakectx)
+		const result = await login({ password, username }, fakectx)
+		expect(result.user.id).to.exist
+		expect(result.user.id).to.a('number')
+		expect(result.user.email).to.equal(email)
+		expect(result.user.name).to.equal(name)
+		expect(result.user.username).to.equal(username)
+		expect(result.token).to.exist
+		expect(result.token).to.be.a('string')
+	})
+
+	it('should be able to subsequently login', async () => {
+		const result = await login({ password, username }, fakectx)
 		expect(result.user.id).to.exist
 		expect(result.user.id).to.a('number')
 		expect(result.user.email).to.equal(email)
@@ -52,7 +63,7 @@ describe('signup mutation', () => {
 		const email = 'wrong@email'
 
 		try {
-			await signup(null, { email, password, username, name }, fakectx)
+			await signup({ email, password, username, name }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)
@@ -74,7 +85,7 @@ describe('signup mutation', () => {
 			.returning('*')
 
 		try {
-			await signup(null, { email, password, username, name }, fakectx)
+			await signup({ email, password, username, name }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)
@@ -82,7 +93,7 @@ describe('signup mutation', () => {
 		}
 
 		try {
-			await signup(null, { email: 'wrong email', password, username, name }, fakectx)
+			await signup({ email: 'wrong email', password, username, name }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)
@@ -90,7 +101,7 @@ describe('signup mutation', () => {
 		}
 
 		try {
-			await signup(null, { email, password, username: 'newuser', name }, fakectx)
+			await signup({ email, password, username: 'newuser', name }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(ForbiddenError)

@@ -1,8 +1,11 @@
 import AuthService from '../../services/auth'
 import messages from '../../utils/messages'
 
-export default async (_, args) => {
-	const { token } = args
+interface argsType {
+	token: string
+}
+
+export default async ({ token }: argsType) => {
 	const authServiceInstance = new AuthService()
 	await authServiceInstance.VerifyEmail(token)
 
