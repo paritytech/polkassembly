@@ -12,7 +12,7 @@ import EmailVerificationToken from '../model/EmailVerificationToken'
 import PasswordResetToken from '../model/PasswordResetToken'
 import RefreshToken from '../model/RefreshToken'
 import User from '../model/User'
-import { AuthObjectType, JWTPayploadType, UserObjectType, Role } from '../types'
+import { AuthObjectType, JWTPayploadType, Role } from '../types'
 import getUserFromUserId from '../utils/getUserFromUserId'
 import getUserIdFromJWT from '../utils/getUserIdFromJWT'
 import messages from '../utils/messages'
@@ -137,19 +137,6 @@ export default class AuthService {
 			},
 			token: this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
-		}
-	}
-
-	public async GetUserProfile(token: string): Promise<UserObjectType> {
-		const userId = await getUserIdFromJWT(token, publicKey)
-		const user = await getUserFromUserId(userId)
-
-		return {
-			id: user.id,
-			email: user.email,
-			username: user.username,
-			name: user.name,
-			email_verified: user.email_verified
 		}
 	}
 
@@ -361,7 +348,7 @@ export default class AuthService {
 			.findById(resetToken.id)
 	}
 
-	private getSignedToken({ id, name, username, email }): string {
+	private getSignedToken({ id, name, username, email, email_verified }): string {
 		const allowedRoles: Role[] = [Role.USER]
 		let currentRole: Role = Role.USER
 
@@ -376,6 +363,7 @@ export default class AuthService {
 			name,
 			username,
 			email,
+			email_verified,
 			iat: Math.floor(Date.now() / 1000),
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
