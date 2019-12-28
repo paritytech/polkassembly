@@ -2224,7 +2224,7 @@ export type ChangeNameMutation = (
   { __typename?: 'mutation_root' }
   & { changeName: Maybe<(
     { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -2237,7 +2237,7 @@ export type ChangeUsernameMutation = (
   { __typename?: 'mutation_root' }
   & { changeUsername: Maybe<(
     { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -2250,7 +2250,7 @@ export type ChangeEmailMutation = (
   { __typename?: 'mutation_root' }
   & { changeEmail: Maybe<(
     { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -2722,6 +2722,7 @@ export const ChangeNameDocument = gql`
     mutation changeName($newName: String!) {
   changeName(newName: $newName) {
     message
+    token
   }
 }
     `;
@@ -2754,6 +2755,7 @@ export const ChangeUsernameDocument = gql`
     mutation changeUsername($username: String!) {
   changeUsername(username: $username) {
     message
+    token
   }
 }
     `;
@@ -2786,6 +2788,7 @@ export const ChangeEmailDocument = gql`
     mutation changeEmail($email: String!) {
   changeEmail(email: $email) {
     message
+    token
   }
 }
     `;

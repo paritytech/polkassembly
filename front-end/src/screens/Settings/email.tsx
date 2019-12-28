@@ -30,7 +30,7 @@ const Email = (): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeEmail && data.changeEmail.message) {
+					if (data && data.changeEmail && data.changeEmail.token) {
 						queueNotification({
 							header: 'Success!',
 							message: data.changeEmail.message,
