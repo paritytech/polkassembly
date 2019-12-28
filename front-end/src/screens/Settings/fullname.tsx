@@ -6,6 +6,7 @@ import { useChangeNameMutation } from '../../generated/graphql'
 import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { NotificationContext } from '../../context/NotificationContext'
 import { NotificationStatus } from '../../types'
+import { handleTokenChange } from '../../services/auth.service'
 
 const Fullname = (): JSX.Element => {
 	const [name, setName] = useState<string | null | undefined>('')
@@ -36,13 +37,16 @@ const Fullname = (): JSX.Element => {
 							message: data.changeName.message,
 							status: NotificationStatus.SUCCESS
 						})
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								name
-							}
-						})
 					}
+					if (data && data.changeName && data.changeName.token) {
+						handleTokenChange(data.changeName.token)
+					}
+					currentUser.setUserDetailsContextState((prevState) => {
+						return {
+							...prevState,
+							name
+						}
+					})
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',

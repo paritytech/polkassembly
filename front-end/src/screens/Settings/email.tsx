@@ -4,8 +4,9 @@ import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeEmailMutation } from '../../generated/graphql'
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { NotificationContext } from '../../context/NotificationContext'
+import { NotificationStatus } from '../../types'
+import { handleTokenChange } from '../../services/auth.service'
 
 const Email = (): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('')
@@ -30,12 +31,17 @@ const Email = (): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeEmail && data.changeEmail.token) {
-						queueNotification({
-							header: 'Success!',
-							message: data.changeEmail.message,
-							status: NotificationStatus.SUCCESS
-						})
+					if (data && data.changeEmail) {
+						if (data.changeEmail.message) {
+							queueNotification({
+								header: 'Success!',
+								message: data.changeEmail.message,
+								status: NotificationStatus.SUCCESS
+							})
+						}
+						if (data.changeEmail.token) {
+							handleTokenChange(data.changeEmail.token)
+						}
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
 								...prevState,
