@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 
+import { Icon } from 'semantic-ui-react'
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
 import { useChangeEmailMutation } from '../../generated/graphql'
@@ -70,6 +71,11 @@ const Email = (): JSX.Element => {
 					placeholder='mail@example.com'
 					type='email'
 				/>
+				{!currentUser.email_verified &&
+				<>
+					<br/><div><Icon name='warning circle' />Email is unverified.</div>
+				</>
+				}
 				{error &&
 				<>
 					<br/><div>{error.message}</div>
