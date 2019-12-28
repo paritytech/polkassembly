@@ -4,10 +4,10 @@ import { Context } from '../../types'
 import messages from '../../utils/messages'
 
 export default async (_, args, ctx: Context) => {
-	const token = getTokenFromReq(ctx.req)
+	let token = getTokenFromReq(ctx.req)
 	const { username } = args
 	const authServiceInstance = new AuthService()
-	await authServiceInstance.ChangeUsername(token, username)
+	token = await authServiceInstance.ChangeUsername(token, username)
 
-	return { message: messages.USERNAME_CHANGE_SUCCESSFUL }
+	return { message: messages.USERNAME_CHANGE_SUCCESSFUL, token }
 }

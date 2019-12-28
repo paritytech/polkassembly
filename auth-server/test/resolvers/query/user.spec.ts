@@ -37,11 +37,8 @@ describe('user query', () => {
 	it('should return user with id', async () => {
 		const id = dbUser.id
 		const result = await user(null, { id })
-		expect(result.email).to.equal(email)
-		expect(result.password).to.equal(password)
-		expect(result.salt).to.equal(salt)
+		expect(result.id).to.equal(id)
 		expect(result.username).to.equal(username)
 		expect(result.name).to.equal(name)
-		expect(result.email_verified).to.equal(email_verified)
 	})
 })

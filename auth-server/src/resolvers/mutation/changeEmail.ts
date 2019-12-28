@@ -7,7 +7,7 @@ import messages from '../../utils/messages'
 import validateEmail from '../../utils/validateEmail'
 
 export default async (_, args, ctx: Context) => {
-	const token = getTokenFromReq(ctx.req)
+	let token = getTokenFromReq(ctx.req)
 	const { email } = args
 
 	if (!validateEmail(email)) {
@@ -15,7 +15,7 @@ export default async (_, args, ctx: Context) => {
 	}
 
 	const authServiceInstance = new AuthService()
-	await authServiceInstance.ChangeEmail(token, email)
+	token = await authServiceInstance.ChangeEmail(token, email)
 
-	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL }
+	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL, token }
 }

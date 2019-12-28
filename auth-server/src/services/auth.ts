@@ -191,16 +191,17 @@ export default class AuthService {
 			.findById(userId)
 	}
 
-	public async ChangeName(token: string, newName: string) {
+	public async ChangeName(token: string, newName: string): Promise<string> {
 		const userId = await getUserIdFromJWT(token, publicKey)
-
-		//verify that the user exists
-		await getUserFromUserId(userId)
 
 		await User
 			.query()
 			.patch({ name: newName })
 			.findById(userId)
+
+		const user = await getUserFromUserId(userId)
+
+		return this.getSignedToken(user)
 	}
 
 	public async VerifyEmail(token: string) {
@@ -228,7 +229,7 @@ export default class AuthService {
 			.findById(verifyToken.id)
 	}
 
-	public async ChangeUsername(token: string, username: string) {
+	public async ChangeUsername(token: string, username: string): Promise<string> {
 		const userId = await getUserIdFromJWT(token, publicKey)
 		const existing = await User
 			.query()
@@ -245,12 +246,14 @@ export default class AuthService {
 				username
 			})
 			.findById(userId)
-	}
 
-	public async ChangeEmail(token: string, email: string) {
-		const userId = await getUserIdFromJWT(token, publicKey)
 		const user = await getUserFromUserId(userId)
 
+		return this.getSignedToken(user)
+	}
+
+	public async ChangeEmail(token: string, email: string): Promise<string> {
+		const userId = await getUserIdFromJWT(token, publicKey)
 		const existing = await User
 			.query()
 			.where('email', email)
@@ -279,13 +282,16 @@ export default class AuthService {
 			.allowInsert('[token, user_id, valid]')
 			.insert({
 				token: uuid(),
-				user_id: user.id,
+				user_id: userId,
 				valid: true
 			})
+
+		const user = await getUserFromUserId(userId)
 
 		// send verification email in background
 		sendVerificationEmail(user, verifyToken)
 
+		return this.getSignedToken(user)
 	}
 
 	public async RequestResetPassword(email: string) {
