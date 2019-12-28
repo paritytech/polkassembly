@@ -1,8 +1,11 @@
 import User from '../../model/User'
 
-export default (_, args) => {
+interface argsType {
+	id: number
+}
+export default ({ id }: argsType) => {
 	return User
 		.query()
-		.where('id', args.id)
+		.where('id', id)
 		.first()
 }
