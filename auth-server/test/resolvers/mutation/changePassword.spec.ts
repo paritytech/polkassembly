@@ -56,7 +56,7 @@ describe('changePassword mutation', () => {
 	it('should be able to login with the new password', async () => {
 		const newPassword = 'newpass'
 
-		const result = await login(null, { password: newPassword, username }, fakectx)
+		const result = await login({ password: newPassword, username }, fakectx)
 		expect(result.user.id).to.exist
 		expect(result.user.id).to.a('number')
 		expect(result.user.email).to.equal(email)

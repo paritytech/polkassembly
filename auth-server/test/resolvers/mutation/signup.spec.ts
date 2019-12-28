@@ -44,7 +44,7 @@ describe('signup mutation', () => {
 	})
 
 	it('should be able to subsequently login', async () => {
-		const result = await login(null, { password, username }, fakectx)
+		const result = await login({ password, username }, fakectx)
 		expect(result.user.id).to.exist
 		expect(result.user.id).to.a('number')
 		expect(result.user.email).to.equal(email)
