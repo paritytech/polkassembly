@@ -16,4 +16,4 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-CMD yarn test
+CMD yarn test:dangerous

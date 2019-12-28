@@ -5,9 +5,11 @@ import styled from 'styled-components';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { useCreatePostMutation, usePost_TopicsQuery } from '../../generated/graphql';
+import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
+import TopicsRadio from './TopicsRadio';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -17,10 +19,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const { queueNotification } = useContext(NotificationContext);
-	const [selectedTopic, setSetlectedTopic] = useState<number | null>(null);
+	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
-	const { data: topicData, error: topicError } = usePost_TopicsQuery()
-	const [createPostMutation, { loading, error }] = useCreatePostMutation();
+
+	const [createPostMutation, { loading }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false)
 	const { history } = useRouter();
 
@@ -45,34 +47,19 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 					throw Error('Error in post creation')
 				}
 			}).catch( e => console.error(e))
+		} else {
+			console.error('Current userid, title, content or selected topic missing',currentUser.id,title, content, selectedTopic)
 		}
 	}
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setContent(content);
-	const onTopicSelection = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => setSetlectedTopic(Number(event.currentTarget.value))
-	const renderTopics = () => {
-		if (!topicData || !topicData.post_topics) return null
-
-		return (
-			<Button.Group size="small">
-				{ topicData.post_topics.map(({ id, name } : {name: string, id:number}) => {
-					return <Button key={id} onClick={onTopicSelection} value={id}>{name}</Button>
-				})}
-			</Button.Group>
-		);
-	}
-
-	if (error || topicError) {
-		error && console.error('Post creation error',error)
-		topicError && console.error('Topic loading error',error)
-	}
 
 	return (
 		<Container>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
-					<div className={className}>
+					<Form className={className}>
 						<h3>New Post</h3>
 						<PostOrCommentForm
 							content={content}
@@ -80,7 +67,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							onTitleChange={onTitleChange}
 							title={title}
 						/>
-						{renderTopics()}
+						<TopicsRadio
+							onTopicSelection={(id) => setSetlectedTopic(id)}
+						/>
+
 						<div className={'mainButtonContainer'}>
 							<Button
 								onClick={handleSend}
@@ -91,7 +81,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 								{isSending || loading ? 'Creating...' : 'Create'}
 							</Button>
 						</div>
-					</div>
+					</Form>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
 			</Grid>
@@ -100,11 +90,6 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(CreatePost)`
-	background-color: #FFF;
-	padding: 2rem 3rem 3rem 3rem;
-	margin-top: 4rem;
-	border: 1px solid #EEE;
-
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
