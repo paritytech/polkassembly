@@ -6,6 +6,7 @@ import { UserDetailsContextType, JWTPayploadType } from '../types';
 
 const initialUserDetailsContext : UserDetailsContextType = {
 	email: null,
+	email_verified: false,
 	id: null,
 	name: null,
 	picture: null,
@@ -24,7 +25,8 @@ try {
 			sub: id,
 			name,
 			username,
-			email
+			email,
+			email_verified
 		} = tokenPayload
 
 		if (id) {
@@ -39,6 +41,7 @@ try {
 		if (email) {
 			initialUserDetailsContext.email = email
 		}
+		initialUserDetailsContext.email_verified = email_verified || false
 	}
 } catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.

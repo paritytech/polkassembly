@@ -57,3 +57,11 @@ export const logout = (setUserDetailsContextState: UserDetailsContextType['setUs
 		}
 	})
 }
+
+/**
+ * Save token in localstorage
+ * @param token JWT token
+ */
+export const handleTokenRefresh = (token: string) => {
+	token && storeLocalStorageToken(token)
+}

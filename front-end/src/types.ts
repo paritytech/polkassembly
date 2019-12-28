@@ -6,6 +6,7 @@ export interface UserDetailsContextType {
     name?: string | null,
     username?: string | null,
     email?: string | null,
+    email_verified?: boolean | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
 
@@ -30,6 +31,7 @@ export interface JWTPayploadType {
     name: string
     username: string
     email: string
+    email_verified: boolean
     iat: string
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
