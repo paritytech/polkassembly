@@ -20,6 +20,12 @@ export enum CacheControlScope {
   Public = 'PUBLIC'
 }
 
+export type ChangeResponse = {
+   __typename?: 'ChangeResponse',
+  message?: Maybe<Scalars['String']>,
+  token?: Maybe<Scalars['String']>,
+};
+
 /** columns and relationships of "comments" */
 export type Comments = {
    __typename?: 'comments',
@@ -407,10 +413,10 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  changeEmail?: Maybe<Message>,
-  changeName?: Maybe<Message>,
+  changeEmail?: Maybe<ChangeResponse>,
+  changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
-  changeUsername?: Maybe<Message>,
+  changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
@@ -473,10 +479,10 @@ export type MutationVerifyEmailArgs = {
 /** mutation root */
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  changeEmail?: Maybe<Message>,
-  changeName?: Maybe<Message>,
+  changeEmail?: Maybe<ChangeResponse>,
+  changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
-  changeUsername?: Maybe<Message>,
+  changeUsername?: Maybe<ChangeResponse>,
   /** delete data from the table: "comments" */
   delete_comments?: Maybe<Comments_Mutation_Response>,
   /** delete data from the table: "post_topics" */
@@ -2217,8 +2223,8 @@ export type ChangeNameMutationVariables = {
 export type ChangeNameMutation = (
   { __typename?: 'mutation_root' }
   & { changeName: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
@@ -2230,8 +2236,8 @@ export type ChangeUsernameMutationVariables = {
 export type ChangeUsernameMutation = (
   { __typename?: 'mutation_root' }
   & { changeUsername: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
@@ -2243,8 +2249,8 @@ export type ChangeEmailMutationVariables = {
 export type ChangeEmailMutation = (
   { __typename?: 'mutation_root' }
   & { changeEmail: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 

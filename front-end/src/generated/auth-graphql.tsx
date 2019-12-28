@@ -19,6 +19,12 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+export type ChangeResponse = {
+   __typename?: 'ChangeResponse',
+  message?: Maybe<Scalars['String']>,
+  token?: Maybe<Scalars['String']>,
+};
+
 export type LoginResponse = {
    __typename?: 'LoginResponse',
   user?: Maybe<User>,
@@ -35,10 +41,10 @@ export type Mutation = {
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  changeUsername?: Maybe<Message>,
-  changeEmail?: Maybe<Message>,
+  changeUsername?: Maybe<ChangeResponse>,
+  changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
-  changeName?: Maybe<Message>,
+  changeName?: Maybe<ChangeResponse>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   verifyEmail?: Maybe<Message>,
