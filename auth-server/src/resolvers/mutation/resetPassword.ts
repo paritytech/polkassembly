@@ -8,7 +8,7 @@ interface argsType {
 	token: string
 }
 
-export default async ({ token, newPassword }: argsType) => {
+export default async (parent, { token, newPassword }: argsType) => {
 
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR)

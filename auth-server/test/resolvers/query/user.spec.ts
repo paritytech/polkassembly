@@ -36,8 +36,7 @@ describe('user query', () => {
 
 	it('should return user with id', async () => {
 		const id = dbUser.id
-		const result = await user({ id })
-		expect(result.id).to.equal(id)
+		const result = await user(null, { id })
 		expect(result.username).to.equal(username)
 		expect(result.name).to.equal(name)
 	})

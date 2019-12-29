@@ -28,7 +28,7 @@ describe('requestResetPassword mutation', () => {
 	let token = '';
 
 	before(async () => {
-		signupResult = await signup({ email, password, username, name }, fakectx)
+		signupResult = await signup(null, { email, password, username, name }, fakectx)
 	})
 
 	after(async () => {
@@ -45,7 +45,7 @@ describe('requestResetPassword mutation', () => {
 
 	it('should be able to request a password reset', async () => {
 
-		const res = await requestResetPassword({ email })
+		const res = await requestResetPassword(null, { email })
 
 		const passwordResetToken = await PasswordResetToken
 			.query()
@@ -62,7 +62,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a short password', async () => {
 
 		try {
-			await resetPassword({ token, newPassword: 'short' })
+			await resetPassword(null, { token, newPassword: 'short' })
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)
@@ -73,7 +73,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a wrong token', async () => {
 
 		try {
-			await resetPassword({ token:'wrong', newPassword })
+			await resetPassword(null, { token:'wrong', newPassword })
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
@@ -83,7 +83,7 @@ describe('requestResetPassword mutation', () => {
 
 	it('should be able to reset password with a valid token', async () => {
 
-		const res = await resetPassword({ token, newPassword })
+		const res = await resetPassword(null, { token, newPassword })
 
 		expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL)
 	})
@@ -91,7 +91,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to change password with an expired token', async () => {
 
 		try {
-			await resetPassword({ token, newPassword })
+			await resetPassword(null, { token, newPassword })
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
@@ -103,7 +103,7 @@ describe('requestResetPassword mutation', () => {
 		const email = 'wrong@email'
 
 		try {
-			await requestResetPassword({ email })
+			await requestResetPassword(null, { email })
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)

@@ -3,7 +3,7 @@ import User from '../../model/User'
 interface argsType {
 	id: number
 }
-export default async ({ id }: argsType) => {
+export default async (parent, { id }: argsType) => {
 	const user = await User
 		.query()
 		.where('id', id)

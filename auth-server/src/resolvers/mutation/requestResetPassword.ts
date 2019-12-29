@@ -8,7 +8,7 @@ interface argsType {
 	email: string
 }
 
-export default async ({ email }: argsType) => {
+export default async (parent, { email }: argsType) => {
 	const authServiceInstance = new AuthService()
 
 	if (!validateEmail(email)) {

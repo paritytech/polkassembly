@@ -7,7 +7,7 @@ interface argsType {
 	newName: string
 }
 
-export default async ({ newName }: argsType, ctx: Context) => {
+export default async (parent, { newName }: argsType, ctx: Context) => {
 	let token = getTokenFromReq(ctx.req)
 	const authServiceInstance = new AuthService()
 	token = await authServiceInstance.ChangeName(token, newName)
