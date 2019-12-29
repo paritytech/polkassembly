@@ -3,7 +3,7 @@ import { Context } from '../../types'
 import getTokenFromReq from '../../utils/getTokenFromReq'
 import messages from '../../utils/messages'
 
-export default async (ctx: Context) => {
+export default async (parent, args, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 	const refreshToken = ctx.req.cookies.refresh_token
 
