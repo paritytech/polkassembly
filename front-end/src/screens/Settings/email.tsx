@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { Icon } from 'semantic-ui-react'
+import styled from 'styled-components'
 
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
@@ -75,6 +77,11 @@ const Email = (): JSX.Element => {
 					<br/><div>{error.message}</div>
 				</>
 				}
+				{!currentUser.email_verified &&
+				<div className={'warning-text'}>
+					<br/><div><Icon name='warning circle' />Email is unverified.</div>
+				</div>
+				}
 			</Form.Field>
 			<Form.Field width={2}>
 				<label>&nbsp;</label>
@@ -91,4 +98,9 @@ const Email = (): JSX.Element => {
 	)
 }
 
-export default Email
+export default styled(Email)`
+
+	.warning-text {
+		color: orange;
+	}
+`
