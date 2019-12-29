@@ -7,7 +7,7 @@ interface argsType {
 	username: string
 }
 
-export default async ({ username }: argsType, ctx: Context) => {
+export default async (parent, { username }: argsType, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 
 	const authServiceInstance = new AuthService()

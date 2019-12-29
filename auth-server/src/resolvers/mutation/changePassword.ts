@@ -10,7 +10,7 @@ interface argsType {
 	oldPassword: string
 }
 
-export default async ({ oldPassword, newPassword }: argsType, ctx: Context) => {
+export default async (parent, { oldPassword, newPassword }: argsType, ctx: Context) => {
 	const token = getTokenFromReq(ctx.req)
 
 	if (newPassword.length < 6) {

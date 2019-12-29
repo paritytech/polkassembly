@@ -25,7 +25,7 @@ describe('changeEmail mutation', () => {
 	const name = 'test name'
 
 	before(async () => {
-		signupResult = await signup({ email, password, username, name }, fakectx)
+		signupResult = await signup(null, { email, password, username, name }, fakectx)
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	})
 
@@ -44,7 +44,7 @@ describe('changeEmail mutation', () => {
 	it('should allow to change an email', async () => {
 		const email = 'blabla@blou.de'
 
-		await changeEmail({ email }, fakectx)
+		await changeEmail(null, { email }, fakectx)
 
 		const verifyToken = await EmailVerificationToken
 			.query()
@@ -58,7 +58,7 @@ describe('changeEmail mutation', () => {
 		const email = 'blabla@blou.de'
 		fakectx.req.headers.authorization = 'Bearer wrong'
 		try {
-			await changeEmail({ email }, fakectx)
+			await changeEmail(null, { email }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(AuthenticationError)
@@ -70,7 +70,7 @@ describe('changeEmail mutation', () => {
 		const email = 'wrong@email'
 
 		try {
-			await changeEmail({ email }, fakectx)
+			await changeEmail(null, { email }, fakectx)
 		} catch (error) {
 			expect(error).to.exist
 			expect(error).to.be.an.instanceof(UserInputError)
