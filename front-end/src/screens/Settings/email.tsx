@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { Icon } from 'semantic-ui-react'
+import styled from 'styled-components'
 
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
@@ -8,7 +10,11 @@ import { NotificationContext } from '../../context/NotificationContext'
 import { NotificationStatus } from '../../types'
 import { handleTokenChange } from '../../services/auth.service'
 
-const Email = (): JSX.Element => {
+interface Props{
+	className?: string
+}
+
+const Email = ({ className }: Props): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('')
 	const currentUser = useContext(UserDetailsContext)
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
@@ -55,13 +61,13 @@ const Email = (): JSX.Element => {
 						message: e.message,
 						status: NotificationStatus.ERROR
 					})
-					console.error('change email error', e)
+					console.error('Change email error:', e)
 				})
 		}
 	}
 
 	return (
-		<Form.Group>
+		<Form.Group className={className}>
 			<Form.Field width={10}>
 				<label>Email</label>
 				<input
@@ -74,6 +80,11 @@ const Email = (): JSX.Element => {
 				<>
 					<br/><div>{error.message}</div>
 				</>
+				}
+				{!currentUser.email_verified &&
+				<div className={'warning-text'}>
+					<div><Icon name='warning circle' />Your email is not verified.</div>
+				</div>
 				}
 			</Form.Field>
 			<Form.Field width={2}>
@@ -91,4 +102,9 @@ const Email = (): JSX.Element => {
 	)
 }
 
-export default Email
+export default styled(Email)`
+
+	.warning-text {
+		color: orange;
+	}
+`
