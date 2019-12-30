@@ -227,6 +227,10 @@ export default class AuthService {
 			.query()
 			.patch({ valid: false })
 			.findById(verifyToken.id)
+
+		const user = await getUserFromUserId(verifyToken.user_id)
+
+		return this.getSignedToken(user)
 	}
 
 	public async ChangeUsername(token: string, username: string): Promise<string> {

@@ -7,7 +7,7 @@ interface argsType {
 
 export default async (parent, { token }: argsType) => {
 	const authServiceInstance = new AuthService()
-	await authServiceInstance.VerifyEmail(token)
+	const updatedJWT = await authServiceInstance.VerifyEmail(token)
 
-	return { message: messages.EMAIL_VERIFICATION_SUCCESSFUL }
+	return { message: messages.EMAIL_VERIFICATION_SUCCESSFUL, token: updatedJWT }
 }
