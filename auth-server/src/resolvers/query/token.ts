@@ -1,7 +1,7 @@
 import AuthService from '../../services/auth'
-import { Context } from '../../types'
+import { Context, TokenType } from '../../types'
 
-export default async (parent, args, ctx: Context) => {
+export default async (parent, args, ctx: Context): Promise<TokenType> => {
 	const refreshToken = ctx.req.cookies.refresh_token
 
 	if (!refreshToken) {
