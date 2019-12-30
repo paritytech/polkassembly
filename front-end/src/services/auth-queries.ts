@@ -5,6 +5,8 @@ const USER_FRAGMENT = gql`
       id
       name
       username
+      email
+      email_verified
   }
 `
 

@@ -99,15 +99,19 @@ const Apollo = ( { children }:Props ) => {
 
 			storeLocalStorageToken(accessToken)
 
-			if (tokenPayload && tokenPayload.sub && tokenPayload.name ){
+			if (tokenPayload && tokenPayload.sub) {
 				const id = Number(tokenPayload.sub)
-				const username =  tokenPayload.name
+				const name = tokenPayload.name
+				const username =  tokenPayload.username
+				const email = tokenPayload.email
 
-				if (id && username){
+				if (id) {
 					currentUser.setUserDetailsContextState((prevState) => {
 						return {
 							...prevState,
+							email,
 							id,
+							name,
 							username
 						}
 					})

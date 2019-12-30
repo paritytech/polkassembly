@@ -14,6 +14,7 @@ export interface UserObjectType {
     email: string
     username: string
     name: string
+    email_verified: boolean
 }
 
 export interface SignUpResultType {
@@ -50,6 +51,9 @@ export interface HasuraClaimPayload {
 export interface JWTPayploadType {
     sub: string
     name: string
+    username: string,
+    email: string
+    email_verified: boolean
     iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }

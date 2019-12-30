@@ -19,6 +19,12 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+export type ChangeResponse = {
+   __typename?: 'ChangeResponse',
+  message?: Maybe<Scalars['String']>,
+  token?: Maybe<Scalars['String']>,
+};
+
 export type LoginResponse = {
    __typename?: 'LoginResponse',
   user?: Maybe<User>,
@@ -35,10 +41,10 @@ export type Mutation = {
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  changeUsername?: Maybe<Message>,
-  changeEmail?: Maybe<Message>,
+  changeUsername?: Maybe<ChangeResponse>,
+  changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
-  changeName?: Maybe<Message>,
+  changeName?: Maybe<ChangeResponse>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   verifyEmail?: Maybe<Message>,
@@ -118,12 +124,13 @@ export type User = {
   id?: Maybe<Scalars['Int']>,
   username?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
-  email_verified?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  email_verified?: Maybe<Scalars['Boolean']>,
 };
 
 export type UserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'username'>
+  & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
 );
 
 export type SignupMutationVariables = {
@@ -191,6 +198,8 @@ export const UserFragmentDoc = gql`
   id
   name
   username
+  email
+  email_verified
 }
     `;
 export const SignupDocument = gql`

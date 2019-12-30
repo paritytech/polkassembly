@@ -17,6 +17,7 @@ import Post from './screens/Post';
 import Proposals from './screens/Proposals';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
+import Settings from './screens/Settings'
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
 
@@ -63,6 +64,9 @@ const App = () => {
 									</Route>
 									<Route path="/verify-email/:token">
 										<VerifyEmail/>
+									</Route>
+									<Route path="/settings">
+										<Settings/>
 									</Route>
 								</Switch>
 							</Apollo>

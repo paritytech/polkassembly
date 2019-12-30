@@ -1,5 +1,5 @@
 export default `
     changeEmail(
         email: String!
-    ): Message
+    ): ChangeResponse
 `

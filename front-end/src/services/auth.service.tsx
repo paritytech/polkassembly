@@ -35,7 +35,10 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 	user && currentUser.setUserDetailsContextState((prevState) => {
 		return {
 			...prevState,
+			email: user.email,
+			email_verified: user.email_verified,
 			id: user.id,
+			name: user.name,
 			username: user.username
 		}
 	})
@@ -46,8 +49,19 @@ export const logout = (setUserDetailsContextState: UserDetailsContextType['setUs
 	setUserDetailsContextState((prevState) => {
 		return {
 			...prevState,
+			email: null,
+			email_verified: false,
 			id: null,
+			name: null,
 			username: null
 		}
 	})
+}
+
+/**
+ * Save token in localstorage
+ * @param token JWT token
+ */
+export const handleTokenChange = (token: string) => {
+	token && storeLocalStorageToken(token)
 }

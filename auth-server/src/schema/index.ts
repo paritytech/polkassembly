@@ -3,6 +3,7 @@ import { gql } from 'apollo-server-express'
 import userType from './type/user'
 import tokenType from './type/token'
 import messageType from './type/message'
+import changeResponseType from './type/changeResponse'
 import loginResponseType from './type/loginResponse'
 import userQuery from './query/user'
 import usersQuery from './query/users'
@@ -21,6 +22,7 @@ import verifyEmail from './mutation/verifyEmail'
 export default gql`
 	${userType}
 	${tokenType}
+	${changeResponseType}
 	${loginResponseType}
 	${messageType}
 

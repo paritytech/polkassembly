@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Menu, Icon } from 'semantic-ui-react'
+import { Dropdown, Menu, Icon } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext'
@@ -33,6 +33,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		logoutMutation();
 	}
 
+	const icon = <Icon name='user circle' inverted />
+
 	return (
 		<Menu className={className} stackable inverted borderless>
 			<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
@@ -41,8 +43,12 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Menu.Menu position="right">
 				{username
 					? <>
-						<Menu.Item><Icon name='user circle' inverted /> {username}</Menu.Item>
-						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+						<Dropdown text={username} icon={icon} item={true}>
+							<Dropdown.Menu>
+								<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
+								<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+							</Dropdown.Menu>
+						</Dropdown>
 					</>
 					: <>
 						<Menu.Item as={Link} to="/login">Login</Menu.Item >
