@@ -57,3 +57,11 @@ export interface JWTPayploadType {
     iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
+
+export interface MessageType {
+    message: string
+}
+
+export interface ChangeResponseType extends MessageType {
+    token: string
+}
