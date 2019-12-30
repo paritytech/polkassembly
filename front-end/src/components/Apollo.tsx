@@ -104,12 +104,14 @@ const Apollo = ( { children }:Props ) => {
 				const name = tokenPayload.name
 				const username =  tokenPayload.username
 				const email = tokenPayload.email
+				const email_verified = tokenPayload.email_verified
 
 				if (id) {
 					currentUser.setUserDetailsContextState((prevState) => {
 						return {
 							...prevState,
 							email,
+							email_verified,
 							id,
 							name,
 							username
