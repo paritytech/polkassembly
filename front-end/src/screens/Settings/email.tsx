@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import Button from '../../ui-components/Button'
 import { Form } from '../../ui-components/Form'
-import { useChangeEmailMutation } from '../../generated/graphql'
-import { UserDetailsContext } from '../../context/UserDetailsContext'
 import { NotificationContext } from '../../context/NotificationContext'
+import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { useChangeEmailMutation } from '../../generated/graphql'
 import { NotificationStatus } from '../../types'
 import { handleTokenChange } from '../../services/auth.service'
 
