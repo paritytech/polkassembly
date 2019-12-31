@@ -26,5 +26,7 @@ export default {
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
 	USERNAME_LENGTH_ERROR: 'Your Username must be at least 3 characters long.',
 	USER_NOT_FOUND: 'User not found.',
-	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.'
+	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
+	SUBSCRIPTION_ADD_SUCCESSFUL: 'You are subscribed to post successfully',
+	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed from post successfuly'
 };
