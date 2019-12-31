@@ -1,6 +1,6 @@
 version: "3.6"
 services:
-  postgres:
+  postgres-test:
     image: postgres
     restart: always
     ports:
@@ -11,14 +11,13 @@ services:
       POSTGRES_PASSWORD: postgres
       PGPORT: 5433
       POSTGRES_DB: governance-auth-test
-    container_name: governance-auth-test
   auth-test:
     image: paritytech/polkassembly-auth-test
     depends_on:
-      - "postgres"
+      - "postgres-test"
     environment:
       NODE_ENV: test
-      TEST_DATABASE_URL: "postgres://postgres:postgres@postgres:5433/governance-auth-test"
+      TEST_DATABASE_URL: "postgres://postgres:postgres@postgres-test:5433/governance-auth-test"
       SENDGRID_API_KEY: ""
       REACT_APP_AUTH_URL: "http://localhost:8010"
       REACT_APP_SERVER_URL: "http://localhost:8080/v1/graphql"

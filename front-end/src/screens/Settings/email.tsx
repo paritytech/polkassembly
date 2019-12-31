@@ -10,7 +10,11 @@ import { useChangeEmailMutation } from '../../generated/graphql'
 import { NotificationStatus } from '../../types'
 import { handleTokenChange } from '../../services/auth.service'
 
-const Email = (): JSX.Element => {
+interface Props{
+	className?: string
+}
+
+const Email = ({ className }: Props): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('')
 	const currentUser = useContext(UserDetailsContext)
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
@@ -57,13 +61,13 @@ const Email = (): JSX.Element => {
 						message: e.message,
 						status: NotificationStatus.ERROR
 					})
-					console.error('change email error', e)
+					console.error('Change email error:', e)
 				})
 		}
 	}
 
 	return (
-		<Form.Group>
+		<Form.Group className={className}>
 			<Form.Field width={10}>
 				<label>Email</label>
 				<input
@@ -79,7 +83,7 @@ const Email = (): JSX.Element => {
 				}
 				{!currentUser.email_verified &&
 				<div className={'warning-text'}>
-					<br/><div><Icon name='warning circle' />Email is unverified.</div>
+					<div><Icon name='warning circle' />Your email is not verified.</div>
 				</div>
 				}
 			</Form.Field>
