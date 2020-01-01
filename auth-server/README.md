@@ -54,6 +54,7 @@ PORT=8010
 BOT_PROPOSAL_USER_ID=1234
 NODE_ENV=development
 DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
+HASURA_POST_SUBSCRIPTION_SECRET="<shared secret key with hasura>"
 ```
 
 A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
@@ -95,7 +96,7 @@ Then run this docker:
 ```bash
 docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
 ```
-It will create a local postgres and test will run on top of that.  
+It will create a local postgres and test will run on top of that.
 
 ### Locally
 **=============DANGER===============**

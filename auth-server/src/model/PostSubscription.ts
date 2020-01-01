@@ -3,7 +3,7 @@ import connection from './connection'
 
 Model.knex(connection)
 
-export default class PasswordResetToken extends Model {
+export default class PostSubscription extends Model {
 	readonly id!: number
 	user_id!: number
 	post_id!: number
