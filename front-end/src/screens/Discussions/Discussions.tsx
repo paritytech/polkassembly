@@ -3,7 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DiscussionCard from '../../components/DiscussionCard'
+import DiscussionCard from '../../components/DiscussionCard';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestDiscussionPostsQuery } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
@@ -17,7 +17,7 @@ const Discussions = ({ className, data }: Props) => {
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
-		history.push('/post/create')
+		history.push('/post/create');
 	};
 
 	return (
@@ -54,7 +54,7 @@ const Discussions = ({ className, data }: Props) => {
 			</Grid>
 		</Container>
 	);
-}
+};
 
 export default styled(Discussions)`
 

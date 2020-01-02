@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { NotificationContext } from '../../context/NotificationContext';
-import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
@@ -23,7 +23,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 
 	const [createPostMutation, { loading }] = useCreatePostMutation();
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
 
 	const handleSend = () => {
@@ -36,21 +36,21 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				userId: currentUser.id
 			} }).then(({ data }) => {
 				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0 && data.insert_posts.returning.length && data.insert_posts.returning[0].id) {
-					const postId = data.insert_posts.returning.length && data.insert_posts.returning[0].id
-					history.push(`/post/${postId}`)
+					const postId = data.insert_posts.returning.length && data.insert_posts.returning[0].id;
+					history.push(`/post/${postId}`);
 					queueNotification({
 						header: 'Thanks for sharing!',
 						message: 'Post created successfully.',
 						status: NotificationStatus.SUCCESS
-					})
+					});
 				} else {
-					throw Error('Error in post creation')
+					throw Error('Error in post creation');
 				}
-			}).catch( e => console.error(e))
+			}).catch( e => console.error(e));
 		} else {
-			console.error('Current userid, title, content or selected topic missing',currentUser.id,title, content, selectedTopic)
+			console.error('Current userid, title, content or selected topic missing',currentUser.id,title, content, selectedTopic);
 		}
-	}
+	};
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setContent(content);
@@ -141,4 +141,4 @@ export default styled(CreatePost)`
 	textarea {
 		font-size: 1.4rem;
 	}
-`
+`;

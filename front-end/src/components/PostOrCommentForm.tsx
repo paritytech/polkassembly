@@ -22,6 +22,7 @@ const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange,
 					<Form.Field width={16}>
 						<label>Title</label>
 						<input
+							className={'title'}
 							onChange={onTitleChange}
 							placeholder='Your title...'
 							type="text"
@@ -45,6 +46,10 @@ export default styled(PostOrCommentForm)`
 		padding: 0;
 	}
 
+	input.title {
+		font-size: 1.4rem !important;
+	}
+
 	textarea {
 		font-size: 1.4rem;
 	}
@@ -53,4 +58,4 @@ export default styled(PostOrCommentForm)`
 		max-width: 100%;
 		padding: 0 0.5rem;
 	}
-`
+`;

@@ -1,24 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
 
-import Button from '../../ui-components/Button'
-import { Form } from '../../ui-components/Form'
-import { useChangeNameMutation } from '../../generated/graphql'
-import { UserDetailsContext } from '../../context/UserDetailsContext'
-import { NotificationContext } from '../../context/NotificationContext'
-import { NotificationStatus } from '../../types'
-import { handleTokenChange } from '../../services/auth.service'
+import Button from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
+import { useChangeNameMutation } from '../../generated/graphql';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { NotificationContext } from '../../context/NotificationContext';
+import { NotificationStatus } from '../../types';
+import { handleTokenChange } from '../../services/auth.service';
 
 const Fullname = (): JSX.Element => {
-	const [name, setName] = useState<string | null | undefined>('')
-	const currentUser = useContext(UserDetailsContext)
-	const [changeNameMutation, { loading, error }] = useChangeNameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } })
-	const { queueNotification } = useContext(NotificationContext)
+	const [name, setName] = useState<string | null | undefined>('');
+	const currentUser = useContext(UserDetailsContext);
+	const [changeNameMutation, { loading, error }] = useChangeNameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
-		setName(currentUser.name)
-	}, [currentUser.name])
+		setName(currentUser.name);
+	}, [currentUser.name]);
 
-	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value)
+	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
@@ -36,27 +36,27 @@ const Fullname = (): JSX.Element => {
 							header: 'Success!',
 							message: data.changeName.message,
 							status: NotificationStatus.SUCCESS
-						})
+						});
 					}
 					if (data && data.changeName && data.changeName.token) {
-						handleTokenChange(data.changeName.token)
+						handleTokenChange(data.changeName.token);
 					}
 					currentUser.setUserDetailsContextState((prevState) => {
 						return {
 							...prevState,
 							name
-						}
-					})
+						};
+					});
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
 						message: e.message,
 						status: NotificationStatus.ERROR
-					})
-					console.error('change name error', e)
-				})
+					});
+					console.error('change name error', e);
+				});
 		}
-	}
+	};
 
 	return (
 		<Form.Group>
@@ -86,7 +86,7 @@ const Fullname = (): JSX.Element => {
 				</Button>
 			</Form.Field>
 		</Form.Group>
-	)
-}
+	);
+};
 
-export default Fullname
+export default Fullname;

@@ -14,5 +14,5 @@ export default () => {
 
 	if (data) return <Post data={data} refetch={refetch} />;
 
-	return <Loader/>
+	return <Loader/>;
 };

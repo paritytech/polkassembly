@@ -25,8 +25,8 @@ const Modal = (props : Props) => {
 				{buttons}
 			</SUIModal.Actions>
 		</SUIModal>
-	)
-}
+	);
+};
 
 export default styled(Modal)`
 &.ui.modal {

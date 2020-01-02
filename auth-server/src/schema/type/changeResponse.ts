@@ -3,4 +3,4 @@ export default `
         message: String
         token: String
     }
-`
+`;

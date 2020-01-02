@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import { Grid, Divider } from 'semantic-ui-react'
-import { Form } from '../../ui-components/Form'
-import Username from './username'
-import Fullname from './fullname'
-import Email from './email'
-import Password from  './password'
+import { Grid, Divider } from 'semantic-ui-react';
+import { Form } from '../../ui-components/Form';
+import Username from './username';
+import Fullname from './fullname';
+import Email from './email';
+import Password from  './password';
 
 interface Props {
 	className?: string
@@ -29,6 +29,6 @@ const Settings = ({ className }:Props): JSX.Element => {
 			</Grid.Column>
 		</Grid>
 	);
-}
+};
 
-export default Settings
+export default Settings;

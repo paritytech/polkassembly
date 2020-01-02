@@ -3,4 +3,4 @@ export default `
         username: String!
         password: String!
     ): LoginResponse
-`
+`;

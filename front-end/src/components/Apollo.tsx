@@ -30,7 +30,7 @@ const fetchAccessToken = () => (
 		},
 		method: 'POST'
 	})
-)
+);
 
 /**
  * Read the data from the answer
@@ -38,16 +38,16 @@ const fetchAccessToken = () => (
  */
 const handleResponse = () => async (response:Response) => {
 	if(response.ok) {
-		const res: Get_Refresh_TokenQueryResult = await response.json()
+		const res: Get_Refresh_TokenQueryResult = await response.json();
 		if(res && res.data){
-			return res.data.token
+			return res.data.token;
 		} else {
-			throw new Error('The auth server did not answer with an expected refreshed token.')
+			throw new Error('The auth server did not answer with an expected refreshed token.');
 		}
 	}
 
-	throw new Error('The auth server did not answer successfully to the refresh token call.')
-}
+	throw new Error('The auth server did not answer successfully to the refresh token call.');
+};
 
 /**
  * Tells whether the jwt token stored locally
@@ -60,10 +60,10 @@ const isTokenValidOrUndefined = (): boolean => {
 		const tokenPayload = jwt.decode(token) as JWTPayploadType | null;
 
 		// if the token couldn't be decoded (tokenPayload is null) ask for a new one.
-		return tokenPayload ? tokenPayload.exp > Date.now() / 1000 : false
+		return tokenPayload ? tokenPayload.exp > Date.now() / 1000 : false;
 	} else {
 		// if there's no token we shouldn't ask for a refresh token
-		return true
+		return true;
 	}
 };
 
@@ -72,11 +72,11 @@ const isTokenValidOrUndefined = (): boolean => {
  * local storage and set the Authorization accordingly.
  */
 const setAuthorizationLink = setContext(() => {
-	const token = getLocalStorageToken()
+	const token = getLocalStorageToken();
 	if (token) {
-		return { headers: { authorization: `Bearer ${token}` } }
+		return { headers: { authorization: `Bearer ${token}` } };
 	} else {
-		return null
+		return null;
 	}
 });
 
@@ -89,22 +89,22 @@ const Apollo = ( { children }:Props ) => {
 	const publicKey = process.env.REACT_APP_JWT_PUBLIC_KEY;
 
 	const handleError = (err:Error) => {
-		logout(currentUser.setUserDetailsContextState)
+		logout(currentUser.setUserDetailsContextState);
 		console.error('There has been a problem getting a new access token: ', err);
-	}
+	};
 
 	const handleFetch = (accessToken : string) => {
 		try {
 			const tokenPayload = accessToken && publicKey && jwt.verify(accessToken, publicKey) as JWTPayploadType;
 
-			storeLocalStorageToken(accessToken)
+			storeLocalStorageToken(accessToken);
 
 			if (tokenPayload && tokenPayload.sub) {
-				const id = Number(tokenPayload.sub)
-				const name = tokenPayload.name
-				const username =  tokenPayload.username
-				const email = tokenPayload.email
-				const email_verified = tokenPayload.email_verified
+				const id = Number(tokenPayload.sub);
+				const name = tokenPayload.name;
+				const username =  tokenPayload.username;
+				const email = tokenPayload.email;
+				const email_verified = tokenPayload.email_verified;
 
 				if (id) {
 					currentUser.setUserDetailsContextState((prevState) => {
@@ -115,15 +115,15 @@ const Apollo = ( { children }:Props ) => {
 							id,
 							name,
 							username
-						}
-					})
+						};
+					});
 				}
 			}
 		} catch (e) {
 			// the jwt isn't valid
-			console.log('Invalid jwt received.',e)
+			console.log('Invalid jwt received.',e);
 		}
-	}
+	};
 
 	const httpLink = new HttpLink({
 		uri: process.env.REACT_APP_HASURA_GRAPHQL_URL
@@ -136,13 +136,13 @@ const Apollo = ( { children }:Props ) => {
 		handleFetch,
 		handleResponse,
 		isTokenValidOrUndefined
-	})
+	});
 
 	const link = ApolloLink.from([
 		tokenRefreshLink,
 		setAuthorizationLink,
 		httpLink
-	])
+	]);
 
 	const client = new ApolloClient({
 		cache: new InMemoryCache(),
@@ -153,7 +153,7 @@ const Apollo = ( { children }:Props ) => {
 		<ApolloProvider client={client}>
 			{children}
 		</ApolloProvider>
-	)
-}
+	);
+};
 
 export default Apollo;

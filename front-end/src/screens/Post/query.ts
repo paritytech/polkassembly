@@ -11,7 +11,7 @@ const commentFields = gql`
         id
         updated_at
     }
-`
+`;
 
 const commentRecursive = gql`
     fragment commentRecursive on comments {       
@@ -24,7 +24,7 @@ const commentRecursive = gql`
         }
     }
     ${commentFields}
-`
+`;
 
 const post = gql`
     fragment post on posts {
@@ -50,7 +50,7 @@ const post = gql`
         }
     }
     ${commentRecursive}
-`
+`;
 
 export const QUERY_POST_AND_COMMENTS = gql`
     query PostAndComments ($id:Int!) {
@@ -67,7 +67,7 @@ export const EDIT_POST= gql`
             affected_rows
         }
   }
-`
+`;
 
 export const ADD_ROOT_COMMENT=gql`
     mutation AddRootComment ($authorId: Int!, $content: String!, $postId: Int!) {
@@ -76,4 +76,4 @@ export const ADD_ROOT_COMMENT=gql`
             affected_rows
         }
     }
-`
+`;

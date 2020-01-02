@@ -1,24 +1,24 @@
-import * as sgMail from '@sendgrid/mail'
+import * as sgMail from '@sendgrid/mail';
 
-import User from '../model/User'
-import EmailVerificationToken from '../model/EmailVerificationToken'
-import PasswordResetToken from '../model/PasswordResetToken'
+import User from '../model/User';
+import EmailVerificationToken from '../model/EmailVerificationToken';
+import PasswordResetToken from '../model/PasswordResetToken';
 
-const apiKey = process.env.SENDGRID_API_KEY
-const FROM = 'noreply@polkassembly.io'
-const DOMAIN = 'http://polkassembly.io'
+const apiKey = process.env.SENDGRID_API_KEY;
+const FROM = 'noreply@polkassembly.io';
+const DOMAIN = 'http://polkassembly.io';
 
 if (apiKey) {
-	sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 }
 
 export const sendVerificationEmail = (user: User, token: EmailVerificationToken) => {
 	if (!apiKey) {
-		console.warn('Verification Email not sent due to missing API key')
-		return
+		console.warn('Verification Email not sent due to missing API key');
+		return;
 	}
 
-	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`
+	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
 	const text = `
 		<p>
 			Welcome aboard ${user.name || ''}!<br/><br/>
@@ -28,7 +28,7 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 			See you soon,<br/><br/>
 			Polkassembly Team
 		</p>
-	`
+	`;
 
 	const msg = {
 		to: user.email,
@@ -36,19 +36,19 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 		subject: 'Verify your email address',
 		text,
 		html: text
-	}
+	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Verification Email not sent', e))
-}
+		console.error('Verification Email not sent', e));
+};
 
 export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) => {
 	if (!apiKey) {
-		console.warn('Password reset Email not sent due to missing API key')
-		return
+		console.warn('Password reset Email not sent due to missing API key');
+		return;
 	}
 
-	const resetUrl = `${DOMAIN}/auth/reset-password?token=${token.token}`
+	const resetUrl = `${DOMAIN}/auth/reset-password?token=${token.token}`;
 	const text = `
 		<p>
 			Hi ${user.name || ''}!<br/><br/>
@@ -65,7 +65,7 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 
 			Polkassembly Team
 		</p>
-	`
+	`;
 
 	const msg = {
 		to: user.email,
@@ -73,16 +73,16 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 		subject: 'Reset Your Password',
 		text,
 		html: text
-	}
+	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Password reset email not sent', e))
-}
+		console.error('Password reset email not sent', e));
+};
 
 export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 	if (!apiKey) {
-		console.warn('There is a new comment on the post you are subscribed to')
-		return
+		console.warn('There is a new comment on the post you are subscribed to');
+		return;
 	}
 
 	const text = `
@@ -96,7 +96,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 
 			Polkassembly Team
 		</p>
-	`
+	`;
 
 	const msg = {
 		to: user.email,
@@ -104,8 +104,8 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 		subject: 'Update on post you are subscribed to',
 		text,
 		html: text
-	}
+	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Post subscription email not sent', e))
-}
+		console.error('Post subscription email not sent', e));
+};

@@ -17,17 +17,17 @@ interface Props {
 
 const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
-	const [content, setContent] = useState('')
+	const [content, setContent] = useState('');
 
 	const onContentChange = (content: string) => setContent(content);
 	const [addRootCommentMutation, { error }] = useAddRootCommentMutation();
 
-	if (!id) return <div>You must loggin to comment.</div>
+	if (!id) return <div>You must loggin to comment.</div>;
 
 	const handleCancel = () => {
 		setContent('');
 		onHide();
-	}
+	};
 
 	const handleSave = () => {
 		addRootCommentMutation( {
@@ -41,13 +41,13 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 				if (data && data.insert_comments && data.insert_comments.affected_rows>0){
 					setContent('');
 					onHide();
-					refetch()
+					refetch();
 				} else {
-					throw new Error('No data returned from the saving comment query')
+					throw new Error('No data returned from the saving comment query');
 				}
-				refetch()})
-			.catch((e) => console.error('Error saving comment',e))
-	}
+				refetch();})
+			.catch((e) => console.error('Error saving comment',e));
+	};
 
 	return (
 		<div className={className}>
@@ -66,7 +66,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 			</>
 		</div>
 	);
-}
+};
 
 export default styled(CreateRootComment)`
 	margin: 2rem 0;

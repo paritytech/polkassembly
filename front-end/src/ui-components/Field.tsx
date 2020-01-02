@@ -3,7 +3,7 @@ import { Form as SUIForm, FormFieldProps as SUIFormFieldProps } from 'semantic-u
 import styled from 'styled-components';
 
 function Field (props : SUIFormFieldProps){
-	return <SUIForm.Field {...props}/>
+	return <SUIForm.Field {...props}/>;
 }
 
 export default styled(Field)`

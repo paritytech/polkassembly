@@ -1,10 +1,10 @@
-import { UserInputError } from 'apollo-server'
+import { UserInputError } from 'apollo-server';
 
-import validateEmail from '../../utils/validateEmail'
-import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie'
-import AuthService from '../../services/auth'
-import { Context } from '../../types'
-import messages from '../../utils/messages'
+import validateEmail from '../../utils/validateEmail';
+import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
+import AuthService from '../../services/auth';
+import { Context, SignUpResultType } from '../../types';
+import messages from '../../utils/messages';
 
 interface argsType {
 	email: string,
@@ -13,22 +13,22 @@ interface argsType {
 	username: string
 }
 
-export default async (parent, { email, password, username, name }: argsType, ctx: Context) => {
+export default async (parent, { email, password, username, name }: argsType, ctx: Context): Promise<SignUpResultType> => {
 
 	if (!validateEmail(email)) {
-		throw new UserInputError(messages.INVALID_EMAIL)
+		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
 	if (username.length < 3) {
-		throw new UserInputError(messages.USERNAME_LENGTH_ERROR)
+		throw new UserInputError(messages.USERNAME_LENGTH_ERROR);
 	}
 
 	if (password.length < 6) {
-		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR)
+		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 
-	const authServiceInstance = new AuthService()
-	const { user, token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name)
-	setRefreshTokenCookie(ctx.res, refreshToken)
-	return { user, token }
-}
+	const authServiceInstance = new AuthService();
+	const { user, token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name);
+	setRefreshTokenCookie(ctx.res, refreshToken);
+	return { user, token };
+};

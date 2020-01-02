@@ -1,10 +1,10 @@
 import React from 'react';
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Dropdown, Menu, Icon } from 'semantic-ui-react'
+import { Dropdown, Menu, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { UserDetailsContext } from '../../context/UserDetailsContext'
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { logout } from '../../services/auth.service';
@@ -25,15 +25,16 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			history.push('/');
 		}
 
-		if (error) console.error(error)
+		if (error) console.error(error);
 
-	},[data, error, history, setUserDetailsContextState])
+	},[data, error, history, setUserDetailsContextState]);
 
 	const handleLogout = () => {
 		logoutMutation();
-	}
+	};
 
-	const icon = <Icon name='user circle' inverted />
+	const userMenu = <><Icon name='user circle' inverted />{username}</>;
+	const caretIcon = <Icon name='caret down' inverted />;
 
 	return (
 		<Menu className={className} stackable inverted borderless>
@@ -43,7 +44,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Menu.Menu position="right">
 				{username
 					? <>
-						<Dropdown text={username} icon={icon} item={true}>
+						<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
 							<Dropdown.Menu>
 								<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
 								<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
@@ -58,7 +59,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			</Menu.Menu>
 		</Menu>
 	);
-}
+};
 
 export default styled(MenuBar)`
 	&.ui.menu {

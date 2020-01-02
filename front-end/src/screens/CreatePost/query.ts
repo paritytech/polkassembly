@@ -22,7 +22,7 @@ const topic_fragment = gql`
         id
         name
     }
-`
+`;
 
 export const GET_POST_TOPICS = gql`
     query Post_topics {

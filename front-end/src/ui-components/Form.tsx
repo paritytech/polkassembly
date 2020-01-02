@@ -2,7 +2,7 @@ import React from 'react';
 import { Form as SUIForm, FormProps as SUIFormProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import Input from './Input'
+import Input from './Input';
 import Field from './Field';
 import Group from './Group';
 
@@ -18,7 +18,7 @@ Form.Group = Group;
 let _standalone=true;
 
 export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
-	_standalone = standalone
+	_standalone = standalone;
 	return <StyledForm {...props} />;
 }
 

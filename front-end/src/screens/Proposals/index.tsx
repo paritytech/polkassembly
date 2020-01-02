@@ -14,7 +14,7 @@ const ProposalsContainer = () => {
 
 	if (data) return <Proposals data={data} />;
 
-	return <Loader/>
+	return <Loader/>;
 };
 
 export default ProposalsContainer;
