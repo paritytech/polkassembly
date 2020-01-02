@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Header, Icon, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
+import { NotificationContext } from '../../../context/NotificationContext';
 import { useResetPasswordMutation } from '../../../generated/graphql';
 import { useRouter } from '../../../hooks';
-import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
 import Button from '../../../ui-components/Button';
+import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
 
 interface Props {
@@ -89,11 +90,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 						>
 							Set new password
 						</Button>
-						{error &&
-						<>
-							<br/><div>{error.message}</div>
-						</>
-						}
+						{error && <FilteredError text={error.message}/>}
 					</div>
 				</Form>}
 			</Grid.Column>

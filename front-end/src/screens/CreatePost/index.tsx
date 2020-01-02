@@ -9,6 +9,7 @@ import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import TopicsRadio from './TopicsRadio';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
 interface Props {
@@ -22,7 +23,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 
-	const [createPostMutation, { loading }] = useCreatePostMutation();
+	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
 
@@ -81,6 +82,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 								{isSending || loading ? 'Creating...' : 'Create'}
 							</Button>
 						</div>
+						{error && error.message && <FilteredError text={error.message}/>}
 					</Form>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>

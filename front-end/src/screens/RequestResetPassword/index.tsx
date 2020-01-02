@@ -3,10 +3,11 @@ import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
-import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
 import { useRequestResetPasswordMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -66,11 +67,7 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 						>
 							Request reset
 						</Button>
-						{error &&
-						<>
-							<br/><div>{error.message}</div>
-						</>
-						}
+						{error && <FilteredError text={error.message}/>}
 					</div>
 				</Form>
 			</Grid.Column>

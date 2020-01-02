@@ -3,10 +3,11 @@ import React, { useState, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddRootCommentMutation } from '../../generated/graphql';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
-import Button from '../../ui-components/Button';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddRootCommentMutation } from '../../generated/graphql';
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
 
 interface Props {
 	className?: string
@@ -51,7 +52,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 
 	return (
 		<div className={className}>
-			{error && error.message && <div>{error.message}</div>}
+			{error && error.message && <FilteredError text={error.message}/>}
 
 			<>
 				<PostOrCommentForm

@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
-import { useChangeNameMutation } from '../../generated/graphql';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { useChangeNameMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
+import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 
 const Fullname = (): JSX.Element => {
 	const [name, setName] = useState<string | null | undefined>('');
@@ -68,11 +69,7 @@ const Fullname = (): JSX.Element => {
 					placeholder='username'
 					type='text'
 				/>
-				{error &&
-				<>
-					<br/><div>{error.message}</div>
-				</>
-				}
+				{error && <FilteredError text={error.message}/>}
 			</Form.Field>
 			<Form.Field width={2}>
 				<label>&nbsp;</label>
