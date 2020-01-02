@@ -52,7 +52,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 
 	return (
 		<div className={className}>
-			{error && error.message && <FilteredError text={error.message}/>}
+			{error && <FilteredError text={error.message}/>}
 
 			<>
 				<PostOrCommentForm

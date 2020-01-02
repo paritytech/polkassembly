@@ -59,7 +59,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	return (
 		<>
 			<div className={className}>
-				{error && error.message && <FilteredError text={error.message}/>}
+				{error && <FilteredError text={error.message}/>}
 				<div className='post_tags'>
 					<Tag>{topic && topic.name}</Tag>
 				</div>
