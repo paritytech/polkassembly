@@ -1,8 +1,8 @@
-import * as argon2 from 'argon2'
-import { Model } from 'objection'
-import connection from './connection'
+import * as argon2 from 'argon2';
+import { Model } from 'objection';
+import connection from './connection';
 
-Model.knex(connection)
+Model.knex(connection);
 
 export default class User extends Model {
 	readonly id!: number
@@ -14,11 +14,11 @@ export default class User extends Model {
 	email_verified: boolean
 
 	static get tableName () {
-		return 'users'
+		return 'users';
 	}
 
 	static get idColumn () {
-		return 'id'
+		return 'id';
 	}
 
 	getUser () {
@@ -28,11 +28,11 @@ export default class User extends Model {
 			name: this.name,
 			username: this.username,
 			email_verified: this.email_verified
-		}
+		};
 	}
 
 	verifyPassword (password) {
-		return argon2.verify(this.password, password)
+		return argon2.verify(this.password, password);
 	}
 
 	static get jsonSchema () {
@@ -46,7 +46,7 @@ export default class User extends Model {
 				name: { type: 'string', minLength: 1, maxLength: 512 },
 				email_verified: { type: 'boolean' }
 			}
-		}
+		};
 	}
 }
 

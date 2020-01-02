@@ -1,28 +1,28 @@
-import * as jwt from 'jsonwebtoken'
-import * as argon2 from 'argon2'
-import { randomBytes } from 'crypto'
-import { uuid } from 'uuidv4'
-import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server'
+import * as jwt from 'jsonwebtoken';
+import * as argon2 from 'argon2';
+import { randomBytes } from 'crypto';
+import { uuid } from 'uuidv4';
+import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
 import {
 	sendVerificationEmail,
 	sendResetPasswordEmail
-} from './email'
-import EmailVerificationToken from '../model/EmailVerificationToken'
-import PasswordResetToken from '../model/PasswordResetToken'
-import RefreshToken from '../model/RefreshToken'
-import User from '../model/User'
-import { AuthObjectType, JWTPayploadType, Role } from '../types'
-import getUserFromUserId from '../utils/getUserFromUserId'
-import getUserIdFromJWT from '../utils/getUserIdFromJWT'
-import messages from '../utils/messages'
+} from './email';
+import EmailVerificationToken from '../model/EmailVerificationToken';
+import PasswordResetToken from '../model/PasswordResetToken';
+import RefreshToken from '../model/RefreshToken';
+import User from '../model/User';
+import { AuthObjectType, JWTPayploadType, Role } from '../types';
+import getUserFromUserId from '../utils/getUserFromUserId';
+import getUserIdFromJWT from '../utils/getUserIdFromJWT';
+import messages from '../utils/messages';
 
-const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY
-const publicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY
-const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE
+const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
+const publicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
+const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
-const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000
-const ONE_DAY = 24 * 60 * 60 * 1000
+const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
+const ONE_DAY = 24 * 60 * 60 * 1000;
 
 export default class AuthService {
 	constructor(){}
@@ -31,15 +31,15 @@ export default class AuthService {
 		const user = await User
 			.query()
 			.where('username', username)
-			.first()
+			.first();
 
 		if (!user) {
-			throw new AuthenticationError(messages.NO_USER_FOUND_WITH_USERNAME)
+			throw new AuthenticationError(messages.NO_USER_FOUND_WITH_USERNAME);
 		}
 
-		const correctPassword = await user.verifyPassword(password)
+		const correctPassword = await user.verifyPassword(password);
 		if (!correctPassword) {
-			throw new AuthenticationError(messages.INCORRECT_PASSWORD)
+			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
 		}
 
 		return {
@@ -52,56 +52,56 @@ export default class AuthService {
 			},
 			token: this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
-		}
+		};
 	}
 
 	public async Logout(token: string, refreshToken: string) {
 		if (!refreshToken) {
-			throw new AuthenticationError(messages.REFRESH_TOKEN_NOT_PROVIDED)
+			throw new AuthenticationError(messages.REFRESH_TOKEN_NOT_PROVIDED);
 		}
 
 		const refreshTokenObj = await RefreshToken
 			.query()
 			.where('token', refreshToken)
-			.first()
+			.first();
 
 		if (!refreshTokenObj) {
-			throw new ForbiddenError(messages.NO_CORRESPONDING_REFRESH_TOKEN)
+			throw new ForbiddenError(messages.NO_CORRESPONDING_REFRESH_TOKEN);
 		}
 
-		const userId = await getUserIdFromJWT(token, publicKey)
+		const userId = await getUserIdFromJWT(token, publicKey);
 
 		if (refreshTokenObj.user_id !== userId) {
-			throw new AuthenticationError(messages.JWT_REFRESH_TOKEN_USER_MISMATCH)
+			throw new AuthenticationError(messages.JWT_REFRESH_TOKEN_USER_MISMATCH);
 		}
 
 		await RefreshToken
 			.query()
 			.patch({ valid: false })
-			.where({ token: refreshToken })
+			.where({ token: refreshToken });
 	}
 
 	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
 			.where('username', username)
-			.first()
+			.first();
 
 		if (existing) {
-			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS)
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
 		existing = await User
 			.query()
 			.where('email', email)
-			.first()
+			.first();
 
 		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS)
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const salt = randomBytes(32)
-		password = await argon2.hash(password, { salt })
+		const salt = randomBytes(32);
+		password = await argon2.hash(password, { salt });
 
 		const user = await User
 			.query()
@@ -113,7 +113,7 @@ export default class AuthService {
 				username,
 				name,
 				email_verified: false
-			})
+			});
 
 		const verifyToken = await EmailVerificationToken
 			.query()
@@ -122,10 +122,10 @@ export default class AuthService {
 				token: uuid(),
 				user_id: user.id,
 				valid: true
-			})
+			});
 
 		// send verification email in background
-		sendVerificationEmail(user, verifyToken)
+		sendVerificationEmail(user, verifyToken);
 
 		return {
 			user: {
@@ -137,50 +137,50 @@ export default class AuthService {
 			},
 			token: this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
-		}
+		};
 	}
 
 	public async RefreshToken(token: string): Promise<string> {
 		const refreshToken = await RefreshToken
 			.query()
 			.where('token', token)
-			.first()
+			.first();
 
 		if (!refreshToken) {
-			throw new ForbiddenError(messages.REFRESH_TOKEN_NOT_PROVIDED)
+			throw new ForbiddenError(messages.REFRESH_TOKEN_NOT_PROVIDED);
 		}
 
 		if (!refreshToken.valid) {
-			throw new ForbiddenError(messages.INVALID_REFRESH_TOKEN)
+			throw new ForbiddenError(messages.INVALID_REFRESH_TOKEN);
 		}
 
 		if (new Date(refreshToken.expires).getTime() < Math.floor(Date.now() / 1000)) {
-			throw new ForbiddenError(messages.REFRESH_TOKEN_EXPIRED)
+			throw new ForbiddenError(messages.REFRESH_TOKEN_EXPIRED);
 		}
 
 		const user = await User
 			.query()
 			.where('id', refreshToken.user_id)
-			.first()
+			.first();
 
-		return this.getSignedToken(user)
+		return this.getSignedToken(user);
 	}
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
 		if (oldPassword === newPassword) {
-			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER)
+			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER);
 		}
 
-		const userId = await getUserIdFromJWT(token, publicKey)
-		const user = await getUserFromUserId(userId)
+		const userId = await getUserIdFromJWT(token, publicKey);
+		const user = await getUserFromUserId(userId);
 
-		const correctPassword = await user.verifyPassword(oldPassword)
+		const correctPassword = await user.verifyPassword(oldPassword);
 		if (!correctPassword) {
-			throw new UserInputError(messages.INCORRECT_PASSWORD)
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
 		}
 
-		const salt = randomBytes(32)
-		const password = await argon2.hash(newPassword, { salt })
+		const salt = randomBytes(32);
+		const password = await argon2.hash(newPassword, { salt });
 
 		await User
 			.query()
@@ -188,56 +188,56 @@ export default class AuthService {
 				salt: salt.toString('hex'),
 				password
 			})
-			.findById(userId)
+			.findById(userId);
 	}
 
 	public async ChangeName(token: string, newName: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey)
+		const userId = await getUserIdFromJWT(token, publicKey);
 
 		await User
 			.query()
 			.patch({ name: newName })
-			.findById(userId)
+			.findById(userId);
 
-		const user = await getUserFromUserId(userId)
+		const user = await getUserFromUserId(userId);
 
-		return this.getSignedToken(user)
+		return this.getSignedToken(user);
 	}
 
 	public async VerifyEmail(token: string) {
 		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
-			.first()
+			.first();
 
 		if (!verifyToken) {
-			throw new AuthenticationError(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
+			throw new AuthenticationError(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);
 		}
 
 		if (!verifyToken.valid) {
-			throw new AuthenticationError(messages.INVALID_EMAIL_VERIFICATION_TOKEN)
+			throw new AuthenticationError(messages.INVALID_EMAIL_VERIFICATION_TOKEN);
 		}
 
 		await User
 			.query()
 			.patch({ email_verified: true })
-			.findById(verifyToken.user_id)
+			.findById(verifyToken.user_id);
 
 		await EmailVerificationToken
 			.query()
 			.patch({ valid: false })
-			.findById(verifyToken.id)
+			.findById(verifyToken.id);
 	}
 
 	public async ChangeUsername(token: string, username: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey)
+		const userId = await getUserIdFromJWT(token, publicKey);
 		const existing = await User
 			.query()
 			.where('username', username)
-			.first()
+			.first();
 
 		if (existing) {
-			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS)
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
 		await User
@@ -245,22 +245,22 @@ export default class AuthService {
 			.patch({
 				username
 			})
-			.findById(userId)
+			.findById(userId);
 
-		const user = await getUserFromUserId(userId)
+		const user = await getUserFromUserId(userId);
 
-		return this.getSignedToken(user)
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeEmail(token: string, email: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey)
+		const userId = await getUserIdFromJWT(token, publicKey);
 		const existing = await User
 			.query()
 			.where('email', email)
-			.first()
+			.first();
 
 		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS)
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
 		await User
@@ -269,13 +269,13 @@ export default class AuthService {
 				email,
 				email_verified: false
 			})
-			.findById(userId)
+			.findById(userId);
 
 		// Invalidate all email verification token for user
 		await EmailVerificationToken
 			.query()
 			.patch({ valid: false })
-			.where({ user_id: userId })
+			.where({ user_id: userId });
 
 		const verifyToken = await EmailVerificationToken
 			.query()
@@ -284,27 +284,27 @@ export default class AuthService {
 				token: uuid(),
 				user_id: userId,
 				valid: true
-			})
+			});
 
-		const user = await getUserFromUserId(userId)
+		const user = await getUserFromUserId(userId);
 
 		// send verification email in background
-		sendVerificationEmail(user, verifyToken)
+		sendVerificationEmail(user, verifyToken);
 
-		return this.getSignedToken(user)
+		return this.getSignedToken(user);
 	}
 
 	public async RequestResetPassword(email: string) {
 		const user = await User
 			.query()
 			.where('email', email)
-			.first()
+			.first();
 
 		if (!user) {
-			return
+			return;
 		}
 
-		const expires = new Date(Date.now() + ONE_DAY).toISOString() // 24 hours
+		const expires = new Date(Date.now() + ONE_DAY).toISOString(); // 24 hours
 
 		const resetToken = await PasswordResetToken
 			.query()
@@ -314,31 +314,31 @@ export default class AuthService {
 				user_id: user.id,
 				valid: true,
 				expires
-			})
+			});
 
-		sendResetPasswordEmail(user, resetToken)
+		sendResetPasswordEmail(user, resetToken);
 	}
 
 	public async ResetPassword(token: string, newPassword: string) {
 		const resetToken = await PasswordResetToken
 			.query()
 			.where('token', token)
-			.first()
+			.first();
 
 		if (!resetToken) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND)
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
 		}
 
 		if (!resetToken.valid) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID)
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
 		if (new Date(resetToken.expires).getTime() < Date.now()) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID)
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		const salt = randomBytes(32)
-		const password = await argon2.hash(newPassword, { salt })
+		const salt = randomBytes(32);
+		const password = await argon2.hash(newPassword, { salt });
 
 		await User
 			.query()
@@ -346,22 +346,22 @@ export default class AuthService {
 				salt: salt.toString('hex'),
 				password
 			})
-			.findById(resetToken.user_id)
+			.findById(resetToken.user_id);
 
 		await PasswordResetToken
 			.query()
 			.patch({ valid: false })
-			.findById(resetToken.id)
+			.findById(resetToken.id);
 	}
 
 	private getSignedToken({ id, name, username, email, email_verified }): string {
-		const allowedRoles: Role[] = [Role.USER]
-		let currentRole: Role = Role.USER
+		const allowedRoles: Role[] = [Role.USER];
+		let currentRole: Role = Role.USER;
 
 		// if our user is the proposal bot, give additional role.
 		if (id == process.env.BOT_PROPOSAL_USER_ID) { // eslint-disable-line
-			allowedRoles.push(Role.PROPOSAL_BOT)
-			currentRole = Role.PROPOSAL_BOT
+			allowedRoles.push(Role.PROPOSAL_BOT);
+			currentRole = Role.PROPOSAL_BOT;
 		}
 
 		const tokenContent : JWTPayploadType = {
@@ -377,20 +377,20 @@ export default class AuthService {
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			}
-		}
+		};
 
 		return jwt.sign(
 			tokenContent,
 			{ key: privateKey, passphrase },
 			{ algorithm: 'RS256', expiresIn: '1h' }
-		)
+		);
 	}
 
 	private async getRefreshToken({ id }): Promise<string> {
-		const token = uuid()
-		const user_id = id
-		const valid = true
-		const expires = new Date(Date.now() + SIX_MONTHS).toISOString() // now + 6 months
+		const token = uuid();
+		const user_id = id;
+		const valid = true;
+		const expires = new Date(Date.now() + SIX_MONTHS).toISOString(); // now + 6 months
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({
@@ -398,8 +398,8 @@ export default class AuthService {
 				user_id,
 				valid,
 				expires
-			})
+			});
 
-		return refreshToken.token
+		return refreshToken.token;
 	}
 }

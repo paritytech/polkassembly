@@ -1,7 +1,7 @@
-import { AuthenticationError } from 'apollo-server'
+import { AuthenticationError } from 'apollo-server';
 
-import messages from './messages'
-import User from '../model/User'
+import messages from './messages';
+import User from '../model/User';
 
 /**
  * Get User from userId
@@ -10,12 +10,12 @@ export default async (userId: number) => {
 	const user = await User
 		.query()
 		.where('id', userId)
-		.first()
+		.first();
 
 	if (!user) {
-		throw new AuthenticationError(messages.USER_NOT_FOUND)
+		throw new AuthenticationError(messages.USER_NOT_FOUND);
 	}
 
-	return user
-}
+	return user;
+};
 

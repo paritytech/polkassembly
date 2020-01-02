@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { Response } from 'express';
 
 /**
  * setRefrestTokenCookie
@@ -14,5 +14,5 @@ export default (res: Response, refreshToken: string) => {
 			maxAge: 6 * 30 * 24 * 60 * 60 * 1000, // 6 months
 			sameSite: 'strict'
 		}
-	)
-}
+	);
+};
