@@ -422,7 +422,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  verifyEmail?: Maybe<Message>,
+  verifyEmail?: Maybe<ChangeResponse>,
 };
 
 
@@ -512,7 +512,7 @@ export type Mutation_Root = {
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   /** update data of the table: "posts" */
   update_posts?: Maybe<Posts_Mutation_Response>,
-  verifyEmail?: Maybe<Message>,
+  verifyEmail?: Maybe<ChangeResponse>,
 };
 
 
@@ -2149,6 +2149,20 @@ export type EditPostMutation = (
   )> }
 );
 
+export type EditCommentMutationVariables = {
+  id: Scalars['uuid'],
+  content: Scalars['String']
+};
+
+
+export type EditCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_comments: Maybe<(
+    { __typename?: 'comments_mutation_response' }
+    & Pick<Comments_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type AddRootCommentMutationVariables = {
   authorId: Scalars['Int'],
   content: Scalars['String'],
@@ -2276,8 +2290,8 @@ export type VerifyEmailMutationVariables = {
 export type VerifyEmailMutation = (
   { __typename?: 'mutation_root' }
   & { verifyEmail: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
@@ -2571,6 +2585,39 @@ export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
+export const EditCommentDocument = gql`
+    mutation EditComment($id: uuid!, $content: String!) {
+  update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
+    affected_rows
+  }
+}
+    `;
+export type EditCommentMutationFn = ApolloReactCommon.MutationFunction<EditCommentMutation, EditCommentMutationVariables>;
+
+/**
+ * __useEditCommentMutation__
+ *
+ * To run a mutation, you first call `useEditCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editCommentMutation, { data, loading, error }] = useEditCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditCommentMutation, EditCommentMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, baseOptions);
+      }
+export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
+export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
+export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
 export const AddRootCommentDocument = gql`
     mutation AddRootComment($authorId: Int!, $content: String!, $postId: Int!) {
   __typename

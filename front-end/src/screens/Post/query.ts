@@ -69,6 +69,14 @@ export const EDIT_POST= gql`
   }
 `;
 
+export const EDIT_COMMENT= gql`
+    mutation EditComment ($id: uuid!, $content: String!) {
+        update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
+            affected_rows
+        }
+  }
+`;
+
 export const ADD_ROOT_COMMENT=gql`
     mutation AddRootComment ($authorId: Int!, $content: String!, $postId: Int!) {
         __typename
