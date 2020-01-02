@@ -17,14 +17,16 @@ export interface UserObjectType {
     email_verified: boolean
 }
 
-export interface SignUpResultType {
-    user: UserObjectType,
+export interface TokenType {
     token: string
 }
 
-export interface AuthObjectType {
+export interface SignUpResultType extends TokenType {
     user: UserObjectType
-    token: string
+}
+
+export interface AuthObjectType extends TokenType {
+    user: UserObjectType
     refreshToken: string
 }
 
@@ -56,4 +58,16 @@ export interface JWTPayploadType {
     email_verified: boolean
     iat: number
     'https://hasura.io/jwt/claims': HasuraClaimPayload
+}
+
+export interface MessageType {
+    message: string
+}
+
+export interface ChangeResponseType extends MessageType, TokenType {}
+
+export interface PublicUser {
+    id: number
+    name: string
+    username: string
 }

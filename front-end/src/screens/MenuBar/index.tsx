@@ -33,7 +33,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		logoutMutation();
 	}
 
-	const icon = <Icon name='user circle' inverted />
+	const userMenu = <><Icon name='user circle' inverted />{username}</>
+	const caretIcon = <Icon name='caret down' inverted />
 
 	return (
 		<Menu className={className} stackable inverted borderless>
@@ -43,7 +44,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Menu.Menu position="right">
 				{username
 					? <>
-						<Dropdown text={username} icon={icon} item={true}>
+						<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
 							<Dropdown.Menu>
 								<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
 								<Menu.Item onClick={handleLogout}>Logout</Menu.Item>

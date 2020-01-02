@@ -1,6 +1,7 @@
 import User from '../../model/User'
+import { PublicUser } from '../../types'
 
-export default async () => {
+export default async (): Promise<PublicUser[]> => {
 	const users = await User.query()
 
 	return Array.isArray(users) ? users.map(user => ({

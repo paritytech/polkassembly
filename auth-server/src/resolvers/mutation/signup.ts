@@ -3,7 +3,7 @@ import { UserInputError } from 'apollo-server'
 import validateEmail from '../../utils/validateEmail'
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie'
 import AuthService from '../../services/auth'
-import { Context } from '../../types'
+import { Context, SignUpResultType } from '../../types'
 import messages from '../../utils/messages'
 
 interface argsType {
@@ -13,7 +13,7 @@ interface argsType {
 	username: string
 }
 
-export default async (parent, { email, password, username, name }: argsType, ctx: Context) => {
+export default async (parent, { email, password, username, name }: argsType, ctx: Context): Promise<SignUpResultType> => {
 
 	if (!validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL)
