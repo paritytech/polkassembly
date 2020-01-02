@@ -95,7 +95,7 @@ Then run this docker:
 ```bash
 docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
 ```
-It will create a local postgres and test will run on top of that.  
+It will create a local postgres and test will run on top of that.
 
 ### Locally
 **=============DANGER===============**
@@ -305,6 +305,35 @@ On success, we get the response
 }
 ```
 
+### Change Email
+We can change a user email with the `changeEmail` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Change_email
+  changeEmail(email:"test.new@example.com")
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation Change_email {\n  changeEmail(email: \"test.new@example.com\") {\n  token\n  message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data":{
+    "changeEmail":{
+      "message":"Name succefully changed",
+      "token": "<New JWT token>"
+    }
+  }
+}
+```
+
 ### Change name
 We can change a user name with the `changeName` mutation. Note that it needs an authorization header:
 
@@ -318,7 +347,7 @@ mutation Change_name{
 curl 'http://localhost:8010/auth/graphql' \
 -H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
 -H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n    message\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n  token\n  message\n  }\n}\n"}'
 ```
 
 On success, we get the response
@@ -327,7 +356,8 @@ On success, we get the response
 {
   "data":{
     "changeName":{
-      "message":"Name succefully changed"
+      "message":"Name succefully changed",
+      "token": "<New JWT token>"
     }
   }
 }
@@ -428,7 +458,10 @@ We can change a user username with the `changeUsername` mutation. Note that it n
 
 ```gql
 mutation Change_username{
-  changeUsername(username:"johnny")
+  changeUsername(username:"johnny") {
+    message
+    token
+  }
 }
 ```
 
@@ -436,7 +469,7 @@ mutation Change_username{
 curl 'http://localhost:8010/auth/graphql' \
 -H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
 -H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_username {\n  changeUsername(username: \"johnny\") {\n    message\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation Change_username {\n  changeUsername(username: \"johnny\") {\n  token\n  message\n  }\n}\n"}'
 ```
 
 On success, we get the response
@@ -445,7 +478,8 @@ On success, we get the response
 {
   "data":{
     "changeUsername":{
-      "message":"Username changed successfully"
+      "message":"Username changed successfully",
+      "token": "<New JWT token>"
     }
   }
 }
