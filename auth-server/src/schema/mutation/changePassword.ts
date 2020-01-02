@@ -3,5 +3,5 @@ export default `
         oldPassword: String!
         newPassword: String!
     ): Message
-`
+`;
 

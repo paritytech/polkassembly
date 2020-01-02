@@ -3,7 +3,7 @@ import { Form as SUIForm, FormGroupProps as SUIFormGroupProps } from 'semantic-u
 import styled from 'styled-components';
 
 function Group (props : SUIFormGroupProps){
-	return <SUIForm.Group {...props}/>
+	return <SUIForm.Group {...props}/>;
 }
 
 export default styled(Group)`

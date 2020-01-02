@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Comment from './Comment'
+import Comment from './Comment';
 import { CommentRecursiveFragment } from '../../generated/graphql';
 
 interface Props{
@@ -20,8 +20,8 @@ const Comments = ({ className, comments, firstComment=true }: Props) => {
 				)}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
 export default styled(Comments)`
 	.comment {

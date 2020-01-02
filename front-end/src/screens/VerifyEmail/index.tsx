@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react'
-import { Segment, Header, Icon, Grid } from 'semantic-ui-react'
+import React, { useEffect, useContext } from 'react';
+import { Segment, Header, Icon, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -16,8 +16,8 @@ interface Props {
 
 const VerifyEmail = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
-	const currentUser = useContext(UserDetailsContext)
-	const { queueNotification } = useContext(NotificationContext)
+	const currentUser = useContext(UserDetailsContext);
+	const { queueNotification } = useContext(NotificationContext);
 	const [verifyEmailMutation, { error }] = useVerifyEmailMutation({
 		variables: {
 			token: router.query.token
@@ -28,25 +28,25 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 		verifyEmailMutation().then(({ data }) => {
 			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.token) {
 				if (data.verifyEmail.token) {
-					handleTokenChange(data.verifyEmail.token)
+					handleTokenChange(data.verifyEmail.token);
 				}
 				currentUser.setUserDetailsContextState((prevState) => {
 					return {
 						...prevState,
 						email_verified: true
-					}
-				})
+					};
+				});
 				queueNotification({
 					header: 'Success!',
 					message: data.verifyEmail.message,
 					status: NotificationStatus.SUCCESS
-				})
+				});
 				router.history.push('/');
 			}
 		}).catch((e) => {
-			console.error('Email verification error', e)
+			console.error('Email verification error', e);
 		});
-	},[currentUser, queueNotification, router.history, verifyEmailMutation])
+	},[currentUser, queueNotification, router.history, verifyEmailMutation]);
 
 	return (
 		<>
@@ -64,9 +64,9 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 				</Grid>
 				: <Loader/>
 			}
-		</>)
-}
+		</>);
+};
 
 export default styled(VerifyEmail)`
 	text-align: center
-`
+`;

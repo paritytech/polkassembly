@@ -1,10 +1,10 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
-import { upload, uploadController } from './controllers/upload'
+import { upload, uploadController } from './controllers/upload';
 
-const router = Router()
+const router = Router();
 
 // unused
-router.post('/auth/upload-profile-pic', upload.single('file'), uploadController)
+router.post('/auth/upload-profile-pic', upload.single('file'), uploadController);
 
-export default router
+export default router;

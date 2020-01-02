@@ -1,4 +1,4 @@
-import { ValidationError, NotFoundError } from 'objection'
+import { ValidationError, NotFoundError } from 'objection';
 import {
 	DBError,
 	UniqueViolationError,
@@ -6,11 +6,11 @@ import {
 	ForeignKeyViolationError,
 	CheckViolationError,
 	DataError
-} from 'objection-db-errors'
+} from 'objection-db-errors';
 
 // In this example `res` is an express response object.
 export default function errorHandler (err, res) {
-	console.log(err && err.stack)
+	console.log(err && err.stack);
 	if (err instanceof ValidationError) {
 		switch (err.type) {
 		case 'ModelValidation':
@@ -18,43 +18,43 @@ export default function errorHandler (err, res) {
 				data: err.data,
 				message: err.message,
 				type: 'ModelValidation'
-			})
-			break
+			});
+			break;
 		case 'RelationExpression':
 			res.status(400).send({
 				message: err.message,
 				type: 'InvalidRelationExpression',
 				data: {}
-			})
-			break
+			});
+			break;
 		case 'UnallowedRelation':
 			res.status(400).send({
 				message: err.message,
 				type: 'UnallowedRelation',
 				data: {}
-			})
-			break
+			});
+			break;
 		case 'InvalidGraph':
 			res.status(400).send({
 				message: err.message,
 				type: 'InvalidGraph',
 				data: {}
-			})
-			break
+			});
+			break;
 		default:
 			res.status(400).send({
 				message: err.message,
 				type: 'UnknownValidationError',
 				data: {}
-			})
-			break
+			});
+			break;
 		}
 	} else if (err instanceof NotFoundError) {
 		res.status(404).send({
 			message: err.message,
 			data: {},
 			type: 'NotFound'
-		})
+		});
 	} else if (err instanceof UniqueViolationError) {
 		res.status(409).send({
 			message: err.message,
@@ -64,7 +64,7 @@ export default function errorHandler (err, res) {
 				constraint: err.constraint,
 				table: err.table
 			}
-		})
+		});
 	} else if (err instanceof NotNullViolationError) {
 		res.status(400).send({
 			message: err.message,
@@ -73,7 +73,7 @@ export default function errorHandler (err, res) {
 				column: err.column,
 				table: err.table
 			}
-		})
+		});
 	} else if (err instanceof ForeignKeyViolationError) {
 		res.status(409).send({
 			message: err.message,
@@ -82,7 +82,7 @@ export default function errorHandler (err, res) {
 				table: err.table,
 				constraint: err.constraint
 			}
-		})
+		});
 	} else if (err instanceof CheckViolationError) {
 		res.status(400).send({
 			message: err.message,
@@ -91,25 +91,25 @@ export default function errorHandler (err, res) {
 				table: err.table,
 				constraint: err.constraint
 			}
-		})
+		});
 	} else if (err instanceof DataError) {
 		res.status(400).send({
 			message: err.message,
 			type: 'InvalidData',
 			data: {}
-		})
+		});
 	} else if (err instanceof DBError) {
 		res.status(500).send({
 			message: err.message,
 			type: 'UnknownDatabaseError',
 			data: {}
-		})
+		});
 	} else {
 		res.status(500).send({
 			message: err.message,
 			type: 'UnknownError',
 			data: {}
-		})
+		});
 	}
 }
 

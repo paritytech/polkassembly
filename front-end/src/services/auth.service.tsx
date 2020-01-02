@@ -1,4 +1,4 @@
-import { UserDetailsContextType } from '../types'
+import { UserDetailsContextType } from '../types';
 import { LoginResponse } from '../generated/auth-graphql';
 
 /**
@@ -6,8 +6,8 @@ import { LoginResponse } from '../generated/auth-graphql';
  * @param token the token received from the authentication header
  */
 export const storeLocalStorageToken = (token: string) => {
-	localStorage.setItem('Authorization', token)
-}
+	localStorage.setItem('Authorization', token);
+};
 
 /**
  * Get the the jwt from localstorage
@@ -15,7 +15,7 @@ export const storeLocalStorageToken = (token: string) => {
  */
 export const getLocalStorageToken = (): string|null => {
 	return localStorage.getItem('Authorization') || null;
-}
+};
 
 /**
  * Remove the the jwt from localstorage
@@ -23,7 +23,7 @@ export const getLocalStorageToken = (): string|null => {
  */
 export const deleteLocalStorageToken = (): void => {
 	return localStorage.removeItem('Authorization');
-}
+};
 
 /**
  * Store the user information in local context and call the function to store the received token
@@ -40,9 +40,9 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 			id: user.id,
 			name: user.name,
 			username: user.username
-		}
-	})
-}
+		};
+	});
+};
 
 export const logout = (setUserDetailsContextState: UserDetailsContextType['setUserDetailsContextState']) => {
 	deleteLocalStorageToken();
@@ -54,14 +54,14 @@ export const logout = (setUserDetailsContextState: UserDetailsContextType['setUs
 			id: null,
 			name: null,
 			username: null
-		}
-	})
-}
+		};
+	});
+};
 
 /**
  * Save token in localstorage
  * @param token JWT token
  */
 export const handleTokenChange = (token: string) => {
-	token && storeLocalStorageToken(token)
-}
+	token && storeLocalStorageToken(token);
+};

@@ -3,4 +3,4 @@ export default `
         user: User
         token: String
     }
-`
+`;

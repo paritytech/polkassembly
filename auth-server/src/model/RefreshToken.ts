@@ -1,7 +1,7 @@
-import { Model } from 'objection'
-import connection from './connection'
+import { Model } from 'objection';
+import connection from './connection';
 
-Model.knex(connection)
+Model.knex(connection);
 
 export default class RefreshToken extends Model {
 	readonly id!: number
@@ -11,11 +11,11 @@ export default class RefreshToken extends Model {
 	expires!: string
 
 	static get tableName () {
-		return 'refresh_tokens'
+		return 'refresh_tokens';
 	}
 
 	static get idColumn () {
-		return 'id'
+		return 'id';
 	}
 
 	getToken () {
@@ -24,7 +24,7 @@ export default class RefreshToken extends Model {
 			user_id: this.user_id,
 			valid: this.valid,
 			expires: this.expires
-		}
+		};
 	}
 
 	static get jsonSchema () {
@@ -38,7 +38,7 @@ export default class RefreshToken extends Model {
 				valid: { type: 'boolean' },
 				expires: { type: 'string' }
 			}
-		}
+		};
 	}
 }
 

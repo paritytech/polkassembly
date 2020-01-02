@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import DiscussionCard from '../../components/DiscussionCard'
+import DiscussionCard from '../../components/DiscussionCard';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
@@ -18,7 +18,7 @@ const HomeContent = ({ className, data }: Props) => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
-		history.push('/post/create')
+		history.push('/post/create');
 	};
 
 	return (
@@ -31,8 +31,8 @@ const HomeContent = ({ className, data }: Props) => {
 						data.posts.map(
 							(post) => {
 								if (!post.author || !post.author.username) {
-									console.error('Author not found')
-									return null
+									console.error('Author not found');
+									return null;
 								} else {
 									return !!post && (
 										<li key={post.id} className='Home__item'>
@@ -47,7 +47,7 @@ const HomeContent = ({ className, data }: Props) => {
 												/>
 											</Link>}
 										</li>
-									)}
+									);}
 							}
 
 						)}
@@ -61,7 +61,7 @@ const HomeContent = ({ className, data }: Props) => {
 			</Grid>
 		</Container>
 	);
-}
+};
 
 export default styled(HomeContent)`
 

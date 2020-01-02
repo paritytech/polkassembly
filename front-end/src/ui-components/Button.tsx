@@ -3,8 +3,8 @@ import { Button as SUIButton, ButtonProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const Button = (props : ButtonProps) => {
-	return <SUIButton {...props} />
-}
+	return <SUIButton {...props} />;
+};
 
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   

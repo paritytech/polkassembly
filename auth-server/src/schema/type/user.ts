@@ -6,4 +6,4 @@ export default `
         email: String
         email_verified: Boolean
 	}
-`
+`;

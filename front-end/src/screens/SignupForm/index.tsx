@@ -20,7 +20,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
 	const { history } = useRouter();
-	const currentUser = useContext(UserDetailsContext)
+	const currentUser = useContext(UserDetailsContext);
 	const [signupMutation, { loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
@@ -44,16 +44,16 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 			})
 				.then(({ data }) => {
 					if (data && data.signup && data.signup.token && data.signup.user) {
-						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser)
-						setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.' ,title: 'You\'ve got some mail' })
+						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser);
+						setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.' ,title: 'You\'ve got some mail' });
 						history.push('/');
 					}}
 
 				).catch((e) => {
-					console.error('Login error', e)
-				})
+					console.error('Login error', e);
+				});
 		}
-	}
+	};
 
 	return (
 		<Grid className={className}>
@@ -123,7 +123,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
-	)
+	);
 };
 
 export default styled(SignupForm)`

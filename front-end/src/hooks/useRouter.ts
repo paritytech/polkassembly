@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -18,7 +18,7 @@ export default function () {
 		const query: {[index: string]:any} = {
 			...queryString.parse(location.search), // Convert string to object
 			...params
-		}
+		};
 
 		return {
 			history,

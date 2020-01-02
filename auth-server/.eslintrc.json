@@ -29,6 +29,7 @@
         "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "single",  { "avoidEscape": true }],
+        "semi": [2, "always"],
         "switch-colon-spacing": ["error", {"after": true, "before": false}]  
     }
 }

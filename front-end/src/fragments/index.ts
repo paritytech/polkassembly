@@ -1,1 +1,1 @@
-export { default as userFragment } from './user.fragment'
+export { default as userFragment } from './user.fragment';

@@ -10,13 +10,13 @@ interface Props{
 }
 
 const MyModal = ({ className }: Props) => {
-	const { modal, dismissModal } = useContext(ModalContext)
+	const { modal, dismissModal } = useContext(ModalContext);
 	const { content, title } = modal;
 
 	if (!modal.content) return null;
 
 	const renderModal = () => {
-		if (!content) return null
+		if (!content) return null;
 
 		return (
 			<Modal
@@ -35,16 +35,16 @@ const MyModal = ({ className }: Props) => {
 				title={title}
 			/>
 
-		)
-	}
+		);
+	};
 
 	return (
 		<div className={className}>
 			{renderModal()}
 		</div>
-	)
-}
+	);
+};
 
 export default styled(MyModal)`
 
-`
+`;
