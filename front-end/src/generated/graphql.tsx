@@ -2277,7 +2277,7 @@ export type VerifyEmailMutation = (
   { __typename?: 'mutation_root' }
   & { verifyEmail: Maybe<(
     { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -2854,6 +2854,7 @@ export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
     message
+    token
   }
 }
     `;
