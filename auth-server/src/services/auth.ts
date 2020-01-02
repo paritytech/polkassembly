@@ -204,7 +204,7 @@ export default class AuthService {
 		return this.getSignedToken(user)
 	}
 
-	public async VerifyEmail(token: string) {
+	public async VerifyEmail(token: string): Promise<string> {
 		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
