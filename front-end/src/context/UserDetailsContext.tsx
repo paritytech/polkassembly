@@ -14,7 +14,7 @@ const initialUserDetailsContext : UserDetailsContextType = {
 		throw new Error('setUserDetailsContextState function must be overridden');
 	},
 	username: null
-}
+};
 
 const accessToken = getLocalStorageToken();
 try {
@@ -27,7 +27,7 @@ try {
 			username,
 			email,
 			email_verified
-		} = tokenPayload
+		} = tokenPayload;
 
 		if (id) {
 			initialUserDetailsContext.id = Number(id);
@@ -36,18 +36,18 @@ try {
 			initialUserDetailsContext.username = username;
 		}
 		if (name) {
-			initialUserDetailsContext.name = name
+			initialUserDetailsContext.name = name;
 		}
 		if (email) {
-			initialUserDetailsContext.email = email
+			initialUserDetailsContext.email = email;
 		}
-		initialUserDetailsContext.email_verified = email_verified || false
+		initialUserDetailsContext.email_verified = email_verified || false;
 	}
 } catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.
 }
 
-export const UserDetailsContext = createContext(initialUserDetailsContext)
+export const UserDetailsContext = createContext(initialUserDetailsContext);
 
 export const UserDetailsProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
@@ -57,5 +57,5 @@ export const UserDetailsProvider = ({ children }: React.PropsWithChildren<{}>) =
 		<UserDetailsContext.Provider value={{ ...userDetailsContextState, setUserDetailsContextState }}>
 			{children}
 		</UserDetailsContext.Provider>
-	)
-}
+	);
+};

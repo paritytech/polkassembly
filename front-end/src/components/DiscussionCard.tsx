@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import { FaComment } from 'react-icons/fa';
 import styled from 'styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
@@ -56,5 +56,5 @@ export default function Discussion ({
 				<li><FaComment/> {comments} comments</li>
 			</ul>
 		</DiscussionCard>
-	)
+	);
 }

@@ -17,7 +17,7 @@ interface Props {
 const LoginForm = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | undefined>('');
 	const [password, setPassword] = useState<string | undefined>('');
-	const currentUser = useContext(UserDetailsContext)
+	const currentUser = useContext(UserDetailsContext);
 	const { history } = useRouter();
 	const [loginMutation, { loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
@@ -36,14 +36,14 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 				}
 			}).then(({ data }) => {
 				if (data && data.login && data.login.token && data.login.user) {
-					handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser)
+					handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser);
 					history.push('/');
 				}
 			}).catch((e) => {
-				console.error('Login error', e)
-			})
+				console.error('Login error', e);
+			});
 		}
-	}
+	};
 
 	return (
 		<Grid className={className}>
@@ -94,7 +94,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
-	)
+	);
 };
 
 export default styled(LoginForm)`

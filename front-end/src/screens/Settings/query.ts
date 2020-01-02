@@ -33,4 +33,4 @@ export const MUTATION_CHANGE_PASSWORD = gql`
             message
         }
     }
-`
+`;

@@ -1,29 +1,29 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 
-import { NotificationContext } from '../context/NotificationContext'
-import DismissableNotification from '../ui-components/DismissableNotification'
+import { NotificationContext } from '../context/NotificationContext';
+import DismissableNotification from '../ui-components/DismissableNotification';
 
 interface Props{
     className?: string
 }
 
 const Notifications = ({ className }: Props) => {
-	const { deQueueNotification, notificationsQueue } = useContext(NotificationContext)
+	const { deQueueNotification, notificationsQueue } = useContext(NotificationContext);
 
 	const renderNotifications = () => {
-		if (!notificationsQueue.size) return null
+		if (!notificationsQueue.size) return null;
 
 		return Array.from(notificationsQueue).map(([key, notification]) =>
-			<DismissableNotification key={key} notification={notification} onDismiss={() => deQueueNotification(key)}/>)
-	}
+			<DismissableNotification key={key} notification={notification} onDismiss={() => deQueueNotification(key)}/>);
+	};
 
 	return (
 		<div className={className}>
 			{renderNotifications()}
 		</div>
-	)
-}
+	);
+};
 
 export default styled(Notifications)`
     position: fixed;
@@ -38,4 +38,4 @@ export default styled(Notifications)`
         right: 1rem;
         width: 40rem;
     }
-`
+`;

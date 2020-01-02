@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { Header, Icon, Grid } from 'semantic-ui-react'
+import React, { useState, useContext } from 'react';
+import { Header, Icon, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { useResetPasswordMutation } from '../../../generated/graphql';
@@ -16,8 +16,8 @@ interface Props {
 const ResetPassword = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
 	const { token } = router.query;
-	const [newPassword, setNewPassword ] = useState('')
-	const { queueNotification } = useContext(NotificationContext)
+	const [newPassword, setNewPassword ] = useState('');
+	const { queueNotification } = useContext(NotificationContext);
 	const [resetPassword, { loading, error }] = useResetPasswordMutation({
 		variables: {
 			newPassword,
@@ -43,25 +43,25 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 						header: 'Success!',
 						message: data.resetPassword.message,
 						status: NotificationStatus.SUCCESS
-					})
+					});
 					router.history.push('/login');
 				}
 			}).catch((e) => {
-				console.error('Reset password error', e)
-			})
+				console.error('Reset password error', e);
+			});
 		}
-	}
+	};
 
 	const renderNoTokenError = () => {
-		if (token) return null
+		if (token) return null;
 
 		return (
 			<Header as='h2' icon>
 				<Icon name='ambulance' />
 				No token password reset token provided
 			</Header>
-		)
-	}
+		);
+	};
 
 	return (
 		<Grid className={className}>
@@ -99,7 +99,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
-	)
+	);
 };
 
 export default styled(ResetPassword)`

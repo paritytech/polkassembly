@@ -13,7 +13,7 @@ const Home = () => {
 
 	if (data) return <HomeContent data={data} />;
 
-	return <Loader/>
+	return <Loader/>;
 };
 
 export default Home;
