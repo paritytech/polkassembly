@@ -14,16 +14,6 @@ describe('Email Service', () => {
 	const username = 'testuser'
 	const name = 'test name'
 	const salt = 'testsalt'
-	let apiKey = ''
-
-	before(() => {
-		apiKey = process.env.SENDGRID_API_KEY
-		process.env.SENDGRID_API_KEY = 'test'
-	})
-
-	after(() => {
-		process.env.SENDGRID_API_KEY = apiKey
-	})
 
 	it('should send verification email', async () => {
 		const user = await User
