@@ -1,5 +1,5 @@
 import AuthService from '../../services/auth'
-import { Context } from '../../types'
+import { Context, SignUpResultType } from '../../types'
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie'
 
 interface LoginArgsType{
@@ -7,7 +7,7 @@ interface LoginArgsType{
 	password: string
 }
 
-export default async (parent, { username, password }:LoginArgsType, ctx: Context) => {
+export default async (parent, { username, password }:LoginArgsType, ctx: Context): Promise<SignUpResultType> => {
 	const authServiceInstance = new AuthService()
 	const { user, token, refreshToken } = await authServiceInstance.Login(username, password)
 	setRefreshTokenCookie(ctx.res, refreshToken)

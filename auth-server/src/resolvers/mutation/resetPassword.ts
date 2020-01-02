@@ -1,6 +1,7 @@
 import { UserInputError } from 'apollo-server'
 
 import AuthService from '../../services/auth'
+import { MessageType } from '../../types'
 import messages from '../../utils/messages'
 
 interface argsType {
@@ -8,7 +9,7 @@ interface argsType {
 	token: string
 }
 
-export default async (parent, { token, newPassword }: argsType) => {
+export default async (parent, { token, newPassword }: argsType): Promise<MessageType> => {
 
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR)
