@@ -26,7 +26,7 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		verifyEmailMutation().then(({ data }) => {
-			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.token) {
+			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.) {
 				if (data.verifyEmail.token) {
 					handleTokenChange(data.verifyEmail.token)
 				}

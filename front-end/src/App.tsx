@@ -20,7 +20,6 @@ import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings'
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
-import Settings from './screens/Settings'
 
 const App = () => {
 
