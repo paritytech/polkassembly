@@ -1,17 +1,17 @@
-import PostSubscription from '../../model/PostSubscription'
-import AuthService from '../../services/auth'
-import { Context  } from '../../types'
-import getTokenFromReq from '../../utils/getTokenFromReq'
-import messages from '../../utils/messages'
+import PostSubscription from '../../model/PostSubscription';
+import AuthService from '../../services/auth';
+import { Context  } from '../../types';
+import getTokenFromReq from '../../utils/getTokenFromReq';
+import messages from '../../utils/messages';
 
 interface argsType {
 	post_id: number
 }
 
 export default async (parent, { post_id }: argsType, ctx: Context)  => {
-	const token = getTokenFromReq(ctx.req)
-	const authServiceInstance = new AuthService()
-	const user = await authServiceInstance.GetUser(token)
+	const token = getTokenFromReq(ctx.req);
+	const authServiceInstance = new AuthService();
+	const user = await authServiceInstance.GetUser(token);
 
 	await PostSubscription
 		.query()
@@ -19,7 +19,7 @@ export default async (parent, { post_id }: argsType, ctx: Context)  => {
 			user_id: user.id,
 			post_id
 		})
-		.del()
+		.del();
 
-	return { message: messages.SUBSCRIPTION_REMOVE_SUCCESSFUL }
-}
+	return { message: messages.SUBSCRIPTION_REMOVE_SUCCESSFUL };
+};
