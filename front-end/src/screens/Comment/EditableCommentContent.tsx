@@ -5,8 +5,10 @@ import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
+import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 
@@ -23,6 +25,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
+	const { queueNotification } = useContext(NotificationContext);
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
@@ -38,6 +41,11 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 			.then(({ data }) => {
 				if (data && data.update_comments && data.update_comments.affected_rows > 0){
 					refetch();
+					queueNotification({
+						header: 'Success!',
+						message: 'Your comment was edited',
+						status: NotificationStatus.SUCCESS
+					});
 				}
 			})
 			.catch((e) => console.error('Error saving comment',e));
