@@ -1,7 +1,7 @@
-import { Model } from 'objection'
-import connection from './connection'
+import { Model } from 'objection';
+import connection from './connection';
 
-Model.knex(connection)
+Model.knex(connection);
 
 export default class PostSubscription extends Model {
 	readonly id!: number
@@ -9,11 +9,11 @@ export default class PostSubscription extends Model {
 	post_id!: number
 
 	static get tableName () {
-		return 'post_subscription'
+		return 'post_subscription';
 	}
 
 	static get idColumn () {
-		return 'id'
+		return 'id';
 	}
 
 	getToken () {
@@ -21,7 +21,7 @@ export default class PostSubscription extends Model {
 			id: this.id,
 			user_id: this.user_id,
 			post_id: this.post_id
-		}
+		};
 	}
 
 	static get jsonSchema () {
@@ -33,7 +33,7 @@ export default class PostSubscription extends Model {
 				user_id: { type: 'integer' },
 				post_id: { type: 'integer' }
 			}
-		}
+		};
 	}
 }
 
