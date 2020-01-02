@@ -14,7 +14,7 @@ const DiscussionsContainer = () => {
 
 	if (data) return <Discussions data={data} />;
 
-	return <Loader/>
+	return <Loader/>;
 
 };
 

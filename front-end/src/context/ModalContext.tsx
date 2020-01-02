@@ -10,18 +10,18 @@ const initialModalContext : ModalContextType = {
 	setModal: () => {
 		throw new Error('setModal function must be overridden');
 	}
-}
+};
 
-export const ModalContext = createContext(initialModalContext)
+export const ModalContext = createContext(initialModalContext);
 
 export const ModalProvider = ({ children }: React.PropsWithChildren<{}>) => {
-	const [modal, setModal] = useState<ModalType>({})
+	const [modal, setModal] = useState<ModalType>({});
 
-	const dismissModal = () => setModal({})
+	const dismissModal = () => setModal({});
 
 	return (
 		<ModalContext.Provider value={{ dismissModal, modal, setModal }}>
 			{children}
 		</ModalContext.Provider>
-	)
-}
+	);
+};

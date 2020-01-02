@@ -3,4 +3,4 @@ export default `
         token: String!
         newPassword: String!
     ): Message
-`
+`;

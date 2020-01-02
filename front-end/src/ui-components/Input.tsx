@@ -3,7 +3,7 @@ import { Form as SUIForm, FormInputProps as SUIFormInputProps } from 'semantic-u
 import styled from 'styled-components';
 
 function Input (props : SUIFormInputProps){
-	return <SUIForm.Input {...props}/>
+	return <SUIForm.Input {...props}/>;
 }
 
 export default styled(Input)`

@@ -1,5 +1,5 @@
-import * as moment from 'moment'
-import React from 'react'
+import * as moment from 'moment';
+import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -17,7 +17,7 @@ const UpdateLabel = ({ className, created_at, updated_at } : Props) => {
 				<Popup content={moment.utc(updated_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()} trigger={<span>(edited)</span>}/>
 			</span>
 	);
-}
+};
 
 export default styled(UpdateLabel)`
     margin-left: .5rem;
@@ -26,4 +26,4 @@ export default styled(UpdateLabel)`
     span {
         color: gray
     }
-}`
+}`;

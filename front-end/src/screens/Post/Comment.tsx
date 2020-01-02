@@ -38,7 +38,7 @@ export const Comment = ({ className, comment } : Props) => {
 			</div>
 		</>
 	);
-}
+};
 
 export default styled(Comment)`
 	.md {

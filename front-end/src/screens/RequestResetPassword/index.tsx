@@ -15,7 +15,7 @@ interface Props {
 const RequestResetPassword = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
 	const { history } = useRouter();
-	const { setModal } = useContext(ModalContext)
+	const { setModal } = useContext(ModalContext);
 	const [requestResetPasswordMutation, { loading, error }] = useRequestResetPasswordMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
@@ -32,13 +32,13 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 			}).then(({ data }) => {
 				if (data && data.requestResetPassword && data.requestResetPassword.message){
 					history.push('/');
-					setModal({ content: data.requestResetPassword.message ,title: 'Check your emails' })
+					setModal({ content: data.requestResetPassword.message ,title: 'Check your emails' });
 				}
 			}).catch((e) => {
-				console.error('Request password reset error', e)
-			})
+				console.error('Request password reset error', e);
+			});
 		}
-	}
+	};
 
 	return (
 		<Grid className={className}>
@@ -76,7 +76,7 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 		</Grid>
-	)
+	);
 };
 
 export default styled(RequestResetPassword)`

@@ -8,7 +8,7 @@ import UpdateLabel from '../ui-components/UpdateLabel';
 const PostContent = ({ post }:{post: PostFragment}) => {
 	const { author, content, created_at, title, updated_at } = post;
 
-	if (!author || !author.username || !content) return <div>Post not available</div>
+	if (!author || !author.username || !content) return <div>Post not available</div>;
 	return (
 		<>
 			<h3>{title}</h3>
@@ -25,6 +25,6 @@ const PostContent = ({ post }:{post: PostFragment}) => {
 			<ReactMarkdown className='post_content' source={content} />
 		</>
 	);
-}
+};
 
 export default PostContent;

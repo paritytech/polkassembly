@@ -1,9 +1,9 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
 import { Container, Grid } from 'semantic-ui-react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import Comments from './Comments'
+import Comments from './Comments';
 import NoPostFound from '../../components/NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import CreateRootComment from './CreateRootComment';
@@ -17,14 +17,14 @@ interface Props {
 }
 
 const Post = ( { className, data, refetch }: Props ) => {
-	const post =  data && data.posts && data.posts[0]
+	const post =  data && data.posts && data.posts[0];
 	const { id } = useContext(UserDetailsContext);
-	const [isRootCommentFormVisible, setRootCommentFormVisibility] = useState(false)
+	const [isRootCommentFormVisible, setRootCommentFormVisibility] = useState(false);
 	const toggleRootContentForm = () => {
-		setRootCommentFormVisibility(!isRootCommentFormVisible)
-	}
+		setRootCommentFormVisibility(!isRootCommentFormVisible);
+	};
 
-	if (!post) return <NoPostFound/>
+	if (!post) return <NoPostFound/>;
 
 	return (
 		<Container className={className}>
@@ -50,7 +50,7 @@ const Post = ( { className, data, refetch }: Props ) => {
 			</Grid>
 		</Container>
 	);
-}
+};
 
 export default styled(Post)`
 	.post_info {

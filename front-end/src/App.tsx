@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Apollo from './components/Apollo';
-import { GlobalStyle } from './ui-components/GlobalStyle'
-import Modal from './components/Modal'
-import Notifications from './components/Notifications'
-import { ModalProvider } from './context/ModalContext'
+import { GlobalStyle } from './ui-components/GlobalStyle';
+import Modal from './components/Modal';
+import Notifications from './components/Notifications';
+import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
@@ -17,7 +17,7 @@ import Post from './screens/Post';
 import Proposals from './screens/Proposals';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
-import Settings from './screens/Settings'
+import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
 

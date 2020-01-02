@@ -23,14 +23,14 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
-	const [newContent, setNewContent] = useState(content || '')
-	const [newTitle, setNewTitle] = useState(title || '')
-	const toggleEdit = () => setIsEditing(!isEditing)
+	const [newContent, setNewContent] = useState(content || '');
+	const [newTitle, setNewTitle] = useState(title || '');
+	const toggleEdit = () => setIsEditing(!isEditing);
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
-		setNewTitle(title || '')
-	}
+		setNewTitle(title || '');
+	};
 	const handleSave = () => {
 		setIsEditing(false);
 		editPostMutation( {
@@ -41,8 +41,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			} }
 		)
 			.then(() => refetch())
-			.catch((e) => console.error('Error saving post',e))
-	}
+			.catch((e) => console.error('Error saving post',e));
+	};
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setNewContent(content);
 	const [editPostMutation, { data, error }] = useEditPostMutation({
@@ -53,7 +53,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 		}
 	});
 
-	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>
+	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
 	return (
 		<>
@@ -94,7 +94,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			</div>
 		</>
 	);
-}
+};
 
 export default styled(EditablePostContent)`
 	margin: 2rem 0;

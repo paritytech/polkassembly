@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react'
-import { Segment, Header, Icon, Grid } from 'semantic-ui-react'
+import React, { useEffect, useContext } from 'react';
+import { Segment, Header, Icon, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -14,7 +14,7 @@ interface Props {
 
 const VerifyEmail = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
-	const { queueNotification } = useContext(NotificationContext)
+	const { queueNotification } = useContext(NotificationContext);
 	const [verifyEmailMutation, { error }] = useVerifyEmailMutation({
 		variables: {
 			token: router.query.token
@@ -28,13 +28,13 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 					header: 'Success!',
 					message: data.verifyEmail.message,
 					status: NotificationStatus.SUCCESS
-				})
+				});
 				router.history.push('/');
 			}
 		}).catch((e) => {
-			console.error('Login error', e)
+			console.error('Login error', e);
 		});
-	},[queueNotification, router.history, verifyEmailMutation])
+	},[queueNotification, router.history, verifyEmailMutation]);
 
 	return (
 		<>
@@ -52,9 +52,9 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 				</Grid>
 				: <Loader/>
 			}
-		</>)
-}
+		</>);
+};
 
 export default styled(VerifyEmail)`
 	text-align: center
-`
+`;

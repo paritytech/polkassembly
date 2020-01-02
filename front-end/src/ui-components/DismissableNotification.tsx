@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { Message, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react'
-import { NotificationStatus, NotificationType } from '../types'
+import { Message, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react';
+import { NotificationStatus, NotificationType } from '../types';
 
 interface Props{
 	className?: string
@@ -11,11 +11,11 @@ interface Props{
 }
 
 const DismissableNotification = ({ className, notification, onDismiss }: Props) => {
-	const { ERROR, SUCCESS, WARNING } = NotificationStatus
-	const { header,message,status } = notification
+	const { ERROR, SUCCESS, WARNING } = NotificationStatus;
+	const { header,message,status } = notification;
 
-	let color: SemanticCOLORS  = 'green'
-	let icon: SemanticICONS = 'check'
+	let color: SemanticCOLORS  = 'green';
+	let icon: SemanticICONS = 'check';
 
 	switch (status){
 	case ERROR:
@@ -43,10 +43,10 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 				onDismiss={onDismiss}
 			/>
 		</div>
-	)
-}
+	);
+};
 
 export default styled(DismissableNotification)`
 	margin-bottom: 1rem;
 	cursor: pointer;
-`
+`;

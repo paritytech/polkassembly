@@ -1,7 +1,7 @@
-import { Model } from 'objection'
-import connection from './connection'
+import { Model } from 'objection';
+import connection from './connection';
 
-Model.knex(connection)
+Model.knex(connection);
 
 export default class EmailVerificationToken extends Model {
 	readonly id!: number
@@ -10,11 +10,11 @@ export default class EmailVerificationToken extends Model {
 	valid: boolean
 
 	static get tableName () {
-		return 'email_verification_token'
+		return 'email_verification_token';
 	}
 
 	static get idColumn () {
-		return 'id'
+		return 'id';
 	}
 
 	getToken () {
@@ -22,7 +22,7 @@ export default class EmailVerificationToken extends Model {
 			token: this.token,
 			user_id: this.user_id,
 			valid: this.valid
-		}
+		};
 	}
 
 	static get jsonSchema () {
@@ -35,7 +35,7 @@ export default class EmailVerificationToken extends Model {
 				user_id: { type: 'integer' },
 				valid: { type: 'boolean' }
 			}
-		}
+		};
 	}
 }
 

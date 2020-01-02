@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import ReactMde, { commands }  from 'react-mde';
 import styled from 'styled-components';
 
@@ -212,7 +212,7 @@ export function TextArea(props: Props): React.ReactElement {
 				commands.unorderedListCommand
 			]
 		}
-	]
+	];
 	const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>('write');
 
 	return (

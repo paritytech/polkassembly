@@ -1,4 +1,4 @@
 export default `
     logout: Message
-`
+`;
 

@@ -8,7 +8,7 @@ const USER_FRAGMENT = gql`
       email
       email_verified
   }
-`
+`;
 
 export const SIGNUP = gql`
     mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
@@ -48,5 +48,5 @@ export const GET_REFRESH_TOKEN = gql`
             token
         }
     }
-`
+`;
 
