@@ -46,16 +46,6 @@ describe('post unSubscribe mutation', () => {
 			.del();
 	});
 
-	it('should not be able to unsubscribe with a wrong jwt', async () => {
-		fakectx.req.headers.authorization = 'Bearer wrong';
-		try {
-			await postUnsubscribe(null, { post_id }, fakectx);
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(AuthenticationError);
-		}
-	});
-
 	it('should be able to unsubscribe from a post', async () => {
 		await postUnsubscribe(null, { post_id }, fakectx);
 
@@ -74,5 +64,16 @@ describe('post unSubscribe mutation', () => {
 		const result = await postUnsubscribe(null, { post_id }, fakectx);
 
 		expect(result.message).to.equals(messages.SUBSCRIPTION_DOES_NOT_EXIST);
+	});
+
+	it('should not be able to unsubscribe with a wrong jwt', async () => {
+		const fakectx_wrong_jwt = fakectx;
+		fakectx_wrong_jwt.req.headers.authorization = 'Bearer wrong';
+		try {
+			await postUnsubscribe(null, { post_id }, fakectx_wrong_jwt);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(AuthenticationError);
+		}
 	});
 });

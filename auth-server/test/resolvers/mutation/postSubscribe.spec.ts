@@ -43,16 +43,6 @@ describe('post subscribe mutation', () => {
 			.del();
 	});
 
-	it('should not be able to subscribe with a wrong jwt', async () => {
-		fakectx.req.headers.authorization = 'Bearer wrong';
-		try {
-			await postSubscribe(null, { post_id }, fakectx);
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(AuthenticationError);
-		}
-	});
-
 	it('should be able to subscribe to a post', async () => {
 		await postSubscribe(null, { post_id }, fakectx);
 
@@ -73,5 +63,17 @@ describe('post subscribe mutation', () => {
 		const result = await postSubscribe(null, { post_id }, fakectx);
 
 		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXISTS);
+	});
+
+	it('should not be able to subscribe with a wrong jwt', async () => {
+		const fakectx_wrong_jwt = fakectx;
+		fakectx_wrong_jwt.req.headers.authorization = 'Bearer wrong';
+
+		try {
+			await postSubscribe(null, { post_id }, fakectx_wrong_jwt);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(AuthenticationError);
+		}
 	});
 });

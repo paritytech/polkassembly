@@ -9,9 +9,9 @@ import User from '../../../src/model/User';
 const noop = () => {};
 
 describe('Email Service', () => {
-	const email = 'test@email.com';
+	const email = 'test2@email.com';
 	const password = 'testpass';
-	const username = 'testuser';
+	const username = 'testuser2';
 	const name = 'test name';
 	const salt = 'testsalt';
 
