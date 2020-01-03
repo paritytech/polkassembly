@@ -88,8 +88,6 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 };
 
 export default styled(EditableCommenContent)`
-	margin: 2rem 0;
-
 	.button-container {
 		width: 100%;
 		display: flex;
