@@ -28,6 +28,7 @@ describe('post subscribe mutation', () => {
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
+	const post_id = 123;
 
 	before(async () => {
 		signupResult = await signup(null, { email, password, username, name }, fakectx);
@@ -42,7 +43,6 @@ describe('post subscribe mutation', () => {
 	});
 
 	it('should be able to subscribe to a post', async () => {
-		const post_id = 123;
 		await postSubscribe(null, { post_id }, fakectx);
 
 		const dbSubscription = await PostSubscription
@@ -57,6 +57,12 @@ describe('post subscribe mutation', () => {
 		expect(dbSubscription.post_id).to.equals(post_id);
 		expect(dbSubscription.user_id).to.equals(signupResult.user.id);
 
+		const result = await postSubscribe(null, { post_id }, fakectx);
+
+		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXIST);
+	});
+
+	it('should show already subscribed if subscribed again', async () => {
 		const result = await postSubscribe(null, { post_id }, fakectx);
 
 		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXIST);
