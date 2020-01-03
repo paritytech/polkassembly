@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
@@ -6,7 +7,7 @@ import { TextArea } from '../ui-components/TextArea';
 
 interface Props {
 	className?: string
-	errorContent?: any
+	errorContent?: FieldError | NestDataObject<any> | NestDataObject<any>[]
 	onChange?: (content: string) => void
 	value?: string
 }

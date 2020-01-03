@@ -1,11 +1,12 @@
 import React, { ChangeEvent } from 'react';
+import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
 
 interface Props {
 	className?: string
-	errorTitle?: any
+	errorTitle?: FieldError | NestDataObject<any> | NestDataObject<any>[]
 	onTitleChange?: (event: ChangeEvent<HTMLInputElement>) => void
 	refTitle?: any
 	title: string
