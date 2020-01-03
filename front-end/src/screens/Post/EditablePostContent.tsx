@@ -23,7 +23,7 @@ interface Props {
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditablePostContent = ({ className, onReply, post,refetch }: Props) => {
+const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);

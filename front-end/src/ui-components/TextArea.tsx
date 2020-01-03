@@ -194,7 +194,6 @@ interface Props {
 	className?: string
 	name?: string
 	onChange:  ((value: string) => void) | undefined
-	ref?: any
     value: string
 }
 
@@ -226,7 +225,6 @@ export function TextArea(props: Props): React.ReactElement {
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}
-				ref={props.ref}
 				selectedTab={selectedTab}
 				value={props.value}
 				{...props}
