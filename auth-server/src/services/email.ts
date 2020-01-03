@@ -92,7 +92,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 			<br />
 			${author.username} has commented on a <a href="${DOMAIN}/post/${comment.post_id}">post you subscribed to</a>.<br /><br />
 
-			${comment.content}<br />
+			comment: ${comment.content}<br />
 
 			Polkassembly Team
 		</p>
