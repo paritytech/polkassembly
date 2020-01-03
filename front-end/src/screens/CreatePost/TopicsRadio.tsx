@@ -3,6 +3,7 @@ import { Radio, CheckboxProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { usePost_TopicsQuery } from '../../generated/graphql';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
 interface Props {
@@ -24,7 +25,7 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 
 	if (error) {
 		console.error('Topic retrieval error', error);
-		return <div>{error.message}</div>;
+		return <FilteredError text={error.message}/>;
 	}
 
 	return (

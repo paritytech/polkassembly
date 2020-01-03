@@ -9,6 +9,7 @@ import { useRouter } from '../../hooks';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import Loader from '../../ui-components/Loader';
+import FilteredError from '../../ui-components/FilteredError';
 
 interface Props {
 	className?: string
@@ -57,7 +58,7 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 						<Segment>
 							<Header as='h2' icon>
 								<Icon name='ambulance' />
-								{error.message}
+								<FilteredError text={error.message}/>
 							</Header>
 						</Segment>
 					</Grid.Column>
