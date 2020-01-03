@@ -8,6 +8,8 @@ import changeUsername from './mutation/changeUsername';
 import changeEmail from './mutation/changeEmail';
 import changePassword from './mutation/changePassword';
 import changeName from './mutation/changeName';
+import postSubscribe from './mutation/postSubscribe';
+import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
 import resetPassword from './mutation/resetPassword';
 import verifyEmail from './mutation/verifyEmail';
@@ -26,6 +28,8 @@ export default {
 		changeEmail,
 		changePassword,
 		changeName,
+		postSubscribe,
+		postUnsubscribe,
 		requestResetPassword,
 		resetPassword,
 		verifyEmail

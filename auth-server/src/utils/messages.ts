@@ -2,6 +2,8 @@ export default {
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',
+	EVENT_POST_ID_NOT_FOUND: 'Post id not found in event.',
+	EVENT_AUTHOR_NOT_FOUND: 'Author not found',
 	INCORRECT_PASSWORD: 'Your password is incorrect.',
 	INVALID_EMAIL: 'Please enter a valid email.',
 	INVALID_EMAIL_VERIFICATION_TOKEN: 'Invalid email verification token.',
@@ -23,8 +25,14 @@ export default {
 	REFRESH_TOKEN_EXPIRED: 'Refresh token expired',
 	REFRESH_TOKEN_NOT_PROVIDED: 'Refresh-token not provided.',
 	RESET_PASSWORD_RETURN_MESSAGE: 'The reset password link was sent to this email, if it exists in our database.',
+	SUCCESS: 'Success.',
+	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
 	USERNAME_LENGTH_ERROR: 'Your Username must be at least 3 characters long.',
 	USER_NOT_FOUND: 'User not found.',
-	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.'
+	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
+	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',
+	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed successfuly.',
+	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
+	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.'
 };
