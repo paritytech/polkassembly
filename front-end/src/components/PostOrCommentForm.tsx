@@ -9,11 +9,12 @@ interface Props {
 	content: string
 	onContentChange?: (content: string) => void
 	onTitleChange?: (event: ChangeEvent<HTMLInputElement>) => void
+	refTitle?: any,
 	title?: string
 	withTitle?: boolean
 }
 
-const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange, title='', withTitle=true }:Props): JSX.Element => {
+const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange, refTitle, title='', withTitle=true }:Props): JSX.Element => {
 
 	return (
 		<div className={className}>
@@ -25,6 +26,7 @@ const PostOrCommentForm = ({ className, content, onContentChange, onTitleChange,
 							className={'title'}
 							onChange={onTitleChange}
 							placeholder='Your title...'
+							ref={refTitle}
 							type="text"
 							value={title}
 						/>

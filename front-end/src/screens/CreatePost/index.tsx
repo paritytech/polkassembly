@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useForm, errors } from 'react-hook-form';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -22,6 +23,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
+	const { register, handleSubmit, watch, errors } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -66,6 +68,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							content={content}
 							onContentChange={onContentChange}
 							onTitleChange={onTitleChange}
+							refTitle={register}
 							title={title}
 						/>
 						<TopicsRadio
@@ -74,7 +77,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 						<div className={'mainButtonContainer'}>
 							<Button
-								onClick={handleSend}
+								onClick={handleSubmit(handleSend)}
 								disabled={isSending || loading}
 								type='submit'
 								variant='primary'
