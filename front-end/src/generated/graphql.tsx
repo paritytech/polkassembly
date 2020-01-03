@@ -422,7 +422,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  verifyEmail?: Maybe<Message>,
+  verifyEmail?: Maybe<ChangeResponse>,
 };
 
 
@@ -512,7 +512,7 @@ export type Mutation_Root = {
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   /** update data of the table: "posts" */
   update_posts?: Maybe<Posts_Mutation_Response>,
-  verifyEmail?: Maybe<Message>,
+  verifyEmail?: Maybe<ChangeResponse>,
 };
 
 
@@ -2276,8 +2276,8 @@ export type VerifyEmailMutationVariables = {
 export type VerifyEmailMutation = (
   { __typename?: 'mutation_root' }
   & { verifyEmail: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -2854,6 +2854,7 @@ export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
     message
+    token
   }
 }
     `;

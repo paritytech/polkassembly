@@ -3,8 +3,10 @@ import { Segment, Header, Icon, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useVerifyEmailMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
+import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import Loader from '../../ui-components/Loader';
 import FilteredError from '../../ui-components/FilteredError';
@@ -15,6 +17,7 @@ interface Props {
 
 const VerifyEmail = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
+	const currentUser = useContext(UserDetailsContext);
 	const { queueNotification } = useContext(NotificationContext);
 	const [verifyEmailMutation, { error }] = useVerifyEmailMutation({
 		variables: {
@@ -24,7 +27,16 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		verifyEmailMutation().then(({ data }) => {
-			if (data && data.verifyEmail && data.verifyEmail.message) {
+			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.token) {
+				if (data.verifyEmail.token) {
+					handleTokenChange(data.verifyEmail.token);
+				}
+				currentUser.setUserDetailsContextState((prevState) => {
+					return {
+						...prevState,
+						email_verified: true
+					};
+				});
 				queueNotification({
 					header: 'Success!',
 					message: data.verifyEmail.message,
@@ -33,9 +45,9 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 				router.history.push('/');
 			}
 		}).catch((e) => {
-			console.error('Login error', e);
+			console.error('Email verification error', e);
 		});
-	},[queueNotification, router.history, verifyEmailMutation]);
+	},[currentUser, queueNotification, router.history, verifyEmailMutation]);
 
 	return (
 		<>

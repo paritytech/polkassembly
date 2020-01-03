@@ -60,29 +60,31 @@ const Fullname = (): JSX.Element => {
 	};
 
 	return (
-		<Form.Group>
-			<Form.Field width={10}>
-				<label>Full Name</label>
-				<input
-					value={name || ''}
-					onChange={onNameChange}
-					placeholder='username'
-					type='text'
-				/>
-				{error && <FilteredError text={error.message}/>}
-			</Form.Field>
-			<Form.Field width={2}>
-				<label>&nbsp;</label>
-				<Button
-					primary
-					disabled={loading}
-					onClick={handleClick}
-					type="submit"
-				>
+		<Form standalone={false}>
+			<Form.Group>
+				<Form.Field width={10}>
+					<label>Full Name</label>
+					<input
+						value={name || ''}
+						onChange={onNameChange}
+						placeholder='username'
+						type='text'
+					/>
+					{error && <FilteredError text={error.message}/>}
+				</Form.Field>
+				<Form.Field width={2}>
+					<label>&nbsp;</label>
+					<Button
+						primary
+						disabled={loading}
+						onClick={handleClick}
+						type="submit"
+					>
 					Change
-				</Button>
-			</Form.Field>
-		</Form.Group>
+					</Button>
+				</Form.Field>
+			</Form.Group>
+		</Form>
 	);
 };
 

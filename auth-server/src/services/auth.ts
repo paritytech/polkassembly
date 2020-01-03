@@ -204,7 +204,7 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async VerifyEmail(token: string) {
+	public async VerifyEmail(token: string): Promise<string> {
 		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
@@ -227,6 +227,10 @@ export default class AuthService {
 			.query()
 			.patch({ valid: false })
 			.findById(verifyToken.id);
+
+		const user = await getUserFromUserId(verifyToken.user_id);
+
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeUsername(token: string, username: string): Promise<string> {
