@@ -24,7 +24,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
-	const { control, errors, handleSubmit, register } = useForm();
+	const { control, errors, handleSubmit } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -56,7 +56,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		}
 	};
 
-	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 
 	return (
@@ -65,18 +65,21 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<Form className={className}>
 						<h3>New Post</h3>
-						<TitleForm
-							errorTitle={errors.title}
-							onTitleChange={onTitleChange}
-							refTitle={register({ required: true })}
-							title={title}
+						<Controller
+							as={<TitleForm
+								errorTitle={errors.title}
+							/>}
+							control={control}
+							name='title'
+							onChange={onTitleChange}
+							rules={{ required: true }}
 						/>
 						<Controller
 							as={<ContentForm
 								errorContent={errors.content}
 							/>}
-							name='content'
 							control={control}
+							name='content'
 							onChange={onContentChange}
 							rules={{ required: true }}
 						/>

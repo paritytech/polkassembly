@@ -31,11 +31,14 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const [newTitle, setNewTitle] = useState(title || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
-	const {  control, errors, handleSubmit, register, setValue } = useForm();
+	const {  control, errors, handleSubmit, setValue } = useForm();
 
 	useEffect(() => {
-		isEditing && setValue('content',content);
-	},[content, isEditing, setValue]);
+		if (isEditing) {
+			setValue('content',content);
+			setValue('title',title);
+		}
+	},[content, isEditing, setValue, title]);
 
 	const handleCancel = () => {
 		toggleEdit();
@@ -63,7 +66,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			})
 			.catch((e) => console.error('Error saving post',e));
 	};
-	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [editPostMutation, { error }] = useEditPostMutation({
 		variables: {
@@ -86,11 +89,14 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 					isEditing
 						?
 						<Form standalone={false}>
-							<TitleForm
-								errorTitle={errors.title}
-								onTitleChange={onTitleChange}
-								refTitle={register({ required: true })}
-								title={newTitle}
+							<Controller
+								as={<TitleForm
+									errorTitle={errors.title}
+								/>}
+								control={control}
+								name='title'
+								onChange={onTitleChange}
+								rules={{ required: true }}
 							/>
 							<Controller
 								as={<ContentForm

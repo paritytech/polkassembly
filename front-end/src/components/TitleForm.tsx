@@ -7,12 +7,11 @@ import { Form } from '../ui-components/Form';
 interface Props {
 	className?: string
 	errorTitle?: FieldError | NestDataObject<any> | NestDataObject<any>[]
-	onTitleChange?: (event: ChangeEvent<HTMLInputElement>) => void
-	refTitle?: any
-	title: string
+	onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+	value?: string
 }
 
-const TitleForm = ({ className, errorTitle, onTitleChange, refTitle, title='' }:Props): JSX.Element => {
+const TitleForm = ({ className, errorTitle, onChange, value = '' }:Props): JSX.Element => {
 
 	return (
 		<div className={className}>
@@ -22,11 +21,10 @@ const TitleForm = ({ className, errorTitle, onTitleChange, refTitle, title='' }:
 					<input
 						className={errorTitle ? 'error title' : 'title'}
 						name={'title'}
-						onChange={onTitleChange}
+						onChange={onChange}
 						placeholder='Your title...'
-						ref={refTitle}
 						type="text"
-						value={title}
+						value={value}
 					/>
 					{errorTitle && <span className={'errorText'}>Did you forget to add a title?</span>}
 				</Form.Field>
