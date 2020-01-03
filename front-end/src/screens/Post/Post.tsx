@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import Comments from './Comments';
+import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import CreateRootComment from './CreateRootComment';
@@ -42,7 +42,10 @@ const Post = ( { className, data, refetch }: Props ) => {
 							refetch={refetch}
 						/>}
 						{ post.comments && post.comments.length
-							? <Comments comments={post.comments}/>
+							? <Comments
+								comments={post.comments}
+								refetch={refetch}
+							/>
 							: null }
 					</div>
 				</Grid.Column>

@@ -1,79 +1,67 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
-import PostContent from '../../components/PostContent';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
-import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
-import { Tag } from '../../ui-components/Tag';
 
 interface Props {
-	className?: string
-	onReply: () => void
-	post: PostFragment
+	authorId: number,
+	className?: string,
+	commentId: string,
+	content: string,
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
-	const { author, topic, content, title } = post;
+const EditableCommenContent = ({ authorId, className, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
-	const [newTitle, setNewTitle] = useState(title || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
-		setNewTitle(title || '');
 	};
 	const handleSave = () => {
 		setIsEditing(false);
-		editPostMutation( {
+		editCommentMutation( {
 			variables: {
 				content: newContent,
-				id: post.id,
-				title: newTitle
+				id: commentId
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.update_posts && data.update_posts.affected_rows>0){
+				if (data && data.update_comments && data.update_comments.affected_rows > 0){
+					refetch();
 					queueNotification({
 						header: 'Success!',
-						message: 'Your post was edited',
+						message: 'Your comment was edited.',
 						status: NotificationStatus.SUCCESS
 					});
-					refetch();
 				}
 			})
-			.catch((e) => console.error('Error saving post',e));
+			.catch((e) => console.error('Error saving comment: ',e));
 	};
-	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setNewContent(content);
-	const [editPostMutation, { error }] = useEditPostMutation({
+	const [editCommentMutation, { error }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
-			id: post.id,
-			title: newTitle
+			id: commentId
 		}
 	});
-
-	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
 	return (
 		<>
 			<div className={className}>
-				{error && <FilteredError text={error.message}/>}
-				<div className='post_tags'>
-					<Tag>{topic && topic.name}</Tag>
-				</div>
+				{error && error.message && <div>{error.message}</div>}
 				{
 					isEditing
 						?
@@ -81,9 +69,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 							<PostOrCommentForm
 								content={newContent}
 								onContentChange={onContentChange}
-								onTitleChange={onTitleChange}
-								title={newTitle}
-
+								withTitle={false}
 							/>
 							<div className='button-container'>
 								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
@@ -92,9 +78,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 						</Form>
 						:
 						<>
-							<PostContent post={post}/>
-							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
-							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
+							<ReactMarkdown className='md' source={content} />
+							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 						</>
 				}
 			</div>
@@ -102,7 +87,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	);
 };
 
-export default styled(EditablePostContent)`
+export default styled(EditableCommenContent)`
 	margin: 2rem 0;
 
 	.button-container {
