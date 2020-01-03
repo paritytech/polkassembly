@@ -22,7 +22,7 @@ export default async (parent, { post_id }: argsType, ctx: Context)  => {
 		.first();
 
 	if (!dbSubscription) {
-		return { message: messages.SUBSCRIPTION_NOT_EXIST };
+		return { message: messages.SUBSCRIPTION_DOES_NOT_EXIST };
 	}
 
 	await PostSubscription

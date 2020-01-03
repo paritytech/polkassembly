@@ -22,7 +22,7 @@ export default async (parent, { post_id }: argsType, ctx: Context)  => {
 		.first();
 
 	if (dbSubscription) {
-		return { message: messages.SUBSCRIPTION_ALREADY_EXIST };
+		return { message: messages.SUBSCRIPTION_ALREADY_EXISTS };
 	}
 
 	await PostSubscription
@@ -33,5 +33,5 @@ export default async (parent, { post_id }: argsType, ctx: Context)  => {
 			post_id
 		});
 
-	return { message: messages.SUBSCRIPTION_ADD_SUCCESSFUL };
+	return { message: messages.SUBSCRIPTION_SUCCESSFUL };
 };

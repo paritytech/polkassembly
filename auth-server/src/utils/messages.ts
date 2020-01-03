@@ -31,8 +31,8 @@ export default {
 	USERNAME_LENGTH_ERROR: 'Your Username must be at least 3 characters long.',
 	USER_NOT_FOUND: 'User not found.',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
-	SUBSCRIPTION_ADD_SUCCESSFUL: 'You successfully subscribed to new comments.',
+	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',
 	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed from post successfuly',
-	SUBSCRIPTION_ALREADY_EXIST: 'You are already subscribed to this post',
-	SUBSCRIPTION_NOT_EXIST: 'Subscription doesn\'t exits'
+	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
+	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exits.'
 };
