@@ -24,6 +24,6 @@ export default styled(UpdateLabel)`
     font-size: 1.2rem;
     
     span {
-        color: gray
+        color: #B5AEAE;
     }
 }`;

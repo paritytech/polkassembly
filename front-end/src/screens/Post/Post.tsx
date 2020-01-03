@@ -160,7 +160,7 @@ export default styled(Post)`
 			&::before, &::after {
 			  letter-spacing: -0.2em;
 			}
-		  }
+		}
 	}
 
 	@media only screen and (max-width: 576px) {
