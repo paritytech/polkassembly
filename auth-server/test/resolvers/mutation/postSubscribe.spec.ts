@@ -1,10 +1,11 @@
+import { AuthenticationError } from 'apollo-server/dist/exports';
 import 'mocha';
 import { expect } from 'chai';
 
 import PostSubscription from '../../../src/model/PostSubscription';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
+import signup from '../../../src/resolvers/mutation/signup';
 import { Context, SignUpResultType } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
@@ -42,6 +43,16 @@ describe('post subscribe mutation', () => {
 			.del();
 	});
 
+	it('should not be able to subscribe with a wrong jwt', async () => {
+		fakectx.req.headers.authorization = 'Bearer wrong';
+		try {
+			await postSubscribe(null, { post_id }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(AuthenticationError);
+		}
+	});
+
 	it('should be able to subscribe to a post', async () => {
 		await postSubscribe(null, { post_id }, fakectx);
 
@@ -56,15 +67,11 @@ describe('post subscribe mutation', () => {
 		expect(dbSubscription).to.exist;
 		expect(dbSubscription.post_id).to.equals(post_id);
 		expect(dbSubscription.user_id).to.equals(signupResult.user.id);
-
-		const result = await postSubscribe(null, { post_id }, fakectx);
-
-		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXIST);
 	});
 
 	it('should show already subscribed if subscribed again', async () => {
 		const result = await postSubscribe(null, { post_id }, fakectx);
 
-		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXIST);
+		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXISTS);
 	});
 });

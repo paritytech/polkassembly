@@ -1,12 +1,14 @@
+import { AuthenticationError } from 'apollo-server/dist/exports';
 import 'mocha';
 import { expect } from 'chai';
 
 import PostSubscription from '../../../src/model/PostSubscription';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
 import postUnsubscribe from '../../../src/resolvers/mutation/postUnsubscribe';
+import signup from '../../../src/resolvers/mutation/signup';
 import { Context, SignUpResultType } from '../../../src/types';
+import messages from '../../../src/utils/messages';
 
 describe('post unSubscribe mutation', () => {
 	let signupResult : SignUpResultType;
@@ -44,6 +46,16 @@ describe('post unSubscribe mutation', () => {
 			.del();
 	});
 
+	it('should not be able to unsubscribe with a wrong jwt', async () => {
+		fakectx.req.headers.authorization = 'Bearer wrong';
+		try {
+			await postUnsubscribe(null, { post_id }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(AuthenticationError);
+		}
+	});
+
 	it('should be able to unsubscribe from a post', async () => {
 		await postUnsubscribe(null, { post_id }, fakectx);
 
@@ -56,5 +68,11 @@ describe('post unSubscribe mutation', () => {
 			.first();
 
 		expect(dbSubscription).to.not.exist;
+	});
+
+	it('should not be able to unsubscribe a second time', async () => {
+		const result = await postUnsubscribe(null, { post_id }, fakectx);
+
+		expect(result.message).to.equals(messages.SUBSCRIPTION_DOES_NOT_EXIST);
 	});
 });
