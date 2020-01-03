@@ -15,7 +15,7 @@ interface Props{
 const Comments = ({ className, comments, firstComment=true, refetch }: Props) => {
 	return (
 		<div className={className}>
-			{firstComment &&	<hr/> }
+			{firstComment && <hr />}
 			<div className={firstComment ? '' : 'comment'} >
 				{comments.map((comment:CommentRecursiveFragment) =>
 					<Comment
@@ -33,7 +33,6 @@ export default styled(Comments)`
 	.comment {
 		padding-left: 2rem;
 		border-left: #EEE 2px solid;
-		margin-top: 1rem;
 
 		p {
 			color:#555;

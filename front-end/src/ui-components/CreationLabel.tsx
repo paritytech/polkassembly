@@ -16,12 +16,13 @@ const CreationLabel = ({ className, created_at, text='posted', username } : Prop
 };
 
 export default styled(CreationLabel)`
-    color: #555;
+    color: #7E7A7A;
     font-weight: 400;
     font-size: 1.2rem;
     margin-bottom: 0.6rem;
         
     span {
+        color: #555252;
         font-weight: 500;
     }
 }`;
