@@ -13,6 +13,18 @@ export default async (parent, { post_id }: argsType, ctx: Context)  => {
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
 
+	const dbSubscription = await PostSubscription
+		.query()
+		.where({
+			user_id: user.id,
+			post_id: post_id
+		})
+		.first();
+
+	if (!dbSubscription) {
+		return { message: messages.SUBSCRIPTION_NOT_EXIST };
+	}
+
 	await PostSubscription
 		.query()
 		.where({
