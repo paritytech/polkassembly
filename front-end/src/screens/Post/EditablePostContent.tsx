@@ -4,11 +4,12 @@ import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
+import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
-import DisapearingLabel from '../../ui-components/DisapearingLabel';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import { Tag } from '../../ui-components/Tag';
@@ -27,6 +28,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
+	const { queueNotification } = useContext(NotificationContext);
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
@@ -41,12 +43,21 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 				title: newTitle
 			} }
 		)
-			.then(() => refetch())
+			.then(({ data }) => {
+				if (data && data.update_posts && data.update_posts.affected_rows>0){
+					queueNotification({
+						header: 'Success!',
+						message: 'Your post was edited',
+						status: NotificationStatus.SUCCESS
+					});
+					refetch();
+				}
+			})
 			.catch((e) => console.error('Error saving post',e));
 	};
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
 	const onContentChange = (content: string) => setNewContent(content);
-	const [editPostMutation, { data, error }] = useEditPostMutation({
+	const [editPostMutation, { error }] = useEditPostMutation({
 		variables: {
 			content: newContent,
 			id: post.id,
@@ -75,8 +86,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 
 							/>
 							<div className='button-container'>
-								<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button className={'primary'} onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</Form>
 						:
@@ -84,12 +95,6 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 							<PostContent post={post}/>
 							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
-							{data && data.update_posts && data.update_posts.affected_rows > 0 &&
-								<DisapearingLabel
-									iconColor='green'
-									iconName='check circle'
-									text='Saved'
-								/> }
 						</>
 				}
 			</div>
