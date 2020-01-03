@@ -46,7 +46,7 @@ const Password = (): JSX.Element => {
 	};
 
 	return (
-		<>
+		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field width={10}>
 					<label>Current Password</label>
@@ -85,7 +85,7 @@ const Password = (): JSX.Element => {
 					</Button>
 				</Form.Field>
 			</Form.Group>
-		</>
+		</Form>
 	);
 };
 
