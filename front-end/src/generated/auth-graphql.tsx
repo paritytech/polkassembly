@@ -47,7 +47,7 @@ export type Mutation = {
   changeName?: Maybe<ChangeResponse>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
-  verifyEmail?: Maybe<Message>,
+  verifyEmail?: Maybe<ChangeResponse>,
 };
 
 

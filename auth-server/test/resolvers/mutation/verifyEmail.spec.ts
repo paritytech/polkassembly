@@ -59,6 +59,7 @@ describe('verifyEmail mutation', () => {
 
 		expect(dbUser.email_verified).to.be.true;
 		expect(res.message).to.eq(messages.EMAIL_VERIFICATION_SUCCESSFUL);
+		expect(res.token).to.exist;
 	});
 
 	it('should throw an error if token is invalid', async () => {

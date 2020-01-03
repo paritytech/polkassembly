@@ -51,7 +51,8 @@ const Email = ({ className }: Props): JSX.Element => {
 						currentUser.setUserDetailsContextState((prevState) => {
 							return {
 								...prevState,
-								email
+								email,
+								email_verified: false
 							};
 						});
 					}
