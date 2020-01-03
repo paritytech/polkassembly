@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 
+import { NotificationContext } from '../../context/NotificationContext';
+import { useChangePasswordMutation } from '../../generated/graphql';
+import { NotificationStatus } from '../../types';
+import FilteredError from '../../ui-components/FilteredError';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
-import { useChangePasswordMutation } from '../../generated/graphql';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
 
 const Password = (): JSX.Element => {
 	const [currentPassword, setCurrentPassword] = useState<string | null | undefined>('');
@@ -46,7 +47,7 @@ const Password = (): JSX.Element => {
 	};
 
 	return (
-		<>
+		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field width={10}>
 					<label>Current Password</label>
@@ -67,10 +68,7 @@ const Password = (): JSX.Element => {
 						placeholder='New Password'
 						type='password'
 					/>
-					{error &&
-					<>
-						<br/><div>{error.message}</div>
-					</>
+					{error && <FilteredError text={error.message}/>
 					}
 				</Form.Field>
 				<Form.Field width={2}>
@@ -85,7 +83,7 @@ const Password = (): JSX.Element => {
 					</Button>
 				</Form.Field>
 			</Form.Group>
-		</>
+		</Form>
 	);
 };
 
