@@ -8,6 +8,7 @@ import { useSignupMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
 interface Props {
@@ -113,11 +114,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						>
 							Sign-up
 						</Button>
-						{error &&
-						<>
-							<br/><div>{error.message}</div>
-						</>
-						}
+						{error && <FilteredError text={error.message}/>}
 					</div>
 				</Form>
 			</Grid.Column>

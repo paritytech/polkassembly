@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
-import { Link } from 'react-router-dom';
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -84,11 +85,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						>
 							Login
 						</Button>
-						{error &&
-						<>
-							<br/><div>{error.message}</div>
-						</>
-						}
+						{error && <FilteredError text={error.message}/>	}
 					</div>
 				</Form>
 			</Grid.Column>

@@ -8,8 +8,9 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import PostContent from '../../components/PostContent';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
 import DisapearingLabel from '../../ui-components/DisapearingLabel';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 import { Tag } from '../../ui-components/Tag';
 
 interface Props {
@@ -58,7 +59,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	return (
 		<>
 			<div className={className}>
-				{error && error.message && <div>{error.message}</div>}
+				{error && <FilteredError text={error.message}/>}
 				<div className='post_tags'>
 					<Tag>{topic && topic.name}</Tag>
 				</div>

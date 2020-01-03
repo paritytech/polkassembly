@@ -370,7 +370,8 @@ We can verify a user email by calling the `verifyEmail` mutation and pass the ve
 ```gql
 mutation {
   verifyEmail(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
-    message
+    message,
+    token
   }
 }
 ```
@@ -387,7 +388,8 @@ On success, we get the response
 {
   "data": {
     "verifyEmail": {
-      "message": "Thank you for verifying your account"
+      "message": "Thank you for verifying your account",
+      "token": "<new JWT>"
     }
   }
 }

@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import Button from '../../ui-components/Button';
-import { Form } from '../../ui-components/Form';
 import { useChangeUsernameMutation } from '../../generated/graphql';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
 import { handleTokenChange } from '../../services/auth.service';
+import { NotificationStatus } from '../../types';
+import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 
 const Username = (): JSX.Element => {
 	const [username, setUsername] = useState<string | null | undefined>('');
@@ -59,33 +61,31 @@ const Username = (): JSX.Element => {
 	};
 
 	return (
-		<Form.Group>
-			<Form.Field width={10}>
-				<label>Username</label>
-				<input
-					value={username || ''}
-					onChange={onUserNameChange}
-					placeholder='username'
-					type='text'
-				/>
-				{error &&
-				<>
-					<br/><div>{error.message}</div>
-				</>
-				}
-			</Form.Field>
-			<Form.Field width={2}>
-				<label>&nbsp;</label>
-				<Button
-					primary
-					disabled={loading}
-					onClick={handleClick}
-					type="submit"
-				>
+		<Form standalone={false}>
+			<Form.Group>
+				<Form.Field width={10}>
+					<label>Username</label>
+					<input
+						value={username || ''}
+						onChange={onUserNameChange}
+						placeholder='username'
+						type='text'
+					/>
+					{error && <FilteredError text={error.message}/>}
+				</Form.Field>
+				<Form.Field width={2}>
+					<label>&nbsp;</label>
+					<Button
+						primary
+						disabled={loading}
+						onClick={handleClick}
+						type="submit"
+					>
 					Change
-				</Button>
-			</Form.Field>
-		</Form.Group>
+					</Button>
+				</Form.Field>
+			</Form.Group>
+		</Form>
 	);
 };
 
