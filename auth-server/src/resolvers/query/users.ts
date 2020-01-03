@@ -1,8 +1,19 @@
 import User from '../../model/User';
 import { PublicUser } from '../../types';
 
-export default async (): Promise<PublicUser[]> => {
-	const users = await User.query();
+interface argsType {
+	limit: number
+	page: number
+}
+
+export default async (parent, { limit, page }: argsType): Promise<PublicUser[]> => {
+	limit = limit || 25;
+	page = page || 1;
+	if (page < 1) {
+		page = 1;
+	}
+	const offset = (page - 1) * limit;
+	const users = await User.query().offset(offset).limit(limit);
 
 	return Array.isArray(users) ? users.map(user => ({
 		id: user.id,
