@@ -488,6 +488,66 @@ On success, we get the response
 }
 ```
 
+### Subscribe to a post new comments 
+We can be notified for any new comment from a given post by calling the `changeUsername` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Post_subscribe{
+  postSubscribe(post_id:19) {
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H 'Content-Type: application/json' \
+--data-binary '{"query":"mutation {\n  postSubscribe(post_id:19){\n    message\n  }\n}"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "postSubscribe": {
+      "message": "You successfully subscribed to new comments."
+    }
+  }
+}
+```
+
+### Unsubscribe to a post
+We can be notified for any new comment from a given post by calling the `changeUsername` mutation. Note that it needs an authorization header:
+
+```gql
+mutation Post_unsubscribe{
+  postUnsubscribe(post_id:19) {
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
+-H 'Content-Type: application/json' \
+--data-binary '{"query":"mutation {\n  postUnsubscribe(post_id:19){\n    message\n  }\n}"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "postUnsubscribe": {
+      "message": "You have been unsubscribed successfuly."
+    }
+  }
+}
+```
+
 ## Testing
 
 To run tests:

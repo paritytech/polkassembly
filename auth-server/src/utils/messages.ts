@@ -32,7 +32,7 @@ export default {
 	USER_NOT_FOUND: 'User not found.',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
 	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',
-	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed from post successfuly',
+	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed successfuly.',
 	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
-	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exits.'
+	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.'
 };
