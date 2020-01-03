@@ -31,7 +31,6 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					created_at={created_at}
 					updated_at={updated_at}
 				/>
-				{/* <ReactMarkdown className='md' source={content} /> */}
 				<EditableCommentContent
 					authorId={author.id}
 					commentId={id}
