@@ -47,7 +47,7 @@ describe('post unSubscribe mutation', () => {
 	});
 
 	it('should be able to unsubscribe from a post', async () => {
-		await postUnsubscribe(null, { post_id }, fakectx);
+		const res = await postUnsubscribe(null, { post_id }, fakectx);
 
 		const dbSubscription = await PostSubscription
 			.query()
@@ -58,6 +58,7 @@ describe('post unSubscribe mutation', () => {
 			.first();
 
 		expect(dbSubscription).to.not.exist;
+		expect(res.message).eq(messages.SUBSCRIPTION_REMOVE_SUCCESSFUL);
 	});
 
 	it('should not be able to unsubscribe a second time', async () => {

@@ -44,7 +44,7 @@ describe('post subscribe mutation', () => {
 	});
 
 	it('should be able to subscribe to a post', async () => {
-		await postSubscribe(null, { post_id }, fakectx);
+		const res = await postSubscribe(null, { post_id }, fakectx);
 
 		const dbSubscription = await PostSubscription
 			.query()
@@ -57,6 +57,7 @@ describe('post subscribe mutation', () => {
 		expect(dbSubscription).to.exist;
 		expect(dbSubscription.post_id).to.equals(post_id);
 		expect(dbSubscription.user_id).to.equals(signupResult.user.id);
+		expect(res.message).to.eq(messages.SUBSCRIPTION_SUCCESSFUL);
 	});
 
 	it('should show already subscribed if subscribed again', async () => {
