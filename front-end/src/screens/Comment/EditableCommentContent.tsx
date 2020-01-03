@@ -4,10 +4,10 @@ import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -43,12 +43,12 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 					refetch();
 					queueNotification({
 						header: 'Success!',
-						message: 'Your comment was edited',
+						message: 'Your comment was edited.',
 						status: NotificationStatus.SUCCESS
 					});
 				}
 			})
-			.catch((e) => console.error('Error saving comment',e));
+			.catch((e) => console.error('Error saving comment: ',e));
 	};
 	const onContentChange = (content: string) => setNewContent(content);
 	const [editCommentMutation, { error }] = useEditCommentMutation({

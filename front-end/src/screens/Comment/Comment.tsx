@@ -1,12 +1,12 @@
-import * as React from 'react';
 import { ApolloQueryResult } from 'apollo-client/core/types';
+import * as React from 'react';
 import styled from 'styled-components';
 
 import Comments from './Comments';
+import EditableCommentContent from './EditableCommentContent';
 import { CommentRecursiveFragment, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
-import EditableCommentContent from './EditableCommentContent';
 
 interface Props{
 	className?: string,
