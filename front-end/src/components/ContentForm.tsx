@@ -40,6 +40,7 @@ export default styled(ContentForm)`
 	.errorText {
 		color: #fe4850;
 		margin-bottom: 1rem;
+		padding-left: 0.5rem;
 	}
 
 	textarea {

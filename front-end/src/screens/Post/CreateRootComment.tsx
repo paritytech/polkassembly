@@ -1,5 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -19,8 +20,9 @@ interface Props {
 const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
+	const { control, errors, handleSubmit } = useForm();
 
-	const onContentChange = (content: string) => setContent(content);
+	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [addRootCommentMutation, { error }] = useAddRootCommentMutation();
 
 	if (!id) return <div>You must loggin to comment.</div>;
@@ -55,13 +57,18 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 			{error && <FilteredError text={error.message}/>}
 
 			<>
-				<ContentForm
+				<Controller
+					as={<ContentForm
+						errorContent={errors.content}
+					/>}
+					name='content'
+					control={control}
 					onChange={onContentChange}
-					value={content}
+					rules={{ required: true }}
 				/>
 				<div className='button-container'>
 					<Button secondary onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
-					<Button primary onClick={handleSave}><Icon name='reply'/> Reply</Button>
+					<Button primary onClick={handleSubmit(handleSave)}><Icon name='reply'/> Reply</Button>
 				</div>
 			</>
 		</div>

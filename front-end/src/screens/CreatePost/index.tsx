@@ -24,7 +24,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
-	const { register, handleSubmit, errors, control } = useForm();
+	const { control, errors, handleSubmit, register } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
