@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostOrCommentForm from '../../components/PostOrCommentForm';
+import ContentForm from '../../components/ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddRootCommentMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
@@ -55,14 +55,13 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 			{error && <FilteredError text={error.message}/>}
 
 			<>
-				<PostOrCommentForm
+				<ContentForm
+					onChange={onContentChange}
 					value={content}
-					onContentChange={onContentChange}
-					withTitle={false}
 				/>
 				<div className='button-container'>
-					<Button className={'secondary'} onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
-					<Button className={'primary'} onClick={handleSave}><Icon name='reply'/> Reply</Button>
+					<Button secondary onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
+					<Button primary onClick={handleSave}><Icon name='reply'/> Reply</Button>
 				</div>
 			</>
 		</div>

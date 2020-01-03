@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostOrCommentForm from '../../components/PostOrCommentForm';
+import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
@@ -66,10 +66,9 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 					isEditing
 						?
 						<Form standalone={false}>
-							<PostOrCommentForm
+							<ContentForm
+								onChange={onContentChange}
 								value={newContent}
-								onContentChange={onContentChange}
-								withTitle={false}
 							/>
 							<div className='button-container'>
 								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>

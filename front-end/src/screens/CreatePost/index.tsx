@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostOrCommentForm from '../../components/PostOrCommentForm';
+import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation } from '../../generated/graphql';
@@ -72,14 +72,12 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							title={title}
 						/>
 						<Controller
-							as={<PostOrCommentForm
+							as={<ContentForm
 								errorContent={errors.content}
-								withTitle={false}
 							/>}
 							name='content'
 							control={control}
 							onChange={onContentChange}
-							onChangeName={'onContentChange'}
 							rules={{ required: true }}
 						/>
 
