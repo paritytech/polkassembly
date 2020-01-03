@@ -56,7 +56,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 
 			<>
 				<PostOrCommentForm
-					content={content}
+					value={content}
 					onContentChange={onContentChange}
 					withTitle={false}
 				/>

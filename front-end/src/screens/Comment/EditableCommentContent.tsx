@@ -67,7 +67,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 						?
 						<Form standalone={false}>
 							<PostOrCommentForm
-								content={newContent}
+								value={newContent}
 								onContentChange={onContentChange}
 								withTitle={false}
 							/>

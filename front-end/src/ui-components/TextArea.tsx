@@ -191,8 +191,11 @@ const StyledTextArea = styled.div`
 `;
 
 interface Props {
+	className?: string
+	name?: string
+	onChange:  ((value: string) => void) | undefined
+	ref?: any
     value: string
-    onChange:  ((value: string) => void) | undefined
 }
 
 export function TextArea(props: Props): React.ReactElement {
@@ -219,11 +222,13 @@ export function TextArea(props: Props): React.ReactElement {
 		<StyledTextArea className="container">
 			<ReactMde
 				commands={listCommands}
-				value={props.value}
-				onChange={props.onChange}
-				selectedTab={selectedTab}
-				onTabChange={setSelectedTab}
 				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+				name={props.name}
+				onChange={props.onChange}
+				onTabChange={setSelectedTab}
+				ref={props.ref}
+				selectedTab={selectedTab}
+				value={props.value}
 				{...props}
 			/>
 		</StyledTextArea>

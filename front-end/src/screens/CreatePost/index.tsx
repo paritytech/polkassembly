@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useForm, errors } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -8,10 +8,11 @@ import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { NotificationStatus } from '../../types';
 import TopicsRadio from './TopicsRadio';
+import { NotificationStatus } from '../../types';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import TitleForm from '../../components/TitleForm';
 
 interface Props {
 	className?: string
@@ -23,7 +24,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
-	const { register, handleSubmit, watch, errors } = useForm();
+	const { register, handleSubmit, errors, control } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -56,7 +57,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	};
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
-	const onContentChange = (content: string) => setContent(content);
+	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 
 	return (
 		<Container>
@@ -64,13 +65,24 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<Form className={className}>
 						<h3>New Post</h3>
-						<PostOrCommentForm
-							content={content}
-							onContentChange={onContentChange}
+						<TitleForm
+							errorTitle={errors.title}
 							onTitleChange={onTitleChange}
-							refTitle={register}
+							refTitle={register({ required: true })}
 							title={title}
 						/>
+						<Controller
+							as={<PostOrCommentForm
+								errorContent={errors.content}
+								withTitle={false}
+							/>}
+							name='content'
+							control={control}
+							onChange={onContentChange}
+							onChangeName={'onContentChange'}
+							rules={{ required: true }}
+						/>
+
 						<TopicsRadio
 							onTopicSelection={(id) => setSetlectedTopic(id)}
 						/>

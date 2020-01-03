@@ -13,6 +13,7 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import { Tag } from '../../ui-components/Tag';
+import TitleForm from '../../components/TitleForm';
 
 interface Props {
 	className?: string
@@ -78,12 +79,14 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 					isEditing
 						?
 						<Form standalone={false}>
-							<PostOrCommentForm
-								content={newContent}
-								onContentChange={onContentChange}
+							<TitleForm
 								onTitleChange={onTitleChange}
 								title={newTitle}
-
+							/>
+							<PostOrCommentForm
+								value={newContent}
+								onContentChange={onContentChange}
+								withTitle={false}
 							/>
 							<div className='button-container'>
 								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
