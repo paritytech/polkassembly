@@ -12,6 +12,9 @@ export default async (parent, { limit, page }: argsType): Promise<PublicUser[]> 
 	if (page < 1) {
 		page = 1;
 	}
+	if (limit > 100) {
+		limit = 100;
+	}
 	const offset = (page - 1) * limit;
 	const users = await User.query().offset(offset).limit(limit);
 
