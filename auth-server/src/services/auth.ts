@@ -12,7 +12,7 @@ import EmailVerificationToken from '../model/EmailVerificationToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
-import { AuthObjectType, JWTPayploadType, Role } from '../types';
+import { AuthObjectType, JWTPayploadType, Role, UserObjectType } from '../types';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
@@ -26,6 +26,12 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 
 export default class AuthService {
 	constructor(){}
+
+	public async GetUser(token: string): Promise<UserObjectType> {
+		const userId = await getUserIdFromJWT(token, publicKey);
+
+		return getUserFromUserId(userId);
+	}
 
 	public async Login(username, password): Promise<AuthObjectType> {
 		const user = await User

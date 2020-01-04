@@ -39,7 +39,7 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Verification Email not sent',e));
+		console.error('Verification Email not sent', e));
 };
 
 export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) => {
@@ -76,5 +76,36 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Password reset email not sent',e));
+		console.error('Password reset email not sent', e));
+};
+
+export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
+	if (!apiKey) {
+		console.warn('There is a new comment on the post you are subscribed to');
+		return;
+	}
+
+	const text = `
+		<p>
+			Hi ${user.name || ''}!<br/><br/>
+
+			<br />
+			${author.username} has commented on a <a href="${DOMAIN}/post/${comment.post_id}">post you subscribed to</a>.<br /><br />
+
+			comment: ${comment.content}<br />
+
+			Polkassembly Team
+		</p>
+	`;
+
+	const msg = {
+		to: user.email,
+		from: FROM,
+		subject: 'Update on post you are subscribed to',
+		text,
+		html: text
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Post subscription email not sent', e));
 };
