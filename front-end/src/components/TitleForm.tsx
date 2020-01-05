@@ -23,7 +23,7 @@ const TitleForm = ({ className, errorTitle, onChange, value = '' }:Props): JSX.E
 						name={'title'}
 						onChange={onChange}
 						placeholder='Your title...'
-						type="text"
+						type='text'
 						value={value}
 					/>
 					{errorTitle && <span className={'errorText'}>Did you forget to add a title?</span>}
