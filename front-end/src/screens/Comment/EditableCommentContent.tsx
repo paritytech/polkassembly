@@ -84,7 +84,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 							/>
 							<div className='button-container'>
 								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</Form>
 						:
