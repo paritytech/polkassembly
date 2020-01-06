@@ -42,7 +42,7 @@ const Discussions = ({ className, data }: Props) => {
 												/>
 											</Link>}
 										</li>
-									),
+									)
 							)}
 					</ul>
 				</Grid.Column>
