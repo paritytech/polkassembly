@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -10,29 +11,22 @@ import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import messages from '../../util/messages';
 
 interface Props {
 	className?: string
 }
 
 const SignupForm = ({ className }:Props): JSX.Element => {
-	const [email, setEmail] = useState<string | undefined>('');
-	const [name, setName] = useState<string | undefined>('');
-	const [username, setUsername] = useState<string | undefined>('');
-	const [password, setPassword] = useState<string | undefined>('');
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const [signupMutation, { loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { errors, handleSubmit, register } = useForm();
 
-	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
-	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value);
-	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
-	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 	const { setModal } = useContext(ModalContext);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
-		event.preventDefault();
-		event.stopPropagation();
+	const handleSubmitForm = (data:Record<string, any>):void => {
+		const { email, name, password, username } = data;
 
 		if (username && email && password){
 			signupMutation({
@@ -60,56 +54,71 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
-				<Form>
+				<Form onSubmit={handleSubmit(handleSubmitForm)}>
 					<h3>Sign Up</h3>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
-								onChange={onUserNameChange}
+								className={errors.username ? 'error' : ''}
+								name='username'
 								placeholder='john'
-								type="text"
+								ref={register({ minLength: 3, required: true })}
+								type='text'
 							/>
+							{errors.username && <span className={'errorText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Full Name</label>
 							<input
-								onChange={onNameChange}
+								className={errors.name ? 'error' : ''}
+								name='name'
 								placeholder='Firstname Lastname'
-								type="text"
+								ref={register({ minLength: 3, required: true })}
+								type='text'
 							/>
+							{errors.name && <span className={'errorText'}>{messages.VALIDATION_NAME_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Email</label>
 							<input
-								onChange={onEmailChange}
+								className={errors.email ? 'error' : ''}
+								name='email'
 								placeholder='john@doe.com'
-								type="email"
+								ref={register({
+									pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i,
+									required: true
+								})}
+								type='text'
 							/>
 							<div className="text-muted">
 								We&apos;ll never share your email with anyone else.
 							</div>
+							{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
-								onChange={onPasswordChange}
+								className={errors.password ? 'error' : ''}
+								name='password'
 								placeholder='Password'
+								ref={register({ minLength: 6, required: true })}
 								type='password'
 							/>
+							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 						</Form.Field>
 					</Form.Group >
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
 							disabled={loading}
-							onClick={handleClick}
+							onClick={handleSubmitForm}
 							type="submit"
 						>
 							Sign-up
@@ -130,5 +139,13 @@ export default styled(SignupForm)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+	}
+
+	input.error {
+		border-color: #fe4850 !important;
+	}
+
+	.errorText {
+		color: #fe4850
 	}
 `;
