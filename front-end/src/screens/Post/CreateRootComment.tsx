@@ -68,7 +68,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 				/>
 				<div className='button-container'>
 					<Button primary negative onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
-					<Button primary onClick={handleSave}><Icon name='reply'/> Reply</Button>
+					<Button primary onClick={handleSubmit(handleSave)}><Icon name='reply'/> Reply</Button>
 				</div>
 			</>
 		</div>
