@@ -95,10 +95,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								})}
 								type='text'
 							/>
+							{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 							<div className="text-muted">
 								We&apos;ll never share your email with anyone else.
 							</div>
-							{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
