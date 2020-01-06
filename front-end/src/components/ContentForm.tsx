@@ -3,6 +3,7 @@ import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
+import messages from '../util/messages';
 import { TextArea } from '../ui-components/TextArea';
 
 interface Props {
@@ -24,7 +25,7 @@ const ContentForm = ({ className, value, errorContent, onChange }:Props): JSX.El
 					value={value || ''}
 				/>
 			</Form.Group>
-			{errorContent && <div className={'errorText'}>Did you forget to add some content?</div>}
+			{errorContent && <div className={'errorText'}>{messages.VALIDATION_CONTENT_ERROR}</div>}
 		</div>
 	);
 };

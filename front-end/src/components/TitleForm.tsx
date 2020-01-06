@@ -3,6 +3,7 @@ import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
+import messages from '../util/messages';
 
 interface Props {
 	className?: string
@@ -26,7 +27,7 @@ const TitleForm = ({ className, errorTitle, onChange, value = '' }:Props): JSX.E
 						type='text'
 						value={value}
 					/>
-					{errorTitle && <span className={'errorText'}>Did you forget to add a title?</span>}
+					{errorTitle && <span className={'errorText'}>{messages.VALIDATION_TITLE_ERROR}</span>}
 				</Form.Field>
 			</Form.Group>
 		</div>
