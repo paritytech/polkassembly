@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -10,24 +11,20 @@ import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import messages from '../../util/messages';
 
 interface Props {
 	className?: string
 }
 
 const LoginForm = ({ className }:Props): JSX.Element => {
-	const [username, setUsername] = useState<string | undefined>('');
-	const [password, setPassword] = useState<string | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const { history } = useRouter();
 	const [loginMutation, { loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { errors, handleSubmit, register } = useForm();
 
-	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
-	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
-		event.preventDefault();
-		event.stopPropagation();
+	const handleSubmitForm = (data:Record<string, any>):void => {
+		const { username, password } = data;
 
 		if (username && password){
 			loginMutation({
@@ -50,16 +47,19 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
-				<Form>
+				<Form onSubmit={handleSubmit(handleSubmitForm)}>
 					<h3>Login</h3>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Username</label>
 							<input
-								onChange={onUserNameChange}
+								className={errors.username ? 'error' : ''}
+								name='username'
 								placeholder='John'
-								type="text"
+								ref={register({ minLength: 3, required: true })}
+								type='text'
 							/>
+							{errors.username && <span className={'errorText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 
@@ -67,11 +67,15 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>Password</label>
 							<input
-								onChange={onPasswordChange}
+								className={errors.password ? 'error' : ''}
+								name='password'
 								placeholder='Password'
-								type="password"
+								ref={register({ minLength: 6 ,required: true })}
+								type='password'
 							/>
-							<div className="text-muted">
+							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
+
+							<div className='text-muted'>
 								<Link to='/request-reset-password'>Forgot your password?</Link>
 							</div>
 						</Form.Field>
@@ -80,8 +84,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						<Button
 							primary
 							disabled={loading}
-							onClick={handleClick}
-							type="submit"
+							type='submit'
 						>
 							Login
 						</Button>
@@ -100,5 +103,13 @@ export default styled(LoginForm)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+	}
+
+	input.error {
+		border-color: #fe4850 !important;
+	}
+
+	.errorText {
+		color: #fe4850
 	}
 `;
