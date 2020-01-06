@@ -1,5 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
+
+import { rewiremock } from '../../rewiremock';
 import users from '../../../src/resolvers/query/users';
 import User from '../../../src/model/User';
 
@@ -50,5 +52,28 @@ describe('user query', () => {
 		result.forEach((user, i) => {
 			expect(user.id).to.equals(dbUsers[i + 5].id);
 		});
+	});
+
+	it('should limit users to 100 if > 100 is requested', async () => {
+		let calledLimit = 0;
+		rewiremock(() => require('../../../src/model/User')).with({
+			default: {
+				query: () => ({
+					offset: () => ({
+						limit: (limit) => {
+							calledLimit = limit;
+							return [];
+						}
+					})
+				})
+			}
+		});
+		rewiremock.enable();
+		const users = require('../../../src/resolvers/query/users');
+		rewiremock.disable();
+
+		await users.default(null, { limit: 101 });
+
+		expect(calledLimit).to.equal(100);
 	});
 });
