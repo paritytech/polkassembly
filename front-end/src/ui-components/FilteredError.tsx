@@ -18,4 +18,5 @@ const FilteredError = ({ className, text } : ErrorProps) => {
 
 export default styled(FilteredError)`
 	color: #D94C3D;
+	font-size: 1.2rem;
 `;
