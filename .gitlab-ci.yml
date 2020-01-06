@@ -7,13 +7,6 @@ variables:
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
 
-before_script:
-#  - export DOCKER_IMAGE=[HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
-  - export DOCKER_IMAGE="$CI_REGISTRY/$SERIVCE_NAME"
-  # - export DOCKER_TAG=$CI_COMMIT_REF_NAME  
-  - export DOCKER_TAG="latest"
-  - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
-
 stages:
   - dockerize
 
@@ -34,6 +27,9 @@ cache:
   services:
     - docker:dind
   script:
+    - export DOCKER_IMAGE="$CI_REGISTRY/$SERVICE_NAME"
+    - export DOCKER_TAG="latest"
+    - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     #- echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
     - docker build -t "$DOCKER_IMAGE_FULL_NAME" $SERVICE_NAME
     #- docker push "$DOCKER_IMAGE_FULL_NAME"
@@ -43,7 +39,7 @@ dockerize-frontend:
   environment:
     name: parity-build
   variables:
-    SERIVCE_NAME: "frontend"
+    SERVICE_NAME: "frontend"
   only:
       - /^k8s/
 #  rules:
