@@ -8,7 +8,7 @@ import UpdateLabel from '../ui-components/UpdateLabel';
 const PostContent = ({ post }:{post: PostFragment}) => {
 	const { author, content, created_at, title, updated_at } = post;
 
-	if (!author || !author.username || !content) return <div>Post not available</div>;
+	if (!author?.username || !content) return <div>Post not available</div>;
 	return (
 		<>
 			<h3>{title}</h3>
