@@ -83,8 +83,8 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button className='quaternary' onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button className='tertiary' onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</Form>
 						:

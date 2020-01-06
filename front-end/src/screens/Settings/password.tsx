@@ -74,7 +74,7 @@ const Password = (): JSX.Element => {
 				<Form.Field width={2}>
 					<label>&nbsp;</label>
 					<Button
-						className='quaternary'
+						secondary
 						disabled={loading}
 						onClick={handleClick}
 						type="submit"

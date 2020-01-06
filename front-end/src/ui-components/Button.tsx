@@ -16,40 +16,44 @@ export default styled(Button)`
 		border: none;
 		padding: 0.7rem 1rem;
 		&.ui.primary.button {
-			color: #fff;
 			background-color: #FF5A47;
+			color: #FFF;
 			&:hover, &:focus {
 				background-color: #D94C3D;
 				color: #FFF;
+				outline: none;
+			}
+		}
+		&.ui.primary.negative.button {
+			background-color: #FFF;
+			color: #FF5A47;
+			border: 0.1rem solid #FF5A47;
+			&:hover, &:focus {
+				background-color: #FFF1F0;
+				color: #D94C3D;
+				border: 0.1rem solid #D94C3D;
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
-			color: #FF5A47;
 			background-color: #FFF;
-			border: 0.15rem solid #FF5A47;
+			color: #FF5A47;
+			border: 0.1rem solid #FF5A47;
 			&:hover, &:focus {
-				background-color: #D94C3D;
-				color: #FFF;
-				border: 0.15rem solid #D94C3D;
+				background-color: #FFF1F0;
+				color: #D94C3D;
+				border: 0.1rem solid #D94C3D;
 				outline: none;
 			}
 		}
-		&.ui.tertiary.button {
-			background-color: #7E7A7A;
-			color: #FFF;
+		&.ui.secondary.negative.button {
+			background-color: #FFF;
+			color: #E65140;
+			border: 0.1rem solid #E65140;
 			&:hover, &:focus {
-				background-color: #555252;
+				background-color: #E66557;
 				color: #FFF;
-				outline: none;
-			}
-		}
-		&.ui.quaternary.button {
-			background-color: #B5AEAE;
-			color: #FFF;
-			&:hover, &:focus {
-				background-color: #8C8787;
-				color: #FFF;
+				border: 0.15rem solid #E66557;
 				outline: none;
 			}	
 		}

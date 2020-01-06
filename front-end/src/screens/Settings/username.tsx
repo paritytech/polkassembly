@@ -81,7 +81,7 @@ const Username = ({ className }:Props): JSX.Element => {
 				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
-						className='quaternary'
+						secondary
 						disabled={loading}
 						onClick={handleClick}
 						type="submit"
