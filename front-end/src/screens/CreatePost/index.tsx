@@ -85,7 +85,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						{error && <FilteredError text={error.message}/>}
 					</Form>
 				</Grid.Column>
-				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={8}/>
+				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
 			</Grid>
 		</Container>
 	);

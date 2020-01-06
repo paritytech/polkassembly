@@ -49,4 +49,28 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 export default styled(DismissableNotification)`
 	margin-bottom: 1rem;
 	cursor: pointer;
+
+	.ui.green.icon.message {
+        font-family: 'Roboto';
+        background-color: #4DD18F;
+		color: #FFF;
+		border: none;
+		outline: none;
+		box-shadow: none!important;
+
+		.header {
+			color: #FFF;
+			font-family: 'Roboto Mono';
+			font-weight: 500;
+		}
+	}
+	
+	.ui.icon.message>.icon:not(.close) {
+		opacity: 1;
+	}
+
+	.close {
+		color: #FFF;
+		text-shadow: none;
+	}
 `;

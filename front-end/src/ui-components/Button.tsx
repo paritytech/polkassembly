@@ -35,15 +35,37 @@ export default styled(Button)`
 				outline: none;
 			}
 		}
+		&.ui.tertiary.button {
+			background-color: #7E7A7A;
+			color: #FFF;
+			&:hover, &:focus {
+				background-color: #555252;
+				color: #FFF;
+				outline: none;
+			}
+		}
+		&.ui.quaternary.button {
+			background-color: #B5AEAE;
+			color: #FFF;
+			&:hover, &:focus {
+				background-color: #8C8787;
+				color: #FFF;
+				outline: none;
+			}	
+		}
 		&.ui.social.button {
 			background-color: #FFF;
 			color: #706D6D;
 			font-size: 1.2rem;
 			border: none;
+			padding: 0.7rem 0.7rem;
 			&:hover{
 				background-color: #EEE;
 				border: none;
 			}
+		}
+		&.ui.button>.icon:not(.button) {
+			opacity: 1;
 		}
 	}
 `;

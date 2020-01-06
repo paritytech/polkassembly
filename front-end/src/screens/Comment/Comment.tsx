@@ -55,6 +55,8 @@ export default styled(Comment)`
 margin-top: 3rem;
 
 	.md {
+		margin-top: 1rem;
+
 		font-size: 1.4rem;
 
 		h1, h2 {

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import styled from 'styled-components';
 
 import { useChangeUsernameMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
@@ -10,7 +11,11 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
-const Username = (): JSX.Element => {
+interface Props {
+	className?: string
+}
+
+const Username = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
@@ -61,7 +66,7 @@ const Username = (): JSX.Element => {
 	};
 
 	return (
-		<Form standalone={false}>
+		<Form standalone={false} className={className}>
 			<Form.Group>
 				<Form.Field width={10}>
 					<label>Username</label>
@@ -73,10 +78,10 @@ const Username = (): JSX.Element => {
 					/>
 					{error && <FilteredError text={error.message}/>}
 				</Form.Field>
-				<Form.Field width={2}>
+				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
-						primary
+						className='quaternary'
 						disabled={loading}
 						onClick={handleClick}
 						type="submit"
@@ -89,4 +94,10 @@ const Username = (): JSX.Element => {
 	);
 };
 
-export default Username;
+export default styled(Username)`
+	.button {
+		display: flex;
+		flex-direction: column;
+		justify-content: left;
+	}
+`;

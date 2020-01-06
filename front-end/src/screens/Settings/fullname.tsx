@@ -75,7 +75,7 @@ const Fullname = (): JSX.Element => {
 				<Form.Field width={2}>
 					<label>&nbsp;</label>
 					<Button
-						primary
+						className='quaternary'
 						disabled={loading}
 						onClick={handleClick}
 						type="submit"

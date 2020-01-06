@@ -72,8 +72,8 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 								withTitle={false}
 							/>
 							<div className='button-container'>
-								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+								<Button className='quaternary' onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
+								<Button className='tertiary' onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</Form>
 						:

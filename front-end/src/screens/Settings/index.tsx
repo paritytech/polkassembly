@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Divider } from 'semantic-ui-react';
+import { Grid, Divider, Container } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import Email from './email';
@@ -13,25 +13,45 @@ interface Props {
 
 const Settings = ({ className }:Props): JSX.Element => {
 	return (
-		<Grid>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-			<Grid.Column className={className} mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
-				<h3>Settings</h3>
-				<Divider/>
-				<Username/>
-				<Fullname/>
-				<Divider/>
-				<Email/>
-				<Divider/>
-				<Password/>
-			</Grid.Column>
-		</Grid>
+		<Container>
+			<Grid>
+				<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
+					<h3>Settings</h3>
+					<Divider/>
+					<Username/>
+					<Fullname/>
+					<Divider/>
+					<Email/>
+					<Divider/>
+					<Password/>
+				</Grid.Column>
+				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
+			</Grid>
+		</Container>
 	);
 };
 
 export default styled(Settings)`
 	background-color: #FFF;
-	background-color:#FFF;
 	padding: 2rem 3rem 3rem 3rem!important;
-	margin-top: 4rem;
+
+	.ui.divider, .ui.divider:not(.vertical):not(.horizontal) {
+		margin: 2rem 0;
+		border-top: 1px solid #EEE;
+		border-bottom: none;
+	}
+
+	@media only screen and (max-width: 576px) {
+		padding: 2rem!important;
+
+		.ui.form {
+			margin-top: 0rem;
+        	padding: 0rem;
+		}
+
+		button {
+			padding: 0.8rem 1rem;
+			border-radius: 0.5rem;
+		}
+    }
 `;
