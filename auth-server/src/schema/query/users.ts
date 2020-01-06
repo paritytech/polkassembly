@@ -1,3 +1,6 @@
 export default `
-    users: [User]
+    users(
+        limit: Int
+        page: Int
+    ): [User]
 `;

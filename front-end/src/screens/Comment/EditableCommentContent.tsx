@@ -1,10 +1,11 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostOrCommentForm from '../../components/PostOrCommentForm';
+import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
@@ -26,6 +27,12 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 	const [newContent, setNewContent] = useState(content || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
+	const {  control, errors, handleSubmit, setValue } = useForm();
+
+	useEffect(() => {
+		isEditing && setValue('content',content);
+	},[content, isEditing, setValue]);
+
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
@@ -50,7 +57,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 			})
 			.catch((e) => console.error('Error saving comment: ',e));
 	};
-	const onContentChange = (content: string) => setNewContent(content);
+	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [editCommentMutation, { error }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
@@ -66,10 +73,14 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 					isEditing
 						?
 						<Form standalone={false}>
-							<PostOrCommentForm
-								content={newContent}
-								onContentChange={onContentChange}
-								withTitle={false}
+							<Controller
+								as={<ContentForm
+									errorContent={errors.content}
+								/>}
+								name='content'
+								control={control}
+								onChange={onContentChange}
+								rules={{ required: true }}
 							/>
 							<div className='button-container'>
 								<Button className='quaternary' onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>

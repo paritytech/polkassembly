@@ -1,18 +1,20 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
-import PostOrCommentForm from '../../components/PostOrCommentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import { Tag } from '../../ui-components/Tag';
+import TitleForm from '../../components/TitleForm';
 
 interface Props {
 	className?: string
@@ -29,6 +31,15 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const [newTitle, setNewTitle] = useState(title || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
+	const {  control, errors, handleSubmit, setValue } = useForm();
+
+	useEffect(() => {
+		if (isEditing) {
+			setValue('content',content);
+			setValue('title',title);
+		}
+	},[content, isEditing, setValue, title]);
+
 	const handleCancel = () => {
 		toggleEdit();
 		setNewContent(content || '');
@@ -55,8 +66,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			})
 			.catch((e) => console.error('Error saving post',e));
 	};
-	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewTitle(event.currentTarget.value);
-	const onContentChange = (content: string) => setNewContent(content);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
+	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [editPostMutation, { error }] = useEditPostMutation({
 		variables: {
 			content: newContent,
@@ -78,16 +89,27 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 					isEditing
 						?
 						<Form standalone={false}>
-							<PostOrCommentForm
-								content={newContent}
-								onContentChange={onContentChange}
-								onTitleChange={onTitleChange}
-								title={newTitle}
-
+							<Controller
+								as={<TitleForm
+									errorTitle={errors.title}
+								/>}
+								control={control}
+								name='title'
+								onChange={onTitleChange}
+								rules={{ required: true }}
+							/>
+							<Controller
+								as={<ContentForm
+									errorContent={errors.content}
+								/>}
+								name='content'
+								control={control}
+								onChange={onContentChange}
+								rules={{ required: true }}
 							/>
 							<div className='button-container'>
 								<Button secondary onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSave}><Icon name='check' className='icon'/> Save</Button>
+								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/> Save</Button>
 							</div>
 						</Form>
 						:
