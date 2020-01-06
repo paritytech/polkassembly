@@ -1,16 +1,18 @@
 import React, { useState, useContext } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Button, Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PostOrCommentForm from '../../components/PostOrCommentForm';
+import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { NotificationStatus } from '../../types';
 import TopicsRadio from './TopicsRadio';
+import { NotificationStatus } from '../../types';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import TitleForm from '../../components/TitleForm';
 
 interface Props {
 	className?: string
@@ -22,6 +24,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
+	const { control, errors, handleSubmit } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -53,8 +56,8 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		}
 	};
 
-	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value);
-	const onContentChange = (content: string) => setContent(content);
+	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
+	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 
 	return (
 		<Container>
@@ -62,19 +65,32 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 					<Form className={className}>
 						<h3>New Post</h3>
-						<PostOrCommentForm
-							content={content}
-							onContentChange={onContentChange}
-							onTitleChange={onTitleChange}
-							title={title}
+						<Controller
+							as={<TitleForm
+								errorTitle={errors.title}
+							/>}
+							control={control}
+							name='title'
+							onChange={onTitleChange}
+							rules={{ required: true }}
 						/>
+						<Controller
+							as={<ContentForm
+								errorContent={errors.content}
+							/>}
+							control={control}
+							name='content'
+							onChange={onContentChange}
+							rules={{ required: true }}
+						/>
+
 						<TopicsRadio
 							onTopicSelection={(id) => setSetlectedTopic(id)}
 						/>
 
 						<div className={'mainButtonContainer'}>
 							<Button
-								onClick={handleSend}
+								onClick={handleSubmit(handleSend)}
 								disabled={isSending || loading}
 								type='submit'
 								variant='primary'
