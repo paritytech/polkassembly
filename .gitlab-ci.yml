@@ -1,10 +1,21 @@
-stages:
-  - test
-  - build
-
+image: parity/kubetools:latest
 variables:
+  PROJECT:                         $CI_PROJECT_PATH_SLUG
+  CI_REGISTRY:                     "eu.gcr.io/test-installations-222013"
+  CI_REGISTRY_USER:                "parity-gcr"
+  KUBE_NAMESPACE:                  $PROJECT
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
+
+before_script:
+#  - export DOCKER_IMAGE=[HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
+  - export DOCKER_IMAGE="$CI_REGISTRY/$SERIVCE_NAME"
+  # - export DOCKER_TAG=$CI_COMMIT_REF_NAME  
+  - export DOCKER_TAG="latest"
+  - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
+
+stages:
+  - dockerize
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -12,38 +23,30 @@ cache:
     - node_modules/
     - packages/*/node_modules/
 
-#### stage:                        test
-
-lint-front-end:
-  stage: test
-  image: node:12
-  interruptible:                   true
-  dependencies:                    []
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - cd front-end
-    - yarn install
-    - yarn lint
-  rules:
-    - changes:
-      - "front-end/**/*"
+#### stage:                        dockerize
+.build_and_push:                   &build_and_push
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://localhost:2375
   tags:
-    - linux-docker
-
-lint-back-end:
-  stage: test
-  image: node:12
-  interruptible:                   true
-  dependencies:                    []
+    - kubernetes-parity-build
+  image: docker:git
+  services:
+    - docker:dind
   script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - cd auth-server
-    - yarn install
-    - yarn lint
-  rules:
-    - changes:
-      - "auth-server/**/*"
-  tags:
-    - linux-docker
+    #- echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker build -t "$DOCKER_IMAGE_FULL_NAME" $SERVICE_NAME
+    #- docker push "$DOCKER_IMAGE_FULL_NAME"
+
+dockerize-frontend:
+  stage: dockerize
+  environment:
+    name: parity-build
+  variables:
+    SERIVCE_NAME: "frontend"
+  only:
+      - /^k8s/
+#  rules:
+#    - changes:
+#      - "front-end/**/*"
+  <<: *build_and_push
