@@ -27,7 +27,7 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 		icon = 'warning';
 		break;
 	case SUCCESS:
-		color = 'green';
+		color = 'red';
 		icon = 'check';
 		break;
 	}
@@ -50,27 +50,52 @@ export default styled(DismissableNotification)`
 	margin-bottom: 1rem;
 	cursor: pointer;
 
-	.ui.green.icon.message {
-        font-family: 'Roboto';
-        background-color: #4DD18F;
-		color: #FFF;
+	.ui.message {
+		font-family: 'Roboto';
 		border: none;
 		outline: none;
 		box-shadow: none!important;
-
 		.header {
-			color: #FFF;
 			font-family: 'Roboto Mono';
 			font-weight: 500;
+			font-size: 1.8rem;
+		}		
+		p {
+			opacity: 1;
+			font-size: 1.5rem;
+		}
+		.close {
+			text-shadow: none;
+			font-size: 1.8rem;
+			margin-right 1rem!important;
+		}
+	}
+
+	.ui.green.message {
+		background-color: #44B87E;
+		color: #114129;
+		.header, .close {
+			color: #114129;
+		}
+	}
+
+	.ui.orange.icon.message {
+		background-color: #FF822E;
+		color: #662900;
+		.header, .close {
+			color: #662900;
 		}
 	}
 	
-	.ui.icon.message>.icon:not(.close) {
-		opacity: 1;
+	.ui.red.icon.message {
+		background-color: #FF474E;
+		color: #520003;
+		.header, .close {
+			color: #520003;
+		}
 	}
 
-	.close {
-		color: #FFF;
-		text-shadow: none;
+	.ui.icon.message>.icon:not(.close) {
+		opacity: 1;
 	}
 `;
