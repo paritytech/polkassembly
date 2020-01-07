@@ -27,7 +27,7 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 		icon = 'warning';
 		break;
 	case SUCCESS:
-		color = 'red';
+		color = 'green';
 		icon = 'check';
 		break;
 	}
