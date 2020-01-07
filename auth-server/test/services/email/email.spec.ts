@@ -1,7 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { rewiremock } from '../../rewiremock';
+import rewiremock from 'rewiremock';
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import PasswordResetToken from '../../../src/model/PasswordResetToken';
 import User from '../../../src/model/User';
