@@ -123,6 +123,11 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						>
 							Sign-up
 						</Button>
+						<Button
+							primary
+							disabled={loading}
+							onClick={() => setModal({ content: 'Hopho' ,title: 'You\'ve got some mail' })}
+						>Modal</Button>
 						{error && <FilteredError text={error.message}/>}
 					</div>
 				</Form>

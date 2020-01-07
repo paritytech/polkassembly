@@ -5,20 +5,21 @@ import styled from 'styled-components';
 type Props = ModalProps & {
 	buttons: React.ReactNode
 	content?: string
+	children?: React.ReactNode
 	className?: string
 	dismissModal?: () => void
 	title?: string
 }
 
 const Modal = (props : Props) => {
-	const { buttons, className, content, title } = props;
+	const { buttons, children, className, title, ...otherProps } = props;
 
 	return (
-		<SUIModal className={className} centered dimmer='inverted' open size='tiny' {...props}>
+		<SUIModal className={className} centered dimmer='inverted' open size='tiny' {...otherProps}>
 			<SUIModal.Header>{title}</SUIModal.Header>
 			<SUIModal.Content>
 				<SUIModal.Description>
-					<p>{content}</p>
+					<p>{children}</p>
 				</SUIModal.Description>
 			</SUIModal.Content>
 			<SUIModal.Actions>
@@ -32,7 +33,7 @@ export default styled(Modal)`
 &.ui.modal {
 	left: auto;
 	height: auto;
-	top: auto;
+	top: 25%;
 	font-size: 1.2rem;
 	border-radius: 0rem;
 
