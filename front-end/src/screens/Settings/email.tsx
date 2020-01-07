@@ -89,7 +89,7 @@ const Email = ({ className }: Props): JSX.Element => {
 				<Form.Field width={2}>
 					<label>&nbsp;</label>
 					<Button
-						primary
+						secondary
 						disabled={loading}
 						onClick={handleClick}
 						type='submit'
@@ -105,6 +105,7 @@ const Email = ({ className }: Props): JSX.Element => {
 export default styled(Email)`
 
 	.warning-text {
-		color: orange;
+		margin-top: 0.5rem;
+		color: #FF5A47;
 	}
 `;

@@ -49,4 +49,53 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 export default styled(DismissableNotification)`
 	margin-bottom: 1rem;
 	cursor: pointer;
+
+	.ui.message {
+		font-family: 'Roboto';
+		border: none;
+		outline: none;
+		box-shadow: none!important;
+		.header {
+			font-family: 'Roboto Mono';
+			font-weight: 500;
+			font-size: 1.8rem;
+		}		
+		p {
+			opacity: 1;
+			font-size: 1.5rem;
+		}
+		.close {
+			text-shadow: none;
+			font-size: 1.8rem;
+			margin-right 1rem!important;
+		}
+	}
+
+	.ui.green.message {
+		background-color: #44B87E;
+		color: #114129;
+		.header, .close {
+			color: #114129;
+		}
+	}
+
+	.ui.orange.icon.message {
+		background-color: #FF822E;
+		color: #662900;
+		.header, .close {
+			color: #662900;
+		}
+	}
+	
+	.ui.red.icon.message {
+		background-color: #FF474E;
+		color: #520003;
+		.header, .close {
+			color: #520003;
+		}
+	}
+
+	.ui.icon.message>.icon:not(.close) {
+		opacity: 1;
+	}
 `;

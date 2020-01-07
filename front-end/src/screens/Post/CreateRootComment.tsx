@@ -67,7 +67,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button secondary onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
+					<Button primary negative onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
 					<Button primary onClick={handleSubmit(handleSave)}><Icon name='reply'/> Reply</Button>
 				</div>
 			</>
