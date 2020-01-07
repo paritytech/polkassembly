@@ -21,19 +21,19 @@ const MyModal = ({ className }: Props) => {
 		return (
 			<Modal
 				buttons={<Button
-					primary
+					content='Got it'
 					icon='check'
+					primary
 					onClick={dismissModal}
-				>Got it</Button>}
+				/>}
 				className={className}
 				centered
-				content={content}
 				dimmer='inverted'
 				open
 				onClose={dismissModal}
 				size='tiny'
 				title={title}
-			/>
+			>{content}</Modal>
 
 		);
 	};
