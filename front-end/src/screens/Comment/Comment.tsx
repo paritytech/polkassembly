@@ -17,7 +17,7 @@ interface Props{
 export const Comment = ({ className, comment, refetch } : Props) => {
 	const { author, comments:c2, content, created_at, id, updated_at } = comment;
 
-	if (!author?.id || !author?.username || !content) return <div>Comment not available</div>;
+	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
 	return (
 		<>

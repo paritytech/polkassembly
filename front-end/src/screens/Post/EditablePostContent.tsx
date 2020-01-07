@@ -76,7 +76,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 		}
 	});
 
-	if (!author?.username || !content) return <div>Post content or author could not be found.</div>;
+	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
 	return (
 		<>
