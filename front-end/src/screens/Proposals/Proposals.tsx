@@ -34,7 +34,7 @@ const Proposals = ({ className, data }: Props) => {
 											/>
 										</Link>}
 									</li>
-								),
+								)
 						)}
 					</ul>
 				</Grid.Column>
