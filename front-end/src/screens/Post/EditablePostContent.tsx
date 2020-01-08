@@ -8,7 +8,7 @@ import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { PostFragment, useEditPostMutation, usePostSubscribeMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -66,6 +66,23 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			})
 			.catch((e) => console.error('Error saving post',e));
 	};
+	const handleSubscribe = () => {
+		postSubscribeMutation({
+			variables: {
+				postId: post.id
+			}
+		})
+			.then(({ data }) => {
+				if (data && data.postSubscribe && data.postSubscribe.message){
+					queueNotification({
+						header: 'Success!',
+						message: data.postSubscribe.message,
+						status: NotificationStatus.SUCCESS
+					});
+				}
+			})
+			.catch((e) => console.error('Error saving post',e));
+	};
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [editPostMutation, { error }] = useEditPostMutation({
@@ -75,6 +92,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			title: newTitle
 		}
 	});
+	const [postSubscribeMutation] = usePostSubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
@@ -117,6 +135,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 							<PostContent post={post}/>
 							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
+							{id && <Button className={'social'} onClick={handleSubscribe}><Icon name='remove bookmark'/> Subscribe</Button>}
 						</>
 				}
 			</div>
@@ -130,7 +149,7 @@ export default styled(EditablePostContent)`
 	.button-container {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;	
+		justify-content: flex-end;
 	}
 
 	.icon {

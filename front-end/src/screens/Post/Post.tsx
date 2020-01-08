@@ -71,7 +71,7 @@ export default styled(Post)`
 	}
 
 	.post_tags {
-		margin-bottom: 1.5rem;		
+		margin-bottom: 1.5rem;
 	}
 
 	h3 {
@@ -98,13 +98,13 @@ export default styled(Post)`
 		h3, h4 {
 			margin: 1.5rem 0 0.5rem 0;
 		}
-		
+
 		h1 {
-			font-size: 2.4rem;	
+			font-size: 2.4rem;
 		}
 
 		h2 {
-			font-size: 1.8rem;	
+			font-size: 1.8rem;
 		}
 
 		h3 {
@@ -123,7 +123,7 @@ export default styled(Post)`
 		ul, ol {
 			padding-left: 2rem;
 		}
-		
+
 		a {
 			color: #FF5A47;
 

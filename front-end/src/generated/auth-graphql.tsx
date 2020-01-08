@@ -45,6 +45,8 @@ export type Mutation = {
   changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeName?: Maybe<ChangeResponse>,
+  postSubscribe?: Maybe<Message>,
+  postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   verifyEmail?: Maybe<ChangeResponse>,
@@ -86,6 +88,16 @@ export type MutationChangeNameArgs = {
 };
 
 
+export type MutationPostSubscribeArgs = {
+  post_id: Scalars['Int']
+};
+
+
+export type MutationPostUnsubscribeArgs = {
+  post_id: Scalars['Int']
+};
+
+
 export type MutationRequestResetPasswordArgs = {
   email: Scalars['String']
 };
@@ -111,6 +123,12 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars['Int']
+};
+
+
+export type QueryUsersArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  page?: Maybe<Scalars['Int']>
 };
 
 export type Token = {

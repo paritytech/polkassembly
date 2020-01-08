@@ -419,6 +419,8 @@ export type Mutation = {
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
+  postSubscribe?: Maybe<Message>,
+  postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
@@ -450,6 +452,16 @@ export type MutationChangeUsernameArgs = {
 export type MutationLoginArgs = {
   password: Scalars['String'],
   username: Scalars['String']
+};
+
+
+export type MutationPostSubscribeArgs = {
+  post_id: Scalars['Int']
+};
+
+
+export type MutationPostUnsubscribeArgs = {
+  post_id: Scalars['Int']
 };
 
 
@@ -501,6 +513,8 @@ export type Mutation_Root = {
   insert_posts?: Maybe<Posts_Mutation_Response>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
+  postSubscribe?: Maybe<Message>,
+  postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
@@ -597,6 +611,18 @@ export type Mutation_RootInsert_PostsArgs = {
 export type Mutation_RootLoginArgs = {
   password: Scalars['String'],
   username: Scalars['String']
+};
+
+
+/** mutation root */
+export type Mutation_RootPostSubscribeArgs = {
+  post_id: Scalars['Int']
+};
+
+
+/** mutation root */
+export type Mutation_RootPostUnsubscribeArgs = {
+  post_id: Scalars['Int']
 };
 
 
@@ -1658,6 +1684,12 @@ export type QueryUserArgs = {
   id: Scalars['Int']
 };
 
+
+export type QueryUsersArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  page?: Maybe<Scalars['Int']>
+};
+
 /** query root */
 export type Query_Root = {
    __typename?: 'query_root',
@@ -1798,6 +1830,13 @@ export type Query_RootPosts_By_PkArgs = {
 /** query root */
 export type Query_RootUserArgs = {
   id: Scalars['Int']
+};
+
+
+/** query root */
+export type Query_RootUsersArgs = {
+  limit?: Maybe<Scalars['Int']>,
+  page?: Maybe<Scalars['Int']>
 };
 
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
@@ -2175,6 +2214,19 @@ export type AddRootCommentMutation = (
   & { insert_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
     & Pick<Comments_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type PostSubscribeMutationVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostSubscribeMutation = (
+  { __typename?: 'mutation_root' }
+  & { postSubscribe: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
   )> }
 );
 
@@ -2653,6 +2705,38 @@ export function useAddRootCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddRootCommentMutationHookResult = ReturnType<typeof useAddRootCommentMutation>;
 export type AddRootCommentMutationResult = ApolloReactCommon.MutationResult<AddRootCommentMutation>;
 export type AddRootCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRootCommentMutation, AddRootCommentMutationVariables>;
+export const PostSubscribeDocument = gql`
+    mutation PostSubscribe($postId: Int!) {
+  postSubscribe(post_id: $postId) {
+    message
+  }
+}
+    `;
+export type PostSubscribeMutationFn = ApolloReactCommon.MutationFunction<PostSubscribeMutation, PostSubscribeMutationVariables>;
+
+/**
+ * __usePostSubscribeMutation__
+ *
+ * To run a mutation, you first call `usePostSubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostSubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postSubscribeMutation, { data, loading, error }] = usePostSubscribeMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostSubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostSubscribeMutation, PostSubscribeMutationVariables>) {
+        return ApolloReactHooks.useMutation<PostSubscribeMutation, PostSubscribeMutationVariables>(PostSubscribeDocument, baseOptions);
+      }
+export type PostSubscribeMutationHookResult = ReturnType<typeof usePostSubscribeMutation>;
+export type PostSubscribeMutationResult = ApolloReactCommon.MutationResult<PostSubscribeMutation>;
+export type PostSubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostSubscribeMutation, PostSubscribeMutationVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {

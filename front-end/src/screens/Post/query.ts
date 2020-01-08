@@ -14,7 +14,7 @@ const commentFields = gql`
 `;
 
 const commentRecursive = gql`
-    fragment commentRecursive on comments {       
+    fragment commentRecursive on comments {
         ...commentFields
         comments {
             ...commentFields
@@ -74,6 +74,14 @@ export const ADD_ROOT_COMMENT=gql`
         __typename
         insert_comments(objects: {author_id: $authorId, content:  $content, post_id: $postId}) {
             affected_rows
+        }
+    }
+`;
+
+export const POST_SUBSCRIBE=gql`
+    mutation PostSubscribe ($postId: Int!) {
+        postSubscribe(post_id: $postId) {
+            message
         }
     }
 `;
