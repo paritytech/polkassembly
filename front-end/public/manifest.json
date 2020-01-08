@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Polkassembly",
+  "name": "polkassembly, discussion platform for polkadot governance",
   "icons": [
     {
       "src": "favicon.ico",
