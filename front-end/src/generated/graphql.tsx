@@ -2230,6 +2230,19 @@ export type PostSubscribeMutation = (
   )> }
 );
 
+export type PostUnsubscribeMutationVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostUnsubscribeMutation = (
+  { __typename?: 'mutation_root' }
+  & { postUnsubscribe: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type LatestProposalPostsQueryVariables = {};
 
 
@@ -2737,6 +2750,38 @@ export function usePostSubscribeMutation(baseOptions?: ApolloReactHooks.Mutation
 export type PostSubscribeMutationHookResult = ReturnType<typeof usePostSubscribeMutation>;
 export type PostSubscribeMutationResult = ApolloReactCommon.MutationResult<PostSubscribeMutation>;
 export type PostSubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostSubscribeMutation, PostSubscribeMutationVariables>;
+export const PostUnsubscribeDocument = gql`
+    mutation PostUnsubscribe($postId: Int!) {
+  postUnsubscribe(post_id: $postId) {
+    message
+  }
+}
+    `;
+export type PostUnsubscribeMutationFn = ApolloReactCommon.MutationFunction<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
+
+/**
+ * __usePostUnsubscribeMutation__
+ *
+ * To run a mutation, you first call `usePostUnsubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostUnsubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postUnsubscribeMutation, { data, loading, error }] = usePostUnsubscribeMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostUnsubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>) {
+        return ApolloReactHooks.useMutation<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>(PostUnsubscribeDocument, baseOptions);
+      }
+export type PostUnsubscribeMutationHookResult = ReturnType<typeof usePostUnsubscribeMutation>;
+export type PostUnsubscribeMutationResult = ApolloReactCommon.MutationResult<PostUnsubscribeMutation>;
+export type PostUnsubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {

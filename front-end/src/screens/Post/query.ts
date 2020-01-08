@@ -85,3 +85,11 @@ export const POST_SUBSCRIBE=gql`
         }
     }
 `;
+
+export const POST_UNSUBSCRIBE=gql`
+    mutation PostUnsubscribe ($postId: Int!) {
+        postUnsubscribe(post_id: $postId) {
+            message
+        }
+    }
+`;

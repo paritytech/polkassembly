@@ -8,7 +8,7 @@ import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostFragment, useEditPostMutation, usePostSubscribeMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { PostFragment, useEditPostMutation, usePostSubscribeMutation, usePostUnsubscribeMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -26,6 +26,7 @@ interface Props {
 const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
+	const [subscribed, setSubscribed] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
@@ -67,21 +68,42 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			.catch((e) => console.error('Error saving post',e));
 	};
 	const handleSubscribe = () => {
-		postSubscribeMutation({
-			variables: {
-				postId: post.id
-			}
-		})
-			.then(({ data }) => {
-				if (data && data.postSubscribe && data.postSubscribe.message){
-					queueNotification({
-						header: 'Success!',
-						message: data.postSubscribe.message,
-						status: NotificationStatus.SUCCESS
-					});
+		if (subscribed) {
+			postUnsubscribeMutation({
+				variables: {
+					postId: post.id
 				}
 			})
-			.catch((e) => console.error('Error saving post',e));
+				.then(({ data }) => {
+					if (data && data.postUnsubscribe && data.postUnsubscribe.message) {
+						queueNotification({
+							header: 'Success!',
+							message: data.postUnsubscribe.message,
+							status: NotificationStatus.SUCCESS
+						});
+						setSubscribed(false);
+					}
+				})
+				.catch((e) => console.error('Error unsubscribing to post',e));
+		} else {
+			postSubscribeMutation({
+				variables: {
+					postId: post.id
+				}
+			})
+				.then(({ data }) => {
+					if (data && data.postSubscribe && data.postSubscribe.message) {
+						queueNotification({
+							header: 'Success!',
+							message: data.postSubscribe.message,
+							status: NotificationStatus.SUCCESS
+						});
+						setSubscribed(true);
+					}
+				})
+				.catch((e) => console.error('Error subscribing to post',e));
+		}
+
 	};
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
@@ -93,6 +115,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 		}
 	});
 	const [postSubscribeMutation] = usePostSubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [postUnsubscribeMutation] = usePostUnsubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 
 	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
@@ -135,7 +158,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 							<PostContent post={post}/>
 							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
-							{id && <Button className={'social'} onClick={handleSubscribe}><Icon name='remove bookmark'/> Subscribe</Button>}
+							{id && <Button className={'social' + (subscribed ? ' unsubscribe' : '')} onClick={handleSubscribe}><Icon name='remove bookmark'/> {subscribed ? 'Unsubscribe' : 'Subscribe'}</Button>}
 						</>
 				}
 			</div>
@@ -145,6 +168,10 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 
 export default styled(EditablePostContent)`
 	margin: 2rem 0;
+
+	.unsubscribe {
+		color: red!important;
+	}
 
 	.button-container {
 		width: 100%;
