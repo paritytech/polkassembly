@@ -8,7 +8,7 @@ import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { PostFragment, useEditPostMutation, usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -26,19 +26,13 @@ interface Props {
 const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const { author, topic, content, title } = post;
 	const [isEditing, setIsEditing] = useState(false);
+	const [subscribed, setSubscribed] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
 	const {  control, errors, handleSubmit, setValue } = useForm();
-
-	useEffect(() => {
-		if (isEditing) {
-			setValue('content',content);
-			setValue('title',title);
-		}
-	},[content, isEditing, setValue, title]);
 
 	const handleCancel = () => {
 		toggleEdit();
@@ -66,6 +60,44 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			})
 			.catch((e) => console.error('Error saving post',e));
 	};
+	const handleSubscribe = () => {
+		if (subscribed) {
+			postUnsubscribeMutation({
+				variables: {
+					postId: post.id
+				}
+			})
+				.then(({ data }) => {
+					if (data && data.postUnsubscribe && data.postUnsubscribe.message) {
+						queueNotification({
+							header: 'Success!',
+							message: data.postUnsubscribe.message,
+							status: NotificationStatus.SUCCESS
+						});
+						setSubscribed(false);
+					}
+				})
+				.catch((e) => console.error('Error unsubscribing to post',e));
+		} else {
+			postSubscribeMutation({
+				variables: {
+					postId: post.id
+				}
+			})
+				.then(({ data }) => {
+					if (data && data.postSubscribe && data.postSubscribe.message) {
+						queueNotification({
+							header: 'Success!',
+							message: data.postSubscribe.message,
+							status: NotificationStatus.SUCCESS
+						});
+						setSubscribed(true);
+					}
+				})
+				.catch((e) => console.error('Error subscribing to post',e));
+		}
+
+	};
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [editPostMutation, { error }] = useEditPostMutation({
@@ -75,6 +107,22 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 			title: newTitle
 		}
 	});
+	const [postSubscribeMutation] = usePostSubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [postUnsubscribeMutation] = usePostUnsubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { data }  = useSubscriptionQuery({
+		context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL },
+		variables: { postId: post.id }
+	});
+
+	useEffect(() => {
+		if (isEditing) {
+			setValue('content',content);
+			setValue('title',title);
+		}
+		if (data && data.subscription && data.subscription.subscribed) {
+			setSubscribed(data.subscription.subscribed);
+		}
+	},[content, isEditing, setValue, data, title]);
 
 	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
@@ -117,6 +165,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 							<PostContent post={post}/>
 							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
+							{id && <Button className={'social' + (subscribed ? ' unsubscribe' : '')} onClick={handleSubscribe}><Icon name='remove bookmark'/> {subscribed ? 'Unsubscribe' : 'Subscribe'}</Button>}
 						</>
 				}
 			</div>
@@ -127,10 +176,14 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 export default styled(EditablePostContent)`
 	margin: 2rem 0;
 
+	.unsubscribe {
+		color: #FF474E !important;
+	}
+
 	.button-container {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;	
+		justify-content: flex-end;
 	}
 
 	.icon {
