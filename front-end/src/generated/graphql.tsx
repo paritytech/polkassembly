@@ -1674,9 +1674,15 @@ export type Posts_Variance_Order_By = {
 
 export type Query = {
    __typename?: 'Query',
+  subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
+};
+
+
+export type QuerySubscriptionArgs = {
+  post_id: Scalars['Int']
 };
 
 
@@ -1717,6 +1723,7 @@ export type Query_Root = {
   posts_aggregate: Posts_Aggregate,
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>,
+  subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
@@ -1828,6 +1835,12 @@ export type Query_RootPosts_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootSubscriptionArgs = {
+  post_id: Scalars['Int']
+};
+
+
+/** query root */
 export type Query_RootUserArgs = {
   id: Scalars['Int']
 };
@@ -1856,6 +1869,11 @@ export type String_Comparison_Exp = {
   _nlike?: Maybe<Scalars['String']>,
   _nsimilar?: Maybe<Scalars['String']>,
   _similar?: Maybe<Scalars['String']>,
+};
+
+export type Subscription = {
+   __typename?: 'Subscription',
+  subscribed?: Maybe<Scalars['Boolean']>,
 };
 
 /** subscription root */
@@ -2240,6 +2258,19 @@ export type PostUnsubscribeMutation = (
   & { postUnsubscribe: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
+  )> }
+);
+
+export type SubscriptionQueryVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type SubscriptionQuery = (
+  { __typename?: 'query_root' }
+  & { subscription: Maybe<(
+    { __typename?: 'Subscription' }
+    & Pick<Subscription, 'subscribed'>
   )> }
 );
 
@@ -2782,6 +2813,39 @@ export function usePostUnsubscribeMutation(baseOptions?: ApolloReactHooks.Mutati
 export type PostUnsubscribeMutationHookResult = ReturnType<typeof usePostUnsubscribeMutation>;
 export type PostUnsubscribeMutationResult = ApolloReactCommon.MutationResult<PostUnsubscribeMutation>;
 export type PostUnsubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
+export const SubscriptionDocument = gql`
+    query Subscription($postId: Int!) {
+  subscription(post_id: $postId) {
+    subscribed
+  }
+}
+    `;
+
+/**
+ * __useSubscriptionQuery__
+ *
+ * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscriptionQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useSubscriptionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
+        return ApolloReactHooks.useQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+      }
+export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+        }
+export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
+export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
+export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {

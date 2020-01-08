@@ -93,3 +93,11 @@ export const POST_UNSUBSCRIBE=gql`
         }
     }
 `;
+
+export const SUBSCRIPTION=gql`
+    query Subscription ($postId: Int!) {
+        subscription(post_id: $postId) {
+            subscribed
+        }
+    }
+`;

@@ -117,6 +117,7 @@ export type Query = {
    __typename?: 'Query',
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<User>>>,
+  subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
 };
 
@@ -129,6 +130,16 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   limit?: Maybe<Scalars['Int']>,
   page?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySubscriptionArgs = {
+  post_id: Scalars['Int']
+};
+
+export type Subscription = {
+   __typename?: 'Subscription',
+  subscribed?: Maybe<Scalars['Boolean']>,
 };
 
 export type Token = {

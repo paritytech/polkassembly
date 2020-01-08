@@ -8,7 +8,7 @@ import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostFragment, useEditPostMutation, usePostSubscribeMutation, usePostUnsubscribeMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { PostFragment, useEditPostMutation, usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -33,13 +33,6 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
 	const {  control, errors, handleSubmit, setValue } = useForm();
-
-	useEffect(() => {
-		if (isEditing) {
-			setValue('content',content);
-			setValue('title',title);
-		}
-	},[content, isEditing, setValue, title]);
 
 	const handleCancel = () => {
 		toggleEdit();
@@ -116,6 +109,20 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 	});
 	const [postSubscribeMutation] = usePostSubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const [postUnsubscribeMutation] = usePostUnsubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { data }  = useSubscriptionQuery({
+		context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL },
+		variables: { postId: post.id }
+	});
+
+	useEffect(() => {
+		if (isEditing) {
+			setValue('content',content);
+			setValue('title',title);
+		}
+		if (data && data.subscription && data.subscription.subscribed) {
+			setSubscribed(data.subscription.subscribed);
+		}
+	},[content, isEditing, setValue, data, title]);
 
 	if (!author || !author.username || !content) return <div>Post content or author could not be found.</div>;
 
