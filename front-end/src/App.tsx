@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import Apollo from './components/Apollo';
 import { GlobalStyle } from './ui-components/GlobalStyle';
@@ -20,59 +21,64 @@ import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
+import { Theme } from './themes/theme';
 
 const App = () => {
 
 	return (
 		<>
-			<GlobalStyle />
 			<Router>
-				<NotificationProvider>
-					<ModalProvider>
-						<UserDetailsProvider>
-							<Apollo>
-								<MenuBar/>
-								<Notifications/>
-								<Modal/>
-								<Switch>
-									<Route exact path="/">
-										<Home/>
-									</Route>
-									<Route path="/discussions">
-										<Discussions/>
-									</Route>
-									<Route path="/login">
-										<LoginForm/>
-									</Route>
-									<Route path="/post/create" >
-										<CreatePost/>
-									</Route>
-									<Route exact path="/post/:id" >
-										<Post/>
-									</Route>
-									<Route path="/proposals" >
-										<Proposals/>
-									</Route>
-									<Route path="/request-reset-password">
-										<RequestResetPassword/>
-									</Route>
-									<Route path="/reset-password/:token">
-										<ResetPassword/>
-									</Route>
-									<Route path="/signup">
-										<SignupForm/>
-									</Route>
-									<Route path="/verify-email/:token">
-										<VerifyEmail/>
-									</Route>
-									<Route path="/settings">
-										<Settings/>
-									</Route>
-								</Switch>
-							</Apollo>
-						</UserDetailsProvider>
-					</ModalProvider>
-				</NotificationProvider>
+				<ThemeProvider theme={Theme}>
+					<NotificationProvider>
+						<ModalProvider>
+							<UserDetailsProvider>
+								<Apollo>
+									<MenuBar/>
+									<Notifications/>
+									<Modal/>
+									<Switch>
+										<Route exact path="/">
+											<Home/>
+										</Route>
+										<Route path="/discussions">
+											<Discussions/>
+										</Route>
+										<Route path="/login">
+											<LoginForm/>
+										</Route>
+										<Route path="/post/create" >
+											<CreatePost/>
+										</Route>
+										<Route exact path="/post/:id" >
+											<Post/>
+										</Route>
+										<Route path="/proposals" >
+											<Proposals/>
+										</Route>
+										<Route path="/request-reset-password">
+											<RequestResetPassword/>
+										</Route>
+										<Route path="/reset-password/:token">
+											<ResetPassword/>
+										</Route>
+										<Route path="/signup">
+											<SignupForm/>
+										</Route>
+										<Route path="/verify-email/:token">
+											<VerifyEmail/>
+										</Route>
+										<Route path="/settings">
+											<Settings/>
+										</Route>
+									</Switch>
+									<>
+										<GlobalStyle />
+									</>
+								</Apollo>
+							</UserDetailsProvider>
+						</ModalProvider>
+					</NotificationProvider>
+				</ThemeProvider>
 			</Router>
 		</>
 	);

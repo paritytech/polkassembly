@@ -9,39 +9,39 @@ const Button = (props : ButtonProps) => {
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
 		font-family: 'Roboto Mono';
-		font-size: 1.45rem;
+		font-size: ${props => props.theme.fontSizes.small};
 		font-weight: 500;
 		text-transform: uppercase;
 		border-radius: 0.3rem;
 		border: none;
-		padding: 0.7rem 1rem;
+		padding: 0.8rem 1.6rem;
 		&.ui.primary.button {
-			color: #fff;
-			background-color: #FF5A47;
+			color: ${props => props.theme.colors.white};
+			background-color: ${props => props.theme.colors.main};
 			&:hover, &:focus {
 				background-color: #D94C3D;
-				color: #FFF;
+				color: ${props => props.theme.colors.white};
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
 			color: #FF5A47;
-			background-color: #FFF;
-			border: 0.15rem solid #FF5A47;
+			background-color: ${props => props.theme.colors.white};
+			border: 0.15rem solid ${props => props.theme.colors.main};
 			&:hover, &:focus {
 				background-color: #D94C3D;
-				color: #FFF;
+				color: ${props => props.theme.colors.white};
 				border: 0.15rem solid #D94C3D;
 				outline: none;
 			}
 		}
 		&.ui.social.button {
-			background-color: #FFF;
+			background-color: ${props => props.theme.colors.white};
 			color: #706D6D;
 			font-size: 1.2rem;
 			border: none;
 			&:hover{
-				background-color: #EEE;
+				background-color: ${props => props.theme.colors.grey01};
 				border: none;
 			}
 		}
