@@ -177,7 +177,7 @@ export default styled(EditablePostContent)`
 	margin: 2rem 0;
 
 	.unsubscribe {
-		color: red!important;
+		color: #FF474E !important;
 	}
 
 	.button-container {
