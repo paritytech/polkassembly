@@ -1,6 +1,7 @@
 import user from './query/user';
 import users from './query/users';
 import token from './query/token';
+import subscription from './query/subscription';
 import login from './mutation/login';
 import logout from './mutation/logout';
 import signup from './mutation/signup';
@@ -18,6 +19,7 @@ export default {
 	Query: {
 		user,
 		users,
+		subscription,
 		token
 	},
 	Mutation: {

@@ -1,6 +1,6 @@
 import PostSubscription from '../../model/PostSubscription';
 import AuthService from '../../services/auth';
-import { Context  } from '../../types';
+import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
@@ -8,7 +8,7 @@ interface argsType {
 	post_id: number
 }
 
-export default async (parent, { post_id }: argsType, ctx: Context)  => {
+export default async (parent, { post_id }: argsType, ctx: Context): Promise<MessageType>  => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

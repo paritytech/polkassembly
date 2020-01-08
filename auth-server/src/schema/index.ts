@@ -5,8 +5,10 @@ import tokenType from './type/token';
 import messageType from './type/message';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
+import subscriptionType from './type/subscription';
 import userQuery from './query/user';
 import usersQuery from './query/users';
+import subscription from './query/subscription';
 import tokenQuery from './query/token';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
@@ -27,10 +29,12 @@ export default gql`
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
+	${subscriptionType}
 
 	type Query {
 		${userQuery}
 		${usersQuery}
+		${subscription}
 		${tokenQuery}
 	}
 
