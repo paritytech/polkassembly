@@ -18,7 +18,7 @@ const CreationLabel = ({ className, created_at, text='posted', username } : Prop
 export default styled(CreationLabel)`
     color: #7E7A7A;
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: ${props => props.theme.fontSizes.small};
     margin-bottom: 0.6rem;
         
     span {

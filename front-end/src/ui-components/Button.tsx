@@ -9,12 +9,12 @@ const Button = (props : ButtonProps) => {
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
 		font-family: 'Roboto Mono';
-		font-size: ${props => props.theme.fontSizes.small};
+		font-size: ${props => props.theme.fontSizes.medium};
 		font-weight: 500;
 		text-transform: uppercase;
 		border-radius: 0.3rem;
 		border: none;
-		padding: 0.8rem 1.6rem;
+		padding: 0.6rem 1.2rem;
 		&.ui.primary.button {
 			color: ${props => props.theme.colors.white};
 			background-color: ${props => props.theme.colors.main};

@@ -59,7 +59,7 @@ const StyledForm = styled(SUIForm)`
         input[type=text], input[type=time], input[type=url] {
             font-family: 'Roboto';
             font-size: 1.2rem;
-            color: #282828;
+            color: ${props => props.theme.colors.black02};
             border: 1 px solid #EEE;
             border-color: #EEE;
             border-radius: 0rem;
@@ -68,7 +68,7 @@ const StyledForm = styled(SUIForm)`
             &:focus {
                 font-family: 'Roboto';
                 font-size: 1.2rem;
-                color: #282828;
+                color: ${props => props.theme.colors.black01};
                 border: 1 px solid #EEE;
                 border-radius: 0rem;
             }

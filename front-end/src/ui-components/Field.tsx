@@ -10,7 +10,7 @@ export default styled(Field)`
     margin-bottom: 1.25rem;
 
     .text-muted {
-        font-size: 1.2rem;
+        font-size: ${props => props.theme.fontSizes.small};
         margin: 0.5rem 0 0 0;
     }
 `;
