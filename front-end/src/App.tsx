@@ -21,14 +21,14 @@ import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
-import { Theme } from './themes/theme';
+import { theme } from './themes/theme';
 
 const App = () => {
 
 	return (
 		<>
 			<Router>
-				<ThemeProvider theme={Theme}>
+				<ThemeProvider theme={theme}>
 					<NotificationProvider>
 						<ModalProvider>
 							<UserDetailsProvider>

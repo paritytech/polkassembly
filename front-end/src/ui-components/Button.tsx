@@ -38,7 +38,7 @@ export default styled(Button)`
 		&.ui.secondary.button {
 			color: ${props => props.theme.colors.main};
 			background-color: ${props => props.theme.colors.white};
-			border: 0.15rem solid ${props => props.theme.colors.main};
+			border: 0.1rem solid ${props => props.theme.colors.main};
 			&:hover, &:focus {
 				background-color: #FFF1F0;
 				color: #D94C3D;
