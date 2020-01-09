@@ -1,7 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'semantic-ui-css/semantic.min.css';
 import '../fonts.css'; /* as createGlobalStyle is not importing fonts*/
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from '@xstyled/styled-components';
 
 export const GlobalStyle = createGlobalStyle`
     html {
@@ -43,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: #282828;
+        color: black01;
         font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;

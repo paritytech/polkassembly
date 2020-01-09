@@ -1088,7 +1088,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.1.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.7.2":
   version "7.7.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.7.7.tgz#194769ca8d6d7790ec23605af9ee3e42a0aa79cf"
   integrity sha512-uCnC2JEVAu8AKB5do1WRIsvrdJ0flYx/A/9f/6chdacnEZ7LmavjdsDXr5ksYBegxtuTPR5Va9/+13QF/kFkCA==
@@ -2649,6 +2649,39 @@
   integrity sha512-mB6ceGjpMGz1ZTza8HYnrPGos2mC6So4NhS1PtZ8s4Qt0K7fBiIGhpSxUbQmhwcSWE3no+bYxmI2OL6KuXYmoQ==
   dependencies:
     tslib "^1.9.3"
+
+"@xstyled/core@^1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/core/-/core-1.15.1.tgz#8b6d37e95b2abd95a396ab8d85b9e7c41c05249a"
+  integrity sha512-9wHNFwHMySFMoJxnqdbN/ugcKQJ1aUsIdmcQHxas58n40piEmHDkjFB6mZ/TsOHn2kn5Hy/T1dDk1OAGSo0T4A==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    "@xstyled/system" "^1.15.1"
+
+"@xstyled/styled-components@^1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/styled-components/-/styled-components-1.15.1.tgz#44cfeb9f8337bf0523469f00cbf158000455cd66"
+  integrity sha512-dr8Q72gJdzGmOzbgwL9RKEJg9YRRjYaLAwJ9JeJsmPwvcSrReCaQE4oD+T8xrharJuH4dq60LJ/sqjDsfeYpDQ==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    "@xstyled/core" "^1.15.1"
+    "@xstyled/system" "^1.15.1"
+    "@xstyled/util" "^1.15.1"
+
+"@xstyled/system@^1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/system/-/system-1.15.1.tgz#d5bc1034c7be6133fdf03e3874e9a16c2c3ed7e6"
+  integrity sha512-6Cse4M6Zf+M8K7W8y/neD1lYPc5LqyTTVWeFhhpejOSvEarK8FvKO+iwTrKRFwAC+/m9jBjBdUs/k5hxFh4jJw==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    "@xstyled/util" "^1.15.1"
+
+"@xstyled/util@^1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/util/-/util-1.15.1.tgz#bd509dab8c52dc4c03bf994ca14ec59049d12db6"
+  integrity sha512-mi2eTWtwNCYXB3WOqVdkYE7Q1RU1rlMNH7GqGBO4gqKcNISyOyr7LrFovF6sP6wO4GlVlj1ZQAib28pBRNjMig==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"

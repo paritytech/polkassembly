@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button as SUIButton, ButtonProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+/* import styled from 'styled-components'; */
+import styled from '@xstyled/styled-components';
 
 const Button = (props : ButtonProps) => {
 	return <SUIButton {...props} />;
@@ -9,14 +10,14 @@ const Button = (props : ButtonProps) => {
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
 		font-family: 'Roboto Mono';
-		font-size: 1.45rem;
+		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;
 		border-radius: 0.3rem;
 		border: none;
 		padding: 0.7rem 1rem;
 		&.ui.primary.button {
-			background-color: #FF5A47;
+			background-color: primary;
 			color: #FFF;
 			&:hover, &:focus {
 				background-color: #D94C3D;
