@@ -1,9 +1,16 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import Showdown from 'showdown';
 
 import CreationLabel from '../ui-components/CreationLabel';
 import { PostFragment } from '../generated/graphql';
 import UpdateLabel from '../ui-components/UpdateLabel';
+
+const converter = new Showdown.Converter({
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tables: true,
+	tasklists: true
+});
 
 const PostContent = ({ post }:{post: PostFragment}) => {
 	const { author, content, created_at, title, updated_at } = post;
@@ -22,7 +29,7 @@ const PostContent = ({ post }:{post: PostFragment}) => {
 					updated_at={updated_at}
 				/>
 			</div>
-			<ReactMarkdown className='post_content' source={content} />
+			<div className='md' dangerouslySetInnerHTML={{ __html: converter.makeHtml(content) }}></div>
 		</>
 	);
 };

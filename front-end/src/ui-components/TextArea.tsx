@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+/* import ReactMarkdown from 'react-markdown'; */
 import ReactMde, { commands }  from 'react-mde';
+import Showdown from 'showdown';
 import styled from 'styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -10,7 +11,8 @@ const StyledTextArea = styled.div`
     textarea {
 		border-radius: 0rem;
 		border: none!important;
-		color: #555!important;
+		color: #555 !important;
+		font-family: 'Roboto';
 		padding: 1rem 1.2rem!important;
 		line-height: 1.4!important;
 	}
@@ -197,6 +199,13 @@ interface Props {
     value: string
 }
 
+const converter = new Showdown.Converter({
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tables: true,
+	tasklists: true
+});
+
 export function TextArea(props: Props): React.ReactElement {
 	const listCommands = [
 		{
@@ -221,7 +230,7 @@ export function TextArea(props: Props): React.ReactElement {
 		<StyledTextArea className="container">
 			<ReactMde
 				commands={listCommands}
-				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+				generateMarkdownPreview={markdown => Promise.resolve(converter.makeHtml(markdown)) }
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}

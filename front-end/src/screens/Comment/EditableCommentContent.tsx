@@ -1,8 +1,8 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
+import Showdown from 'showdown';
 import styled from 'styled-components';
 
 import ContentForm from '../../components/ContentForm';
@@ -20,6 +20,13 @@ interface Props {
 	content: string,
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
+
+const converter = new Showdown.Converter({
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tables: true,
+	tasklists: true
+});
 
 const EditableCommenContent = ({ authorId, className, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -89,7 +96,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 						</Form>
 						:
 						<>
-							<ReactMarkdown className='md' source={content} />
+							<div className='md' dangerouslySetInnerHTML={{ __html: converter.makeHtml(content) }}></div>
 							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
 						</>
 				}
