@@ -16,7 +16,7 @@ export default styled(Button)`
 		border: none;
 		padding: 0.7rem 1rem;
 		&.ui.primary.button {
-			background-color: primary;
+			background-color: primary_red;
 			color: #FFF;
 			&:hover, &:focus {
 				background-color: #D94C3D;
