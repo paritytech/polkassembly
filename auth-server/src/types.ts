@@ -71,3 +71,7 @@ export interface PublicUser {
     name: string
     username: string
 }
+
+export interface Subscription {
+    subscribed: boolean
+}

@@ -488,7 +488,7 @@ On success, we get the response
 }
 ```
 
-### Subscribe to a post new comments 
+### Subscribe to a post new comments
 We can be notified for any new comment from a given post by calling the `changeUsername` mutation. Note that it needs an authorization header:
 
 ```gql
@@ -536,13 +536,24 @@ curl 'http://localhost:8010/auth/graphql' \
 --data-binary '{"query":"mutation {\n  postUnsubscribe(post_id:19){\n    message\n  }\n}"}'
 ```
 
+### Get Subscription to a post
+We can get if user is subscribed to a particular post by calling the `subscription` query. Note that it needs an authorization header:
+
+```gql
+query Post_subscription{
+  subscription(post_id: 19) {
+    subscribed
+  }
+}
+```
+
 On success, we get the response
 
 ```json
 {
   "data": {
-    "postUnsubscribe": {
-      "message": "You have been unsubscribed successfuly."
+    "subscription": {
+      "subscribed": true
     }
   }
 }
