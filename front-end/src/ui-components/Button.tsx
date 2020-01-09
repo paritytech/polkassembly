@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button as SUIButton, ButtonProps } from 'semantic-ui-react';
-/* import styled from 'styled-components'; */
 import styled from '@xstyled/styled-components';
 
 const Button = (props : ButtonProps) => {
