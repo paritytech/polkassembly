@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { FaComment } from 'react-icons/fa';
-import styled from 'styled-components';
+import { Icon } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
@@ -53,7 +53,7 @@ export default function Discussion ({
 				username={authorUsername}
 			/>
 			<ul>
-				<li><FaComment/> {comments} comments</li>
+				<li><Icon name='comment' /> {comments} comments</li>
 			</ul>
 		</DiscussionCard>
 	);

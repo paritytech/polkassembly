@@ -55,6 +55,7 @@ export default styled(ContentForm)`
 
 	.container {
 		max-width: 100%;
+		min-width: 100%;
 		padding: 0 0.5rem;
 	}
 `;
