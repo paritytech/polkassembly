@@ -44,4 +44,8 @@ export default styled(Comments)`
 			margin-bottom: 1rem;
 		}
 	}
+
+	hr {
+		border-top: 1px solid #EEE;
+	}
 `;
