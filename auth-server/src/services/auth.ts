@@ -5,10 +5,12 @@ import { uuid } from 'uuidv4';
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
 import {
+	sendEmailUndoEmail,
 	sendVerificationEmail,
 	sendResetPasswordEmail
 } from './email';
 import EmailVerificationToken from '../model/EmailVerificationToken';
+import EmailUndoToken from '../model/EmailUndoToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
@@ -273,6 +275,16 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
+		const undoToken = await EmailUndoToken
+			.query()
+			.allowInsert('[token, user_id, email, valid]')
+			.insert({
+				token: uuid(),
+				user_id: userId,
+				email,
+				valid: true
+			});
+
 		await User
 			.query()
 			.patch({
@@ -300,6 +312,9 @@ export default class AuthService {
 
 		// send verification email in background
 		sendVerificationEmail(user, verifyToken);
+
+		// send undo token in background
+		sendEmailUndoEmail(user, undoToken);
 
 		return this.getSignedToken(user);
 	}
@@ -362,6 +377,35 @@ export default class AuthService {
 			.query()
 			.patch({ valid: false })
 			.findById(resetToken.id);
+	}
+
+	public async UndoEmail(token: string) {
+		const undoToken = await EmailUndoToken
+			.query()
+			.where('token', token)
+			.first();
+
+		if (!undoToken) {
+			throw new AuthenticationError(messages.EMAIL_UNDO_TOKEN_NOT_FOUND);
+		}
+
+		if (!undoToken.valid) {
+			throw new AuthenticationError(messages.INVALID_EMAIL_UNDO_TOKEN);
+		}
+
+		await User
+			.query()
+			.patch({ email: undoToken.email })
+			.findById(undoToken.user_id);
+
+		await EmailUndoToken
+			.query()
+			.patch({ valid: false })
+			.findById(undoToken.id);
+
+		const user = await getUserFromUserId(undoToken.user_id);
+
+		return this.getSignedToken(user);
 	}
 
 	private getSignedToken({ id, name, username, email, email_verified }): string {

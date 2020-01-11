@@ -23,6 +23,7 @@ import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
 import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
+import undoEmail from './mutation/undoEmail';
 import verifyEmail from './mutation/verifyEmail';
 
 export default gql`
@@ -52,6 +53,7 @@ export default gql`
 		${requestResetPassword}
 		${resetPassword}
 		${signupMutation}
+		${undoEmail}
 		${verifyEmail}
 	}
 `;

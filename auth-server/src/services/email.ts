@@ -2,6 +2,8 @@ import * as sgMail from '@sendgrid/mail';
 
 import User from '../model/User';
 import EmailVerificationToken from '../model/EmailVerificationToken';
+import EmailUndoToken from '../model/EmailUndoToken';
+
 import PasswordResetToken from '../model/PasswordResetToken';
 
 const apiKey = process.env.SENDGRID_API_KEY;
@@ -108,4 +110,41 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 
 	sgMail.send(msg).catch(e =>
 		console.error('Post subscription email not sent', e));
+};
+
+export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
+	if (!apiKey) {
+		console.warn('Email undo token email not sent due to missing API key');
+		return;
+	}
+
+	const undoUrl = `${DOMAIN}/auth/undo-email?token=${undoToken.token}`;
+	const text = `
+		<p>
+			Hi ${user.name || ''}!<br/><br/>
+
+			It looks like someone has changed your email at polkassembly.<br />
+			If its you then its ok.<br /><br />
+
+			If its not you then here is a recovery email link. Use it to change your account email back to this email:<br /><br />
+			<a href="${undoUrl}">Recover Your Email</a><br /><br />
+
+			Just a heads up, to make sure your information is safe and secure, the link will expire after 24 hours.<br /><br />
+
+			If you did change your email, then just ignore this message.<br /><br />
+
+			Polkassembly Team
+		</p>
+	`;
+
+	const msg = {
+		to: user.email,
+		from: FROM,
+		subject: 'Your Email was changed at polkassembly',
+		text,
+		html: text
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Email undo email not sent', e));
 };
