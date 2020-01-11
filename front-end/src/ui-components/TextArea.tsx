@@ -101,9 +101,8 @@ const StyledTextArea = styled.div`
 					font-size: 1.6rem;
 				}
 
-				input[type=checkbox] {
-					vertical-align: baseline;
-					list-style-type: none;
+				ul > li > input {
+					display: none;
 				}
 			}
 		}
@@ -209,7 +208,6 @@ export function TextArea(props: Props): React.ReactElement {
 				commands.strikeThroughCommand,
 				commands.codeCommand,
 				commands.imageCommand,
-				commands.checkedListCommand,
 				commands.orderedListCommand,
 				commands.unorderedListCommand
 			]

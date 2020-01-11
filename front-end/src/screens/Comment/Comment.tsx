@@ -77,6 +77,9 @@ margin-top: 3rem;
 
 		ul {
 			margin-left: 3rem;
+			li > input {
+				display: none;
+			}
 		}
 
 		ol {

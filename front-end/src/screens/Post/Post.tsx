@@ -122,6 +122,9 @@ export default styled(Post)`
 
 		ul, ol {
 			padding-left: 2rem;
+			li > input {
+				display: none;
+			}	
 		}
 
 		a {
