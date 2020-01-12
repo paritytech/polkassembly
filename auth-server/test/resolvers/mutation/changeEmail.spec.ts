@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import 'mocha';
 
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
+import EmailUndoToken from '../../../src/model/EmailUndoToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
@@ -39,6 +40,11 @@ describe('changeEmail mutation', () => {
 			.query()
 			.where({ user_id: signupResult.user.id })
 			.del();
+
+		await EmailUndoToken
+			.query()
+			.where( { user_id: signupResult.user.id })
+			.del();
 	});
 
 	it('should allow to change an email', async () => {
@@ -50,8 +56,15 @@ describe('changeEmail mutation', () => {
 			.query()
 			.where({ user_id: signupResult.user.id, valid: true });
 
+		const undoToken = await EmailUndoToken
+			.query()
+			.where({ user_id: signupResult.user.id, valid: true });
+
 		expect(verifyToken.length).to.eq(1);
 		expect(verifyToken[0].token).to.not.be.empty;
+
+		expect(undoToken.length).to.eq(1);
+		expect(undoToken[0].token).to.not.be.empty;
 	});
 
 	it('should not be able to change email with an invalid jwt', async () => {
