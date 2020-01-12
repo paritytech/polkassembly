@@ -14,6 +14,7 @@ import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
+import NotFound from './screens/NotFound';
 import Post from './screens/Post';
 import Proposals from './screens/Proposals';
 import RequestResetPassword from './screens/RequestResetPassword';
@@ -70,6 +71,9 @@ const App = () => {
 										</Route>
 										<Route path="/settings">
 											<Settings/>
+										</Route>
+										<Route path="*">
+											<NotFound/>
 										</Route>
 									</Switch>
 								</Apollo>
