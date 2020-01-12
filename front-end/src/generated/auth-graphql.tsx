@@ -9,7 +9,6 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any,
 };
 
@@ -38,32 +37,19 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  login?: Maybe<LoginResponse>,
-  logout?: Maybe<Message>,
-  signup?: Maybe<LoginResponse>,
   changeUsername?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeName?: Maybe<ChangeResponse>,
+  login?: Maybe<LoginResponse>,
+  logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  signup?: Maybe<LoginResponse>,
+  undoEmail?: Maybe<ChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
-};
-
-
-export type MutationLoginArgs = {
-  username: Scalars['String'],
-  password: Scalars['String']
-};
-
-
-export type MutationSignupArgs = {
-  email: Scalars['String'],
-  password: Scalars['String'],
-  username: Scalars['String'],
-  name?: Maybe<Scalars['String']>
 };
 
 
@@ -88,6 +74,12 @@ export type MutationChangeNameArgs = {
 };
 
 
+export type MutationLoginArgs = {
+  username: Scalars['String'],
+  password: Scalars['String']
+};
+
+
 export type MutationPostSubscribeArgs = {
   post_id: Scalars['Int']
 };
@@ -109,16 +101,34 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSignupArgs = {
+  email: Scalars['String'],
+  password: Scalars['String'],
+  username: Scalars['String'],
+  name?: Maybe<Scalars['String']>
+};
+
+
+export type MutationUndoEmailArgs = {
+  token: Scalars['String']
+};
+
+
 export type MutationVerifyEmailArgs = {
   token: Scalars['String']
 };
 
 export type Query = {
    __typename?: 'Query',
-  user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
+  user?: Maybe<User>,
+  users?: Maybe<Array<Maybe<User>>>,
+};
+
+
+export type QuerySubscriptionArgs = {
+  post_id: Scalars['Int']
 };
 
 
@@ -130,11 +140,6 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   limit?: Maybe<Scalars['Int']>,
   page?: Maybe<Scalars['Int']>
-};
-
-
-export type QuerySubscriptionArgs = {
-  post_id: Scalars['Int']
 };
 
 export type Subscription = {

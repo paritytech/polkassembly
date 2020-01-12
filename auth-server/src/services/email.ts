@@ -50,7 +50,7 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) =>
 		return;
 	}
 
-	const resetUrl = `${DOMAIN}/auth/reset-password?token=${token.token}`;
+	const resetUrl = `${DOMAIN}/reset-password/${token.token}`;
 	const text = `
 		<p>
 			Hi ${user.name || ''}!<br/><br/>
@@ -118,7 +118,7 @@ export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
 		return;
 	}
 
-	const undoUrl = `${DOMAIN}/auth/undo-email?token=${undoToken.token}`;
+	const undoUrl = `${DOMAIN}/undo-email/${undoToken.token}`;
 	const text = `
 		<p>
 			Hi ${user.name || ''}!<br/><br/>
@@ -138,7 +138,7 @@ export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
 	`;
 
 	const msg = {
-		to: user.email,
+		to: undoToken.email,
 		from: FROM,
 		subject: 'Your Email was changed at polkassembly',
 		text,

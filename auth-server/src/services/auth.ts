@@ -275,13 +275,15 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
+		let user = await getUserFromUserId(userId);
+
 		const undoToken = await EmailUndoToken
 			.query()
 			.allowInsert('[token, user_id, email, valid]')
 			.insert({
 				token: uuid(),
 				user_id: userId,
-				email,
+				email: user.email,
 				valid: true
 			});
 
@@ -308,7 +310,7 @@ export default class AuthService {
 				valid: true
 			});
 
-		const user = await getUserFromUserId(userId);
+		user = await getUserFromUserId(userId);
 
 		// send verification email in background
 		sendVerificationEmail(user, verifyToken);
