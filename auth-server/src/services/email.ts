@@ -126,7 +126,7 @@ export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
 			Your email on polkassembly.io was changed.<br />
 			If its you then its ok.<br /><br />
 
-			If its not you then here is a recovery email link. Use it to change your account email back to this email:<br /><br />
+			If you did not change your email and suspect that it is a malicious attempt, click on the following link to change your account email back to:<br /><br />
 			<a href="${undoUrl}">Recover Your Email</a><br /><br />
 
 			Just a heads up, to make sure your information is safe and secure, the link will expire after 24 hours.<br /><br />
