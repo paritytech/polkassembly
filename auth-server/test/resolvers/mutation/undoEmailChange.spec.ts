@@ -10,7 +10,7 @@ import undoEmailChange from '../../../src/resolvers/mutation/undoEmailChange';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
-describe('verifyEmail mutation', () => {
+describe('undoEmailChange mutation', () => {
 	let signupResult;
 	let undoToken;
 	let fakectx: Context = {
