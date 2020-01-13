@@ -156,8 +156,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/> Save</Button>
+								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/>Cancel</Button>
+								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/>Save</Button>
 							</div>
 						</Form>
 						:

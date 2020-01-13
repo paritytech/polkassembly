@@ -12,7 +12,7 @@ export default styled(Button)`
 		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;
-		border-radius: 0.3rem;
+		border-radius: button_radius;
 		border: none;
 		padding: 0.7rem 1rem;
 		&.ui.primary.button {
@@ -27,22 +27,30 @@ export default styled(Button)`
 		&.ui.primary.negative.button {
 			background-color: white;
 			color: red_primary;
-			border: 0.1rem solid red_primary;
+			border-style: solid;
+			border-color: red_primary;
+			border-width: 0.1rem;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
-				border: 0.1rem solid #D94C3D;
+				border-style: solid;
+				border-color: red_secondary;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
 			background-color: white;
 			color: red_primary;
-			border: 0.1rem solid #FF5A47;
+			border-style: solid;
+			border-color: red_secondary;
+			border-width: 0.1rem;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
-				border: 0.1rem solid #D94C3D;
+				border-style: solid;
+				border-color: red_secondary;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
@@ -53,7 +61,9 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: #E66557;
 				color: white;
-				border: 0.1rem solid #E66557;
+				border-style: solid;
+				border-color: #E66557;
+				border-width: 0.1rem;
 				outline: none;
 			}	
 		}

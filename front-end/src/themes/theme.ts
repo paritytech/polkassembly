@@ -14,5 +14,8 @@ export const theme = {
 		lg: '2.1rem',
 		md: '1.5rem',
 		sm: '1.2rem'
+	},
+	radii: {
+		button_radius: '0.3rem'
 	}
 };
