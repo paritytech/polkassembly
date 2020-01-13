@@ -5,7 +5,7 @@ import { uuid } from 'uuidv4';
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
 import {
-	sendEmailUndoEmail,
+	sendUndoEmailChangeEmail,
 	sendVerificationEmail,
 	sendResetPasswordEmail
 } from './email';
@@ -316,7 +316,7 @@ export default class AuthService {
 		sendVerificationEmail(user, verifyToken);
 
 		// send undo token in background
-		sendEmailUndoEmail(user, undoToken);
+		sendUndoEmailChangeEmail(user, undoToken);
 
 		return this.getSignedToken(user);
 	}

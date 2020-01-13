@@ -112,7 +112,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 		console.error('Post subscription email not sent', e));
 };
 
-export const sendEmailUndoEmail = (user: User, undoToken: UndoEmailChangeToken) => {
+export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeToken) => {
 	if (!apiKey) {
 		console.warn('Email undo token email not sent due to missing API key');
 		return;
