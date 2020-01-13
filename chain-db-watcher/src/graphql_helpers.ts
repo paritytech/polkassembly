@@ -3,7 +3,7 @@ import { GraphQLClient } from 'graphql-request';
 import { PostAndProposalType } from '../types';
 
 const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
-
+const ProposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 /**
  * Tell if there is already a proposal in the DB matching the
  * onchain proposal id passed as argument
@@ -47,13 +47,13 @@ export const proposalAlreadyExist = async (onchainId: number) => {
 
 export const addPostAndProposal = async ({ authorId, depositAmount, onchainId, methodName, methodArguments }:PostAndProposalType) => {
 	const token = await getToken();
-	const proposalCategorieId = 3;
+	const proposalCategorieId = ProposalPostTypeId;
 	const defaultProposalContent = 'Post not yet edited by the proposal author';
 	const defaultProposalTitle = `#${onchainId} on chain proposal`;
 	const affectedRows = 2;
 
-	if (!graphqlServerUrl) throw new Error ('Please specify an environment variable for the REACT_APP_SERVER_URL');
-	if (!token) throw new Error ('No authorization token found for the node-watcher');
+	if (!graphqlServerUrl) throw new Error ('Please specify an environment variable for the REACT_APP_SERVER_URL.');
+	if (!token) throw new Error ('No authorization token found for the node-watcher.');
 
 	try {
 		const client = new GraphQLClient(graphqlServerUrl, {
@@ -85,13 +85,13 @@ export const addPostAndProposal = async ({ authorId, depositAmount, onchainId, m
        `;
 		const proposalAndPostVariables = {
 			'authorId': authorId,
+			'deposit': depositAmount,
 			'categoryId': proposalCategorieId,
 			'content': defaultProposalContent,
-			'title': defaultProposalTitle,
-			'deposit': depositAmount,
 			'methodArguments': methodArguments,
 			'methodName': methodName,
-			'onchainId': onchainId
+			'onchainId': onchainId,
+			'title': defaultProposalTitle
 		};
 
 		return client.request(addPostAndProposalMutation, proposalAndPostVariables)
@@ -103,7 +103,7 @@ export const addPostAndProposal = async ({ authorId, depositAmount, onchainId, m
 			});
 
 	} catch (e){
-		console.log('propAlreadyExist - graphql execurion error',e);
+		console.log('addPostAndProposal - graphql execution error',e);
 		throw new Error(e);
 	}
 };
