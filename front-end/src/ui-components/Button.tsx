@@ -27,7 +27,7 @@ export default styled(Button)`
 		&.ui.primary.negative.button {
 			background-color: white;
 			color: red_primary;
-			border: 0.1rem solid red_primary;
+			border: 0.1rem solid #FF5A47;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
