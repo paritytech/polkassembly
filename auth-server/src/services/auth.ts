@@ -1,6 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import moment from 'moment';
 import { uuid } from 'uuidv4';
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
@@ -276,6 +277,25 @@ export default class AuthService {
 		}
 
 		let user = await getUserFromUserId(userId);
+
+		const existingUndoToken = await UndoEmailChangeToken
+			.query()
+			.where('user_id', userId)
+			.orderBy('id', 'desc')
+			.first();
+
+
+
+		if (existingUndoToken) {
+			const now = moment();
+			const last = moment(existingUndoToken.created_at);
+
+			const hours = moment.duration(last.diff(now)).asHours();
+
+			if (hours < 48) {
+				throw new ForbiddenError(messages.EMAIL_CHANGE_NOT_ALLOWED_YET);
+			}
+		}
 
 		const undoToken = await UndoEmailChangeToken
 			.query()

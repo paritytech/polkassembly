@@ -1,5 +1,6 @@
 export default {
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
+	EMAIL_CHANGE_NOT_ALLOWED_YET: 'Email change not allowed. Please wait 48 hours after last email change.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	EMAIL_UNDO_SUCCESSFUL: 'Your email has been reverted to old email.',
 	EMAIL_UNDO_TOKEN_NOT_FOUND: 'Email change undo token not found.',

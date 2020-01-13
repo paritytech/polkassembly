@@ -10,6 +10,7 @@ export default class UndoEmailChangeToken extends Model {
 	email!: string
 	user_id!: number
 	valid: boolean
+	created_at: string
 
 	static get tableName () {
 		return 'undo_email_change_token';
@@ -24,7 +25,8 @@ export default class UndoEmailChangeToken extends Model {
 			token: this.token,
 			email: this.email,
 			user_id: this.user_id,
-			valid: this.valid
+			valid: this.valid,
+			created_at: this.created_at
 		};
 	}
 
@@ -37,7 +39,8 @@ export default class UndoEmailChangeToken extends Model {
 				token: { type: 'string' },
 				email: { type: 'string' },
 				user_id: { type: 'integer' },
-				valid: { type: 'boolean' }
+				valid: { type: 'boolean' },
+				created_at: { type: 'string' }
 			}
 		};
 	}
