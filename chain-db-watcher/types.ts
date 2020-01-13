@@ -1,5 +1,5 @@
-import { TypeDef } from "@polkadot/types/types";
-import BN = require("bn.js");
+import { TypeDef } from '@polkadot/types/types';
+import BN = require('bn.js');
 
 export type tokenType = string | null
 
