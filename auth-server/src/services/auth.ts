@@ -284,8 +284,6 @@ export default class AuthService {
 			.orderBy('id', 'desc')
 			.first();
 
-
-
 		if (existingUndoToken) {
 			const now = moment();
 			const last = moment(existingUndoToken.created_at);
