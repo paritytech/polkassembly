@@ -2,7 +2,7 @@ import * as sgMail from '@sendgrid/mail';
 
 import User from '../model/User';
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import EmailUndoToken from '../model/EmailUndoToken';
+import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 
 import PasswordResetToken from '../model/PasswordResetToken';
 
@@ -112,7 +112,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 		console.error('Post subscription email not sent', e));
 };
 
-export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
+export const sendEmailUndoEmail = (user: User, undoToken: UndoEmailChangeToken) => {
 	if (!apiKey) {
 		console.warn('Email undo token email not sent due to missing API key');
 		return;

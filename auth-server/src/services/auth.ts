@@ -10,7 +10,7 @@ import {
 	sendResetPasswordEmail
 } from './email';
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import EmailUndoToken from '../model/EmailUndoToken';
+import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
@@ -277,7 +277,7 @@ export default class AuthService {
 
 		let user = await getUserFromUserId(userId);
 
-		const undoToken = await EmailUndoToken
+		const undoToken = await UndoEmailChangeToken
 			.query()
 			.allowInsert('[token, user_id, email, valid]')
 			.insert({
@@ -381,8 +381,8 @@ export default class AuthService {
 			.findById(resetToken.id);
 	}
 
-	public async UndoEmail(token: string) {
-		const undoToken = await EmailUndoToken
+	public async UndoEmailChange(token: string) {
+		const undoToken = await UndoEmailChangeToken
 			.query()
 			.where('token', token)
 			.first();
@@ -400,7 +400,7 @@ export default class AuthService {
 			.patch({ email: undoToken.email })
 			.findById(undoToken.user_id);
 
-		await EmailUndoToken
+		await UndoEmailChangeToken
 			.query()
 			.patch({ valid: false })
 			.findById(undoToken.id);

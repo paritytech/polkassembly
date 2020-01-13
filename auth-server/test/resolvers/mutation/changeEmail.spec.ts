@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import 'mocha';
 
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
-import EmailUndoToken from '../../../src/model/EmailUndoToken';
+import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
@@ -41,7 +41,7 @@ describe('changeEmail mutation', () => {
 			.where({ user_id: signupResult.user.id })
 			.del();
 
-		await EmailUndoToken
+		await UndoEmailChangeToken
 			.query()
 			.where( { user_id: signupResult.user.id })
 			.del();
@@ -56,7 +56,7 @@ describe('changeEmail mutation', () => {
 			.query()
 			.where({ user_id: signupResult.user.id, valid: true });
 
-		const undoToken = await EmailUndoToken
+		const undoToken = await UndoEmailChangeToken
 			.query()
 			.where({ user_id: signupResult.user.id, valid: true });
 
