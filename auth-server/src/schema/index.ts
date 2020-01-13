@@ -5,13 +5,8 @@ import usersQuery from './query/users';
 import subscription from './query/subscription';
 import tokenQuery from './query/token';
 
-import changeResponseType from './type/changeResponse';
-import loginResponseType from './type/loginResponse';
-import messageType from './type/message';
-import subscriptionType from './type/subscription';
-import tokenType from './type/token';
-import userType from './type/user';
-
+import addressLinkConfirm from './mutation/addressLinkConfirm';
+import addressLinkStart from './mutation/addressLinkStart';
 import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
@@ -25,7 +20,16 @@ import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
 import verifyEmail from './mutation/verifyEmail';
 
+import addressLinkType from './type/addressLinkType';
+import changeResponseType from './type/changeResponse';
+import loginResponseType from './type/loginResponse';
+import messageType from './type/message';
+import subscriptionType from './type/subscription';
+import tokenType from './type/token';
+import userType from './type/user';
+
 export default gql`
+	${addressLinkType}
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
@@ -41,6 +45,8 @@ export default gql`
 	}
 
 	type Mutation {
+		${addressLinkConfirm}
+		${addressLinkStart}
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}

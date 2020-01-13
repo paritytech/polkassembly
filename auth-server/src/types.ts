@@ -75,3 +75,7 @@ export interface PublicUser {
 export interface Subscription {
     subscribed: boolean
 }
+
+export interface AddressLinkStartType extends MessageType {
+    address_id: number
+}

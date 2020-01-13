@@ -1,4 +1,8 @@
 export default {
+	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
+	ADDRESS_LINKING_SUCCESSFUL: 'Address is successfully linked to your account.',
+	ADDRESS_NOT_FOUND: 'Address not found',
+	ADDRESS_USER_NOT_MATCHING: 'You are not allowed to link this address',
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',

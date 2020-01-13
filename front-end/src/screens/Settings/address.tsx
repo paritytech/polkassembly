@@ -17,6 +17,8 @@ const Address = (): JSX.Element => {
 
 			const allAccounts = await web3Accounts();
 
+			console.log(allAccounts);
+
 			setAccounts(allAccounts);
 		}
 
