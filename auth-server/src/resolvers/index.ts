@@ -35,7 +35,7 @@ export default {
 		postUnsubscribe,
 		requestResetPassword,
 		resetPassword,
-		verifyEmail,
-		undoEmailChange
+		undoEmailChange,
+		verifyEmail
 	}
 };
