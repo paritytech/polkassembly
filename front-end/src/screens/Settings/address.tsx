@@ -29,15 +29,17 @@ const Address = (): JSX.Element => {
 				<Form.Field width={10}>
 					<label>Available Addresses</label>
 					{accounts.length ? (
-						<ul>
+						<div className="ui list">
 							{accounts.map(account => (
-								<li key={account.address}>
-									<div>{account.meta.name}</div>
-									<div>{account.address}</div>
-									<button>Link</button>
-								</li>
+								<div key={account.address} className="item">
+									<img className="ui avatar image" src="/polkadot.png" />
+									<div className="content">
+										<div className="header">{account.meta.name}</div>
+										<div className="description">{account.address}</div>
+									</div>
+								</div>
 							))}
-						</ul>
+						</div>
 					) : (
 						<>
 							<div>No addresses detected</div>
