@@ -2,7 +2,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
@@ -163,9 +163,9 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 						:
 						<>
 							<PostContent post={post}/>
-							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
-							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/> Reply</Button>}
-							{id && <Button className={'social' + (subscribed ? ' unsubscribe' : '')} onClick={handleSubscribe}><Icon name='remove bookmark'/> {subscribed ? 'Unsubscribe' : 'Subscribe'}</Button>}
+							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/>Reply</Button>}
+							{id && <Button className={'social' + (subscribed ? ' negative' : '')} onClick={handleSubscribe}><Icon name='remove bookmark'/>{subscribed ? 'Unsubscribe' : 'Subscribe'}</Button>}
 						</>
 				}
 			</div>
@@ -176,19 +176,9 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 export default styled(EditablePostContent)`
 	margin: 2rem 0;
 
-	.unsubscribe {
-		color: #FF474E !important;
-	}
-
 	.button-container {
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
-	}
-
-	.icon {
-		margin-top: -0.2rem!important;
-		margin-right: -0.3rem!important;
-		opacity: 1;
 	}
 }`;
