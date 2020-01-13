@@ -1,16 +1,4 @@
 export const theme = {
-	border: {
-		border_box: 'border',
-		border_button: 'border'
-	},
-	borderStyles: {
-		border_box: 'solid',
-		border_button: 'solid'
-	},
-	borderWidths: {
-		border_box: '0.1rem',
-		border_button: '0.1rem'
-	},
 	colors: {
 		black01: '#282828',
 		grey_light: '#EEE',

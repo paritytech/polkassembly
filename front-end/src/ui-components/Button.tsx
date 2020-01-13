@@ -27,34 +27,30 @@ export default styled(Button)`
 		&.ui.primary.negative.button {
 			background-color: white;
 			color: red_primary;
-			border: border_button;
-			border-style: border_button;
+			border-style: solid;
 			border-color: red_primary;
-			border-width: border_button;
+			border-width: 0.1rem;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
-				border: border_button;
-				border-style: border_button;
+				border-style: solid;
 				border-color: red_secondary;
-				border-width: border_button;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
 			background-color: white;
 			color: red_primary;
-			border: border_button;
-			border-style: border_button;
+			border-style: solid;
 			border-color: red_secondary;
-			border-width: border_button;
+			border-width: 0.1rem;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
-				border: border_button;
-				border-style: border_button;
+				border-style: solid;
 				border-color: red_secondary;
-				border-width: border_button;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
@@ -65,10 +61,9 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: #E66557;
 				color: white;
-				border: border_button;
-				border-style: border_button;
+				border-style: solid;
 				border-color: #E66557;
-				border-width: border_button;
+				border-width: 0.1rem;
 				outline: none;
 			}	
 		}
