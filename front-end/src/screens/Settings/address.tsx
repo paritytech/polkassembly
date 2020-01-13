@@ -23,32 +23,29 @@ const Address = (): JSX.Element => {
 		connect();
 	}, []);
 
+	// TODO: generate avtar image svg logo
 	return (
-		<Form standalone={false}>
-			<Form.Group>
-				<Form.Field width={10}>
-					<label>Available Addresses</label>
-					{accounts.length ? (
-						<div className="ui list">
-							{accounts.map(account => (
-								<div key={account.address} className="item">
-									<img className="ui avatar image" src="/polkadot.png" />
-									<div className="content">
-										<div className="header">{account.meta.name}</div>
-										<div className="description">{account.address}</div>
-									</div>
-								</div>
-							))}
+		<div>
+			<div className="header">Available Addresses</div>
+			{accounts.length ? (
+				<div className="ui list">
+					{accounts.map(account => (
+						<div key={account.address} className="item">
+							<img className="ui avatar image" src="/polkadot.png" />
+							<div className="content">
+								<div className="header">{account.meta.name}</div>
+								<div className="description">{account.address}</div>
+							</div>
 						</div>
-					) : (
-						<>
-							<div>No addresses detected</div>
-							<div>Please reload this page with <a href={polkadotExtension}>Polkadot extension</a>.</div>
-						</>
-					)}
-				</Form.Field>
-			</Form.Group>
-		</Form>
+					))}
+				</div>
+			) : (
+				<>
+					<div>No addresses detected</div>
+					<div>Please reload this page with <a href={polkadotExtension}>Polkadot extension</a>.</div>
+				</>
+			)}
+		</div>
 	);
 };
 
