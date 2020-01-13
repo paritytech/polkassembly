@@ -1,16 +1,19 @@
 import React from 'react';
 import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Dropdown, Menu, Icon } from 'semantic-ui-react';
+import { Dropdown, Menu, Icon, Responsive } from 'semantic-ui-react';
 import styled from 'styled-components';
 
+import MobileMenu from './MobileMenu';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { logout } from '../../services/auth.service';
 
 interface Props {
-	className?: string
+	className?: string,
+	onPusherClick?: boolean,
+	visible?: boolean
 }
 
 const MenuBar = ({ className } : Props): JSX.Element => {
@@ -37,27 +40,34 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const caretIcon = <Icon name='caret down' inverted />;
 
 	return (
-		<Menu className={className} stackable inverted borderless>
-			<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
-			<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
-			<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
-			<Menu.Menu position="right">
-				{username
-					? <>
-						<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
-							<Dropdown.Menu>
-								<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
-								<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</>
-					: <>
-						<Menu.Item as={Link} to="/login">Login</Menu.Item >
-						<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
-					</>
-				}
-			</Menu.Menu>
-		</Menu>
+		<>
+			<Responsive {...Responsive.onlyMobile}>
+				<MobileMenu></MobileMenu>
+			</Responsive>
+			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+				<Menu className={className} stackable inverted borderless>
+					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+					<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
+					<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
+					<Menu.Menu position="right">
+						{username
+							? <>
+								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
+									<Dropdown.Menu>
+										<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
+										<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							</>
+							: <>
+								<Menu.Item as={Link} to="/login">Login</Menu.Item >
+								<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
+							</>
+						}
+					</Menu.Menu>
+				</Menu>
+			</Responsive>
+		</>
 	);
 };
 
