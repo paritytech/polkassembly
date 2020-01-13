@@ -559,12 +559,12 @@ On success, we get the response
 }
 ```
 
-### Email Undo
-We can undo a email change by calling the `undoEmail` mutation and pass the undo email token:
+### Undo Email Change
+We can undo a email change by calling the `undoEmailChange` mutation and pass the undo email token:
 
 ```gql
 mutation {
-  undoEmail(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
+  undoEmailChange(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
     message,
     token
   }
@@ -574,7 +574,7 @@ mutation {
 ```bash
 curl 'http://localhost:8010/auth/graphql' \
 -H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation {\n  undoEmail(token: \"1a068d3f-4260-4538-b0ef-2a6c91d562f4\") {\n    message\n token\n  }\n}\n"}'
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  undoEmailChange(token: \"1a068d3f-4260-4538-b0ef-2a6c91d562f4\") {\n    message\n token\n  }\n}\n"}'
 ```
 
 On success, we get the response
@@ -582,7 +582,7 @@ On success, we get the response
 ```json
 {
   "data": {
-    "undoEmail": {
+    "undoEmailChange": {
       "message": "Your email has been reverted to old email.",
       "token": "<new JWT>"
     }
