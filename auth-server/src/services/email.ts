@@ -131,8 +131,6 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 
 			This link is valid for 48 hours, past this time, you will not be able to use it to recover your email. If you did not have time to click it and are a victim of a malicious email change, please open an issue on https://github.com/paritytech/polkassembly/issues/new<br /><br />
 
-			If you did change your email, then just ignore this message.<br /><br />
-
 			Polkassembly Team
 		</p>
 	`;
