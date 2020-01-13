@@ -1,4 +1,16 @@
 export const theme = {
+	border: {
+		border_box: 'border',
+		border_button: 'border'
+	},
+	borderStyles: {
+		border_box: 'solid',
+		border_button: 'solid'
+	},
+	borderWidths: {
+		border_box: '0.1rem',
+		border_button: '0.1rem'
+	},
 	colors: {
 		black01: '#282828',
 		grey_light: '#EEE',
@@ -14,5 +26,8 @@ export const theme = {
 		lg: '2.1rem',
 		md: '1.5rem',
 		sm: '1.2rem'
+	},
+	radii: {
+		button_radius: '0.3rem'
 	}
 };
