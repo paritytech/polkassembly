@@ -1,9 +1,9 @@
 {
-  "name": "node-watcher",
+  "name": "chain-db-watcher",
   "version": "1.0.0",
-  "description": "Service to create porposal posts automatically in the governance platform when an on-chain proposal appears",
+  "description": "Service to create porposal posts automatically in polkassembly.io db when an on-chain proposal appears",
   "main": "index.ts",
-  "author": "thibaut@parity.io",
+  "author": "Thibaut Sardan",
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
