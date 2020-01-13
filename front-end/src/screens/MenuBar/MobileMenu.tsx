@@ -1,50 +1,68 @@
 import React, { ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon, Sidebar } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
 interface Props {
 	children?: ReactNode,
-	className?: string,
-	onPusherClick?: boolean,
-	visible?: boolean
+	className?: 'mobilemenu'
 }
 
-const MobileMenu = ({
-	children,
-	onPusherClick
-}:Props) => {
-	const [visible, setVisible] = useState(false);
+const MobileMenu = ({ children, className }:Props) => {
+	const [leftVisible, setLeftVisible] = useState(false);
+	const [rightVisible, setRightVisible] = useState(false);
 
-	const handleToggle = () => {
-		setVisible(true);
+	const handleLeftToggle = () => {
+		setLeftVisible(true);
+	};
+
+	const handleRightToggle = () => {
+		setRightVisible(true);
+	};
+
+	const handleClose = () => {
+		if (leftVisible) setLeftVisible(false);
+		if (rightVisible) setRightVisible(false);
 	};
 
 	return (
-		<Sidebar.Pushable>
+		<Sidebar.Pushable className={className}>
 			<Sidebar
 				as={Menu}
 				animation="overlay"
+				direction='left'
 				icon="labeled"
 				inverted
 				vertical
-				visible={visible}
+				visible={leftVisible}
 			>
-				<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
-				<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
+				<Menu.Item as={Link} to="/discussions">Discussions</Menu.Item>
+				<Menu.Item as={Link} to="/proposals">Proposals</Menu.Item>
+			</Sidebar>
+			<Sidebar
+				as={Menu}
+				animation="overlay"
+				direction='right'
+				icon="labeled"
+				inverted
+				vertical
+				visible={rightVisible}
+			>
+				<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
 			</Sidebar>
 			<Sidebar.Pusher
-				dimmed={visible}
-				onClick={onPusherClick}
-				style={{ minHeight: '5rem' }}
+				dimmed={leftVisible || rightVisible}
+				onClick={handleClose}
+				style={{ minHeight: '100vh' }}
 			>
 				<Menu fixed="top" inverted>
-					<Menu.Item onClick={handleToggle}>
+					<Menu.Item onClick={handleLeftToggle}>
 						<Icon name="sidebar" />
 					</Menu.Item>
 					<Menu.Item as={Link} to="/" id='title'>
 						Polkassembly
 					</Menu.Item>
-					<Menu.Item>
+					<Menu.Item onClick={handleRightToggle}>
 						<Icon name="user" />
 					</Menu.Item>
 				</Menu>
@@ -54,4 +72,19 @@ const MobileMenu = ({
 	);
 };
 
-export default MobileMenu;
+export default styled(MobileMenu)`
+	.ui.menu, .ui.inverted.menu {
+		font-family: 'Roboto Mono';
+		font-weight: 500;
+		letter-spacing: 1.1;
+
+		#title {
+			text-transform: uppercase;
+		}
+
+		.item {
+			font-size: 1.45rem;
+			color: grey_secondary !important;
+		}
+	}
+`;
