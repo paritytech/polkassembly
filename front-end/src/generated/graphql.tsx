@@ -361,7 +361,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  undoEmail?: Maybe<ChangeResponse>,
+  undoEmailChange?: Maybe<ChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
 };
 
@@ -422,7 +422,7 @@ export type MutationSignupArgs = {
 };
 
 
-export type MutationUndoEmailArgs = {
+export type MutationUndoEmailChangeArgs = {
   token: Scalars['String']
 };
 
@@ -452,7 +452,7 @@ export type Mutation_Root = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  undoEmail?: Maybe<ChangeResponse>,
+  undoEmailChange?: Maybe<ChangeResponse>,
   update_comments?: Maybe<Comments_Mutation_Response>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
@@ -561,7 +561,7 @@ export type Mutation_RootSignupArgs = {
 };
 
 
-export type Mutation_RootUndoEmailArgs = {
+export type Mutation_RootUndoEmailChangeArgs = {
   token: Scalars['String']
 };
 
@@ -2066,14 +2066,14 @@ export type ChangePasswordMutation = (
   )> }
 );
 
-export type UndoEmailMutationVariables = {
+export type UndoEmailChangeMutationVariables = {
   token: Scalars['String']
 };
 
 
-export type UndoEmailMutation = (
+export type UndoEmailChangeMutation = (
   { __typename?: 'mutation_root' }
-  & { undoEmail: Maybe<(
+  & { undoEmailChange: Maybe<(
     { __typename?: 'ChangeResponse' }
     & Pick<ChangeResponse, 'message' | 'token'>
   )> }
@@ -2791,39 +2791,39 @@ export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
-export const UndoEmailDocument = gql`
-    mutation undoEmail($token: String!) {
-  undoEmail(token: $token) {
+export const UndoEmailChangeDocument = gql`
+    mutation undoEmailChange($token: String!) {
+  undoEmailChange(token: $token) {
     message
     token
   }
 }
     `;
-export type UndoEmailMutationFn = ApolloReactCommon.MutationFunction<UndoEmailMutation, UndoEmailMutationVariables>;
+export type UndoEmailChangeMutationFn = ApolloReactCommon.MutationFunction<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>;
 
 /**
- * __useUndoEmailMutation__
+ * __useUndoEmailChangeMutation__
  *
- * To run a mutation, you first call `useUndoEmailMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUndoEmailMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUndoEmailChangeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUndoEmailChangeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [undoEmailMutation, { data, loading, error }] = useUndoEmailMutation({
+ * const [undoEmailChangeMutation, { data, loading, error }] = useUndoEmailChangeMutation({
  *   variables: {
  *      token: // value for 'token'
  *   },
  * });
  */
-export function useUndoEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UndoEmailMutation, UndoEmailMutationVariables>) {
-        return ApolloReactHooks.useMutation<UndoEmailMutation, UndoEmailMutationVariables>(UndoEmailDocument, baseOptions);
+export function useUndoEmailChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>) {
+        return ApolloReactHooks.useMutation<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>(UndoEmailChangeDocument, baseOptions);
       }
-export type UndoEmailMutationHookResult = ReturnType<typeof useUndoEmailMutation>;
-export type UndoEmailMutationResult = ApolloReactCommon.MutationResult<UndoEmailMutation>;
-export type UndoEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<UndoEmailMutation, UndoEmailMutationVariables>;
+export type UndoEmailChangeMutationHookResult = ReturnType<typeof useUndoEmailChangeMutation>;
+export type UndoEmailChangeMutationResult = ApolloReactCommon.MutationResult<UndoEmailChangeMutation>;
+export type UndoEmailChangeMutationOptions = ApolloReactCommon.BaseMutationOptions<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {

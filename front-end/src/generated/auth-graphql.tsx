@@ -48,7 +48,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  undoEmail?: Maybe<ChangeResponse>,
+  undoEmailChange?: Maybe<ChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
 };
 
@@ -109,7 +109,7 @@ export type MutationSignupArgs = {
 };
 
 
-export type MutationUndoEmailArgs = {
+export type MutationUndoEmailChangeArgs = {
   token: Scalars['String']
 };
 

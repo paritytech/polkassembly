@@ -21,7 +21,7 @@ import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
-import UndoEmail from './screens/UndoEmail';
+import UndoEmailChange from './screens/UndoEmailChange';
 import { theme } from './themes/theme';
 
 const App = () => {
@@ -70,7 +70,7 @@ const App = () => {
 											<VerifyEmail/>
 										</Route>
 										<Route path="/undo-email/:token">
-											<UndoEmail/>
+											<UndoEmailChange/>
 										</Route>
 										<Route path="/settings">
 											<Settings/>
