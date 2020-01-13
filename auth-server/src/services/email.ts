@@ -118,7 +118,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		return;
 	}
 
-	const undoUrl = `${DOMAIN}/undo-email/${undoToken.token}`;
+	const undoUrl = `${DOMAIN}/undo-email-change/${undoToken.token}`;
 	const text = `
 		<p>
 			Hi ${user.name || ''}!<br/><br/>

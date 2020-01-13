@@ -69,7 +69,7 @@ const App = () => {
 										<Route path="/verify-email/:token">
 											<VerifyEmail/>
 										</Route>
-										<Route path="/undo-email/:token">
+										<Route path="/undo-email-change/:token">
 											<UndoEmailChange/>
 										</Route>
 										<Route path="/settings">
