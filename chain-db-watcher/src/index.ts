@@ -4,7 +4,7 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Option, Vec, u32, GenericCall } from '@polkadot/types';
 import { ITuple } from '@polkadot/types/types';
 
-import { PostAndProposalTypeInfo } from './types';
+import { PostAndProposalTypeInfo } from '../types';
 import { addPostAndProposal, proposalAlreadyExist } from './graphql_helpers';
 
 dotenv.config();

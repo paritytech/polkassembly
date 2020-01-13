@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn tsc && node build/index.js",
-    "lint": "eslint \"**/*.js|ts\"",
+    "start": "yarn tsc && node build/src/subscriber.js",
+    "lint": "eslint \"./src/**/*.js|ts\"",
     "tsc": "tsc"
   },
   "repository": {
@@ -16,6 +16,7 @@
     "url": "git+https://github.com/paritytech/polkassembly/chain-db-watcher.git"
   },
   "devDependencies": {
+    "@types/ws": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
     "dotenv": "^8.2.0",
@@ -31,8 +32,14 @@
     "@polkadot/api-derive": "^0.99.1",
     "@polkadot/types": "^0.99.1",
     "@types/node-fetch": "^2.5.4",
+    "apollo-link": "^1.2.13",
+    "apollo-link-ws": "^1.0.19",
+    "graphql": "^14.5.8",
     "graphql-request": "^1.8.2",
+    "graphql-tag": "^2.10.1",
     "node-fetch": "^2.6.0",
-    "typescript": "^3.7.4"
+    "subscriptions-transport-ws": "^0.9.16",
+    "typescript": "^3.7.4",
+    "ws": "^7.2.1"
   }
 }

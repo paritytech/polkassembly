@@ -1,6 +1,6 @@
 import { getToken } from './util';
 import { GraphQLClient } from 'graphql-request';
-import { PostAndProposalType } from './types';
+import { PostAndProposalType } from '../types';
 
 const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 
