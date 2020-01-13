@@ -129,7 +129,7 @@ export const sendEmailUndoEmail = (user: User, undoToken: EmailUndoToken) => {
 			If you did not change your email and suspect that it is a malicious attempt, click on the following link to change your account email back to:<br /><br />
 			<a href="${undoUrl}">Recover Your Email</a><br /><br />
 
-			Just a heads up, to make sure your information is safe and secure, the link will expire after 24 hours.<br /><br />
+			This link is valid for 48 hours, past this time, you will not be able to use it to recover your email. If you did not have time to click it and are a victim of a malicious email change, please open an issue on https://github.com/paritytech/polkassembly/issues/new<br /><br />
 
 			If you did change your email, then just ignore this message.<br /><br />
 
