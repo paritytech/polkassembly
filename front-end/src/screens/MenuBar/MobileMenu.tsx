@@ -125,16 +125,8 @@ export default styled(MobileMenu)`
 			border-radius: 0.8rem!important;
 		}
 
-		#leftmenu {
+		#leftmenu, #rightmenu {
 			position: fixed;
-			left: 1rem;
-			max-width: 2.4rem;
-			font-size: 1.8rem;
-		}
-
-		#rightmenu {
-			position: fixed;
-			right: 1rem;
 			max-width: 2.4rem;
 			font-size: 1.8rem;
 		}
@@ -159,11 +151,8 @@ export default styled(MobileMenu)`
 		border-radius: 0.8rem!important;
 		.item {
 			margin-left: 1rem;
+			border-radius: 0.8rem!important;
 		}
-	}
-
-	.ui.sidebar.menu .item {
-		border-radius: 0.8rem!important;
 	}
 
 	.ui.labeled.icon.menu {
@@ -178,5 +167,30 @@ export default styled(MobileMenu)`
 		font-size: 1.6rem!important;
 		display: inline-block;
 		margin: 0 2rem auto 0!important;
+	}
+
+	.ui.right.sidebar .item {
+		float: left;
+		clear: both;
+	}
+
+	@media only screen and (max-width: 576px) {
+		#leftmenu {
+			left: 1rem;
+		}
+
+		#rightmenu {
+			right: 1rem;
+		}
+	}
+
+	@media only screen and (min-width: 576px) {
+		#leftmenu {
+			left: 2rem;
+		}
+
+		#rightmenu {
+			right: 2rem;
+		}
 	}
 `;

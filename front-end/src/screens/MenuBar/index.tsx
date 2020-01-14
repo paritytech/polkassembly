@@ -41,12 +41,12 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 
 	return (
 		<>
-			<Responsive {...Responsive.onlyMobile}>
+			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<MobileMenu>
 					<NavBarChildren>{children}</NavBarChildren>
 				</MobileMenu>
 			</Responsive>
-			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
 					<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
