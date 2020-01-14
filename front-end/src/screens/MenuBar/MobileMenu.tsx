@@ -20,20 +20,24 @@ export const NavBarChildren = ({ children }:Props) => (
 const MobileMenu = ({ children, className }:Props) => {
 	const [leftVisible, setLeftVisible] = useState(false);
 	const [rightVisible, setRightVisible] = useState(false);
+	const [pusherheight, setPusherheight] = useState('auto');
 
 	const handleLeftToggle = () => {
 		leftVisible ? setLeftVisible(false) : setLeftVisible(true);
 		rightVisible ? setRightVisible(false) : setRightVisible(false);
+		pusherheight === '100vH' && !rightVisible ? setPusherheight('auto') : setPusherheight('100vH');
 	};
 
 	const handleRightToggle = () => {
 		rightVisible ? setRightVisible(false) : setRightVisible(true);
 		leftVisible ? setLeftVisible(false) : setLeftVisible(false);
+		pusherheight === '100vH' && !leftVisible ? setPusherheight('auto') : setPusherheight('100vH');
 	};
 
 	const handleClose = () => {
 		setLeftVisible(false);
 		setRightVisible(false);
+		setPusherheight('auto');
 	};
 
 	const currentUser = useContext(UserDetailsContext);
@@ -108,7 +112,7 @@ const MobileMenu = ({ children, className }:Props) => {
 				<Sidebar.Pusher
 					dimmed={leftVisible || rightVisible}
 					onClick={handleClose}
-					style={{ minHeight: '100vh' }}
+					style={{ height: pusherheight }}
 				>
 					{children}
 				</Sidebar.Pusher>
@@ -210,7 +214,7 @@ export default styled(MobileMenu)`
 			right: 2rem;
 		}
 	}
-	
+
 	.ui.sticky {
 		position: fixed!important;
 	}
