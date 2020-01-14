@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
 
-import { addPostAndProposalMutation, getProposal } from './queries';
-import { getToken } from './util';
+import { addPostAndProposalMutation, getProposalQuery, loginMutation } from './queries';
+
+dotenv.config();
 
 const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 
@@ -9,9 +11,9 @@ const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
  * Tell if there is already a proposal in the DB matching the
  * onchain proposal id passed as argument
  *
- * @param onchainId the onchain proposal id
+ * @param onchain_proposal_id the prisma db id for the proposal
  */
-export const proposalAlreadyExists = async (onchainId: number) => {
+export const proposalAlreadyExists = async (onchain_proposal_id: number): Promise<boolean> => {
 	const token = await getToken();
 
 	if (!graphqlServerUrl) throw new Error ('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set');
@@ -24,16 +26,16 @@ export const proposalAlreadyExists = async (onchainId: number) => {
 			}
 		});
 
-		return client.request(getProposal, { onchain_id: onchainId })
-			.then(data => data.proposals && !!data.proposals.length)
+		return client.request(getProposalQuery, { onchain_proposal_id })
+			.then(data => !!data?.onchain_proposals?.length)
 			.catch(err => {
-				console.log('GraphQL response errors',err.response.errors);
-				console.log('Response data if available',err.response.data);
+				err.response?.errors && console.log('GraphQL response errors',err.response.errors);
+				err.response?.data && console.log('Response data if available',err.response.data);
 				throw new Error(err);
 			});
 
 	} catch (e){
-		console.error('Graphql execution error - Proposal already exists',e);
+		console.error('Graphql execution error - Proposal already exists');
 		throw new Error(e);
 	}
 };
@@ -50,7 +52,7 @@ export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: str
 
 	const proposalAndPostVariables = {
 		'author_id': process.env.BOT_PROPOSAL_USER_ID,
-		'chain_db_id': onchainId,
+		'onchain_proposal_id': onchainId,
 		'content': 'Post not yet edited by the proposal author',
 		'proposer_address': proposer,
 		'title': `#${onchainId} - On chain proposal`,
@@ -69,20 +71,57 @@ export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: str
 		});
 
 		return client.request(addPostAndProposalMutation, proposalAndPostVariables)
-			.then(data => {
-				console.log('data',data);
-				return data['insert_onchain_proposals']
-				&& data['insert_onchain_proposals']['returning']
-				&& data['insert_onchain_proposals']['returning'][0]
-				&& data['insert_proposals']['returning'][0].id;})
+			.then(data => data?.['insert_proposals']?.['returning'][0]?.id)
 			.catch(err => {
-				console.log('GraphQL response errors',err.response.errors);
-				console.log('Response data if available',err.response.data);
+				err.response?.errors && console.log('GraphQL response errors',err.response.errors);
+				err.response?.data && console.log('Response data if available',err.response.data);
 				throw new Error(err);
 			});
 
 	} catch (e){
 		console.log('addPostAndProposal - graphql execution error',e);
+		throw new Error(e);
+	}
+};
+
+// FIXME This is probably too simple and fetches the token every single time.
+// it's ok for proposals since there are rarely more than 1 proposal per 15min.
+export const getToken = async (): Promise<string> => {
+
+	const credentials = {
+		username: process.env.USERNAME,
+		password: process.env.PASSWORD
+	};
+
+	const authServerUrl = process.env.AUTH_SERVER_URL;
+
+	if (!authServerUrl) {
+		throw new Error('Auth server url not set in .env file.');
+	}
+
+	if (!credentials.username || !credentials.password) {
+		throw new Error ('USERNAME or PASSWORD environment variables haven\'t been set for the proposal bot to login.');
+	}
+
+	try {
+		const client = new GraphQLClient(authServerUrl, { headers: {} });
+
+		return client.request(loginMutation, credentials)
+			.then((data) => {
+				if (data.login?.token) {
+					return data?.login?.token;
+				} else {
+					throw new Error(`Unexpected data: ${data}`);
+				}
+			})
+			.catch(err => {
+				err.response?.errors && console.log('GraphQL response errors',err.response.errors);
+				err.response?.data && console.log('Response data if available',err.response.data);
+				throw new Error(err);
+			});
+
+	} catch (e){
+		console.error('Graphql execution error - Proposal already exists',e);
 		throw new Error(e);
 	}
 };

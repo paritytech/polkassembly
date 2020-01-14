@@ -27,7 +27,13 @@ const createSubscriptionObservable = (wsurl: string, query: any, variables?: any
 	return execute(link, { query: query, variables: variables });
 };
 
-function main() {
+async function main() {
+	// try{
+	// 	const token = await getToken();
+	// 	console.log('----> token', token);
+	// } catch(e){
+	// 	console.log('ooopw', e);
+	// }
 
 	if (!graphQLEndpoint) {
 		console.error('GraphQL endpoint not set in environment variables!');
@@ -40,6 +46,8 @@ function main() {
 		// { id: 1 }                                              // Query variables
 	);
 
+	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
+
 	subscriptionClient.subscribe(({ data }) => {
 		console.log('Received event: ');
 		console.log(JSON.stringify(data, null, 2));
@@ -50,11 +58,16 @@ function main() {
 			proposalAlreadyExists(proposalId)
 				.then(async (alreadyExist) => {
 					if (!alreadyExist) {
-						addPostAndProposal({
-							onchainId: proposalId,
-							proposer
-						});
-						console.log(`✅ Proposal ${proposalId.toString()} added to the database.`);
+						try {
+							const id = await addPostAndProposal({
+								onchainId: proposalId,
+								proposer
+							});
+							console.log(`✅ Proposal ${proposalId.toString()} added to the database. Post: http://polkassembly.io/post/${id}`);
+						} catch (error) {
+							throw new Error(`Error adding a new proposal: ${error}`);
+						}
+
 					} else {
 						throw new Error(`🔴 proposal id ${proposalId.toString()} already exists in the database. Not inserted.`);
 					}
@@ -67,4 +80,4 @@ function main() {
 	});
 }
 
-main();
+main().catch(error => console.error(error));

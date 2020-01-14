@@ -44,7 +44,7 @@ export const proposalsSubscription = gql`
 
 export const addPostAndProposalMutation = `
     mutation addPostAndProposalMutation (
-        $chain_db_id:Int!,
+        $onchain_proposal_id:Int!,
         $author_id: Int!,
         $proposer_address: String!,
         $content: String!,
@@ -54,7 +54,7 @@ export const addPostAndProposalMutation = `
         ){
         __typename
         insert_onchain_proposals(objects: {
-            chain_db_id: $chain_db_id,
+            onchain_proposal_id: $onchain_proposal_id,
             proposer_address: $proposer_address,
             post: {data: {
                 author_id: $author_id,
@@ -85,10 +85,18 @@ export const addPostAndProposalMutation = `
 // 	}
 //   }
 
-export const getProposal = `
-    query getProposals($onchain_id: Int!) {
-        onchain_proposals(where: {onchain_id: {_eq: $onchain_id}}) {
+export const getProposalQuery = `
+    query getProposals($onchain_proposal_id: Int!) {
+        onchain_proposals(where: {onchain_proposal_id: {_eq: $onchain_proposal_id}}) {
             id
+        }
+    }
+`;
+
+export const loginMutation = `
+    mutation LOGIN($password: String!, $username: String!) {
+        login(password: $password, username: $username) {
+            token
         }
     }
 `;
