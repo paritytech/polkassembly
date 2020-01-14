@@ -1,6 +1,6 @@
 export const theme = {
 	colors: {
-		black01: '#282828',
+		black_primary: '#282828',
 		grey_light: '#EEE',
 		grey_primary: '#706D6D',
 		grey_secondary: '#B5AEAE',
@@ -11,6 +11,7 @@ export const theme = {
 		white: '#FFF'
 	},
 	fontSizes: {
+		input_text: '1.3rem',
 		lg: '2.1rem',
 		md: '1.5rem',
 		sm: '1.2rem'

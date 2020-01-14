@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form as SUIForm, FormInputProps as SUIFormInputProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 function Input (props : SUIFormInputProps){
 	return <SUIForm.Input {...props}/>;
@@ -8,8 +8,8 @@ function Input (props : SUIFormInputProps){
 
 export default styled(Input)`
     font-family: 'Roboto';
-    font-size: 1.2rem;
-    color: #282828;
+    font-size: input_text;
+    color: black_primary;
     border: 1 px solid #EEE;
     border-radius: 0rem;
     padding: 0.625rem 0 0.5rem 0;

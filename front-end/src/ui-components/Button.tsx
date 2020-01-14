@@ -12,15 +12,19 @@ export default styled(Button)`
 		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;
+		letter-spacing: 0.06rem;
 		border-radius: button_radius;
 		border: none;
-		padding: 0.7rem 1rem;
+		padding: 0.8rem 1.6rem;
+		.small {
+			font-size: sm;
+			padding: 0.6rem 1.2rem;
+		}
 		&.ui.primary.button {
 			background-color: red_primary;
-			color: white;
+			color: black_primary;
 			&:hover, &:focus {
 				background-color: red_secondary;
-				color: white;
 				outline: none;
 			}
 		}
@@ -41,15 +45,14 @@ export default styled(Button)`
 		}
 		&.ui.secondary.button {
 			background-color: white;
-			color: red_primary;
+			color: text;
 			border-style: solid;
-			border-color: red_secondary;
+			border-color: grey_secondary;
 			border-width: 0.1rem;
 			&:hover, &:focus {
-				background-color: red_light;
-				color: red_secondary;
+				background-color: grey_light;
 				border-style: solid;
-				border-color: red_secondary;
+				border-color: grey_primary;
 				border-width: 0.1rem;
 				outline: none;
 			}

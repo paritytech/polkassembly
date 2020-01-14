@@ -42,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: black01;
+        color: black_primary;
         font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;
@@ -51,7 +51,7 @@ export const GlobalStyle = createGlobalStyle`
 
     h3 {
         font-family: 'Roboto Mono';
-        font-size: 2.4rem;
+        font-size: 2.6rem;
         margin-bottom: 1.25rem;
     }
 
