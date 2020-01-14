@@ -2,13 +2,12 @@
 
 import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
-import BN from 'bn.js';
 import dotenv from 'dotenv';
-import gql from 'graphql-tag';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import  ws from 'ws';
 
-import { proposalAlreadyExist, addPostAndProposal } from './graphql_helpers';
+import { proposalAlreadyExists, addPostAndProposal } from './graphql_helpers';
+import { proposalsSubscription } from './queries';
 
 dotenv.config();
 
@@ -28,47 +27,6 @@ const createSubscriptionObservable = (wsurl: string, query: any, variables?: any
 	return execute(link, { query: query, variables: variables });
 };
 
-const PROPOSAL_SUBSCRIPTION = gql`
-	subscription ProposalsSubscription{
-		proposal {
-			mutation
-				node {
-					depositAmount
-					method
-					proposalId
-					proposer
-					proposalArguments {
-						name
-						value
-					}
-					section
-				}
-		}
-    }
-`;
-// e.g returns
-// {
-// 	"data": {
-// 	  "proposal": {
-// 		"mutation": "CREATED",
-// 		"node": {
-// 		  "method": "remark",
-// 		  "metaDescription": "[ Make some on-chain remark.]",
-// 		  "proposalId": 0,
-// 		  "section": "system",
-// 		  "depositAmount": "123000000000000",
-// 		  "proposalArguments": [
-// 			{
-// 			  "name": "_remark",
-// 			  "value": "0x00"
-// 			}
-// 		  ],
-// 		  "proposer": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-// 		}
-// 	  }
-// 	}
-//   }
-
 function main() {
 
 	if (!graphQLEndpoint) {
@@ -78,7 +36,7 @@ function main() {
 
 	const subscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		PROPOSAL_SUBSCRIPTION
+		proposalsSubscription
 		// { id: 1 }                                              // Query variables
 	);
 
@@ -89,7 +47,7 @@ function main() {
 		if (data?.proposal.mutation === 'CREATED'){
 			const { proposalId, proposer } = data.proposal.node;
 
-			proposalAlreadyExist(proposalId)
+			proposalAlreadyExists(proposalId)
 				.then(async (alreadyExist) => {
 					if (!alreadyExist) {
 						addPostAndProposal({

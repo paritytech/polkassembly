@@ -1,5 +1,7 @@
-import { getToken } from './util';
 import { GraphQLClient } from 'graphql-request';
+
+import { addPostAndProposalMutation, getProposal } from './queries';
+import { getToken } from './util';
 
 const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 
@@ -9,7 +11,7 @@ const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
  *
  * @param onchainId the onchain proposal id
  */
-export const proposalAlreadyExist = async (onchainId: number) => {
+export const proposalAlreadyExists = async (onchainId: number) => {
 	const token = await getToken();
 
 	if (!graphqlServerUrl) throw new Error ('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set');
@@ -22,14 +24,6 @@ export const proposalAlreadyExist = async (onchainId: number) => {
 			}
 		});
 
-		const getProposal = `
-            query Proposals($onchain_id: Int!) {
-            proposals(where: {onchain_id: {_eq: $onchain_id}}) {
-                id
-            }
-        }
-       `;
-
 		return client.request(getProposal, { onchain_id: onchainId })
 			.then(data => data.proposals && !!data.proposals.length)
 			.catch(err => {
@@ -39,18 +33,30 @@ export const proposalAlreadyExist = async (onchainId: number) => {
 			});
 
 	} catch (e){
-		console.log('propAlreadyExist - graphql execurion error',e);
+		console.error('Graphql execution error - Proposal already exists',e);
 		throw new Error(e);
 	}
 };
 
+/**
+ * Creates a generic post and the linked proposal in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal, encoded with the network prefix
+ * @param onchainId the onchain proposal id
+ */
+
 export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: string, onchainId: number}) => {
 	const token = await getToken();
-	const defaultProposalContent = 'Post not yet edited by the proposal author';
-	const defaultProposalTitle = `#${onchainId} on chain proposal`;
-	const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
-	const botProposalUserId = process.env.BOT_PROPOSAL_USER_ID;
-	const proposalTopicId = 1; // Democracy
+
+	const proposalAndPostVariables = {
+		'author_id': process.env.BOT_PROPOSAL_USER_ID,
+		'chain_db_id': onchainId,
+		'content': 'Post not yet edited by the proposal author',
+		'proposer_address': proposer,
+		'title': `#${onchainId} - On chain proposal`,
+		'topic_id': 1, // Democracy
+		'type_id': process.env.HASURA_PROPOSAL_POST_TYPE_ID
+	};
 
 	if (!graphqlServerUrl) throw new Error ('Please specify an environment variable for the REACT_APP_SERVER_URL.');
 	if (!token) throw new Error ('No authorization token found for the chain-db-watcher.');
@@ -61,68 +67,6 @@ export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: str
 				'Authorization': 'Bearer ' + token
 			}
 		});
-
-		// mutation addPostAndProposalMutation ($chain_db_id:Int!, $author_id: Int!, $content: String!, $title: String!, $topic_id: Int!, $type_id: Int! ){
-		// 	__typename
-		// 	insert_onchain_proposals(objects: {chain_db_id: $chain_db_id, post: {data: {author_id: $author_id, content: $content, title: $title, topic_id: $topic_id, type_id: $type_id}}}) {
-		// 	  returning {
-		// 		id
-		// 	  }
-		// 	}
-		//   }
-
-		// returns
-		// {
-		// 	"data": {
-		// 	  "insert_onchain_proposals": {
-		// 		"returning": [
-		// 		  {
-		// 			"id": 1
-		// 		  }
-		// 		]
-		// 	  },
-		// 	  "__typename": "mutation_root"
-		// 	}
-		//   }
-
-		const addPostAndProposalMutation = `
-		mutation addPostAndProposalMutation (
-			$chain_db_id:Int!,
-			$author_id: Int!,
-			$proposer_address: String!,
-			$content: String!,
-			$title: String!,
-			$topic_id: Int!,
-			$type_id: Int!
-			){
-			__typename
-			insert_onchain_proposals(objects: {
-				chain_db_id: $chain_db_id,
-				proposer_address: $proposer_address,
-				post: {data: {
-					author_id: $author_id,
-					content: $content,
-					title: $title,
-					topic_id: $topic_id,
-					type_id: $type_id
-				}
-			}}) {
-			  returning {
-				id
-			  }
-			}
-		  }
-	   `;
-
-		const proposalAndPostVariables = {
-			'author_id': botProposalUserId,
-			'chain_db_id': onchainId,
-			'content': defaultProposalContent,
-			'proposer_address': proposer,
-			'title': defaultProposalTitle,
-			'topic_id': proposalTopicId,
-			'type_id': proposalPostTypeId
-		};
 
 		return client.request(addPostAndProposalMutation, proposalAndPostVariables)
 			.then(data => {

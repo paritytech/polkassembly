@@ -1,55 +1,29 @@
 
 import dotenv from 'dotenv';
-// import { RawParam, RawParamValue } from '../types';
-// import { TypeDef, TypeDefInfo } from '@polkadot/types/types';
-// import { isUndefined } from '@polkadot/util';
 import fetch from 'node-fetch';
 
 dotenv.config();
 
-// export const createValue = (param: { type: TypeDef }): RawParam => {
-// 	const value = getInitValue(param.type);
-
-// 	return {
-// 		isValid: !isUndefined(value),
-// 		value
-// 	};
-// };
-
-// export const getInitValue = (def: TypeDef): RawParamValue | RawParamValue[] => {
-// 	if (def.info === TypeDefInfo.Vec) {
-// 		return [getInitValue(def.sub as TypeDef)];
-// 	} else if (def.info === TypeDefInfo.Tuple) {
-// 		return Array.isArray(def.sub)
-// 			? def.sub.map((def): any => getInitValue(def))
-// 			: [];
-// 	} else if (def.info === TypeDefInfo.Struct) {
-// 		return Array.isArray(def.sub)
-// 			? def.sub.reduce((result, def): Record<string, RawParamValue | RawParamValue[]> => {
-// 				result[def.name as string] = getInitValue(def);
-
-// 				return result;
-// 			}, {} as unknown as Record<string, RawParamValue | RawParamValue[]>)
-// 			: {};
-// 	} else if (def.info === TypeDefInfo.Enum) {
-// 		return Array.isArray(def.sub)
-// 			? { [def.sub[0].name as string]: getInitValue(def.sub[0]) }
-// 			: {};
-// 	}
-// };
-
-// FIXME This is dumb and fetches the token every single time.
+// FIXME This is probably too simple and fetches the token every single time.
+// it's ok for proposals since there are rarely more than 1 proposal per 15min.
 export const getToken = async () => {
 
+	const username = process.env.USERNAME;
+	const password = process.env.PASSWORD;
+
+	if (!username || !password) {
+		throw new Error ('USERNAME or PASSWORD environment variables haven\'t been set for the proposal bot to login.');
+	}
+
 	const credentials = JSON.stringify({
-		'username':process.env.USERNAME,
-		'password':process.env.PASSWORD
+		username,
+		password
 	});
 
 	const url = process.env.AUTH_SERVER_LOGIN_URL;
 
 	if (!url) {
-		throw new Error('Auth server url not set in env.');
+		throw new Error('Auth server url not set in env file.');
 	}
 
 	const token = await fetch(url, {
