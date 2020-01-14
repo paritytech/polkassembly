@@ -10,10 +10,6 @@ export interface PostAndProposalTypeInfo {
   methodArguments?: string // serialized JSON
 }
 
-export interface PostAndProposalType extends PostAndProposalTypeInfo {
-  onchainId: number
-}
-
 export type RawParamValue = any | undefined;
 
 export type RawParamValueArray = (RawParamValue | RawParamValue[])[];

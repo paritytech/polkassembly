@@ -1,87 +1,112 @@
-import dotenv from 'dotenv';
-import { Proposal, AccountId, BalanceOf } from '@polkadot/types/interfaces';
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Option, Vec, u32, GenericCall } from '@polkadot/types';
-import { ITuple } from '@polkadot/types/types';
+/*****  Setup a GraphQL subscription observable  ******************************/
 
-import { PostAndProposalTypeInfo } from '../types';
-import { addPostAndProposal, proposalAlreadyExist } from './graphql_helpers';
+import { execute } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import BN from 'bn.js';
+import dotenv from 'dotenv';
+import gql from 'graphql-tag';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import  ws from 'ws';
+
+import { proposalAlreadyExist, addPostAndProposal } from './graphql_helpers';
 
 dotenv.config();
 
-const main = async () => {
-	// const wsProvider = new WsProvider('wss://dev-node.substrate.dev');
-	const wsProvider = new WsProvider(process.env.NODE_WS_PROVIDER);
-	const api = await ApiPromise.create({ provider: wsProvider });
+const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
+const getWsClient = function(wsurl: string) {
+	const client = new SubscriptionClient(
+		wsurl, { reconnect: true }, ws
+	);
+	return client;
+};
 
-	// Initial scrapping of all proposals. Casting is needed for now
-	const publicProps = await api.query.democracy.publicProps<Vec<ITuple<[u32, Proposal]>>>();
-	// e.g returns
-	// [[0, {callIndex: 0x0300, args: {now: 0}}, 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY]]
+// wsurl: GraphQL endpoint
+// query: GraphQL query (use gql`` from the 'graphql-tag' library)
+// variables: Query variables object
+const createSubscriptionObservable = (wsurl: string, query: any, variables?: any) => {
+	const link = new WebSocketLink(getWsClient(wsurl));
+	return execute(link, { query: query, variables: variables });
+};
 
-	publicProps.map(async ([idNumber, proposal]) => {
-		const proposalId = idNumber.toNumber();
-
-		getPostAndProposalInfo(api, proposalId, proposal);
-
-		proposalAlreadyExist(proposalId)
-			.then(async (alreadyExist) => {
-				if (!alreadyExist) {
-					const values = await getPostAndProposalInfo(api, proposalId, proposal);
-					if (values) {
-						addPostAndProposal({ ...values, onchainId: idNumber.toNumber() });
-						console.log(`✅ Proposal ${idNumber.toString()} added to the database.`);
-					} else {
-						throw new Error(`Failed at getting post and proposal info for proposal #${idNumber.toString()}.`);
+const PROPOSAL_SUBSCRIPTION = gql`
+	subscription ProposalsSubscription{
+		proposal {
+			mutation
+				node {
+					depositAmount
+					method
+					proposalId
+					proposer
+					proposalArguments {
+						name
+						value
 					}
-				} else {
-					throw new Error(`🔴 proposal id ${idNumber.toString()} already exists in the database. Not inserted.`);
+					section
 				}
-			})
-			.catch(e => { throw new Error(e); });
+		}
+    }
+`;
+// e.g returns
+// {
+// 	"data": {
+// 	  "proposal": {
+// 		"mutation": "CREATED",
+// 		"node": {
+// 		  "method": "remark",
+// 		  "metaDescription": "[ Make some on-chain remark.]",
+// 		  "proposalId": 0,
+// 		  "section": "system",
+// 		  "depositAmount": "123000000000000",
+// 		  "proposalArguments": [
+// 			{
+// 			  "name": "_remark",
+// 			  "value": "0x00"
+// 			}
+// 		  ],
+// 		  "proposer": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+// 		}
+// 	  }
+// 	}
+//   }
+
+function main() {
+
+	if (!graphQLEndpoint) {
+		console.error('GraphQL endpoint not set in environment variables!');
+		return;
+	}
+
+	const subscriptionClient = createSubscriptionObservable(
+		graphQLEndpoint,
+		PROPOSAL_SUBSCRIPTION
+		// { id: 1 }                                              // Query variables
+	);
+
+	subscriptionClient.subscribe(({ data }) => {
+		console.log('Received event: ');
+		console.log(JSON.stringify(data, null, 2));
+
+		if (data?.proposal.mutation === 'CREATED'){
+			const { proposalId, proposer } = data.proposal.node;
+
+			proposalAlreadyExist(proposalId)
+				.then(async (alreadyExist) => {
+					if (!alreadyExist) {
+						addPostAndProposal({
+							onchainId: proposalId,
+							proposer
+						});
+						console.log(`✅ Proposal ${proposalId.toString()} added to the database.`);
+					} else {
+						throw new Error(`🔴 proposal id ${proposalId.toString()} already exists in the database. Not inserted.`);
+					}
+				})
+				.catch(e => { throw new Error(e); });
+		}
+	}, (err) => {
+		console.log('Err');
+		console.log(err);
 	});
-};
+}
 
-const getPostAndProposalInfo = async (api: ApiPromise, idNumber:number, proposal:Proposal): Promise<PostAndProposalTypeInfo | null> => {
-	const depositOf = await api.query.democracy.depositOf<Option<ITuple<[BalanceOf, Vec<AccountId>]>>>(idNumber);
-
-	const depositInfo = depositOf.unwrapOr(null);
-	if (!depositInfo) return null;
-	// e.g returns
-	// [
-	//   [0,{"callIndex":"0x0001","args":{"_remark":"0x01"}},"5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"],
-	//   [1,{"callIndex":"0x0602","args":{"source":"5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY","dest":"5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty","value":123000000000000}},"5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"]
-	// ]
-	// const authorAddress = depositInfo[1][0].toString();
-	const depositAmount = depositInfo[0];
-	// const { meta, method, section } = GenericCall.findFunction(proposal.callIndex);
-	// const methodName = `${section}.${method}`;
-	// console.log('-----------------------------')
-	// console.log('authorAddress',authorAddress)
-	// console.log('amountDeposit',depositAmount)
-	// console.log('methodName',methodName)
-
-	// const documentation = (meta && meta.documentation) ? meta.documentation.join(' ') : null;
-
-	const params = GenericCall.filterOrigin(proposal.meta).map(({ name }): { name: string } => ({
-		name: name.toString()
-	}));
-
-	const methodArguments = proposal && proposal.args && params && params.reduce((agg, arg, index) => {
-		return {
-			...agg,
-			// FIXME prob not super clever to "toString()" the arg here. Addresses or array of addresses should remain as such.
-			[arg.name]: proposal.args[index].toString()
-		};
-	}, {});
-
-	return {
-		authorId: 56, // FIXME need to have an actual author id based on the address
-		depositAmount,
-		methodArguments: JSON.stringify(methodArguments),
-		methodName: ''
-	};
-};
-
-main().catch(console.error);
-// proposalAlreadyExist(0).then(proposal => console.log('proposal',proposal))
+main();

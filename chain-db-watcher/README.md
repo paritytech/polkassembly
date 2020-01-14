@@ -1,4 +1,4 @@
-# Node watcher
+# Chain DB watcher
 
 This service is listening to a graphQL based chain DB and creates new proposal posts on Polkassembly.io as soon as an on-chain proposal is created.
 
@@ -11,6 +11,7 @@ AUTH_SERVER_LOGIN_URL="http://localhost:8010/login"
 # NODE_WS_PROVIDER="ws://127.0.0.1:9944"
 CHAIN_DB_GRAPHQL_URL="http://localhost:4466/"
 HASURA_PROPOSAL_POST_TYPE_ID=2
+BOT_PROPOSAL_USER_ID=6
 ```
 ## Run
 - `yarn`
