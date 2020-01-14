@@ -72,7 +72,7 @@ export default styled(HomeContent)`
 
 		.mainButtonContainer {
 			align-items: stretch!important;
-			margin: 1rem!important;
+			margin: 0 1rem 1rem 1rem!important;
 
 			.newPostButton {
 				padding: 0.8rem 1rem;
@@ -88,7 +88,7 @@ export default styled(HomeContent)`
 
 		.mainButtonContainer {
 			margin: 1rem 0;
-			margin-top: 1rem!important;
+			margin-top: 0 1rem 1rem 1rem!important;
 		}
 	}
 

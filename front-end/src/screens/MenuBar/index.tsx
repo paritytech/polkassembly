@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import MobileMenu from './MobileMenu';
+/* import MobileMenu, { NavBarChildren } from './MobileMenu'; */
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
@@ -12,7 +12,6 @@ import { logout } from '../../services/auth.service';
 
 interface Props {
 	className?: string,
-	onPusherClick?: boolean,
 	visible?: boolean
 }
 
@@ -41,9 +40,11 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 	return (
 		<>
-			<Responsive {...Responsive.onlyMobile}>
-				<MobileMenu></MobileMenu>
-			</Responsive>
+			{/* <Responsive {...Responsive.onlyMobile}>
+				<MobileMenu>
+					<NavBarChildren></NavBarChildren>
+				</MobileMenu>
+			</Responsive> */}
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>

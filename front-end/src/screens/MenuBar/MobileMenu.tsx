@@ -1,12 +1,21 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon, Sidebar } from 'semantic-ui-react';
+import { Container, Menu, Icon, Sidebar } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useLogoutMutation } from '../../generated/auth-graphql';
+import { useRouter } from '../../hooks';
+import { logout } from '../../services/auth.service';
 
 interface Props {
 	children?: ReactNode,
 	className?: 'mobilemenu'
 }
+
+export const NavBarChildren = ({ children }:Props) => (
+	<Container>{children}</Container>
+);
 
 const MobileMenu = ({ children, className }:Props) => {
 	const [leftVisible, setLeftVisible] = useState(false);
@@ -23,6 +32,25 @@ const MobileMenu = ({ children, className }:Props) => {
 	const handleClose = () => {
 		if (leftVisible) setLeftVisible(false);
 		if (rightVisible) setRightVisible(false);
+	};
+
+	const currentUser = useContext(UserDetailsContext);
+	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { history } = useRouter();
+	const { setUserDetailsContextState, username } = currentUser;
+
+	useEffect(() => {
+		if (data && data.logout && data.logout.message) {
+			logout(setUserDetailsContextState);
+			history.push('/');
+		}
+
+		if (error) console.error(error);
+
+	},[data, error, history, setUserDetailsContextState]);
+
+	const handleLogout = () => {
+		logoutMutation();
 	};
 
 	return (
@@ -48,8 +76,18 @@ const MobileMenu = ({ children, className }:Props) => {
 				vertical
 				visible={rightVisible}
 			>
-				<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
-				<Menu.Item><Icon name="sign-out" />Logout</Menu.Item>
+				{username
+					?
+					<>
+						<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
+						<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
+					</>
+					:
+					<>
+						<Menu.Item as={Link} to="/login">Login</Menu.Item >
+						<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
+					</>
+				}
 			</Sidebar>
 			<Sidebar.Pusher
 				dimmed={leftVisible || rightVisible}

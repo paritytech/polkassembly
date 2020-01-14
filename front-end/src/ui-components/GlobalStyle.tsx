@@ -97,7 +97,7 @@ export const GlobalStyle = createGlobalStyle`
         }
 
         .ui.grid, .ui.container {
-            margin-top: 0!important;
+            margin-top: 7rem!important;
             margin-left: 0!important;
             margin-right: 0!important;
         }

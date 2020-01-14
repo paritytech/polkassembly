@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Responsive } from 'semantic-ui-react';
 import { ThemeProvider } from '@xstyled/styled-components';
 
 import Apollo from './components/Apollo';
@@ -14,6 +15,7 @@ import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
+import MobileMenu, { NavBarChildren } from './screens/MenuBar/MobileMenu';
 import NotFound from './screens/NotFound';
 import Post from './screens/Post';
 import Proposals from './screens/Proposals';
@@ -35,47 +37,95 @@ const App = () => {
 							<UserDetailsProvider>
 								<Apollo>
 									<GlobalStyle />
-									<MenuBar/>
-									<Notifications/>
-									<Modal/>
-									<Switch>
-										<Route exact path="/">
-											<Home/>
-										</Route>
-										<Route path="/discussions">
-											<Discussions/>
-										</Route>
-										<Route path="/login">
-											<LoginForm/>
-										</Route>
-										<Route path="/post/create" >
-											<CreatePost/>
-										</Route>
-										<Route exact path="/post/:id" >
-											<Post/>
-										</Route>
-										<Route path="/proposals" >
-											<Proposals/>
-										</Route>
-										<Route path="/request-reset-password">
-											<RequestResetPassword/>
-										</Route>
-										<Route path="/reset-password/:token">
-											<ResetPassword/>
-										</Route>
-										<Route path="/signup">
-											<SignupForm/>
-										</Route>
-										<Route path="/verify-email/:token">
-											<VerifyEmail/>
-										</Route>
-										<Route path="/settings">
-											<Settings/>
-										</Route>
-										<Route path="*">
-											<NotFound/>
-										</Route>
-									</Switch>
+									<Responsive {...Responsive.onlyMobile}>
+										<MobileMenu>
+											<NavBarChildren>
+												<Notifications/>
+												<Modal/>
+												<Switch>
+													<Route exact path="/">
+														<Home/>
+													</Route>
+													<Route path="/discussions">
+														<Discussions/>
+													</Route>
+													<Route path="/login">
+														<LoginForm/>
+													</Route>
+													<Route path="/post/create" >
+														<CreatePost/>
+													</Route>
+													<Route exact path="/post/:id" >
+														<Post/>
+													</Route>
+													<Route path="/proposals" >
+														<Proposals/>
+													</Route>
+													<Route path="/request-reset-password">
+														<RequestResetPassword/>
+													</Route>
+													<Route path="/reset-password/:token">
+														<ResetPassword/>
+													</Route>
+													<Route path="/signup">
+														<SignupForm/>
+													</Route>
+													<Route path="/verify-email/:token">
+														<VerifyEmail/>
+													</Route>
+													<Route path="/settings">
+														<Settings/>
+													</Route>
+													<Route path="*">
+														<NotFound/>
+													</Route>
+												</Switch>
+											</NavBarChildren>
+										</MobileMenu>
+									</Responsive>
+									<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+										<MenuBar/>
+										<Notifications/>
+										<Modal/>
+										<Switch>
+											<Route exact path="/">
+												<Home/>
+											</Route>
+											<Route path="/discussions">
+												<Discussions/>
+											</Route>
+											<Route path="/login">
+												<LoginForm/>
+											</Route>
+											<Route path="/post/create" >
+												<CreatePost/>
+											</Route>
+											<Route exact path="/post/:id" >
+												<Post/>
+											</Route>
+											<Route path="/proposals" >
+												<Proposals/>
+											</Route>
+											<Route path="/request-reset-password">
+												<RequestResetPassword/>
+											</Route>
+											<Route path="/reset-password/:token">
+												<ResetPassword/>
+											</Route>
+											<Route path="/signup">
+												<SignupForm/>
+											</Route>
+											<Route path="/verify-email/:token">
+												<VerifyEmail/>
+											</Route>
+											<Route path="/settings">
+												<Settings/>
+											</Route>
+											<Route path="*">
+												<NotFound/>
+											</Route>
+										</Switch>
+									</Responsive>
 								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>
