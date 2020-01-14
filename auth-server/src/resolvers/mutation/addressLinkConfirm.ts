@@ -1,4 +1,3 @@
-import { uuid } from 'uuidv4';
 import { ForbiddenError } from 'apollo-server';
 
 import Address from '../../model/address';
@@ -32,6 +31,7 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 
 	// TODO: verify signature
 	// TODO: set linked: true
+	console.log(dbAddress, signature)
 
 	return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
 };
