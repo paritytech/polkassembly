@@ -6,6 +6,7 @@
   "homepage": "http://polkassembly.io/",
   "dependencies": {
     "@polkadot/extension-dapp": "^0.14.1",
+    "@polkadot/util": "^1.8.1",
     "@substrate/ui-components": "^0.2.4",
     "@xstyled/styled-components": "^1.15.1",
     "apollo-cache": "^1.3.2",

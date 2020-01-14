@@ -1,36 +1,54 @@
 import gql from 'graphql-tag';
 
 export const MUTATION_CHANGE_NAME = gql`
-    mutation changeName($newName: String!){
-        changeName(newName: $newName){
-            message
-            token
-        }
-    }
+	mutation changeName($newName: String!){
+		changeName(newName: $newName){
+			message
+			token
+		}
+	}
 `;
 
 export const MUTATION_CHANGE_USERNAME = gql`
-    mutation changeUsername($username: String!){
-        changeUsername(username: $username){
-            message
-            token
-        }
-    }
+	mutation changeUsername($username: String!){
+		changeUsername(username: $username){
+			message
+			token
+		}
+	}
 `;
 
 export const MUTATION_CHANGE_EMAIL = gql`
-    mutation changeEmail($email: String!){
-        changeEmail(email: $email){
-            message
-            token
-        }
-    }
+	mutation changeEmail($email: String!){
+		changeEmail(email: $email){
+			message
+			token
+		}
+	}
 `;
 
 export const MUTATION_CHANGE_PASSWORD = gql`
-    mutation changePassword($oldPassword: String!, $newPassword: String!){
-        changePassword(oldPassword: $oldPassword, newPassword: $newPassword){
-            message
-        }
-    }
+	mutation changePassword($oldPassword: String!, $newPassword: String!){
+		changePassword(oldPassword: $oldPassword, newPassword: $newPassword){
+			message
+		}
+	}
+`;
+
+export const ADDRESS_LINK_START = gql`
+	mutation addressLinkStart($address: String!, $name: String!, $source: String!){
+		addressLinkStart(address: $address, name: $name, source: $source) {
+			sign_message
+			message
+			address_id
+		}
+	}
+`;
+
+export const ADDRESS_LINK_CONFIRM = gql`
+	mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
+    	addressLinkConfirm(address_id: $address_id, signature: $signature) {
+			message
+		}
+	}
 `;

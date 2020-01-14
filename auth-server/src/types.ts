@@ -78,4 +78,5 @@ export interface Subscription {
 
 export interface AddressLinkStartType extends MessageType {
     address_id: number
+    sign_message: string
 }

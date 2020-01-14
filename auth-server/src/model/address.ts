@@ -9,7 +9,8 @@ export default class Address extends Model {
 	user_id!: number
 	name: string
 	source: string
-	message: string
+	sign_message: string
+	signature: string
 	linked!: boolean
 
 	static get tableName () {
@@ -26,7 +27,8 @@ export default class Address extends Model {
 			user_id: this.user_id,
 			name: this.name,
 			source: this.source,
-			message: this.message, // message which will be signed for proving address
+			sign_message: this.sign_message, // message which will be signed for proving address
+			signature: this.signature,
 			linked: this.linked
 		};
 	}
@@ -41,7 +43,8 @@ export default class Address extends Model {
 				user_id: { type: 'integer' },
 				name: { type: 'string' },
 				source: { type: 'string' },
-				message: { type: 'string' },
+				sign_message: { type: 'string' },
+				signature: { type: 'signature' },
 				linked: { type: 'boolean' }
 			}
 		};

@@ -1,6 +1,6 @@
 export default `
     type AddressLinkType {
-        signMessage: String
+        sign_message: String
         message: String
         address_id: Int
     }

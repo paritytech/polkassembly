@@ -19,15 +19,15 @@ export default async (parent, { address, name, source }: argsType, ctx: Context)
 
 	const dbAddress = await Address
 		.query()
-		.allowInsert('[address, user_id, name, source]')
+		.allowInsert('[address, user_id, name, source, sign_message, linked]')
 		.insert({
 			address,
 			user_id: user.id,
 			name,
 			source,
-			message: uuid(),
+			sign_message: uuid(),
 			linked: false
 		});
 
-	return { message: messages.ADDRESS_LINKING_STARTED, address_id: dbAddress.id };
+	return { message: messages.ADDRESS_LINKING_STARTED, sign_message: dbAddress.sign_message, address_id: dbAddress.id };
 };
