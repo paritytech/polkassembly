@@ -1,4 +1,6 @@
 import { ForbiddenError } from 'apollo-server';
+import keyring from '@polkadot/ui-keyring';
+import { naclVerify, schnorrkelVerify } from '@polkadot/util-crypto';
 
 import Address from '../../model/address';
 import AuthService from '../../services/auth';
@@ -8,7 +10,7 @@ import messages from '../../utils/messages';
 
 interface argsType {
 	address_id: number
-	signature: String
+	signature: string
 }
 
 export default async (parent, { address_id, signature }: argsType, ctx: Context): Promise<MessageType>  => {
@@ -29,9 +31,20 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 		throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
 	}
 
-	// TODO: verify signature
-	// TODO: set linked: true
-	console.log(dbAddress, signature)
+	await Address
+		.query()
+		.patch({
+			signature: signature,
+			linked: true
+		})
+		.findById(address_id);
+
+	const publicKey = keyring.decodeAddress(dbAddress.address || '');
+
+	const isValidEd = naclVerify(dbAddress.sign_message, signature, publicKey);
+	const isValidSr = schnorrkelVerify(dbAddress.sign_message, signature, publicKey);
+
+	console.log(isValidEd, isValidSr);
 
 	return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
 };

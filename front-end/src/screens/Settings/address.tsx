@@ -50,6 +50,8 @@ const Address = (): JSX.Element => {
 				}
 			});
 
+			console.log(addressLinkStartResult);
+
 			if (!addressLinkStartResult || !addressLinkStartResult.data || !addressLinkStartResult.data.addressLinkStart) {
 				return console.error('Address link start mutaion failed');
 			}
@@ -75,7 +77,7 @@ const Address = (): JSX.Element => {
 		} catch (error) {
 			queueNotification({
 				header: 'Failed!',
-				message: e.message,
+				message: error.message,
 				status: NotificationStatus.ERROR
 			});
 		}

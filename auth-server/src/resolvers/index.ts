@@ -1,3 +1,5 @@
+import addressLinkConfirm from './mutation/addressLinkConfirm';
+import addressLinkStart from './mutation/addressLinkStart';
 import changeUsername from './mutation/changeUsername';
 import changeEmail from './mutation/changeEmail';
 import changePassword from './mutation/changePassword';
@@ -23,6 +25,8 @@ export default {
 		token
 	},
 	Mutation: {
+		addressLinkConfirm,
+		addressLinkStart,
 		login,
 		logout,
 		signup,
