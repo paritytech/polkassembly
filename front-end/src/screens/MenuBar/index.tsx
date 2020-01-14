@@ -1,21 +1,22 @@
 import React from 'react';
-import { useContext, useEffect } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-/* import MobileMenu, { NavBarChildren } from './MobileMenu'; */
+import MobileMenu, { NavBarChildren } from './MobileMenu';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
 import { logout } from '../../services/auth.service';
 
 interface Props {
+	children?: ReactNode,
 	className?: string,
 	visible?: boolean
 }
 
-const MenuBar = ({ className } : Props): JSX.Element => {
+const MenuBar = ({ children, className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { history } = useRouter();
@@ -40,11 +41,11 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 	return (
 		<>
-			{/* <Responsive {...Responsive.onlyMobile}>
+			<Responsive {...Responsive.onlyMobile}>
 				<MobileMenu>
-					<NavBarChildren></NavBarChildren>
+					<NavBarChildren>{children}</NavBarChildren>
 				</MobileMenu>
-			</Responsive> */}
+			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
@@ -67,6 +68,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						}
 					</Menu.Menu>
 				</Menu>
+				<NavBarChildren>{children}</NavBarChildren>
 			</Responsive>
 		</>
 	);
