@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Menu, Icon, Sidebar } from 'semantic-ui-react';
+import { Container, Menu, Icon, Sidebar, Sticky } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -22,16 +22,18 @@ const MobileMenu = ({ children, className }:Props) => {
 	const [rightVisible, setRightVisible] = useState(false);
 
 	const handleLeftToggle = () => {
-		setLeftVisible(true);
+		leftVisible ? setLeftVisible(false) : setLeftVisible(true);
+		rightVisible ? setRightVisible(false) : setRightVisible(false);
 	};
 
 	const handleRightToggle = () => {
-		setRightVisible(true);
+		rightVisible ? setRightVisible(false) : setRightVisible(true);
+		leftVisible ? setLeftVisible(false) : setLeftVisible(false);
 	};
 
 	const handleClose = () => {
-		if (leftVisible) setLeftVisible(false);
-		if (rightVisible) setRightVisible(false);
+		setLeftVisible(false);
+		setRightVisible(false);
 	};
 
 	const currentUser = useContext(UserDetailsContext);
@@ -54,60 +56,64 @@ const MobileMenu = ({ children, className }:Props) => {
 	};
 
 	return (
-		<Sidebar.Pushable className={className}>
-			<Sidebar
-				as={Menu}
-				animation="overlay"
-				direction='left'
-				icon="labeled"
-				inverted
-				vertical
-				visible={leftVisible}
-			>
-				<Menu.Item as={Link} to="/discussions"><Icon name="comments" />Discussions</Menu.Item>
-				<Menu.Item as={Link} to="/proposals"><Icon name="file alternate" />Proposals</Menu.Item>
-			</Sidebar>
-			<Sidebar
-				as={Menu}
-				animation="overlay"
-				direction='right'
-				icon="labeled"
-				inverted
-				vertical
-				visible={rightVisible}
-			>
-				{username
-					?
-					<>
-						<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
-						<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
-					</>
-					:
-					<>
-						<Menu.Item as={Link} to="/login">Login</Menu.Item >
-						<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
-					</>
-				}
-			</Sidebar>
-			<Sidebar.Pusher
-				dimmed={leftVisible || rightVisible}
-				onClick={handleClose}
-				style={{ minHeight: '100vh' }}
-			>
+		<>
+			<Sticky className={className}>
 				<Menu fixed="top" inverted widths={3} id='menubar'>
 					<Menu.Item onClick={handleLeftToggle} id='leftmenu'>
 						<Icon name="sidebar" />
 					</Menu.Item>
-					<Menu.Item as={Link} to="/" id='title'>
+					<Menu.Item onClick={handleClose} as={Link} to="/" id='title'>
 						Polkassembly
 					</Menu.Item>
 					<Menu.Item onClick={handleRightToggle} id='rightmenu'>
 						<Icon name="user" />
 					</Menu.Item>
 				</Menu>
-				{children}
-			</Sidebar.Pusher>
-		</Sidebar.Pushable>
+			</Sticky>
+			<Sidebar.Pushable className={className}>
+				<Sidebar
+					as={Menu}
+					animation="overlay"
+					direction='left'
+					icon="labeled"
+					inverted
+					vertical
+					visible={leftVisible}
+				>
+					<Menu.Item as={Link} to="/discussions"><Icon name="comments" />Discussions</Menu.Item>
+					<Menu.Item as={Link} to="/proposals"><Icon name="file alternate" />Proposals</Menu.Item>
+				</Sidebar>
+				<Sidebar
+					as={Menu}
+					animation="overlay"
+					direction='right'
+					icon="labeled"
+					inverted
+					vertical
+					visible={rightVisible}
+				>
+					{username
+						?
+						<>
+							<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
+							<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
+						</>
+						:
+						<>
+							<Menu.Item as={Link} to="/login">Login</Menu.Item >
+							<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
+						</>
+					}
+				</Sidebar>
+				<Sidebar.Pusher
+					dimmed={leftVisible || rightVisible}
+					onClick={handleClose}
+					style={{ minHeight: '100vh' }}
+				>
+					{children}
+				</Sidebar.Pusher>
+			</Sidebar.Pushable>
+		</>
 	);
 };
 
@@ -117,18 +123,29 @@ export default styled(MobileMenu)`
 		font-weight: 500;
 		letter-spacing: 1.1;
 		min-height: 5rem;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-bottom-color: grey_primary;
 
 		#title {
 			text-transform: uppercase;
 			text-align: center;
 			margin: auto auto;
 			border-radius: 0.8rem!important;
+			&:active, &:hover {
+				background: none;
+				color: white;
+			}
 		}
 
 		#leftmenu, #rightmenu {
 			position: fixed;
 			max-width: 2.4rem;
 			font-size: 1.8rem;
+			&:active, &:hover {
+				background: none;
+				color: white;
+			}
 		}
 
 		.item {
@@ -147,7 +164,7 @@ export default styled(MobileMenu)`
 
 	.ui.left.sidebar, .ui.right.sidebar {
 		width: 260px;
-		padding-top: 2rem;
+		padding-top: 6rem;
 		border-radius: 0.8rem!important;
 		.item {
 			margin-left: 1rem;
@@ -192,5 +209,9 @@ export default styled(MobileMenu)`
 		#rightmenu {
 			right: 2rem;
 		}
+	}
+	
+	.ui.sticky {
+		position: fixed!important;
 	}
 `;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Responsive } from 'semantic-ui-react';
 import { ThemeProvider } from '@xstyled/styled-components';
 
 import Apollo from './components/Apollo';
@@ -15,7 +14,6 @@ import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
-import MobileMenu, { NavBarChildren } from './screens/MenuBar/MobileMenu';
 import NotFound from './screens/NotFound';
 import Post from './screens/Post';
 import Proposals from './screens/Proposals';
