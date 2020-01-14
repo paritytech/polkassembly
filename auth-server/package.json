@@ -26,10 +26,12 @@
   },
   "homepage": "https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/auth-webhooks/passport-js#readme",
   "dependencies": {
+    "@polkadot/api": "^0.100.1",
     "@polkadot/keyring": "^1.8.1",
     "@polkadot/types": "^0.100.1",
     "@polkadot/ui-keyring": "^0.47.1",
     "@polkadot/ui-settings": "^0.47.1",
+    "@polkadot/util": "^1.8.1",
     "@polkadot/util-crypto": "^1.8.1",
     "@sendgrid/mail": "^6.4.0",
     "@types/mocha": "^5.2.7",

@@ -1,5 +1,5 @@
 import { ForbiddenError } from 'apollo-server';
-import keyring from '@polkadot/ui-keyring';
+import { Keyring } from '@polkadot/api';
 import { naclVerify, schnorrkelVerify } from '@polkadot/util-crypto';
 
 import Address from '../../model/address';
@@ -12,6 +12,8 @@ interface argsType {
 	address_id: number
 	signature: string
 }
+
+const keyring = new Keyring({ type: 'sr25519' });
 
 export default async (parent, { address_id, signature }: argsType, ctx: Context): Promise<MessageType>  => {
 	const token = getTokenFromReq(ctx.req);
@@ -38,6 +40,9 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 			linked: true
 		})
 		.findById(address_id);
+
+	console.log(dbAddress.address);
+	console.log(dbAddress.sign_message, signature);
 
 	const publicKey = keyring.decodeAddress(dbAddress.address || '');
 

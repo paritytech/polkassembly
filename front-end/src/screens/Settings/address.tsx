@@ -75,6 +75,7 @@ const Address = (): JSX.Element => {
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
+			console.log(error);
 			queueNotification({
 				header: 'Failed!',
 				message: error.message,
