@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import moment from 'moment';
+import * as moment from 'moment';
 import { uuid } from 'uuidv4';
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
