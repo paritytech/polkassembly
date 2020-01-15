@@ -138,7 +138,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 	const msg = {
 		to: undoToken.email,
 		from: FROM,
-		subject: 'Your Email was changed at polkassembly',
+		subject: 'Your Polkassembly email was changed',
 		text,
 		html: text
 	};
