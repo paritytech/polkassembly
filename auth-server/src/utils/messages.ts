@@ -1,4 +1,5 @@
 export default {
+	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
 	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
 	ADDRESS_LINKING_SUCCESSFUL: 'Address is successfully linked to your account.',
 	ADDRESS_NOT_FOUND: 'Address not found',

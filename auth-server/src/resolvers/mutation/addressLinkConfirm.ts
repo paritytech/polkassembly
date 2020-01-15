@@ -45,7 +45,9 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 				linked: true
 			})
 			.findById(address_id);
-	}
 
-	return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
+		return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
+	} else {
+		return { message: messages.ADDRESS_LINKING_FAILED };
+	}
 };
