@@ -11,7 +11,7 @@ export const theme = {
 		white: '#FFF'
 	},
 	fontSizes: {
-		input_text: '1.3rem',
+		input_text_size: '1.3rem',
 		lg: '2.1rem',
 		md: '1.5rem',
 		sm: '1.2rem',
