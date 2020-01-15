@@ -28,8 +28,9 @@
       "no-trailing-spaces": ["warn"],
       "no-unused-vars": "off",
       "object-curly-spacing": ["error", "always"],
+      "no-extra-parens": ["error", "all", { "returnAssign": false }],
       "quotes": ["error", "single",  { "avoidEscape": true }],
       "semi": [2, "always"],
-      "switch-colon-spacing": ["error", {"after": true, "before": false}]  
+      "switch-colon-spacing": ["error", {"after": true, "before": false}]
   }
 }

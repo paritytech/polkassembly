@@ -23,7 +23,7 @@ export const proposalAlreadyExists = async (onchain_proposal_id: number): Promis
 		});
 
 		return client.request(getProposalQuery, { onchain_proposal_id })
-			.then(data => !!(data?.onchain_proposals?.length))
+			.then(data => !!data?.onchain_proposals?.length)
 			.catch(err => {
 				err.response?.errors && console.log('GraphQL response errors',err.response.errors);
 				err.response?.data && console.log('Response data if available',err.response.data);
