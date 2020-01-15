@@ -18,7 +18,15 @@ export const GlobalStyle = createGlobalStyle`
         color: #555252;
     }
 
+    pre {
+        display: inline-block;
+        max-width: 100%;
+        white-space: pre-wrap;
+    }
+
     code {
+        display: inline-block;
+        max-width: 100%;
         font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
     }
