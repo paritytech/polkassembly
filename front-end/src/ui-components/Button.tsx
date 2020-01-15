@@ -58,7 +58,7 @@ export default styled(Button)`
 			border-color: grey_secondary;
 			border-width: 0.1rem;
 			&:hover, &:focus {
-				color: text;
+				color: black_text;
 				background-color: grey_light;
 				border-style: solid;
 				border-color: grey_primary;

@@ -57,7 +57,7 @@ const Post = ( { className, data, refetch }: Props ) => {
 
 export default styled(Post)`
 	.post_info {
-		color: text;
+		color: black_text;
 		font-size: sm;
 		padding-bottom: 2rem;
 		margin-bottom: 2rem;
@@ -85,7 +85,7 @@ export default styled(Post)`
 	}
 
 	.post_content {
-		color: text;
+		color: black_text;
 		font-family: 'Roboto';
 		font-size: md;
 		line-height: 150%;
@@ -167,7 +167,7 @@ export default styled(Post)`
 			font-size: sm;
 			background-color: rgba(0, 0, 0, 0.04);
 			border-radius: 3px;
-			color: text;
+			color: black_text;
 			&::before, &::after {
 			  letter-spacing: -0.2em;
 			}

@@ -41,7 +41,7 @@ const StyledForm = styled(SUIForm)`
     &.ui.form {
         .field {
             > label {
-                font-size: 1.3rem;
+                font-size: input_text_size;
                 font-weight: 500;
                 color: black_primary !important;
                 margin-bottom: 0.6rem;
@@ -70,7 +70,7 @@ const StyledForm = styled(SUIForm)`
             &:focus {
                 font-family: 'Roboto';
                 font-size: 1.3rem;
-                color: text;
+                color: black_text;
                 border-color: grey_primary;
                 border-radius: 0rem;
             }
@@ -80,7 +80,7 @@ const StyledForm = styled(SUIForm)`
         }
 
         input::selection, textarea::selection {
-            color: text;
+            color: black_text;
             background-color: grey_light;
         }
         
