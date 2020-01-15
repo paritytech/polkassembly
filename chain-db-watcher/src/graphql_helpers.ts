@@ -11,7 +11,7 @@ const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
  * Tell if there is already a proposal in the DB matching the
  * onchain proposal id passed as argument
  *
- * @param onchain_proposal_id the prisma db id for the proposal
+ * @param onchain_proposal_id the proposal id that is on chain (not the Prisma db id)
  */
 export const proposalAlreadyExists = async (onchain_proposal_id: number): Promise<boolean> => {
 
@@ -40,19 +40,20 @@ export const proposalAlreadyExists = async (onchain_proposal_id: number): Promis
  * Creates a generic post and the linked proposal in hasura discussion DB
  *
  * @param proposer address of the proposer of the proposal, encoded with the network prefix
- * @param onchainId the onchain proposal id
+ * @param onchain_proposal_id the proposal id that is on chain (not the Prisma db id)
  */
 
-export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: string, onchainId: number}) => {
+export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {proposer: string, onchain_proposal_id: number}) => {
+	const DEMOCRACY_TOPIC_ID = 1;
 	const token = await getToken();
 
 	const proposalAndPostVariables = {
 		'author_id': process.env.BOT_PROPOSAL_USER_ID,
-		'onchain_proposal_id': onchainId,
+		'onchain_proposal_id': onchain_proposal_id,
 		'content': 'Post not yet edited by the proposal author',
 		'proposer_address': proposer,
-		'title': `#${onchainId} - On chain proposal`,
-		'topic_id': 1, // Democracy
+		'title': `#${onchain_proposal_id} - On chain proposal`,
+		'topic_id': DEMOCRACY_TOPIC_ID,
 		'type_id': process.env.HASURA_PROPOSAL_POST_TYPE_ID
 	};
 
@@ -80,8 +81,11 @@ export const addPostAndProposal = async ({ proposer, onchainId }: {proposer: str
 	}
 };
 
-// FIXME This is probably too simple and fetches the token every single time.
-// it's ok for proposals since there are rarely more than 1 proposal per 15min.
+/**
+ * Fetched the JWT from auth server for a "proposal_bot"
+ * This is very simple, there's no caching and it fetches the token every single time.
+ * it's ok for proposals since there are rarely more than 1 proposal per 15min.
+ */
 export const getToken = async (): Promise<string> => {
 
 	const credentials = {

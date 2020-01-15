@@ -1,5 +1,3 @@
-/*****  Setup a GraphQL subscription observable  ******************************/
-
 import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import dotenv from 'dotenv';
@@ -28,12 +26,6 @@ const createSubscriptionObservable = (wsurl: string, query: any, variables?: any
 };
 
 async function main() {
-	// try{
-	// 	const token = await getToken();
-	// 	console.log('----> token', token);
-	// } catch(e){
-	// 	console.log('ooopw', e);
-	// }
 
 	if (!graphQLEndpoint) {
 		console.error('GraphQL endpoint not set in environment variables!');
@@ -43,7 +35,6 @@ async function main() {
 	const subscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
 		proposalsSubscription
-		// { id: 1 }                                              // Query variables
 	);
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
@@ -59,7 +50,7 @@ async function main() {
 				.then((alreadyExist) => {
 					if (!alreadyExist) {
 						addPostAndProposal({
-							onchainId: proposalId,
+							onchain_proposal_id: proposalId,
 							proposer
 						})
 							.then( () => console.log(`✅ Proposal ${proposalId.toString()} added to the database.`))
