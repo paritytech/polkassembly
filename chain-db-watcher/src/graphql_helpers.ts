@@ -89,8 +89,8 @@ export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {pro
 export const getToken = async (): Promise<string> => {
 
 	const credentials = {
-		username: process.env.USERNAME,
-		password: process.env.PASSWORD
+		username: process.env.PROPOSAL_BOT_USERNAME,
+		password: process.env.PROPOSAL_BOT_PASSWORD
 	};
 
 	const authServerUrl = process.env.AUTH_SERVER_URL;
@@ -100,7 +100,7 @@ export const getToken = async (): Promise<string> => {
 	}
 
 	if (!credentials.username || !credentials.password) {
-		throw new Error ('USERNAME or PASSWORD environment variables haven\'t been set for the proposal bot to login.');
+		throw new Error ('PROPOSAL_BOT_USERNAME or PROPOSAL_BOT_PASSWORD environment variables haven\'t been set for the proposal bot to login.');
 	}
 
 	try {
