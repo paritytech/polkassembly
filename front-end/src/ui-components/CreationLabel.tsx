@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 interface Props{
     className?: string
@@ -16,13 +16,13 @@ const CreationLabel = ({ className, created_at, text='posted', username } : Prop
 };
 
 export default styled(CreationLabel)`
-    color: #7E7A7A;
+    color: grey_primary;
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: sm;
     margin-bottom: 0.6rem;
         
     span {
-        color: #555252;
+        color: black_text;
         font-weight: 500;
     }
 }`;

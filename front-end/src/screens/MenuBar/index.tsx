@@ -67,7 +67,7 @@ export default styled(MenuBar)`
 		padding: 1.5rem 2rem;
 		font-family: 'Roboto Mono';
 		font-size: 1.4rem;
-		letter-spacing: 0.1rem;
+		letter-spacing: 0.15rem;
 		.item {
 			font-weight: 500;
 			padding: 0.5rem 0.5rem;
