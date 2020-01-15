@@ -23,7 +23,7 @@ export const proposalAlreadyExists = async (onchain_proposal_id: number): Promis
 		});
 
 		return client.request(getProposalQuery, { onchain_proposal_id })
-			.then(data => !!data?.onchain_proposals?.length)
+			.then(data => !!(data?.onchain_proposals?.length))
 			.catch(err => {
 				err.response?.errors && console.log('GraphQL response errors',err.response.errors);
 				err.response?.data && console.log('Response data if available',err.response.data);
@@ -44,7 +44,10 @@ export const proposalAlreadyExists = async (onchain_proposal_id: number): Promis
  */
 
 export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {proposer: string, onchain_proposal_id: number}) => {
-	const DEMOCRACY_TOPIC_ID = 1;
+	const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
+
+	if (!democracyTopicId) throw new Error ('Please specify an environment variable for the DEMOCRACY_TOPIC_ID.');
+
 	const token = await getToken();
 
 	const proposalAndPostVariables = {
@@ -53,7 +56,7 @@ export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {pro
 		'content': 'Post not yet edited by the proposal author',
 		'proposer_address': proposer,
 		'title': `#${onchain_proposal_id} - On chain proposal`,
-		'topic_id': DEMOCRACY_TOPIC_ID,
+		'topic_id': democracyTopicId,
 		'type_id': process.env.HASURA_PROPOSAL_POST_TYPE_ID
 	};
 
@@ -63,7 +66,7 @@ export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {pro
 	try {
 		const client = new GraphQLClient(graphqlServerUrl, {
 			headers: {
-				'Authorization': 'Bearer ' + token
+				'Authorization': `Bearer ${token}`
 			}
 		});
 

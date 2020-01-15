@@ -11,6 +11,7 @@ AUTH_SERVER_URL="http://localhost:8010/auth/graphql/"
 CHAIN_DB_GRAPHQL_URL="http://localhost:4466/"
 HASURA_PROPOSAL_POST_TYPE_ID=2
 BOT_PROPOSAL_USER_ID=6
+DEMOCRACY_TOPIC_ID=1
 ```
 ## Run
 - `yarn`
