@@ -16,9 +16,17 @@ export default styled(Button)`
 		border-radius: button_radius;
 		border: none;
 		padding: 0.8rem 1.6rem;
-		.small {
+		&.ui.tiny.button {
 			font-size: sm;
 			padding: 0.6rem 1.2rem;
+		}
+		&.ui.small.button {
+			font-size: md;
+			padding: 0.6rem 1.2rem;
+		}
+		&.ui.medium.button {
+			font-size: md;
+			padding: 0.8rem 1.6rem;
 		}
 		&.ui.primary.button {
 			background-color: red_primary;
@@ -45,11 +53,12 @@ export default styled(Button)`
 		}
 		&.ui.secondary.button {
 			background-color: white;
-			color: text;
+			color: grey_primary;
 			border-style: solid;
 			border-color: grey_secondary;
 			border-width: 0.1rem;
 			&:hover, &:focus {
+				color: text;
 				background-color: grey_light;
 				border-style: solid;
 				border-color: grey_primary;
@@ -76,6 +85,9 @@ export default styled(Button)`
 			font-size: sm;
 			border: none;
 			padding: 0.7rem 0.7rem;
+			text-transform: none;
+			letter-spacing: 0rem;
+			border-radius: 0.2rem;
 			&:hover{
 				background-color: grey_light;
 				border: none;
@@ -85,11 +97,13 @@ export default styled(Button)`
 			opacity: 1;
 		}
 		&.ui.social.negative.button {
-				background-color: white;
-				color: red_primary;
-				font-size: sm;
-				border: none;
-				padding: 0.7rem 0.7rem;
+			background-color: white;
+			color: red_primary;
+			font-size: sm;
+			border: none;
+			padding: 0.7rem 0.7rem;
+			text-transform: none;
+			letter-spacing: 0rem;
 			&:hover {
 				background-color: red_light;
 				border: none;

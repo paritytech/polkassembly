@@ -14,7 +14,8 @@ export const theme = {
 		input_text: '1.3rem',
 		lg: '2.1rem',
 		md: '1.5rem',
-		sm: '1.2rem'
+		sm: '1.2rem',
+		xl: '3rem'
 	},
 	radii: {
 		button_radius: '0.3rem'

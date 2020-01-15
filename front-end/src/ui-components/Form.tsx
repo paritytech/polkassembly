@@ -43,6 +43,7 @@ const StyledForm = styled(SUIForm)`
             > label {
                 font-size: 1.3rem;
                 font-weight: 500;
+                color: black_primary !important;
                 margin-bottom: 0.6rem;
             }
         }

@@ -1,7 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
 import { Container, Grid } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
@@ -57,33 +57,37 @@ const Post = ( { className, data, refetch }: Props ) => {
 
 export default styled(Post)`
 	.post_info {
-		color: #555;
-		font-size: 1.2rem;
+		color: text;
+		font-size: sm;
 		padding-bottom: 2rem;
 		margin-bottom: 2rem;
-		border-bottom: 1px solid #EEE;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-bottom-color: grey_light;
 	}
 
 	.PostContent {
-		background-color: #FFF;
-		padding: 2rem 3rem 2rem 3rem;
-		border: 1px solid #EEE;
+		background-color: white;
+		padding: 2rem 3rem 4rem 3rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
 	}
 
 	.post_tags {
-		margin-bottom: 1.5rem;
+		margin-bottom: 2.5rem;
 	}
 
 	h3 {
 		font-family: 'Roboto';
-		font-size: 2.4rem;
+		font-size: xl;
 		margin-bottom: 0.4rem;
 	}
 
 	.post_content {
-		color: #555;
+		color: text;
 		font-family: 'Roboto';
-		font-size: 1.45rem;
+		font-size: md;
 		line-height: 150%;
 		margin-bottom: 2rem;
 
@@ -108,16 +112,16 @@ export default styled(Post)`
 		}
 
 		h3 {
-			font-size: 1.45rem;
+			font-size: md;
 		}
 
 		h4 {
-			font-size: 1.45rem;
+			font-size: md;
 			font-family: 'Roboto Mono';
 		}
 
 		h5, h6 {
-			font-size: 1.2rem;
+			font-size: sm;
 		}
 
 		ul, ol {
@@ -128,20 +132,21 @@ export default styled(Post)`
 		}
 
 		a {
-			color: #FF5A47;
+			color: red_primary;
 
 			&:hover {
 				text-decoration: none;
-				color: #D94C3D;
-				border-bottom: 1px solid #D94C3D;
+				color: red_secondary;
 			}
 		}
 
 		blockquote {
 			margin-left: 0;
 			padding: 0 1em;
-			color: #7E7A7A;
-			border-left: 0.25rem solid #B5AEAE;
+			color: grey_primary;
+			border-left-style: solid;
+			border-left-width: 0.25rem;
+			border-left-color: grey_primary;
 			font-size: 1.6rem;
 				& > :first-child {
 					margin-top: 0;
@@ -157,12 +162,12 @@ export default styled(Post)`
 		}
 
 		code {
-			padding: 0.2em 0 0.2em 0;
+			padding: 0.2rem 0 0.2rem 0;
 			margin: 0;
-			font-size: 1.2rem;
+			font-size: sm;
 			background-color: rgba(0, 0, 0, 0.04);
 			border-radius: 3px;
-			color: #555252;
+			color: text;
 			&::before, &::after {
 			  letter-spacing: -0.2em;
 			}
