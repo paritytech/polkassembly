@@ -14,16 +14,12 @@ const graphqlServerUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
  * @param onchain_proposal_id the prisma db id for the proposal
  */
 export const proposalAlreadyExists = async (onchain_proposal_id: number): Promise<boolean> => {
-	const token = await getToken();
 
 	if (!graphqlServerUrl) throw new Error ('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set');
-	if (!token) throw new Error ('No authorization token found for the  chain-db-watcher');
 
 	try {
 		const client = new GraphQLClient(graphqlServerUrl, {
-			headers: {
-				'Authorization': 'Bearer ' + token
-			}
+			headers: {}
 		});
 
 		return client.request(getProposalQuery, { onchain_proposal_id })

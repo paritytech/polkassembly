@@ -56,20 +56,16 @@ async function main() {
 			const { proposalId, proposer } = data.proposal.node;
 
 			proposalAlreadyExists(proposalId)
-				.then(async (alreadyExist) => {
+				.then((alreadyExist) => {
 					if (!alreadyExist) {
-						try {
-							const id = await addPostAndProposal({
-								onchainId: proposalId,
-								proposer
-							});
-							console.log(`✅ Proposal ${proposalId.toString()} added to the database. Post: http://polkassembly.io/post/${id}`);
-						} catch (error) {
-							throw new Error(`Error adding a new proposal: ${error}`);
-						}
-
+						addPostAndProposal({
+							onchainId: proposalId,
+							proposer
+						})
+							.then( () => console.log(`✅ Proposal ${proposalId.toString()} added to the database.`))
+							.catch( error => console.error(`Error adding a new proposal: ${error}`));
 					} else {
-						throw new Error(`🔴 proposal id ${proposalId.toString()} already exists in the database. Not inserted.`);
+						console.error(`🔴 proposal id ${proposalId.toString()} already exists in the database. Not inserted.`);
 					}
 				})
 				.catch(error => console.error(error));
