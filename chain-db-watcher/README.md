@@ -8,7 +8,6 @@ USERNAME=bot # username to create proposals
 PASSWORD=<create a password> # password for this bot to use for a signup.
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
 AUTH_SERVER_LOGIN_URL="http://localhost:8010/login"
-# NODE_WS_PROVIDER="ws://127.0.0.1:9944"
 CHAIN_DB_GRAPHQL_URL="http://localhost:4466/"
 HASURA_PROPOSAL_POST_TYPE_ID=2
 BOT_PROPOSAL_USER_ID=6
