@@ -1,6 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import Comments from './Comments';
 import EditableCommentContent from './EditableCommentContent';
@@ -87,21 +87,22 @@ margin-top: 3rem;
 		}
 
 		a {
-			color: #FF5A47;
+			color: red_primary;
 
 			&:hover {
 				text-decoration: none;
-				color: #D94C3D;
-				border-bottom: 1px solid #D94C3D;
+				color: red_secondary;
 			}
 		}
 
 		blockquote {
 			margin-left: 0;
 			padding: 0 1em;
-			color: #7E7A7A;
-			border-left: 0.25rem solid #B5AEAE;
-			font-size: 1.4rem;
+			color: grey_primary;
+			border-left-style: solid;
+			border-left-width: 0.25rem;
+			border-left-color: grey_primary;
+			font-size: md;
 				& > :first-child {
 					margin-top: 0;
 				}
@@ -121,7 +122,7 @@ margin-top: 3rem;
 			font-size: 1.2rem;
 			background-color: rgba(0, 0, 0, 0.04);
 			border-radius: 3px;
-			color: #555252;
+			color: black_text;
 			&::before, &::after {
 			  letter-spacing: -0.2em;
 			}
