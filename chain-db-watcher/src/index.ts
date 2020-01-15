@@ -72,7 +72,7 @@ async function main() {
 						throw new Error(`🔴 proposal id ${proposalId.toString()} already exists in the database. Not inserted.`);
 					}
 				})
-				.catch(e => { throw new Error(e); });
+				.catch(error => console.error(error));
 		}
 	}, (err) => {
 		console.log('Err');
