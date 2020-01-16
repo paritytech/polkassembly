@@ -10,7 +10,7 @@ import { logout } from '../../services/auth.service';
 
 interface Props {
 	children?: ReactNode,
-	className?: 'mobilemenu'
+	className?: string
 }
 
 export const NavBarChildren = ({ children }:Props) => (
