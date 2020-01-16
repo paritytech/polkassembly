@@ -10,6 +10,7 @@ import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
+import undoEmailChangeResponse from './type/undoEmailChangeResponse';
 import userType from './type/user';
 
 import changeUsernameMutation from './mutation/changeUsername';
@@ -32,6 +33,7 @@ export default gql`
 	${messageType}
 	${subscriptionType}
 	${tokenType}
+	${undoEmailChangeResponse}
 	${userType}
 
 	type Query {

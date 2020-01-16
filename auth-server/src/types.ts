@@ -75,3 +75,7 @@ export interface PublicUser {
 export interface Subscription {
     subscribed: boolean
 }
+
+export interface UndoEmailChangeResponseType extends ChangeResponseType {
+    email: string
+}

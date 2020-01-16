@@ -415,7 +415,10 @@ export default class AuthService {
 
 		await User
 			.query()
-			.patch({ email: undoToken.email })
+			.patch({
+				email: undoToken.email,
+				email_verified: false
+			})
 			.findById(undoToken.user_id);
 
 		await UndoEmailChangeToken
@@ -425,7 +428,7 @@ export default class AuthService {
 
 		const user = await getUserFromUserId(undoToken.user_id);
 
-		return this.getSignedToken(user);
+		return { updatedToken: this.getSignedToken(user), email: user.email };
 	}
 
 	private getSignedToken({ id, name, username, email, email_verified }): string {

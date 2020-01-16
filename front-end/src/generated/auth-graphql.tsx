@@ -48,7 +48,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
-  undoEmailChange?: Maybe<ChangeResponse>,
+  undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
 };
 
@@ -149,6 +149,13 @@ export type Subscription = {
 
 export type Token = {
    __typename?: 'Token',
+  token?: Maybe<Scalars['String']>,
+};
+
+export type UndoEmailChangeResponse = {
+   __typename?: 'UndoEmailChangeResponse',
+  message?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
   token?: Maybe<Scalars['String']>,
 };
 
