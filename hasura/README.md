@@ -16,6 +16,19 @@ Copy docker-compose.yaml.example to docker-compose.yaml
 - Run the postgres and graphql-engine in docker by running:  
 `docker-compose up`
 
+### Needed rows
+
+To make sure we are all using the same ids you need to run the following SQL in the hasura SQL console:
+```sql
+insert into post_topics values  (1, 'Democracy');
+insert into post_topics values  (2, 'Council');
+insert into post_topics values  (3, 'Treasury');
+insert into post_topics values  (4, 'Technical Committee');
+
+insert into post_types values (1, 'Discussion');
+insert into post_types values (2, 'Proposal');
+```
+
 ### Migration
 
 We are using a [preview of hasura](https://github.com/hasura/graphql-engine/pull/2395#issuecomment-547378585), migration must therefore be applied manually with the `hasura-dev` cli.

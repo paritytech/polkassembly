@@ -1,0 +1,43 @@
+{
+  "name": "chain-db-watcher",
+  "version": "1.0.0",
+  "description": "Service to create porposal posts automatically in polkassembly.io db when an on-chain proposal appears",
+  "main": "index.ts",
+  "author": "Thibaut Sardan",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn tsc && ts-node ./src/index.ts",
+    "lint": "eslint \"./src/**/*.js|ts\"",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paritytech/polkassembly/chain-db-watcher.git"
+  },
+  "devDependencies": {
+    "@types/ws": "^6.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.5.4",
+    "apollo-link": "^1.2.13",
+    "apollo-link-ws": "^1.0.19",
+    "graphql": "^14.5.8",
+    "graphql-request": "^1.8.2",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.6.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "ts-node": "^8.6.1",
+    "typescript": "^3.7.4",
+    "ws": "^7.2.1"
+  }
+}

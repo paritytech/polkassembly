@@ -1,0 +1,11 @@
+- args:
+    sql: ALTER TABLE "public"."onchain_proposals" ADD COLUMN "chain_db_id" uuid
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."onchain_proposals" ALTER COLUMN "chain_db_id" DROP
+      NOT NULL
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."onchain_proposals" ADD CONSTRAINT proposals_chain_db_id_key
+      UNIQUE (chain_db_id)
+  type: run_sql

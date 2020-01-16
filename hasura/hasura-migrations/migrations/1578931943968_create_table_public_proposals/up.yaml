@@ -1,0 +1,11 @@
+- args:
+    sql: CREATE TABLE "public"."proposals"("id" serial NOT NULL, "created_at" timestamptz
+      NOT NULL DEFAULT now(), "post_id" integer NOT NULL, "chain_db_id" uuid NOT NULL,
+      PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("post_id"), UNIQUE ("chain_db_id"));
+      COMMENT ON TABLE "public"."proposals" IS E'on chain proposal created automatically
+      by chain-db-watcher';
+  type: run_sql
+- args:
+    name: proposals
+    schema: public
+  type: add_existing_table_or_view

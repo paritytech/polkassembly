@@ -4971,7 +4971,7 @@ export type LatestProposalPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username'>
+      & Pick<User, 'id' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -5552,6 +5552,7 @@ export const LatestProposalPostsDocument = gql`
     id
     title
     author {
+      id
       username
     }
     created_at
