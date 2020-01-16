@@ -1,10 +1,9 @@
 import React from 'react';
-import { ReactNode, useContext, useEffect } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Dropdown, Menu, Icon, Responsive } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Container, Dropdown, Menu, Icon, Responsive, Sidebar } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
-import MobileMenu, { NavBarChildren } from './MobileMenu';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/auth-graphql';
 import { useRouter } from '../../hooks';
@@ -15,6 +14,10 @@ interface Props {
 	className?: string,
 	visible?: boolean
 }
+
+const NavBarChildren = ({ children }:Props) => (
+	<Container>{children}</Container>
+);
 
 const MenuBar = ({ children, className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -36,21 +39,99 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 		logoutMutation();
 	};
 
+	// Menu Items
+	const contentItems = [
+		{ content:'Discussions', key:'discussions', to:'/discussions' },
+		{ content: 'Proposals', key:'proposals', to:'/proposals' }
+	];
+
+	const loggedOutItems = [
+		{ content:'Login', key:'login', to:'/login' },
+		{ content: 'Sign-up', key:'signup', to:'/signup' }
+	];
+
 	const userMenu = <><Icon name='user circle' inverted />{username}</>;
 	const caretIcon = <Icon name='caret down' inverted />;
+
+	// Mobile Sidebar
+	const [leftVisible, setLeftVisible] = useState(false);
+	const [rightVisible, setRightVisible] = useState(false);
+
+	const handleLeftToggle = () => {
+		leftVisible ? setLeftVisible(false) : setLeftVisible(true);
+		rightVisible ? setRightVisible(false) : setRightVisible(false);
+	};
+
+	const handleRightToggle = () => {
+		rightVisible ? setRightVisible(false) : setRightVisible(true);
+		leftVisible ? setLeftVisible(false) : setLeftVisible(false);
+	};
+
+	const handleClose = () => {
+		setLeftVisible(false);
+		setRightVisible(false);
+	};
 
 	return (
 		<>
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-				<MobileMenu>
-					<NavBarChildren>{children}</NavBarChildren>
-				</MobileMenu>
+				<Menu className={className} inverted widths={3} id='menubar'>
+					<Menu.Item onClick={handleLeftToggle} id='leftmenu'>
+						<Icon name="sidebar" />
+					</Menu.Item>
+					<Menu.Item onClick={handleClose} as={Link} to="/" id='title'>
+						Polkassembly
+					</Menu.Item>
+					<Menu.Item onClick={handleRightToggle} id='rightmenu'>
+						<Icon name="user" />
+					</Menu.Item>
+				</Menu>
+				<Sidebar.Pushable className={className}>
+					<Sidebar
+						as={Menu}
+						animation="overlay"
+						direction='left'
+						icon="labeled"
+						inverted
+						vertical
+						visible={leftVisible}
+					>
+						{contentItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
+					</Sidebar>
+					<Sidebar
+						as={Menu}
+						animation="overlay"
+						direction='right'
+						icon="labeled"
+						inverted
+						vertical
+						visible={rightVisible}
+					>
+						{username
+							?
+							<>
+								<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
+								<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
+							</>
+							:
+							<>
+								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
+							</>
+						}
+					</Sidebar>
+					<Sidebar.Pusher
+						dimmed={leftVisible || rightVisible}
+						onClick={handleClose}
+						style={{ minHeight: '100vH' }}
+					>
+						<NavBarChildren>{children}</NavBarChildren>
+					</Sidebar.Pusher>
+				</Sidebar.Pushable>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
-					<Menu.Item as={Link} to="/discussions" id='title'>Discussions</Menu.Item>
-					<Menu.Item as={Link} to="/proposals" id='title'>Proposals</Menu.Item>
+					{contentItems.map(item => <Menu.Item as={Link} id='title' key={item.key} {...item} />)}
 					<Menu.Menu position="right">
 						{username
 							? <>
@@ -62,8 +143,7 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 								</Dropdown>
 							</>
 							: <>
-								<Menu.Item as={Link} to="/login">Login</Menu.Item >
-								<Menu.Item as={Link} to="/signup">Sign-up</Menu.Item >
+								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
 							</>
 						}
 					</Menu.Menu>
@@ -75,39 +155,119 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 };
 
 export default styled(MenuBar)`
-	&.ui.menu {
-		border-radius: 0;
-		padding: 1.5rem 2rem;
-		font-family: 'Roboto Mono';
-		font-size: 1.4rem;
-		letter-spacing: 0.1rem;
-		.item {
+	@media only screen and (max-width: 992px) {
+		&.ui.menu, .ui.inverted.menu {
+			font-family: 'Roboto Mono';
 			font-weight: 500;
-			padding: 0.5rem 0.5rem;
-			margin: 0 1.5rem;
-			color: #B5AEAE;
+			letter-spacing: 1.1;
+			min-height: 5rem;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+			border-radius: 0rem;
+			margin: 0rem!important;
+
+			#title {
+				text-transform: uppercase;
+				text-align: center;
+				margin: auto auto;
+				border-radius: 0.8rem!important;
+				&:active, &:hover {
+					background: none;
+					color: white;
+				}
+			}
+	
+			#leftmenu, #rightmenu {
+				position: absolute;
+				max-width: 2.4rem;
+				font-size: 1.8rem;
+				&:active, &:hover {
+					background: none;
+					color: white;
+				}
+			}
+	
+			.item {
+				font-size: 1.45rem;
+				color: grey_secondary !important;
+				display: inline-block;
+				&:before {
+					width: 0rem;
+				}
+			}
+	
+			a.item:active {
+				color: #FFF!important
+			}
+
+			#leftmenu {
+				left: 2rem;
+			}
+	
+			#rightmenu {
+				right: 2rem;
+			}
+		}
+
+		.ui.left.sidebar, .ui.right.sidebar {
+			width: 260px;
+			padding-top: 1rem;
+			border-radius: 0rem!important;
+			.item {
+				margin-left: 1rem;
+				border-radius: 0.8rem!important;
+			}
+		}
+
+		.ui.labeled.icon.menu {
+			text-align: left;
+			i {
+				text-align: center!important;
+				padding-right: 2rem;
+			}
+		}
+	
+		.ui.labeled.icon.menu .item>.icon:not(.dropdown) {
+			font-size: 1.6rem!important;
+			display: inline-block;
+			margin: 0 2rem auto 0!important;
+		}
+	
+		.ui.right.sidebar .item {
+			float: left;
+			clear: both;
 		}
 	}
 
-	@media only screen and (max-width: 576px) {
+	@media only screen and (min-width: 992px) {
 		&.ui.menu {
-			padding: 1.5rem 1rem;
+			font-family: 'Roboto Mono';
+			border-radius: 0;
+			padding: 1.5rem 2rem;
+			font-size: md;
+			letter-spacing: 0.15rem;
 			.item {
+				font-weight: 500;
 				padding: 0.5rem 0.5rem;
-				margin: 0rem 0rem;
+				margin: 0 1.5rem;
+				color: grey_secondary;
+				&:hover {
+					color: white;
+				}
+			}
+		}
+
+		#title {
+			text-transform: uppercase;
+			color: grey_secondary;
+			&:hover {
+				color: white;
 			}
 		}
 	}
 
-	.ui.inverted.menu {
-		background-color: #282828;
-	}
-
 	&.ui.inverted.menu a.item:hover {
 		border-radius: 0.5rem;
-	}
-
-	#title {
-		text-transform: uppercase;
 	}
 `;
