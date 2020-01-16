@@ -288,7 +288,7 @@ export default class AuthService {
 			const now = moment();
 			const last = moment(existingUndoToken.created_at);
 
-			const hours = moment.duration(last.diff(now)).asHours();
+			const hours = moment.duration(now.diff(last)).asHours();
 
 			if (hours < 48) {
 				throw new ForbiddenError(messages.EMAIL_CHANGE_NOT_ALLOWED_YET);
