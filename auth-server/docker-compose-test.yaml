@@ -2,14 +2,11 @@ version: "3.6"
 services:
   postgres-test:
     image: postgres
-    restart: always
     ports:
-      - target: 5433
-        published: 5433
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      PGPORT: 5433
       POSTGRES_DB: governance-auth-test
   auth-test:
     image: paritytech/polkassembly-auth-test

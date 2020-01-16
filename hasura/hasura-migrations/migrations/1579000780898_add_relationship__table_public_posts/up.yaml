@@ -1,0 +1,13 @@
+- args:
+    name: onchain_proposal
+    table:
+      name: posts
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          id: post_id
+        remote_table:
+          name: onchain_proposals
+          schema: public
+  type: create_object_relationship
