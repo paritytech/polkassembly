@@ -65,30 +65,13 @@ const HomeContent = ({ className, data }: Props) => {
 
 export default styled(HomeContent)`
 
-	@media only screen and (max-width: 576px) {
-		h3 {
-			margin-left: 1.5rem!important;
-		}
-
-		.mainButtonContainer {
-			align-items: stretch!important;
-			margin: 0 1rem 1rem 1rem!important;
-
-			.newPostButton {
-				padding: 0.8rem 1rem;
-				border-radius: 0.5rem;
-			}
-		}
-	}
-
 	@media only screen and (max-width: 768px) {
 		h3 {
 			margin-left: 0rem;
 		}
 
 		.mainButtonContainer {
-			margin: 1rem 0;
-			margin-top: 0 1rem 1rem 1rem!important;
+			margin: 0rem;
 		}
 	}
 
@@ -99,6 +82,22 @@ export default styled(HomeContent)`
 
 		.mainButtonContainer {
 			margin-top: 1rem!important;
+		}
+	}
+
+	@media only screen and (max-width: 576px) {
+		h3 {
+			margin-left: 1.5rem!important;
+		}
+
+		.mainButtonContainer {
+			align-items: stretch!important;
+			margin: 1rem!important;
+
+			.newPostButton {
+				padding: 0.8rem 1rem;
+				border-radius: 0.5rem;
+			}
 		}
 	}
 

@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Menu, Icon, Sidebar, Sticky } from 'semantic-ui-react';
+import { Container, Menu, Icon, Sidebar } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -20,24 +20,21 @@ export const NavBarChildren = ({ children }:Props) => (
 const MobileMenu = ({ children, className }:Props) => {
 	const [leftVisible, setLeftVisible] = useState(false);
 	const [rightVisible, setRightVisible] = useState(false);
-	const [pusherheight, setPusherheight] = useState('auto');
 
 	const handleLeftToggle = () => {
 		leftVisible ? setLeftVisible(false) : setLeftVisible(true);
 		rightVisible ? setRightVisible(false) : setRightVisible(false);
-		pusherheight === '100vH' && !rightVisible ? setPusherheight('auto') : setPusherheight('100vH');
+		console.log('handleLeftToggle: leftVisible:' + { leftVisible } );
 	};
 
 	const handleRightToggle = () => {
 		rightVisible ? setRightVisible(false) : setRightVisible(true);
 		leftVisible ? setLeftVisible(false) : setLeftVisible(false);
-		pusherheight === '100vH' && !leftVisible ? setPusherheight('auto') : setPusherheight('100vH');
 	};
 
 	const handleClose = () => {
 		setLeftVisible(false);
 		setRightVisible(false);
-		setPusherheight('auto');
 	};
 
 	const currentUser = useContext(UserDetailsContext);
@@ -61,8 +58,8 @@ const MobileMenu = ({ children, className }:Props) => {
 
 	return (
 		<>
-			<Sticky className={className}>
-				<Menu fixed="top" inverted widths={3} id='menubar'>
+			<div className={className}>
+				<Menu inverted widths={3} id='menubar'>
 					<Menu.Item onClick={handleLeftToggle} id='leftmenu'>
 						<Icon name="sidebar" />
 					</Menu.Item>
@@ -73,7 +70,7 @@ const MobileMenu = ({ children, className }:Props) => {
 						<Icon name="user" />
 					</Menu.Item>
 				</Menu>
-			</Sticky>
+			</div>
 			<Sidebar.Pushable className={className}>
 				<Sidebar
 					as={Menu}
@@ -112,7 +109,7 @@ const MobileMenu = ({ children, className }:Props) => {
 				<Sidebar.Pusher
 					dimmed={leftVisible || rightVisible}
 					onClick={handleClose}
-					style={{ height: pusherheight }}
+					style={{ minHeight: '100vH' }}
 				>
 					{children}
 				</Sidebar.Pusher>
@@ -130,6 +127,7 @@ export default styled(MobileMenu)`
 		border-bottom-style: solid;
 		border-bottom-width: 1px;
 		border-bottom-color: grey_primary;
+		border-radius: 0rem;
 
 		#title {
 			text-transform: uppercase;
@@ -143,7 +141,7 @@ export default styled(MobileMenu)`
 		}
 
 		#leftmenu, #rightmenu {
-			position: fixed;
+			position: absolute;
 			max-width: 2.4rem;
 			font-size: 1.8rem;
 			&:active, &:hover {
@@ -168,8 +166,8 @@ export default styled(MobileMenu)`
 
 	.ui.left.sidebar, .ui.right.sidebar {
 		width: 260px;
-		padding-top: 6rem;
-		border-radius: 0.8rem!important;
+		padding-top: 1rem;
+		border-radius: 0rem!important;
 		.item {
 			margin-left: 1rem;
 			border-radius: 0.8rem!important;
@@ -213,9 +211,5 @@ export default styled(MobileMenu)`
 		#rightmenu {
 			right: 2rem;
 		}
-	}
-
-	.ui.sticky {
-		position: fixed!important;
 	}
 `;
