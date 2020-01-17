@@ -136,7 +136,7 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
-					{contentItems.map(item => <Menu.Item as={Link} id='title' key={item.key} {...item} />)}
+					{contentItems.map(item => <Menu.Item as={Link} className='desktop_items' key={item.key} {...item} />)}
 					<Menu.Menu position="right">
 						{username
 							? <>
@@ -148,7 +148,7 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 								</Dropdown>
 							</>
 							: <>
-								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
+								{loggedOutItems.map(item => <Menu.Item as={Link} className='desktop_items' key={item.key} {...item} />)}
 							</>
 						}
 					</Menu.Menu>
@@ -172,7 +172,7 @@ export default styled(MenuBar)`
 			border-radius: 0rem;
 			margin: 0rem!important;
 
-			#title {
+			.desktop_items, #title {
 				text-transform: uppercase;
 				text-align: center;
 				margin: auto auto;
@@ -266,11 +266,10 @@ export default styled(MenuBar)`
 			}
 		}
 
-		#title {
-			text-transform: uppercase;
-			color: grey_secondary;
-			&:hover {
-				color: white;
+		.desktop_items, #title {
+			text-transform: uppercase !important;
+			i.icon {
+				display: none;
 			}
 		}
 	}
