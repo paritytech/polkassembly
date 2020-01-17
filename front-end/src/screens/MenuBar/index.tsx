@@ -46,6 +46,11 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content: 'Sign-up', icon:'plus circle', key:'signup', to:'/signup' }
 	];
 
+	const loggedInItems = [
+		{ content:'Settings', icon:'cog', key:'settings', to:'/settings' },
+		{ content: 'Logout', icon:'sign-out', key:'signout', onClick: handleLogout, to:'/' }
+	];
+
 	const userMenu = <><Icon name='user circle' inverted />{username}</>;
 	const caretIcon = <Icon name='caret down' inverted />;
 
@@ -71,7 +76,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						Polkassembly
 					</Menu.Item>
 					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="times" />}
+						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="cancel" />}
 					</Menu.Item>
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
@@ -88,8 +93,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						{username
 							?
 							<>
-								<Menu.Item as={Link} to="/settings" onClick={handleClose}><Icon name="cog" />Settings</Menu.Item>
-								<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
+								{loggedInItems.map(item => <Menu.Item as={Link} key={item.key} {...item}/>)}
 							</>
 							:
 							<>
@@ -109,8 +113,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
 									<Dropdown.Menu>
-										<Menu.Item as={Link} to="/settings">Settings</Menu.Item>
-										<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+										{loggedInItems.map(item => <Menu.Item as={Link} key={item.key} {...item}/>)}
 									</Dropdown.Menu>
 								</Dropdown>
 							</>

@@ -66,9 +66,6 @@ const HomeContent = ({ className, data }: Props) => {
 export default styled(HomeContent)`
 
 	@media only screen and (max-width: 768px) {
-		h3 {
-			margin-left: 0rem;
-		}
 
 		.mainButtonContainer {
 			margin: 0rem;
@@ -122,6 +119,5 @@ export default styled(HomeContent)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		margin-top: 4rem;
 	}
 `;
