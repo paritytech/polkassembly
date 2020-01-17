@@ -90,32 +90,34 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 					<Sidebar
 						as={Menu}
 						animation="overlay"
-						direction='left'
+						direction='top'
 						icon="labeled"
 						inverted
+						stackable
 						vertical
 						visible={leftVisible}
 					>
-						{contentItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
+						{contentItems.map(item => <Menu.Item as={Link} key={item.key} onClick={handleClose} {...item} />)}
 					</Sidebar>
 					<Sidebar
 						as={Menu}
 						animation="overlay"
-						direction='right'
+						direction='top'
 						icon="labeled"
 						inverted
+						stackable
 						vertical
 						visible={rightVisible}
 					>
 						{username
 							?
 							<>
-								<Menu.Item as={Link} to="/settings"><Icon name="cog" />Settings</Menu.Item>
+								<Menu.Item as={Link} to="/settings" onClick={handleClose}><Icon name="cog" />Settings</Menu.Item>
 								<Menu.Item onClick={handleLogout}><Icon name="sign-out" />Logout</Menu.Item>
 							</>
 							:
 							<>
-								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} {...item} />)}
+								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} onClick={handleClose} {...item} />)}
 							</>
 						}
 					</Sidebar>
@@ -210,18 +212,20 @@ export default styled(MenuBar)`
 			}
 		}
 
-		.ui.left.sidebar, .ui.right.sidebar {
-			width: 260px;
-			padding-top: 1rem;
+		.ui.top.sidebar {
+			padding: 1rem;
 			border-radius: 0rem!important;
 			.item {
-				margin-left: 1rem;
+				float: left;
+				clear: both;
+				text-aling: left;
 				border-radius: 0.8rem!important;
 			}
 		}
 
-		.ui.labeled.icon.menu {
+		.ui.icon.menu .item {
 			text-align: left;
+			padding: 1.5rem 2rem;
 			i {
 				text-align: center!important;
 				padding-right: 2rem;
