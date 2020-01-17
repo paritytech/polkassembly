@@ -76,7 +76,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						Polkassembly
 					</Menu.Item>
 					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="cancel" />}
+						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="close" />}
 					</Menu.Item>
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
