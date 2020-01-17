@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -15,11 +15,7 @@ interface Props {
 	visible?: boolean
 }
 
-const NavBarChildren = ({ children }:Props) => (
-	<Container>{children}</Container>
-);
-
-const MenuBar = ({ children, className } : Props): JSX.Element => {
+const MenuBar = ({ className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { history } = useRouter();
@@ -54,61 +50,41 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 	const caretIcon = <Icon name='caret down' inverted />;
 
 	// Mobile Sidebar
-	const [leftVisible, setLeftVisible] = useState(false);
-	const [rightVisible, setRightVisible] = useState(false);
+	const [menuVisible, setMenuVisible] = useState(false);
+	const [pushableHeight, setPushableHeight] = useState('0rem');
 
-	const handleLeftToggle = () => {
-		leftVisible ? setLeftVisible(false) : setLeftVisible(true);
-		rightVisible ? setRightVisible(false) : setRightVisible(false);
-	};
-
-	const handleRightToggle = () => {
-		rightVisible ? setRightVisible(false) : setRightVisible(true);
-		leftVisible ? setLeftVisible(false) : setLeftVisible(false);
+	const handleToggle = () => {
+		menuVisible ? setMenuVisible(false) : setMenuVisible(true);
+		menuVisible ? setPushableHeight('0rem'): setPushableHeight('100%');
 	};
 
 	const handleClose = () => {
-		setLeftVisible(false);
-		setRightVisible(false);
+		setMenuVisible(false);
+		setPushableHeight('0rem');
 	};
 
 	return (
 		<>
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-				<Menu className={className} inverted widths={3} id='menubar'>
-					<Menu.Item onClick={handleLeftToggle} id='leftmenu'>
-						{!leftVisible ? <Icon name="sidebar" /> : <Icon name="times" />}
-					</Menu.Item>
+				<Menu className={className} inverted widths={2} id='menubar'>
 					<Menu.Item onClick={handleClose} as={Link} to="/" id='title'>
 						Polkassembly
 					</Menu.Item>
-					<Menu.Item onClick={handleRightToggle} id='rightmenu'>
-						{!rightVisible ? <Icon name="user" /> : <Icon name="times" />}
+					<Menu.Item onClick={handleToggle} id='rightmenu'>
+						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="times" />}
 					</Menu.Item>
 				</Menu>
-				<Sidebar.Pushable className={className}>
+				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
 					<Sidebar
 						as={Menu}
-						animation="overlay"
 						direction='top'
 						icon="labeled"
 						inverted
 						stackable
 						vertical
-						visible={leftVisible}
+						visible={menuVisible}
 					>
 						{contentItems.map(item => <Menu.Item as={Link} key={item.key} onClick={handleClose} {...item} />)}
-					</Sidebar>
-					<Sidebar
-						as={Menu}
-						animation="overlay"
-						direction='top'
-						icon="labeled"
-						inverted
-						stackable
-						vertical
-						visible={rightVisible}
-					>
 						{username
 							?
 							<>
@@ -121,16 +97,7 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 							</>
 						}
 					</Sidebar>
-					<SidebarPusher>
-						<NavBarChildren>{children}</NavBarChildren>
-					</SidebarPusher>
-					{/* <Sidebar.Pusher
-						dimmed={leftVisible || rightVisible}
-						onClick={handleClose}
-						style={{ minHeight: '100vH' }}
-					>
-						<NavBarChildren>{children}</NavBarChildren>
-					</Sidebar.Pusher> */}
+					<SidebarPusher />
 				</Sidebar.Pushable>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
@@ -148,76 +115,88 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 								</Dropdown>
 							</>
 							: <>
-								{loggedOutItems.map(item => <Menu.Item as={Link} className='desktop_items' key={item.key} {...item} />)}
+								{loggedOutItems.map(item => <Menu.Item as={Link} className='user_items' key={item.key} {...item} />)}
 							</>
 						}
 					</Menu.Menu>
 				</Menu>
-				<NavBarChildren>{children}</NavBarChildren>
 			</Responsive>
 		</>
 	);
 };
 
 export default styled(MenuBar)`
-	@media only screen and (max-width: 992px) {
-		&.ui.menu, .ui.inverted.menu {
-			font-family: 'Roboto Mono';
+	&.ui.menu, .ui.inverted.menu {
+		font-family: 'Roboto Mono';
+		border-radius: 0rem;
+		letter-spacing: 1.1;
+
+		.item {
+			color: grey_secondary;
 			font-weight: 500;
-			letter-spacing: 1.1;
+			&:hover {
+				color: white;
+			}
+		}
+
+		.desktop_items, #title {
+			text-transform: uppercase;
+		}
+
+		i.icon {
+			color: grey_secondary;
+		}
+	}
+
+	@media only screen and (max-width: 992px) {
+
+		&.pushable {
+			position: relative;
+		}
+
+		&.ui.menu, .ui.inverted.menu {
 			min-height: 5rem;
 			border-bottom-style: solid;
 			border-bottom-width: 1px;
 			border-bottom-color: grey_primary;
-			border-radius: 0rem;
 			margin: 0rem!important;
 
+			.desktop_items, #title, #rightmenu {
+				position: absolute;
+			}
+
 			.desktop_items, #title {
-				text-transform: uppercase;
-				text-align: center;
-				margin: auto auto;
+				text-align: left;
+				margin: auto 0;
+				left: 2rem;
+				top: 0.4rem;
 				border-radius: 0.8rem!important;
-				&:active, &:hover {
-					background: none;
-					color: white;
-				}
 			}
 	
-			#leftmenu, #rightmenu {
-				position: absolute;
-				max-width: 2.4rem;
+			#rightmenu {
+				right: 2rem;
 				font-size: 1.8rem;
-				&:active, &:hover {
-					background: none;
-					color: white;
-				}
+				max-width: 2.4rem;
 			}
 	
 			.item {
-				font-size: 1.45rem;
-				color: grey_secondary !important;
+				font-size: md;
 				display: inline-block;
 				&:before {
 					width: 0rem;
 				}
 			}
-	
-			a.item:active {
-				color: #FFF!important
-			}
 
-			#leftmenu {
-				left: 2rem;
-			}
-	
-			#rightmenu {
-				right: 2rem;
+			a.item:hover {
+				background: none;
+				color: grey_secondary;
 			}
 		}
 
 		.ui.top.sidebar {
 			padding: 1rem;
 			border-radius: 0rem!important;
+			position: relative;
 			.item {
 				float: left;
 				clear: both;
@@ -228,53 +207,38 @@ export default styled(MenuBar)`
 
 		.ui.icon.menu .item {
 			text-align: left;
-			padding: 1.5rem 2rem;
-			i {
-				text-align: center!important;
-				margin: 0 auto;
-				padding-right: 2rem;
+			padding: 1.5rem 1rem;
+			&>.icon:not(.dropdown) {
+				font-size: 1.6rem!important;
+				display: inline-block;
+				margin: 0 1.2rem auto 0!important;
 			}
-		}
-	
-		.ui.labeled.icon.menu .item>.icon:not(.dropdown) {
-			font-size: 1.6rem!important;
-			display: inline-block;
-			margin: 0 1rem auto 0!important;
-		}
-	
-		.ui.right.sidebar .item {
-			float: left;
-			clear: both;
 		}
 	}
 
 	@media only screen and (min-width: 992px) {
 		&.ui.menu {
-			font-family: 'Roboto Mono';
-			border-radius: 0;
 			padding: 1.5rem 2rem;
 			font-size: md;
-			letter-spacing: 0.15rem;
 			.item {
-				font-weight: 500;
 				padding: 0.5rem 0.5rem;
 				margin: 0 1.5rem;
-				color: grey_secondary;
-				&:hover {
-					color: white;
-				}
 			}
 		}
 
-		.desktop_items, #title {
-			text-transform: uppercase !important;
+		.desktop_items, .user_items, #title {
 			i.icon {
 				display: none;
 			}
 		}
+
+		.user_items {
+			text-transform: capitalize;
+			
+		}
 	}
 
-	&.ui.inverted.menu a.item:hover {
+	&.ui.inverted.menu a.item:hover, &.ui.inverted.menu .dropdown.item:hover {
 		border-radius: 0.5rem;
 	}
 `;

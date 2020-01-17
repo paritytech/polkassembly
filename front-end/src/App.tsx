@@ -34,49 +34,48 @@ const App = () => {
 						<ModalProvider>
 							<UserDetailsProvider>
 								<Apollo>
-									<MenuBar>
-										<GlobalStyle />
-										<Notifications/>
-										<Modal/>
-										<Switch>
-											<Route exact path="/">
-												<Home/>
-											</Route>
-											<Route path="/discussions">
-												<Discussions/>
-											</Route>
-											<Route path="/login">
-												<LoginForm/>
-											</Route>
-											<Route path="/post/create" >
-												<CreatePost/>
-											</Route>
-											<Route exact path="/post/:id" >
-												<Post/>
-											</Route>
-											<Route path="/proposals" >
-												<Proposals/>
-											</Route>
-											<Route path="/request-reset-password">
-												<RequestResetPassword/>
-											</Route>
-											<Route path="/reset-password/:token">
-												<ResetPassword/>
-											</Route>
-											<Route path="/signup">
-												<SignupForm/>
-											</Route>
-											<Route path="/verify-email/:token">
-												<VerifyEmail/>
-											</Route>
-											<Route path="/settings">
-												<Settings/>
-											</Route>
-											<Route path="*">
-												<NotFound/>
-											</Route>
-										</Switch>
-									</MenuBar>
+									<MenuBar />
+									<GlobalStyle />
+									<Notifications/>
+									<Modal/>
+									<Switch>
+										<Route exact path="/">
+											<Home/>
+										</Route>
+										<Route path="/discussions">
+											<Discussions/>
+										</Route>
+										<Route path="/login">
+											<LoginForm/>
+										</Route>
+										<Route path="/post/create" >
+											<CreatePost/>
+										</Route>
+										<Route exact path="/post/:id" >
+											<Post/>
+										</Route>
+										<Route path="/proposals" >
+											<Proposals/>
+										</Route>
+										<Route path="/request-reset-password">
+											<RequestResetPassword/>
+										</Route>
+										<Route path="/reset-password/:token">
+											<ResetPassword/>
+										</Route>
+										<Route path="/signup">
+											<SignupForm/>
+										</Route>
+										<Route path="/verify-email/:token">
+											<VerifyEmail/>
+										</Route>
+										<Route path="/settings">
+											<Settings/>
+										</Route>
+										<Route path="*">
+											<NotFound/>
+										</Route>
+									</Switch>
 								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>
