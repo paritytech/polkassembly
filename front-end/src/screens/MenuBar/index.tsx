@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Dropdown, Menu, Icon, Responsive, Sidebar } from 'semantic-ui-react';
+import { Container, Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -41,13 +41,13 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 
 	// Menu Items
 	const contentItems = [
-		{ content:'Discussions', key:'discussions', to:'/discussions' },
-		{ content: 'Proposals', key:'proposals', to:'/proposals' }
+		{ content:'Discussions', icon:'comments', key:'discussions', to:'/discussions' },
+		{ content: 'Proposals', icon:'file alternate', key:'proposals', to:'/proposals' }
 	];
 
 	const loggedOutItems = [
-		{ content:'Login', key:'login', to:'/login' },
-		{ content: 'Sign-up', key:'signup', to:'/signup' }
+		{ content:'Login', icon:'sign in', key:'login', to:'/login' },
+		{ content: 'Sign-up', icon:'plus circle', key:'signup', to:'/signup' }
 	];
 
 	const userMenu = <><Icon name='user circle' inverted />{username}</>;
@@ -77,13 +77,13 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={className} inverted widths={3} id='menubar'>
 					<Menu.Item onClick={handleLeftToggle} id='leftmenu'>
-						<Icon name="sidebar" />
+						{!leftVisible ? <Icon name="sidebar" /> : <Icon name="times" />}
 					</Menu.Item>
 					<Menu.Item onClick={handleClose} as={Link} to="/" id='title'>
 						Polkassembly
 					</Menu.Item>
 					<Menu.Item onClick={handleRightToggle} id='rightmenu'>
-						<Icon name="user" />
+						{!rightVisible ? <Icon name="user" /> : <Icon name="times" />}
 					</Menu.Item>
 				</Menu>
 				<Sidebar.Pushable className={className}>
@@ -121,13 +121,16 @@ const MenuBar = ({ children, className } : Props): JSX.Element => {
 							</>
 						}
 					</Sidebar>
-					<Sidebar.Pusher
+					<SidebarPusher>
+						<NavBarChildren>{children}</NavBarChildren>
+					</SidebarPusher>
+					{/* <Sidebar.Pusher
 						dimmed={leftVisible || rightVisible}
 						onClick={handleClose}
 						style={{ minHeight: '100vH' }}
 					>
 						<NavBarChildren>{children}</NavBarChildren>
-					</Sidebar.Pusher>
+					</Sidebar.Pusher> */}
 				</Sidebar.Pushable>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
@@ -228,6 +231,7 @@ export default styled(MenuBar)`
 			padding: 1.5rem 2rem;
 			i {
 				text-align: center!important;
+				margin: 0 auto;
 				padding-right: 2rem;
 			}
 		}
@@ -235,7 +239,7 @@ export default styled(MenuBar)`
 		.ui.labeled.icon.menu .item>.icon:not(.dropdown) {
 			font-size: 1.6rem!important;
 			display: inline-block;
-			margin: 0 2rem auto 0!important;
+			margin: 0 1rem auto 0!important;
 		}
 	
 		.ui.right.sidebar .item {
