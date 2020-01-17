@@ -12,37 +12,57 @@ export default styled(Button)`
 		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;
-		border-radius: 0.3rem;
+		letter-spacing: 0.06rem;
+		border-radius: button_radius;
 		border: none;
-		padding: 0.7rem 1rem;
+		padding: 0.8rem 1.6rem;
+		&.ui.tiny.button {
+			font-size: sm;
+			padding: 0.6rem 1.2rem;
+		}
+		&.ui.small.button {
+			font-size: md;
+			padding: 0.6rem 1.2rem;
+		}
+		&.ui.medium.button {
+			font-size: md;
+			padding: 0.8rem 1.6rem;
+		}
 		&.ui.primary.button {
 			background-color: red_primary;
-			color: white;
+			color: black_primary;
 			&:hover, &:focus {
 				background-color: red_secondary;
-				color: white;
 				outline: none;
 			}
 		}
 		&.ui.primary.negative.button {
 			background-color: white;
 			color: red_primary;
-			border: 0.1rem solid red_primary;
+			border-style: solid;
+			border-color: red_primary;
+			border-width: 0.1rem;
 			&:hover, &:focus {
 				background-color: red_light;
 				color: red_secondary;
-				border: 0.1rem solid #D94C3D;
+				border-style: solid;
+				border-color: red_secondary;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
 		&.ui.secondary.button {
 			background-color: white;
-			color: red_primary;
-			border: 0.1rem solid #FF5A47;
+			color: grey_primary;
+			border-style: solid;
+			border-color: grey_secondary;
+			border-width: 0.1rem;
 			&:hover, &:focus {
-				background-color: red_light;
-				color: red_secondary;
-				border: 0.1rem solid #D94C3D;
+				color: black_text;
+				background-color: grey_light;
+				border-style: solid;
+				border-color: grey_primary;
+				border-width: 0.1rem;
 				outline: none;
 			}
 		}
@@ -53,7 +73,9 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: #E66557;
 				color: white;
-				border: 0.1rem solid #E66557;
+				border-style: solid;
+				border-color: #E66557;
+				border-width: 0.1rem;
 				outline: none;
 			}	
 		}
@@ -63,6 +85,9 @@ export default styled(Button)`
 			font-size: sm;
 			border: none;
 			padding: 0.7rem 0.7rem;
+			text-transform: none;
+			letter-spacing: 0rem;
+			border-radius: 0.2rem;
 			&:hover{
 				background-color: grey_light;
 				border: none;
@@ -72,11 +97,13 @@ export default styled(Button)`
 			opacity: 1;
 		}
 		&.ui.social.negative.button {
-				background-color: white;
-				color: red_primary;
-				font-size: sm;
-				border: none;
-				padding: 0.7rem 0.7rem;
+			background-color: white;
+			color: red_primary;
+			font-size: sm;
+			border: none;
+			padding: 0.7rem 0.7rem;
+			text-transform: none;
+			letter-spacing: 0rem;
 			&:hover {
 				background-color: red_light;
 				border: none;

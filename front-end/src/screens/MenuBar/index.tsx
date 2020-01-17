@@ -176,7 +176,7 @@ export default styled(MenuBar)`
 			#rightmenu {
 				right: 2rem;
 				font-size: 1.8rem;
-				max-width: 2.4rem;
+				max-width: 2rem;
 			}
 	
 			.item {

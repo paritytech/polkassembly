@@ -156,8 +156,8 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/> Save</Button>
+								<Button secondary size='small' onClick={handleCancel}><Icon name='cancel' className='icon'/>Cancel</Button>
+								<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/>Save</Button>
 							</div>
 						</Form>
 						:
@@ -174,7 +174,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 };
 
 export default styled(EditablePostContent)`
-	margin: 2rem 0;
+	margin-bottom: 2rem;
 
 	.button-container {
 		width: 100%;

@@ -7,10 +7,11 @@ function Field (props : SUIFormFieldProps){
 }
 
 export default styled(Field)`
-    margin-bottom: 1.25rem;
+    margin-bottom: 2rem;
 
     .text-muted {
+        color: grey_primary;
         font-size: 1.2rem;
-        margin: 0.5rem 0 0 0;
+        margin-top: 1rem;
     }
 `;

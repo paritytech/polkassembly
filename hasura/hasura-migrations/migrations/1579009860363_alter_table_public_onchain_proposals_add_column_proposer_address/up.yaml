@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."onchain_proposals" ADD COLUMN "proposer_address" text
+      NOT NULL;
+  type: run_sql

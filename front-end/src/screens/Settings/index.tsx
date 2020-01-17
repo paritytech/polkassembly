@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Divider, Container } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import Email from './email';
 import Fullname from './fullname';
@@ -32,13 +32,22 @@ const Settings = ({ className }:Props): JSX.Element => {
 };
 
 export default styled(Settings)`
-	background-color: #FFF;
+	background-color: white;
 	padding: 2rem 3rem 3rem 3rem!important;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey_light;
 
 	.ui.divider, .ui.divider:not(.vertical):not(.horizontal) {
-		margin: 2rem 0;
-		border-top: 1px solid #EEE;
+		margin: 3rem 0 2rem 0;
+		border-top-style: solid;
+		border-top-width: 1px;
+		border-top-color: grey_light;
 		border-bottom: none;
+	}
+
+	.button {
+		margin-top: 0.2rem;
 	}
 
 	@media only screen and (max-width: 576px) {
