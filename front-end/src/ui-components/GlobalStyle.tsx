@@ -105,7 +105,7 @@ export const GlobalStyle = createGlobalStyle`
         }
 
         .ui.grid, .ui.container {
-            margin-top: 0!important;
+            margin-top: 0rem!important;
             margin-left: 0!important;
             margin-right: 0!important;
         }
@@ -113,33 +113,5 @@ export const GlobalStyle = createGlobalStyle`
         h3 {
             font-size: 2.1rem;
         }
-    }
-
-    .btn {
-        font-family: 'Roboto Mono';
-        font-size: 1.125rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        border-radius: 0.188rem;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #EB5757;
-    }
-
-    .btn-primary:hover {
-        background-color: #CC3D3D;
-    }
-
-    .btn-primary:not(:disabled):not(.disabled).active,
-    .btn-primary:not(:disabled):not(.disabled):active {
-        background-color: #CC3D3D;
-    }
-
-    .btn-primary.focus,
-    .btn-primary:focus,
-    .btn-primary:not(:disabled):not(.disabled):active:focus {
-        box-shadow: none;
     }
 `;
