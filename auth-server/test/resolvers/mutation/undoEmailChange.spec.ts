@@ -32,7 +32,7 @@ describe('undoEmailChange mutation', () => {
 			.allowInsert('[token, user_id, email, valid]')
 			.insert({
 				token: uuid(),
-				email: 'old@email.com',
+				email,
 				user_id: signupResult.user.id,
 				valid: true
 			});
