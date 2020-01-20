@@ -123,7 +123,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		<p>
 			Hi ${user.name || ''}!<br/><br/>
 
-			Your email on polkassembly.io was changed.<br />
+			Your email on polkassembly.io was changed to ${user.email}.<br />
 			If you did the change, then everything is fine, you have nothing to do.<br /><br />
 
 			If you did not change your email and suspect that it is a malicious attempt, click on the following link to change your account email back to:<br /><br />
