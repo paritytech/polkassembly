@@ -3,16 +3,16 @@ import { expect } from 'chai';
 import 'mocha';
 import { uuid } from 'uuidv4';
 
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
+import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
-import verifyEmail from '../../../src/resolvers/mutation/verifyEmail';
+import undoEmailChange from '../../../src/resolvers/mutation/undoEmailChange';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
-describe('verifyEmail mutation', () => {
+describe('undoEmailChange mutation', () => {
 	let signupResult;
-	let verifyToken;
+	let undoToken;
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -27,11 +27,12 @@ describe('verifyEmail mutation', () => {
 	before(async () => {
 		signupResult = await signup(null, { email, password, username, name }, fakectx);
 
-		verifyToken = await EmailVerificationToken
+		undoToken = await UndoEmailChangeToken
 			.query()
-			.allowInsert('[token, user_id, valid]')
+			.allowInsert('[token, user_id, email, valid]')
 			.insert({
 				token: uuid(),
+				email,
 				user_id: signupResult.user.id,
 				valid: true
 			});
@@ -43,32 +44,32 @@ describe('verifyEmail mutation', () => {
 			.where({ id: signupResult.user.id })
 			.del();
 
-		await EmailVerificationToken
+		await UndoEmailChangeToken
 			.query()
-			.where({ id: verifyToken.id })
+			.where({ id: undoToken.id })
 			.del();
 	});
 
-	it('should be able to verify email with valid token', async () => {
-		const res = await verifyEmail(null, { token: verifyToken.token });
+	it('should be able to undo email change with valid token', async () => {
+		const res = await undoEmailChange(null, { token: undoToken.token });
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.email_verified).to.be.true;
-		expect(res.message).to.eq(messages.EMAIL_VERIFICATION_SUCCESSFUL);
+		expect(dbUser.email).to.equal(undoToken.email);
+		expect(res.message).to.eq(messages.EMAIL_UNDO_SUCCESSFUL);
 		expect(res.token).to.exist;
 	});
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await verifyEmail(null, { token: uuid() });
+			await undoEmailChange(null, { token: uuid() });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
-			expect(error.message).to.eq(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);
+			expect(error.message).to.eq(messages.EMAIL_UNDO_TOKEN_NOT_FOUND);
 		}
 	});
 });

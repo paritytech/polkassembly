@@ -4,50 +4,58 @@ import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useVerifyEmailMutation } from '../../generated/graphql';
+import { useUndoEmailChangeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
-import Loader from '../../ui-components/Loader';
 import FilteredError from '../../ui-components/FilteredError';
+import Loader from '../../ui-components/Loader';
 
 interface Props {
 	className?: string
 }
 
-const VerifyEmail = ({ className }:Props): JSX.Element => {
+const UndoEmailChange = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const { queueNotification } = useContext(NotificationContext);
-	const [verifyEmailMutation, { error }] = useVerifyEmailMutation({
+	const [undoEmailChangeMutation, { error }] = useUndoEmailChangeMutation({
 		variables: {
 			token: router.query.token
 		}
 	});
 
 	useEffect(() => {
-		verifyEmailMutation().then(({ data }) => {
-			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.token) {
-				if (data.verifyEmail.token) {
-					handleTokenChange(data.verifyEmail.token);
+		undoEmailChangeMutation().then(({ data }) => {
+			if (data && data.undoEmailChange) {
+				if (data.undoEmailChange.token) {
+					handleTokenChange(data.undoEmailChange.token);
 				}
-				currentUser.setUserDetailsContextState((prevState) => {
-					return {
-						...prevState,
-						email_verified: true
-					};
-				});
-				queueNotification({
-					header: 'Success!',
-					message: data.verifyEmail.message,
-					status: NotificationStatus.SUCCESS
-				});
+
+				if (data.undoEmailChange.email) {
+					currentUser.setUserDetailsContextState((prevState) => {
+						return {
+							...prevState,
+							email: data.undoEmailChange && data.undoEmailChange.email,
+							email_verified: false
+						};
+					});
+				}
+
+				if (data.undoEmailChange.message) {
+					queueNotification({
+						header: 'Success!',
+						message: data.undoEmailChange.message,
+						status: NotificationStatus.SUCCESS
+					});
+				}
+
 				router.history.push('/');
 			}
 		}).catch((e) => {
-			console.error('Email verification error', e);
+			console.error('Undo email Change error', e);
 		});
-	},[currentUser, queueNotification, router.history, verifyEmailMutation]);
+	},[currentUser, queueNotification, router.history, undoEmailChangeMutation]);
 
 	return (
 		<>
@@ -65,9 +73,10 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 				</Grid>
 				: <Loader/>
 			}
-		</>);
+		</>
+	);
 };
 
-export default styled(VerifyEmail)`
+export default styled(UndoEmailChange)`
 	text-align: center
 `;
