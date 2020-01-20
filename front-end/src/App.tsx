@@ -35,8 +35,8 @@ const App = () => {
 						<ModalProvider>
 							<UserDetailsProvider>
 								<Apollo>
+									<MenuBar />
 									<GlobalStyle />
-									<MenuBar/>
 									<Notifications/>
 									<Modal/>
 									<Switch>
