@@ -110,7 +110,7 @@ describe('changeEmail mutation', () => {
 		await UndoEmailChangeToken
 			.query()
 			.patch({
-				created_at: new Date(Date.now() - 49 * 60 * 60 * 1000).toISOString() // now + 6 months
+				created_at: new Date(Date.now() - 49 * 60 * 60 * 1000).toISOString() // now - 49 hours
 			})
 			.where( { user_id: signupResult.user.id });
 
