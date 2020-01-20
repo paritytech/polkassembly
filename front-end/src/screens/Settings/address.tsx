@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
+import Identicon from '@polkadot/react-identicon';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation } from '../../generated/graphql';
@@ -84,6 +85,14 @@ const Address = (): JSX.Element => {
 		}
 	};
 
+	const shorten = (address: string) => {
+		if (!address || address.length < 8) {
+			return address;
+		}
+
+		return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+	};
+
 	// TODO: generate avtar image svg logo
 	return (
 		<div>
@@ -95,10 +104,15 @@ const Address = (): JSX.Element => {
 							<div className="right floated content">
 								<Button className={'social'} onClick={() => handleLink(account)}><Icon name='chain'/>Link</Button>
 							</div>
-							<img className="ui avatar image" src="/polkadot.png" />
+							<Identicon
+								className="image"
+								value={account.address}
+								size={32}
+								theme={'polkadot'}
+							/>
 							<div className="content">
 								<div className="header">{account.meta.name}</div>
-								<div className="description">{account.address}</div>
+								<div className="description">{shorten(account.address)}</div>
 							</div>
 						</div>
 					))}
