@@ -1,4 +1,4 @@
-import { AuthenticationError, UserInputError } from 'apollo-server';
+import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -77,6 +77,7 @@ describe('changeEmail mutation', () => {
 			expect(error).to.be.an.instanceof(AuthenticationError);
 			expect(error.message).to.eq(messages.INVALID_JWT);
 		}
+		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
 	it('should not be able to change email with an invalid email', async () => {
@@ -89,5 +90,33 @@ describe('changeEmail mutation', () => {
 			expect(error).to.be.an.instanceof(UserInputError);
 			expect(error.message).to.eq(messages.INVALID_EMAIL);
 		}
+	});
+
+	it('should not be able to change email before 48 hours and undotoken valid', async () => {
+		const email = 'blabla2@blou.de';
+
+		try {
+			await changeEmail(null, { email }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.EMAIL_CHANGE_NOT_ALLOWED_YET);
+		}
+	});
+
+	it('should be able to change email after 48 hours', async () => {
+		const email = 'blabla2@blou.de';
+
+		await UndoEmailChangeToken
+			.query()
+			.patch({
+				created_at: new Date(Date.now() - 49 * 60 * 60 * 1000).toISOString() // now + 6 months
+			})
+			.where( { user_id: signupResult.user.id });
+
+		const { message, token } = await changeEmail(null, { email }, fakectx);
+
+		expect(token).to.exist;
+		expect(message).to.equal(messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL);
 	});
 });

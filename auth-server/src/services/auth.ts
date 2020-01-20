@@ -280,7 +280,10 @@ export default class AuthService {
 
 		const existingUndoToken = await UndoEmailChangeToken
 			.query()
-			.where('user_id', userId)
+			.where({
+				user_id: userId,
+				valid: true
+			})
 			.orderBy('created_at', 'desc')
 			.first();
 
