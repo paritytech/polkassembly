@@ -126,7 +126,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 			Your email on polkassembly.io was changed to ${user.email}.<br />
 			If you did the change, then everything is fine, you have nothing to do.<br /><br />
 
-			If you did not change your email and suspect that it is a malicious attempt, click on the following link to change your account email back to:<br /><br />
+			If you did not change your email and suspect that it is a malicious attempt, click on the following link to change your account email back to: ${undoToken.email}<br /><br />
 			<a href="${undoUrl}">Recover Your Email</a><br /><br />
 
 			This link is valid for 48 hours, past this time, you will not be able to use it to recover your email. If you did not have time to click it and are a victim of a malicious email change, please open an issue on https://github.com/paritytech/polkassembly/issues/new<br /><br />
