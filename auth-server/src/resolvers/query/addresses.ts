@@ -1,25 +1,17 @@
 import Address from '../../model/Address';
+import { AddressType, Context } from '../../types';
 import AuthService from '../../services/auth';
-import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
-import messages from '../../utils/messages';
 
-interface argsType {
-	address: string
-}
-
-export default async (parent, { address }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (parent, args, ctx: Context): Promise<AddressType[]> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
 
-	await Address
+	return Address
 		.query()
 		.where({
-			address,
+			linked: true,
 			user_id: user.id
-		})
-		.del();
-
-	return { message: messages.ADDRESS_UNLINKING_SUCCESS };
+		});
 };

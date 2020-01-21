@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 
-import Address from '../../model/address';
+import Address from '../../model/Address';
 import AuthService from '../../services/auth';
 import { Context, AddressLinkStartType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';

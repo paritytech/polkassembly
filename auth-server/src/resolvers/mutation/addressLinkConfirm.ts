@@ -2,7 +2,7 @@ import { ForbiddenError } from 'apollo-server';
 import { Keyring } from '@polkadot/api';
 import { schnorrkelVerify } from '@polkadot/util-crypto';
 
-import Address from '../../model/address';
+import Address from '../../model/Address';
 import AuthService from '../../services/auth';
 import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';

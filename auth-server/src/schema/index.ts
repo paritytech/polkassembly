@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express';
 
+import addresses from './query/addresses';
 import userQuery from './query/user';
 import usersQuery from './query/users';
 import subscription from './query/subscription';
@@ -22,6 +23,7 @@ import signupMutation from './mutation/signup';
 import verifyEmail from './mutation/verifyEmail';
 
 import addressLinkType from './type/addressLinkType';
+import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
@@ -31,6 +33,7 @@ import userType from './type/user';
 
 export default gql`
 	${addressLinkType}
+	${address}
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
@@ -39,6 +42,7 @@ export default gql`
 	${userType}
 
 	type Query {
+		${addresses}
 		${subscription}
 		${tokenQuery}
 		${userQuery}

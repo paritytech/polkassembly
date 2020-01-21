@@ -76,6 +76,13 @@ export interface Subscription {
     subscribed: boolean
 }
 
+export interface AddressType {
+    address: string
+    public_key: string
+    name: string
+    source: string
+}
+
 export interface AddressLinkStartType extends MessageType {
     address_id: number
     sign_message: string
