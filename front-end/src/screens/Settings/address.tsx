@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import Identicon from '@polkadot/react-identicon';
 
 import { NotificationContext } from '../../context/NotificationContext';
-import { useAddressLinkConfirmMutation, useAddressLinkStartMutation } from '../../generated/graphql';
+import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 
@@ -13,20 +14,18 @@ const APP = 'polkassembly';
 const polkadotExtension = 'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd?hl=en'; // TODO: add mozilla
 
 const Address = (): JSX.Element => {
-	const [accounts, setAccounts] = useState<any[]>([]);
+	const [linked, setLinked] = useState<{[key: string]: boolean}>({});
+	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [addressLinkStartMutation] = useAddressLinkStartMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [addressUnlinkMutation] = useAddressUnlinkMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
 		async function connect() {
-			const allInjected = await web3Enable(APP);
-
-			console.log(allInjected);
+			await web3Enable(APP);
 
 			const allAccounts = await web3Accounts();
-
-			console.log(allAccounts);
 
 			setAccounts(allAccounts);
 		}
@@ -51,8 +50,6 @@ const Address = (): JSX.Element => {
 				}
 			});
 
-			console.log(addressLinkStartResult);
-
 			if (!addressLinkStartResult || !addressLinkStartResult.data || !addressLinkStartResult.data.addressLinkStart) {
 				return console.error('Address link start mutaion failed');
 			}
@@ -70,13 +67,42 @@ const Address = (): JSX.Element => {
 				}
 			});
 
+			linked[account.address] = true;
+
+			setLinked(linked);
+
 			queueNotification({
 				header: 'Success!',
-				message: addressLinkConfirmResult && addressLinkConfirmResult.data && addressLinkConfirmResult.data.addressLinkConfirm && addressLinkConfirmResult.data.addressLinkConfirm.message || '',
+				message: (addressLinkConfirmResult && addressLinkConfirmResult.data && addressLinkConfirmResult.data.addressLinkConfirm && addressLinkConfirmResult.data.addressLinkConfirm.message) || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
-			console.log(error);
+			queueNotification({
+				header: 'Failed!',
+				message: error.message,
+				status: NotificationStatus.ERROR
+			});
+		}
+	};
+
+	const handleUnlink = async (account: any) => {
+		try {
+			const addressUnlinkConfirmResult = await addressUnlinkMutation({
+				variables: {
+					address: account.address
+				}
+			});
+
+			linked[account.address] = false;
+
+			setLinked(linked);
+
+			queueNotification({
+				header: 'Success!',
+				message: (addressUnlinkConfirmResult && addressUnlinkConfirmResult.data && addressUnlinkConfirmResult.data.addressUnlink && addressUnlinkConfirmResult.data.addressUnlink.message) || '',
+				status: NotificationStatus.SUCCESS
+			});
+		} catch (error) {
 			queueNotification({
 				header: 'Failed!',
 				message: error.message,
@@ -93,6 +119,9 @@ const Address = (): JSX.Element => {
 		return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
 	};
 
+	const linkIcon = <><Icon name='chain'/> Link</>;
+	const unlinkIcon = <><Icon name='broken chain'/> Unlink</>;
+
 	// TODO: generate avtar image svg logo
 	return (
 		<div>
@@ -102,7 +131,12 @@ const Address = (): JSX.Element => {
 					{accounts.map(account => (
 						<div key={account.address} className="item">
 							<div className="right floated content">
-								<Button className={'social'} onClick={() => handleLink(account)}><Icon name='chain'/>Link</Button>
+								<Button
+									className={'social'}
+									onClick={() => linked[account.address] ? handleUnlink(account) : handleLink(account)}
+								>
+									{linked[account.address] ? unlinkIcon : linkIcon}
+								</Button>
 							</div>
 							<Identicon
 								className="image"

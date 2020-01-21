@@ -33,7 +33,7 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 		throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
 	}
 
-	const publicKey = keyring.decodeAddress(dbAddress.address || '');
+	const publicKey = keyring.decodeAddress(dbAddress.address);
 
 	const isValidSr = schnorrkelVerify(dbAddress.sign_message, signature, publicKey);
 
@@ -41,6 +41,7 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 		await Address
 			.query()
 			.patch({
+				public_key: Buffer.from(publicKey).toString('hex'),
 				signature: signature,
 				linked: true
 			})

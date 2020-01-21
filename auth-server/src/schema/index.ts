@@ -7,6 +7,7 @@ import tokenQuery from './query/token';
 
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
+import addressUnlink from './mutation/addressUnlink';
 import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
@@ -47,6 +48,7 @@ export default gql`
 	type Mutation {
 		${addressLinkConfirm}
 		${addressLinkStart}
+		${addressUnlink}
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}

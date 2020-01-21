@@ -46,6 +46,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   addressLinkConfirm?: Maybe<Message>,
   addressLinkStart?: Maybe<AddressLinkType>,
+  addressUnlink?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -71,6 +72,11 @@ export type MutationAddressLinkStartArgs = {
   address: Scalars['String'],
   name: Scalars['String'],
   source: Scalars['String']
+};
+
+
+export type MutationAddressUnlinkArgs = {
+  address: Scalars['String']
 };
 
 

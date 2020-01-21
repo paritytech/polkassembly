@@ -4,6 +4,7 @@ exports.up = function(knex) {
 		table.increments('id').primary().notNullable();
 		table.integer('user_id').notNullable();
 		table.string('address');
+		table.string('public_key');
 		table.string('name');
 		table.string('source');
 		table.uuid('sign_message');

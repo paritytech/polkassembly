@@ -6,6 +6,7 @@ Model.knex(connection);
 export default class Address extends Model {
 	readonly id!: number
 	address: string
+	public_key: string
 	user_id!: number
 	name: string
 	source: string
@@ -25,6 +26,7 @@ export default class Address extends Model {
 		return {
 			address: this.address,
 			user_id: this.user_id,
+			public_key: this.public_key,
 			name: this.name,
 			source: this.source,
 			sign_message: this.sign_message, // message which will be signed for proving address
@@ -40,6 +42,7 @@ export default class Address extends Model {
 			properties: {
 				id: { type: 'integer' },
 				address: { type: 'string' },
+				public_key: { type: 'string' },
 				user_id: { type: 'integer' },
 				name: { type: 'string' },
 				source: { type: 'string' },
