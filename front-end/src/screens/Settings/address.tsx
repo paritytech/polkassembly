@@ -5,13 +5,13 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import Identicon from '@polkadot/react-identicon';
 
+import getExtensionUrl from '../../util/getExtensionUrl';
 import { NotificationContext } from '../../context/NotificationContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 
 const APP = 'polkassembly';
-const polkadotExtension = 'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd?hl=en'; // TODO: add mozilla
 
 const Address = (): JSX.Element => {
 	const [linked, setLinked] = useState<{[key: string]: boolean}>({});
@@ -154,7 +154,7 @@ const Address = (): JSX.Element => {
 			) : (
 				<>
 					<div>No addresses detected</div>
-					<div>Please reload this page with <a href={polkadotExtension}>Polkadot extension</a>.</div>
+					<div>Please reload this page with <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
 				</>
 			)}
 		</div>
