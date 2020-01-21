@@ -11,7 +11,6 @@ export default class Address extends Model {
 	name: string
 	source: string
 	sign_message: string
-	signature: string
 	linked!: boolean
 
 	static get tableName () {
@@ -30,7 +29,6 @@ export default class Address extends Model {
 			name: this.name,
 			source: this.source,
 			sign_message: this.sign_message, // message which will be signed for proving address
-			signature: this.signature,
 			linked: this.linked
 		};
 	}
@@ -47,7 +45,6 @@ export default class Address extends Model {
 				name: { type: 'string' },
 				source: { type: 'string' },
 				sign_message: { type: 'string' },
-				signature: { type: 'signature' },
 				linked: { type: 'boolean' }
 			}
 		};
