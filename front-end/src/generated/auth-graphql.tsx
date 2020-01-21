@@ -13,6 +13,14 @@ export type Scalars = {
 };
 
 
+export type Address = {
+   __typename?: 'Address',
+  address?: Maybe<Scalars['String']>,
+  public_key?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  source?: Maybe<Scalars['String']>,
+};
+
 export type AddressLinkType = {
    __typename?: 'AddressLinkType',
   sign_message?: Maybe<Scalars['String']>,
@@ -142,6 +150,7 @@ export type MutationVerifyEmailArgs = {
 
 export type Query = {
    __typename?: 'Query',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,

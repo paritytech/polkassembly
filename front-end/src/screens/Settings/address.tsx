@@ -7,7 +7,7 @@ import Identicon from '@polkadot/react-identicon';
 
 import getExtensionUrl from '../../util/getExtensionUrl';
 import { NotificationContext } from '../../context/NotificationContext';
-import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
+import { useAddressesQuery, useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 
@@ -19,6 +19,7 @@ const Address = (): JSX.Element => {
 	const [addressLinkStartMutation] = useAddressLinkStartMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const [addressUnlinkMutation] = useAddressUnlinkMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const { data } = useAddressesQuery({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
@@ -32,6 +33,17 @@ const Address = (): JSX.Element => {
 
 		connect();
 	}, []);
+
+	useEffect(() => {
+		data && data.addresses && data.addresses.forEach((address) => {
+			if (address && address.address) {
+				linked[address.address] = true;
+			}
+		});
+
+		setLinked(linked);
+
+	}, [data, linked]);
 
 	const handleLink = async (account: any) => {
 		try {

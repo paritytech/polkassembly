@@ -17,6 +17,14 @@ export type Scalars = {
   Upload: any,
 };
 
+export type Address = {
+   __typename?: 'Address',
+  address?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  public_key?: Maybe<Scalars['String']>,
+  source?: Maybe<Scalars['String']>,
+};
+
 export type AddressLinkType = {
    __typename?: 'AddressLinkType',
   address_id?: Maybe<Scalars['Int']>,
@@ -3329,6 +3337,7 @@ export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Proposalsproposal
 
 export type Query = {
    __typename?: 'Query',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -3353,6 +3362,7 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -5137,6 +5147,17 @@ export type AddressUnlinkMutation = (
   )> }
 );
 
+export type AddressesQueryVariables = {};
+
+
+export type AddressesQuery = (
+  { __typename?: 'query_root' }
+  & { addresses: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'address' | 'public_key' | 'name' | 'source'>
+  )>>> }
+);
+
 export type VerifyEmailMutationVariables = {
   token: Scalars['String']
 };
@@ -5950,6 +5971,41 @@ export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
+export const AddressesDocument = gql`
+    query addresses {
+  addresses {
+    address
+    public_key
+    name
+    source
+  }
+}
+    `;
+
+/**
+ * __useAddressesQuery__
+ *
+ * To run a query within a React component, call `useAddressesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddressesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddressesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
+        return ApolloReactHooks.useQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
+      }
+export function useAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
+        }
+export type AddressesQueryHookResult = ReturnType<typeof useAddressesQuery>;
+export type AddressesLazyQueryHookResult = ReturnType<typeof useAddressesLazyQuery>;
+export type AddressesQueryResult = ApolloReactCommon.QueryResult<AddressesQuery, AddressesQueryVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
