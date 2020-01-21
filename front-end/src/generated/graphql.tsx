@@ -795,7 +795,7 @@ export type MutationResetPasswordArgs = {
 
 
 export type MutationSignupArgs = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String']
@@ -1186,7 +1186,7 @@ export type Mutation_RootResetPasswordArgs = {
 
 
 export type Mutation_RootSignupArgs = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String']

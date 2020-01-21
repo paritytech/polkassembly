@@ -28,7 +28,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	const handleSubmitForm = (data:Record<string, any>):void => {
 		const { email, name, password, username } = data;
 
-		if (username && email && password){
+		if (username && password){
 			signupMutation({
 				variables: {
 					email,
@@ -40,7 +40,9 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 				.then(({ data }) => {
 					if (data && data.signup && data.signup.token && data.signup.user) {
 						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser);
-						setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.' ,title: 'You\'ve got some mail' });
+						if (email) {
+							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.' ,title: 'You\'ve got some mail' });
+						}
 						history.push('/');
 					}}
 
@@ -76,10 +78,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.name ? 'error' : ''}
 								name='name'
 								placeholder='Firstname Lastname'
-								ref={register({ minLength: 3, required: true })}
 								type='text'
 							/>
-							{errors.name && <span className={'errorText'}>{messages.VALIDATION_NAME_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
@@ -90,8 +90,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								name='email'
 								placeholder='john@doe.com'
 								ref={register({
-									pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i,
-									required: true
+									pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
 								})}
 								type='text'
 							/>

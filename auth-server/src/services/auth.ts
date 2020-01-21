@@ -100,10 +100,12 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
-		existing = await User
-			.query()
-			.where('email', email)
-			.first();
+		if (email) {
+			existing = await User
+				.query()
+				.where('email', email)
+				.first();
+		}
 
 		if (existing) {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
@@ -124,17 +126,19 @@ export default class AuthService {
 				email_verified: false
 			});
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: user.id,
-				valid: true
-			});
+		if (email) {
+			const verifyToken = await EmailVerificationToken
+				.query()
+				.allowInsert('[token, user_id, valid]')
+				.insert({
+					token: uuid(),
+					user_id: user.id,
+					valid: true
+				});
 
-		// send verification email in background
-		sendVerificationEmail(user, verifyToken);
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
 
 		return {
 			user: {
