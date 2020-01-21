@@ -2,7 +2,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -67,8 +67,8 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button primary negative onClick={handleCancel}><Icon name='cancel'/> Cancel</Button>
-					<Button primary onClick={handleSubmit(handleSave)}><Icon name='reply'/> Reply</Button>
+					<Button secondary size='small' onClick={handleCancel}><Icon name='cancel'/>Cancel</Button>
+					<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='reply'/>Reply</Button>
 				</div>
 			</>
 		</div>
@@ -86,7 +86,6 @@ export default styled(CreateRootComment)`
 
 	.icon {
 		margin-top: -0.2rem!important;
-		margin-right: -0.3rem!important;
 		opacity: 1;
 	}
 `;

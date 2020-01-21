@@ -1,0 +1,6 @@
+- args:
+    relationship: onchain_proposal
+    table:
+      name: posts
+      schema: public
+  type: drop_relationship

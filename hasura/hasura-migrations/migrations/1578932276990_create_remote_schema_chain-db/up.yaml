@@ -1,0 +1,8 @@
+- args:
+    definition:
+      forward_client_headers: false
+      headers: []
+      timeout_seconds: 60
+      url: http://localhost:4466
+    name: chain-db
+  type: add_remote_schema

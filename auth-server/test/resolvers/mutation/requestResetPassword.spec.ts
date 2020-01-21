@@ -1,5 +1,6 @@
 import { UserInputError, AuthenticationError } from 'apollo-server';
 import { expect } from 'chai';
+import { uuid } from 'uuidv4';
 import 'mocha';
 
 import PasswordResetToken from '../../../src/model/PasswordResetToken';
@@ -73,7 +74,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a wrong token', async () => {
 
 		try {
-			await resetPassword(null, { token:'wrong', newPassword });
+			await resetPassword(null, { token: uuid(), newPassword });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

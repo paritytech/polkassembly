@@ -15,10 +15,18 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         background-color: #F1F3F2;
-        color: #555252;
+        color: black_text;
+    }
+
+    pre {
+        display: inline-block;
+        max-width: 100%;
+        white-space: pre-wrap;
     }
 
     code {
+        display: inline-block;
+        max-width: 100%;
         font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
     }
@@ -42,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: black01;
+        color: black_primary;
         font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;
@@ -51,7 +59,7 @@ export const GlobalStyle = createGlobalStyle`
 
     h3 {
         font-family: 'Roboto Mono';
-        font-size: 2.4rem;
+        font-size: 2.6rem;
         margin-bottom: 1.25rem;
     }
 
@@ -97,7 +105,7 @@ export const GlobalStyle = createGlobalStyle`
         }
 
         .ui.grid, .ui.container {
-            margin-top: 0!important;
+            margin-top: 0rem!important;
             margin-left: 0!important;
             margin-right: 0!important;
         }
@@ -105,33 +113,5 @@ export const GlobalStyle = createGlobalStyle`
         h3 {
             font-size: 2.1rem;
         }
-    }
-
-    .btn {
-        font-family: 'Roboto Mono';
-        font-size: 1.125rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        border-radius: 0.188rem;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #EB5757;
-    }
-
-    .btn-primary:hover {
-        background-color: #CC3D3D;
-    }
-
-    .btn-primary:not(:disabled):not(.disabled).active,
-    .btn-primary:not(:disabled):not(.disabled):active {
-        background-color: #CC3D3D;
-    }
-
-    .btn-primary.focus,
-    .btn-primary:focus,
-    .btn-primary:not(:disabled):not(.disabled):active:focus {
-        box-shadow: none;
     }
 `;

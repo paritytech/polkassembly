@@ -14,7 +14,7 @@ cd auth-server && docker-compose --file docker-compose.yaml up -d && cd ..;
 sleep 5
 
 printf "\n\n-- launching auth-server\n" 
-cd auth-server && yarn start &> auth.log &
+cd auth-server && yarn && yarn start &> auth.log &
 
 sleep 5
 
@@ -32,4 +32,4 @@ printf "\n\n-- hasura migration\n"
 cd hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-secret ip7itpC5L6R3RbNE4vkdZfsN && cd ../../..;
 
 printf "\n\n-- launching front-end\n"
-cd front-end && yarn start &> front-end.log &
+cd front-end && yarn && yarn start &> front-end.log &

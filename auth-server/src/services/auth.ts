@@ -1,14 +1,17 @@
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import * as moment from 'moment';
 import { uuid } from 'uuidv4';
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
 import {
+	sendUndoEmailChangeEmail,
 	sendVerificationEmail,
 	sendResetPasswordEmail
 } from './email';
 import EmailVerificationToken from '../model/EmailVerificationToken';
+import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
@@ -273,6 +276,38 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
+		let user = await getUserFromUserId(userId);
+
+		const existingUndoToken = await UndoEmailChangeToken
+			.query()
+			.where({
+				user_id: userId,
+				valid: true
+			})
+			.orderBy('created_at', 'desc')
+			.first();
+
+		if (existingUndoToken) {
+			const now = moment();
+			const last = moment(existingUndoToken.created_at);
+
+			const hours = moment.duration(now.diff(last)).asHours();
+
+			if (hours < 48) {
+				throw new ForbiddenError(messages.EMAIL_CHANGE_NOT_ALLOWED_YET);
+			}
+		}
+
+		const undoToken = await UndoEmailChangeToken
+			.query()
+			.allowInsert('[token, user_id, email, valid]')
+			.insert({
+				token: uuid(),
+				user_id: userId,
+				email: user.email,
+				valid: true
+			});
+
 		await User
 			.query()
 			.patch({
@@ -296,10 +331,13 @@ export default class AuthService {
 				valid: true
 			});
 
-		const user = await getUserFromUserId(userId);
+		user = await getUserFromUserId(userId);
 
 		// send verification email in background
 		sendVerificationEmail(user, verifyToken);
+
+		// send undo token in background
+		sendUndoEmailChangeEmail(user, undoToken);
 
 		return this.getSignedToken(user);
 	}
@@ -362,6 +400,38 @@ export default class AuthService {
 			.query()
 			.patch({ valid: false })
 			.findById(resetToken.id);
+	}
+
+	public async UndoEmailChange(token: string) {
+		const undoToken = await UndoEmailChangeToken
+			.query()
+			.where('token', token)
+			.first();
+
+		if (!undoToken) {
+			throw new AuthenticationError(messages.EMAIL_UNDO_TOKEN_NOT_FOUND);
+		}
+
+		if (!undoToken.valid) {
+			throw new AuthenticationError(messages.INVALID_EMAIL_UNDO_TOKEN);
+		}
+
+		await User
+			.query()
+			.patch({
+				email: undoToken.email,
+				email_verified: false
+			})
+			.findById(undoToken.user_id);
+
+		await UndoEmailChangeToken
+			.query()
+			.patch({ valid: false })
+			.findById(undoToken.id);
+
+		const user = await getUserFromUserId(undoToken.user_id);
+
+		return { updatedToken: this.getSignedToken(user), email: user.email };
 	}
 
 	private getSignedToken({ id, name, username, email, email_verified }): string {

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Container, Grid } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Container, Grid } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -10,6 +10,7 @@ import { useCreatePostMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import TopicsRadio from './TopicsRadio';
 import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import TitleForm from '../../components/TitleForm';
@@ -90,10 +91,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 						<div className={'mainButtonContainer'}>
 							<Button
+								primary
 								onClick={handleSubmit(handleSend)}
 								disabled={isSending || loading}
 								type='submit'
-								variant='primary'
 							>
 								{isSending || loading ? 'Creating...' : 'Create'}
 							</Button>
@@ -113,50 +114,5 @@ export default styled(CreatePost)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-	}
-
-	.ui.button {
-		font-family: 'Roboto Mono';
-		font-size: 1.6rem;
-		font-weight: 500;
-		text-transform: uppercase;
-		border-radius: 0.3rem;
-		border: none;
-		padding: 0.5rem 1rem;
-		color: #fff;
-		background-color: #FF5A47;
-		&:focus, &:hover {
-			background-color: #D94C3D;
-			outline: none;
-		}
-	}
-
-	.ui.small.buttons {
-		margin: 0 0 1.875rem 0;
-
-		.ui.button {
-			font-size: 1rem;
-			background-color: #B5AEAE;
-			padding: 0.5rem 0.8rem;
-			border-radius: 0.2rem;
-			letter-spacing: 0.05rem;
-			line-height: 100%;
-			text-transform: none;
-			&:focus, &:hover {
-				background-color: #282828;
-				outline: none;
-			}
-		}
-	}
-
-	.fields {
-		.container {
-			padding-right: 5px;
-			padding-left: 5px;
-		}
-	}
-
-	textarea {
-		font-size: 1.4rem;
 	}
 `;

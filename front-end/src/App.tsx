@@ -22,6 +22,7 @@ import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
+import UndoEmailChange from './screens/UndoEmailChange';
 import { theme } from './themes/theme';
 
 const App = () => {
@@ -34,8 +35,8 @@ const App = () => {
 						<ModalProvider>
 							<UserDetailsProvider>
 								<Apollo>
+									<MenuBar />
 									<GlobalStyle />
-									<MenuBar/>
 									<Notifications/>
 									<Modal/>
 									<Switch>
@@ -68,6 +69,9 @@ const App = () => {
 										</Route>
 										<Route path="/verify-email/:token">
 											<VerifyEmail/>
+										</Route>
+										<Route path="/undo-email-change/:token">
+											<UndoEmailChange/>
 										</Route>
 										<Route path="/settings">
 											<Settings/>

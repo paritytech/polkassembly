@@ -20,6 +20,7 @@ import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
 import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
+import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
 
 import addressLinkType from './type/addressLinkType';
@@ -29,6 +30,7 @@ import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
+import undoEmailChangeResponse from './type/undoEmailChangeResponse';
 import userType from './type/user';
 
 export default gql`
@@ -39,6 +41,7 @@ export default gql`
 	${messageType}
 	${subscriptionType}
 	${tokenType}
+	${undoEmailChangeResponse}
 	${userType}
 
 	type Query {
@@ -64,6 +67,7 @@ export default gql`
 		${requestResetPassword}
 		${resetPassword}
 		${signupMutation}
+		${undoEmailChange}
 		${verifyEmail}
 	}
 `;

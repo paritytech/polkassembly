@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -21,7 +21,7 @@ interface Props {
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const EditableCommenContent = ({ authorId, className, content, commentId, refetch }: Props) => {
+const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
@@ -83,14 +83,14 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button primary negative onClick={handleCancel}><Icon name='cancel' className='icon'/> Cancel</Button>
-								<Button primary onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/> Save</Button>
+								<Button secondary size='small' onClick={handleCancel}><Icon name='cancel' className='icon'/>Cancel</Button>
+								<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/>Save</Button>
 							</div>
 						</Form>
 						:
 						<>
 							<ReactMarkdown className='md' source={content} />
-							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/> Edit</Button>}
+							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						</>
 				}
 			</div>
@@ -98,7 +98,7 @@ const EditableCommenContent = ({ authorId, className, content, commentId, refetc
 	);
 };
 
-export default styled(EditableCommenContent)`
+export default styled(EditableCommentContent)`
 	.button-container {
 		width: 100%;
 		display: flex;
@@ -107,7 +107,6 @@ export default styled(EditableCommenContent)`
 
 	.icon {
 		margin-top: -0.2rem!important;
-		margin-right: -0.3rem!important;
 		opacity: 1;
 	}
 }`;

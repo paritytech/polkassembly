@@ -2,7 +2,7 @@
 exports.up = function(knex) {
 	return knex.schema.createTable('refresh_tokens', (table) => {
 		table.increments('id').primary().notNullable();
-		table.string('token').unique().notNullable();
+		table.uuid('token').unique().notNullable();
 		table.integer('user_id').notNullable();
 		table.boolean('valid').notNullable();
 		table.datetime('expires').notNullable();

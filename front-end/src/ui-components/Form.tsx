@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form as SUIForm, FormProps as SUIFormProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import Input from './Input';
 import Field from './Field';
@@ -41,13 +41,15 @@ const StyledForm = styled(SUIForm)`
     &.ui.form {
         .field {
             > label {
-                font-size: 1.2rem;
+                font-size: input_text_size;
                 font-weight: 500;
+                color: black_primary !important;
+                margin-bottom: 0.6rem;
             }
         }
 
         .fields {
-            margin-bottom: 1.875rem;
+            margin-bottom: 2rem;
 
             @media only screen and (max-width: 767px) {
                 margin-bottom: 1.25rem;
@@ -58,20 +60,28 @@ const StyledForm = styled(SUIForm)`
         input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
         input[type=text], input[type=time], input[type=url] {
             font-family: 'Roboto';
-            font-size: 1.2rem;
-            color: #282828;
+            font-size: 1.3rem;
+            color: black_primary;
             border: 1 px solid #EEE;
-            border-color: #EEE;
+            border-color: grey_light;
             border-radius: 0rem;
             text-indent: 0rem;
-            padding: 0.625rem 0.625 0.5rem 0.625;
+            padding: 1rem;
             &:focus {
                 font-family: 'Roboto';
-                font-size: 1.2rem;
-                color: #282828;
-                border: 1 px solid #EEE;
+                font-size: 1.3rem;
+                color: black_text;
+                border-color: grey_primary;
                 border-radius: 0rem;
             }
+            &:hover {
+                border-color: grey_secondary;
+            }
+        }
+
+        input::selection, textarea::selection {
+            color: black_text;
+            background-color: grey_light;
         }
         
     @media only screen and (max-width: 576px) {

@@ -64,7 +64,7 @@ describe('verifyEmail mutation', () => {
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await verifyEmail(null, { token: 'fake' });
+			await verifyEmail(null, { token: uuid() });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
