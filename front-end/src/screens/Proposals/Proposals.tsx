@@ -3,7 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DiscussionCard from '../../components/DiscussionCard';
+import ProposalCard from '../../components/ProposalCard';
 import { LatestProposalPostsQuery } from '../../generated/graphql';
 
 interface Props {
@@ -24,12 +24,13 @@ const Proposals = ({ className, data }: Props) => {
 								!!post && !!post.author && !!post.author.username && (
 									<li key={post.id} className='proposals__item'>
 										{<Link to={`/post/${post.id}`}>
-											<DiscussionCard
+											<ProposalCard
 												authorUsername={post.author.username}
 												comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
 													? 'no'
 													: post.comments_aggregate.aggregate!.count!.toString()}
 												created_at={post.created_at}
+												proposal_onchain_id={post.onchain_proposal!.onchain_proposal_id.toString()}
 												title={post.title}
 											/>
 										</Link>}

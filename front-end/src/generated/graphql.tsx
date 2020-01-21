@@ -4981,7 +4981,10 @@ export type LatestProposalPostsQuery = (
     ), type: (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
-    ) }
+    ), onchain_proposal: Maybe<(
+      { __typename?: 'onchain_proposals' }
+      & Pick<Onchain_Proposals, 'onchain_proposal_id'>
+    )> }
   )> }
 );
 
@@ -5565,6 +5568,9 @@ export const LatestProposalPostsDocument = gql`
     type {
       name
       id
+    }
+    onchain_proposal {
+      onchain_proposal_id
     }
   }
 }

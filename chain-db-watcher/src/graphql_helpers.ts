@@ -55,7 +55,7 @@ export const addPostAndProposal = async ({ proposer, onchain_proposal_id }: {pro
 		'onchain_proposal_id': onchain_proposal_id,
 		'content': 'Post not yet edited by the proposal author',
 		'proposer_address': proposer,
-		'title': `#${onchain_proposal_id} - On chain proposal`,
+		'title': 'On chain proposal',
 		'topic_id': democracyTopicId,
 		'type_id': process.env.HASURA_PROPOSAL_POST_TYPE_ID
 	};
