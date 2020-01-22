@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: test-polkassembly-frontend
-    image: "$DOCKER_IMAGE_FULL_NAME"
+    image: "${CI_REGISTRY}/${PROJECT}-front-end:${DOCKER_TAG}
   imagePullSecrets:
   - name: regcred
