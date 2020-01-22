@@ -35,7 +35,8 @@ const Address = (): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		data && data.addresses && data.addresses.forEach((address) => {
+		const addresses = (data && data.addresses) || [];
+		addresses.forEach((address) => {
 			if (address && address.address) {
 				linked[address.address] = true;
 			}
