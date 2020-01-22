@@ -57,9 +57,7 @@ const Address = (): JSX.Element => {
 
 			const addressLinkStartResult = await addressLinkStartMutation({
 				variables: {
-					address: account.address,
-					name: account.meta.name,
-					source: account.meta.source
+					address: account.address
 				}
 			});
 

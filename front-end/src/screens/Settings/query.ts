@@ -36,8 +36,8 @@ export const MUTATION_CHANGE_PASSWORD = gql`
 `;
 
 export const ADDRESS_LINK_START = gql`
-	mutation addressLinkStart($address: String!, $name: String!, $source: String!){
-		addressLinkStart(address: $address, name: $name, source: $source) {
+	mutation addressLinkStart($address: String!){
+		addressLinkStart(address: $address) {
 			sign_message
 			message
 			address_id
@@ -66,8 +66,6 @@ export const ADDRESSES = gql`
 		addresses {
 			address
 			public_key
-			name
-			source
 		}
 	}
 `;

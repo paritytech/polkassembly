@@ -5,8 +5,6 @@ exports.up = function(knex) {
 		table.integer('user_id').notNullable();
 		table.string('address');
 		table.string('public_key');
-		table.string('name');
-		table.string('source');
 		table.uuid('sign_message');
 		table.boolean('linked').defaultTo(false);
 		table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));

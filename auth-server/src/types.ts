@@ -79,8 +79,6 @@ export interface Subscription {
 export interface AddressType {
     address: string
     public_key: string
-    name: string
-    source: string
 }
 
 export interface AddressLinkStartType extends MessageType {

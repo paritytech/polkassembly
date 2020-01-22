@@ -771,9 +771,7 @@ export type MutationAddressLinkConfirmArgs = {
 
 
 export type MutationAddressLinkStartArgs = {
-  address: Scalars['String'],
-  name: Scalars['String'],
-  source: Scalars['String']
+  address: Scalars['String']
 };
 
 
@@ -957,9 +955,7 @@ export type Mutation_RootAddressLinkConfirmArgs = {
 
 
 export type Mutation_RootAddressLinkStartArgs = {
-  address: Scalars['String'],
-  name: Scalars['String'],
-  source: Scalars['String']
+  address: Scalars['String']
 };
 
 
@@ -5125,9 +5121,7 @@ export type ChangePasswordMutation = (
 );
 
 export type AddressLinkStartMutationVariables = {
-  address: Scalars['String'],
-  name: Scalars['String'],
-  source: Scalars['String']
+  address: Scalars['String']
 };
 
 
@@ -5173,7 +5167,7 @@ export type AddressesQuery = (
   { __typename?: 'query_root' }
   & { addresses: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
-    & Pick<Address, 'address' | 'public_key' | 'name' | 'source'>
+    & Pick<Address, 'address' | 'public_key'>
   )>>> }
 );
 
@@ -5904,8 +5898,8 @@ export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswo
 export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const AddressLinkStartDocument = gql`
-    mutation addressLinkStart($address: String!, $name: String!, $source: String!) {
-  addressLinkStart(address: $address, name: $name, source: $source) {
+    mutation addressLinkStart($address: String!) {
+  addressLinkStart(address: $address) {
     sign_message
     message
     address_id
@@ -5928,8 +5922,6 @@ export type AddressLinkStartMutationFn = ApolloReactCommon.MutationFunction<Addr
  * const [addressLinkStartMutation, { data, loading, error }] = useAddressLinkStartMutation({
  *   variables: {
  *      address: // value for 'address'
- *      name: // value for 'name'
- *      source: // value for 'source'
  *   },
  * });
  */
@@ -6009,8 +6001,6 @@ export const AddressesDocument = gql`
   addresses {
     address
     public_key
-    name
-    source
   }
 }
     `;
