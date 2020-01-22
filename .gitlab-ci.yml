@@ -49,10 +49,11 @@ front-end:
 deploy:
   stage: deploy
   environment:
-    name: parity-build
+    name: dashboards-cluster-1
+  tags:
+    - kubernetes-parity-build
   only:
       - /^k8s/
   script:
     - cat kubernetes/deploy.yaml.template | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -
     - cat kubernetes/deploy.yaml.template | envsubst | kubectl -n polkassembly apply -f -
-
