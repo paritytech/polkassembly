@@ -26,7 +26,7 @@ cache:
   services:
     - docker:dind
   script:
-    - export DOCKER_IMAGE="$CI_REGISTRY/$KUBE_NAMESPACE-$CI_JOB_NAME"
+    - export DOCKER_IMAGE="${CI_REGISTRY}/${PROJECT}-${CI_JOB_NAME}"
     #- export DOCKER_TAG=""
     - export DOCKER_TAG="citest"
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
