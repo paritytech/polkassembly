@@ -8,6 +8,7 @@ variables:
 
 stages:
   - dockerize
+  - deploy
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -44,3 +45,14 @@ front-end:
 #    - changes:
 #      - "front-end/**/*"
   <<: *build_and_push
+
+deploy:
+  stage: deploy
+  environment:
+    name: parity-build
+  only:
+      - /^k8s/
+  script:
+    - cat kubernetes/deploy.yaml.template | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -
+    - cat kubernetes/deploy.yaml.template | envsubst | kubectl -n polkassembly apply -f -
+
