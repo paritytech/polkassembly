@@ -7,18 +7,20 @@ import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
 interface argsType {
+	network: string
 	address: string
 }
 
-export default async (parent, { address }: argsType, ctx: Context): Promise<AddressLinkStartType>  => {
+export default async (parent, { network, address }: argsType, ctx: Context): Promise<AddressLinkStartType>  => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
 
 	const dbAddress = await Address
 		.query()
-		.allowInsert('[address, user_id, sign_message, linked]')
+		.allowInsert('[network, address, user_id, sign_message, linked]')
 		.insert({
+			network,
 			address,
 			user_id: user.id,
 			sign_message: uuid(),

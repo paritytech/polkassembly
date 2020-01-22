@@ -78,6 +78,7 @@ export type MutationAddressLinkConfirmArgs = {
 
 
 export type MutationAddressLinkStartArgs = {
+  network: Scalars['String'],
   address: Scalars['String']
 };
 

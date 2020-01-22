@@ -12,6 +12,7 @@ import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 
 const APP = 'polkassembly';
+const NETWORK = 'kasuma';
 
 const Address = (): JSX.Element => {
 	const [linked, setLinked] = useState<{[key: string]: boolean}>({});
@@ -57,7 +58,8 @@ const Address = (): JSX.Element => {
 
 			const addressLinkStartResult = await addressLinkStartMutation({
 				variables: {
-					address: account.address
+					address: account.address,
+					network: NETWORK
 				}
 			});
 

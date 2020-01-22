@@ -5,6 +5,7 @@ Model.knex(connection);
 
 export default class Address extends Model {
 	readonly id!: number
+	network: string
 	address: string
 	public_key: string
 	user_id!: number
@@ -21,6 +22,7 @@ export default class Address extends Model {
 
 	getToken () {
 		return {
+			network: this.network,
 			address: this.address,
 			user_id: this.user_id,
 			public_key: this.public_key,
@@ -35,6 +37,7 @@ export default class Address extends Model {
 			required: ['user_id'],
 			properties: {
 				id: { type: 'integer' },
+				network: { type: 'network' },
 				address: { type: 'string' },
 				public_key: { type: 'string' },
 				user_id: { type: 'integer' },
