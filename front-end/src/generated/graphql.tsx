@@ -17,6 +17,21 @@ export type Scalars = {
   Upload: any,
 };
 
+export type Address = {
+   __typename?: 'Address',
+  address?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  public_key?: Maybe<Scalars['String']>,
+  source?: Maybe<Scalars['String']>,
+};
+
+export type AddressLinkType = {
+   __typename?: 'AddressLinkType',
+  address_id?: Maybe<Scalars['Int']>,
+  message?: Maybe<Scalars['String']>,
+  sign_message?: Maybe<Scalars['String']>,
+};
+
 export type AggregateBlockNumber = {
    __typename?: 'AggregateBlockNumber',
   count: Scalars['Int'],
@@ -730,6 +745,9 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  addressLinkConfirm?: Maybe<Message>,
+  addressLinkStart?: Maybe<AddressLinkType>,
+  addressUnlink?: Maybe<Message>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -743,6 +761,23 @@ export type Mutation = {
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
+};
+
+
+export type MutationAddressLinkConfirmArgs = {
+  address_id: Scalars['Int'],
+  signature: Scalars['String']
+};
+
+
+export type MutationAddressLinkStartArgs = {
+  address: Scalars['String'],
+  network: Scalars['String']
+};
+
+
+export type MutationAddressUnlinkArgs = {
+  address: Scalars['String']
 };
 
 
@@ -813,6 +848,9 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
+  addressLinkConfirm?: Maybe<Message>,
+  addressLinkStart?: Maybe<AddressLinkType>,
+  addressUnlink?: Maybe<Message>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -908,6 +946,23 @@ export type Mutation_Root = {
   upsertTotalIssuance: TotalIssuance,
   upsertValidator: Validator,
   verifyEmail?: Maybe<ChangeResponse>,
+};
+
+
+export type Mutation_RootAddressLinkConfirmArgs = {
+  address_id: Scalars['Int'],
+  signature: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLinkStartArgs = {
+  address: Scalars['String'],
+  network: Scalars['String']
+};
+
+
+export type Mutation_RootAddressUnlinkArgs = {
+  address: Scalars['String']
 };
 
 
@@ -3292,6 +3347,7 @@ export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Proposalsproposal
 
 export type Query = {
    __typename?: 'Query',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -3316,6 +3372,7 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -5065,6 +5122,58 @@ export type ChangePasswordMutation = (
   )> }
 );
 
+export type AddressLinkStartMutationVariables = {
+  network: Scalars['String'],
+  address: Scalars['String']
+};
+
+
+export type AddressLinkStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLinkStart: Maybe<(
+    { __typename?: 'AddressLinkType' }
+    & Pick<AddressLinkType, 'sign_message' | 'message' | 'address_id'>
+  )> }
+);
+
+export type AddressLinkConfirmMutationVariables = {
+  address_id: Scalars['Int'],
+  signature: Scalars['String']
+};
+
+
+export type AddressLinkConfirmMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLinkConfirm: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type AddressUnlinkMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type AddressUnlinkMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressUnlink: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type AddressesQueryVariables = {};
+
+
+export type AddressesQuery = (
+  { __typename?: 'query_root' }
+  & { addresses: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'address' | 'public_key'>
+  )>>> }
+);
+
 export type UndoEmailChangeMutationVariables = {
   token: Scalars['String']
 };
@@ -5791,6 +5900,139 @@ export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const AddressLinkStartDocument = gql`
+    mutation addressLinkStart($network: String!, $address: String!) {
+  addressLinkStart(network: $network, address: $address) {
+    sign_message
+    message
+    address_id
+  }
+}
+    `;
+export type AddressLinkStartMutationFn = ApolloReactCommon.MutationFunction<AddressLinkStartMutation, AddressLinkStartMutationVariables>;
+
+/**
+ * __useAddressLinkStartMutation__
+ *
+ * To run a mutation, you first call `useAddressLinkStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLinkStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLinkStartMutation, { data, loading, error }] = useAddressLinkStartMutation({
+ *   variables: {
+ *      network: // value for 'network'
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressLinkStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLinkStartMutation, AddressLinkStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLinkStartMutation, AddressLinkStartMutationVariables>(AddressLinkStartDocument, baseOptions);
+      }
+export type AddressLinkStartMutationHookResult = ReturnType<typeof useAddressLinkStartMutation>;
+export type AddressLinkStartMutationResult = ApolloReactCommon.MutationResult<AddressLinkStartMutation>;
+export type AddressLinkStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLinkStartMutation, AddressLinkStartMutationVariables>;
+export const AddressLinkConfirmDocument = gql`
+    mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
+  addressLinkConfirm(address_id: $address_id, signature: $signature) {
+    message
+  }
+}
+    `;
+export type AddressLinkConfirmMutationFn = ApolloReactCommon.MutationFunction<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>;
+
+/**
+ * __useAddressLinkConfirmMutation__
+ *
+ * To run a mutation, you first call `useAddressLinkConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLinkConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLinkConfirmMutation, { data, loading, error }] = useAddressLinkConfirmMutation({
+ *   variables: {
+ *      address_id: // value for 'address_id'
+ *      signature: // value for 'signature'
+ *   },
+ * });
+ */
+export function useAddressLinkConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>(AddressLinkConfirmDocument, baseOptions);
+      }
+export type AddressLinkConfirmMutationHookResult = ReturnType<typeof useAddressLinkConfirmMutation>;
+export type AddressLinkConfirmMutationResult = ApolloReactCommon.MutationResult<AddressLinkConfirmMutation>;
+export type AddressLinkConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>;
+export const AddressUnlinkDocument = gql`
+    mutation addressUnlink($address: String!) {
+  addressUnlink(address: $address) {
+    message
+  }
+}
+    `;
+export type AddressUnlinkMutationFn = ApolloReactCommon.MutationFunction<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
+
+/**
+ * __useAddressUnlinkMutation__
+ *
+ * To run a mutation, you first call `useAddressUnlinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressUnlinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressUnlinkMutation, { data, loading, error }] = useAddressUnlinkMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressUnlinkMutation, AddressUnlinkMutationVariables>(AddressUnlinkDocument, baseOptions);
+      }
+export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
+export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
+export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
+export const AddressesDocument = gql`
+    query addresses {
+  addresses {
+    address
+    public_key
+  }
+}
+    `;
+
+/**
+ * __useAddressesQuery__
+ *
+ * To run a query within a React component, call `useAddressesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddressesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddressesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
+        return ApolloReactHooks.useQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
+      }
+export function useAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
+        }
+export type AddressesQueryHookResult = ReturnType<typeof useAddressesQuery>;
+export type AddressesLazyQueryHookResult = ReturnType<typeof useAddressesLazyQuery>;
+export type AddressesQueryResult = ApolloReactCommon.QueryResult<AddressesQuery, AddressesQueryVariables>;
 export const UndoEmailChangeDocument = gql`
     mutation undoEmailChange($token: String!) {
   undoEmailChange(token: $token) {
