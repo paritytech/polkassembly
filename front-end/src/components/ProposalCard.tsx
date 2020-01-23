@@ -1,23 +1,65 @@
 import * as React from 'react';
-import { Icon, Grid } from 'semantic-ui-react';
+import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
+import VotingBar from '../ui-components/VotingBar';
+import StatusTag from '../ui-components/StatusTag';
 
 const ProposalCard = styled.div`
     padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
-    border: 1px solid #EEE;
+	border: 1px solid #EEE;
+
+	&:hover {
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_secondary;
+		text-decoration: none;
+	}
+
+	.ui.horizontal.segments {
+		box-shadow: none;
+		border: none;
+		margin: 0.5rem 0;
+	}
+
+	.ui.segment {
+		padding: 0;
+	}
+
+	.ui.horizontal.segments>.segment {
+		border-left: none;
+	}
+
+	.onchain_id {
+		max-width: 7rem;
+	}
+
     h4 {
         color: black_primary;
         font-weight: 500;
-        font-size: 1.8rem;
-        margin-bottom: 0.3rem; 
-    }
+        font-size: lg;
+		margin-bottom: 0.3rem; 
+		display: inline-block;
+	}
+
+	.titel {
+		display: inline-block;
+		float: left;
+	}
+
+	.status_tag {
+		float: right;
+	}
+	.creationlabel {
+		display: block;
+	}
+
     ul {
         color: grey_secondary;
-        font-size: 1rem;
-        font-family: 'Roboto Mono';
+        font-size: xs;
         font-weight: 500;
+        margin-top: 0.8rem;
         li {
             display: inline;
             margin-right: 1.5rem;
@@ -49,22 +91,28 @@ export default function Proposal ({
 
 	return (
 		<ProposalCard>
-			<Grid>
-				<Grid.Column width={2}>
+			<Segment.Group horizontal>
+				<Segment className='onchain_id'>
 					<h4>#{proposal_onchain_id}</h4>
-				</Grid.Column>
-				<Grid.Column width={14}>
-					<h4>{title}</h4>
+				</Segment>
+				<Segment>
+					<h4 className='title'>{title}</h4>
+					<StatusTag className='status_tag' status='cancelled'></StatusTag>
 					<CreationLabel
 						created_at={created_at}
 						username={authorUsername}
+					/>
+					<VotingBar
+						percent='42'
+						threshold='72'
+						/*value='Yes Votes' */
 					/>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 						<li><Icon name='certificate' /> {comments} KSM deposited</li>
 					</ul>
-				</Grid.Column>
-			</Grid>
+				</Segment>
+			</Segment.Group>
 		</ProposalCard>
 	);
 }

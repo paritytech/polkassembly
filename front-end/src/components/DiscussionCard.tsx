@@ -5,18 +5,28 @@ import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
     padding: 2rem 3rem 1.5rem 3rem;
-    background-color: #FFF;
-    border: 1px solid #EEE;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey_light;
+
+    &:hover {
+        border-style: solid;
+        border-width: 1px;
+        border-color: grey_secondary;
+        text-decoration: none;
+    }
+
     h4 {
-        color: #282828;
+        color: black_primary;
         font-weight: 500;
         font-size: 1.6rem;
         margin-bottom: 0.3rem; 
     }
     ul {
-        color: #B5AEAE;
-        font-size: 1rem;
-        font-family: 'Roboto Mono';
+        color: grey_secondary;
+        font-size: xs;
+        font-family: 'Roboto';
         font-weight: 500;
         li {
             display: inline;

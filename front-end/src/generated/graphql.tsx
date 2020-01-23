@@ -4835,7 +4835,13 @@ export type LatestPostsQuery = (
         { __typename?: 'comments_aggregate_fields' }
         & Pick<Comments_Aggregate_Fields, 'count'>
       )> }
-    ) }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), onchain_proposal: Maybe<(
+      { __typename?: 'onchain_proposals' }
+      & Pick<Onchain_Proposals, 'onchain_proposal_id'>
+    )> }
   )> }
 );
 
@@ -5321,6 +5327,13 @@ export const LatestPostsDocument = gql`
       aggregate {
         count
       }
+    }
+    type {
+      name
+      id
+    }
+    onchain_proposal {
+      onchain_proposal_id
     }
   }
 }

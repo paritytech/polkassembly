@@ -23,7 +23,7 @@ const Discussions = ({ className, data }: Props) => {
 	return (
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Latest Discussions</h3>
 					<ul className='Discussions__list'>
 						{!!data.posts &&
@@ -46,7 +46,7 @@ const Discussions = ({ className, data }: Props) => {
 							)}
 					</ul>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<div className='mainButtonContainer'>
 						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
@@ -98,13 +98,12 @@ export default styled(Discussions)`
 		list-style-type: none;
 	}
 
+	h3 {
+		margin-bottom 2rem;
+	}
+
 	.Discussions__item {
 		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
 		a:hover {
 			tex	t-decoration: none;
 		}

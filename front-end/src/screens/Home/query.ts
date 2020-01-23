@@ -16,6 +16,13 @@ export const QUERY_LATEST_POSTS = gql`
                     count
                 }
             }
+            type {
+                name
+                id
+            }
+            onchain_proposal {
+              onchain_proposal_id
+            }
         }
     }
 `;

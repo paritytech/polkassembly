@@ -136,7 +136,7 @@ export default styled(MenuBar)`
 
 		.item {
 			color: grey_secondary;
-			font-weight: 500;
+			font-weight: 400;
 			&:hover {
 				color: white;
 			}

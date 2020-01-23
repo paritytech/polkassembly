@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import ProposalCard from '../../components/ProposalCard';
 import { LatestProposalPostsQuery } from '../../generated/graphql';
@@ -14,9 +14,9 @@ interface Props {
 const Proposals = ({ className, data }: Props) => {
 	return (
 		<Container className={className}>
-			<h3>Latest Proposals</h3>
 			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
+					<h3>Latest Proposals</h3>
 					<ul className='proposals__list'>
 						{!!data.posts &&
 						data.posts.map(
@@ -39,7 +39,7 @@ const Proposals = ({ className, data }: Props) => {
 						)}
 					</ul>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
 				</Grid.Column>
 			</Grid>
 		</Container>
@@ -47,6 +47,10 @@ const Proposals = ({ className, data }: Props) => {
 };
 
 export default styled(Proposals)`
+
+	h3 {
+		margin-bottom 2rem;
+	}
 
 	@media only screen and (max-width: 768px) {
 		h3 {
@@ -66,13 +70,8 @@ export default styled(Proposals)`
 
 	.proposals__item {
 		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
 		a:hover {
-			tex	t-decoration: none;
+			text-decoration: none;
 		}
 	}
 `;

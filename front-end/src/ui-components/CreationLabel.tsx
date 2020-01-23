@@ -15,11 +15,14 @@ const CreationLabel = ({ className, created_at, text='posted', username } : Prop
 	</span>;
 };
 
-export default styled(CreationLabel)`
+export default styled(CreationLabel).attrs(() => ({
+	className: 'creationlabel'
+}))`
     color: grey_primary;
     font-weight: 400;
     font-size: sm;
     margin-bottom: 0.6rem;
+    display: inline-block;
         
     span {
         color: black_text;
