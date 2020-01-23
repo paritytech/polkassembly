@@ -22,12 +22,9 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const { setUserDetailsContextState, username } = currentUser;
 
 	const handleLogout = () => {
-		logoutMutation()
-			.then(() => {
-				logout(setUserDetailsContextState);
-				history.push('/');
-			})
-			.catch( e => console.error(e));
+		logoutMutation().catch(e => console.error(e));
+		logout(setUserDetailsContextState);
+		history.push('/');
 	};
 
 	// Menu Items
