@@ -17,7 +17,7 @@ kubectl apply -f ./kubernetes/init.yaml
 
 2. Adding a your k8s cluster to gitlab-ci 
 Follow [this](https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#add-existing-cluster) instructions
-but use the *authentication_token* from the *ServiceAccount* created in step 1. and make sure to uncheck the *RBAC-enabled cluster* box.
+**but** use the *authentication_token* from the *ServiceAccount* created in step 1. and make sure to uncheck the *RBAC-enabled cluster* box.
 
 3. Configure access to the Docker Registry
 * login to manually to you registry in question
