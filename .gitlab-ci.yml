@@ -87,6 +87,14 @@ dockerize-auth-server:
   only:
       - master
   <<: *build_and_push
+  
+dockerize-hasura:
+  stage: dockerize
+  environment:
+    name: parity-build
+  only:
+      - master
+  <<: *build_and_push
 
 #### stage:                        deploy
 
