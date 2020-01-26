@@ -39,18 +39,18 @@ const StyledForm = styled(SUIForm)`
     }
 
     &.ui.form {
-        .field {
+
+        .field
             > label {
                 font-size: input_text_size;
                 font-weight: 500;
                 color: black_primary !important;
                 margin-bottom: 0.6rem;
-            }
         }
 
         .fields {
             margin-bottom: 2rem;
-
+    
             @media only screen and (max-width: 767px) {
                 margin-bottom: 1.25rem;
             }
@@ -83,7 +83,7 @@ const StyledForm = styled(SUIForm)`
             color: black_text;
             background-color: grey_light;
         }
-        
+
     @media only screen and (max-width: 576px) {
         margin-top: 0rem;
         padding: 2rem;
