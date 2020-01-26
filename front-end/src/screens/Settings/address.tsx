@@ -144,15 +144,14 @@ const Address = ({ className }: Props): JSX.Element => {
 	return (
 		<Form className={className} standalone='false'>
 			<Form.Group>
-				{/* <div className="header">Available Addresses</div> */}
 				{accounts.length ? (
 					<Form.Field width={16}>
-						<label>Available Addresses</label>
+						<label className="header">Available Addresses</label>
 						<div className="ui list">
 							{accounts.map(account => (
 								<Grid key={account.address}>
 									<Grid.Column width={10}>
-										<div className="item" style={{ display: 'inline-block' }}>
+										<div className="item">
 											<Identicon
 												className="image"
 												value={account.address}
