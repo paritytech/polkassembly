@@ -1,12 +1,12 @@
-import { expect } from 'chai';
 import 'mocha';
+import { expect } from 'chai';
+import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
 import addresses from '../../../src/resolvers/query/addresses';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
-import { uuid } from 'uuidv4';
 
 describe('user query', () => {
 	let signupResult;
