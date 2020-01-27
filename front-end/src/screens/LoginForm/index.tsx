@@ -59,7 +59,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 								ref={register({ minLength: 3, required: true })}
 								type='text'
 							/>
-							{errors.username && <span className={'errorText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
+							{errors.username && <span className={'dangerText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 
@@ -73,7 +73,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 								ref={register({ minLength: 6, required: true })}
 								type='password'
 							/>
-							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
+							{errors.password && <span className={'dangerText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 
 							<div className='text-muted'>
 								<Link className='dangerText' to='/request-reset-password'>Forgot your password?</Link>
@@ -107,10 +107,6 @@ export default styled(LoginForm)`
 
 	input.error {
 		border-color: #fe4850 !important;
-	}
-
-	.errorText {
-		color: #fe4850;
 	}
 
 	.dangerText {
