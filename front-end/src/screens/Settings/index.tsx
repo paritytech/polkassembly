@@ -53,6 +53,30 @@ export default styled(Settings)`
 		margin-top: 0.2rem;
 	}
 
+	.ui.form:not(.unstackable) 
+	.fields:not(.unstackable)>.ten.wide.field {
+
+		@media only screen and (max-width: 767px)  {
+			width: 70%!important;
+		}
+
+		@media only screen and (max-width: 576px) {
+			width: 60%!important;
+		}
+	}
+
+	.ui.form:not(.unstackable) 
+	.fields:not(.unstackable)>.six.wide.field {
+
+		@media only screen and (max-width: 767px)  {
+			width: 30%!important;
+		}
+
+		@media only screen and (max-width: 576px) {
+			width: 40%!important;
+		}
+	}
+
 	@media only screen and (max-width: 576px) {
 		padding: 2rem!important;
 
@@ -65,5 +89,5 @@ export default styled(Settings)`
 			padding: 0.8rem 1rem;
 			border-radius: 0.5rem;
 		}
-    }
+	}
 `;
