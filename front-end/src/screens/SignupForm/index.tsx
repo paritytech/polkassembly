@@ -78,6 +78,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								<Popup
 									trigger={<Icon name='question circle'/>}
 									content='We only use your name as a more readable alternative to your username.'
+									style={{ marginLeft: '-0.7rem' }}
 								/>
 							</label>
 							<input
@@ -95,6 +96,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								<Popup
 									trigger={<Icon name='question circle'/>}
 									content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
+									style={{ marginLeft: '-0.7rem' }}
 								/>
 							</label>
 							<input
