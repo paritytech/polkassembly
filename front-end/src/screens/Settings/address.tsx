@@ -168,6 +168,7 @@ const Address = ({ className }: Props): JSX.Element => {
 										<div className="button-container">
 											<Button
 												className={'social'}
+												negative={linked[account.address] ? true : false}
 												onClick={() => linked[account.address] ? handleUnlink(account) : handleLink(account)}
 											>
 												{linked[account.address] ? unlinkIcon : linkIcon}
