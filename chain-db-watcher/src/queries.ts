@@ -5,15 +5,9 @@ export const proposalsSubscription = gql`
         proposal {
             mutation
                 node {
-                    depositAmount
-                    method
+                    id
                     proposalId
                     proposer
-                    proposalArguments {
-                        name
-                        value
-                    }
-                    section
                 }
         }
     }
