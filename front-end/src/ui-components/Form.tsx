@@ -38,6 +38,17 @@ const StyledForm = styled(SUIForm)`
         }
     }
 
+    .text-muted {
+        color: grey_primary;
+
+        a {
+            color: grey_primary;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: grey_primary;
+        }
+    }
+
     &.ui.form {
 
         .field
