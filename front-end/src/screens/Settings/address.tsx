@@ -182,7 +182,7 @@ const Address = ({ className }: Props): JSX.Element => {
 				) : (
 					<>
 						<Form.Field width={16}>
-							<div className='text-muted'>No addresses detected.</div>&nbsp;
+							<div className='text-muted'>No address detected.</div>&nbsp;
 							<div className='text-muted'>Please reload this page with <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
 						</Form.Field>
 					</>
