@@ -6,8 +6,6 @@
   "extends": [
       "eslint:recommended",
       "semistandard",
-      "prettier",
-      "plugin:prettier/recommended",
       "plugin:import/typescript",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
@@ -22,7 +20,6 @@
     "project": ["./tsconfig.json"]
   },
   "plugins": [
-      "prettier",
       "@typescript-eslint",
       "simple-import-sort"
   ],
@@ -34,11 +31,11 @@
     "comma-dangle": ["error", "never"],
     "indent": ["error", "tab"],
     "no-multiple-empty-lines": ["error", {"max": 1}],
+    "no-tabs": ["error", { "allowIndentationTabs": true }],
     "no-trailing-spaces": ["warn"],
     "no-unused-vars": "off",
     "object-curly-spacing": ["error", "always"],
     "no-extra-parens": ["error", "all", { "returnAssign": false }],
-    "prettier/prettier": ["error", { "singleQuote": true, "useTabs":true, "tabWidth": 4 }],
     "quotes": ["error", "single",  { "avoidEscape": true }],
     "semi": [2, "always"],
     "switch-colon-spacing": ["error", {"after": true, "before": false}]

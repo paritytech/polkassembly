@@ -82,10 +82,11 @@ export const getToken = async (): Promise<string> => {
 export const proposalDiscussionExists = async (
 	onchainProposalId: number
 ): Promise<boolean> => {
-	if (!discussionGraphqlUrl)
+	if (!discussionGraphqlUrl) {
 		throw new Error(
 			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
 		);
+	}
 
 	try {
 		const client = new GraphQLClient(discussionGraphqlUrl, {
@@ -135,10 +136,11 @@ export const canUpdateDiscussionDB = async ({
 	onchainReferendumId: number;
 	onchainProposalId: number;
 }): Promise<boolean> => {
-	if (!discussionGraphqlUrl)
+	if (!discussionGraphqlUrl) {
 		throw new Error(
 			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
 		);
+	}
 
 	try {
 		const client = new GraphQLClient(discussionGraphqlUrl, {
@@ -153,16 +155,15 @@ export const canUpdateDiscussionDB = async ({
 			.then(data => {
 				if (data?.onchain_links?.length) {
 					if (
-						data.onchain_links[0].onchainProposalId ===
-							onchainProposalId &&
-						data.onchain_links[0].onchain_referendum_id === null
+						data.onchain_links[0].onchainProposalId === onchainProposalId &&
+							data.onchain_links[0].onchain_referendum_id === null
 					) {
 						return true;
 					} else {
 						return false;
 					}
 				}
-				// there is no discussion db row with either the proposal id, not the referendum id
+				// there is no discussion db row with either the proposal id, or the referendum id
 				return false;
 			})
 			.catch(err => {
@@ -206,18 +207,21 @@ export const addPostAndProposal = async ({
 	proposer: string;
 	onchainProposalId: number;
 }): Promise<void> => {
-	if (!democracyTopicId)
+	if (!democracyTopicId) {
 		throw new Error(
 			'Please specify an environment variable for the DEMOCRACY_TOPIC_ID.'
 		);
-	if (!proposalPostTypeId)
+	}
+	if (!proposalPostTypeId) {
 		throw new Error(
 			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
 		);
-	if (!proposalPostTypeId)
+	}
+	if (!proposalPostTypeId) {
 		throw new Error(
 			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
 		);
+	}
 
 	const proposalAndPostVariables = {
 		author_id: botProposalUserId,
@@ -232,14 +236,16 @@ export const addPostAndProposal = async ({
 	try {
 		const token = await getToken();
 
-		if (!token)
+		if (!token) {
 			throw new Error(
 				'No authorization token found for the chain-db-watcher.'
 			);
-		if (!discussionGraphqlUrl)
+		}
+		if (!discussionGraphqlUrl) {
 			throw new Error(
 				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
 			);
+		}
 
 		const client = new GraphQLClient(discussionGraphqlUrl, {
 			headers: {
@@ -298,10 +304,11 @@ export const getAssociatedProposalId = ({
 	preimageHash,
 	referendumCreationBlockHash
 }: ReferendumInfo): Promise<number | null> => {
-	if (!chainGraphqlServerUrl)
+	if (!chainGraphqlServerUrl) {
 		throw new Error(
 			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
 		);
+	}
 
 	try {
 		const client = new GraphQLClient(chainGraphqlServerUrl, {
@@ -390,10 +397,11 @@ export const addReferendumId = async ({
 	onchainProposalId,
 	onchainReferendumId
 }: MatchingInfo): Promise<boolean> => {
-	if (!discussionGraphqlUrl)
+	if (!discussionGraphqlUrl) {
 		throw new Error(
 			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
 		);
+	}
 
 	try {
 		const token = await getToken();

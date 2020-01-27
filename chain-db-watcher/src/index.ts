@@ -17,7 +17,7 @@ import { proposalSubscription, referendumSubscription } from './queries';
 dotenv.config();
 
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
-const getWsClient = function(wsurl: string): SubscriptionClient {
+const getWsClient = function (wsurl: string): SubscriptionClient {
 	const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
 	return client;
 };
@@ -34,7 +34,7 @@ const createSubscriptionObservable = (
 	return execute(link, { query: query, variables: variables });
 };
 
-function main() {
+function main () {
 	if (!graphQLEndpoint) {
 		console.error(
 			chalk.red('GraphQL endpoint not set in environment variables!')
@@ -70,17 +70,12 @@ function main() {
 							})
 								.then(() =>
 									console.log(
-										`${chalk.green(
-											'✔︎'
-										)} Proposal ${proposalId.toString()} added to the database.`
+										`${chalk.green('✔︎')} Proposal ${proposalId.toString()} added to the database.`
 									)
 								)
 								.catch(error =>
 									console.error(
-										chalk.red(
-											`⚠︎ Error adding a new proposal: ${error}`
-										)
-									)
+										chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
 								);
 						} else {
 							console.error(
@@ -143,17 +138,11 @@ function main() {
 								})
 									.then(() =>
 										console.log(
-											`${chalk.green(
-												'✔︎'
-											)} Referendum id ${referendumId} added to the proposal id ${associatedProposalId}.`
+											`${chalk.green('✔︎')} Referendum id ${referendumId} added to the proposal id ${associatedProposalId}.`
 										)
 									)
 									.catch((error: any) =>
-										console.error(
-											chalk.red(
-												`⚠︎ Error adding a new proposal: ${error}`
-											)
-										)
+										console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
 									);
 							} else {
 								console.error(

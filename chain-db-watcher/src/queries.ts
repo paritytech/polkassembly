@@ -14,27 +14,25 @@ export const proposalSubscription = gql`
 `;
 
 // e.g returns
-// {
-// 	"data": {
-// 	  "proposal": {
-// 		"mutation": "CREATED",
-// 		"node": {
-// 		  "author": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-// 		  "method": "remark",
-// 		  "metaDescription": "[ Make some on-chain remark.]",
-// 		  "proposalId": 0,
-// 		  "section": "system",
-// 		  "depositAmount": "123000000000000",
-// 		  "proposalArguments": [
-// 			{
-// 			  "name": "_remark",
-// 			  "value": "0x00"
-// 			}
-// 		  ],
-// 		}
-// 	  }
-// 	}
-// }
+// data: {
+//  proposal: {
+//      mutation: 'CREATED',
+//      node: {
+//         author: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+//         method: 'remark',
+//         metaDescription: '[ Make some on-chain remark.]',
+//         proposalId: 0,
+//         section: 'system',
+//         depositAmount: '123000000000000',
+//         proposalArguments: [
+//             {
+//             name: '_remark',
+//             value: '0x00'
+//             }
+//         ]
+//      }
+//   }
+// };
 
 export const referendumSubscription = gql`
 	subscription ProposalsSubscription {
@@ -104,16 +102,16 @@ export const addPostAndProposalMutation = `
 
 // returns
 // {
-// 	"data": {
-// 	  "insert_onchain_links": {
-// 		"returning": [
-// 		  {
-// 			"id": 1
-// 		  }
-// 		]
-// 	  },
-// 	  "__typename": "mutation_root"
-// 	}
+//  "data": {
+//    "insert_onchain_links": {
+//      "returning": [
+//        {
+//          "id": 1
+//        }
+//      ]
+//    },
+//    "__typename": "mutation_root"
+//  }
 //   }
 
 export const getProposalQuery = `
