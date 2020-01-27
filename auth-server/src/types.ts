@@ -76,6 +76,16 @@ export interface Subscription {
     subscribed: boolean
 }
 
+export interface AddressType {
+    address: string
+    public_key: string
+}
+
+export interface AddressLinkStartType extends MessageType {
+    address_id: number
+    sign_message: string
+}
+
 export interface UndoEmailChangeResponseType extends ChangeResponseType {
     email: string
 }

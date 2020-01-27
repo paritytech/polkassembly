@@ -1,18 +1,14 @@
 import { gql } from 'apollo-server-express';
 
+import addresses from './query/addresses';
 import userQuery from './query/user';
 import usersQuery from './query/users';
 import subscription from './query/subscription';
 import tokenQuery from './query/token';
 
-import changeResponseType from './type/changeResponse';
-import loginResponseType from './type/loginResponse';
-import messageType from './type/message';
-import subscriptionType from './type/subscription';
-import tokenType from './type/token';
-import undoEmailChangeResponse from './type/undoEmailChangeResponse';
-import userType from './type/user';
-
+import addressLinkConfirm from './mutation/addressLinkConfirm';
+import addressLinkStart from './mutation/addressLinkStart';
+import addressUnlink from './mutation/addressUnlink';
 import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
@@ -27,7 +23,19 @@ import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
 
+import addressLinkType from './type/addressLinkType';
+import address from './type/address';
+import changeResponseType from './type/changeResponse';
+import loginResponseType from './type/loginResponse';
+import messageType from './type/message';
+import subscriptionType from './type/subscription';
+import tokenType from './type/token';
+import undoEmailChangeResponse from './type/undoEmailChangeResponse';
+import userType from './type/user';
+
 export default gql`
+	${addressLinkType}
+	${address}
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
@@ -37,6 +45,7 @@ export default gql`
 	${userType}
 
 	type Query {
+		${addresses}
 		${subscription}
 		${tokenQuery}
 		${userQuery}
@@ -44,6 +53,9 @@ export default gql`
 	}
 
 	type Mutation {
+		${addressLinkConfirm}
+		${addressLinkStart}
+		${addressUnlink}
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}
