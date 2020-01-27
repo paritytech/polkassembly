@@ -15,7 +15,7 @@ interface argsType {
 
 export default async (parent, { email, password, username, name }: argsType, ctx: Context): Promise<SignUpResultType> => {
 
-	if (!validateEmail(email)) {
+	if (email && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 

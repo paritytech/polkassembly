@@ -137,7 +137,7 @@ export type MutationResetPasswordArgs = {
 
 
 export type MutationSignupArgs = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
@@ -211,7 +211,7 @@ export type UserFragment = (
 );
 
 export type SignupMutationVariables = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
@@ -280,7 +280,7 @@ export const UserFragmentDoc = gql`
 }
     `;
 export const SignupDocument = gql`
-    mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
+    mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
     user {
       ...user

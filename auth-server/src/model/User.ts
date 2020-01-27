@@ -42,8 +42,8 @@ export default class User extends Model {
 			properties: {
 				id: { type: 'integer' },
 				username: { type: 'string', minLength: 1, maxLength: 255 },
-				email: { type: 'string', minLength: 1, maxLength: 255 },
-				name: { type: 'string', minLength: 1, maxLength: 512 },
+				email: { type: 'string', maxLength: 255 },
+				name: { type: 'string', maxLength: 512 },
 				email_verified: { type: 'boolean' }
 			}
 		};

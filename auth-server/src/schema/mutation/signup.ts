@@ -1,6 +1,6 @@
 export default `
     signup(
-        email: String!
+        email: String
         password: String!
         username: String!
         name: String
