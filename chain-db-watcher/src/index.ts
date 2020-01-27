@@ -34,7 +34,7 @@ const createSubscriptionObservable = (
 	return execute(link, { query: query, variables: variables });
 };
 
-function main () {
+function main (): void {
 	if (!graphQLEndpoint) {
 		console.error(
 			chalk.red('GraphQL endpoint not set in environment variables!')
@@ -80,7 +80,7 @@ function main () {
 						} else {
 							console.error(
 								chalk.red(
-									`✖︎ Proposal id ${proposalId.toString()} already exists in the database. Not inserted.`
+									`✖︎ Proposal id ${proposalId.toString()} already exists in the dicsussion database. Not inserted.`
 								)
 							);
 						}
@@ -108,7 +108,7 @@ function main () {
 			if (!(referendumStatus[0].status === 'Started')) {
 				console.error(
 					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected Status.`
+						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "Started", got ${referendumStatus[0].status}."`
 					)
 				);
 			}
@@ -126,20 +126,15 @@ function main () {
 						);
 					}
 
-					canUpdateDiscussionDB({
-						onchainProposalId: associatedProposalId,
-						onchainReferendumId: referendumId
-					})
-						.then(alreadyExist => {
-							if (!alreadyExist) {
+					canUpdateDiscussionDB(associatedProposalId)
+						.then(canUpdate => {
+							if (canUpdate) {
 								addReferendumId({
 									onchainProposalId: associatedProposalId,
 									onchainReferendumId: referendumId
 								})
 									.then(() =>
-										console.log(
-											`${chalk.green('✔︎')} Referendum id ${referendumId} added to the proposal id ${associatedProposalId}.`
-										)
+										console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
 									)
 									.catch((error: any) =>
 										console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
@@ -147,7 +142,7 @@ function main () {
 							} else {
 								console.error(
 									chalk.red(
-										`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db.`
+										`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
 									)
 								);
 							}

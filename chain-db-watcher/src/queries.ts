@@ -122,12 +122,11 @@ export const getProposalQuery = `
     }
 `;
 
-export const getReferendumQuery = `
-    query getReferendum($onchainReferendumId: Int!, $onchainProposalId: Int!) {
-        onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_eq: $onchainReferendumId}}}) {
-        id
-        onchain_proposal_id
-        onchain_referendum_id
+export const getProposalWithNullReferendumQuery = `
+    query getReferendum($onchainProposalId: Int!) {
+        onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+            id
+            onchain_proposal_id
         }
     }
 `;
