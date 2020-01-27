@@ -74,10 +74,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>
-								Full Name&nbsp;
+								Display Name&nbsp;
 								<Popup
 									trigger={<Icon name='question circle'/>}
-									content='We only use your name as a more readable alternative to your username.'
+									content='We only use your display name as a more readable alternative to your username.'
 									style={{ marginLeft: '-0.7rem' }}
 								/>
 							</label>
