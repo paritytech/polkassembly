@@ -37,17 +37,17 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 
 	const isValidSr = schnorrkelVerify(dbAddress.sign_message, signature, publicKey);
 
-	if (isValidSr) {
-		await Address
-			.query()
-			.patch({
-				public_key: Buffer.from(publicKey).toString('hex'),
-				linked: true
-			})
-			.findById(address_id);
-
-		return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
-	} else {
-		return { message: messages.ADDRESS_LINKING_FAILED };
+	if (!isValidSr) {
+		throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 	}
+
+	await Address
+		.query()
+		.patch({
+			public_key: Buffer.from(publicKey).toString('hex'),
+			linked: true
+		})
+		.findById(address_id);
+
+	return { message: messages.ADDRESS_LINKING_SUCCESSFUL };
 };
