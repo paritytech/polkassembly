@@ -15,7 +15,7 @@ const PostContent = ({ post }:{post: PostFragment}) => {
 			<div className='post_info'>
 				<CreationLabel
 					created_at={created_at}
-					displayname={ author.name ? author.name : undefined}
+					displayname={author.name}
 					username={author.username }
 				/>
 				<UpdateLabel
