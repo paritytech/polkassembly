@@ -1,0 +1,14 @@
+- args:
+    hasura_fields:
+    - onchain_referendum_id
+    name: onchain_referendum
+    remote_field:
+      referendum:
+        arguments:
+          where:
+            referendumId: $onchain_referendum_id
+    remote_schema: chain-db
+    table:
+      name: onchain_links
+      schema: public
+  type: create_remote_relationship

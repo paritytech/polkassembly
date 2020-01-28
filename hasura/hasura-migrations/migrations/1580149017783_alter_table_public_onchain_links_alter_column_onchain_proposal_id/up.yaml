@@ -1,0 +1,11 @@
+- args:
+    sql: ALTER TABLE "public"."onchain_links" ALTER COLUMN "onchain_proposal_id" TYPE
+      int4;
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."onchain_links" ALTER COLUMN "onchain_proposal_id" DROP
+      NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."onchain_links"."onchain_proposal_id" IS E''
+  type: run_sql
