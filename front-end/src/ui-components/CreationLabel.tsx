@@ -14,7 +14,7 @@ interface Props{
 const CreationLabel = ({ className, created_at, displayname, text='posted', username } : Props) => {
 	return <span className={className}>
 		{text} by {
-			displayname !== undefined
+			displayname
 				?
 				<Popup
 					trigger={<span>{displayname}&nbsp;</span>}
