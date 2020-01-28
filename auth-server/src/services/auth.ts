@@ -463,7 +463,8 @@ export default class AuthService {
 
 		const kusamaAddresses = addresses
 			.filter(address => address.network === KUSAMA)
-			.map(address => address.address);
+			.map(address => (`"${address.address}"`))
+			.join(',');
 
 		const tokenContent : JWTPayploadType = {
 			sub: `${id}`,
@@ -477,7 +478,7 @@ export default class AuthService {
 				'x-hasura-default-role': currentRole,
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`,
-				'x-hasura-kusama': kusamaAddresses
+				'x-hasura-kusama': `{${kusamaAddresses}}`
 			}
 		};
 

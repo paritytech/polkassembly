@@ -48,7 +48,7 @@ export interface HasuraClaimPayload {
     'x-hasura-default-role': Role
     'x-hasura-user-email': string
     'x-hasura-user-id': string
-    'x-hasura-kusama': string[]
+    'x-hasura-kusama': string
 }
 
 export interface JWTPayploadType {
