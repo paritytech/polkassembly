@@ -55,39 +55,23 @@ function main (): void {
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
 
 	proposalSubscriptionClient.subscribe(
-		({ data }) => {
+		({ data }): void => {
 			// console.log(`Received Proposal event: ${JSON.stringify(data, null, 2)}`);
 
 			if (data?.proposal.mutation === 'CREATED') {
 				const { proposalId, author } = data.proposal.node;
-
-				proposalDiscussionExists(proposalId)
-					.then(alreadyExist => {
-						if (!alreadyExist) {
-							addPostAndProposal({
-								onchainProposalId: proposalId,
-								proposer: author
-							})
-								.then(() =>
-									console.log(
-										`${chalk.green('✔︎')} Proposal ${proposalId.toString()} added to the database.`
-									)
-								)
-								.catch(error =>
-									console.error(
-										chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
-								);
-						} else {
-							console.error(
-								chalk.red(
-									`✖︎ Proposal id ${proposalId.toString()} already exists in the dicsussion database. Not inserted.`
-								)
-							);
-						}
-					})
-					.catch(error => console.error(chalk.red(error)));
+				proposalDiscussionExists(proposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addPostAndProposal({ onchainProposalId: proposalId, proposer: author }).then(
+							() => console.log(`${chalk.green('✔︎')} Proposal ${proposalId.toString()} added to the database.`)
+						).catch(error => console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`)));
+					} else {
+						console.error(chalk.red(`✖︎ Proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
 			}
-		},
+		}
+		,
 		err => {
 			console.error(chalk.red(err));
 		}

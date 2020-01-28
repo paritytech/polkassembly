@@ -174,7 +174,7 @@ export const addPostAndProposal = async ({
 		onchainProposalId,
 		content: 'Post not yet edited by the proposal author',
 		proposer_address: proposer,
-		title: `#${onchainProposalId} - On chain proposal`,
+		title: 'On chain democracy proposal',
 		topic_id: democracyTopicId,
 		type_id: proposalPostTypeId
 	};
