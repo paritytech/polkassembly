@@ -33,7 +33,8 @@ const Discussions = ({ className, data }: Props) => {
 										<li key={post.id} className='Discussions__item'>
 											{<Link to={`/post/${post.id}`}>
 												<DiscussionCard
-													authorUsername={post.author.username}
+													displayname={post.author.name}
+													username={post.author.username }
 													comments={post.comments_aggregate.aggregate && post.comments_aggregate.aggregate!.count
 														? post.comments_aggregate.aggregate!.count!.toString()
 														: 'no'}

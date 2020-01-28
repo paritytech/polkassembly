@@ -63,7 +63,7 @@ const Fullname = (): JSX.Element => {
 		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field width={10}>
-					<label>Full Name</label>
+					<label>Display Name</label>
 					<input
 						value={name || ''}
 						onChange={onNameChange}

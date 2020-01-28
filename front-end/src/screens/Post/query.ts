@@ -4,6 +4,7 @@ const commentFields = gql`
     fragment commentFields on comments {
         author {
             id
+            name
             username
         }
         content
@@ -30,6 +31,7 @@ const post = gql`
     fragment post on posts {
         author {
             id
+            name
             username
         }
         content
