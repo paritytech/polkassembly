@@ -30,6 +30,7 @@ const post = gql`
     fragment post on posts {
         author {
             id
+            name
             username
         }
         content

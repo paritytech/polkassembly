@@ -5,18 +5,20 @@ import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
     padding: 2rem 3rem 1.5rem 3rem;
-    background-color: #FFF;
-    border: 1px solid #EEE;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey_light;
     h4 {
-        color: #282828;
+        color: black_primary;
         font-weight: 500;
         font-size: 1.6rem;
         margin-bottom: 0.3rem; 
     }
     ul {
-        color: #B5AEAE;
+        color: grey_secondary;
         font-size: 1rem;
-        font-family: 'Roboto Mono';
+        font-family: 'Roboto';
         font-weight: 500;
         li {
             display: inline;
@@ -32,17 +34,21 @@ const DiscussionCard = styled.div`
 `;
 
 export interface DiscussionProps {
-  authorUsername: string
+  /* authorUsername: string */
   created_at: Date
+  displayname?: string
   comments?: string
   title: string
+  username: string
 }
 
 export default function Discussion ({
-	authorUsername,
+	/* authorUsername, */
 	created_at,
+	displayname,
 	comments,
-	title
+	title,
+	username
 }:DiscussionProps) {
 
 	return (
@@ -50,7 +56,9 @@ export default function Discussion ({
 			<h4>{title}</h4>
 			<CreationLabel
 				created_at={created_at}
-				username={authorUsername}
+				displayname={ displayname ? displayname : undefined }
+				username={username }
+				/* username={authorUsername} */
 			/>
 			<ul>
 				<li><Icon name='comment' /> {comments} comments</li>

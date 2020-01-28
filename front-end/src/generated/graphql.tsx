@@ -4861,7 +4861,7 @@ export type LatestDiscussionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -4885,7 +4885,7 @@ export type LatestPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -4923,7 +4923,7 @@ export type PostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
+    & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentRecursiveFragment
@@ -5028,7 +5028,7 @@ export type LatestProposalPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -5240,6 +5240,7 @@ export const PostFragmentDoc = gql`
     fragment post on posts {
   author {
     id
+    name
     username
   }
   content
@@ -5371,6 +5372,7 @@ export const LatestDiscussionPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at
@@ -5419,6 +5421,7 @@ export const LatestPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at
@@ -5662,6 +5665,7 @@ export const LatestProposalPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at
