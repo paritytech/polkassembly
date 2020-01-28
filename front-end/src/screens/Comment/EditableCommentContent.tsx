@@ -46,7 +46,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.update_comments && data.update_comments.affected_rows > 0){
+				if (data?.update_comments && data.update_comments.affected_rows > 0){
 					refetch();
 					queueNotification({
 						header: 'Success!',
