@@ -3345,13 +3345,20 @@ export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Proposalsproposal
   id?: Maybe<Scalars['Int']>,
 };
 
+export type PublicUser = {
+   __typename?: 'PublicUser',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
+};
+
 export type Query = {
    __typename?: 'Query',
   addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
 };
 
 
@@ -3422,7 +3429,7 @@ export type Query_Root = {
   totalIssuances: Array<Maybe<TotalIssuance>>,
   totalIssuancesConnection: TotalIssuanceConnection,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,
@@ -4861,7 +4868,7 @@ export type LatestDiscussionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -4885,7 +4892,7 @@ export type LatestPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -4901,7 +4908,7 @@ export type CommentFieldsFragment = (
   & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
+    & Pick<User, 'id' | 'name' | 'username'>
   )> }
 );
 
@@ -4923,7 +4930,7 @@ export type PostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
+    & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentRecursiveFragment
@@ -5028,7 +5035,7 @@ export type LatestProposalPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -5217,6 +5224,7 @@ export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on comments {
   author {
     id
+    name
     username
   }
   content
@@ -5240,6 +5248,7 @@ export const PostFragmentDoc = gql`
     fragment post on posts {
   author {
     id
+    name
     username
   }
   content
@@ -5371,6 +5380,7 @@ export const LatestDiscussionPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at
@@ -5419,6 +5429,7 @@ export const LatestPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at
@@ -5662,6 +5673,7 @@ export const LatestProposalPostsDocument = gql`
     title
     author {
       id
+      name
       username
     }
     created_at

@@ -7,6 +7,7 @@ export const QUERY_LATEST_POSTS = gql`
             title
             author {
                 id
+                name
                 username
             }
             created_at
