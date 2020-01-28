@@ -16,6 +16,12 @@ import { proposalSubscription, referendumSubscription } from './queries';
 
 dotenv.config();
 
+const subscriptionMutation = {
+	Created: 'CREATED'
+};
+const eventStatus = {
+	Started: 'Started'
+};
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
 const getWsClient = function (wsurl: string): SubscriptionClient {
 	const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
@@ -58,7 +64,7 @@ function main (): void {
 		({ data }): void => {
 			// console.log(`Received Proposal event: ${JSON.stringify(data, null, 2)}`);
 
-			if (data?.proposal.mutation === 'CREATED') {
+			if (data?.proposal.mutation === subscriptionMutation.Created) {
 				const { proposalId, author } = data.proposal.node;
 				proposalDiscussionExists(proposalId).then(alreadyExist => {
 					if (!alreadyExist) {
@@ -80,7 +86,7 @@ function main (): void {
 	referendumSubscriptionClient.subscribe(({ data }): void => {
 		// console.log(`Received Referendum event: ${JSON.stringify(data, null, 2)}`);
 
-		if (data?.referendum.mutation === 'CREATED') {
+		if (data?.referendum.mutation === subscriptionMutation.Created) {
 			const {
 				primage,
 				referendumId,
@@ -89,10 +95,10 @@ function main (): void {
 
 			// At referendum creation, there should be only
 			// a "Started" status event.
-			if (!(referendumStatus[0].status === 'Started')) {
+			if (!(referendumStatus[0].status === eventStatus.Started)) {
 				console.error(
 					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "Started", got ${referendumStatus[0].status}."`
+						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus[0].status}."`
 					)
 				);
 			}
