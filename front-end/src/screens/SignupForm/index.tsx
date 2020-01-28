@@ -86,6 +86,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								name='name'
 								placeholder='Firstname Lastname'
 								type='text'
+								ref={register({ required: false })}
 							/>
 						</Form.Field>
 					</Form.Group>
