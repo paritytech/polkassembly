@@ -38,27 +38,16 @@ export const getToken = async (): Promise<string> => {
 
 	try {
 		const client = new GraphQLClient(authServerUrl, { headers: {} });
+		const data = await client.request(loginMutation, credentials);
 
-		return client
-			.request(loginMutation, credentials)
-			.then(data => {
-				if (data.login?.token) {
-					return data?.login?.token;
-				} else {
-					throw new Error(`Unexpected data: ${data}`);
-				}
-			})
-			.catch(err => {
-				err.response?.errors &&
-					console.error(chalk.red('GraphQL response errors', err.response.errors));
-				err.response?.data &&
-					console.error(chalk.red('Response data if available', err.response.data));
-				throw new Error(err);
-			});
+		if (data.login?.token) {
+			return data?.login?.token;
+		} else {
+			throw new Error(`Unexpected data: ${data}`);
+		}
 	} catch (e) {
-		console.error(
-			chalk.red('Graphql execution error - Proposal already exists')
-		);
+		e.response?.errors && console.error(chalk.red('GraphQL response errors', e.response.errors));
+		e.response?.data && console.error(chalk.red('Response data if available', e.response.data));
 		throw new Error(e);
 	}
 };
