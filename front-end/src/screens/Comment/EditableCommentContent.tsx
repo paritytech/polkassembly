@@ -109,4 +109,4 @@ export default styled(EditableCommentContent)`
 		margin-top: -0.2rem!important;
 		opacity: 1;
 	}
-}`;
+`;
