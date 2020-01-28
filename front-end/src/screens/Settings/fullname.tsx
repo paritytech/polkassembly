@@ -25,7 +25,7 @@ const Fullname = (): JSX.Element => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (name) {
+		if (name || name === '') {
 			changeNameMutation({
 				variables: {
 					newName: name
