@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Grid } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Grid, Icon, Popup } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -73,7 +73,14 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Full Name</label>
+							<label>
+								Display Name&nbsp;
+								<Popup
+									trigger={<Icon name='question circle'/>}
+									content='We only use your display name as a more readable alternative to your username.'
+									style={{ marginLeft: '-0.7rem' }}
+								/>
+							</label>
 							<input
 								className={errors.name ? 'error' : ''}
 								name='name'
@@ -84,7 +91,14 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Email</label>
+							<label>
+								Email&nbsp;
+								<Popup
+									trigger={<Icon name='question circle'/>}
+									content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
+									style={{ marginLeft: '-0.7rem' }}
+								/>
+							</label>
 							<input
 								className={errors.email ? 'error' : ''}
 								name='email'
@@ -146,5 +160,9 @@ export default styled(SignupForm)`
 
 	.errorText {
 		color: #fe4850
+	}
+
+	i.icon.question.circle:before {
+		color: grey_secondary;
 	}
 `;
