@@ -6,6 +6,7 @@ import Email from './email';
 import Fullname from './fullname';
 import Password from  './password';
 import Username from './username';
+import Address from './address';
 
 interface Props {
 	className?: string
@@ -24,6 +25,8 @@ const Settings = ({ className }:Props): JSX.Element => {
 					<Email/>
 					<Divider/>
 					<Password/>
+					<Divider/>
+					<Address/>
 				</Grid.Column>
 				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
 			</Grid>
@@ -50,6 +53,30 @@ export default styled(Settings)`
 		margin-top: 0.2rem;
 	}
 
+	.ui.form:not(.unstackable) 
+	.fields:not(.unstackable)>.ten.wide.field {
+
+		@media only screen and (max-width: 767px)  {
+			width: 70%!important;
+		}
+
+		@media only screen and (max-width: 576px) {
+			width: 60%!important;
+		}
+	}
+
+	.ui.form:not(.unstackable) 
+	.fields:not(.unstackable)>.six.wide.field {
+
+		@media only screen and (max-width: 767px)  {
+			width: 30%!important;
+		}
+
+		@media only screen and (max-width: 576px) {
+			width: 40%!important;
+		}
+	}
+
 	@media only screen and (max-width: 576px) {
 		padding: 2rem!important;
 
@@ -62,5 +89,5 @@ export default styled(Settings)`
 			padding: 0.8rem 1rem;
 			border-radius: 0.5rem;
 		}
-    }
+	}
 `;

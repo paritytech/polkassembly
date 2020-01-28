@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
@@ -17,22 +17,14 @@ interface Props {
 
 const MenuBar = ({ className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
-	const [logoutMutation, { data, error }] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [logoutMutation] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
 	const { history } = useRouter();
 	const { setUserDetailsContextState, username } = currentUser;
 
-	useEffect(() => {
-		if (data && data.logout && data.logout.message) {
-			logout(setUserDetailsContextState);
-			history.push('/');
-		}
-
-		if (error) console.error(error);
-
-	},[data, error, history, setUserDetailsContextState]);
-
 	const handleLogout = () => {
-		logoutMutation();
+		logoutMutation().catch(e => console.error(e));
+		logout(setUserDetailsContextState);
+		history.push('/');
 	};
 
 	// Menu Items

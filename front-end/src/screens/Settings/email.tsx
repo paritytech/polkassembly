@@ -86,7 +86,7 @@ const Email = ({ className }: Props): JSX.Element => {
 				</div>
 					}
 				</Form.Field>
-				<Form.Field width={2}>
+				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
 						secondary

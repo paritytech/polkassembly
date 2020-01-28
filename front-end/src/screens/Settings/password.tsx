@@ -71,7 +71,7 @@ const Password = (): JSX.Element => {
 					{error && <FilteredError text={error.message}/>
 					}
 				</Form.Field>
-				<Form.Field width={2}>
+				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
 						secondary

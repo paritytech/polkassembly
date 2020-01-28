@@ -64,3 +64,14 @@ export interface ModalContextType {
     modal: ModalType,
     setModal: (modal: ModalType) => void;
 }
+
+export interface AccountMeta {
+    genesisHash: string | undefined
+    name: string
+    source: string
+}
+
+export interface Account {
+    address: string
+    meta: AccountMeta
+}

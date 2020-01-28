@@ -23,7 +23,7 @@ const NotFound = ({ className }:Props): JSX.Element => {
 					<br/>
 					<br/>
 					<>
-						<img width={100} src='broken-chain.png'/>
+						<img alt={'broken chain'} width={100} src='broken-chain.png'/>
 					</>
 					<br/>
 					<br/>

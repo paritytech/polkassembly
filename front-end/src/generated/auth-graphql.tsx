@@ -13,6 +13,21 @@ export type Scalars = {
 };
 
 
+export type Address = {
+   __typename?: 'Address',
+  address?: Maybe<Scalars['String']>,
+  public_key?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  source?: Maybe<Scalars['String']>,
+};
+
+export type AddressLinkType = {
+   __typename?: 'AddressLinkType',
+  sign_message?: Maybe<Scalars['String']>,
+  message?: Maybe<Scalars['String']>,
+  address_id?: Maybe<Scalars['Int']>,
+};
+
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE'
@@ -37,6 +52,9 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  addressLinkConfirm?: Maybe<Message>,
+  addressLinkStart?: Maybe<AddressLinkType>,
+  addressUnlink?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -50,6 +68,23 @@ export type Mutation = {
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
+};
+
+
+export type MutationAddressLinkConfirmArgs = {
+  address_id: Scalars['Int'],
+  signature: Scalars['String']
+};
+
+
+export type MutationAddressLinkStartArgs = {
+  network: Scalars['String'],
+  address: Scalars['String']
+};
+
+
+export type MutationAddressUnlinkArgs = {
+  address: Scalars['String']
 };
 
 
@@ -102,7 +137,7 @@ export type MutationResetPasswordArgs = {
 
 
 export type MutationSignupArgs = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
@@ -120,6 +155,7 @@ export type MutationVerifyEmailArgs = {
 
 export type Query = {
    __typename?: 'Query',
+  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -175,7 +211,7 @@ export type UserFragment = (
 );
 
 export type SignupMutationVariables = {
-  email: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
@@ -244,7 +280,7 @@ export const UserFragmentDoc = gql`
 }
     `;
 export const SignupDocument = gql`
-    mutation SIGNUP($email: String!, $password: String!, $username: String!, $name: String) {
+    mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
     user {
       ...user
