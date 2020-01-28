@@ -21,7 +21,7 @@ const Proposals = ({ className, data }: Props) => {
 						{!!data.posts &&
 						data.posts.map(
 							(post) =>
-								!!post && !!post.author && !!post.author.username && (
+								!!post?.author?.username && (
 									<li key={post.id} className='proposals__item'>
 										{<Link to={`/post/${post.id}`}>
 											<GovernanceCard
@@ -32,7 +32,7 @@ const Proposals = ({ className, data }: Props) => {
 													: 'no'}
 												created_at={post.created_at}
 												title={post.title}
-												topic={post.topic && post.topic.name}
+												topic={post.topic.name}
 											/>
 										</Link>}
 									</li>

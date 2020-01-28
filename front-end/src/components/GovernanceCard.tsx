@@ -9,7 +9,7 @@ interface DiscussionProps {
     displayname?: string | null
     comments?: string
 	title: string
-	topic?: string | null
+	topic: string
     username: string
 }
 
@@ -32,7 +32,7 @@ const Discussion = function ({
 				username={username}
 			/>
 			<ul>
-				<li><Icon name='comment' /> {comments} comments - {topic || ''}</li>
+				<li><Icon name='comment' /> {comments} comments - {topic}</li>
 			</ul>
 		</div>
 	);

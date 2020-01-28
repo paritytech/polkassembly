@@ -2724,15 +2724,15 @@ export type Posts = {
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   content?: Maybe<Scalars['String']>,
-  created_at?: Maybe<Scalars['timestamptz']>,
+  created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
   onchain_link?: Maybe<Onchain_Links>,
   title: Scalars['String'],
-  topic?: Maybe<Post_Topics>,
-  topic_id?: Maybe<Scalars['Int']>,
+  topic: Post_Topics,
+  topic_id: Scalars['Int'],
   type: Post_Types,
   type_id: Scalars['Int'],
-  updated_at?: Maybe<Scalars['timestamptz']>,
+  updated_at: Scalars['timestamptz'],
 };
 
 
@@ -6543,10 +6543,10 @@ export type PostFragment = (
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentRecursiveFragment
-  )>, topic: Maybe<(
+  )>, topic: (
     { __typename?: 'post_topics' }
     & Pick<Post_Topics, 'id' | 'name'>
-  )>, type: (
+  ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
   ) }
@@ -6654,10 +6654,10 @@ export type LatestProposalPostsQuery = (
     ), type: (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
-    ), topic: Maybe<(
+    ), topic: (
       { __typename?: 'post_topics' }
       & Pick<Post_Topics, 'id' | 'name'>
-    )>, onchain_link: Maybe<(
+    ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
       & { onchain_proposal: Maybe<(
