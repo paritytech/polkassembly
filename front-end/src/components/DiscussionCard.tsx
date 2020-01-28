@@ -34,7 +34,6 @@ const DiscussionCard = styled.div`
 `;
 
 export interface DiscussionProps {
-  /* authorUsername: string */
   created_at: Date
   displayname?: string
   comments?: string
@@ -43,7 +42,6 @@ export interface DiscussionProps {
 }
 
 export default function Discussion ({
-	/* authorUsername, */
 	created_at,
 	displayname,
 	comments,
@@ -58,7 +56,6 @@ export default function Discussion ({
 				created_at={created_at}
 				displayname={ displayname ? displayname : undefined }
 				username={username }
-				/* username={authorUsername} */
 			/>
 			<ul>
 				<li><Icon name='comment' /> {comments} comments</li>
