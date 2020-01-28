@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 interface Props{
     className?: string
     created_at: Date
-    displayname?: string
+    displayname?: string | null
     text?: string
     username: string
 }
@@ -17,12 +17,12 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 			displayname
 				?
 				<Popup
-					trigger={<span>{displayname}&nbsp;</span>}
+					trigger={<span>{displayname}</span>}
 					content={username}
 					position='top center'
 				/>
 				:
-				<span>{username}&nbsp;</span>
+				<span>{username}</span>
 		}
 		{moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
 	</span>;
@@ -36,6 +36,7 @@ export default styled(CreationLabel)`
         
     span {
         color: black_text;
-        font-weight: 500;
+		font-weight: 500;
+		margin-right: 0.3rem;
     }
 }`;

@@ -25,7 +25,7 @@ const Proposals = ({ className, data }: Props) => {
 									<li key={post.id} className='proposals__item'>
 										{<Link to={`/post/${post.id}`}>
 											<DiscussionCard
-												displayname={ post.author.name ? post.author.name : undefined }
+												displayname={post.author.name}
 												username={post.author.username }
 												comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
 													? 'no'
