@@ -54,7 +54,7 @@ export default function Discussion ({
 			<h4>{title}</h4>
 			<CreationLabel
 				created_at={created_at}
-				displayname={ displayname ? displayname : undefined }
+				displayname={displayname}
 				username={username }
 			/>
 			<ul>
