@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
 
 interface DiscussionProps {
     className?: string
+    comments?: string
     created_at: Date
     displayname?: string | null
-    comments?: string
+    proposalId?: number | null
 	title: string
 	topic: string
     username: string
@@ -15,9 +16,10 @@ interface DiscussionProps {
 
 const Discussion = function ({
 	className,
+	comments,
 	created_at,
 	displayname,
-	comments,
+	proposalId,
 	title,
 	topic,
 	username
@@ -25,15 +27,23 @@ const Discussion = function ({
 
 	return (
 		<div className={className}>
-			<h4>{title}</h4>
-			<CreationLabel
-				created_at={created_at}
-				displayname={displayname}
-				username={username}
-			/>
-			<ul>
-				<li><Icon name='comment' /> {comments} comments - {topic}</li>
-			</ul>
+			<Grid>
+				<Grid.Column width={1}>
+					<h2>#{proposalId}</h2>
+				</Grid.Column>
+				<Grid.Column width={12}>
+					<h4 className={'proposalTitle'}>{title}</h4>
+					<CreationLabel
+						created_at={created_at}
+						displayname={displayname}
+						username={username}
+					/>
+					<ul>
+						<li><Icon name='comment' /> {comments} comments - {topic}</li>
+					</ul>
+				</Grid.Column>
+
+			</Grid>
 		</div>
 	);
 };
