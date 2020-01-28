@@ -24,6 +24,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 			<div className={className}>
 				<CreationLabel
 					created_at={created_at}
+					displayname={author.name}
 					text={'commented'}
 					username={author.username}
 				/>

@@ -55,7 +55,7 @@ export default function Discussion ({
 			<CreationLabel
 				created_at={created_at}
 				displayname={displayname}
-				username={username }
+				username={username}
 			/>
 			<ul>
 				<li><Icon name='comment' /> {comments} comments</li>

@@ -19,6 +19,7 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 				<Popup
 					trigger={<span>{displayname}</span>}
 					content={username}
+					hoverable={true}
 					position='top center'
 				/>
 				:
