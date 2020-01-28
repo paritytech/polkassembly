@@ -31,7 +31,7 @@ const Email = ({ className }: Props): JSX.Element => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (email) {
+		if (email || email === '') {
 			changeEmailMutation({
 				variables: {
 					email
