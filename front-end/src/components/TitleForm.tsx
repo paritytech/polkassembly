@@ -7,7 +7,7 @@ import messages from '../util/messages';
 
 interface Props {
 	className?: string
-	errorTitle?: FieldError | NestDataObject<any> | NestDataObject<any>[]
+	errorTitle?: FieldError | NestDataObject<any> | NestDataObject<any>[] | FieldError[]
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 	value?: string
 }
