@@ -8,7 +8,7 @@ import addresses from '../../../src/resolvers/query/addresses';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 
-describe('user query', () => {
+describe('adresses query', () => {
 	let signupResult;
 	let dbAddresses = [];
 	const fakectx: Context = {
@@ -57,7 +57,7 @@ describe('user query', () => {
 			.del();
 	});
 
-	it('should return users with limit', async () => {
+	it('should return addresses for user', async () => {
 		const result = await addresses(null, null, fakectx);
 		result.forEach((address, i) => {
 			expect(address.address).to.equals(dbAddresses[i].address);
