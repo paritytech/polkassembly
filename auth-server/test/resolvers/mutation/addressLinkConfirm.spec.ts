@@ -67,7 +67,8 @@ describe('addressLinkConfirm mutation', () => {
 
 	it('should not be able to confirm address link with fake signature', async () => {
 		const network = 'kasuma';
-		const address = '5E9ap3x1fQ42vQ4kaD9UiSgDHZJ1WsPN64E1CMKBzAg3h7aX';
+		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 		const signature = 'fake';
 
 		const linkStartRes = await addressLinkStart(null, { network, address }, fakectx);
@@ -75,7 +76,7 @@ describe('addressLinkConfirm mutation', () => {
 		await Address
 			.query()
 			.patch({
-				sign_message: 'da194645-4daf-43b6-b023-6c6ce99ee709'
+				sign_message: signMessage
 			})
 			.findById(linkStartRes.address_id);
 
