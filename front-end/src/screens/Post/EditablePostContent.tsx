@@ -181,4 +181,4 @@ export default styled(EditablePostContent)`
 		display: flex;
 		justify-content: flex-end;
 	}
-}`;
+`;
