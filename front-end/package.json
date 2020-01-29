@@ -5,8 +5,8 @@
   "private": true,
   "homepage": "http://polkassembly.io/",
   "dependencies": {
-    "@graphql-codegen/typescript": "1.11.0",
-    "@graphql-codegen/typescript-react-apollo": "1.11.0",
+    "@graphql-codegen/typescript": "1.11.2",
+    "@graphql-codegen/typescript-react-apollo": "1.11.2",
     "@polkadot/extension-dapp": "^0.20.1",
     "@polkadot/extension-inject": "^0.20.1",
     "@polkadot/keyring": "^1.8.1",
@@ -72,8 +72,8 @@
     ]
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.11.0",
-    "@graphql-codegen/typescript-operations": "1.11.0",
+    "@graphql-codegen/cli": "1.11.2",
+    "@graphql-codegen/typescript-operations": "1.11.2",
     "@types/jest": "25.1.0",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/node": "13.5.1",
