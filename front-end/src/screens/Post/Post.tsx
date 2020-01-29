@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import CreateRootComment from './CreateRootComment';
+import CreatePostComment from './PostCommentForm';
 import EditablePostContent from './EditablePostContent';
 import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 
@@ -19,9 +19,9 @@ interface Props {
 const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id } = useContext(UserDetailsContext);
-	const [isRootCommentFormVisible, setRootCommentFormVisibility] = useState(false);
+	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const toggleRootContentForm = () => {
-		setRootCommentFormVisibility(!isRootCommentFormVisible);
+		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
 
 	if (!post) return <NoPostFound/>;
@@ -36,12 +36,14 @@ const Post = ( { className, data, refetch }: Props ) => {
 							post={post}
 							refetch={refetch}
 						/>
-						{ id && isRootCommentFormVisible && <CreateRootComment
-							onHide={toggleRootContentForm}
-							postId={post.id}
-							refetch={refetch}
-						/>}
-						{ post.comments && post.comments.length
+						{ id && isPostReplyFormVisible &&
+							<CreatePostComment
+								onHide={toggleRootContentForm}
+								postId={post.id}
+								refetch={refetch}
+							/>
+						}
+						{ post.comments?.length
 							? <Comments
 								comments={post.comments}
 								refetch={refetch}

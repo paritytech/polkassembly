@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddRootCommentMutation } from '../../generated/graphql';
+import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddPostCommentMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
@@ -17,13 +17,13 @@ interface Props {
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 }
 
-const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
+const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
 	const { control, errors, handleSubmit } = useForm();
 
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
-	const [addRootCommentMutation, { error }] = useAddRootCommentMutation();
+	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
 
 	if (!id) return <div>You must loggin to comment.</div>;
 
@@ -33,7 +33,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 	};
 
 	const handleSave = () => {
-		addRootCommentMutation( {
+		addPostCommentMutation( {
 			variables: {
 				authorId: id,
 				content,
@@ -75,7 +75,7 @@ const CreateRootComment = ({ className, onHide, postId, refetch }: Props) => {
 	);
 };
 
-export default styled(CreateRootComment)`
+export default styled(PostCommentForm)`
 	margin: 2rem 0;
 
 	.button-container {

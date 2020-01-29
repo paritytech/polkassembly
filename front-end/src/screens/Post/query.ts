@@ -71,8 +71,8 @@ export const EDIT_POST= gql`
   }
 `;
 
-export const ADD_ROOT_COMMENT=gql`
-    mutation AddRootComment ($authorId: Int!, $content: String!, $postId: Int!) {
+export const ADD_POST_COMMENT=gql`
+    mutation AddPostComment ($authorId: Int!, $content: String!, $postId: Int!) {
         __typename
         insert_comments(objects: {author_id: $authorId, content:  $content, post_id: $postId}) {
             affected_rows

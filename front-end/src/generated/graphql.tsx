@@ -7168,17 +7168,17 @@ export const AddRootCommentDocument = gql`
 export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRootCommentMutation, AddRootCommentMutationVariables>;
 
 /**
- * __useAddRootCommentMutation__
+ * __useAddPostCommentMutation__
  *
- * To run a mutation, you first call `useAddRootCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddRootCommentMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addRootCommentMutation, { data, loading, error }] = useAddRootCommentMutation({
+ * const [addRootCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
  *   variables: {
  *      authorId: // value for 'authorId'
  *      content: // value for 'content'
@@ -7186,10 +7186,10 @@ export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRoo
  *   },
  * });
  */
-export function useAddRootCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRootCommentMutation, AddRootCommentMutationVariables>) {
+export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRootCommentMutation, AddRootCommentMutationVariables>) {
         return ApolloReactHooks.useMutation<AddRootCommentMutation, AddRootCommentMutationVariables>(AddRootCommentDocument, baseOptions);
       }
-export type AddRootCommentMutationHookResult = ReturnType<typeof useAddRootCommentMutation>;
+export type AddRootCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddRootCommentMutationResult = ApolloReactCommon.MutationResult<AddRootCommentMutation>;
 export type AddRootCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRootCommentMutation, AddRootCommentMutationVariables>;
 export const PostSubscribeDocument = gql`
