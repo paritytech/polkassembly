@@ -40,6 +40,7 @@ describe('addressLinkConfirm mutation', () => {
 	it('should be able to confirm address link', async () => {
 		const network = 'kasuma';
 		const address = '5E9ap3x1fQ42vQ4kaD9UiSgDHZJ1WsPN64E1CMKBzAg3h7aX';
+		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 		const signature = '0x660535f7dc76abff4de1ab61e194b2af9bfa88ba99de7c418e3a9ddbec2a463847031aad7e9f8634ccfdea4b8ae83723cc3997327b2760958ca04e3364cb3207';
 
 		const linkStartRes = await addressLinkStart(null, { network, address }, fakectx);
@@ -47,7 +48,7 @@ describe('addressLinkConfirm mutation', () => {
 		await Address
 			.query()
 			.patch({
-				sign_message: 'da194645-4daf-43b6-b023-6c6ce99ee709'
+				sign_message: signMessage
 			})
 			.findById(linkStartRes.address_id);
 
