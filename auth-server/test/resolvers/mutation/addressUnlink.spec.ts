@@ -1,6 +1,7 @@
 import 'mocha';
-import { expect } from 'chai';
+import { Keyring } from '@polkadot/api';
 import { AuthenticationError } from 'apollo-server';
+import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
@@ -30,14 +31,18 @@ describe('addressUnlink mutation', () => {
 		signupResult = await signup(null, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 
+		const keyring = new Keyring({ type: 'sr25519' });
+		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const publicKey = keyring.decodeAddress(dbAddress.address);
+
 		dbAddress = await Address
 			.query()
 			.allowInsert('[network, address, user_id, public_key, sign_message, linked]')
 			.insert({
 				network: 'kasuma',
-				address: 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F', // Alice
+				address,
 				user_id: signupResult.user.id,
-				public_key: uuid(),
+				public_key: Buffer.from(publicKey).toString('hex'),
 				sign_message: uuid(),
 				linked: true
 			})
