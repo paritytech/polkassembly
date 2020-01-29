@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
-import StatusTag from 'src/ui-components/StatusTag';
+import StatusTag from '../ui-components/StatusTag';
 
 interface DiscussionProps {
     className?: string

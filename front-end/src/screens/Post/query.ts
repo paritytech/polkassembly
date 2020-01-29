@@ -27,6 +27,15 @@ const commentRecursive = gql`
     ${commentFields}
 `;
 
+const onchainLink = gql`
+    fragment onchainLink on onchain_links {
+        id,
+        onchain_proposal_id,
+        onchain_referendum_id
+    }
+    ${commentFields}
+`;
+
 const post = gql`
     fragment post on posts {
         author {
@@ -41,6 +50,9 @@ const post = gql`
         comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
             ...commentRecursive
         }
+        onchain_link{
+            ...onchainLink
+        }
         title
         topic {
             id
@@ -52,6 +64,7 @@ const post = gql`
         }
     }
     ${commentRecursive}
+    ${onchainLink}
 `;
 
 export const QUERY_POST_AND_COMMENTS = gql`

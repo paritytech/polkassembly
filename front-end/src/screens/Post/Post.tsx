@@ -6,9 +6,11 @@ import styled from '@xstyled/styled-components';
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import GovernancePostInfo from './GovernancePostInfo';
 import CreatePostComment from './PostCommentForm';
 import EditablePostContent from './EditablePostContent';
 import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import SubscriptionButton from '../../components/SubscriptionButton';
 
 interface Props {
 	className?: string;
@@ -20,7 +22,8 @@ const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
-	const toggleRootContentForm = () => {
+
+	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
 
@@ -32,13 +35,21 @@ const Post = ( { className, data, refetch }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
 						<EditablePostContent
-							onReply={toggleRootContentForm}
+							onReply={togglePostReplyForm}
 							post={post}
 							refetch={refetch}
 						/>
+						{
+							(post.onchain_link?.onchain_proposal_id !== null || post.onchain_link.onchain_referendum_id !== null) &&
+							<GovernancePostInfo
+								proposalId={post.onchain_link?.onchain_proposal_id}
+								referendumId={post.onchain_link?.onchain_referendum_id}
+							/>
+						}
+						{id && <SubscriptionButton postId={post.id}/>}
 						{ id && isPostReplyFormVisible &&
 							<CreatePostComment
-								onHide={toggleRootContentForm}
+								onHide={togglePostReplyForm}
 								postId={post.id}
 								refetch={refetch}
 							/>

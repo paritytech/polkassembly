@@ -6534,6 +6534,11 @@ export type CommentRecursiveFragment = (
   & CommentFieldsFragment
 );
 
+export type OnchainLinkFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
+);
+
 export type PostFragment = (
   { __typename?: 'posts' }
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
@@ -6543,6 +6548,9 @@ export type PostFragment = (
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkFragment
   )>, topic: (
     { __typename?: 'post_topics' }
     & Pick<Post_Topics, 'id' | 'name'>
@@ -6867,6 +6875,13 @@ export const CommentRecursiveFragmentDoc = gql`
   }
 }
     ${CommentFieldsFragmentDoc}`;
+export const OnchainLinkFragmentDoc = gql`
+    fragment onchainLink on onchain_links {
+  id
+  onchain_proposal_id
+  onchain_referendum_id
+}
+    `;
 export const PostFragmentDoc = gql`
     fragment post on posts {
   author {
@@ -6881,6 +6896,9 @@ export const PostFragmentDoc = gql`
   comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
     ...commentRecursive
   }
+  onchain_link {
+    ...onchainLink
+  }
   title
   topic {
     id
@@ -6891,7 +6909,8 @@ export const PostFragmentDoc = gql`
     name
   }
 }
-    ${CommentRecursiveFragmentDoc}`;
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
