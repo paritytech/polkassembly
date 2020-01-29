@@ -13,7 +13,7 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
-import { Tag } from '../../ui-components/Tag';
+import Tag from '../../ui-components/Tag';
 import TitleForm from '../../components/TitleForm';
 
 interface Props {
