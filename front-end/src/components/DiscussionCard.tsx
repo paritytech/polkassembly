@@ -9,6 +9,12 @@ const DiscussionCard = styled.div`
     border-style: solid;
     border-width: 1px;
     border-color: grey_light;
+    &:hover {
+        border-style: solid;
+        border-width: 1px;
+        border-color: grey_secondary;
+        text-decoration: none;
+    }
     h4 {
         color: black_primary;
         font-weight: 500;
@@ -17,7 +23,7 @@ const DiscussionCard = styled.div`
     }
     ul {
         color: grey_secondary;
-        font-size: 1rem;
+        font-size: xs;
         font-family: 'Roboto';
         font-weight: 500;
         li {

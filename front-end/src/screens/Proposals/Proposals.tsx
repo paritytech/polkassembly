@@ -26,11 +26,12 @@ const Proposals = ({ className, data }: Props) => {
 										{<Link to={`/post/${post.id}`}>
 											<GovernanceCard
 												displayname={post.author.name}
-												comments={post.comments_aggregate.aggregate && post.comments_aggregate.aggregate.count
+												comments={post.comments_aggregate.aggregate?.count
 													? post.comments_aggregate.aggregate.count.toString()
 													: 'no'}
 												created_at={post.created_at}
 												proposalId={post.onchain_link?.onchain_proposal_id}
+												status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}
 												title={post.title}
 												topic={post.topic.name}
 												username={post.author.username}

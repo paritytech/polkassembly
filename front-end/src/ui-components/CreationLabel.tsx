@@ -31,6 +31,7 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 
 export default styled(CreationLabel)`
     color: grey_primary;
+	display: block;
     font-weight: 400;
     font-size: sm;
     margin-bottom: 0.6rem;
