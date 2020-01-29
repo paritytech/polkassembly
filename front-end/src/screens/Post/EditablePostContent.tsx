@@ -7,29 +7,25 @@ import styled from '@xstyled/styled-components';
 import ContentForm from '../../components/ContentForm';
 import PostContent from '../../components/PostContent';
 import { NotificationContext } from '../../context/NotificationContext';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
-import Tag from '../../ui-components/Tag';
 import TitleForm from '../../components/TitleForm';
 
 interface Props {
 	className?: string
-	onReply: () => void
+	isEditing: boolean
 	post: PostFragment
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	toggleEdit: () => void
 }
 
-const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
-	const { author, topic, content, title } = post;
-	const [isEditing, setIsEditing] = useState(false);
-	const { id } = useContext(UserDetailsContext);
+const EditablePostContent = ({ className, isEditing, post, refetch, toggleEdit }: Props) => {
+	const { author, content, title } = post;
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
-	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
 	const {  control, errors, handleSubmit, setValue } = useForm();
 
@@ -39,7 +35,7 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 		setNewTitle(title || '');
 	};
 	const handleSave = () => {
-		setIsEditing(false);
+		toggleEdit();
 		editPostMutation( {
 			variables: {
 				content: newContent,
@@ -83,9 +79,6 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 		<>
 			<div className={className}>
 				{error && <FilteredError text={error.message}/>}
-				<div className='post_tags'>
-					<Tag>{topic && topic.name}</Tag>
-				</div>
 				{
 					isEditing
 						?
@@ -116,8 +109,6 @@ const EditablePostContent = ({ className, onReply, post, refetch }: Props) => {
 						:
 						<>
 							<PostContent post={post}/>
-							{post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-							{id && <Button className={'social'} onClick={onReply}><Icon name='reply'/>Reply</Button>}
 						</>
 				}
 			</div>

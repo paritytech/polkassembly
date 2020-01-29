@@ -1,6 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import Comments from '../Comment/Comments';
@@ -11,6 +11,8 @@ import CreatePostComment from './PostCommentForm';
 import EditablePostContent from './EditablePostContent';
 import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import SubscriptionButton from '../../components/SubscriptionButton';
+import Button from '../../ui-components/Button';
+import Tag from '../../ui-components/Tag';
 
 interface Props {
 	className?: string;
@@ -22,7 +24,8 @@ const Post = ( { className, data, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
-
+	const [isEditing, setIsEditing] = useState(false);
+	const toggleEdit = () => setIsEditing(!isEditing);
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
@@ -33,10 +36,15 @@ const Post = ( { className, data, refetch }: Props ) => {
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
+
 					<div className='PostContent'>
+						<div className='post_tags'>
+							<Tag>{post.topic && post.topic.name}</Tag>
+						</div>
 						<EditablePostContent
-							onReply={togglePostReplyForm}
+							isEditing={isEditing}
 							post={post}
+							toggleEdit={toggleEdit}
 							refetch={refetch}
 						/>
 						{
@@ -46,7 +54,11 @@ const Post = ( { className, data, refetch }: Props ) => {
 								referendumId={post.onchain_link?.onchain_referendum_id}
 							/>
 						}
-						{id && <SubscriptionButton postId={post.id}/>}
+
+						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
+						{!isEditing && post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+
 						{ id && isPostReplyFormVisible &&
 							<CreatePostComment
 								onHide={togglePostReplyForm}

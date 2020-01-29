@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled from '@xstyled/styled-components';
+import { Icon } from 'semantic-ui-react';
+
 import { usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery } from '../generated/graphql';
 import { NotificationContext } from '../context/NotificationContext';
 import { NotificationStatus } from '../types';
 import Button from '../ui-components/Button';
-import { Icon } from 'semantic-ui-react';
 
 interface DiscussionProps {
-	className?: string
 	postId: number
 }
 
 const SubscriptionButton = function ({
-	className,
 	postId
 }:DiscussionProps) {
 
@@ -81,6 +79,4 @@ const SubscriptionButton = function ({
 	);
 };
 
-export default styled(SubscriptionButton)`
-    
-`;
+export default SubscriptionButton;
