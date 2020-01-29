@@ -6580,14 +6580,14 @@ export type EditPostMutation = (
   )> }
 );
 
-export type AddRootCommentMutationVariables = {
+export type AddPostCommentMutationVariables = {
   authorId: Scalars['Int'],
   content: Scalars['String'],
   postId: Scalars['Int']
 };
 
 
-export type AddRootCommentMutation = (
+export type AddPostCommentMutation = (
   { __typename: 'mutation_root' }
   & { insert_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
@@ -7157,15 +7157,15 @@ export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
-export const AddRootCommentDocument = gql`
-    mutation AddRootComment($authorId: Int!, $content: String!, $postId: Int!) {
+export const AddPostCommentDocument = gql`
+    mutation AddPostComment($authorId: Int!, $content: String!, $postId: Int!) {
   __typename
   insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
     affected_rows
   }
 }
     `;
-export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRootCommentMutation, AddRootCommentMutationVariables>;
+export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPostCommentMutation, AddPostCommentMutationVariables>;
 
 /**
  * __useAddPostCommentMutation__
@@ -7178,7 +7178,7 @@ export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRoo
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addRootCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
+ * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
  *   variables: {
  *      authorId: // value for 'authorId'
  *      content: // value for 'content'
@@ -7186,12 +7186,12 @@ export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRoo
  *   },
  * });
  */
-export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRootCommentMutation, AddRootCommentMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddRootCommentMutation, AddRootCommentMutationVariables>(AddRootCommentDocument, baseOptions);
+export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
       }
-export type AddRootCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
-export type AddRootCommentMutationResult = ApolloReactCommon.MutationResult<AddRootCommentMutation>;
-export type AddRootCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRootCommentMutation, AddRootCommentMutationVariables>;
+export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
+export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
+export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
 export const PostSubscribeDocument = gql`
     mutation PostSubscribe($postId: Int!) {
   postSubscribe(post_id: $postId) {
