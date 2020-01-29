@@ -7,7 +7,7 @@ exports.up = function(knex) {
 		table.string('address');
 		table.string('public_key');
 		table.uuid('sign_message');
-		table.boolean('linked').defaultTo(false);
+		table.boolean('verified').defaultTo(false);
 		table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
 		table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('RESTRICT');
 	});

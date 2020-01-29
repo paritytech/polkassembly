@@ -11,7 +11,7 @@ export default async (parent, args, ctx: Context): Promise<AddressType[]> => {
 	return Address
 		.query()
 		.where({
-			linked: true,
+			verified: true,
 			user_id: user.id
 		});
 };

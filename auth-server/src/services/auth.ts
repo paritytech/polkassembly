@@ -462,7 +462,7 @@ export default class AuthService {
 		}
 
 		const kusamaAddresses = addresses
-			.filter(address => address.network === KUSAMA)
+			.filter(address => (address.network === KUSAMA && address.verified))
 			.map(address => (`"${address.address}"`))
 			.join(',');
 
