@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Button primary 1`] = `
+<button
+  className="ui button sc-LzLsE dCQing primary"
+  fontSize="sm"
+  fontWeight="500"
+  onClick={[Function]}
+>
+  Primary Button
+</button>
+`;
+
+exports[`Storyshots Button secondary 1`] = `
+<button
+  className="ui button sc-LzLsE dCQing secondary"
+  fontSize="sm"
+  fontWeight="500"
+  onClick={[Function]}
+>
+  Secondary Button
+</button>
+`;
