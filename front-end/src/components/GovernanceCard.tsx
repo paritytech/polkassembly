@@ -68,12 +68,12 @@ export default styled(Discussion)`
     }
     h4 {
         color: black_primary;
+        display: block;
         font-weight: 500;
         font-size: lg;
 		margin-bottom: 0.3rem; 
         margin-bottom: 0.3rem; 
 		margin-bottom: 0.3rem; 
-		display: inline-block;
 	}
 	.creationlabel {
 		display: block;

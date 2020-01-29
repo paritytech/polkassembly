@@ -6537,6 +6537,21 @@ export type CommentRecursiveFragment = (
 export type OnchainLinkFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
+  & { onchain_proposal: Maybe<(
+    { __typename?: 'Proposal' }
+    & Pick<Proposal, 'id'>
+    & { proposalStatus: Maybe<Array<(
+      { __typename?: 'ProposalStatus' }
+      & Pick<ProposalStatus, 'id' | 'status'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'author' | 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'name' | 'value'>
+      )>> }
+    )> }
+  )> }
 );
 
 export type PostFragment = (
@@ -6880,6 +6895,25 @@ export const OnchainLinkFragmentDoc = gql`
   id
   onchain_proposal_id
   onchain_referendum_id
+  onchain_proposal(where: {}) {
+    id
+    proposalStatus {
+      id
+      status
+    }
+    preimage {
+      author
+      depositAmount
+      hash
+      id
+      metaDescription
+      method
+      preimageArguments {
+        name
+        value
+      }
+    }
+  }
 }
     `;
 export const PostFragmentDoc = gql`

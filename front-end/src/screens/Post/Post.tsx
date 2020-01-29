@@ -1,18 +1,19 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Container, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import GovernancePostInfo from './GovernancePostInfo';
+import PostGovernanceInfo from './PostGovernanceInfo';
 import CreatePostComment from './PostCommentForm';
 import EditablePostContent from './EditablePostContent';
 import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
 import SubscriptionButton from '../../components/SubscriptionButton';
 import Button from '../../ui-components/Button';
 import Tag from '../../ui-components/Tag';
+import StatusTag from '../../ui-components/StatusTag';
 
 interface Props {
 	className?: string;
@@ -25,10 +26,17 @@ const Post = ( { className, data, refetch }: Props ) => {
 	const { id } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
+	const [isProposal, setIsProposal] = useState(false);
+	const [isReferendum, setIsReferendum] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
+
+	useEffect(() => {
+		setIsProposal(post?.onchain_link?.onchain_proposal_id === 0 || !!post?.onchain_link?.onchain_proposal_id);
+		setIsReferendum(post?.onchain_link?.onchain_referendum_id === 0 || !!post?.onchain_link?.onchain_referendum_id);
+	}, [post]);
 
 	if (!post) return <NoPostFound/>;
 
@@ -40,6 +48,7 @@ const Post = ( { className, data, refetch }: Props ) => {
 					<div className='PostContent'>
 						<div className='post_tags'>
 							<Tag>{post.topic && post.topic.name}</Tag>
+							{(isProposal || isReferendum) && <StatusTag status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}></StatusTag>}
 						</div>
 						<EditablePostContent
 							isEditing={isEditing}
@@ -48,10 +57,10 @@ const Post = ( { className, data, refetch }: Props ) => {
 							refetch={refetch}
 						/>
 						{
-							(post.onchain_link?.onchain_proposal_id !== null || post.onchain_link.onchain_referendum_id !== null) &&
-							<GovernancePostInfo
-								proposalId={post.onchain_link?.onchain_proposal_id}
-								referendumId={post.onchain_link?.onchain_referendum_id}
+							(isProposal || isReferendum) && post.onchain_link &&
+							<PostGovernanceInfo
+								isReferendum={isReferendum}
+								onchainLink={post.onchain_link}
 							/>
 						}
 

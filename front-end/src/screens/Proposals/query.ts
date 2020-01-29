@@ -38,6 +38,4 @@ query LatestProposalPosts {
       }
     }
   }
-}
-
-`;
+}`;

@@ -16,7 +16,7 @@ const Proposals = ({ className, data }: Props) => {
 		<Container className={className}>
 			<h3>Latest Proposals</h3>
 			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<ul className='proposals__list'>
 						{!!data.posts &&
 						data.posts.map(
@@ -42,7 +42,7 @@ const Proposals = ({ className, data }: Props) => {
 						)}
 					</ul>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
 				</Grid.Column>
 			</Grid>
 		</Container>
