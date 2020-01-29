@@ -35,7 +35,7 @@ describe('addressUnlink mutation', () => {
 			.allowInsert('[network, address, user_id, public_key, sign_message, linked]')
 			.insert({
 				network: 'kasuma',
-				address: uuid(),
+				address: 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F', // Alice
 				user_id: signupResult.user.id,
 				public_key: uuid(),
 				sign_message: uuid(),
