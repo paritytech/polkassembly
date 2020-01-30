@@ -1,7 +1,8 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState, useEffect } from 'react';
-import { Container, Grid, Icon } from 'semantic-ui-react';
+import { Container, Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import { Form } from '../../ui-components/Form';
 
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
@@ -44,7 +45,6 @@ const Post = ( { className, data, refetch }: Props ) => {
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-
 					<div className='PostContent'>
 						<div className='post_tags'>
 							<Tag>{post.topic && post.topic.name}</Tag>
@@ -83,7 +83,108 @@ const Post = ( { className, data, refetch }: Props ) => {
 							: null }
 					</div>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={6}></Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
+					<div className='PostContent'>
+						<h2>Votes</h2>
+						<Divider/>
+						<Grid>
+							<Grid.Column width={5}>
+								<div><b>Total KSM Locked</b></div>
+								<div>241,547 KSM</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<div><b>Turnout</b></div>
+								<div>12,415%</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<div><b>Threshold</b></div>
+								<div>91.2%</div>
+							</Grid.Column>
+						</Grid>
+						<Divider/>
+						<Grid>
+							<Grid.Column width={5}>
+								<div><b>Total Votes</b></div>
+								<div>2,311,547</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<div><b>Yes</b></div>
+								<div>1,588,731</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<div><b>No</b></div>
+								<div>725,826</div>
+							</Grid.Column>
+						</Grid>
+					</div>
+					<div className='PostContent'>
+						<h2>Your Vote</h2>
+						<Form standalone={false}>
+							<Form.Group>
+								<Form.Field width={16}>
+									<label>Amount</label>
+									<input
+										placeholder='120'
+										type='text'
+									/>
+									<div>
+										2341 KSM Available. <a href='#'>Vote all.</a>
+									</div>
+								</Form.Field>
+							</Form.Group>
+							<Form.Group>
+								<Form.Field width={16}>
+									<label>Vote Lock</label>
+									<select>
+										<option value="2">2 weeks lock</option>
+										<option value="4">4 weeks lock</option>
+										<option value="8">8 weeks lock</option>
+										<option value="10">10 weeks lock</option>
+									</select>
+									<div>
+										120 KSM * 2 Lock periods = <b>240 votes</b>
+									</div>
+								</Form.Field>
+							</Form.Group>
+							<Form.Group>
+								<Form.Field width={8}>
+									<label>&nbsp;</label>
+									<Button
+										fluid
+										basic
+										color='red'
+									>
+										<Icon name='thumbs down' />
+										NAY
+									</Button>
+								</Form.Field>
+								<Form.Field width={8}>
+									<label>&nbsp;</label>
+									<Button
+										fluid
+										primary
+									>
+										<Icon name='thumbs up' />
+										AYE
+									</Button>
+								</Form.Field>
+							</Form.Group>
+						</Form>
+					</div>
+					<div className='PostContent'>
+						<h2>Timeline</h2>
+						<Grid>
+							<Grid.Column width={8}>
+								<div><b>Blocks Remaining</b></div>
+								<div>69,420</div>
+							</Grid.Column>
+							<Grid.Column width={8}>
+								<div><b>Enact at</b></div>
+								<div>Block 240,000</div>
+							</Grid.Column>
+						</Grid>
+					</div>
+				</Grid.Column>
 			</Grid>
 		</Container>
 	);
@@ -106,6 +207,7 @@ export default styled(Post)`
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
+		margin-bottom: 1rem;
 	}
 
 	.post_tags {
@@ -162,7 +264,7 @@ export default styled(Post)`
 			padding-left: 2rem;
 			li > input {
 				display: none;
-			}	
+			}
 		}
 
 		a {
