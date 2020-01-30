@@ -39,6 +39,7 @@ export default {
 	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
 	USERNAME_LENGTH_ERROR: 'Your Username must be at least 3 characters long.',
+	USERNAME_WHITESPACE_ERROR: 'Username cannot contain whitespace.',
 	USER_NOT_FOUND: 'User not found.',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
 	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',

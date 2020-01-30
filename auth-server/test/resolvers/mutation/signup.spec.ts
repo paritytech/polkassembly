@@ -71,6 +71,18 @@ describe('signup mutation', () => {
 		}
 	});
 
+	it('should throw an error username contains whitespace', async () => {
+		const username = 'user name';
+
+		try {
+			await signup(null, { email, password, username, name }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.USERNAME_WHITESPACE_ERROR);
+		}
+	});
+
 	it('should throw an error if user with username/email already exist', async () => {
 		const dbUser = await User
 			.query()

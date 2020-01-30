@@ -23,6 +23,10 @@ export default async (parent, { email, password, username, name }: argsType, ctx
 		throw new UserInputError(messages.USERNAME_LENGTH_ERROR);
 	}
 
+	if (/\s/g.test(username)) {
+		throw new UserInputError(messages.USERNAME_WHITESPACE_ERROR);
+	}
+
 	if (password.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
