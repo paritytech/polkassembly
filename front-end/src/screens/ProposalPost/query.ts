@@ -61,7 +61,7 @@ const proposalPost = gql`
 
 export const QUERY_PROPOSAL_POST_AND_COMMENTS = gql`
     query ProposalPostAndComments ($id:Int!) {
-        posts(where: {id: {_eq: $id}}) {
+        posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
             ...proposalPost
         }
     }

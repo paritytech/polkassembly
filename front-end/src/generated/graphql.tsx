@@ -6553,6 +6553,37 @@ export type Post_TopicsQuery = (
   )> }
 );
 
+export type DiscussionPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type DiscussionPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DiscussionPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & DiscussionPostFragment
+  )> }
+);
+
 export type LatestDiscussionPostsQueryVariables = {};
 
 
@@ -6715,37 +6746,6 @@ export type LatestProposalPostsQuery = (
         )>> }
       )> }
     )> }
-  )> }
-);
-
-export type DiscussionPostFragment = (
-  { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
-  & { author: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
-  )>, comments: Array<(
-    { __typename?: 'comments' }
-    & CommentRecursiveFragment
-  )>, topic: (
-    { __typename?: 'post_topics' }
-    & Pick<Post_Topics, 'id' | 'name'>
-  ), type: (
-    { __typename?: 'post_types' }
-    & Pick<Post_Types, 'id' | 'name'>
-  ) }
-);
-
-export type DiscussionPostAndCommentsQueryVariables = {
-  id: Scalars['Int']
-};
-
-
-export type DiscussionPostAndCommentsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & DiscussionPostFragment
   )> }
 );
 
@@ -7453,6 +7453,39 @@ export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
 export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
 export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
+export const DiscussionPostAndCommentsDocument = gql`
+    query DiscussionPostAndComments($id: Int!) {
+  posts(where: {id: {_eq: $id}}) {
+    ...discussionPost
+  }
+}
+    ${DiscussionPostFragmentDoc}`;
+
+/**
+ * __useDiscussionPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+      }
+export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+        }
+export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
+export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
+export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const LatestDiscussionPostsDocument = gql`
     query LatestDiscussionPosts {
   posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
@@ -7744,42 +7777,9 @@ export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
 export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
 export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
-export const DiscussionPostAndCommentsDocument = gql`
-    query DiscussionPostAndComments($id: Int!) {
-  posts(where: {id: {_eq: $id}}) {
-    ...discussionPost
-  }
-}
-    ${DiscussionPostFragmentDoc}`;
-
-/**
- * __useDiscussionPostAndCommentsQuery__
- *
- * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useDiscussionPostAndCommentsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
-        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
-      }
-export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
-        }
-export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
-export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
-export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const ProposalPostAndCommentsDocument = gql`
     query ProposalPostAndComments($id: Int!) {
-  posts(where: {id: {_eq: $id}}) {
+  posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
     ...proposalPost
   }
 }
@@ -7812,7 +7812,7 @@ export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof usePr
 export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
 export const ReferendumPostAndCommentsDocument = gql`
     query ReferendumPostAndComments($id: Int!) {
-  posts(where: {id: {_eq: $id}}) {
+  posts(where: {onchain_link: {onchain_referendum_id: {_eq: $id}}}) {
     ...referendumPost
   }
 }

@@ -15,17 +15,19 @@ const Proposals = ({ className, data }: Props) => {
 		<ul className={`${className} proposals__list`}>
 			{!!data.posts &&
 						data.posts.map(
-							(post) =>
-								!!post?.author?.username && (
+							(post) => {
+								const onchainId = post.onchain_link?.onchain_proposal_id;
+
+								return (!!post?.author?.username && (
 									<li key={post.id} className='proposals__item'>
-										{<Link to={`/proposal/${post.id}`}>
+										{<Link to={`/proposal/${onchainId}`}>
 											<GovernanceCard
 												displayname={post.author.name}
 												comments={post.comments_aggregate.aggregate?.count
 													? post.comments_aggregate.aggregate.count.toString()
 													: 'no'}
 												created_at={post.created_at}
-												onchainId={post.onchain_link?.onchain_proposal_id}
+												onchainId={onchainId}
 												status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}
 												title={post.title}
 												topic={post.topic.name}
@@ -33,7 +35,8 @@ const Proposals = ({ className, data }: Props) => {
 											/>
 										</Link>}
 									</li>
-								)
+								));
+							}
 						)}
 		</ul>
 	);

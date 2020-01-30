@@ -64,7 +64,7 @@ const referendumPost = gql`
 
 export const QUERY_REFERENDUM_POST_AND_COMMENTS = gql`
     query ReferendumPostAndComments ($id:Int!) {
-        posts(where: {id: {_eq: $id}}) {
+        posts(where: {onchain_link: {onchain_referendum_id: {_eq: $id}}}) {
             ...referendumPost
         }
     }
