@@ -3,8 +3,8 @@ import React from 'react';
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
-import ProposalContainer from './DemocracyProposals';
-import ReferendaContainer from './DemocracyReferenda';
+import ProposalContainer from './Proposals';
+import ReferendaContainer from './Referenda';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
