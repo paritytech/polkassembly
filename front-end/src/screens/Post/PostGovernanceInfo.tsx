@@ -12,28 +12,35 @@ const GovernancePostInfo = ({ className, isReferendum, onchainLink }: Props) => 
 	if (!onchainLink) return null;
 
 	const {
-		onchain_proposal_id: proposalId,
-		onchain_referendum_id: referendumId,
-		onchain_proposal: onChainProposal,
-		proposer_address: proposerAddress } = onchainLink;
-	const preimage = onChainProposal?.preimage;
+		onchain_proposal: onchainProposal,
+		onchain_referendum: onChainReferendum,
+		proposer_address: proposerAddress
+	} = onchainLink;
+	const preimage = isReferendum ? onChainReferendum?.preimage : onchainProposal?.preimage;
 	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
-	console.log('preimageArguments',preimageArguments);
+
 	return (
 		<div className={className}>
-			{proposerAddress && <>Proposer: {proposerAddress} <br/></>}
-			Deposit: {depositAmount} KSM<br/>
-			Description: {metaDescription}<br/>
-			Method: {method}<br/>
-			{preimageArguments && preimageArguments.length
-				? <>Arguments:
-					<div className={'methodArguments'}>
-						{preimageArguments.map((element, index) => {
-							return <span key={index}>{element.name}: {element.value}</span>;
-						})}
-					</div>
+			{proposerAddress &&
+				<>
+					Proposer: {proposerAddress} <br/>
 				</>
-				: null}
+			}
+			{depositAmount && method && preimageArguments && metaDescription &&
+			<>
+				Deposit: {depositAmount} KSM<br/>
+				Description: {metaDescription}<br/>
+				Method: {method}<br/>
+				{preimageArguments && preimageArguments.length
+					? <>Arguments:
+						<div className={'methodArguments'}>
+							{preimageArguments.map((element, index) => {
+								return <span key={index}>{element.name}: {element.value}</span>;
+							})}
+						</div>
+					</>
+					: null}
+			</>}
 		</div>
 	);
 };

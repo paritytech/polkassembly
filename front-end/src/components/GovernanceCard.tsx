@@ -9,7 +9,7 @@ interface DiscussionProps {
     comments?: string
     created_at: Date
     displayname?: string | null
-    proposalId?: number | null
+    onchainId?: number | null
     status?: string | null
 	title: string
 	topic: string
@@ -21,7 +21,7 @@ const Discussion = function ({
 	comments,
 	created_at,
 	displayname,
-	proposalId,
+	onchainId,
 	status,
 	title,
 	topic,
@@ -32,7 +32,7 @@ const Discussion = function ({
 		<div className={className}>
 			<Grid>
 				<Grid.Column width={1}>
-					<h2>#{proposalId}</h2>
+					<h2>#{onchainId}</h2>
 				</Grid.Column>
 				<Grid.Column width={11}>
 					<h4 className={'proposalTitle'}>{title}</h4>
@@ -42,7 +42,7 @@ const Discussion = function ({
 						username={username}
 					/>
 					<ul>
-						<li><Icon name='comment' /> {comments} comments - {topic}</li>
+						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
 				</Grid.Column>
 				<Grid.Column className={'statusTag'} width={4}>

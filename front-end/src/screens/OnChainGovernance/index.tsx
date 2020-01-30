@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLatestProposalPostsQuery } from '../../generated/graphql';
-import Proposals from './Proposals';
+import OnchainGovenance from './OnchainGovenance';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
@@ -11,7 +11,7 @@ const ProposalsContainer = () => {
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <Proposals data={data} />;
+	if (data) return <OnchainGovenance data={data} />;
 
 	return <Loader/>;
 };

@@ -34,23 +34,46 @@ const onchainLink = gql`
         onchain_proposal_id,
         onchain_referendum_id
         onchain_proposal(where: {}) {
-        id
-        proposalStatus {
-          id
-          status
+            id
+            proposalStatus {
+                id
+                status
+            }
+            preimage {
+                depositAmount
+                hash
+                id
+                metaDescription
+                method
+                preimageArguments {
+                    id
+                    name
+                    value
+                }
+            }
         }
-        preimage {
-          depositAmount
-          hash
-          id
-          metaDescription
-          method
-          preimageArguments {
-            name
-            value
-          }
+        onchain_referendum(where: {}) {
+            id
+            delay
+            end
+            voteThreshold
+            referendumStatus {
+                status
+                id
+            }
+            preimage {
+                depositAmount
+                hash
+                id
+                metaDescription
+                method
+                preimageArguments {
+                    id
+                    name
+                    value
+                }
+            }
         }
-      }
     }
 `;
 

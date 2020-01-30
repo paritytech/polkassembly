@@ -16,7 +16,7 @@ import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
 import NotFound from './screens/NotFound';
 import Post from './screens/Post';
-import Proposals from './screens/Proposals';
+import OnChainGovernance from './screens/OnChainGovernance';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
@@ -55,8 +55,8 @@ const App = () => {
 										<Route exact path="/post/:id" >
 											<Post/>
 										</Route>
-										<Route path="/proposals" >
-											<Proposals/>
+										<Route path="/onchain" >
+											<OnChainGovernance/>
 										</Route>
 										<Route path="/request-reset-password">
 											<RequestResetPassword/>

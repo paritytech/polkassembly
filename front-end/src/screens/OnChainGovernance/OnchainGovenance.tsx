@@ -11,10 +11,10 @@ interface Props {
   data: LatestProposalPostsQuery
 }
 
-const Proposals = ({ className, data }: Props) => {
+const OnchainGovenance = ({ className, data }: Props) => {
 	return (
 		<Container className={className}>
-			<h3>Latest Proposals</h3>
+			<h3>Latest Proposals & Referenda</h3>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<ul className='proposals__list'>
@@ -30,7 +30,7 @@ const Proposals = ({ className, data }: Props) => {
 													? post.comments_aggregate.aggregate.count.toString()
 													: 'no'}
 												created_at={post.created_at}
-												proposalId={post.onchain_link?.onchain_proposal_id}
+												onchainId={post.onchain_link?.onchain_proposal_id}
 												status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}
 												title={post.title}
 												topic={post.topic.name}
@@ -49,7 +49,7 @@ const Proposals = ({ className, data }: Props) => {
 	);
 };
 
-export default styled(Proposals)`
+export default styled(OnchainGovenance)`
 
 	@media only screen and (max-width: 768px) {
 		h3 {
