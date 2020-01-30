@@ -12,6 +12,7 @@ export type Scalars = {
   Upload: any,
 };
 
+
 export type Address = {
    __typename?: 'Address',
   address?: Maybe<Scalars['String']>,
@@ -152,20 +153,13 @@ export type MutationVerifyEmailArgs = {
   token: Scalars['String']
 };
 
-export type PublicUser = {
-   __typename?: 'PublicUser',
-  id?: Maybe<Scalars['Int']>,
-  username?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
-};
-
 export type Query = {
    __typename?: 'Query',
   addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<PublicUser>>>,
+  users?: Maybe<Array<Maybe<User>>>,
 };
 
 

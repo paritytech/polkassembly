@@ -4353,20 +4353,13 @@ export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Prop
   id?: Maybe<Scalars['Int']>,
 };
 
-export type PublicUser = {
-   __typename?: 'PublicUser',
-  id?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-};
-
 export type Query = {
    __typename?: 'Query',
   addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<PublicUser>>>,
+  users?: Maybe<Array<Maybe<User>>>,
 };
 
 
@@ -4452,7 +4445,7 @@ export type Query_Root = {
   totalIssuances: Array<Maybe<TotalIssuance>>,
   totalIssuancesConnection: TotalIssuanceConnection,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<PublicUser>>>,
+  users?: Maybe<Array<Maybe<User>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,

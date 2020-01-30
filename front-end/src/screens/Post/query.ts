@@ -30,6 +30,7 @@ const commentRecursive = gql`
 const onchainLink = gql`
     fragment onchainLink on onchain_links {
         id,
+        proposer_address,
         onchain_proposal_id,
         onchain_referendum_id
         onchain_proposal(where: {}) {
@@ -39,7 +40,6 @@ const onchainLink = gql`
           status
         }
         preimage {
-          author
           depositAmount
           hash
           id

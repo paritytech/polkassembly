@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 import { OnchainLinkFragment } from '../../generated/graphql';
 
 interface Props{
@@ -34,5 +34,8 @@ const GovernancePostInfo = ({ className, isReferendum, onchainLink }: Props) => 
 };
 
 export default styled(GovernancePostInfo)`
-
+	border-width: 1px;
+	border-style: solid;
+	border-color: grey_light;
+	padding: 1rem;
 `;
