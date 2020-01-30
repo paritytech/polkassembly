@@ -18,8 +18,10 @@ spec:
       containers:
       - name: front-end
         image: gcr.io/test-installations-222013/polkassembly-front-end:master
-      - ports:
+        ports:
         - containerPort: 80
+          name: http
+          protocol: TCP
       imagePullSecrets:
       - name: regcred
       restartPolicy: Always

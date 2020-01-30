@@ -9,10 +9,10 @@ metadata:
     traefik.frontend.entryPoints: "https,http"
 spec:
   rules:
-    - host: preview.polkassembly.io
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: front-end-service
-              servicePort: http
+  - host: test.polkassembly.io
+    http:
+      paths:
+      - backend:
+          serviceName: front-end-service
+          servicePort: http
+        path: /
