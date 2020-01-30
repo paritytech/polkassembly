@@ -72,10 +72,10 @@
     ]
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.8.3",
-    "@graphql-codegen/typescript": "1.8.1",
-    "@graphql-codegen/typescript-operations": "1.8.1",
-    "@graphql-codegen/typescript-react-apollo": "1.8.1",
+    "@graphql-codegen/cli": "1.12.1",
+    "@graphql-codegen/typescript": "1.12.1",
+    "@graphql-codegen/typescript-operations": "1.12.1",
+    "@graphql-codegen/typescript-react-apollo": "1.12.1",
     "@storybook/addon-actions": "^5.3.9",
     "@storybook/addon-knobs": "^5.3.9",
     "@storybook/addon-storyshots": "^5.3.9",
