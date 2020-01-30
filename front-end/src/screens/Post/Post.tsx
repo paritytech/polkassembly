@@ -138,7 +138,7 @@ const Post = ( { className, data, refetch }: Props ) => {
 						<h2>Votes</h2>
 						<Divider/>
 						<Grid>
-							<Grid.Column width={5}>
+							<Grid.Column width={6}>
 								<div><b>Total KSM Locked</b></div>
 								<div>241,547 KSM</div>
 							</Grid.Column>
@@ -153,7 +153,7 @@ const Post = ( { className, data, refetch }: Props ) => {
 						</Grid>
 						<Divider/>
 						<Grid>
-							<Grid.Column width={5}>
+							<Grid.Column width={6}>
 								<div><b>Total Votes</b></div>
 								<div>2,311,547</div>
 							</Grid.Column>
