@@ -6412,11 +6412,6 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
-export type UserFragmentFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'username'>
-);
-
 export type EditCommentMutationVariables = {
   id: Scalars['uuid'],
   content: Scalars['String']
@@ -6429,6 +6424,97 @@ export type EditCommentMutation = (
     { __typename?: 'comments_mutation_response' }
     & Pick<Comments_Mutation_Response, 'affected_rows'>
   )> }
+);
+
+export type EditPostMutationVariables = {
+  id: Scalars['Int'],
+  content: Scalars['String'],
+  title: Scalars['String']
+};
+
+
+export type EditPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_posts: Maybe<(
+    { __typename?: 'posts_mutation_response' }
+    & Pick<Posts_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type AddPostCommentMutationVariables = {
+  authorId: Scalars['Int'],
+  content: Scalars['String'],
+  postId: Scalars['Int']
+};
+
+
+export type AddPostCommentMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_comments: Maybe<(
+    { __typename?: 'comments_mutation_response' }
+    & Pick<Comments_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type PostSubscribeMutationVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostSubscribeMutation = (
+  { __typename?: 'mutation_root' }
+  & { postSubscribe: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type PostUnsubscribeMutationVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostUnsubscribeMutation = (
+  { __typename?: 'mutation_root' }
+  & { postUnsubscribe: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type SubscriptionQueryVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type SubscriptionQuery = (
+  { __typename?: 'query_root' }
+  & { subscription: Maybe<(
+    { __typename?: 'Subscription' }
+    & Pick<Subscription, 'subscribed'>
+  )> }
+);
+
+export type CommentFieldsFragment = (
+  { __typename?: 'comments' }
+  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )> }
+);
+
+export type CommentRecursiveFragment = (
+  { __typename?: 'comments' }
+  & { comments: Array<(
+    { __typename?: 'comments' }
+    & { comments: Array<(
+      { __typename?: 'comments' }
+      & CommentFieldsFragment
+    )> }
+    & CommentFieldsFragment
+  )> }
+  & CommentFieldsFragment
 );
 
 export type CreatePostMutationVariables = {
@@ -6632,31 +6718,40 @@ export type LatestProposalPostsQuery = (
   )> }
 );
 
-export type CommentFieldsFragment = (
-  { __typename?: 'comments' }
-  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+export type DiscussionPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
-  )> }
-);
-
-export type CommentRecursiveFragment = (
-  { __typename?: 'comments' }
-  & { comments: Array<(
+  )>, comments: Array<(
     { __typename?: 'comments' }
-    & { comments: Array<(
-      { __typename?: 'comments' }
-      & CommentFieldsFragment
-    )> }
-    & CommentFieldsFragment
-  )> }
-  & CommentFieldsFragment
+    & CommentRecursiveFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
 );
 
-export type OnchainLinkFragment = (
+export type DiscussionPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DiscussionPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & DiscussionPostFragment
+  )> }
+);
+
+export type OnchainLinkProposalFragment = (
   { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id'>
   & { onchain_proposal: Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'id'>
@@ -6671,7 +6766,47 @@ export type OnchainLinkFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )>, onchain_referendum: Maybe<(
+  )> }
+);
+
+export type ProposalPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkProposalFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type ProposalPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type ProposalPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & ProposalPostFragment
+  )> }
+);
+
+export type OnchainLinkReferendumFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
+  & { onchain_referendum: Maybe<(
     { __typename?: 'Referendum' }
     & Pick<Referendum, 'id' | 'delay' | 'end' | 'voteThreshold'>
     & { referendumStatus: Maybe<Array<(
@@ -6688,7 +6823,7 @@ export type OnchainLinkFragment = (
   )> }
 );
 
-export type PostFragment = (
+export type ReferendumPostFragment = (
   { __typename?: 'posts' }
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
@@ -6699,7 +6834,7 @@ export type PostFragment = (
     & CommentRecursiveFragment
   )>, onchain_link: Maybe<(
     { __typename?: 'onchain_links' }
-    & OnchainLinkFragment
+    & OnchainLinkReferendumFragment
   )>, topic: (
     { __typename?: 'post_topics' }
     & Pick<Post_Topics, 'id' | 'name'>
@@ -6709,85 +6844,16 @@ export type PostFragment = (
   ) }
 );
 
-export type PostAndCommentsQueryVariables = {
+export type ReferendumPostAndCommentsQueryVariables = {
   id: Scalars['Int']
 };
 
 
-export type PostAndCommentsQuery = (
+export type ReferendumPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & PostFragment
-  )> }
-);
-
-export type EditPostMutationVariables = {
-  id: Scalars['Int'],
-  content: Scalars['String'],
-  title: Scalars['String']
-};
-
-
-export type EditPostMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_posts: Maybe<(
-    { __typename?: 'posts_mutation_response' }
-    & Pick<Posts_Mutation_Response, 'affected_rows'>
-  )> }
-);
-
-export type AddPostCommentMutationVariables = {
-  authorId: Scalars['Int'],
-  content: Scalars['String'],
-  postId: Scalars['Int']
-};
-
-
-export type AddPostCommentMutation = (
-  { __typename: 'mutation_root' }
-  & { insert_comments: Maybe<(
-    { __typename?: 'comments_mutation_response' }
-    & Pick<Comments_Mutation_Response, 'affected_rows'>
-  )> }
-);
-
-export type PostSubscribeMutationVariables = {
-  postId: Scalars['Int']
-};
-
-
-export type PostSubscribeMutation = (
-  { __typename?: 'mutation_root' }
-  & { postSubscribe: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
-  )> }
-);
-
-export type PostUnsubscribeMutationVariables = {
-  postId: Scalars['Int']
-};
-
-
-export type PostUnsubscribeMutation = (
-  { __typename?: 'mutation_root' }
-  & { postUnsubscribe: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
-  )> }
-);
-
-export type SubscriptionQueryVariables = {
-  postId: Scalars['Int']
-};
-
-
-export type SubscriptionQuery = (
-  { __typename?: 'query_root' }
-  & { subscription: Maybe<(
-    { __typename?: 'Subscription' }
-    & Pick<Subscription, 'subscribed'>
+    & ReferendumPostFragment
   )> }
 );
 
@@ -6949,13 +7015,6 @@ export type VerifyEmailMutation = (
   )> }
 );
 
-export const UserFragmentFragmentDoc = gql`
-    fragment userFragment on User {
-  id
-  name
-  username
-}
-    `;
 export const TopicFragmentDoc = gql`
     fragment topic on post_topics {
   id
@@ -6986,12 +7045,36 @@ export const CommentRecursiveFragmentDoc = gql`
   }
 }
     ${CommentFieldsFragmentDoc}`;
-export const OnchainLinkFragmentDoc = gql`
-    fragment onchainLink on onchain_links {
+export const DiscussionPostFragmentDoc = gql`
+    fragment discussionPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}`;
+export const OnchainLinkProposalFragmentDoc = gql`
+    fragment onchainLinkProposal on onchain_links {
   id
   proposer_address
   onchain_proposal_id
-  onchain_referendum_id
   onchain_proposal(where: {}) {
     id
     proposalStatus {
@@ -7011,6 +7094,42 @@ export const OnchainLinkFragmentDoc = gql`
       }
     }
   }
+}
+    `;
+export const ProposalPostFragmentDoc = gql`
+    fragment proposalPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  onchain_link {
+    ...onchainLinkProposal
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkProposalFragmentDoc}`;
+export const OnchainLinkReferendumFragmentDoc = gql`
+    fragment onchainLinkReferendum on onchain_links {
+  id
+  proposer_address
+  onchain_referendum_id
   onchain_referendum(where: {}) {
     id
     delay
@@ -7035,8 +7154,8 @@ export const OnchainLinkFragmentDoc = gql`
   }
 }
     `;
-export const PostFragmentDoc = gql`
-    fragment post on posts {
+export const ReferendumPostFragmentDoc = gql`
+    fragment referendumPost on posts {
   author {
     id
     name
@@ -7050,7 +7169,7 @@ export const PostFragmentDoc = gql`
     ...commentRecursive
   }
   onchain_link {
-    ...onchainLink
+    ...onchainLinkReferendum
   }
   title
   topic {
@@ -7063,7 +7182,7 @@ export const PostFragmentDoc = gql`
   }
 }
     ${CommentRecursiveFragmentDoc}
-${OnchainLinkFragmentDoc}`;
+${OnchainLinkReferendumFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -7097,6 +7216,172 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
+export const EditPostDocument = gql`
+    mutation EditPost($id: Int!, $content: String!, $title: String!) {
+  update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
+    affected_rows
+  }
+}
+    `;
+export type EditPostMutationFn = ApolloReactCommon.MutationFunction<EditPostMutation, EditPostMutationVariables>;
+
+/**
+ * __useEditPostMutation__
+ *
+ * To run a mutation, you first call `useEditPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostMutation, { data, loading, error }] = useEditPostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostMutation, EditPostMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, baseOptions);
+      }
+export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
+export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
+export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
+export const AddPostCommentDocument = gql`
+    mutation AddPostComment($authorId: Int!, $content: String!, $postId: Int!) {
+  __typename
+  insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
+    affected_rows
+  }
+}
+    `;
+export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPostCommentMutation, AddPostCommentMutationVariables>;
+
+/**
+ * __useAddPostCommentMutation__
+ *
+ * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
+ *   variables: {
+ *      authorId: // value for 'authorId'
+ *      content: // value for 'content'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
+      }
+export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
+export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
+export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const PostSubscribeDocument = gql`
+    mutation PostSubscribe($postId: Int!) {
+  postSubscribe(post_id: $postId) {
+    message
+  }
+}
+    `;
+export type PostSubscribeMutationFn = ApolloReactCommon.MutationFunction<PostSubscribeMutation, PostSubscribeMutationVariables>;
+
+/**
+ * __usePostSubscribeMutation__
+ *
+ * To run a mutation, you first call `usePostSubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostSubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postSubscribeMutation, { data, loading, error }] = usePostSubscribeMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostSubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostSubscribeMutation, PostSubscribeMutationVariables>) {
+        return ApolloReactHooks.useMutation<PostSubscribeMutation, PostSubscribeMutationVariables>(PostSubscribeDocument, baseOptions);
+      }
+export type PostSubscribeMutationHookResult = ReturnType<typeof usePostSubscribeMutation>;
+export type PostSubscribeMutationResult = ApolloReactCommon.MutationResult<PostSubscribeMutation>;
+export type PostSubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostSubscribeMutation, PostSubscribeMutationVariables>;
+export const PostUnsubscribeDocument = gql`
+    mutation PostUnsubscribe($postId: Int!) {
+  postUnsubscribe(post_id: $postId) {
+    message
+  }
+}
+    `;
+export type PostUnsubscribeMutationFn = ApolloReactCommon.MutationFunction<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
+
+/**
+ * __usePostUnsubscribeMutation__
+ *
+ * To run a mutation, you first call `usePostUnsubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostUnsubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postUnsubscribeMutation, { data, loading, error }] = usePostUnsubscribeMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostUnsubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>) {
+        return ApolloReactHooks.useMutation<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>(PostUnsubscribeDocument, baseOptions);
+      }
+export type PostUnsubscribeMutationHookResult = ReturnType<typeof usePostUnsubscribeMutation>;
+export type PostUnsubscribeMutationResult = ApolloReactCommon.MutationResult<PostUnsubscribeMutation>;
+export type PostUnsubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
+export const SubscriptionDocument = gql`
+    query Subscription($postId: Int!) {
+  subscription(post_id: $postId) {
+    subscribed
+  }
+}
+    `;
+
+/**
+ * __useSubscriptionQuery__
+ *
+ * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscriptionQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useSubscriptionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
+        return ApolloReactHooks.useQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+      }
+export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+        }
+export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
+export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
+export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename
@@ -7459,205 +7744,105 @@ export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
 export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
 export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
-export const PostAndCommentsDocument = gql`
-    query PostAndComments($id: Int!) {
+export const DiscussionPostAndCommentsDocument = gql`
+    query DiscussionPostAndComments($id: Int!) {
   posts(where: {id: {_eq: $id}}) {
-    ...post
+    ...discussionPost
   }
 }
-    ${PostFragmentDoc}`;
+    ${DiscussionPostFragmentDoc}`;
 
 /**
- * __usePostAndCommentsQuery__
+ * __useDiscussionPostAndCommentsQuery__
  *
- * To run a query within a React component, call `usePostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = usePostAndCommentsQuery({
+ * const { data, loading, error } = useDiscussionPostAndCommentsQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function usePostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-        return ApolloReactHooks.useQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
+export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
       }
-export function usePostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
+export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
         }
-export type PostAndCommentsQueryHookResult = ReturnType<typeof usePostAndCommentsQuery>;
-export type PostAndCommentsLazyQueryHookResult = ReturnType<typeof usePostAndCommentsLazyQuery>;
-export type PostAndCommentsQueryResult = ApolloReactCommon.QueryResult<PostAndCommentsQuery, PostAndCommentsQueryVariables>;
-export const EditPostDocument = gql`
-    mutation EditPost($id: Int!, $content: String!, $title: String!) {
-  update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
-    affected_rows
+export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
+export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
+export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
+export const ProposalPostAndCommentsDocument = gql`
+    query ProposalPostAndComments($id: Int!) {
+  posts(where: {id: {_eq: $id}}) {
+    ...proposalPost
   }
 }
-    `;
-export type EditPostMutationFn = ApolloReactCommon.MutationFunction<EditPostMutation, EditPostMutationVariables>;
+    ${ProposalPostFragmentDoc}`;
 
 /**
- * __useEditPostMutation__
+ * __useProposalPostAndCommentsQuery__
  *
- * To run a mutation, you first call `useEditPostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEditPostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [editPostMutation, { data, loading, error }] = useEditPostMutation({
- *   variables: {
- *      id: // value for 'id'
- *      content: // value for 'content'
- *      title: // value for 'title'
- *   },
- * });
- */
-export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostMutation, EditPostMutationVariables>) {
-        return ApolloReactHooks.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, baseOptions);
-      }
-export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
-export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
-export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
-export const AddPostCommentDocument = gql`
-    mutation AddPostComment($authorId: Int!, $content: String!, $postId: Int!) {
-  __typename
-  insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
-    affected_rows
-  }
-}
-    `;
-export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPostCommentMutation, AddPostCommentMutationVariables>;
-
-/**
- * __useAddPostCommentMutation__
- *
- * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
- *   variables: {
- *      authorId: // value for 'authorId'
- *      content: // value for 'content'
- *      postId: // value for 'postId'
- *   },
- * });
- */
-export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
-      }
-export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
-export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
-export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
-export const PostSubscribeDocument = gql`
-    mutation PostSubscribe($postId: Int!) {
-  postSubscribe(post_id: $postId) {
-    message
-  }
-}
-    `;
-export type PostSubscribeMutationFn = ApolloReactCommon.MutationFunction<PostSubscribeMutation, PostSubscribeMutationVariables>;
-
-/**
- * __usePostSubscribeMutation__
- *
- * To run a mutation, you first call `usePostSubscribeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostSubscribeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postSubscribeMutation, { data, loading, error }] = usePostSubscribeMutation({
- *   variables: {
- *      postId: // value for 'postId'
- *   },
- * });
- */
-export function usePostSubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostSubscribeMutation, PostSubscribeMutationVariables>) {
-        return ApolloReactHooks.useMutation<PostSubscribeMutation, PostSubscribeMutationVariables>(PostSubscribeDocument, baseOptions);
-      }
-export type PostSubscribeMutationHookResult = ReturnType<typeof usePostSubscribeMutation>;
-export type PostSubscribeMutationResult = ApolloReactCommon.MutationResult<PostSubscribeMutation>;
-export type PostSubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostSubscribeMutation, PostSubscribeMutationVariables>;
-export const PostUnsubscribeDocument = gql`
-    mutation PostUnsubscribe($postId: Int!) {
-  postUnsubscribe(post_id: $postId) {
-    message
-  }
-}
-    `;
-export type PostUnsubscribeMutationFn = ApolloReactCommon.MutationFunction<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
-
-/**
- * __usePostUnsubscribeMutation__
- *
- * To run a mutation, you first call `usePostUnsubscribeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePostUnsubscribeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [postUnsubscribeMutation, { data, loading, error }] = usePostUnsubscribeMutation({
- *   variables: {
- *      postId: // value for 'postId'
- *   },
- * });
- */
-export function usePostUnsubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>) {
-        return ApolloReactHooks.useMutation<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>(PostUnsubscribeDocument, baseOptions);
-      }
-export type PostUnsubscribeMutationHookResult = ReturnType<typeof usePostUnsubscribeMutation>;
-export type PostUnsubscribeMutationResult = ApolloReactCommon.MutationResult<PostUnsubscribeMutation>;
-export type PostUnsubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
-export const SubscriptionDocument = gql`
-    query Subscription($postId: Int!) {
-  subscription(post_id: $postId) {
-    subscribed
-  }
-}
-    `;
-
-/**
- * __useSubscriptionQuery__
- *
- * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSubscriptionQuery({
+ * const { data, loading, error } = useProposalPostAndCommentsQuery({
  *   variables: {
- *      postId: // value for 'postId'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useSubscriptionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
-        return ApolloReactHooks.useQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+export function useProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
       }
-export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+export function useProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
         }
-export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
-export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
-export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
+export type ProposalPostAndCommentsQueryHookResult = ReturnType<typeof useProposalPostAndCommentsQuery>;
+export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useProposalPostAndCommentsLazyQuery>;
+export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
+export const ReferendumPostAndCommentsDocument = gql`
+    query ReferendumPostAndComments($id: Int!) {
+  posts(where: {id: {_eq: $id}}) {
+    ...referendumPost
+  }
+}
+    ${ReferendumPostFragmentDoc}`;
+
+/**
+ * __useReferendumPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReferendumPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useReferendumPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+      }
+export function useReferendumPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+        }
+export type ReferendumPostAndCommentsQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsQuery>;
+export type ReferendumPostAndCommentsLazyQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsLazyQuery>;
+export type ReferendumPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>;
 export const ResetPasswordDocument = gql`
     mutation resetPassword($newPassword: String!, $token: String!) {
   resetPassword(newPassword: $newPassword, token: $token) {

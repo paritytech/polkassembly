@@ -2,12 +2,12 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import CreationLabel from '../ui-components/CreationLabel';
-import { PostFragment } from '../generated/graphql';
+import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../generated/graphql';
 import UpdateLabel from '../ui-components/UpdateLabel';
 
 interface Props {
 	onchainId?: number | null
-	post: PostFragment
+	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
 }
 const PostContent = ({ onchainId, post }:Props) => {
 	const { author, content, created_at, title, updated_at } = post;

@@ -4,9 +4,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import ContentForm from '../../components/ContentForm';
+import ContentForm from '../ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { PostAndCommentsQueryVariables, PostAndCommentsQuery, useAddPostCommentMutation } from '../../generated/graphql';
+import { useAddPostCommentMutation, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
@@ -14,7 +14,7 @@ interface Props {
 	className?: string
 	onHide: () => void
 	postId: number
-	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {

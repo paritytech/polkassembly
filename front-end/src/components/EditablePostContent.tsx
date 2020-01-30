@@ -4,22 +4,22 @@ import { useForm, Controller } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import ContentForm from '../../components/ContentForm';
-import PostContent from '../../components/PostContent';
-import { NotificationContext } from '../../context/NotificationContext';
-import { PostFragment, useEditPostMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
-import { NotificationStatus } from '../../types';
-import Button from '../../ui-components/Button';
-import FilteredError from '../../ui-components/FilteredError';
-import { Form } from '../../ui-components/Form';
-import TitleForm from '../../components/TitleForm';
+import ContentForm from './ContentForm';
+import PostContent from './PostContent';
+import { NotificationContext } from '../context/NotificationContext';
+import { DiscussionPostFragment, useEditPostMutation, DiscussionPostAndCommentsQueryVariables, DiscussionPostAndCommentsQuery, ProposalPostFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostFragment, ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../generated/graphql';
+import { NotificationStatus } from '../types';
+import Button from '../ui-components/Button';
+import FilteredError from '../ui-components/FilteredError';
+import { Form } from '../ui-components/Form';
+import TitleForm from './TitleForm';
 
 interface Props {
 	className?: string
 	isEditing: boolean
 	onchainId?: number | null
-	post: PostFragment
-	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 	toggleEdit: () => void
 }
 

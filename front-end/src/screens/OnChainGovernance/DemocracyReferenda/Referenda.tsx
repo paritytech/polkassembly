@@ -18,7 +18,7 @@ const Referenda = ({ className, data }: Props) => {
 							(post) =>
 								!!post?.author?.username && (
 									<li key={post.id} className='proposals__item'>
-										{<Link to={`/referenda/${post.id}`}>
+										{<Link to={`/referendum/${post.id}`}>
 											<GovernanceCard
 												displayname={post.author.name}
 												comments={post.comments_aggregate.aggregate?.count

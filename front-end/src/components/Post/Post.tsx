@@ -1,33 +1,34 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import Comments from '../Comment/Comments';
-import NoPostFound from '../../components/NoPostFound';
+import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import PostGovernanceInfo from './PostGovernanceInfo';
 import CreatePostComment from './PostCommentForm';
-import EditablePostContent from './EditablePostContent';
-import { PostAndCommentsQueryHookResult, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
-import SubscriptionButton from '../../components/SubscriptionButton';
+import EditablePostContent from '../EditablePostContent';
+import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../../generated/graphql';
+import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
 import Tag from '../../ui-components/Tag';
 import StatusTag from '../../ui-components/StatusTag';
+import PostProposalInfo from './PostProposalInfo';
+import PostReferendumInfo from './PostReferendumInfo';
 
 interface Props {
 	className?: string;
-	data: PostAndCommentsQueryHookResult['data']
-	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data']
+	isProposal?: boolean
+	isReferendum?: boolean
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const Post = ( { className, data, refetch }: Props ) => {
+const Post = ( { className, data, isProposal = false, isReferendum = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
-	const [isProposal, setIsProposal] = useState(false);
-	const [isReferendum, setIsReferendum] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
@@ -35,16 +36,22 @@ const Post = ( { className, data, refetch }: Props ) => {
 
 	// if an onchain_link has both the a proposal_id and referendum_id, it means it's a referendum now
 	// the referendum id should be shown.
-	const onchainId = isReferendum || isProposal
-		? isReferendum
-			? post?.onchain_link?.onchain_referendum_id
-			: post?.onchain_link?.onchain_proposal_id
-		: null;
+	let onchainId: number | null | undefined;
+	let referendumPost: ReferendumPostFragment | undefined;
+	let proposalPost: ProposalPostFragment | undefined;
+	let definedOnchainLink : OnchainLinkReferendumFragment | OnchainLinkProposalFragment | undefined;
 
-	useEffect(() => {
-		setIsProposal(post?.onchain_link?.onchain_proposal_id === 0 || !!post?.onchain_link?.onchain_proposal_id);
-		setIsReferendum(post?.onchain_link?.onchain_referendum_id === 0 || !!post?.onchain_link?.onchain_referendum_id);
-	}, [post]);
+	if (isReferendum){
+		referendumPost = post as ReferendumPostFragment;
+		definedOnchainLink = referendumPost.onchain_link as OnchainLinkReferendumFragment;
+		onchainId = definedOnchainLink.onchain_referendum_id;
+	}
+
+	if (isProposal) {
+		proposalPost = post as ProposalPostFragment;
+		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
+		onchainId = definedOnchainLink.onchain_proposal_id;
+	}
 
 	if (!post) return <NoPostFound/>;
 
@@ -54,8 +61,9 @@ const Post = ( { className, data, refetch }: Props ) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
 						<div className='post_tags'>
-							<Tag>{post.topic && post.topic.name}</Tag>
-							{(isProposal || isReferendum) && <StatusTag status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}></StatusTag>}
+							<Tag>{post.topic.name}</Tag>
+							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}></StatusTag>}
+							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.referendumStatus?.[0].status}></StatusTag>}
 						</div>
 						<EditablePostContent
 							isEditing={isEditing}
@@ -64,11 +72,14 @@ const Post = ( { className, data, refetch }: Props ) => {
 							refetch={refetch}
 							toggleEdit={toggleEdit}
 						/>
-						{
-							(isProposal || isReferendum) && post.onchain_link &&
-							<PostGovernanceInfo
-								isReferendum={isReferendum}
-								onchainLink={post.onchain_link}
+						{ isProposal &&
+								<PostProposalInfo
+									onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+								/>
+						}
+						{ isReferendum &&
+							<PostReferendumInfo
+								onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
 							/>
 						}
 

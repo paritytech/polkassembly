@@ -1,22 +1,22 @@
 import * as React from 'react';
 import styled from '@xstyled/styled-components';
-import { OnchainLinkFragment } from '../../generated/graphql';
+
+import { OnchainLinkReferendumFragment } from '../../generated/graphql';
 
 interface Props{
 	className?: string
-	isReferendum: boolean
-	onchainLink: OnchainLinkFragment
+	onchainLink: OnchainLinkReferendumFragment
 }
 
-const GovernancePostInfo = ({ className, isReferendum, onchainLink }: Props) => {
+const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
-		onchain_proposal: onchainProposal,
-		onchain_referendum: onChainReferendum,
+		onchain_referendum: onchainReferendum,
 		proposer_address: proposerAddress
 	} = onchainLink;
-	const preimage = isReferendum ? onChainReferendum?.preimage : onchainProposal?.preimage;
+
+	const preimage = onchainReferendum?.preimage;
 	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
@@ -45,7 +45,7 @@ const GovernancePostInfo = ({ className, isReferendum, onchainLink }: Props) => 
 	);
 };
 
-export default styled(GovernancePostInfo)`
+export default styled(PostReferendumInfo)`
 	border-width: 1px;
 	border-style: solid;
 	border-color: grey_light;

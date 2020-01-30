@@ -1,22 +1,12 @@
+import styled from '@xstyled/styled-components';
 import React from 'react';
-
-// import { useLatestProposalPostsQuery } from '../../generated/graphql';
-// import OnchainGovenance from './OnchainGovenance';
-// import FilteredError from '../../ui-components/FilteredError';
-// import Loader from '../../ui-components/Loader';
-import ProposalContainer from './DemocracyProposals';
-import ReferendaContainer from './DemocracyReferenda';
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
-import styled from '@xstyled/styled-components';
+
+import ProposalContainer from './DemocracyProposals';
+import ReferendaContainer from './DemocracyReferenda';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
-
-	// const { data, error } = useLatestProposalPostsQuery();
-
-	// if (error) return <FilteredError text={error.message}/>;
-
-	// if (data) return <OnchainGovenance data={data} />;
 
 	return (
 		<Container className={className}>
@@ -37,13 +27,13 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 	@media only screen and (max-width: 768px) {
-		h3 {
+		h1 {
 			margin-left: 3rem;
 		}
 	}
 
 	@media only screen and (max-width: 576px) {
-		h3 {
+		h1 {
 			margin-left: 1.5rem;
 		}
 	}
