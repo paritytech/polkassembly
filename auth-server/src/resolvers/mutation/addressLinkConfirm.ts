@@ -42,7 +42,7 @@ export default async (parent, { address_id, signature }: argsType, ctx: Context)
 			.query()
 			.patch({
 				public_key: Buffer.from(publicKey).toString('hex'),
-				linked: true
+				verified: true
 			})
 			.findById(address_id);
 
