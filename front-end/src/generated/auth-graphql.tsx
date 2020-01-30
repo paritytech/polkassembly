@@ -12,7 +12,6 @@ export type Scalars = {
   Upload: any,
 };
 
-
 export type Address = {
    __typename?: 'Address',
   address?: Maybe<Scalars['String']>,
