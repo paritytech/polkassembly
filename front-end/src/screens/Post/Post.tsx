@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Container, Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { Form } from '../../ui-components/Form';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
 import Comments from '../Comment/Comments';
 import NoPostFound from '../../components/NoPostFound';
@@ -33,6 +34,55 @@ const Post = ( { className, data, refetch }: Props ) => {
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
+
+	useEffect(() => {
+		// Construct
+		async function connect() {
+			const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io'); // 'ws://127.0.0.1:9944'
+			const api = await ApiPromise.create({ provider: wsProvider });
+
+			// Do something
+			console.log(api.genesisHash.toHex());
+			// The length of an epoch (session) in Babe
+			console.log(api.consts.babe.epochDuration.toNumber());
+
+			// The amount required to create a new account
+			console.log(api.consts.balances.creationFee.toNumber());
+
+			// The amount required per byte on an extrinsic
+			console.log(api.consts.balances);
+
+			// The actual address that we will use
+			const ADDR = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
+
+			// Retrieve the last timestamp
+			const now = await api.query.timestamp.now();
+
+			// Retrieve the account nonce via the system module
+			const nonce = await api.query.system.accountNonce(ADDR);
+
+			// Retrieve the account balance via the balances module
+			const balance = await api.query.balances.freeBalance(ADDR);
+
+			console.log(`${now}: balance of ${balance} and a nonce of ${nonce}`);
+
+			// Retrieve the chain name
+			const chain = await api.rpc.system.chain();
+
+			// Retrieve the latest header
+			const lastHeader = await api.rpc.chain.getHeader();
+
+			// Log the information
+			console.log(chain, lastHeader);
+
+			// Subscribe to the new headers
+			await api.rpc.chain.subscribeNewHeads((lastHeader) => {
+				console.log(`${chain}: last block #${lastHeader.number} has hash ${lastHeader.hash}`);
+			});
+		}
+
+		connect();
+	}, []);
 
 	useEffect(() => {
 		setIsProposal(post?.onchain_link?.onchain_proposal_id === 0 || !!post?.onchain_link?.onchain_proposal_id);
