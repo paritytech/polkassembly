@@ -71,7 +71,7 @@ describe('signup mutation', () => {
 		}
 	});
 
-	it('should throw an error username contains whitespace', async () => {
+	it('should throw an error if username contains whitespace', async () => {
 		const username = 'user name';
 
 		try {
