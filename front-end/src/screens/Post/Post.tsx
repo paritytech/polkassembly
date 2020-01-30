@@ -33,6 +33,14 @@ const Post = ( { className, data, refetch }: Props ) => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
 
+	// if an onchain_link has both the a proposal_id and referendum_id, it means it's a referendum now
+	// the referendum id should be shown.
+	const onchainId = isReferendum || isProposal
+		? isReferendum
+			? post?.onchain_link?.onchain_referendum_id
+			: post?.onchain_link?.onchain_proposal_id
+		: null;
+
 	useEffect(() => {
 		setIsProposal(post?.onchain_link?.onchain_proposal_id === 0 || !!post?.onchain_link?.onchain_proposal_id);
 		setIsReferendum(post?.onchain_link?.onchain_referendum_id === 0 || !!post?.onchain_link?.onchain_referendum_id);
@@ -44,7 +52,6 @@ const Post = ( { className, data, refetch }: Props ) => {
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-
 					<div className='PostContent'>
 						<div className='post_tags'>
 							<Tag>{post.topic && post.topic.name}</Tag>
@@ -52,9 +59,10 @@ const Post = ( { className, data, refetch }: Props ) => {
 						</div>
 						<EditablePostContent
 							isEditing={isEditing}
+							onchainId={onchainId}
 							post={post}
-							toggleEdit={toggleEdit}
 							refetch={refetch}
+							toggleEdit={toggleEdit}
 						/>
 						{
 							(isProposal || isReferendum) && post.onchain_link &&

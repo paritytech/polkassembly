@@ -17,12 +17,13 @@ import TitleForm from '../../components/TitleForm';
 interface Props {
 	className?: string
 	isEditing: boolean
+	onchainId?: number | null
 	post: PostFragment
 	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
 	toggleEdit: () => void
 }
 
-const EditablePostContent = ({ className, isEditing, post, refetch, toggleEdit }: Props) => {
+const EditablePostContent = ({ className, isEditing, onchainId, post, refetch, toggleEdit }: Props) => {
 	const { author, content, title } = post;
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
@@ -108,7 +109,7 @@ const EditablePostContent = ({ className, isEditing, post, refetch, toggleEdit }
 						</Form>
 						:
 						<>
-							<PostContent post={post}/>
+							<PostContent onchainId={onchainId} post={post}/>
 						</>
 				}
 			</div>

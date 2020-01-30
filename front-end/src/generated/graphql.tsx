@@ -4353,13 +4353,20 @@ export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Prop
   id?: Maybe<Scalars['Int']>,
 };
 
+export type PublicUser = {
+   __typename?: 'PublicUser',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
+};
+
 export type Query = {
    __typename?: 'Query',
   addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
 };
 
 
@@ -4445,7 +4452,7 @@ export type Query_Root = {
   totalIssuances: Array<Maybe<TotalIssuance>>,
   totalIssuancesConnection: TotalIssuanceConnection,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,
@@ -6529,7 +6536,7 @@ export type CommentRecursiveFragment = (
 
 export type OnchainLinkFragment = (
   { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
   & { onchain_proposal: Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'id'>
@@ -6538,7 +6545,7 @@ export type OnchainLinkFragment = (
       & Pick<ProposalStatus, 'id' | 'status'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'author' | 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'name' | 'value'>
@@ -6886,6 +6893,7 @@ export const CommentRecursiveFragmentDoc = gql`
 export const OnchainLinkFragmentDoc = gql`
     fragment onchainLink on onchain_links {
   id
+  proposer_address
   onchain_proposal_id
   onchain_referendum_id
   onchain_proposal(where: {}) {
@@ -6895,7 +6903,6 @@ export const OnchainLinkFragmentDoc = gql`
       status
     }
     preimage {
-      author
       depositAmount
       hash
       id

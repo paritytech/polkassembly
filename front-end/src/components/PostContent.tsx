@@ -5,13 +5,17 @@ import CreationLabel from '../ui-components/CreationLabel';
 import { PostFragment } from '../generated/graphql';
 import UpdateLabel from '../ui-components/UpdateLabel';
 
-const PostContent = ({ post }:{post: PostFragment}) => {
+interface Props {
+	onchainId?: number | null
+	post: PostFragment
+}
+const PostContent = ({ onchainId, post }:Props) => {
 	const { author, content, created_at, title, updated_at } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>;
 	return (
 		<>
-			<h3>{title}</h3>
+			<h3>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h3>
 			<div className='post_info'>
 				<CreationLabel
 					created_at={created_at}
