@@ -1,29 +1,24 @@
 import React from 'react';
-import { Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../../components/GovernanceCard';
-import { LatestProposalPostsQuery } from '../../generated/graphql';
+import GovernanceCard from '../../../components/GovernanceCard';
+import { LatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestProposalPostsQuery
+  data: LatestDemocracyProposalPostsQuery
 }
 
-const OnchainGovenance = ({ className, data }: Props) => {
+const Proposals = ({ className, data }: Props) => {
 	return (
-		<Container className={className}>
-			<h3>Latest Proposals & Referenda</h3>
-			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<ul className='proposals__list'>
-						{!!data.posts &&
+		<ul className={`${className} proposals__list`}>
+			{!!data.posts &&
 						data.posts.map(
 							(post) =>
 								!!post?.author?.username && (
 									<li key={post.id} className='proposals__item'>
-										{<Link to={`/post/${post.id}`}>
+										{<Link to={`/proposal/${post.id}`}>
 											<GovernanceCard
 												displayname={post.author.name}
 												comments={post.comments_aggregate.aggregate?.count
@@ -40,29 +35,11 @@ const OnchainGovenance = ({ className, data }: Props) => {
 									</li>
 								)
 						)}
-					</ul>
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={6}>
-				</Grid.Column>
-			</Grid>
-		</Container>
+		</ul>
 	);
 };
 
-export default styled(OnchainGovenance)`
-
-	@media only screen and (max-width: 768px) {
-		h3 {
-			margin-left: 3rem;
-		}
-	}
-
-	@media only screen and (max-width: 576px) {
-		h3 {
-			margin-left: 1.5rem;
-		}
-	}
-
+export default styled(Proposals)`
 	li {
 		list-style-type: none;
 	}

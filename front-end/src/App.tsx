@@ -52,6 +52,12 @@ const App = () => {
 										<Route path="/post/create" >
 											<CreatePost/>
 										</Route>
+										<Route exact path="/proposal/:id" >
+											<Post/>
+										</Route>
+										<Route exact path="/referendum/:id" >
+											<Post/>
+										</Route>
 										<Route exact path="/post/:id" >
 											<Post/>
 										</Route>

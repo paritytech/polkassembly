@@ -24,7 +24,6 @@ const Discussion = function ({
 	onchainId,
 	status,
 	title,
-	topic,
 	username
 }:DiscussionProps) {
 
