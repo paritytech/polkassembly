@@ -60,7 +60,19 @@ spec:
         image: hasura/graphql-engine:pull2395-7ea7f82c
         imagePullPolicy: IfNotPresent
         name: graphql-engine
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      restartPolicy: Always
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.14
+        command: ["/cloud_sql_proxy",
+                  "-instances=test-installations-222013:us-central1:governance-auth=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/test-installations-222013-bb0efcdf24f9.json"]
+        securityContext:
+          runAsUser: 2  # non-root user
+          allowPrivilegeEscalation: false
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
