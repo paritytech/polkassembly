@@ -85,10 +85,6 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		connect();
 	}, []);
 
-	useEffect(() => {
-		setIsProposal(post?.onchain_link?.onchain_proposal_id === 0 || !!post?.onchain_link?.onchain_proposal_id);
-		setIsReferendum(post?.onchain_link?.onchain_referendum_id === 0 || !!post?.onchain_link?.onchain_referendum_id);
-	}, [post]);
 	// if an onchain_link has both the a proposal_id and referendum_id, it means it's a referendum now
 	// the referendum id should be shown.
 	let onchainId: number | null | undefined;
