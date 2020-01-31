@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 
-import { usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery } from '../generated/graphql';
-import { NotificationContext } from '../context/NotificationContext';
-import { NotificationStatus } from '../types';
-import Button from '../ui-components/Button';
+import { usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery } from '../../generated/graphql';
+import { NotificationContext } from '../../context/NotificationContext';
+import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
 
 interface DiscussionProps {
 	postId: number

@@ -64,7 +64,7 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
         border-radius: 0.2rem;
 		letter-spacing: 0.05rem;
 		text-transform: capitalize;
-        &.Proposed {
+        &.Proposed, &.Started {
             border-color: blue_primary;
             color: blue_primary;
         }
@@ -72,7 +72,7 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
             border-color: green_primary;
             color: green_primary;
         }
-        &Ccancelled, &.NotPassed, &.Vetoed {
+        &.Cancelled, &.NotPassed, &.Vetoed {
             border-color: red_primary;
             color: red_primary;
         }

@@ -6412,11 +6412,6 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
-export type UserFragmentFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'username'>
-);
-
 export type EditCommentMutationVariables = {
   id: Scalars['uuid'],
   content: Scalars['String']
@@ -6428,163 +6423,6 @@ export type EditCommentMutation = (
   & { update_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
     & Pick<Comments_Mutation_Response, 'affected_rows'>
-  )> }
-);
-
-export type CreatePostMutationVariables = {
-  userId: Scalars['Int'],
-  content: Scalars['String'],
-  topicId: Scalars['Int'],
-  title: Scalars['String']
-};
-
-
-export type CreatePostMutation = (
-  { __typename: 'mutation_root' }
-  & { insert_posts: Maybe<(
-    { __typename?: 'posts_mutation_response' }
-    & Pick<Posts_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'posts' }
-      & Pick<Posts, 'id'>
-    )> }
-  )> }
-);
-
-export type TopicFragment = (
-  { __typename?: 'post_topics' }
-  & Pick<Post_Topics, 'id' | 'name'>
-);
-
-export type Post_TopicsQueryVariables = {};
-
-
-export type Post_TopicsQuery = (
-  { __typename?: 'query_root' }
-  & { post_topics: Array<(
-    { __typename?: 'post_topics' }
-    & TopicFragment
-  )> }
-);
-
-export type LatestDiscussionPostsQueryVariables = {};
-
-
-export type LatestDiscussionPostsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username'>
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ), type: (
-      { __typename?: 'post_types' }
-      & Pick<Post_Types, 'name' | 'id'>
-    ) }
-  )> }
-);
-
-export type LatestPostsQueryVariables = {};
-
-
-export type LatestPostsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username'>
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ) }
-  )> }
-);
-
-export type CommentFieldsFragment = (
-  { __typename?: 'comments' }
-  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
-  & { author: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
-  )> }
-);
-
-export type CommentRecursiveFragment = (
-  { __typename?: 'comments' }
-  & { comments: Array<(
-    { __typename?: 'comments' }
-    & { comments: Array<(
-      { __typename?: 'comments' }
-      & CommentFieldsFragment
-    )> }
-    & CommentFieldsFragment
-  )> }
-  & CommentFieldsFragment
-);
-
-export type OnchainLinkFragment = (
-  { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
-  & { onchain_proposal: Maybe<(
-    { __typename?: 'Proposal' }
-    & Pick<Proposal, 'id'>
-    & { proposalStatus: Maybe<Array<(
-      { __typename?: 'ProposalStatus' }
-      & Pick<ProposalStatus, 'id' | 'status'>
-    )>>, preimage: Maybe<(
-      { __typename?: 'Preimage' }
-      & Pick<Preimage, 'author' | 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
-      & { preimageArguments: Maybe<Array<(
-        { __typename?: 'PreimageArgument' }
-        & Pick<PreimageArgument, 'name' | 'value'>
-      )>> }
-    )> }
-  )> }
-);
-
-export type PostFragment = (
-  { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
-  & { author: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
-  )>, comments: Array<(
-    { __typename?: 'comments' }
-    & CommentRecursiveFragment
-  )>, onchain_link: Maybe<(
-    { __typename?: 'onchain_links' }
-    & OnchainLinkFragment
-  )>, topic: (
-    { __typename?: 'post_topics' }
-    & Pick<Post_Topics, 'id' | 'name'>
-  ), type: (
-    { __typename?: 'post_types' }
-    & Pick<Post_Types, 'id' | 'name'>
-  ) }
-);
-
-export type PostAndCommentsQueryVariables = {
-  id: Scalars['Int']
-};
-
-
-export type PostAndCommentsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & PostFragment
   )> }
 );
 
@@ -6657,6 +6495,222 @@ export type SubscriptionQuery = (
   )> }
 );
 
+export type CommentFieldsFragment = (
+  { __typename?: 'comments' }
+  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )> }
+);
+
+export type CommentRecursiveFragment = (
+  { __typename?: 'comments' }
+  & { comments: Array<(
+    { __typename?: 'comments' }
+    & { comments: Array<(
+      { __typename?: 'comments' }
+      & CommentFieldsFragment
+    )> }
+    & CommentFieldsFragment
+  )> }
+  & CommentFieldsFragment
+);
+
+export type CreatePostMutationVariables = {
+  userId: Scalars['Int'],
+  content: Scalars['String'],
+  topicId: Scalars['Int'],
+  title: Scalars['String']
+};
+
+
+export type CreatePostMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_posts: Maybe<(
+    { __typename?: 'posts_mutation_response' }
+    & Pick<Posts_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'id'>
+    )> }
+  )> }
+);
+
+export type TopicFragment = (
+  { __typename?: 'post_topics' }
+  & Pick<Post_Topics, 'id' | 'name'>
+);
+
+export type Post_TopicsQueryVariables = {};
+
+
+export type Post_TopicsQuery = (
+  { __typename?: 'query_root' }
+  & { post_topics: Array<(
+    { __typename?: 'post_topics' }
+    & TopicFragment
+  )> }
+);
+
+export type DiscussionPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type DiscussionPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DiscussionPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & DiscussionPostFragment
+  )> }
+);
+
+export type LatestDiscussionPostsQueryVariables = {};
+
+
+export type LatestDiscussionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
+  )> }
+);
+
+export type LatestPostsQueryVariables = {};
+
+
+export type LatestPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
+export type LatestDemocracyProposalPostsQueryVariables = {
+  postType?: Scalars['Int'],
+  postTopic?: Scalars['Int']
+};
+
+
+export type LatestDemocracyProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & { onchain_proposal: Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
+  )> }
+);
+
+export type LatestDemocracyReferendaPostsQueryVariables = {
+  postType?: Scalars['Int'],
+  postTopic?: Scalars['Int']
+};
+
+
+export type LatestDemocracyReferendaPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
+      & { onchain_referendum: Maybe<(
+        { __typename?: 'Referendum' }
+        & Pick<Referendum, 'id'>
+        & { referendumStatus: Maybe<Array<(
+          { __typename?: 'ReferendumStatus' }
+          & Pick<ReferendumStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
+  )> }
+);
+
 export type LatestProposalPostsQueryVariables = {};
 
 
@@ -6692,6 +6746,114 @@ export type LatestProposalPostsQuery = (
         )>> }
       )> }
     )> }
+  )> }
+);
+
+export type OnchainLinkProposalFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id'>
+  & { onchain_proposal: Maybe<(
+    { __typename?: 'Proposal' }
+    & Pick<Proposal, 'id'>
+    & { proposalStatus: Maybe<Array<(
+      { __typename?: 'ProposalStatus' }
+      & Pick<ProposalStatus, 'id' | 'status'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'id' | 'name' | 'value'>
+      )>> }
+    )> }
+  )> }
+);
+
+export type ProposalPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkProposalFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type ProposalPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type ProposalPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & ProposalPostFragment
+  )> }
+);
+
+export type OnchainLinkReferendumFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
+  & { onchain_referendum: Maybe<(
+    { __typename?: 'Referendum' }
+    & Pick<Referendum, 'id' | 'delay' | 'end' | 'voteThreshold'>
+    & { referendumStatus: Maybe<Array<(
+      { __typename?: 'ReferendumStatus' }
+      & Pick<ReferendumStatus, 'status' | 'id'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'id' | 'name' | 'value'>
+      )>> }
+    )> }
+  )> }
+);
+
+export type ReferendumPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkReferendumFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type ReferendumPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type ReferendumPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & ReferendumPostFragment
   )> }
 );
 
@@ -6853,13 +7015,6 @@ export type VerifyEmailMutation = (
   )> }
 );
 
-export const UserFragmentFragmentDoc = gql`
-    fragment userFragment on User {
-  id
-  name
-  username
-}
-    `;
 export const TopicFragmentDoc = gql`
     fragment topic on post_topics {
   id
@@ -6890,11 +7045,36 @@ export const CommentRecursiveFragmentDoc = gql`
   }
 }
     ${CommentFieldsFragmentDoc}`;
-export const OnchainLinkFragmentDoc = gql`
-    fragment onchainLink on onchain_links {
+export const DiscussionPostFragmentDoc = gql`
+    fragment discussionPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
   id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}`;
+export const OnchainLinkProposalFragmentDoc = gql`
+    fragment onchainLinkProposal on onchain_links {
+  id
+  proposer_address
   onchain_proposal_id
-  onchain_referendum_id
   onchain_proposal(where: {}) {
     id
     proposalStatus {
@@ -6902,13 +7082,13 @@ export const OnchainLinkFragmentDoc = gql`
       status
     }
     preimage {
-      author
       depositAmount
       hash
       id
       metaDescription
       method
       preimageArguments {
+        id
         name
         value
       }
@@ -6916,8 +7096,8 @@ export const OnchainLinkFragmentDoc = gql`
   }
 }
     `;
-export const PostFragmentDoc = gql`
-    fragment post on posts {
+export const ProposalPostFragmentDoc = gql`
+    fragment proposalPost on posts {
   author {
     id
     name
@@ -6931,7 +7111,7 @@ export const PostFragmentDoc = gql`
     ...commentRecursive
   }
   onchain_link {
-    ...onchainLink
+    ...onchainLinkProposal
   }
   title
   topic {
@@ -6944,7 +7124,65 @@ export const PostFragmentDoc = gql`
   }
 }
     ${CommentRecursiveFragmentDoc}
-${OnchainLinkFragmentDoc}`;
+${OnchainLinkProposalFragmentDoc}`;
+export const OnchainLinkReferendumFragmentDoc = gql`
+    fragment onchainLinkReferendum on onchain_links {
+  id
+  proposer_address
+  onchain_referendum_id
+  onchain_referendum(where: {}) {
+    id
+    delay
+    end
+    voteThreshold
+    referendumStatus {
+      status
+      id
+    }
+    preimage {
+      depositAmount
+      hash
+      id
+      metaDescription
+      method
+      preimageArguments {
+        id
+        name
+        value
+      }
+    }
+  }
+}
+    `;
+export const ReferendumPostFragmentDoc = gql`
+    fragment referendumPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  onchain_link {
+    ...onchainLinkReferendum
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkReferendumFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -6978,204 +7216,6 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
-export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
-  __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
-    affected_rows
-    returning {
-      id
-    }
-  }
-}
-    `;
-export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
-
-/**
- * __useCreatePostMutation__
- *
- * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      content: // value for 'content'
- *      topicId: // value for 'topicId'
- *      title: // value for 'title'
- *   },
- * });
- */
-export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
-      }
-export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
-export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
-export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
-export const Post_TopicsDocument = gql`
-    query Post_topics {
-  post_topics {
-    ...topic
-  }
-}
-    ${TopicFragmentDoc}`;
-
-/**
- * __usePost_TopicsQuery__
- *
- * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePost_TopicsQuery({
- *   variables: {
- *   },
- * });
- */
-export function usePost_TopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-        return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-      }
-export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-        }
-export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
-export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
-export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
-export const LatestDiscussionPostsDocument = gql`
-    query LatestDiscussionPosts {
-  posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
-    id
-    title
-    author {
-      id
-      name
-      username
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-    type {
-      name
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useLatestDiscussionPostsQuery__
- *
- * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLatestDiscussionPostsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-      }
-export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-        }
-export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
-export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
-export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
-export const LatestPostsDocument = gql`
-    query LatestPosts {
-  posts(order_by: {created_at: desc}) {
-    id
-    title
-    author {
-      id
-      name
-      username
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useLatestPostsQuery__
- *
- * To run a query within a React component, call `useLatestPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLatestPostsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLatestPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-      }
-export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-        }
-export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
-export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
-export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
-export const PostAndCommentsDocument = gql`
-    query PostAndComments($id: Int!) {
-  posts(where: {id: {_eq: $id}}) {
-    ...post
-  }
-}
-    ${PostFragmentDoc}`;
-
-/**
- * __usePostAndCommentsQuery__
- *
- * To run a query within a React component, call `usePostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePostAndCommentsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-        return ApolloReactHooks.useQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
-      }
-export function usePostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
-        }
-export type PostAndCommentsQueryHookResult = ReturnType<typeof usePostAndCommentsQuery>;
-export type PostAndCommentsLazyQueryHookResult = ReturnType<typeof usePostAndCommentsLazyQuery>;
-export type PostAndCommentsQueryResult = ApolloReactCommon.QueryResult<PostAndCommentsQuery, PostAndCommentsQueryVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
@@ -7342,9 +7382,339 @@ export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
 export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
 export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
+export const CreatePostDocument = gql`
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
+  __typename
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}
+    `;
+export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      content: // value for 'content'
+ *      topicId: // value for 'topicId'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
+      }
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
+export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const Post_TopicsDocument = gql`
+    query Post_topics {
+  post_topics {
+    ...topic
+  }
+}
+    ${TopicFragmentDoc}`;
+
+/**
+ * __usePost_TopicsQuery__
+ *
+ * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePost_TopicsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePost_TopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
+        return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+      }
+export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+        }
+export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
+export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
+export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
+export const DiscussionPostAndCommentsDocument = gql`
+    query DiscussionPostAndComments($id: Int!) {
+  posts(where: {id: {_eq: $id}}) {
+    ...discussionPost
+  }
+}
+    ${DiscussionPostFragmentDoc}`;
+
+/**
+ * __useDiscussionPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+      }
+export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+        }
+export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
+export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
+export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
+export const LatestDiscussionPostsDocument = gql`
+    query LatestDiscussionPosts {
+  posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
+    id
+    title
+    author {
+      id
+      name
+      username
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDiscussionPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDiscussionPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+      }
+export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+        }
+export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
+export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
+export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
+export const LatestPostsDocument = gql`
+    query LatestPosts {
+  posts(order_by: {created_at: desc}) {
+    id
+    title
+    author {
+      id
+      name
+      username
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+      }
+export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+        }
+export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
+export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
+export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
+export const LatestDemocracyProposalPostsDocument = gql`
+    query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1) {
+  posts(limit: 5, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *   },
+ * });
+ */
+export function useLatestDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+        }
+export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsQuery>;
+export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
+export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
+export const LatestDemocracyReferendaPostsDocument = gql`
+    query LatestDemocracyReferendaPosts($postType: Int! = 2, $postTopic: Int! = 1) {
+  posts(limit: 5, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        referendumStatus {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyReferendaPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyReferendaPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyReferendaPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *   },
+ * });
+ */
+export function useLatestDemocracyReferendaPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>(LatestDemocracyReferendaPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>(LatestDemocracyReferendaPostsDocument, baseOptions);
+        }
+export type LatestDemocracyReferendaPostsQueryHookResult = ReturnType<typeof useLatestDemocracyReferendaPostsQuery>;
+export type LatestDemocracyReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyReferendaPostsLazyQuery>;
+export type LatestDemocracyReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>;
 export const LatestProposalPostsDocument = gql`
     query LatestProposalPosts {
-  posts(limit: 20, where: {type: {id: {_eq: 2}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+  posts(limit: 20, where: {type: {id: {_eq: 2}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
     id
     title
     author {
@@ -7407,6 +7777,72 @@ export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
 export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
 export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
+export const ProposalPostAndCommentsDocument = gql`
+    query ProposalPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
+    ...proposalPost
+  }
+}
+    ${ProposalPostFragmentDoc}`;
+
+/**
+ * __useProposalPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProposalPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+      }
+export function useProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+        }
+export type ProposalPostAndCommentsQueryHookResult = ReturnType<typeof useProposalPostAndCommentsQuery>;
+export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useProposalPostAndCommentsLazyQuery>;
+export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
+export const ReferendumPostAndCommentsDocument = gql`
+    query ReferendumPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_referendum_id: {_eq: $id}}}) {
+    ...referendumPost
+  }
+}
+    ${ReferendumPostFragmentDoc}`;
+
+/**
+ * __useReferendumPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReferendumPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useReferendumPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+      }
+export function useReferendumPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+        }
+export type ReferendumPostAndCommentsQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsQuery>;
+export type ReferendumPostAndCommentsLazyQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsLazyQuery>;
+export type ReferendumPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>;
 export const ResetPasswordDocument = gql`
     mutation resetPassword($newPassword: String!, $token: String!) {
   resetPassword(newPassword: $newPassword, token: $token) {

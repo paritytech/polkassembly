@@ -15,8 +15,10 @@ import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
 import NotFound from './screens/NotFound';
-import Post from './screens/Post';
-import Proposals from './screens/Proposals';
+import PostDiscussion from './screens/DiscussionPost';
+import OnChain from './screens/OnChain';
+import PostProposal from './screens/ProposalPost';
+import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
@@ -52,11 +54,17 @@ const App = () => {
 										<Route path="/post/create" >
 											<CreatePost/>
 										</Route>
-										<Route exact path="/post/:id" >
-											<Post/>
+										<Route exact path="/proposal/:id" >
+											<PostProposal/>
 										</Route>
-										<Route path="/proposals" >
-											<Proposals/>
+										<Route exact path="/referendum/:id" >
+											<PostReferendum/>
+										</Route>
+										<Route exact path="/post/:id" >
+											<PostDiscussion/>
+										</Route>
+										<Route path="/onchain" >
+											<OnChain/>
 										</Route>
 										<Route path="/request-reset-password">
 											<RequestResetPassword/>
