@@ -2,14 +2,17 @@ version: "3.6"
 services:
   postgres-test:
     image: postgres
+    restart: always
     ports:
-      - "5433:5432"
+      - "5433:5433"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: governance-auth-test
+      POSTGRES_DATABASE: governance-auth-test
+      PGPORT: 5433
   auth-test:
     image: paritytech/polkassembly-auth-test
+    restart: always
     depends_on:
       - "postgres-test"
     environment:

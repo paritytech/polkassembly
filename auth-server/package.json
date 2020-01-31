@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "oauth 2.0 server for polkassembly",
   "scripts": {
-    "test": "./test.sh",
+    "test": "docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test . && docker-compose -f docker-compose-test.yaml up --abort-on-container-exit",
     "test:dangerous": "knex migrate:latest && mocha -r ts-node/register test/**/*.spec.ts",
     "start": "yarn tsc && node build/src/index.js",
     "lint": "eslint . --ext .js,.ts",
