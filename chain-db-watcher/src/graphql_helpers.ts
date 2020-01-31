@@ -20,6 +20,12 @@ const botProposalUserId = process.env.BOT_PROPOSAL_USER_ID;
 const authServerUrl = process.env.AUTH_SERVER_URL;
 const chainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 
+/**
+ * Fetches the JWT from auth server for a "proposal_bot"
+ * This is very simple, there's no caching and it fetches the token every single time.
+ * it's ok for proposals since there are rarely more than 1 proposal per 15min.
+ */
+
 export const getToken = async (): Promise<string | void> => {
 	const credentials = {
 		username: process.env.PROPOSAL_BOT_USERNAME,
@@ -46,9 +52,11 @@ export const getToken = async (): Promise<string | void> => {
 			throw new Error(`Unexpected data at proposal bot login: ${data}`);
 		}
 	} catch (e) {
-		e.response?.errors && console.error(chalk.red('GraphQL response errors', e.response.errors));
-		e.response?.data && console.error(chalk.red('Response data if available', e.response.data));
 		console.error(chalk.red('getToken execution error', e));
+		e.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', e.response.errors));
+		e.response?.data &&
+			console.error(chalk.red('Response data if available', e.response.data));
 	}
 };
 
@@ -76,15 +84,11 @@ export const proposalDiscussionExists = async (
 
 		return !!data?.onchain_links?.length;
 	} catch (err) {
+		console.error(chalk.red(`proposalDiscussionExists execution error with proposalId: ${onchainProposalId}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
 			console.error(chalk.red('Response data if available', err.response.data));
-		console.error(
-			chalk.red(
-				`proposalDiscussionExists execution error with proposalId: ${onchainProposalId}`
-			), err
-		);
 	}
 };
 
@@ -108,15 +112,11 @@ export const canUpdateDiscussionDB = async (onchainProposalId: number): Promise<
 
 		return !!data?.onchain_links?.length;
 	} catch (err) {
+		console.error(chalk.red(`canUpdateDiscussionDB execution error - Referendum already linked to proposal ${onchainProposalId} in discussion DB.`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
 			console.error(chalk.red('Response data if available', err.response.data));
-		console.error(
-			chalk.red(
-				`canUpdateDiscussionDB execution error - Referendum already linked to proposal ${onchainProposalId} in discussion DB.`
-			), err
-		);
 	}
 };
 
@@ -184,26 +184,13 @@ export const addPostAndProposal = async ({
 
 		return data?.['insert_proposals']?.['returning'][0]?.id;
 	} catch (err) {
+		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}`, err));
 		err.response?.errors &&
-		console.error(chalk.red('GraphQL response errors', err.response.errors));
-	err.response?.data &&
-		console.error(chalk.red('Response data if available', err.response.data));
-	console.error(
-		chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}`, err)
-	);
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
 	}
 };
-
-/**
- * Fetches the JWT from auth server for a "proposal_bot"
- * This is very simple, there's no caching and it fetches the token every single time.
- * it's ok for proposals since there are rarely more than 1 proposal per 15min.
- */
-
-interface ReferendumInfo {
-	preimageHash: string | null;
-	referendumCreationBlockHash: string;
-}
 
 /**
  * Returns the Proposal id from chain-db from which the renferendum id originates
@@ -212,6 +199,11 @@ interface ReferendumInfo {
  * @param {string | null} referendumInfo.preimageHash - The preimage hash of the referendum, if any.
  * @param {string} referendumInfo.referendumCreationBlockHash - The block hash at which the referendum was created.
  */
+
+interface ReferendumInfo {
+	preimageHash: string | null;
+	referendumCreationBlockHash: string;
+}
 
 export const getAssociatedProposalId = async ({
 	preimageHash,
@@ -264,14 +256,11 @@ export const getAssociatedProposalId = async ({
 			return data.proposals[0].proposalId;
 		}
 	} catch (err) {
-		console.error(
-			chalk.red(`getAssociatedProposal execution error with preimage hash: ${preimageHash}`)
-			, err
-		);
+		console.error(chalk.red(`getAssociatedProposal execution error with preimage hash: ${preimageHash}`), err);
 		err.response?.errors &&
-		console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
-		console.error(chalk.red('Response data if available', err.response.data));
+			console.error(chalk.red('Response data if available', err.response.data));
 	}
 };
 
@@ -315,7 +304,7 @@ export const addReferendumId = async ({
 	} catch (err) {
 		console.error(chalk.red(`addReferendumId execution error with proposalId:${onchainProposalId}, referendumId:${onchainReferendumId}`), err);
 		err.response?.errors &&
-		console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
 			console.error(chalk.red('Response data if available', err.response.data));
 	}
