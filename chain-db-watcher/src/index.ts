@@ -70,7 +70,7 @@ function main (): void {
 					if (!alreadyExist) {
 						addPostAndProposal({ onchainProposalId: proposalId, proposer: author }).then(
 							() => console.log(`${chalk.green('✔︎')} Proposal ${proposalId.toString()} added to the database.`)
-						).catch(error => console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`)));
+						).catch(error => console.error(chalk.red(error)));
 					} else {
 						console.error(chalk.red(`✖︎ Proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
 					}
@@ -110,37 +110,36 @@ function main (): void {
 				referendumCreationBlockHash
 			})
 				.then(associatedProposalId => {
-					if (associatedProposalId === null) {
-						throw new Error(
-							`No proposal Id found on chain-db for referendum id: ${referendumId}.`
-						);
-					}
-
-					canUpdateDiscussionDB(associatedProposalId)
-						.then(canUpdate => {
-							if (canUpdate) {
-								addReferendumId({
-									onchainProposalId: associatedProposalId,
-									onchainReferendumId: referendumId
-								})
-									.then(() =>
-										console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
-									)
-									.catch((error: any) =>
-										console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
+					// edge case, proposal id can be 0, which is falsy
+					if (!associatedProposalId && associatedProposalId !== 0) {
+						console.error(chalk.red(`No proposal Id found on chain-db for referendum id: ${referendumId}.`));
+					} else {
+						canUpdateDiscussionDB(associatedProposalId)
+							.then(canUpdate => {
+								if (canUpdate) {
+									addReferendumId({
+										onchainProposalId: associatedProposalId,
+										onchainReferendumId: referendumId
+									})
+										.then(() =>
+											console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
+										)
+										.catch((error: any) =>
+											console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
+										);
+								} else {
+									console.error(
+										chalk.red(
+											`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
+										)
 									);
-							} else {
-								console.error(
-									chalk.red(
-										`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-									)
-								);
-							}
-						})
-						.catch(error => console.error(chalk.red(error)));
+								}
+							})
+							.catch(error => console.error(chalk.red(error)));
+					}
 				})
 				.catch(e => {
-					throw new Error(e);
+					console.error(chalk.red(e));
 				});
 		}
 	});
