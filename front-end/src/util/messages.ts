@@ -3,5 +3,5 @@ export default {
 	VALIDATION_EMAIL_ERROR: 'You need to provide a valid email!',
 	VALIDATION_PASSWORD_ERROR: 'You need to specify a password with at least 6 characters!',
 	VALIDATION_TITLE_ERROR: 'Did you forget to add a title?',
-	VALIDATION_USERNAME_ERROR: 'You need to specify a username with at least 3 characters!'
+	VALIDATION_USERNAME_ERROR: 'Invalid character found, you can use letters and the following characters ._-'
 };

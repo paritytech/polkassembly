@@ -65,7 +65,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.username ? 'error' : ''}
 								name='username'
 								placeholder='john'
-								ref={register({ minLength: 3, required: true })}
+								ref={register({ pattern: /^[A-Za-z0-9._-]{3,20}$/, required: true })}
 								type='text'
 							/>
 							{errors.username && <span className={'errorText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
