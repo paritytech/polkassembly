@@ -39,9 +39,9 @@ spec:
               name: hasura-config
         - name: HASURA_GRAPHQL_JWT_SECRET
           valueFrom:
-            configMapKeyRef:
-              key: HASURA_GRAPHQL_JWT_SECRET
-              name: hasura-config
+            secretKeyRef:
+              key: graphql_jwt_secret
+              name: hasura-secrets.yaml
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           valueFrom:
             configMapKeyRef:
