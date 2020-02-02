@@ -1,9 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState, useEffect } from 'react';
-import { Container, Divider, Grid, Icon } from 'semantic-ui-react';
+import React, { useContext, useState } from 'react';
+import { Container, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import { Form } from '../../ui-components/Form';
-import { ApiPromise, WsProvider } from '@polkadot/api';
 
 import Comments from '../Comment/Comments';
 import NoPostFound from '../NoPostFound';
@@ -17,9 +15,10 @@ import Tag from '../../ui-components/Tag';
 import StatusTag from '../../ui-components/StatusTag';
 import PostProposalInfo from './PostProposalInfo';
 import PostReferendumInfo from './PostReferendumInfo';
+import Democracy from './Democracy';
 
 interface Props {
-	className?: string;
+	className?: string
 	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data']
 	isProposal?: boolean
 	isReferendum?: boolean
@@ -35,55 +34,6 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
-
-	useEffect(() => {
-		// Construct
-		async function connect() {
-			const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io'); // 'ws://127.0.0.1:9944'
-			const api = await ApiPromise.create({ provider: wsProvider });
-
-			// Do something
-			console.log(api.genesisHash.toHex());
-			// The length of an epoch (session) in Babe
-			console.log(api.consts.babe.epochDuration.toNumber());
-
-			// The amount required to create a new account
-			console.log(api.consts.balances.creationFee.toNumber());
-
-			// The amount required per byte on an extrinsic
-			console.log(api.consts.balances);
-
-			// The actual address that we will use
-			const ADDR = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
-
-			// Retrieve the last timestamp
-			const now = await api.query.timestamp.now();
-
-			// Retrieve the account nonce via the system module
-			const nonce = await api.query.system.accountNonce(ADDR);
-
-			// Retrieve the account balance via the balances module
-			const balance = await api.query.balances.freeBalance(ADDR);
-
-			console.log(`${now}: balance of ${balance} and a nonce of ${nonce}`);
-
-			// Retrieve the chain name
-			const chain = await api.rpc.system.chain();
-
-			// Retrieve the latest header
-			const lastHeader = await api.rpc.chain.getHeader();
-
-			// Log the information
-			console.log(chain, lastHeader);
-
-			// Subscribe to the new headers
-			await api.rpc.chain.subscribeNewHeads((lastHeader) => {
-				console.log(`${chain}: last block #${lastHeader.number} has hash ${lastHeader.hash}`);
-			});
-		}
-
-		connect();
-	}, []);
 
 	// if an onchain_link has both the a proposal_id and referendum_id, it means it's a referendum now
 	// the referendum id should be shown.
@@ -154,106 +104,7 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 					</div>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					<div className='PostContent'>
-						<h2>Votes</h2>
-						<Divider/>
-						<Grid>
-							<Grid.Column width={6}>
-								<div><b>Total KSM Locked</b></div>
-								<div>241,547 KSM</div>
-							</Grid.Column>
-							<Grid.Column width={5}>
-								<div><b>Turnout</b></div>
-								<div>12,415%</div>
-							</Grid.Column>
-							<Grid.Column width={5}>
-								<div><b>Threshold</b></div>
-								<div>91.2%</div>
-							</Grid.Column>
-						</Grid>
-						<Divider/>
-						<Grid>
-							<Grid.Column width={6}>
-								<div><b>Total Votes</b></div>
-								<div>2,311,547</div>
-							</Grid.Column>
-							<Grid.Column width={5}>
-								<div><b>Yes</b></div>
-								<div>1,588,731</div>
-							</Grid.Column>
-							<Grid.Column width={5}>
-								<div><b>No</b></div>
-								<div>725,826</div>
-							</Grid.Column>
-						</Grid>
-					</div>
-					<div className='PostContent'>
-						<h2>Your Vote</h2>
-						<Form standalone={false}>
-							<Form.Group>
-								<Form.Field width={16}>
-									<label>Amount</label>
-									<input
-										placeholder='120'
-										type='text'
-									/>
-									<div>
-										2341 KSM Available. <a href='#'>Vote all.</a>
-									</div>
-								</Form.Field>
-							</Form.Group>
-							<Form.Group>
-								<Form.Field width={16}>
-									<label>Vote Lock</label>
-									<select>
-										<option value="2">2 weeks lock</option>
-										<option value="4">4 weeks lock</option>
-										<option value="8">8 weeks lock</option>
-										<option value="10">10 weeks lock</option>
-									</select>
-									<div>
-										120 KSM * 2 Lock periods = <b>240 votes</b>
-									</div>
-								</Form.Field>
-							</Form.Group>
-							<Form.Group>
-								<Form.Field width={8}>
-									<label>&nbsp;</label>
-									<Button
-										fluid
-										basic
-										color='red'
-									>
-										<Icon name='thumbs down' />
-										NAY
-									</Button>
-								</Form.Field>
-								<Form.Field width={8}>
-									<label>&nbsp;</label>
-									<Button
-										fluid
-										primary
-									>
-										<Icon name='thumbs up' />
-										AYE
-									</Button>
-								</Form.Field>
-							</Form.Group>
-						</Form>
-					</div>
-					<div className='PostContent'>
-						<h2>Timeline</h2>
-						<Grid>
-							<Grid.Column width={8}>
-								<div><b>Blocks Remaining</b></div>
-								<div>69,420</div>
-							</Grid.Column>
-							<Grid.Column width={8}>
-								<div><b>Enact at</b></div>
-								<div>Block 240,000</div>
-							</Grid.Column>
-						</Grid>
-					</div>
+					<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
 				</Grid.Column>
 			</Grid>
 		</Container>
