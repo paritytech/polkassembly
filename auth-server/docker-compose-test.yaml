@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DATABASE: governance-auth-test
+      POSTGRES_DB: governance-auth-test
       PGPORT: 5433
   auth-test:
     image: paritytech/polkassembly-auth-test
