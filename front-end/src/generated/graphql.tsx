@@ -6625,7 +6625,21 @@ export type LatestPostsQuery = (
         { __typename?: 'comments_aggregate_fields' }
         & Pick<Comments_Aggregate_Fields, 'count'>
       )> }
-    ) }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & { onchain_proposal: Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
   )> }
 );
 
@@ -6743,6 +6757,13 @@ export type LatestProposalPostsQuery = (
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )>, onchain_referendum: Maybe<(
+        { __typename?: 'Referendum' }
+        & Pick<Referendum, 'id'>
+        & { referendumStatus: Maybe<Array<(
+          { __typename?: 'ReferendumStatus' }
+          & Pick<ReferendumStatus, 'id' | 'status'>
         )>> }
       )> }
     )> }
@@ -7537,7 +7558,7 @@ export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLate
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
 export const LatestPostsDocument = gql`
     query LatestPosts {
-  posts(order_by: {created_at: desc}) {
+  posts(limit: 20, order_by: {created_at: desc}) {
     id
     title
     author {
@@ -7550,6 +7571,21 @@ export const LatestPostsDocument = gql`
     comments_aggregate {
       aggregate {
         count
+      }
+    }
+    type {
+      name
+      id
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus {
+          id
+          status
+        }
       }
     }
   }
@@ -7740,10 +7776,17 @@ export const LatestProposalPostsDocument = gql`
     onchain_link {
       id
       onchain_proposal_id
-      onchain_referendum_id
       onchain_proposal(where: {}) {
         id
         proposalStatus {
+          id
+          status
+        }
+      }
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        referendumStatus {
           id
           status
         }

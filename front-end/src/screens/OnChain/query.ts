@@ -28,10 +28,17 @@ query LatestProposalPosts {
     onchain_link {
       id
       onchain_proposal_id
-      onchain_referendum_id
       onchain_proposal(where: {}) {
         id
         proposalStatus {
+          id
+          status
+        }
+      }
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        referendumStatus {
           id
           status
         }

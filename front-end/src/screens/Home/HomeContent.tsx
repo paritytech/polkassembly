@@ -4,6 +4,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import DiscussionCard from '../../components/DiscussionCard';
+import Governancecard from '../../components/GovernanceCard';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
@@ -25,7 +26,7 @@ const HomeContent = ({ className, data }: Props) => {
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={8}>
-					<h3>Latest Discussions</h3>
+					<h3>Latest Activity</h3>
 					<ul className='Home__list'>
 						{!!data.posts &&
 						data.posts.map(
@@ -37,15 +38,32 @@ const HomeContent = ({ className, data }: Props) => {
 									return !!post && (
 										<li key={post.id} className='Home__item'>
 											{<Link to={`/post/${post.id}`}>
-												<DiscussionCard
-													displayname={post.author.name}
-													username={post.author.username}
-													comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-														? 'no'
-														: post.comments_aggregate.aggregate!.count!.toString()}
-													created_at={post.created_at}
-													title={post.title}
-												/>
+												{
+													post.type.id === 1
+														?
+														<DiscussionCard
+															displayname={post.author.name}
+															username={post.author.username}
+															comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
+																? 'no'
+																: post.comments_aggregate.aggregate!.count!.toString()}
+															created_at={post.created_at}
+															title={post.title}
+														/>
+														:
+														<Governancecard
+															displayname={post.author.name}
+															comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
+																? 'no'
+																: post.comments_aggregate.aggregate!.count!.toString()}
+															created_at={post.created_at}
+															onchainId={/* post.onchain_link?.onchain_proposal ? */ post.onchain_link?.onchain_proposal_id /* : post.onchain_link?.onchain_referendum_id */}
+															status={/* post.onchain_link?.onchain_proposal ? */ post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status /* :  /post.onchain_link?.onchain_referendum?.referendumStatus?.[0].status*/}
+															title={post.title}
+															topic={'post.topic.name'}
+															username={post.author.username}
+														/>
+												}
 											</Link>}
 										</li>
 									);}
@@ -105,11 +123,6 @@ export default styled(HomeContent)`
 
 	.Home__item {
 		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
 		a:hover {
 			tex	t-decoration: none;
 		}

@@ -101,11 +101,6 @@ export default styled(Discussions)`
 
 	.Discussions__item {
 		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
 		a:hover {
 			text-decoration: none;
 		}

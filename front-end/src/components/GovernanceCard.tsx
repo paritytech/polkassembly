@@ -31,7 +31,7 @@ const Discussion = function ({
 		<div className={className}>
 			<Grid>
 				<Grid.Column width={1}>
-					<h2>#{onchainId}</h2>
+					<h4>#{onchainId}</h4>
 				</Grid.Column>
 				<Grid.Column width={11}>
 					<h4 className={'proposalTitle'}>{title}</h4>
@@ -53,13 +53,13 @@ const Discussion = function ({
 };
 
 export default styled(Discussion)`
-    padding: 1.2rem 1.5rem;
+	padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
 	border: 1px solid #EEE;
 	&:hover {
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_secondary;
+		border-color: #CCC;
 		text-decoration: none;
 	}
     .statusTag {

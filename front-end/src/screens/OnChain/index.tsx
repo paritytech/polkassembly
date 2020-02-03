@@ -26,6 +26,10 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 };
 
 export default styled(OnchainPostsContainer)`
+	h2 {
+		margin-top: 4rem;
+	}
+
 	@media only screen and (max-width: 768px) {
 		h1 {
 			margin-left: 3rem;

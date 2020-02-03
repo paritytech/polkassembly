@@ -64,6 +64,7 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
         border-radius: 0.2rem;
 		letter-spacing: 0.05rem;
 		text-transform: capitalize;
+		padding: 0.5rem 1rem;
         &.Proposed, &.Started {
             border-color: blue_primary;
             color: blue_primary;
