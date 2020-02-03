@@ -99,5 +99,8 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "react-test-renderer": "^16.12.0",
     "require-context.macro": "^1.2.2"
+  },
+  "resolutions": {
+    "styled-components": "^5.0.0-beta.11"
   }
 }
