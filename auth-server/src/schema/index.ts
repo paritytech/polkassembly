@@ -28,6 +28,7 @@ import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
+import publicUser from './type/publicUser';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
 import undoEmailChangeResponse from './type/undoEmailChangeResponse';
@@ -39,6 +40,7 @@ export default gql`
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
+	${publicUser}
 	${subscriptionType}
 	${tokenType}
 	${undoEmailChangeResponse}

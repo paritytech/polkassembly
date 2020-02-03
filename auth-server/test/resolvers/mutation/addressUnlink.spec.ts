@@ -33,18 +33,18 @@ describe('addressUnlink mutation', () => {
 
 		const keyring = new Keyring({ type: 'sr25519' });
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
-		const publicKey = keyring.decodeAddress(dbAddress.address);
+		const publicKey = keyring.decodeAddress(address);
 
 		dbAddress = await Address
 			.query()
-			.allowInsert('[network, address, user_id, public_key, sign_message, linked]')
+			.allowInsert('[network, address, user_id, public_key, sign_message, verified]')
 			.insert({
 				network: 'kasuma',
 				address,
 				user_id: signupResult.user.id,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				sign_message: uuid(),
-				linked: true
+				verified: true
 			})
 			.returning('*');
 	});

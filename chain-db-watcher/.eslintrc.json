@@ -5,7 +5,11 @@
   },
   "extends": [
       "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended"
+      "semistandard",
+      "plugin:import/typescript",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "globals": {
       "Atomics": "readonly",
@@ -13,24 +17,27 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+    "project": ["./tsconfig.json"]
   },
   "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "simple-import-sort"
   ],
   "rules": {
-      "@typescript-eslint/no-unused-vars": "error",
-      "arrow-spacing":["warn",{ "before": true, "after": true }],
-      "comma-dangle": ["error", "never"],
-      "indent": ["error", "tab"],
-      "no-multiple-empty-lines": ["error", {"max": 1}],
-      "no-trailing-spaces": ["warn"],
-      "no-unused-vars": "off",
-      "object-curly-spacing": ["error", "always"],
-      "no-extra-parens": ["error", "all", { "returnAssign": false }],
-      "quotes": ["error", "single",  { "avoidEscape": true }],
-      "semi": [2, "always"],
-      "switch-colon-spacing": ["error", {"after": true, "before": false}]
+    "simple-import-sort/sort": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "arrow-spacing":["warn",{ "before": true, "after": true }],
+    "@typescript-eslint/camelcase": ["error", {"properties": "never"}],
+    "comma-dangle": ["error", "never"],
+    "indent": ["error", "tab"],
+    "no-multiple-empty-lines": ["error", {"max": 1}],
+    "no-tabs": ["error", { "allowIndentationTabs": true }],
+    "no-trailing-spaces": ["warn"],
+    "no-unused-vars": "off",
+    "object-curly-spacing": ["error", "always"],
+    "no-extra-parens": ["error", "all", { "returnAssign": false }],
+    "quotes": ["error", "single",  { "avoidEscape": true }],
+    "semi": [2, "always"],
+    "switch-colon-spacing": ["error", {"after": true, "before": false}]
   }
 }

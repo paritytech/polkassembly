@@ -60,7 +60,7 @@ describe('addressLinkConfirm mutation', () => {
 			.first();
 
 		expect(dbAddress.public_key).to.exist;
-		expect(dbAddress.linked).to.be.true;
+		expect(dbAddress.verified).to.be.true;
 
 		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
 	});

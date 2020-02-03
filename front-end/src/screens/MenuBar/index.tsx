@@ -30,7 +30,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Menu Items
 	const contentItems = [
 		{ content:'Discussions', icon:'comments', key:'discussions', to:'/discussions' },
-		{ content: 'Proposals', icon:'file alternate', key:'proposals', to:'/proposals' }
+		{ content: 'On chain', icon:'file alternate', key:'proposals', to:'/onchain' }
 	];
 
 	const loggedOutItems = [

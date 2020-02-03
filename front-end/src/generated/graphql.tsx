@@ -47,13 +47,38 @@ export type AggregateNomination = {
   count: Scalars['Int'],
 };
 
+export type AggregatePreimage = {
+   __typename?: 'AggregatePreimage',
+  count: Scalars['Int'],
+};
+
+export type AggregatePreimageArgument = {
+   __typename?: 'AggregatePreimageArgument',
+  count: Scalars['Int'],
+};
+
+export type AggregatePreimageStatus = {
+   __typename?: 'AggregatePreimageStatus',
+  count: Scalars['Int'],
+};
+
 export type AggregateProposal = {
    __typename?: 'AggregateProposal',
   count: Scalars['Int'],
 };
 
-export type AggregateProposalArgument = {
-   __typename?: 'AggregateProposalArgument',
+export type AggregateProposalStatus = {
+   __typename?: 'AggregateProposalStatus',
+  count: Scalars['Int'],
+};
+
+export type AggregateReferendum = {
+   __typename?: 'AggregateReferendum',
+  count: Scalars['Int'],
+};
+
+export type AggregateReferendumStatus = {
+   __typename?: 'AggregateReferendumStatus',
   count: Scalars['Int'],
 };
 
@@ -858,8 +883,13 @@ export type Mutation_Root = {
   createBlockNumber: BlockNumber,
   createEra: Era,
   createNomination: Nomination,
+  createPreimage: Preimage,
+  createPreimageArgument: PreimageArgument,
+  createPreimageStatus: PreimageStatus,
   createProposal: Proposal,
-  createProposalArgument: ProposalArgument,
+  createProposalStatus: ProposalStatus,
+  createReferendum: Referendum,
+  createReferendumStatus: ReferendumStatus,
   createReward: Reward,
   createSession: Session,
   createSlashing: Slashing,
@@ -871,8 +901,13 @@ export type Mutation_Root = {
   deleteManyBlockNumbers: BatchPayload,
   deleteManyEras: BatchPayload,
   deleteManyNominations: BatchPayload,
-  deleteManyProposalArguments: BatchPayload,
+  deleteManyPreimageArguments: BatchPayload,
+  deleteManyPreimageStatuses: BatchPayload,
+  deleteManyPreimages: BatchPayload,
+  deleteManyProposalStatuses: BatchPayload,
   deleteManyProposals: BatchPayload,
+  deleteManyReferendumStatuses: BatchPayload,
+  deleteManyReferendums: BatchPayload,
   deleteManyRewards: BatchPayload,
   deleteManySessions: BatchPayload,
   deleteManySlashings: BatchPayload,
@@ -880,8 +915,13 @@ export type Mutation_Root = {
   deleteManyTotalIssuances: BatchPayload,
   deleteManyValidators: BatchPayload,
   deleteNomination?: Maybe<Nomination>,
+  deletePreimage?: Maybe<Preimage>,
+  deletePreimageArgument?: Maybe<PreimageArgument>,
+  deletePreimageStatus?: Maybe<PreimageStatus>,
   deleteProposal?: Maybe<Proposal>,
-  deleteProposalArgument?: Maybe<ProposalArgument>,
+  deleteProposalStatus?: Maybe<ProposalStatus>,
+  deleteReferendum?: Maybe<Referendum>,
+  deleteReferendumStatus?: Maybe<ReferendumStatus>,
   deleteReward?: Maybe<Reward>,
   deleteSession?: Maybe<Session>,
   deleteSlashing?: Maybe<Slashing>,
@@ -889,13 +929,13 @@ export type Mutation_Root = {
   deleteTotalIssuance?: Maybe<TotalIssuance>,
   deleteValidator?: Maybe<Validator>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
-  delete_onchain_proposals?: Maybe<Onchain_Proposals_Mutation_Response>,
+  delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
   executeRaw: Scalars['Json'],
   insert_comments?: Maybe<Comments_Mutation_Response>,
-  insert_onchain_proposals?: Maybe<Onchain_Proposals_Mutation_Response>,
+  insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
@@ -912,8 +952,13 @@ export type Mutation_Root = {
   updateManyBlockNumbers: BatchPayload,
   updateManyEras: BatchPayload,
   updateManyNominations: BatchPayload,
-  updateManyProposalArguments: BatchPayload,
+  updateManyPreimageArguments: BatchPayload,
+  updateManyPreimageStatuses: BatchPayload,
+  updateManyPreimages: BatchPayload,
+  updateManyProposalStatuses: BatchPayload,
   updateManyProposals: BatchPayload,
+  updateManyReferendumStatuses: BatchPayload,
+  updateManyReferendums: BatchPayload,
   updateManyRewards: BatchPayload,
   updateManySessions: BatchPayload,
   updateManySlashings: BatchPayload,
@@ -921,8 +966,13 @@ export type Mutation_Root = {
   updateManyTotalIssuances: BatchPayload,
   updateManyValidators: BatchPayload,
   updateNomination?: Maybe<Nomination>,
+  updatePreimage?: Maybe<Preimage>,
+  updatePreimageArgument?: Maybe<PreimageArgument>,
+  updatePreimageStatus?: Maybe<PreimageStatus>,
   updateProposal?: Maybe<Proposal>,
-  updateProposalArgument?: Maybe<ProposalArgument>,
+  updateProposalStatus?: Maybe<ProposalStatus>,
+  updateReferendum?: Maybe<Referendum>,
+  updateReferendumStatus?: Maybe<ReferendumStatus>,
   updateReward?: Maybe<Reward>,
   updateSession?: Maybe<Session>,
   updateSlashing?: Maybe<Slashing>,
@@ -930,15 +980,20 @@ export type Mutation_Root = {
   updateTotalIssuance?: Maybe<TotalIssuance>,
   updateValidator?: Maybe<Validator>,
   update_comments?: Maybe<Comments_Mutation_Response>,
-  update_onchain_proposals?: Maybe<Onchain_Proposals_Mutation_Response>,
+  update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
   upsertBlockNumber: BlockNumber,
   upsertEra: Era,
   upsertNomination: Nomination,
+  upsertPreimage: Preimage,
+  upsertPreimageArgument: PreimageArgument,
+  upsertPreimageStatus: PreimageStatus,
   upsertProposal: Proposal,
-  upsertProposalArgument: ProposalArgument,
+  upsertProposalStatus: ProposalStatus,
+  upsertReferendum: Referendum,
+  upsertReferendumStatus: ReferendumStatus,
   upsertReward: Reward,
   upsertSession: Session,
   upsertSlashing: Slashing,
@@ -1002,13 +1057,38 @@ export type Mutation_RootCreateNominationArgs = {
 };
 
 
+export type Mutation_RootCreatePreimageArgs = {
+  data: PreimageCreateInput
+};
+
+
+export type Mutation_RootCreatePreimageArgumentArgs = {
+  data: PreimageArgumentCreateInput
+};
+
+
+export type Mutation_RootCreatePreimageStatusArgs = {
+  data: PreimageStatusCreateInput
+};
+
+
 export type Mutation_RootCreateProposalArgs = {
   data: ProposalCreateInput
 };
 
 
-export type Mutation_RootCreateProposalArgumentArgs = {
-  data: ProposalArgumentCreateInput
+export type Mutation_RootCreateProposalStatusArgs = {
+  data: ProposalStatusCreateInput
+};
+
+
+export type Mutation_RootCreateReferendumArgs = {
+  data: ReferendumCreateInput
+};
+
+
+export type Mutation_RootCreateReferendumStatusArgs = {
+  data: ReferendumStatusCreateInput
 };
 
 
@@ -1067,13 +1147,38 @@ export type Mutation_RootDeleteManyNominationsArgs = {
 };
 
 
-export type Mutation_RootDeleteManyProposalArgumentsArgs = {
-  where?: Maybe<ProposalArgumentWhereInput>
+export type Mutation_RootDeleteManyPreimageArgumentsArgs = {
+  where?: Maybe<PreimageArgumentWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyPreimageStatusesArgs = {
+  where?: Maybe<PreimageStatusWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyPreimagesArgs = {
+  where?: Maybe<PreimageWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyProposalStatusesArgs = {
+  where?: Maybe<ProposalStatusWhereInput>
 };
 
 
 export type Mutation_RootDeleteManyProposalsArgs = {
   where?: Maybe<ProposalWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyReferendumStatusesArgs = {
+  where?: Maybe<ReferendumStatusWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyReferendumsArgs = {
+  where?: Maybe<ReferendumWhereInput>
 };
 
 
@@ -1112,13 +1217,38 @@ export type Mutation_RootDeleteNominationArgs = {
 };
 
 
+export type Mutation_RootDeletePreimageArgs = {
+  where: PreimageWhereUniqueInput
+};
+
+
+export type Mutation_RootDeletePreimageArgumentArgs = {
+  where: PreimageArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootDeletePreimageStatusArgs = {
+  where: PreimageStatusWhereUniqueInput
+};
+
+
 export type Mutation_RootDeleteProposalArgs = {
   where: ProposalWhereUniqueInput
 };
 
 
-export type Mutation_RootDeleteProposalArgumentArgs = {
-  where: ProposalArgumentWhereUniqueInput
+export type Mutation_RootDeleteProposalStatusArgs = {
+  where: ProposalStatusWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteReferendumArgs = {
+  where: ReferendumWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteReferendumStatusArgs = {
+  where: ReferendumStatusWhereUniqueInput
 };
 
 
@@ -1157,8 +1287,8 @@ export type Mutation_RootDelete_CommentsArgs = {
 };
 
 
-export type Mutation_RootDelete_Onchain_ProposalsArgs = {
-  where: Onchain_Proposals_Bool_Exp
+export type Mutation_RootDelete_Onchain_LinksArgs = {
+  where: Onchain_Links_Bool_Exp
 };
 
 
@@ -1189,9 +1319,9 @@ export type Mutation_RootInsert_CommentsArgs = {
 };
 
 
-export type Mutation_RootInsert_Onchain_ProposalsArgs = {
-  objects: Array<Onchain_Proposals_Insert_Input>,
-  on_conflict?: Maybe<Onchain_Proposals_On_Conflict>
+export type Mutation_RootInsert_Onchain_LinksArgs = {
+  objects: Array<Onchain_Links_Insert_Input>,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>
 };
 
 
@@ -1283,15 +1413,45 @@ export type Mutation_RootUpdateManyNominationsArgs = {
 };
 
 
-export type Mutation_RootUpdateManyProposalArgumentsArgs = {
-  data: ProposalArgumentUpdateManyMutationInput,
-  where?: Maybe<ProposalArgumentWhereInput>
+export type Mutation_RootUpdateManyPreimageArgumentsArgs = {
+  data: PreimageArgumentUpdateManyMutationInput,
+  where?: Maybe<PreimageArgumentWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyPreimageStatusesArgs = {
+  data: PreimageStatusUpdateManyMutationInput,
+  where?: Maybe<PreimageStatusWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyPreimagesArgs = {
+  data: PreimageUpdateManyMutationInput,
+  where?: Maybe<PreimageWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyProposalStatusesArgs = {
+  data: ProposalStatusUpdateManyMutationInput,
+  where?: Maybe<ProposalStatusWhereInput>
 };
 
 
 export type Mutation_RootUpdateManyProposalsArgs = {
   data: ProposalUpdateManyMutationInput,
   where?: Maybe<ProposalWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyReferendumStatusesArgs = {
+  data: ReferendumStatusUpdateManyMutationInput,
+  where?: Maybe<ReferendumStatusWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyReferendumsArgs = {
+  data: ReferendumUpdateManyMutationInput,
+  where?: Maybe<ReferendumWhereInput>
 };
 
 
@@ -1337,15 +1497,45 @@ export type Mutation_RootUpdateNominationArgs = {
 };
 
 
+export type Mutation_RootUpdatePreimageArgs = {
+  data: PreimageUpdateInput,
+  where: PreimageWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdatePreimageArgumentArgs = {
+  data: PreimageArgumentUpdateInput,
+  where: PreimageArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdatePreimageStatusArgs = {
+  data: PreimageStatusUpdateInput,
+  where: PreimageStatusWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateProposalArgs = {
   data: ProposalUpdateInput,
   where: ProposalWhereUniqueInput
 };
 
 
-export type Mutation_RootUpdateProposalArgumentArgs = {
-  data: ProposalArgumentUpdateInput,
-  where: ProposalArgumentWhereUniqueInput
+export type Mutation_RootUpdateProposalStatusArgs = {
+  data: ProposalStatusUpdateInput,
+  where: ProposalStatusWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateReferendumArgs = {
+  data: ReferendumUpdateInput,
+  where: ReferendumWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateReferendumStatusArgs = {
+  data: ReferendumStatusUpdateInput,
+  where: ReferendumStatusWhereUniqueInput
 };
 
 
@@ -1392,10 +1582,10 @@ export type Mutation_RootUpdate_CommentsArgs = {
 };
 
 
-export type Mutation_RootUpdate_Onchain_ProposalsArgs = {
-  _inc?: Maybe<Onchain_Proposals_Inc_Input>,
-  _set?: Maybe<Onchain_Proposals_Set_Input>,
-  where: Onchain_Proposals_Bool_Exp
+export type Mutation_RootUpdate_Onchain_LinksArgs = {
+  _inc?: Maybe<Onchain_Links_Inc_Input>,
+  _set?: Maybe<Onchain_Links_Set_Input>,
+  where: Onchain_Links_Bool_Exp
 };
 
 
@@ -1441,6 +1631,27 @@ export type Mutation_RootUpsertNominationArgs = {
 };
 
 
+export type Mutation_RootUpsertPreimageArgs = {
+  create: PreimageCreateInput,
+  update: PreimageUpdateInput,
+  where: PreimageWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertPreimageArgumentArgs = {
+  create: PreimageArgumentCreateInput,
+  update: PreimageArgumentUpdateInput,
+  where: PreimageArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertPreimageStatusArgs = {
+  create: PreimageStatusCreateInput,
+  update: PreimageStatusUpdateInput,
+  where: PreimageStatusWhereUniqueInput
+};
+
+
 export type Mutation_RootUpsertProposalArgs = {
   create: ProposalCreateInput,
   update: ProposalUpdateInput,
@@ -1448,10 +1659,24 @@ export type Mutation_RootUpsertProposalArgs = {
 };
 
 
-export type Mutation_RootUpsertProposalArgumentArgs = {
-  create: ProposalArgumentCreateInput,
-  update: ProposalArgumentUpdateInput,
-  where: ProposalArgumentWhereUniqueInput
+export type Mutation_RootUpsertProposalStatusArgs = {
+  create: ProposalStatusCreateInput,
+  update: ProposalStatusUpdateInput,
+  where: ProposalStatusWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertReferendumArgs = {
+  create: ReferendumCreateInput,
+  update: ReferendumUpdateInput,
+  where: ReferendumWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertReferendumStatusArgs = {
+  create: ReferendumStatusCreateInput,
+  update: ReferendumStatusUpdateInput,
+  where: ReferendumStatusWhereUniqueInput
 };
 
 
@@ -1701,286 +1926,321 @@ export type NominationWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
-export type Onchain_Proposals = {
-   __typename?: 'onchain_proposals',
+export type Onchain_Links = {
+   __typename?: 'onchain_links',
   created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
-  onchain_proposal_id: Scalars['Int'],
+  onchain_proposal?: Maybe<Proposal>,
+  onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum?: Maybe<Referendum>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post: Posts,
   post_id: Scalars['Int'],
-  proposal?: Maybe<Proposal>,
   proposer_address: Scalars['String'],
 };
 
 
-export type Onchain_ProposalsProposalArgs = {
-  where: ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Proposalsproposal
+export type Onchain_LinksOnchain_ProposalArgs = {
+  where: ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal
 };
 
-export type Onchain_Proposals_Aggregate = {
-   __typename?: 'onchain_proposals_aggregate',
-  aggregate?: Maybe<Onchain_Proposals_Aggregate_Fields>,
-  nodes: Array<Onchain_Proposals>,
+
+export type Onchain_LinksOnchain_ReferendumArgs = {
+  where: ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum
 };
 
-export type Onchain_Proposals_Aggregate_Fields = {
-   __typename?: 'onchain_proposals_aggregate_fields',
-  avg?: Maybe<Onchain_Proposals_Avg_Fields>,
+export type Onchain_Links_Aggregate = {
+   __typename?: 'onchain_links_aggregate',
+  aggregate?: Maybe<Onchain_Links_Aggregate_Fields>,
+  nodes: Array<Onchain_Links>,
+};
+
+export type Onchain_Links_Aggregate_Fields = {
+   __typename?: 'onchain_links_aggregate_fields',
+  avg?: Maybe<Onchain_Links_Avg_Fields>,
   count?: Maybe<Scalars['Int']>,
-  max?: Maybe<Onchain_Proposals_Max_Fields>,
-  min?: Maybe<Onchain_Proposals_Min_Fields>,
-  stddev?: Maybe<Onchain_Proposals_Stddev_Fields>,
-  stddev_pop?: Maybe<Onchain_Proposals_Stddev_Pop_Fields>,
-  stddev_samp?: Maybe<Onchain_Proposals_Stddev_Samp_Fields>,
-  sum?: Maybe<Onchain_Proposals_Sum_Fields>,
-  var_pop?: Maybe<Onchain_Proposals_Var_Pop_Fields>,
-  var_samp?: Maybe<Onchain_Proposals_Var_Samp_Fields>,
-  variance?: Maybe<Onchain_Proposals_Variance_Fields>,
+  max?: Maybe<Onchain_Links_Max_Fields>,
+  min?: Maybe<Onchain_Links_Min_Fields>,
+  stddev?: Maybe<Onchain_Links_Stddev_Fields>,
+  stddev_pop?: Maybe<Onchain_Links_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Onchain_Links_Stddev_Samp_Fields>,
+  sum?: Maybe<Onchain_Links_Sum_Fields>,
+  var_pop?: Maybe<Onchain_Links_Var_Pop_Fields>,
+  var_samp?: Maybe<Onchain_Links_Var_Samp_Fields>,
+  variance?: Maybe<Onchain_Links_Variance_Fields>,
 };
 
 
-export type Onchain_Proposals_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Onchain_Proposals_Select_Column>>,
+export type Onchain_Links_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Onchain_Links_Select_Column>>,
   distinct?: Maybe<Scalars['Boolean']>
 };
 
-export type Onchain_Proposals_Aggregate_Order_By = {
-  avg?: Maybe<Onchain_Proposals_Avg_Order_By>,
+export type Onchain_Links_Aggregate_Order_By = {
+  avg?: Maybe<Onchain_Links_Avg_Order_By>,
   count?: Maybe<Order_By>,
-  max?: Maybe<Onchain_Proposals_Max_Order_By>,
-  min?: Maybe<Onchain_Proposals_Min_Order_By>,
-  stddev?: Maybe<Onchain_Proposals_Stddev_Order_By>,
-  stddev_pop?: Maybe<Onchain_Proposals_Stddev_Pop_Order_By>,
-  stddev_samp?: Maybe<Onchain_Proposals_Stddev_Samp_Order_By>,
-  sum?: Maybe<Onchain_Proposals_Sum_Order_By>,
-  var_pop?: Maybe<Onchain_Proposals_Var_Pop_Order_By>,
-  var_samp?: Maybe<Onchain_Proposals_Var_Samp_Order_By>,
-  variance?: Maybe<Onchain_Proposals_Variance_Order_By>,
+  max?: Maybe<Onchain_Links_Max_Order_By>,
+  min?: Maybe<Onchain_Links_Min_Order_By>,
+  stddev?: Maybe<Onchain_Links_Stddev_Order_By>,
+  stddev_pop?: Maybe<Onchain_Links_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Onchain_Links_Stddev_Samp_Order_By>,
+  sum?: Maybe<Onchain_Links_Sum_Order_By>,
+  var_pop?: Maybe<Onchain_Links_Var_Pop_Order_By>,
+  var_samp?: Maybe<Onchain_Links_Var_Samp_Order_By>,
+  variance?: Maybe<Onchain_Links_Variance_Order_By>,
 };
 
-export type Onchain_Proposals_Arr_Rel_Insert_Input = {
-  data: Array<Onchain_Proposals_Insert_Input>,
-  on_conflict?: Maybe<Onchain_Proposals_On_Conflict>,
+export type Onchain_Links_Arr_Rel_Insert_Input = {
+  data: Array<Onchain_Links_Insert_Input>,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>,
 };
 
-export type Onchain_Proposals_Avg_Fields = {
-   __typename?: 'onchain_proposals_avg_fields',
+export type Onchain_Links_Avg_Fields = {
+   __typename?: 'onchain_links_avg_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Avg_Order_By = {
+export type Onchain_Links_Avg_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Onchain_Proposals_Bool_Exp>>>,
-  _not?: Maybe<Onchain_Proposals_Bool_Exp>,
-  _or?: Maybe<Array<Maybe<Onchain_Proposals_Bool_Exp>>>,
+export type Onchain_Links_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Onchain_Links_Bool_Exp>>>,
+  _not?: Maybe<Onchain_Links_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Onchain_Links_Bool_Exp>>>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
+  onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   proposer_address?: Maybe<String_Comparison_Exp>,
 };
 
-export enum Onchain_Proposals_Constraint {
+export enum Onchain_Links_Constraint {
+  OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
 }
 
-export type Onchain_Proposals_Inc_Input = {
+export type Onchain_Links_Inc_Input = {
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
-export type Onchain_Proposals_Insert_Input = {
+export type Onchain_Links_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
 
-export type Onchain_Proposals_Max_Fields = {
-   __typename?: 'onchain_proposals_max_fields',
+export type Onchain_Links_Max_Fields = {
+   __typename?: 'onchain_links_max_fields',
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
 
-export type Onchain_Proposals_Max_Order_By = {
+export type Onchain_Links_Max_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Min_Fields = {
-   __typename?: 'onchain_proposals_min_fields',
+export type Onchain_Links_Min_Fields = {
+   __typename?: 'onchain_links_min_fields',
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
 
-export type Onchain_Proposals_Min_Order_By = {
+export type Onchain_Links_Min_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Mutation_Response = {
-   __typename?: 'onchain_proposals_mutation_response',
+export type Onchain_Links_Mutation_Response = {
+   __typename?: 'onchain_links_mutation_response',
   affected_rows: Scalars['Int'],
-  returning: Array<Onchain_Proposals>,
+  returning: Array<Onchain_Links>,
 };
 
-export type Onchain_Proposals_Obj_Rel_Insert_Input = {
-  data: Onchain_Proposals_Insert_Input,
-  on_conflict?: Maybe<Onchain_Proposals_On_Conflict>,
+export type Onchain_Links_Obj_Rel_Insert_Input = {
+  data: Onchain_Links_Insert_Input,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>,
 };
 
-export type Onchain_Proposals_On_Conflict = {
-  constraint: Onchain_Proposals_Constraint,
-  update_columns: Array<Onchain_Proposals_Update_Column>,
-  where?: Maybe<Onchain_Proposals_Bool_Exp>,
+export type Onchain_Links_On_Conflict = {
+  constraint: Onchain_Links_Constraint,
+  update_columns: Array<Onchain_Links_Update_Column>,
+  where?: Maybe<Onchain_Links_Bool_Exp>,
 };
 
-export type Onchain_Proposals_Order_By = {
+export type Onchain_Links_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
 
-export enum Onchain_Proposals_Select_Column {
+export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
   OnchainProposalId = 'onchain_proposal_id',
+  OnchainReferendumId = 'onchain_referendum_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
 
-export type Onchain_Proposals_Set_Input = {
+export type Onchain_Links_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
 
-export type Onchain_Proposals_Stddev_Fields = {
-   __typename?: 'onchain_proposals_stddev_fields',
+export type Onchain_Links_Stddev_Fields = {
+   __typename?: 'onchain_links_stddev_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Stddev_Order_By = {
+export type Onchain_Links_Stddev_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Stddev_Pop_Fields = {
-   __typename?: 'onchain_proposals_stddev_pop_fields',
+export type Onchain_Links_Stddev_Pop_Fields = {
+   __typename?: 'onchain_links_stddev_pop_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Stddev_Pop_Order_By = {
+export type Onchain_Links_Stddev_Pop_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Stddev_Samp_Fields = {
-   __typename?: 'onchain_proposals_stddev_samp_fields',
+export type Onchain_Links_Stddev_Samp_Fields = {
+   __typename?: 'onchain_links_stddev_samp_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Stddev_Samp_Order_By = {
+export type Onchain_Links_Stddev_Samp_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Sum_Fields = {
-   __typename?: 'onchain_proposals_sum_fields',
+export type Onchain_Links_Sum_Fields = {
+   __typename?: 'onchain_links_sum_fields',
   id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
-export type Onchain_Proposals_Sum_Order_By = {
+export type Onchain_Links_Sum_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export enum Onchain_Proposals_Update_Column {
+export enum Onchain_Links_Update_Column {
   CreatedAt = 'created_at',
   Id = 'id',
   OnchainProposalId = 'onchain_proposal_id',
+  OnchainReferendumId = 'onchain_referendum_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
 
-export type Onchain_Proposals_Var_Pop_Fields = {
-   __typename?: 'onchain_proposals_var_pop_fields',
+export type Onchain_Links_Var_Pop_Fields = {
+   __typename?: 'onchain_links_var_pop_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Var_Pop_Order_By = {
+export type Onchain_Links_Var_Pop_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Var_Samp_Fields = {
-   __typename?: 'onchain_proposals_var_samp_fields',
+export type Onchain_Links_Var_Samp_Fields = {
+   __typename?: 'onchain_links_var_samp_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Var_Samp_Order_By = {
+export type Onchain_Links_Var_Samp_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
-export type Onchain_Proposals_Variance_Fields = {
-   __typename?: 'onchain_proposals_variance_fields',
+export type Onchain_Links_Variance_Fields = {
+   __typename?: 'onchain_links_variance_fields',
   id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
+  onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
-export type Onchain_Proposals_Variance_Order_By = {
+export type Onchain_Links_Variance_Order_By = {
   id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
+  onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -2464,15 +2724,15 @@ export type Posts = {
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   content?: Maybe<Scalars['String']>,
-  created_at?: Maybe<Scalars['timestamptz']>,
+  created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
-  onchain_proposal?: Maybe<Onchain_Proposals>,
+  onchain_link?: Maybe<Onchain_Links>,
   title: Scalars['String'],
-  topic?: Maybe<Post_Topics>,
-  topic_id?: Maybe<Scalars['Int']>,
+  topic: Post_Topics,
+  topic_id: Scalars['Int'],
   type: Post_Types,
   type_id: Scalars['Int'],
-  updated_at?: Maybe<Scalars['timestamptz']>,
+  updated_at: Scalars['timestamptz'],
 };
 
 
@@ -2563,7 +2823,7 @@ export type Posts_Bool_Exp = {
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
-  onchain_proposal?: Maybe<Onchain_Proposals_Bool_Exp>,
+  onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
   topic?: Maybe<Post_Topics_Bool_Exp>,
   topic_id?: Maybe<Int_Comparison_Exp>,
@@ -2589,7 +2849,7 @@ export type Posts_Insert_Input = {
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
-  onchain_proposal?: Maybe<Onchain_Proposals_Obj_Rel_Insert_Input>,
+  onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -2667,7 +2927,7 @@ export type Posts_Order_By = {
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  onchain_proposal?: Maybe<Onchain_Proposals_Order_By>,
+  onchain_link?: Maybe<Onchain_Links_Order_By>,
   title?: Maybe<Order_By>,
   topic?: Maybe<Post_Topics_Order_By>,
   topic_id?: Maybe<Order_By>,
@@ -2814,76 +3074,83 @@ export type Posts_Variance_Order_By = {
   type_id?: Maybe<Order_By>,
 };
 
-export enum PrismaDatabase {
-  Default = 'default'
-}
-
-export type Proposal = {
-   __typename?: 'Proposal',
-  blockNumber: BlockNumber,
+export type Preimage = Node & {
+   __typename?: 'Preimage',
+  author: Scalars['String'],
   depositAmount: Scalars['String'],
   hash: Scalars['String'],
-  id: Scalars['Int'],
+  id: Scalars['ID'],
   metaDescription: Scalars['String'],
   method: Scalars['String'],
-  proposal: Scalars['String'],
-  proposalArguments?: Maybe<Array<ProposalArgument>>,
-  proposalId: Scalars['Int'],
-  proposer: Scalars['String'],
+  preimageArguments?: Maybe<Array<PreimageArgument>>,
+  preimageStatus?: Maybe<Array<PreimageStatus>>,
+  proposal?: Maybe<Proposal>,
+  referendum?: Maybe<Referendum>,
   section: Scalars['String'],
 };
 
 
-export type ProposalProposalArgumentsArgs = {
+export type PreimagePreimageArgumentsArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
   last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<ProposalArgumentOrderByInput>,
+  orderBy?: Maybe<PreimageArgumentOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<ProposalArgumentWhereInput>
+  where?: Maybe<PreimageArgumentWhereInput>
 };
 
-export type ProposalArgument = Node & {
-   __typename?: 'ProposalArgument',
+
+export type PreimagePreimageStatusArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageStatusWhereInput>
+};
+
+export type PreimageArgument = Node & {
+   __typename?: 'PreimageArgument',
   id: Scalars['ID'],
   name: Scalars['String'],
-  proposal: Proposal,
+  preimage: Preimage,
   value: Scalars['String'],
 };
 
-export type ProposalArgumentConnection = {
-   __typename?: 'ProposalArgumentConnection',
-  aggregate: AggregateProposalArgument,
-  edges: Array<Maybe<ProposalArgumentEdge>>,
+export type PreimageArgumentConnection = {
+   __typename?: 'PreimageArgumentConnection',
+  aggregate: AggregatePreimageArgument,
+  edges: Array<Maybe<PreimageArgumentEdge>>,
   pageInfo: PageInfo,
 };
 
-export type ProposalArgumentCreateInput = {
+export type PreimageArgumentCreateInput = {
   id?: Maybe<Scalars['ID']>,
   name: Scalars['String'],
-  proposal: ProposalCreateOneWithoutProposalArgumentsInput,
+  preimage: PreimageCreateOneWithoutPreimageArgumentsInput,
   value: Scalars['String'],
 };
 
-export type ProposalArgumentCreateManyWithoutProposalInput = {
-  connect?: Maybe<Array<ProposalArgumentWhereUniqueInput>>,
-  create?: Maybe<Array<ProposalArgumentCreateWithoutProposalInput>>,
+export type PreimageArgumentCreateManyWithoutPreimageInput = {
+  connect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>,
+  create?: Maybe<Array<PreimageArgumentCreateWithoutPreimageInput>>,
 };
 
-export type ProposalArgumentCreateWithoutProposalInput = {
+export type PreimageArgumentCreateWithoutPreimageInput = {
   id?: Maybe<Scalars['ID']>,
   name: Scalars['String'],
   value: Scalars['String'],
 };
 
-export type ProposalArgumentEdge = {
-   __typename?: 'ProposalArgumentEdge',
+export type PreimageArgumentEdge = {
+   __typename?: 'PreimageArgumentEdge',
   cursor: Scalars['String'],
-  node: ProposalArgument,
+  node: PreimageArgument,
 };
 
-export enum ProposalArgumentOrderByInput {
+export enum PreimageArgumentOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
@@ -2892,17 +3159,17 @@ export enum ProposalArgumentOrderByInput {
   ValueDesc = 'value_DESC'
 }
 
-export type ProposalArgumentPreviousValues = {
-   __typename?: 'ProposalArgumentPreviousValues',
+export type PreimageArgumentPreviousValues = {
+   __typename?: 'PreimageArgumentPreviousValues',
   id: Scalars['ID'],
   name: Scalars['String'],
   value: Scalars['String'],
 };
 
-export type ProposalArgumentScalarWhereInput = {
-  AND?: Maybe<Array<ProposalArgumentScalarWhereInput>>,
-  NOT?: Maybe<Array<ProposalArgumentScalarWhereInput>>,
-  OR?: Maybe<Array<ProposalArgumentScalarWhereInput>>,
+export type PreimageArgumentScalarWhereInput = {
+  AND?: Maybe<Array<PreimageArgumentScalarWhereInput>>,
+  NOT?: Maybe<Array<PreimageArgumentScalarWhereInput>>,
+  OR?: Maybe<Array<PreimageArgumentScalarWhereInput>>,
   id?: Maybe<Scalars['ID']>,
   id_contains?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
@@ -2947,78 +3214,78 @@ export type ProposalArgumentScalarWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
-export type ProposalArgumentSubscriptionPayload = {
-   __typename?: 'ProposalArgumentSubscriptionPayload',
+export type PreimageArgumentSubscriptionPayload = {
+   __typename?: 'PreimageArgumentSubscriptionPayload',
   mutation: MutationType,
-  node?: Maybe<ProposalArgument>,
-  previousValues?: Maybe<ProposalArgumentPreviousValues>,
+  node?: Maybe<PreimageArgument>,
+  previousValues?: Maybe<PreimageArgumentPreviousValues>,
   updatedFields?: Maybe<Array<Scalars['String']>>,
 };
 
-export type ProposalArgumentSubscriptionWhereInput = {
-  AND?: Maybe<Array<ProposalArgumentSubscriptionWhereInput>>,
-  NOT?: Maybe<Array<ProposalArgumentSubscriptionWhereInput>>,
-  OR?: Maybe<Array<ProposalArgumentSubscriptionWhereInput>>,
+export type PreimageArgumentSubscriptionWhereInput = {
+  AND?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>,
+  OR?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>,
   mutation_in?: Maybe<Array<MutationType>>,
-  node?: Maybe<ProposalArgumentWhereInput>,
+  node?: Maybe<PreimageArgumentWhereInput>,
   updatedFields_contains?: Maybe<Scalars['String']>,
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
 };
 
-export type ProposalArgumentUpdateInput = {
+export type PreimageArgumentUpdateInput = {
   name?: Maybe<Scalars['String']>,
-  proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalArgumentsInput>,
+  preimage?: Maybe<PreimageUpdateOneRequiredWithoutPreimageArgumentsInput>,
   value?: Maybe<Scalars['String']>,
 };
 
-export type ProposalArgumentUpdateManyDataInput = {
-  name?: Maybe<Scalars['String']>,
-  value?: Maybe<Scalars['String']>,
-};
-
-export type ProposalArgumentUpdateManyMutationInput = {
+export type PreimageArgumentUpdateManyDataInput = {
   name?: Maybe<Scalars['String']>,
   value?: Maybe<Scalars['String']>,
 };
 
-export type ProposalArgumentUpdateManyWithoutProposalInput = {
-  connect?: Maybe<Array<ProposalArgumentWhereUniqueInput>>,
-  create?: Maybe<Array<ProposalArgumentCreateWithoutProposalInput>>,
-  delete?: Maybe<Array<ProposalArgumentWhereUniqueInput>>,
-  deleteMany?: Maybe<Array<ProposalArgumentScalarWhereInput>>,
-  disconnect?: Maybe<Array<ProposalArgumentWhereUniqueInput>>,
-  set?: Maybe<Array<ProposalArgumentWhereUniqueInput>>,
-  update?: Maybe<Array<ProposalArgumentUpdateWithWhereUniqueWithoutProposalInput>>,
-  updateMany?: Maybe<Array<ProposalArgumentUpdateManyWithWhereNestedInput>>,
-  upsert?: Maybe<Array<ProposalArgumentUpsertWithWhereUniqueWithoutProposalInput>>,
-};
-
-export type ProposalArgumentUpdateManyWithWhereNestedInput = {
-  data: ProposalArgumentUpdateManyDataInput,
-  where: ProposalArgumentScalarWhereInput,
-};
-
-export type ProposalArgumentUpdateWithoutProposalDataInput = {
+export type PreimageArgumentUpdateManyMutationInput = {
   name?: Maybe<Scalars['String']>,
   value?: Maybe<Scalars['String']>,
 };
 
-export type ProposalArgumentUpdateWithWhereUniqueWithoutProposalInput = {
-  data: ProposalArgumentUpdateWithoutProposalDataInput,
-  where: ProposalArgumentWhereUniqueInput,
+export type PreimageArgumentUpdateManyWithoutPreimageInput = {
+  connect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>,
+  create?: Maybe<Array<PreimageArgumentCreateWithoutPreimageInput>>,
+  delete?: Maybe<Array<PreimageArgumentWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<PreimageArgumentScalarWhereInput>>,
+  disconnect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>,
+  set?: Maybe<Array<PreimageArgumentWhereUniqueInput>>,
+  update?: Maybe<Array<PreimageArgumentUpdateWithWhereUniqueWithoutPreimageInput>>,
+  updateMany?: Maybe<Array<PreimageArgumentUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<PreimageArgumentUpsertWithWhereUniqueWithoutPreimageInput>>,
 };
 
-export type ProposalArgumentUpsertWithWhereUniqueWithoutProposalInput = {
-  create: ProposalArgumentCreateWithoutProposalInput,
-  update: ProposalArgumentUpdateWithoutProposalDataInput,
-  where: ProposalArgumentWhereUniqueInput,
+export type PreimageArgumentUpdateManyWithWhereNestedInput = {
+  data: PreimageArgumentUpdateManyDataInput,
+  where: PreimageArgumentScalarWhereInput,
 };
 
-export type ProposalArgumentWhereInput = {
-  AND?: Maybe<Array<ProposalArgumentWhereInput>>,
-  NOT?: Maybe<Array<ProposalArgumentWhereInput>>,
-  OR?: Maybe<Array<ProposalArgumentWhereInput>>,
+export type PreimageArgumentUpdateWithoutPreimageDataInput = {
+  name?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type PreimageArgumentUpdateWithWhereUniqueWithoutPreimageInput = {
+  data: PreimageArgumentUpdateWithoutPreimageDataInput,
+  where: PreimageArgumentWhereUniqueInput,
+};
+
+export type PreimageArgumentUpsertWithWhereUniqueWithoutPreimageInput = {
+  create: PreimageArgumentCreateWithoutPreimageInput,
+  update: PreimageArgumentUpdateWithoutPreimageDataInput,
+  where: PreimageArgumentWhereUniqueInput,
+};
+
+export type PreimageArgumentWhereInput = {
+  AND?: Maybe<Array<PreimageArgumentWhereInput>>,
+  NOT?: Maybe<Array<PreimageArgumentWhereInput>>,
+  OR?: Maybe<Array<PreimageArgumentWhereInput>>,
   id?: Maybe<Scalars['ID']>,
   id_contains?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
@@ -3047,7 +3314,7 @@ export type ProposalArgumentWhereInput = {
   name_not_in?: Maybe<Array<Scalars['String']>>,
   name_not_starts_with?: Maybe<Scalars['String']>,
   name_starts_with?: Maybe<Scalars['String']>,
-  proposal?: Maybe<ProposalWhereInput>,
+  preimage?: Maybe<PreimageWhereInput>,
   value?: Maybe<Scalars['String']>,
   value_contains?: Maybe<Scalars['String']>,
   value_ends_with?: Maybe<Scalars['String']>,
@@ -3064,54 +3331,112 @@ export type ProposalArgumentWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
-export type ProposalArgumentWhereUniqueInput = {
+export type PreimageArgumentWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
-export type ProposalConnection = {
-   __typename?: 'ProposalConnection',
-  aggregate: AggregateProposal,
-  edges: Array<Maybe<ProposalEdge>>,
+export type PreimageConnection = {
+   __typename?: 'PreimageConnection',
+  aggregate: AggregatePreimage,
+  edges: Array<Maybe<PreimageEdge>>,
   pageInfo: PageInfo,
 };
 
-export type ProposalCreateInput = {
-  blockNumber: BlockNumberCreateOneInput,
+export type PreimageCreateInput = {
+  author: Scalars['String'],
   depositAmount: Scalars['String'],
   hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
-  proposal: Scalars['String'],
-  proposalArguments?: Maybe<ProposalArgumentCreateManyWithoutProposalInput>,
-  proposalId: Scalars['Int'],
-  proposer: Scalars['String'],
+  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
   section: Scalars['String'],
 };
 
-export type ProposalCreateOneWithoutProposalArgumentsInput = {
-  connect?: Maybe<ProposalWhereUniqueInput>,
-  create?: Maybe<ProposalCreateWithoutProposalArgumentsInput>,
+export type PreimageCreateOneWithoutPreimageArgumentsInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutPreimageArgumentsInput>,
 };
 
-export type ProposalCreateWithoutProposalArgumentsInput = {
-  blockNumber: BlockNumberCreateOneInput,
+export type PreimageCreateOneWithoutPreimageStatusInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutPreimageStatusInput>,
+};
+
+export type PreimageCreateOneWithoutProposalInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutProposalInput>,
+};
+
+export type PreimageCreateOneWithoutReferendumInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutReferendumInput>,
+};
+
+export type PreimageCreateWithoutPreimageArgumentsInput = {
+  author: Scalars['String'],
   depositAmount: Scalars['String'],
   hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
-  proposal: Scalars['String'],
-  proposalId: Scalars['Int'],
-  proposer: Scalars['String'],
+  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
   section: Scalars['String'],
 };
 
-export type ProposalEdge = {
-   __typename?: 'ProposalEdge',
+export type PreimageCreateWithoutPreimageStatusInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
+  section: Scalars['String'],
+};
+
+export type PreimageCreateWithoutProposalInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
+  section: Scalars['String'],
+};
+
+export type PreimageCreateWithoutReferendumInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
+  section: Scalars['String'],
+};
+
+export type PreimageEdge = {
+   __typename?: 'PreimageEdge',
   cursor: Scalars['String'],
-  node: Proposal,
+  node: Preimage,
 };
 
-export enum ProposalOrderByInput {
+export enum PreimageOrderByInput {
+  AuthorAsc = 'author_ASC',
+  AuthorDesc = 'author_DESC',
   DepositAmountAsc = 'depositAmount_ASC',
   DepositAmountDesc = 'depositAmount_DESC',
   HashAsc = 'hash_ASC',
@@ -3122,101 +3447,372 @@ export enum ProposalOrderByInput {
   MetaDescriptionDesc = 'metaDescription_DESC',
   MethodAsc = 'method_ASC',
   MethodDesc = 'method_DESC',
-  ProposalIdAsc = 'proposalId_ASC',
-  ProposalIdDesc = 'proposalId_DESC',
-  ProposalAsc = 'proposal_ASC',
-  ProposalDesc = 'proposal_DESC',
-  ProposerAsc = 'proposer_ASC',
-  ProposerDesc = 'proposer_DESC',
   SectionAsc = 'section_ASC',
   SectionDesc = 'section_DESC'
 }
 
-export type ProposalPreviousValues = {
-   __typename?: 'ProposalPreviousValues',
+export type PreimagePreviousValues = {
+   __typename?: 'PreimagePreviousValues',
+  author: Scalars['String'],
   depositAmount: Scalars['String'],
   hash: Scalars['String'],
-  id: Scalars['Int'],
+  id: Scalars['ID'],
   metaDescription: Scalars['String'],
   method: Scalars['String'],
-  proposal: Scalars['String'],
-  proposalId: Scalars['Int'],
-  proposer: Scalars['String'],
   section: Scalars['String'],
 };
 
-export type ProposalSubscriptionPayload = {
-   __typename?: 'ProposalSubscriptionPayload',
+export type PreimageStatus = Node & {
+   __typename?: 'PreimageStatus',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  preimage: Preimage,
+  status: Scalars['String'],
+};
+
+export type PreimageStatusConnection = {
+   __typename?: 'PreimageStatusConnection',
+  aggregate: AggregatePreimageStatus,
+  edges: Array<Maybe<PreimageStatusEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type PreimageStatusCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  preimage: PreimageCreateOneWithoutPreimageStatusInput,
+  status: Scalars['String'],
+};
+
+export type PreimageStatusCreateManyWithoutPreimageInput = {
+  connect?: Maybe<Array<PreimageStatusWhereUniqueInput>>,
+  create?: Maybe<Array<PreimageStatusCreateWithoutPreimageInput>>,
+};
+
+export type PreimageStatusCreateWithoutPreimageInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+};
+
+export type PreimageStatusEdge = {
+   __typename?: 'PreimageStatusEdge',
+  cursor: Scalars['String'],
+  node: PreimageStatus,
+};
+
+export enum PreimageStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC'
+}
+
+export type PreimageStatusPreviousValues = {
+   __typename?: 'PreimageStatusPreviousValues',
+  id: Scalars['ID'],
+  status: Scalars['String'],
+};
+
+export type PreimageStatusScalarWhereInput = {
+  AND?: Maybe<Array<PreimageStatusScalarWhereInput>>,
+  NOT?: Maybe<Array<PreimageStatusScalarWhereInput>>,
+  OR?: Maybe<Array<PreimageStatusScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type PreimageStatusSubscriptionPayload = {
+   __typename?: 'PreimageStatusSubscriptionPayload',
   mutation: MutationType,
-  node?: Maybe<Proposal>,
-  previousValues?: Maybe<ProposalPreviousValues>,
+  node?: Maybe<PreimageStatus>,
+  previousValues?: Maybe<PreimageStatusPreviousValues>,
   updatedFields?: Maybe<Array<Scalars['String']>>,
 };
 
-export type ProposalSubscriptionWhereInput = {
-  AND?: Maybe<Array<ProposalSubscriptionWhereInput>>,
-  NOT?: Maybe<Array<ProposalSubscriptionWhereInput>>,
-  OR?: Maybe<Array<ProposalSubscriptionWhereInput>>,
+export type PreimageStatusSubscriptionWhereInput = {
+  AND?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>,
+  OR?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>,
   mutation_in?: Maybe<Array<MutationType>>,
-  node?: Maybe<ProposalWhereInput>,
+  node?: Maybe<PreimageStatusWhereInput>,
   updatedFields_contains?: Maybe<Scalars['String']>,
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
 };
 
-export type ProposalUpdateInput = {
+export type PreimageStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  depositAmount?: Maybe<Scalars['String']>,
-  hash?: Maybe<Scalars['String']>,
-  metaDescription?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  proposal?: Maybe<Scalars['String']>,
-  proposalArguments?: Maybe<ProposalArgumentUpdateManyWithoutProposalInput>,
-  proposalId?: Maybe<Scalars['Int']>,
-  proposer?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
+  preimage?: Maybe<PreimageUpdateOneRequiredWithoutPreimageStatusInput>,
+  status?: Maybe<Scalars['String']>,
 };
 
-export type ProposalUpdateManyMutationInput = {
-  depositAmount?: Maybe<Scalars['String']>,
-  hash?: Maybe<Scalars['String']>,
-  metaDescription?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  proposal?: Maybe<Scalars['String']>,
-  proposalId?: Maybe<Scalars['Int']>,
-  proposer?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
+export type PreimageStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>,
 };
 
-export type ProposalUpdateOneRequiredWithoutProposalArgumentsInput = {
-  connect?: Maybe<ProposalWhereUniqueInput>,
-  create?: Maybe<ProposalCreateWithoutProposalArgumentsInput>,
-  update?: Maybe<ProposalUpdateWithoutProposalArgumentsDataInput>,
-  upsert?: Maybe<ProposalUpsertWithoutProposalArgumentsInput>,
+export type PreimageStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>,
 };
 
-export type ProposalUpdateWithoutProposalArgumentsDataInput = {
+export type PreimageStatusUpdateManyWithoutPreimageInput = {
+  connect?: Maybe<Array<PreimageStatusWhereUniqueInput>>,
+  create?: Maybe<Array<PreimageStatusCreateWithoutPreimageInput>>,
+  delete?: Maybe<Array<PreimageStatusWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<PreimageStatusScalarWhereInput>>,
+  disconnect?: Maybe<Array<PreimageStatusWhereUniqueInput>>,
+  set?: Maybe<Array<PreimageStatusWhereUniqueInput>>,
+  update?: Maybe<Array<PreimageStatusUpdateWithWhereUniqueWithoutPreimageInput>>,
+  updateMany?: Maybe<Array<PreimageStatusUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<PreimageStatusUpsertWithWhereUniqueWithoutPreimageInput>>,
+};
+
+export type PreimageStatusUpdateManyWithWhereNestedInput = {
+  data: PreimageStatusUpdateManyDataInput,
+  where: PreimageStatusScalarWhereInput,
+};
+
+export type PreimageStatusUpdateWithoutPreimageDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  depositAmount?: Maybe<Scalars['String']>,
-  hash?: Maybe<Scalars['String']>,
-  metaDescription?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  proposal?: Maybe<Scalars['String']>,
-  proposalId?: Maybe<Scalars['Int']>,
-  proposer?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
+  status?: Maybe<Scalars['String']>,
 };
 
-export type ProposalUpsertWithoutProposalArgumentsInput = {
-  create: ProposalCreateWithoutProposalArgumentsInput,
-  update: ProposalUpdateWithoutProposalArgumentsDataInput,
+export type PreimageStatusUpdateWithWhereUniqueWithoutPreimageInput = {
+  data: PreimageStatusUpdateWithoutPreimageDataInput,
+  where: PreimageStatusWhereUniqueInput,
 };
 
-export type ProposalWhereInput = {
-  AND?: Maybe<Array<ProposalWhereInput>>,
-  NOT?: Maybe<Array<ProposalWhereInput>>,
-  OR?: Maybe<Array<ProposalWhereInput>>,
+export type PreimageStatusUpsertWithWhereUniqueWithoutPreimageInput = {
+  create: PreimageStatusCreateWithoutPreimageInput,
+  update: PreimageStatusUpdateWithoutPreimageDataInput,
+  where: PreimageStatusWhereUniqueInput,
+};
+
+export type PreimageStatusWhereInput = {
+  AND?: Maybe<Array<PreimageStatusWhereInput>>,
+  NOT?: Maybe<Array<PreimageStatusWhereInput>>,
+  OR?: Maybe<Array<PreimageStatusWhereInput>>,
   blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  preimage?: Maybe<PreimageWhereInput>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type PreimageStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type PreimageSubscriptionPayload = {
+   __typename?: 'PreimageSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Preimage>,
+  previousValues?: Maybe<PreimagePreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type PreimageSubscriptionWhereInput = {
+  AND?: Maybe<Array<PreimageSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<PreimageSubscriptionWhereInput>>,
+  OR?: Maybe<Array<PreimageSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<PreimageWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type PreimageUpdateInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpdateManyMutationInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpdateOneRequiredWithoutPreimageArgumentsInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutPreimageArgumentsInput>,
+  update?: Maybe<PreimageUpdateWithoutPreimageArgumentsDataInput>,
+  upsert?: Maybe<PreimageUpsertWithoutPreimageArgumentsInput>,
+};
+
+export type PreimageUpdateOneRequiredWithoutPreimageStatusInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutPreimageStatusInput>,
+  update?: Maybe<PreimageUpdateWithoutPreimageStatusDataInput>,
+  upsert?: Maybe<PreimageUpsertWithoutPreimageStatusInput>,
+};
+
+export type PreimageUpdateOneWithoutProposalInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutProposalInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<PreimageUpdateWithoutProposalDataInput>,
+  upsert?: Maybe<PreimageUpsertWithoutProposalInput>,
+};
+
+export type PreimageUpdateOneWithoutReferendumInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutReferendumInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<PreimageUpdateWithoutReferendumDataInput>,
+  upsert?: Maybe<PreimageUpsertWithoutReferendumInput>,
+};
+
+export type PreimageUpdateWithoutPreimageArgumentsDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpdateWithoutPreimageStatusDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpdateWithoutProposalDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpdateWithoutReferendumDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpsertWithoutPreimageArgumentsInput = {
+  create: PreimageCreateWithoutPreimageArgumentsInput,
+  update: PreimageUpdateWithoutPreimageArgumentsDataInput,
+};
+
+export type PreimageUpsertWithoutPreimageStatusInput = {
+  create: PreimageCreateWithoutPreimageStatusInput,
+  update: PreimageUpdateWithoutPreimageStatusDataInput,
+};
+
+export type PreimageUpsertWithoutProposalInput = {
+  create: PreimageCreateWithoutProposalInput,
+  update: PreimageUpdateWithoutProposalDataInput,
+};
+
+export type PreimageUpsertWithoutReferendumInput = {
+  create: PreimageCreateWithoutReferendumInput,
+  update: PreimageUpdateWithoutReferendumDataInput,
+};
+
+export type PreimageWhereInput = {
+  AND?: Maybe<Array<PreimageWhereInput>>,
+  NOT?: Maybe<Array<PreimageWhereInput>>,
+  OR?: Maybe<Array<PreimageWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
   depositAmount?: Maybe<Scalars['String']>,
   depositAmount_contains?: Maybe<Scalars['String']>,
   depositAmount_ends_with?: Maybe<Scalars['String']>,
@@ -3245,14 +3841,20 @@ export type ProposalWhereInput = {
   hash_not_in?: Maybe<Array<Scalars['String']>>,
   hash_not_starts_with?: Maybe<Scalars['String']>,
   hash_starts_with?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  id_gt?: Maybe<Scalars['Int']>,
-  id_gte?: Maybe<Scalars['Int']>,
-  id_in?: Maybe<Array<Scalars['Int']>>,
-  id_lt?: Maybe<Scalars['Int']>,
-  id_lte?: Maybe<Scalars['Int']>,
-  id_not?: Maybe<Scalars['Int']>,
-  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
   metaDescription?: Maybe<Scalars['String']>,
   metaDescription_contains?: Maybe<Scalars['String']>,
   metaDescription_ends_with?: Maybe<Scalars['String']>,
@@ -3281,45 +3883,14 @@ export type ProposalWhereInput = {
   method_not_in?: Maybe<Array<Scalars['String']>>,
   method_not_starts_with?: Maybe<Scalars['String']>,
   method_starts_with?: Maybe<Scalars['String']>,
-  proposal?: Maybe<Scalars['String']>,
-  proposalArguments_every?: Maybe<ProposalArgumentWhereInput>,
-  proposalArguments_none?: Maybe<ProposalArgumentWhereInput>,
-  proposalArguments_some?: Maybe<ProposalArgumentWhereInput>,
-  proposalId?: Maybe<Scalars['Int']>,
-  proposalId_gt?: Maybe<Scalars['Int']>,
-  proposalId_gte?: Maybe<Scalars['Int']>,
-  proposalId_in?: Maybe<Array<Scalars['Int']>>,
-  proposalId_lt?: Maybe<Scalars['Int']>,
-  proposalId_lte?: Maybe<Scalars['Int']>,
-  proposalId_not?: Maybe<Scalars['Int']>,
-  proposalId_not_in?: Maybe<Array<Scalars['Int']>>,
-  proposal_contains?: Maybe<Scalars['String']>,
-  proposal_ends_with?: Maybe<Scalars['String']>,
-  proposal_gt?: Maybe<Scalars['String']>,
-  proposal_gte?: Maybe<Scalars['String']>,
-  proposal_in?: Maybe<Array<Scalars['String']>>,
-  proposal_lt?: Maybe<Scalars['String']>,
-  proposal_lte?: Maybe<Scalars['String']>,
-  proposal_not?: Maybe<Scalars['String']>,
-  proposal_not_contains?: Maybe<Scalars['String']>,
-  proposal_not_ends_with?: Maybe<Scalars['String']>,
-  proposal_not_in?: Maybe<Array<Scalars['String']>>,
-  proposal_not_starts_with?: Maybe<Scalars['String']>,
-  proposal_starts_with?: Maybe<Scalars['String']>,
-  proposer?: Maybe<Scalars['String']>,
-  proposer_contains?: Maybe<Scalars['String']>,
-  proposer_ends_with?: Maybe<Scalars['String']>,
-  proposer_gt?: Maybe<Scalars['String']>,
-  proposer_gte?: Maybe<Scalars['String']>,
-  proposer_in?: Maybe<Array<Scalars['String']>>,
-  proposer_lt?: Maybe<Scalars['String']>,
-  proposer_lte?: Maybe<Scalars['String']>,
-  proposer_not?: Maybe<Scalars['String']>,
-  proposer_not_contains?: Maybe<Scalars['String']>,
-  proposer_not_ends_with?: Maybe<Scalars['String']>,
-  proposer_not_in?: Maybe<Array<Scalars['String']>>,
-  proposer_not_starts_with?: Maybe<Scalars['String']>,
-  proposer_starts_with?: Maybe<Scalars['String']>,
+  preimageArguments_every?: Maybe<PreimageArgumentWhereInput>,
+  preimageArguments_none?: Maybe<PreimageArgumentWhereInput>,
+  preimageArguments_some?: Maybe<PreimageArgumentWhereInput>,
+  preimageStatus_every?: Maybe<PreimageStatusWhereInput>,
+  preimageStatus_none?: Maybe<PreimageStatusWhereInput>,
+  preimageStatus_some?: Maybe<PreimageStatusWhereInput>,
+  proposal?: Maybe<ProposalWhereInput>,
+  referendum?: Maybe<ReferendumWhereInput>,
   section?: Maybe<Scalars['String']>,
   section_contains?: Maybe<Scalars['String']>,
   section_ends_with?: Maybe<Scalars['String']>,
@@ -3336,13 +3907,457 @@ export type ProposalWhereInput = {
   section_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type PreimageWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export enum PrismaDatabase {
+  Default = 'default'
+}
+
+export type Proposal = {
+   __typename?: 'Proposal',
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  id: Scalars['Int'],
+  preimage?: Maybe<Preimage>,
+  preimageHash: Scalars['String'],
+  proposalId: Scalars['Int'],
+  proposalStatus?: Maybe<Array<ProposalStatus>>,
+};
+
+
+export type ProposalProposalStatusArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ProposalStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ProposalStatusWhereInput>
+};
+
+export type ProposalConnection = {
+   __typename?: 'ProposalConnection',
+  aggregate: AggregateProposal,
+  edges: Array<Maybe<ProposalEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type ProposalCreateInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  preimage?: Maybe<PreimageCreateOneWithoutProposalInput>,
+  preimageHash: Scalars['String'],
+  proposalId: Scalars['Int'],
+  proposalStatus?: Maybe<ProposalStatusCreateManyWithoutProposalInput>,
+};
+
+export type ProposalCreateOneWithoutPreimageInput = {
+  connect?: Maybe<ProposalWhereUniqueInput>,
+  create?: Maybe<ProposalCreateWithoutPreimageInput>,
+};
+
+export type ProposalCreateOneWithoutProposalStatusInput = {
+  connect?: Maybe<ProposalWhereUniqueInput>,
+  create?: Maybe<ProposalCreateWithoutProposalStatusInput>,
+};
+
+export type ProposalCreateWithoutPreimageInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  preimageHash: Scalars['String'],
+  proposalId: Scalars['Int'],
+  proposalStatus?: Maybe<ProposalStatusCreateManyWithoutProposalInput>,
+};
+
+export type ProposalCreateWithoutProposalStatusInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  preimage?: Maybe<PreimageCreateOneWithoutProposalInput>,
+  preimageHash: Scalars['String'],
+  proposalId: Scalars['Int'],
+};
+
+export type ProposalEdge = {
+   __typename?: 'ProposalEdge',
+  cursor: Scalars['String'],
+  node: Proposal,
+};
+
+export enum ProposalOrderByInput {
+  AuthorAsc = 'author_ASC',
+  AuthorDesc = 'author_DESC',
+  DepositAmountAsc = 'depositAmount_ASC',
+  DepositAmountDesc = 'depositAmount_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PreimageHashAsc = 'preimageHash_ASC',
+  PreimageHashDesc = 'preimageHash_DESC',
+  ProposalIdAsc = 'proposalId_ASC',
+  ProposalIdDesc = 'proposalId_DESC'
+}
+
+export type ProposalPreviousValues = {
+   __typename?: 'ProposalPreviousValues',
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  id: Scalars['Int'],
+  preimageHash: Scalars['String'],
+  proposalId: Scalars['Int'],
+};
+
+export type ProposalStatus = Node & {
+   __typename?: 'ProposalStatus',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  proposal: Proposal,
+  status: Scalars['String'],
+};
+
+export type ProposalStatusConnection = {
+   __typename?: 'ProposalStatusConnection',
+  aggregate: AggregateProposalStatus,
+  edges: Array<Maybe<ProposalStatusEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type ProposalStatusCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  proposal: ProposalCreateOneWithoutProposalStatusInput,
+  status: Scalars['String'],
+};
+
+export type ProposalStatusCreateManyWithoutProposalInput = {
+  connect?: Maybe<Array<ProposalStatusWhereUniqueInput>>,
+  create?: Maybe<Array<ProposalStatusCreateWithoutProposalInput>>,
+};
+
+export type ProposalStatusCreateWithoutProposalInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+};
+
+export type ProposalStatusEdge = {
+   __typename?: 'ProposalStatusEdge',
+  cursor: Scalars['String'],
+  node: ProposalStatus,
+};
+
+export enum ProposalStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC'
+}
+
+export type ProposalStatusPreviousValues = {
+   __typename?: 'ProposalStatusPreviousValues',
+  id: Scalars['ID'],
+  status: Scalars['String'],
+};
+
+export type ProposalStatusScalarWhereInput = {
+  AND?: Maybe<Array<ProposalStatusScalarWhereInput>>,
+  NOT?: Maybe<Array<ProposalStatusScalarWhereInput>>,
+  OR?: Maybe<Array<ProposalStatusScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusSubscriptionPayload = {
+   __typename?: 'ProposalStatusSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<ProposalStatus>,
+  previousValues?: Maybe<ProposalStatusPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ProposalStatusSubscriptionWhereInput = {
+  AND?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>,
+  OR?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<ProposalStatusWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ProposalStatusUpdateInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalStatusInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusUpdateManyWithoutProposalInput = {
+  connect?: Maybe<Array<ProposalStatusWhereUniqueInput>>,
+  create?: Maybe<Array<ProposalStatusCreateWithoutProposalInput>>,
+  delete?: Maybe<Array<ProposalStatusWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<ProposalStatusScalarWhereInput>>,
+  disconnect?: Maybe<Array<ProposalStatusWhereUniqueInput>>,
+  set?: Maybe<Array<ProposalStatusWhereUniqueInput>>,
+  update?: Maybe<Array<ProposalStatusUpdateWithWhereUniqueWithoutProposalInput>>,
+  updateMany?: Maybe<Array<ProposalStatusUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<ProposalStatusUpsertWithWhereUniqueWithoutProposalInput>>,
+};
+
+export type ProposalStatusUpdateManyWithWhereNestedInput = {
+  data: ProposalStatusUpdateManyDataInput,
+  where: ProposalStatusScalarWhereInput,
+};
+
+export type ProposalStatusUpdateWithoutProposalDataInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
+  data: ProposalStatusUpdateWithoutProposalDataInput,
+  where: ProposalStatusWhereUniqueInput,
+};
+
+export type ProposalStatusUpsertWithWhereUniqueWithoutProposalInput = {
+  create: ProposalStatusCreateWithoutProposalInput,
+  update: ProposalStatusUpdateWithoutProposalDataInput,
+  where: ProposalStatusWhereUniqueInput,
+};
+
+export type ProposalStatusWhereInput = {
+  AND?: Maybe<Array<ProposalStatusWhereInput>>,
+  NOT?: Maybe<Array<ProposalStatusWhereInput>>,
+  OR?: Maybe<Array<ProposalStatusWhereInput>>,
+  blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  proposal?: Maybe<ProposalWhereInput>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type ProposalStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type ProposalSubscriptionPayload = {
+   __typename?: 'ProposalSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Proposal>,
+  previousValues?: Maybe<ProposalPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ProposalSubscriptionWhereInput = {
+  AND?: Maybe<Array<ProposalSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<ProposalSubscriptionWhereInput>>,
+  OR?: Maybe<Array<ProposalSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<ProposalWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ProposalUpdateInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  proposalId?: Maybe<Scalars['Int']>,
+  proposalStatus?: Maybe<ProposalStatusUpdateManyWithoutProposalInput>,
+};
+
+export type ProposalUpdateManyMutationInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  preimageHash?: Maybe<Scalars['String']>,
+  proposalId?: Maybe<Scalars['Int']>,
+};
+
+export type ProposalUpdateOneRequiredWithoutProposalStatusInput = {
+  connect?: Maybe<ProposalWhereUniqueInput>,
+  create?: Maybe<ProposalCreateWithoutProposalStatusInput>,
+  update?: Maybe<ProposalUpdateWithoutProposalStatusDataInput>,
+  upsert?: Maybe<ProposalUpsertWithoutProposalStatusInput>,
+};
+
+export type ProposalUpdateOneWithoutPreimageInput = {
+  connect?: Maybe<ProposalWhereUniqueInput>,
+  create?: Maybe<ProposalCreateWithoutPreimageInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<ProposalUpdateWithoutPreimageDataInput>,
+  upsert?: Maybe<ProposalUpsertWithoutPreimageInput>,
+};
+
+export type ProposalUpdateWithoutPreimageDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  preimageHash?: Maybe<Scalars['String']>,
+  proposalId?: Maybe<Scalars['Int']>,
+  proposalStatus?: Maybe<ProposalStatusUpdateManyWithoutProposalInput>,
+};
+
+export type ProposalUpdateWithoutProposalStatusDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  proposalId?: Maybe<Scalars['Int']>,
+};
+
+export type ProposalUpsertWithoutPreimageInput = {
+  create: ProposalCreateWithoutPreimageInput,
+  update: ProposalUpdateWithoutPreimageDataInput,
+};
+
+export type ProposalUpsertWithoutProposalStatusInput = {
+  create: ProposalCreateWithoutProposalStatusInput,
+  update: ProposalUpdateWithoutProposalStatusDataInput,
+};
+
+export type ProposalWhereInput = {
+  AND?: Maybe<Array<ProposalWhereInput>>,
+  NOT?: Maybe<Array<ProposalWhereInput>>,
+  OR?: Maybe<Array<ProposalWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  depositAmount_contains?: Maybe<Scalars['String']>,
+  depositAmount_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_gt?: Maybe<Scalars['String']>,
+  depositAmount_gte?: Maybe<Scalars['String']>,
+  depositAmount_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_lt?: Maybe<Scalars['String']>,
+  depositAmount_lte?: Maybe<Scalars['String']>,
+  depositAmount_not?: Maybe<Scalars['String']>,
+  depositAmount_not_contains?: Maybe<Scalars['String']>,
+  depositAmount_not_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_not_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_not_starts_with?: Maybe<Scalars['String']>,
+  depositAmount_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  proposalId?: Maybe<Scalars['Int']>,
+  proposalId_gt?: Maybe<Scalars['Int']>,
+  proposalId_gte?: Maybe<Scalars['Int']>,
+  proposalId_in?: Maybe<Array<Scalars['Int']>>,
+  proposalId_lt?: Maybe<Scalars['Int']>,
+  proposalId_lte?: Maybe<Scalars['Int']>,
+  proposalId_not?: Maybe<Scalars['Int']>,
+  proposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  proposalStatus_every?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_none?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
+};
+
 export type ProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   proposalId?: Maybe<Scalars['Int']>,
 };
 
-export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Proposalsproposal = {
+export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
   id?: Maybe<Scalars['Int']>,
+};
+
+export type PublicUser = {
+   __typename?: 'PublicUser',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  username?: Maybe<Scalars['String']>,
 };
 
 export type Query = {
@@ -3351,7 +4366,7 @@ export type Query = {
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
 };
 
 
@@ -3386,9 +4401,9 @@ export type Query_Root = {
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
   nominationsConnection: NominationConnection,
-  onchain_proposals: Array<Onchain_Proposals>,
-  onchain_proposals_aggregate: Onchain_Proposals_Aggregate,
-  onchain_proposals_by_pk?: Maybe<Onchain_Proposals>,
+  onchain_links: Array<Onchain_Links>,
+  onchain_links_aggregate: Onchain_Links_Aggregate,
+  onchain_links_by_pk?: Maybe<Onchain_Links>,
   post_topics: Array<Post_Topics>,
   post_topics_aggregate: Post_Topics_Aggregate,
   post_topics_by_pk?: Maybe<Post_Topics>,
@@ -3398,12 +4413,27 @@ export type Query_Root = {
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
+  preimage?: Maybe<Preimage>,
+  preimageArgument?: Maybe<PreimageArgument>,
+  preimageArguments: Array<Maybe<PreimageArgument>>,
+  preimageArgumentsConnection: PreimageArgumentConnection,
+  preimageStatus?: Maybe<PreimageStatus>,
+  preimageStatuses: Array<Maybe<PreimageStatus>>,
+  preimageStatusesConnection: PreimageStatusConnection,
+  preimages: Array<Maybe<Preimage>>,
+  preimagesConnection: PreimageConnection,
   proposal?: Maybe<Proposal>,
-  proposalArgument?: Maybe<ProposalArgument>,
-  proposalArguments: Array<Maybe<ProposalArgument>>,
-  proposalArgumentsConnection: ProposalArgumentConnection,
+  proposalStatus?: Maybe<ProposalStatus>,
+  proposalStatuses: Array<Maybe<ProposalStatus>>,
+  proposalStatusesConnection: ProposalStatusConnection,
   proposals: Array<Maybe<Proposal>>,
   proposalsConnection: ProposalConnection,
+  referendum?: Maybe<Referendum>,
+  referendumStatus?: Maybe<ReferendumStatus>,
+  referendumStatuses: Array<Maybe<ReferendumStatus>>,
+  referendumStatusesConnection: ReferendumStatusConnection,
+  referendums: Array<Maybe<Referendum>>,
+  referendumsConnection: ReferendumConnection,
   reward?: Maybe<Reward>,
   rewards: Array<Maybe<Reward>>,
   rewardsConnection: RewardConnection,
@@ -3422,7 +4452,7 @@ export type Query_Root = {
   totalIssuances: Array<Maybe<TotalIssuance>>,
   totalIssuancesConnection: TotalIssuanceConnection,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<User>>>,
+  users?: Maybe<Array<Maybe<PublicUser>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,
@@ -3538,25 +4568,25 @@ export type Query_RootNominationsConnectionArgs = {
 };
 
 
-export type Query_RootOnchain_ProposalsArgs = {
-  distinct_on?: Maybe<Array<Onchain_Proposals_Select_Column>>,
+export type Query_RootOnchain_LinksArgs = {
+  distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Onchain_Proposals_Order_By>>,
-  where?: Maybe<Onchain_Proposals_Bool_Exp>
+  order_by?: Maybe<Array<Onchain_Links_Order_By>>,
+  where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
 
-export type Query_RootOnchain_Proposals_AggregateArgs = {
-  distinct_on?: Maybe<Array<Onchain_Proposals_Select_Column>>,
+export type Query_RootOnchain_Links_AggregateArgs = {
+  distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Onchain_Proposals_Order_By>>,
-  where?: Maybe<Onchain_Proposals_Bool_Exp>
+  order_by?: Maybe<Array<Onchain_Links_Order_By>>,
+  where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
 
-export type Query_RootOnchain_Proposals_By_PkArgs = {
+export type Query_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -3630,35 +4660,116 @@ export type Query_RootPosts_By_PkArgs = {
 };
 
 
+export type Query_RootPreimageArgs = {
+  where: PreimageWhereUniqueInput
+};
+
+
+export type Query_RootPreimageArgumentArgs = {
+  where: PreimageArgumentWhereUniqueInput
+};
+
+
+export type Query_RootPreimageArgumentsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageArgumentOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageArgumentWhereInput>
+};
+
+
+export type Query_RootPreimageArgumentsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageArgumentOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageArgumentWhereInput>
+};
+
+
+export type Query_RootPreimageStatusArgs = {
+  where: PreimageStatusWhereUniqueInput
+};
+
+
+export type Query_RootPreimageStatusesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageStatusWhereInput>
+};
+
+
+export type Query_RootPreimageStatusesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageStatusWhereInput>
+};
+
+
+export type Query_RootPreimagesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageWhereInput>
+};
+
+
+export type Query_RootPreimagesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<PreimageOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<PreimageWhereInput>
+};
+
+
 export type Query_RootProposalArgs = {
   where: ProposalWhereUniqueInput
 };
 
 
-export type Query_RootProposalArgumentArgs = {
-  where: ProposalArgumentWhereUniqueInput
+export type Query_RootProposalStatusArgs = {
+  where: ProposalStatusWhereUniqueInput
 };
 
 
-export type Query_RootProposalArgumentsArgs = {
+export type Query_RootProposalStatusesArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
   last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<ProposalArgumentOrderByInput>,
+  orderBy?: Maybe<ProposalStatusOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<ProposalArgumentWhereInput>
+  where?: Maybe<ProposalStatusWhereInput>
 };
 
 
-export type Query_RootProposalArgumentsConnectionArgs = {
+export type Query_RootProposalStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
   last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<ProposalArgumentOrderByInput>,
+  orderBy?: Maybe<ProposalStatusOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<ProposalArgumentWhereInput>
+  where?: Maybe<ProposalStatusWhereInput>
 };
 
 
@@ -3681,6 +4792,60 @@ export type Query_RootProposalsConnectionArgs = {
   orderBy?: Maybe<ProposalOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ProposalWhereInput>
+};
+
+
+export type Query_RootReferendumArgs = {
+  where: ReferendumWhereUniqueInput
+};
+
+
+export type Query_RootReferendumStatusArgs = {
+  where: ReferendumStatusWhereUniqueInput
+};
+
+
+export type Query_RootReferendumStatusesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumStatusWhereInput>
+};
+
+
+export type Query_RootReferendumStatusesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumStatusWhereInput>
+};
+
+
+export type Query_RootReferendumsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumWhereInput>
+};
+
+
+export type Query_RootReferendumsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumWhereInput>
 };
 
 
@@ -3859,6 +5024,457 @@ export type Query_RootValidatorsConnectionArgs = {
   orderBy?: Maybe<ValidatorOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ValidatorWhereInput>
+};
+
+export type Referendum = {
+   __typename?: 'Referendum',
+  delay: Scalars['Int'],
+  end: Scalars['Int'],
+  id: Scalars['Int'],
+  preimage?: Maybe<Preimage>,
+  preimageHash: Scalars['String'],
+  referendumId: Scalars['Int'],
+  referendumStatus?: Maybe<Array<ReferendumStatus>>,
+  voteThreshold: Scalars['String'],
+};
+
+
+export type ReferendumReferendumStatusArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumStatusWhereInput>
+};
+
+export type ReferendumConnection = {
+   __typename?: 'ReferendumConnection',
+  aggregate: AggregateReferendum,
+  edges: Array<Maybe<ReferendumEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type ReferendumCreateInput = {
+  delay: Scalars['Int'],
+  end: Scalars['Int'],
+  preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>,
+  preimageHash: Scalars['String'],
+  referendumId: Scalars['Int'],
+  referendumStatus?: Maybe<ReferendumStatusCreateManyWithoutReferendumInput>,
+  voteThreshold: Scalars['String'],
+};
+
+export type ReferendumCreateOneWithoutPreimageInput = {
+  connect?: Maybe<ReferendumWhereUniqueInput>,
+  create?: Maybe<ReferendumCreateWithoutPreimageInput>,
+};
+
+export type ReferendumCreateOneWithoutReferendumStatusInput = {
+  connect?: Maybe<ReferendumWhereUniqueInput>,
+  create?: Maybe<ReferendumCreateWithoutReferendumStatusInput>,
+};
+
+export type ReferendumCreateWithoutPreimageInput = {
+  delay: Scalars['Int'],
+  end: Scalars['Int'],
+  preimageHash: Scalars['String'],
+  referendumId: Scalars['Int'],
+  referendumStatus?: Maybe<ReferendumStatusCreateManyWithoutReferendumInput>,
+  voteThreshold: Scalars['String'],
+};
+
+export type ReferendumCreateWithoutReferendumStatusInput = {
+  delay: Scalars['Int'],
+  end: Scalars['Int'],
+  preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>,
+  preimageHash: Scalars['String'],
+  referendumId: Scalars['Int'],
+  voteThreshold: Scalars['String'],
+};
+
+export type ReferendumEdge = {
+   __typename?: 'ReferendumEdge',
+  cursor: Scalars['String'],
+  node: Referendum,
+};
+
+export enum ReferendumOrderByInput {
+  DelayAsc = 'delay_ASC',
+  DelayDesc = 'delay_DESC',
+  EndAsc = 'end_ASC',
+  EndDesc = 'end_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PreimageHashAsc = 'preimageHash_ASC',
+  PreimageHashDesc = 'preimageHash_DESC',
+  ReferendumIdAsc = 'referendumId_ASC',
+  ReferendumIdDesc = 'referendumId_DESC',
+  VoteThresholdAsc = 'voteThreshold_ASC',
+  VoteThresholdDesc = 'voteThreshold_DESC'
+}
+
+export type ReferendumPreviousValues = {
+   __typename?: 'ReferendumPreviousValues',
+  delay: Scalars['Int'],
+  end: Scalars['Int'],
+  id: Scalars['Int'],
+  preimageHash: Scalars['String'],
+  referendumId: Scalars['Int'],
+  voteThreshold: Scalars['String'],
+};
+
+export type ReferendumStatus = Node & {
+   __typename?: 'ReferendumStatus',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  referendum: Referendum,
+  status: Scalars['String'],
+};
+
+export type ReferendumStatusConnection = {
+   __typename?: 'ReferendumStatusConnection',
+  aggregate: AggregateReferendumStatus,
+  edges: Array<Maybe<ReferendumStatusEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type ReferendumStatusCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  referendum: ReferendumCreateOneWithoutReferendumStatusInput,
+  status: Scalars['String'],
+};
+
+export type ReferendumStatusCreateManyWithoutReferendumInput = {
+  connect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>,
+  create?: Maybe<Array<ReferendumStatusCreateWithoutReferendumInput>>,
+};
+
+export type ReferendumStatusCreateWithoutReferendumInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+};
+
+export type ReferendumStatusEdge = {
+   __typename?: 'ReferendumStatusEdge',
+  cursor: Scalars['String'],
+  node: ReferendumStatus,
+};
+
+export enum ReferendumStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC'
+}
+
+export type ReferendumStatusPreviousValues = {
+   __typename?: 'ReferendumStatusPreviousValues',
+  id: Scalars['ID'],
+  status: Scalars['String'],
+};
+
+export type ReferendumStatusScalarWhereInput = {
+  AND?: Maybe<Array<ReferendumStatusScalarWhereInput>>,
+  NOT?: Maybe<Array<ReferendumStatusScalarWhereInput>>,
+  OR?: Maybe<Array<ReferendumStatusScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusSubscriptionPayload = {
+   __typename?: 'ReferendumStatusSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<ReferendumStatus>,
+  previousValues?: Maybe<ReferendumStatusPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ReferendumStatusSubscriptionWhereInput = {
+  AND?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>,
+  OR?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<ReferendumStatusWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ReferendumStatusUpdateInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  referendum?: Maybe<ReferendumUpdateOneRequiredWithoutReferendumStatusInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusUpdateManyWithoutReferendumInput = {
+  connect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>,
+  create?: Maybe<Array<ReferendumStatusCreateWithoutReferendumInput>>,
+  delete?: Maybe<Array<ReferendumStatusWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<ReferendumStatusScalarWhereInput>>,
+  disconnect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>,
+  set?: Maybe<Array<ReferendumStatusWhereUniqueInput>>,
+  update?: Maybe<Array<ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput>>,
+  updateMany?: Maybe<Array<ReferendumStatusUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<ReferendumStatusUpsertWithWhereUniqueWithoutReferendumInput>>,
+};
+
+export type ReferendumStatusUpdateManyWithWhereNestedInput = {
+  data: ReferendumStatusUpdateManyDataInput,
+  where: ReferendumStatusScalarWhereInput,
+};
+
+export type ReferendumStatusUpdateWithoutReferendumDataInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput = {
+  data: ReferendumStatusUpdateWithoutReferendumDataInput,
+  where: ReferendumStatusWhereUniqueInput,
+};
+
+export type ReferendumStatusUpsertWithWhereUniqueWithoutReferendumInput = {
+  create: ReferendumStatusCreateWithoutReferendumInput,
+  update: ReferendumStatusUpdateWithoutReferendumDataInput,
+  where: ReferendumStatusWhereUniqueInput,
+};
+
+export type ReferendumStatusWhereInput = {
+  AND?: Maybe<Array<ReferendumStatusWhereInput>>,
+  NOT?: Maybe<Array<ReferendumStatusWhereInput>>,
+  OR?: Maybe<Array<ReferendumStatusWhereInput>>,
+  blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  referendum?: Maybe<ReferendumWhereInput>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type ReferendumSubscriptionPayload = {
+   __typename?: 'ReferendumSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Referendum>,
+  previousValues?: Maybe<ReferendumPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ReferendumSubscriptionWhereInput = {
+  AND?: Maybe<Array<ReferendumSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<ReferendumSubscriptionWhereInput>>,
+  OR?: Maybe<Array<ReferendumSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<ReferendumWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type ReferendumUpdateInput = {
+  delay?: Maybe<Scalars['Int']>,
+  end?: Maybe<Scalars['Int']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  referendumId?: Maybe<Scalars['Int']>,
+  referendumStatus?: Maybe<ReferendumStatusUpdateManyWithoutReferendumInput>,
+  voteThreshold?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumUpdateManyMutationInput = {
+  delay?: Maybe<Scalars['Int']>,
+  end?: Maybe<Scalars['Int']>,
+  preimageHash?: Maybe<Scalars['String']>,
+  referendumId?: Maybe<Scalars['Int']>,
+  voteThreshold?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumUpdateOneRequiredWithoutReferendumStatusInput = {
+  connect?: Maybe<ReferendumWhereUniqueInput>,
+  create?: Maybe<ReferendumCreateWithoutReferendumStatusInput>,
+  update?: Maybe<ReferendumUpdateWithoutReferendumStatusDataInput>,
+  upsert?: Maybe<ReferendumUpsertWithoutReferendumStatusInput>,
+};
+
+export type ReferendumUpdateOneWithoutPreimageInput = {
+  connect?: Maybe<ReferendumWhereUniqueInput>,
+  create?: Maybe<ReferendumCreateWithoutPreimageInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<ReferendumUpdateWithoutPreimageDataInput>,
+  upsert?: Maybe<ReferendumUpsertWithoutPreimageInput>,
+};
+
+export type ReferendumUpdateWithoutPreimageDataInput = {
+  delay?: Maybe<Scalars['Int']>,
+  end?: Maybe<Scalars['Int']>,
+  preimageHash?: Maybe<Scalars['String']>,
+  referendumId?: Maybe<Scalars['Int']>,
+  referendumStatus?: Maybe<ReferendumStatusUpdateManyWithoutReferendumInput>,
+  voteThreshold?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumUpdateWithoutReferendumStatusDataInput = {
+  delay?: Maybe<Scalars['Int']>,
+  end?: Maybe<Scalars['Int']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  referendumId?: Maybe<Scalars['Int']>,
+  voteThreshold?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumUpsertWithoutPreimageInput = {
+  create: ReferendumCreateWithoutPreimageInput,
+  update: ReferendumUpdateWithoutPreimageDataInput,
+};
+
+export type ReferendumUpsertWithoutReferendumStatusInput = {
+  create: ReferendumCreateWithoutReferendumStatusInput,
+  update: ReferendumUpdateWithoutReferendumStatusDataInput,
+};
+
+export type ReferendumWhereInput = {
+  AND?: Maybe<Array<ReferendumWhereInput>>,
+  NOT?: Maybe<Array<ReferendumWhereInput>>,
+  OR?: Maybe<Array<ReferendumWhereInput>>,
+  delay?: Maybe<Scalars['Int']>,
+  delay_gt?: Maybe<Scalars['Int']>,
+  delay_gte?: Maybe<Scalars['Int']>,
+  delay_in?: Maybe<Array<Scalars['Int']>>,
+  delay_lt?: Maybe<Scalars['Int']>,
+  delay_lte?: Maybe<Scalars['Int']>,
+  delay_not?: Maybe<Scalars['Int']>,
+  delay_not_in?: Maybe<Array<Scalars['Int']>>,
+  end?: Maybe<Scalars['Int']>,
+  end_gt?: Maybe<Scalars['Int']>,
+  end_gte?: Maybe<Scalars['Int']>,
+  end_in?: Maybe<Array<Scalars['Int']>>,
+  end_lt?: Maybe<Scalars['Int']>,
+  end_lte?: Maybe<Scalars['Int']>,
+  end_not?: Maybe<Scalars['Int']>,
+  end_not_in?: Maybe<Array<Scalars['Int']>>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  referendumId?: Maybe<Scalars['Int']>,
+  referendumId_gt?: Maybe<Scalars['Int']>,
+  referendumId_gte?: Maybe<Scalars['Int']>,
+  referendumId_in?: Maybe<Array<Scalars['Int']>>,
+  referendumId_lt?: Maybe<Scalars['Int']>,
+  referendumId_lte?: Maybe<Scalars['Int']>,
+  referendumId_not?: Maybe<Scalars['Int']>,
+  referendumId_not_in?: Maybe<Array<Scalars['Int']>>,
+  referendumStatus_every?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_none?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_some?: Maybe<ReferendumStatusWhereInput>,
+  voteThreshold?: Maybe<Scalars['String']>,
+  voteThreshold_contains?: Maybe<Scalars['String']>,
+  voteThreshold_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_gt?: Maybe<Scalars['String']>,
+  voteThreshold_gte?: Maybe<Scalars['String']>,
+  voteThreshold_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_lt?: Maybe<Scalars['String']>,
+  voteThreshold_lte?: Maybe<Scalars['String']>,
+  voteThreshold_not?: Maybe<Scalars['String']>,
+  voteThreshold_not_contains?: Maybe<Scalars['String']>,
+  voteThreshold_not_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_not_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_not_starts_with?: Maybe<Scalars['String']>,
+  voteThreshold_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type ReferendumWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>,
+  referendumId?: Maybe<Scalars['Int']>,
+};
+
+export type ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
+  id?: Maybe<Scalars['Int']>,
 };
 
 export type Reward = Node & {
@@ -4365,9 +5981,9 @@ export type Subscription_Root = {
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
-  onchain_proposals: Array<Onchain_Proposals>,
-  onchain_proposals_aggregate: Onchain_Proposals_Aggregate,
-  onchain_proposals_by_pk?: Maybe<Onchain_Proposals>,
+  onchain_links: Array<Onchain_Links>,
+  onchain_links_aggregate: Onchain_Links_Aggregate,
+  onchain_links_by_pk?: Maybe<Onchain_Links>,
   post_topics: Array<Post_Topics>,
   post_topics_aggregate: Post_Topics_Aggregate,
   post_topics_by_pk?: Maybe<Post_Topics>,
@@ -4403,25 +6019,25 @@ export type Subscription_RootComments_By_PkArgs = {
 };
 
 
-export type Subscription_RootOnchain_ProposalsArgs = {
-  distinct_on?: Maybe<Array<Onchain_Proposals_Select_Column>>,
+export type Subscription_RootOnchain_LinksArgs = {
+  distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Onchain_Proposals_Order_By>>,
-  where?: Maybe<Onchain_Proposals_Bool_Exp>
+  order_by?: Maybe<Array<Onchain_Links_Order_By>>,
+  where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
 
-export type Subscription_RootOnchain_Proposals_AggregateArgs = {
-  distinct_on?: Maybe<Array<Onchain_Proposals_Select_Column>>,
+export type Subscription_RootOnchain_Links_AggregateArgs = {
+  distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
   offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Onchain_Proposals_Order_By>>,
-  where?: Maybe<Onchain_Proposals_Bool_Exp>
+  order_by?: Maybe<Array<Onchain_Links_Order_By>>,
+  where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
 
-export type Subscription_RootOnchain_Proposals_By_PkArgs = {
+export type Subscription_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -4796,11 +6412,6 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
-export type UserFragmentFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'username'>
-);
-
 export type EditCommentMutationVariables = {
   id: Scalars['uuid'],
   content: Scalars['String']
@@ -4812,140 +6423,6 @@ export type EditCommentMutation = (
   & { update_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
     & Pick<Comments_Mutation_Response, 'affected_rows'>
-  )> }
-);
-
-export type CreatePostMutationVariables = {
-  userId: Scalars['Int'],
-  content: Scalars['String'],
-  topicId: Scalars['Int'],
-  title: Scalars['String']
-};
-
-
-export type CreatePostMutation = (
-  { __typename: 'mutation_root' }
-  & { insert_posts: Maybe<(
-    { __typename?: 'posts_mutation_response' }
-    & Pick<Posts_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'posts' }
-      & Pick<Posts, 'id'>
-    )> }
-  )> }
-);
-
-export type TopicFragment = (
-  { __typename?: 'post_topics' }
-  & Pick<Post_Topics, 'id' | 'name'>
-);
-
-export type Post_TopicsQueryVariables = {};
-
-
-export type Post_TopicsQuery = (
-  { __typename?: 'query_root' }
-  & { post_topics: Array<(
-    { __typename?: 'post_topics' }
-    & TopicFragment
-  )> }
-);
-
-export type LatestDiscussionPostsQueryVariables = {};
-
-
-export type LatestDiscussionPostsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ), type: (
-      { __typename?: 'post_types' }
-      & Pick<Post_Types, 'name' | 'id'>
-    ) }
-  )> }
-);
-
-export type LatestPostsQueryVariables = {};
-
-
-export type LatestPostsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ) }
-  )> }
-);
-
-export type CommentFieldsFragment = (
-  { __typename?: 'comments' }
-  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
-  & { author: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
-  )> }
-);
-
-export type CommentRecursiveFragment = (
-  { __typename?: 'comments' }
-  & { comments: Array<(
-    { __typename?: 'comments' }
-    & { comments: Array<(
-      { __typename?: 'comments' }
-      & CommentFieldsFragment
-    )> }
-    & CommentFieldsFragment
-  )> }
-  & CommentFieldsFragment
-);
-
-export type PostFragment = (
-  { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
-  & { author: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
-  )>, comments: Array<(
-    { __typename?: 'comments' }
-    & CommentRecursiveFragment
-  )>, topic: Maybe<(
-    { __typename?: 'post_topics' }
-    & Pick<Post_Topics, 'id' | 'name'>
-  )>, type: (
-    { __typename?: 'post_types' }
-    & Pick<Post_Types, 'id' | 'name'>
-  ) }
-);
-
-export type PostAndCommentsQueryVariables = {
-  id: Scalars['Int']
-};
-
-
-export type PostAndCommentsQuery = (
-  { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & PostFragment
   )> }
 );
 
@@ -4964,14 +6441,14 @@ export type EditPostMutation = (
   )> }
 );
 
-export type AddRootCommentMutationVariables = {
+export type AddPostCommentMutationVariables = {
   authorId: Scalars['Int'],
   content: Scalars['String'],
   postId: Scalars['Int']
 };
 
 
-export type AddRootCommentMutation = (
+export type AddPostCommentMutation = (
   { __typename: 'mutation_root' }
   & { insert_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
@@ -5018,17 +6495,106 @@ export type SubscriptionQuery = (
   )> }
 );
 
-export type LatestProposalPostsQueryVariables = {};
+export type CommentFieldsFragment = (
+  { __typename?: 'comments' }
+  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )> }
+);
+
+export type CommentRecursiveFragment = (
+  { __typename?: 'comments' }
+  & { comments: Array<(
+    { __typename?: 'comments' }
+    & { comments: Array<(
+      { __typename?: 'comments' }
+      & CommentFieldsFragment
+    )> }
+    & CommentFieldsFragment
+  )> }
+  & CommentFieldsFragment
+);
+
+export type CreatePostMutationVariables = {
+  userId: Scalars['Int'],
+  content: Scalars['String'],
+  topicId: Scalars['Int'],
+  title: Scalars['String']
+};
 
 
-export type LatestProposalPostsQuery = (
+export type CreatePostMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_posts: Maybe<(
+    { __typename?: 'posts_mutation_response' }
+    & Pick<Posts_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'id'>
+    )> }
+  )> }
+);
+
+export type TopicFragment = (
+  { __typename?: 'post_topics' }
+  & Pick<Post_Topics, 'id' | 'name'>
+);
+
+export type Post_TopicsQueryVariables = {};
+
+
+export type Post_TopicsQuery = (
+  { __typename?: 'query_root' }
+  & { post_topics: Array<(
+    { __typename?: 'post_topics' }
+    & TopicFragment
+  )> }
+);
+
+export type DiscussionPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type DiscussionPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DiscussionPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & DiscussionPostFragment
+  )> }
+);
+
+export type LatestDiscussionPostsQueryVariables = {};
+
+
+export type LatestDiscussionPostsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
+      & Pick<User, 'id' | 'name' | 'username'>
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -5039,6 +6605,255 @@ export type LatestProposalPostsQuery = (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
     ) }
+  )> }
+);
+
+export type LatestPostsQueryVariables = {};
+
+
+export type LatestPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
+export type LatestDemocracyProposalPostsQueryVariables = {
+  postType?: Scalars['Int'],
+  postTopic?: Scalars['Int']
+};
+
+
+export type LatestDemocracyProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & { onchain_proposal: Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
+  )> }
+);
+
+export type LatestDemocracyReferendaPostsQueryVariables = {
+  postType?: Scalars['Int'],
+  postTopic?: Scalars['Int']
+};
+
+
+export type LatestDemocracyReferendaPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
+      & { onchain_referendum: Maybe<(
+        { __typename?: 'Referendum' }
+        & Pick<Referendum, 'id'>
+        & { referendumStatus: Maybe<Array<(
+          { __typename?: 'ReferendumStatus' }
+          & Pick<ReferendumStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
+  )> }
+);
+
+export type LatestProposalPostsQueryVariables = {};
+
+
+export type LatestProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
+      & { onchain_proposal: Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )> }
+    )> }
+  )> }
+);
+
+export type OnchainLinkProposalFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id'>
+  & { onchain_proposal: Maybe<(
+    { __typename?: 'Proposal' }
+    & Pick<Proposal, 'id'>
+    & { proposalStatus: Maybe<Array<(
+      { __typename?: 'ProposalStatus' }
+      & Pick<ProposalStatus, 'id' | 'status'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'id' | 'name' | 'value'>
+      )>> }
+    )> }
+  )> }
+);
+
+export type ProposalPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkProposalFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type ProposalPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type ProposalPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & ProposalPostFragment
+  )> }
+);
+
+export type OnchainLinkReferendumFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
+  & { onchain_referendum: Maybe<(
+    { __typename?: 'Referendum' }
+    & Pick<Referendum, 'id' | 'delay' | 'end' | 'voteThreshold'>
+    & { referendumStatus: Maybe<Array<(
+      { __typename?: 'ReferendumStatus' }
+      & Pick<ReferendumStatus, 'status' | 'id'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'id' | 'name' | 'value'>
+      )>> }
+    )> }
+  )> }
+);
+
+export type ReferendumPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkReferendumFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type ReferendumPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type ReferendumPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & ReferendumPostFragment
   )> }
 );
 
@@ -5200,13 +7015,6 @@ export type VerifyEmailMutation = (
   )> }
 );
 
-export const UserFragmentFragmentDoc = gql`
-    fragment userFragment on User {
-  id
-  name
-  username
-}
-    `;
 export const TopicFragmentDoc = gql`
     fragment topic on post_topics {
   id
@@ -5217,6 +7025,7 @@ export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on comments {
   author {
     id
+    name
     username
   }
   content
@@ -5236,10 +7045,11 @@ export const CommentRecursiveFragmentDoc = gql`
   }
 }
     ${CommentFieldsFragmentDoc}`;
-export const PostFragmentDoc = gql`
-    fragment post on posts {
+export const DiscussionPostFragmentDoc = gql`
+    fragment discussionPost on posts {
   author {
     id
+    name
     username
   }
   content
@@ -5260,6 +7070,119 @@ export const PostFragmentDoc = gql`
   }
 }
     ${CommentRecursiveFragmentDoc}`;
+export const OnchainLinkProposalFragmentDoc = gql`
+    fragment onchainLinkProposal on onchain_links {
+  id
+  proposer_address
+  onchain_proposal_id
+  onchain_proposal(where: {}) {
+    id
+    proposalStatus {
+      id
+      status
+    }
+    preimage {
+      depositAmount
+      hash
+      id
+      metaDescription
+      method
+      preimageArguments {
+        id
+        name
+        value
+      }
+    }
+  }
+}
+    `;
+export const ProposalPostFragmentDoc = gql`
+    fragment proposalPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  onchain_link {
+    ...onchainLinkProposal
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkProposalFragmentDoc}`;
+export const OnchainLinkReferendumFragmentDoc = gql`
+    fragment onchainLinkReferendum on onchain_links {
+  id
+  proposer_address
+  onchain_referendum_id
+  onchain_referendum(where: {}) {
+    id
+    delay
+    end
+    voteThreshold
+    referendumStatus {
+      status
+      id
+    }
+    preimage {
+      depositAmount
+      hash
+      id
+      metaDescription
+      method
+      preimageArguments {
+        id
+        name
+        value
+      }
+    }
+  }
+}
+    `;
+export const ReferendumPostFragmentDoc = gql`
+    fragment referendumPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  onchain_link {
+    ...onchainLinkReferendum
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkReferendumFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -5293,202 +7216,6 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
-export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
-  __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
-    affected_rows
-    returning {
-      id
-    }
-  }
-}
-    `;
-export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
-
-/**
- * __useCreatePostMutation__
- *
- * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      content: // value for 'content'
- *      topicId: // value for 'topicId'
- *      title: // value for 'title'
- *   },
- * });
- */
-export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
-      }
-export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
-export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
-export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
-export const Post_TopicsDocument = gql`
-    query Post_topics {
-  post_topics {
-    ...topic
-  }
-}
-    ${TopicFragmentDoc}`;
-
-/**
- * __usePost_TopicsQuery__
- *
- * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePost_TopicsQuery({
- *   variables: {
- *   },
- * });
- */
-export function usePost_TopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-        return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-      }
-export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-        }
-export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
-export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
-export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
-export const LatestDiscussionPostsDocument = gql`
-    query LatestDiscussionPosts {
-  posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
-    id
-    title
-    author {
-      id
-      username
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-    type {
-      name
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useLatestDiscussionPostsQuery__
- *
- * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLatestDiscussionPostsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-      }
-export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-        }
-export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
-export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
-export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
-export const LatestPostsDocument = gql`
-    query LatestPosts {
-  posts(order_by: {created_at: desc}) {
-    id
-    title
-    author {
-      id
-      username
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useLatestPostsQuery__
- *
- * To run a query within a React component, call `useLatestPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLatestPostsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLatestPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-      }
-export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
-        }
-export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
-export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
-export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
-export const PostAndCommentsDocument = gql`
-    query PostAndComments($id: Int!) {
-  posts(where: {id: {_eq: $id}}) {
-    ...post
-  }
-}
-    ${PostFragmentDoc}`;
-
-/**
- * __usePostAndCommentsQuery__
- *
- * To run a query within a React component, call `usePostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePostAndCommentsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-        return ApolloReactHooks.useQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
-      }
-export function usePostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostAndCommentsQuery, PostAndCommentsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PostAndCommentsQuery, PostAndCommentsQueryVariables>(PostAndCommentsDocument, baseOptions);
-        }
-export type PostAndCommentsQueryHookResult = ReturnType<typeof usePostAndCommentsQuery>;
-export type PostAndCommentsLazyQueryHookResult = ReturnType<typeof usePostAndCommentsLazyQuery>;
-export type PostAndCommentsQueryResult = ApolloReactCommon.QueryResult<PostAndCommentsQuery, PostAndCommentsQueryVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
@@ -5523,28 +7250,28 @@ export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
-export const AddRootCommentDocument = gql`
-    mutation AddRootComment($authorId: Int!, $content: String!, $postId: Int!) {
+export const AddPostCommentDocument = gql`
+    mutation AddPostComment($authorId: Int!, $content: String!, $postId: Int!) {
   __typename
   insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
     affected_rows
   }
 }
     `;
-export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRootCommentMutation, AddRootCommentMutationVariables>;
+export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPostCommentMutation, AddPostCommentMutationVariables>;
 
 /**
- * __useAddRootCommentMutation__
+ * __useAddPostCommentMutation__
  *
- * To run a mutation, you first call `useAddRootCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddRootCommentMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addRootCommentMutation, { data, loading, error }] = useAddRootCommentMutation({
+ * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
  *   variables: {
  *      authorId: // value for 'authorId'
  *      content: // value for 'content'
@@ -5552,12 +7279,12 @@ export type AddRootCommentMutationFn = ApolloReactCommon.MutationFunction<AddRoo
  *   },
  * });
  */
-export function useAddRootCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddRootCommentMutation, AddRootCommentMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddRootCommentMutation, AddRootCommentMutationVariables>(AddRootCommentDocument, baseOptions);
+export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
       }
-export type AddRootCommentMutationHookResult = ReturnType<typeof useAddRootCommentMutation>;
-export type AddRootCommentMutationResult = ApolloReactCommon.MutationResult<AddRootCommentMutation>;
-export type AddRootCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddRootCommentMutation, AddRootCommentMutationVariables>;
+export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
+export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
+export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
 export const PostSubscribeDocument = gql`
     mutation PostSubscribe($postId: Int!) {
   postSubscribe(post_id: $postId) {
@@ -5655,13 +7382,118 @@ export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
 export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
 export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
-export const LatestProposalPostsDocument = gql`
-    query LatestProposalPosts {
-  posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 2}}}) {
+export const CreatePostDocument = gql`
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
+  __typename
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}
+    `;
+export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      content: // value for 'content'
+ *      topicId: // value for 'topicId'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
+      }
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
+export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const Post_TopicsDocument = gql`
+    query Post_topics {
+  post_topics {
+    ...topic
+  }
+}
+    ${TopicFragmentDoc}`;
+
+/**
+ * __usePost_TopicsQuery__
+ *
+ * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePost_TopicsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePost_TopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
+        return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+      }
+export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+        }
+export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
+export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
+export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
+export const DiscussionPostAndCommentsDocument = gql`
+    query DiscussionPostAndComments($id: Int!) {
+  posts(where: {id: {_eq: $id}}) {
+    ...discussionPost
+  }
+}
+    ${DiscussionPostFragmentDoc}`;
+
+/**
+ * __useDiscussionPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+      }
+export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+        }
+export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
+export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
+export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
+export const LatestDiscussionPostsDocument = gql`
+    query LatestDiscussionPosts {
+  posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
     id
     title
     author {
       id
+      name
       username
     }
     created_at
@@ -5674,6 +7506,248 @@ export const LatestProposalPostsDocument = gql`
     type {
       name
       id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDiscussionPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDiscussionPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+      }
+export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+        }
+export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
+export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
+export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
+export const LatestPostsDocument = gql`
+    query LatestPosts {
+  posts(order_by: {created_at: desc}) {
+    id
+    title
+    author {
+      id
+      name
+      username
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLatestPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+      }
+export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestPostsQuery, LatestPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestPostsQuery, LatestPostsQueryVariables>(LatestPostsDocument, baseOptions);
+        }
+export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
+export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
+export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
+export const LatestDemocracyProposalPostsDocument = gql`
+    query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1) {
+  posts(limit: 5, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *   },
+ * });
+ */
+export function useLatestDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+        }
+export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsQuery>;
+export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
+export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
+export const LatestDemocracyReferendaPostsDocument = gql`
+    query LatestDemocracyReferendaPosts($postType: Int! = 2, $postTopic: Int! = 1) {
+  posts(limit: 5, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        referendumStatus {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyReferendaPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyReferendaPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyReferendaPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *   },
+ * });
+ */
+export function useLatestDemocracyReferendaPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>(LatestDemocracyReferendaPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>(LatestDemocracyReferendaPostsDocument, baseOptions);
+        }
+export type LatestDemocracyReferendaPostsQueryHookResult = ReturnType<typeof useLatestDemocracyReferendaPostsQuery>;
+export type LatestDemocracyReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyReferendaPostsLazyQuery>;
+export type LatestDemocracyReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyReferendaPostsQuery, LatestDemocracyReferendaPostsQueryVariables>;
+export const LatestProposalPostsDocument = gql`
+    query LatestProposalPosts {
+  posts(limit: 20, where: {type: {id: {_eq: 2}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_referendum_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus {
+          id
+          status
+        }
+      }
     }
   }
 }
@@ -5703,6 +7777,72 @@ export function useLatestProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type LatestProposalPostsQueryHookResult = ReturnType<typeof useLatestProposalPostsQuery>;
 export type LatestProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestProposalPostsLazyQuery>;
 export type LatestProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestProposalPostsQuery, LatestProposalPostsQueryVariables>;
+export const ProposalPostAndCommentsDocument = gql`
+    query ProposalPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
+    ...proposalPost
+  }
+}
+    ${ProposalPostFragmentDoc}`;
+
+/**
+ * __useProposalPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProposalPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+      }
+export function useProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+        }
+export type ProposalPostAndCommentsQueryHookResult = ReturnType<typeof useProposalPostAndCommentsQuery>;
+export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useProposalPostAndCommentsLazyQuery>;
+export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
+export const ReferendumPostAndCommentsDocument = gql`
+    query ReferendumPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_referendum_id: {_eq: $id}}}) {
+    ...referendumPost
+  }
+}
+    ${ReferendumPostFragmentDoc}`;
+
+/**
+ * __useReferendumPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReferendumPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useReferendumPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+      }
+export function useReferendumPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+        }
+export type ReferendumPostAndCommentsQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsQuery>;
+export type ReferendumPostAndCommentsLazyQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsLazyQuery>;
+export type ReferendumPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>;
 export const ResetPasswordDocument = gql`
     mutation resetPassword($newPassword: String!, $token: String!) {
   resetPassword(newPassword: $newPassword, token: $token) {

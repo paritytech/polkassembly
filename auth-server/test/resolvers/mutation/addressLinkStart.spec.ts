@@ -51,7 +51,7 @@ describe('addressLinkStart mutation', () => {
 		expect(dbAddress.sign_message).to.exist;
 		expect(dbAddress.sign_message).to.be.a('string');
 		expect(dbAddress.sign_message).to.equal(res.sign_message);
-		expect(dbAddress.linked).to.be.false;
+		expect(dbAddress.verified).to.be.false;
 
 		expect(res.message).to.equal(messages.ADDRESS_LINKING_STARTED);
 	});

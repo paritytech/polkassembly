@@ -31,14 +31,14 @@ describe('adresses query', () => {
 		for (let i = 0; i < 3; i++) {
 			dbAddresses.push(await Address
 				.query()
-				.allowInsert('[network, address, user_id, public_key, sign_message, linked]')
+				.allowInsert('[network, address, user_id, public_key, sign_message, verified]')
 				.insert({
 					network: 'kasuma',
 					address: uuid(),
 					user_id: signupResult.user.id,
 					public_key: uuid(),
 					sign_message: uuid(),
-					linked: true
+					verified: true
 				})
 				.returning('*')
 			);
