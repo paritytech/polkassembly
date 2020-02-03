@@ -39,9 +39,9 @@ describe('addressLinkConfirm mutation', () => {
 
 	it('should be able to confirm address link', async () => {
 		const network = 'kasuma';
-		const address = '5E9ap3x1fQ42vQ4kaD9UiSgDHZJ1WsPN64E1CMKBzAg3h7aX';
+		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const signature = '0x660535f7dc76abff4de1ab61e194b2af9bfa88ba99de7c418e3a9ddbec2a463847031aad7e9f8634ccfdea4b8ae83723cc3997327b2760958ca04e3364cb3207';
+		const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
 
 		const linkStartRes = await addressLinkStart(null, { network, address }, fakectx);
 
