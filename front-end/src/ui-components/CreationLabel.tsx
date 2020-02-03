@@ -40,4 +40,4 @@ export default styled(CreationLabel)`
 		font-weight: 500;
 		margin-right: 0.3rem;
     }
-}`;
+`;
