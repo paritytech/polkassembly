@@ -13,7 +13,7 @@ import {
 	proposalDiscussionExists
 } from './graphql_helpers';
 import { proposalSubscription, referendumSubscription } from './queries';
-import { isSynced } from './sync';
+import { syncDBs } from './sync';
 
 dotenv.config();
 
@@ -26,7 +26,7 @@ const eventStatus = {
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
 
 function main (): void {
-	isSynced();
+	syncDBs();
 
 	// const getWsClient = function (wsurl: string): SubscriptionClient {
 	// 	const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
