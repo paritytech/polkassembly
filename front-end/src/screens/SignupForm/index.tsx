@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FieldError } from 'react-hook-form';
 import { Grid, Icon, Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -65,10 +65,13 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.username ? 'error' : ''}
 								name='username'
 								placeholder='john'
-								ref={register({ minLength: 3, required: true })}
+								ref={register({ maxLength:20, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
 								type='text'
 							/>
-							{errors.username && <span className={'errorText'}>{messages.VALIDATION_USERNAME_ERROR}</span>}
+							{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}
+							{(errors.username as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MINLENGTH_ERROR}</span>}
+							{(errors.username as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_PATTERN_ERROR}</span>}
+							{(errors.username as FieldError)?.type === 'required' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_REQUIRED_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
