@@ -5,10 +5,10 @@ import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import ContentForm from '../../components/ContentForm';
+import ContentForm from '../ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useEditCommentMutation, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { useEditCommentMutation, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -18,7 +18,7 @@ interface Props {
 	className?: string,
 	commentId: string,
 	content: string,
-	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
@@ -46,7 +46,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.update_comments && data.update_comments.affected_rows > 0){
+				if (data?.update_comments && data.update_comments.affected_rows > 0){
 					refetch();
 					queueNotification({
 						header: 'Success!',

@@ -1,0 +1,10 @@
+- args:
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "created_at" TYPE timestamp with
+      time zone;
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "created_at" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."posts"."created_at" IS E'null'
+  type: run_sql

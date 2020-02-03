@@ -3,13 +3,13 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import Comment from './Comment';
-import { CommentRecursiveFragment, PostAndCommentsQueryVariables, PostAndCommentsQuery } from '../../generated/graphql';
+import { CommentRecursiveFragment, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
 
 interface Props{
 	className?: string
 	comments: CommentRecursiveFragment[]
 	firstComment?: boolean
-	refetch: (variables?: PostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<PostAndCommentsQuery>>
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const Comments = ({ className, comments, firstComment=true, refetch }: Props) => {

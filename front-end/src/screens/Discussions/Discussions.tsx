@@ -35,9 +35,9 @@ const Discussions = ({ className, data }: Props) => {
 												<DiscussionCard
 													displayname={post.author.name}
 													username={post.author.username }
-													comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-														? 'no'
-														: post.comments_aggregate.aggregate!.count!.toString()}
+													comments={post.comments_aggregate.aggregate && post.comments_aggregate.aggregate!.count
+														? post.comments_aggregate.aggregate!.count!.toString()
+														: 'no'}
 													created_at={post.created_at}
 													title={post.title}
 												/>
@@ -107,7 +107,7 @@ export default styled(Discussions)`
 			text-decoration: none;
 		}
 		a:hover {
-			tex	t-decoration: none;
+			text-decoration: none;
 		}
 	}
 
