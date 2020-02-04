@@ -25,7 +25,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 			{proposerAddress &&
 				<div className='info_group'>
 					<h6>Proposer</h6>
-					{proposerAddress} <br/>
+					{proposerAddress}
 				</div>
 			}
 			{depositAmount && method && preimageArguments && metaDescription &&

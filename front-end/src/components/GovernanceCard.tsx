@@ -31,7 +31,7 @@ const Discussion = function ({
 		<div className={className}>
 			<Segment.Group horizontal>
 				<Segment className='onchain_id'>
-					<h4>#{onchainId}</h4>
+					<h5>#{onchainId}</h5>
 				</Segment>
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
@@ -78,7 +78,7 @@ export default styled(Discussion)`
 
 	.onchain_id {
 		min-width: 4rem!important;
-		max-width: 7rem;
+		max-width: 6rem;
 	}
 
 	.statusSegment {
@@ -92,15 +92,22 @@ export default styled(Discussion)`
 		right: 0;
 	}
 	
-    h4 {
+    h4, h5 {
         color: black_primary;
         display: block;
         font-weight: 500;
-        font-size: lg;
-		margin-bottom: 0.3rem; 
-        margin-bottom: 0.3rem; 
 		margin-bottom: 0.3rem; 
 	}
+
+	h4 {
+		font-size: lg;
+	}
+
+	h5 {
+		font-size: md;
+		line-height: 1.4;
+	}
+
 	.creationlabel {
 		display: block;
 	}
@@ -122,6 +129,11 @@ export default styled(Discussion)`
 		
 		h4 {
 			font-size: md;
+		}
+
+		h5 {
+			font-size: sm;
+			line-height: 1.2;
 		}
 
 		.statusTag {

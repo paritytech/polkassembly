@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@xstyled/styled-components';
 
 import { OnchainLinkProposalFragment } from '../../generated/graphql';
+import { chainProperties } from '../../global/chainProperties';
 
 interface Props{
 	className?: string
@@ -23,14 +24,14 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 			{proposerAddress &&
 				<div className='info_group'>
 					<h6>Proposer</h6>
-					{proposerAddress} <br/>
+					{proposerAddress}
 				</div>
 			}
 			{depositAmount && method && preimageArguments && metaDescription &&
 			<>
 				<div className='info_group'>
 					<h6>Deposit</h6>
-					{depositAmount} KSM
+					{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 				</div>
 				<div className='info_group'>
 					<h6>Description</h6>
