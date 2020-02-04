@@ -2,12 +2,12 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
 
+import { getSdk as getOnchainSdk } from './generated/chain-db-graphql';
+import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
 import {
-	addPostAndProposalMutation,
 	addReferendumIdMutation,
 	getProposalQuery,
 	getProposalWithNullReferendumQuery,
-	getTabledProposalsAtBlockQuery,
 	loginMutation
 } from './queries';
 
@@ -18,7 +18,7 @@ const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 const botProposalUserId = process.env.BOT_PROPOSAL_USER_ID;
 const authServerUrl = process.env.AUTH_SERVER_URL;
-const chainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 
 /**
  * Fetches the JWT from auth server for a "proposal_bot"
@@ -133,7 +133,7 @@ export const addPostAndProposal = async ({
 }: {
 	proposer: string;
 	onchainProposalId: number;
-}): Promise<void> => {
+}): Promise<number | null | undefined> => {
 	if (!democracyTopicId) {
 		throw new Error(
 			'Please specify an environment variable for the DEMOCRACY_TOPIC_ID.'
@@ -144,20 +144,20 @@ export const addPostAndProposal = async ({
 			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
 		);
 	}
-	if (!proposalPostTypeId) {
+	if (!botProposalUserId) {
 		throw new Error(
 			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
 		);
 	}
 
 	const proposalAndPostVariables = {
-		author_id: botProposalUserId,
+		author_id: Number(botProposalUserId),
 		onchainProposalId,
 		content: 'Post not yet edited by the proposal author',
 		proposer_address: proposer,
 		title: 'On chain democracy proposal',
-		topic_id: democracyTopicId,
-		type_id: proposalPostTypeId
+		topic_id: Number(democracyTopicId),
+		type_id: Number(proposalPostTypeId)
 	};
 
 	try {
@@ -180,9 +180,10 @@ export const addPostAndProposal = async ({
 			}
 		});
 
-		const data = await client.request(addPostAndProposalMutation, proposalAndPostVariables);
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndProposalMutation(proposalAndPostVariables);
 
-		return data?.['insert_proposals']?.['returning'][0]?.id;
+		return data?.insert_onchain_links?.returning[0]?.id;
 	} catch (err) {
 		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}`, err));
 		err.response?.errors &&
@@ -201,7 +202,7 @@ export const addPostAndProposal = async ({
  */
 
 interface ReferendumInfo {
-	preimageHash: string | null;
+	preimageHash?: string | null;
 	referendumCreationBlockHash: string;
 }
 
@@ -209,14 +210,14 @@ export const getAssociatedProposalId = async ({
 	preimageHash,
 	referendumCreationBlockHash
 }: ReferendumInfo): Promise<number | void> => {
-	if (!chainGraphqlServerUrl) {
+	if (!chainDBGraphqlUrl) {
 		throw new Error(
 			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
 		);
 	}
 
 	try {
-		const client = new GraphQLClient(chainGraphqlServerUrl, {
+		const client = new GraphQLClient(chainDBGraphqlUrl, {
 			headers: {}
 		});
 
@@ -224,13 +225,8 @@ export const getAssociatedProposalId = async ({
 			blockHash: referendumCreationBlockHash
 		};
 
-		// FIXME This only takes care of democracy proposals going from proposal -> referendum
-		// it does not cater for council proposals that are externally tabled
-		const data = await client
-			.request(
-				getTabledProposalsAtBlockQuery,
-				getTabledProposalsAtBlockVariables
-			);
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getTabledProposalAtBlock(getTabledProposalsAtBlockVariables);
 
 		if (!data?.proposals?.length) {
 			throw new Error(`No democracy proposal was tabled at block: ${referendumCreationBlockHash}.`);
@@ -238,22 +234,22 @@ export const getAssociatedProposalId = async ({
 
 		// if more than one proposal got tabled at this blockHash
 		// we need to find out which one the current referendum
-		// corresponds to.
+		// corresponds to by matching preimage hash if possible.
 		if (data.proposals.length > 1) {
 			const candidates = data.proposals.filter(
-				(proposal: any) =>
+				(proposal) =>
 					preimageHash &&
-			proposal.preimage.hash === preimageHash
+			proposal?.preimage?.hash === preimageHash
 			);
 			if (candidates.length === 1) {
 				// we got lucky, a matching preimage was found
-				return candidates[0].proposalId;
+				return candidates?.[0]?.proposalId;
 			} else {
 				throw new Error(`Several poposals were tabled at block: ${referendumCreationBlockHash}.\n
 				The preimage didn't help identify a matching proposal. Preimage hash: ${preimageHash}.`);
 			}
 		} else {
-			return data.proposals[0].proposalId;
+			return data.proposals?.[0]?.proposalId;
 		}
 	} catch (err) {
 		console.error(chalk.red(`getAssociatedProposal execution error with preimage hash: ${preimageHash}`), err);

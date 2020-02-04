@@ -1,4 +1,4 @@
-import { SyncData, SyncMap } from '../types';
+import { OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
 
 export const getMaps = (syncData: SyncData): SyncMap => {
 	const discussionProposalMap = syncData?.discussion.proposals?.reduce(
@@ -44,7 +44,10 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 					if ((curr?.referendumId || curr?.referendumId === 0) && (curr?.id || curr?.id === 0)) {
 						return {
 							...prev,
-							[curr.referendumId]: curr.id
+							[curr.referendumId]: {
+								preimageHash: curr.preimageHash,
+								blockCreationHash: curr?.referendumStatus?.[0]?.blockNumber?.hash
+							} as OnchainReferendaValueSyncType
 						};
 					} else {
 						return prev || {};

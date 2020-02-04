@@ -4317,6 +4317,23 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
+export type GetTabledProposalAtBlockQueryVariables = {
+  blockHash: Scalars['String']
+};
+
+
+export type GetTabledProposalAtBlockQuery = (
+  { __typename?: 'Query' }
+  & { proposals: Array<Maybe<(
+    { __typename?: 'Proposal' }
+    & Pick<Proposal, 'proposalId'>
+    & { preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'hash'>
+    )> }
+  )>> }
+);
+
 export type GetOnchainReferendaQueryVariables = {};
 
 
@@ -4330,7 +4347,15 @@ export type GetOnchainReferendaQuery = (
 
 export type OnchainReferendumFragment = (
   { __typename?: 'Referendum' }
-  & Pick<Referendum, 'id' | 'referendumId'>
+  & Pick<Referendum, 'preimageHash' | 'id' | 'referendumId'>
+  & { referendumStatus: Maybe<Array<(
+    { __typename?: 'ReferendumStatus' }
+    & Pick<ReferendumStatus, 'id' | 'status'>
+    & { blockNumber: (
+      { __typename?: 'BlockNumber' }
+      & Pick<BlockNumber, 'id' | 'hash'>
+    ) }
+  )>> }
 );
 
 export type GetOnchainProposalsQueryVariables = {};
@@ -4351,8 +4376,17 @@ export type OnchainProposalFragment = (
 
 export const OnchainReferendumFragmentDoc = gql`
     fragment onchainReferendum on Referendum {
+  preimageHash
   id
   referendumId
+  referendumStatus(where: {status: "Started"}) {
+    id
+    status
+    blockNumber {
+      id
+      hash
+    }
+  }
 }
     `;
 export const OnchainProposalFragmentDoc = gql`
@@ -4360,6 +4394,16 @@ export const OnchainProposalFragmentDoc = gql`
   author
   id
   proposalId
+}
+    `;
+export const GetTabledProposalAtBlockDocument = gql`
+    query getTabledProposalAtBlock($blockHash: String!) {
+  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
+    proposalId
+    preimage {
+      hash
+    }
+  }
 }
     `;
 export const GetOnchainReferendaDocument = gql`
@@ -4378,6 +4422,9 @@ export const GetOnchainProposalsDocument = gql`
     ${OnchainProposalFragmentDoc}`;
 export function getSdk(client: GraphQLClient) {
   return {
+    getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
+      return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
+    },
     getOnchainReferenda(variables?: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
       return client.request<GetOnchainReferendaQuery>(print(GetOnchainReferendaDocument), variables);
     },

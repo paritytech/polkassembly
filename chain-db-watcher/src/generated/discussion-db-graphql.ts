@@ -6412,6 +6412,45 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
+export type AddPostAndProposalMutationMutationVariables = {
+  onchainProposalId: Scalars['Int'],
+  author_id: Scalars['Int'],
+  proposer_address: Scalars['String'],
+  content: Scalars['String'],
+  title: Scalars['String'],
+  topic_id: Scalars['Int'],
+  type_id: Scalars['Int']
+};
+
+
+export type AddPostAndProposalMutationMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_onchain_links: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id'>
+    )> }
+  )> }
+);
+
+export type GetTabledProposalAtBlockQueryVariables = {
+  blockHash: Scalars['String']
+};
+
+
+export type GetTabledProposalAtBlockQuery = (
+  { __typename?: 'query_root' }
+  & { proposals: Array<Maybe<(
+    { __typename?: 'Proposal' }
+    & Pick<Proposal, 'proposalId'>
+    & { preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'hash'>
+    )> }
+  )>> }
+);
+
 export type GetDiscussionProposalsQueryVariables = {};
 
 
@@ -6457,6 +6496,26 @@ export const DiscussionReferendumFragmentDoc = gql`
   onchain_referendum_id
 }
     `;
+export const AddPostAndProposalMutationDocument = gql`
+    mutation addPostAndProposalMutation($onchainProposalId: Int!, $author_id: Int!, $proposer_address: String!, $content: String!, $title: String!, $topic_id: Int!, $type_id: Int!) {
+  __typename
+  insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposer_address, post: {data: {author_id: $author_id, content: $content, title: $title, topic_id: $topic_id, type_id: $type_id}}}) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+export const GetTabledProposalAtBlockDocument = gql`
+    query getTabledProposalAtBlock($blockHash: String!) {
+  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
+    proposalId
+    preimage {
+      hash
+    }
+  }
+}
+    `;
 export const GetDiscussionProposalsDocument = gql`
     query getDiscussionProposals {
   onchain_links(where: {onchain_proposal_id: {_is_null: false}}) {
@@ -6473,6 +6532,12 @@ export const GetDiscussionReferendaDocument = gql`
     ${DiscussionReferendumFragmentDoc}`;
 export function getSdk(client: GraphQLClient) {
   return {
+    addPostAndProposalMutation(variables: AddPostAndProposalMutationMutationVariables): Promise<AddPostAndProposalMutationMutation> {
+      return client.request<AddPostAndProposalMutationMutation>(print(AddPostAndProposalMutationDocument), variables);
+    },
+    getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
+      return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
+    },
     getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
       return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);
     },

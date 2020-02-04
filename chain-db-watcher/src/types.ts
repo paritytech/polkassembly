@@ -23,9 +23,18 @@ export interface SyncMap {
 
 export interface OnchainSyncMap {
     proposals?: objectMap;
+    referenda?: referendumObjectMap;
+}
+
+export interface OnchainReferendaValueSyncType {
+    preimageHash: string;
+    blockCreationHash: string;
+}
+
+export interface DiscussionSyncMap {
+    proposals?: objectMap;
     referenda?: objectMap;
 }
 
-export type DiscussionSyncMap = OnchainSyncMap
-
-type objectMap = {[index: string]: number};
+type objectMap = {[index: string]: string};
+type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
