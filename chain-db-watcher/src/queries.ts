@@ -70,20 +70,3 @@ export const referendumSubscription = gql`
 //     "preimage": null
 //   }
 // }
-
-export const getProposalQuery = `
-    query getProposal($onchainProposalId: Int!) {
-        onchain_links(where: {onchain_proposal_id: {_eq: $onchainProposalId}}) {
-            id
-        }
-    }
-`;
-
-export const loginMutation = `
-    mutation LOGIN($password: String!, $username: String!) {
-        login(password: $password, username: $username) {
-            token
-        }
-    }
-`;
-

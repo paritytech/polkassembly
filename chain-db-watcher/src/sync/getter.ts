@@ -26,9 +26,7 @@ export const getDiscussionProposals = async (): Promise<Array<DiscussionProposal
 	}
 
 	try {
-		const client = new GraphQLClient(discussionGraphqlUrl, {
-			headers: {}
-		});
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
 
 		const discussionSdk = getDiscussionSdk(client);
 		const data = await discussionSdk.getDiscussionProposals();
@@ -51,9 +49,7 @@ export const getDiscussionReferenda = async (): Promise<Array<DiscussionReferend
 	}
 
 	try {
-		const client = new GraphQLClient(discussionGraphqlUrl, {
-			headers: {}
-		});
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
 
 		const discussionSdk = getDiscussionSdk(client);
 		const data = await discussionSdk.getDiscussionReferenda();
@@ -76,9 +72,7 @@ export const getOnChainProposals = async (): Promise<Array<OnchainProposalFragme
 	}
 
 	try {
-		const client = new GraphQLClient(onchainGraphqlServerUrl, {
-			headers: {}
-		});
+		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
 		const data = await onchainSdk.getOnchainProposals();
@@ -101,9 +95,7 @@ export const getOnchainReferenda = async (): Promise<Array<OnchainReferendumFrag
 	}
 
 	try {
-		const client = new GraphQLClient(onchainGraphqlServerUrl, {
-			headers: {}
-		});
+		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
 		const data = await onchainSdk.getOnchainReferenda();

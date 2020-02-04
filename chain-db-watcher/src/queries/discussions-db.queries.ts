@@ -29,20 +29,6 @@ export const addPostAndProposalMutation = gql`
     }
 `;
 
-// returns
-// {
-//  "data": {
-//    "insert_onchain_links": {
-//      "returning": [
-//        {
-//          "id": 1
-//        }
-//      ]
-//    },
-//    "__typename": "mutation_root"
-//  }
-//   }
-
 export const getProposalWithNoAssociatedReferendumQuery = gql`
     query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
         onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
@@ -51,19 +37,6 @@ export const getProposalWithNoAssociatedReferendumQuery = gql`
         }
     }
 `;
-
-// returns
-// {
-//     "data": {
-//       "onchain_links": [
-//         {
-//           "id": 17,
-//           "onchain_proposal_id": 1,
-//           "onchain_referendum_id": 1
-//         }
-//       ]
-//     }
-//   }
 
 export const addReferendumIdToProposalMutation = gql`
         mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
@@ -79,3 +52,20 @@ export const addReferendumIdToProposalMutation = gql`
         }
     }
 `;
+
+export const loginMutation = gql`
+    mutation loginMutation($password: String!, $username: String!) {
+        login(password: $password, username: $username) {
+            token
+        }
+    }
+`;
+
+export const getDiscussionProposalById = gql`
+    query getDiscussionProposalById($onchainProposalId: Int!) {
+        onchain_links(where: {onchain_proposal_id: {_eq: $onchainProposalId}}) {
+            id
+        }
+    }
+`;
+

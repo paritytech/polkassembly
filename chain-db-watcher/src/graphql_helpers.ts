@@ -4,17 +4,15 @@ import { GraphQLClient } from 'graphql-request';
 
 import { getSdk as getOnchainSdk } from './generated/chain-db-graphql';
 import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
-import {
-	getProposalQuery,
-	loginMutation
-} from './queries';
 
 dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
-const botProposalUserId = process.env.BOT_PROPOSAL_USER_ID;
+const proposalBotUserId = process.env.BOT_PROPOSAL_USER_ID;
+const proposalBotUsername = process.env.PROPOSAL_BOT_USERNAME;
+const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const authServerUrl = process.env.AUTH_SERVER_URL;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 
@@ -28,24 +26,24 @@ const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the propo
  */
 
 export const getToken = async (): Promise<string | void> => {
-	const credentials = {
-		username: process.env.PROPOSAL_BOT_USERNAME,
-		password: process.env.PROPOSAL_BOT_PASSWORD
-	};
+	if (!discussionGraphqlUrl) {
+		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
+	}
 
 	if (!authServerUrl) {
 		throw new Error('Auth server url not set in .env file.');
 	}
 
-	if (!credentials.username || !credentials.password) {
+	if (!proposalBotPassword || !proposalBotUsername) {
 		throw new Error(
 			"PROPOSAL_BOT_USERNAME or PROPOSAL_BOT_PASSWORD environment variables haven't been set for the proposal bot to login."
 		);
 	}
 
 	try {
-		const client = new GraphQLClient(authServerUrl, { headers: {} });
-		const data = await client.request(loginMutation, credentials);
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.loginMutation({ password: proposalBotPassword, username: proposalBotUsername });
 
 		if (data.login?.token) {
 			return data?.login?.token;
@@ -81,9 +79,10 @@ export const proposalDiscussionExists = async (
 			headers: {}
 		});
 
-		const data = await client.request(getProposalQuery, { onchainProposalId });
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionProposalById({ onchainProposalId });
 
-		return !!data?.onchain_links?.length;
+		return !!data.onchain_links?.length;
 	} catch (err) {
 		console.error(chalk.red(`proposalDiscussionExists execution error with proposalId: ${onchainProposalId}`), err);
 		err.response?.errors &&
@@ -146,14 +145,14 @@ export const addDiscussionPostAndProposal = async ({
 			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
 		);
 	}
-	if (!botProposalUserId) {
+	if (!proposalBotUserId) {
 		throw new Error(
 			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
 		);
 	}
 
 	const proposalAndPostVariables = {
-		author_id: Number(botProposalUserId),
+		author_id: Number(proposalBotUserId),
 		onchainProposalId,
 		content: DEFAULT_DESCRIPTION,
 		proposer_address: proposer,

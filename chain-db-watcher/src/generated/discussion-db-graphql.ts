@@ -6461,6 +6461,33 @@ export type AddReferendumIdToProposalMutationMutation = (
   )> }
 );
 
+export type LoginMutationMutationVariables = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type LoginMutationMutation = (
+  { __typename?: 'mutation_root' }
+  & { login: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+  )> }
+);
+
+export type GetDiscussionProposalByIdQueryVariables = {
+  onchainProposalId: Scalars['Int']
+};
+
+
+export type GetDiscussionProposalByIdQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id'>
+  )> }
+);
+
 export type GetDiscussionProposalsQueryVariables = {};
 
 
@@ -6531,6 +6558,20 @@ export const AddReferendumIdToProposalMutationDocument = gql`
   }
 }
     `;
+export const LoginMutationDocument = gql`
+    mutation loginMutation($password: String!, $username: String!) {
+  login(password: $password, username: $username) {
+    token
+  }
+}
+    `;
+export const GetDiscussionProposalByIdDocument = gql`
+    query getDiscussionProposalById($onchainProposalId: Int!) {
+  onchain_links(where: {onchain_proposal_id: {_eq: $onchainProposalId}}) {
+    id
+  }
+}
+    `;
 export const GetDiscussionProposalsDocument = gql`
     query getDiscussionProposals {
   onchain_links(where: {onchain_proposal_id: {_is_null: false}}) {
@@ -6555,6 +6596,12 @@ export function getSdk(client: GraphQLClient) {
     },
     addReferendumIdToProposalMutation(variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
       return client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables);
+    },
+    loginMutation(variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
+      return client.request<LoginMutationMutation>(print(LoginMutationDocument), variables);
+    },
+    getDiscussionProposalById(variables: GetDiscussionProposalByIdQueryVariables): Promise<GetDiscussionProposalByIdQuery> {
+      return client.request<GetDiscussionProposalByIdQuery>(print(GetDiscussionProposalByIdDocument), variables);
     },
     getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
       return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);
