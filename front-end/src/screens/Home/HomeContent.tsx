@@ -25,7 +25,7 @@ const HomeContent = ({ className, data }: Props) => {
 	return (
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Latest Activity</h3>
 					<ul className='Home__list'>
 						{!!data.posts &&
@@ -72,7 +72,7 @@ const HomeContent = ({ className, data }: Props) => {
 						)}
 					</ul>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<div className='mainButtonContainer'>
 						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>

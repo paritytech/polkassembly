@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@xstyled/styled-components';
 
 import { OnchainLinkReferendumFragment } from '../../generated/graphql';
+import { chainProperties } from '../../global/chainProperties';
 
 interface Props{
 	className?: string
@@ -31,7 +32,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 			<>
 				<div className='info_group'>
 					<h6>Deposit</h6>
-					{depositAmount} KSM
+					{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 				</div>
 				<div className='info_group'>
 					<h6>Description</h6>
@@ -63,6 +64,7 @@ export default styled(PostReferendumInfo)`
 	margin-top: 2rem;
 	padding-top: 2rem;
 	font-size: md;
+	overflow-wrap: break-word;
 
 	.info_group {
 		margin-bottom: 1.6rem;

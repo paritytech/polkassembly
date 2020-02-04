@@ -62,6 +62,7 @@ export default styled(PostProposalInfo)`
 	margin-top: 2rem;
 	padding-top: 2rem;
 	font-size: md;
+	overflow-wrap: break-word;
 
 	.info_group {
 		margin-bottom: 1.6rem;

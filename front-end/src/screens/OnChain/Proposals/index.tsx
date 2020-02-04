@@ -5,13 +5,17 @@ import Proposals from './Proposals';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
-const ProposalsContainer = () => {
+interface Props {
+	className?: string
+}
+
+const ProposalsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestDemocracyProposalPostsQuery();
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <Proposals data={data}/>;
+	if (data) return <Proposals className={className} data={data}/>;
 
 	return <Loader/>;
 };
