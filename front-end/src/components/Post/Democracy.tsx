@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
@@ -45,9 +44,9 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 
 		const account = keyring.getPair(allAccounts[0].address);
 
-		const second = api.tx.democracy.second(onchainId);
+		const second = api.tx.democracy.second(onchainId || 0);
 
-		//TODO: sing and send second to node
+		await second.signAndSend(account);
 	};
 
 	const voteRefrendum = async (aye: boolean) => {
@@ -61,9 +60,9 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 
 		const account = keyring.getPair(allAccounts[0].address);
 
-		const vote = api.tx.democracy.vote(onchainId, { aye, conviction: 'Locked1x' });
+		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction: 'Locked1x' });
 
-		//TODO: sing and send vote to node
+		await vote.signAndSend(account);
 	};
 
 	if (isProposal) {
