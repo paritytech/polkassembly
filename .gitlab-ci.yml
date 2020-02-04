@@ -106,6 +106,7 @@ deploy:
     - kubernetes-parity-build
   only:
     - /^fv/
+    - manualy
   script:
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
