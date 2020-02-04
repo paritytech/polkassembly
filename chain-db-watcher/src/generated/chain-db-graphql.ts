@@ -4346,7 +4346,7 @@ export type GetOnchainProposalsQuery = (
 
 export type OnchainProposalFragment = (
   { __typename?: 'Proposal' }
-  & Pick<Proposal, 'id' | 'proposalId'>
+  & Pick<Proposal, 'author' | 'id' | 'proposalId'>
 );
 
 export const OnchainReferendumFragmentDoc = gql`
@@ -4357,6 +4357,7 @@ export const OnchainReferendumFragmentDoc = gql`
     `;
 export const OnchainProposalFragmentDoc = gql`
     fragment onchainProposal on Proposal {
+  author
   id
   proposalId
 }

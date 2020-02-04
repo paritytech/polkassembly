@@ -9,6 +9,7 @@ export const getDiscussionProposals = gql`
     fragment discussionProposal on onchain_links {
         id
         onchain_proposal_id
+        proposer_address
     }
 `;
 

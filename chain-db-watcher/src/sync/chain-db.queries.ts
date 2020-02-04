@@ -30,6 +30,7 @@ export const getOnchainProposals = gql`
         }
     }
     fragment onchainProposal on Proposal {
+        author
         id
         proposalId
     }
