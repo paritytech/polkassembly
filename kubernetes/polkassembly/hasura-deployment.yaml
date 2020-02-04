@@ -41,7 +41,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: graphql-jwt-secret
-              name: hasura-secrets.yaml
+              name: graphql-jwt-secret
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           valueFrom:
             configMapKeyRef:
