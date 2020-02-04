@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
+import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
@@ -14,36 +16,55 @@ interface Props {
 	onchainId?: number | null | undefined
 }
 
+const APP = 'polkassembly';
+
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
+	let api: ApiPromise;
 
 	useEffect(() => {
 		// Construct
 		async function connect() {
-			const wsProvider = new WsProvider('ws://127.0.0.1:9944'); // 'ws://127.0.0.1:9944'
-			const api = await ApiPromise.create({ provider: wsProvider });
+			const wsProvider = new WsProvider('ws://127.0.0.1:9944');
 
-			// Constuct the keying after the API (crypto has an async init)
-			const keyring = new Keyring({ type: 'sr25519' });
+			api = await ApiPromise.create({ provider: wsProvider });
 
-			// Add Alice to our keyring with a hard-deived path (empty phrase, so uses dev)
-			const alice = keyring.addFromUri('//Alice');
-
-			// const second = api.tx.democracy.second(234234);
-
-			const vote = api.tx.democracy.vote(1, true);
-
-			// Create a extrinsic, transferring 12345 units to Bob
-
-			// Sign and send the transaction using our account
-			const hash = await vote.signAndSend(alice);
-
-			console.log(hash);
+			await web3Enable(APP);
 		}
 
 		connect();
 	}, []);
 
-	isProposal = true;
+	const secondProposal = async () => {
+		const allAccounts = await web3Accounts();
+
+		const injected = await web3FromSource(allAccounts[0].meta.source);
+
+		api.setSigner(injected.signer);
+
+		const keyring = new Keyring({ type: 'sr25519' });
+
+		const account = keyring.getPair(allAccounts[0].address);
+
+		const second = api.tx.democracy.second(onchainId);
+
+		//TODO: sing and send second to node
+	};
+
+	const voteRefrendum = async (aye: boolean) => {
+		const allAccounts = await web3Accounts();
+
+		const injected = await web3FromSource(allAccounts[0].meta.source);
+
+		api.setSigner(injected.signer);
+
+		const keyring = new Keyring({ type: 'sr25519' });
+
+		const account = keyring.getPair(allAccounts[0].address);
+
+		const vote = api.tx.democracy.vote(onchainId, { aye, conviction: 'Locked1x' });
+
+		//TODO: sing and send vote to node
+	};
 
 	if (isProposal) {
 		return (
@@ -69,6 +90,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 									<label>&nbsp;</label>
 									<Button
 										primary
+										onClick={secondProposal}
 									>
 										SECOND
 									</Button>
@@ -153,6 +175,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 									fluid
 									basic
 									color='red'
+									onClick={() => voteRefrendum(false)}
 								>
 									<Icon name='thumbs down' />
 									NAY
@@ -163,6 +186,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 								<Button
 									fluid
 									primary
+									onClick={() => voteRefrendum(true)}
 								>
 									<Icon name='thumbs up' />
 									AYE
