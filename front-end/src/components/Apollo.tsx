@@ -13,7 +13,7 @@ import {
 	getLocalStorageToken,
 	storeLocalStorageToken
 } from '../services/auth.service';
-import { Get_Refresh_TokenQueryResult } from '../generated/auth-graphql';
+import { Get_Refresh_TokenQueryResult } from '../generated/graphql';
 import { UserDetailsContext } from '../context/UserDetailsContext';
 import { JWTPayploadType } from '../types';
 
