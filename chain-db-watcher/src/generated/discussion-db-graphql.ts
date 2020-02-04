@@ -6434,21 +6434,31 @@ export type AddPostAndProposalMutationMutation = (
   )> }
 );
 
-export type GetTabledProposalAtBlockQueryVariables = {
-  blockHash: Scalars['String']
+export type GetProposalWithNoAssociatedReferendumQueryQueryVariables = {
+  onchainProposalId: Scalars['Int']
 };
 
 
-export type GetTabledProposalAtBlockQuery = (
+export type GetProposalWithNoAssociatedReferendumQueryQuery = (
   { __typename?: 'query_root' }
-  & { proposals: Array<Maybe<(
-    { __typename?: 'Proposal' }
-    & Pick<Proposal, 'proposalId'>
-    & { preimage: Maybe<(
-      { __typename?: 'Preimage' }
-      & Pick<Preimage, 'hash'>
-    )> }
-  )>> }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+  )> }
+);
+
+export type AddReferendumIdToProposalMutationMutationVariables = {
+  proposalId: Scalars['Int'],
+  referendumId: Scalars['Int']
+};
+
+
+export type AddReferendumIdToProposalMutationMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_onchain_links: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
+  )> }
 );
 
 export type GetDiscussionProposalsQueryVariables = {};
@@ -6506,13 +6516,18 @@ export const AddPostAndProposalMutationDocument = gql`
   }
 }
     `;
-export const GetTabledProposalAtBlockDocument = gql`
-    query getTabledProposalAtBlock($blockHash: String!) {
-  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
-    proposalId
-    preimage {
-      hash
-    }
+export const GetProposalWithNoAssociatedReferendumQueryDocument = gql`
+    query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
+  onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+    id
+    onchain_proposal_id
+  }
+}
+    `;
+export const AddReferendumIdToProposalMutationDocument = gql`
+    mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
+  update_onchain_links(where: {onchain_proposal_id: {_eq: $proposalId}}, _set: {onchain_referendum_id: $referendumId}) {
+    affected_rows
   }
 }
     `;
@@ -6535,8 +6550,11 @@ export function getSdk(client: GraphQLClient) {
     addPostAndProposalMutation(variables: AddPostAndProposalMutationMutationVariables): Promise<AddPostAndProposalMutationMutation> {
       return client.request<AddPostAndProposalMutationMutation>(print(AddPostAndProposalMutationDocument), variables);
     },
-    getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
-      return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
+    getProposalWithNoAssociatedReferendumQuery(variables: GetProposalWithNoAssociatedReferendumQueryQueryVariables): Promise<GetProposalWithNoAssociatedReferendumQueryQuery> {
+      return client.request<GetProposalWithNoAssociatedReferendumQueryQuery>(print(GetProposalWithNoAssociatedReferendumQueryDocument), variables);
+    },
+    addReferendumIdToProposalMutation(variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
+      return client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables);
     },
     getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
       return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);

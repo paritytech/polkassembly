@@ -79,28 +79,6 @@ export const getProposalQuery = `
     }
 `;
 
-export const getProposalWithNullReferendumQuery = `
-    query getReferendum($onchainProposalId: Int!) {
-        onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
-            id
-            onchain_proposal_id
-        }
-    }
-`;
-
-// returns
-// {
-//     "data": {
-//       "onchain_links": [
-//         {
-//           "id": 17,
-//           "onchain_proposal_id": 1,
-//           "onchain_referendum_id": 1
-//         }
-//       ]
-//     }
-//   }
-
 export const loginMutation = `
     mutation LOGIN($password: String!, $username: String!) {
         login(password: $password, username: $username) {
@@ -109,17 +87,3 @@ export const loginMutation = `
     }
 `;
 
-export const addReferendumIdMutation = `
-        mutation addReferendumId ($proposalId: Int!, $referendumId: Int!) {
-            update_onchain_links(
-                where: {
-                    onchain_proposal_id: {_eq: $proposalId}
-                },
-                _set: {
-                    onchain_referendum_id: $referendumId
-                }
-            ) {
-            affected_rows
-        }
-    }
-`;

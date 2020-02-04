@@ -43,38 +43,39 @@ export const addPostAndProposalMutation = gql`
 //  }
 //   }
 
-export const getTabledProposalsAtBlockQuery = gql`
-    query getTabledProposalAtBlock($blockHash: String!) {
-        proposals(
-            where: {
-                proposalStatus_some: {
-                    AND: [
-                        {
-                            blockNumber: {
-                                hash: $blockHash
-                            }
-                        }
-                        { status: "Tabled" }
-                    ]
-                }
-            }
-        ) {
-            proposalId
-            preimage {
-                hash
-            }
+export const getProposalWithNoAssociatedReferendumQuery = gql`
+    query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
+        onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+            id
+            onchain_proposal_id
         }
     }
-  `;
-//   {
+`;
+
+// returns
+// {
 //     "data": {
-//       "proposals": [
+//       "onchain_links": [
 //         {
-//           "proposalId": 0,
-//           "preimage": {
-//             "hash": "0xd81b9aefdaf562df8e7b503523eeca599ed89ef91e4828da82fb2030ca15d01e"
-//           }
+//           "id": 17,
+//           "onchain_proposal_id": 1,
+//           "onchain_referendum_id": 1
 //         }
 //       ]
 //     }
 //   }
+
+export const addReferendumIdToProposalMutation = gql`
+        mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
+            update_onchain_links(
+                where: {
+                    onchain_proposal_id: {_eq: $proposalId}
+                },
+                _set: {
+                    onchain_referendum_id: $referendumId
+                }
+            ) {
+            affected_rows
+        }
+    }
+`;

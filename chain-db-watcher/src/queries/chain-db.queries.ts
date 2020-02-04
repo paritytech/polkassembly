@@ -10,7 +10,7 @@ export const getTabledProposalsAtBlockQuery = gql`
                             blockNumber: {
                                 hash: $blockHash
                             }
-                        }
+                        },
                         { status: "Tabled" }
                     ]
                 }

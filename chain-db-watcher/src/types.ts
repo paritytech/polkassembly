@@ -36,5 +36,5 @@ export interface DiscussionSyncMap {
     referenda?: objectMap;
 }
 
-type objectMap = {[index: string]: string};
-type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
+export type objectMap = {[index: string]: string};
+export type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
