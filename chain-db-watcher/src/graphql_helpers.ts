@@ -13,7 +13,6 @@ const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 const proposalBotUserId = process.env.BOT_PROPOSAL_USER_ID;
 const proposalBotUsername = process.env.PROPOSAL_BOT_USERNAME;
 const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
-const authServerUrl = process.env.AUTH_SERVER_URL;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 
 const DEFAULT_TITLE = 'On chain democracy proposal';
@@ -28,10 +27,6 @@ const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the propo
 export const getToken = async (): Promise<string | void> => {
 	if (!discussionGraphqlUrl) {
 		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
-	}
-
-	if (!authServerUrl) {
-		throw new Error('Auth server url not set in .env file.');
 	}
 
 	if (!proposalBotPassword || !proposalBotUsername) {

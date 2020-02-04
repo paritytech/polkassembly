@@ -13,15 +13,6 @@ export const getDiscussionProposals = gql`
     }
 `;
 
-// {
-//     "data": {
-//       "onchain_links": [{
-//              "id": 1,
-//              "onchain_proposal_id": 1
-//          }]
-//     }
-//   }
-
 export const getDiscussionReferenda = gql`
 query getDiscussionReferenda {
     onchain_links(where: {onchain_referendum_id: {_is_null: false}}){
@@ -34,11 +25,3 @@ query getDiscussionReferenda {
   }
 `;
 
-// {
-//     "data": {
-//       "onchain_links": [{
-//              "id": 1,
-//              "onchain_referendum_id": 1
-//          }]
-//     }
-//   }

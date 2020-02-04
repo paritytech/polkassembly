@@ -23,15 +23,4 @@ export const getTabledProposalsAtBlockQuery = gql`
         }
     }
   `;
-//   {
-//     "data": {
-//       "proposals": [
-//         {
-//           "proposalId": 0,
-//           "preimage": {
-//             "hash": "0xd81b9aefdaf562df8e7b503523eeca599ed89ef91e4828da82fb2030ca15d01e"
-//           }
-//         }
-//       ]
-//     }
-//   }
+

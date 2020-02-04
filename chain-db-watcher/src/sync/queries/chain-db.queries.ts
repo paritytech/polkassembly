@@ -24,26 +24,6 @@ export const getOnchainReferenda = gql`
     }
 `;
 
-// retrurns
-// "data": {
-//     "referendums": [
-//       {
-//         "preimageHash": "0xbefe734153bba814dfa1ba2ee4ab93c4c28e547ea04c81633e4a03441cf54389",
-//         "id": 76,
-//         "referendumId": 0,
-//         "referendumStatus": [
-//           {
-//             "id": "ck66m17md00q20744k38o9euj",
-//             "status": "Started",
-//             "blockNumber": {
-//               "id": "ck66m17kj00ps0744i2iw660h",
-//               "number": 60
-//             }
-//           }
-//         ]
-//       },
-//       ...
-
 export const getOnchainProposals = gql`
     query getOnchainProposals {
         proposals {
@@ -56,14 +36,3 @@ export const getOnchainProposals = gql`
         proposalId
     }
 `;
-
-// {
-//     "data": {
-//       "proposals": [
-//         {
-//           "id": 75,
-//           "proposalId": 2
-//         }
-//       ]
-//     }
-//   }
