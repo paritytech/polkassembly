@@ -38,6 +38,7 @@ export default {
 	SUCCESS: 'Success.',
 	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
+	USERNAME_INVALID_ERROR: 'Invalid character found, you can use letters and the following characters ._-',
 	USERNAME_LENGTH_ERROR: 'Your Username must be at least 3 characters long.',
 	USER_NOT_FOUND: 'User not found.',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
