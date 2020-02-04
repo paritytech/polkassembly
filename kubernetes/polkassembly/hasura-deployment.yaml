@@ -40,7 +40,7 @@ spec:
         - name: HASURA_GRAPHQL_JWT_SECRET
           valueFrom:
             secretKeyRef:
-              key: graphql_jwt_secret
+              key: graphql-jwt-secret
               name: hasura-secrets.yaml
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           valueFrom:
