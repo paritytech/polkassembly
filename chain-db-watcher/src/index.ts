@@ -7,9 +7,7 @@ import ws from 'ws';
 
 import {
 	addDiscussionPostAndProposal,
-	addReferendumId,
-	getAssociatedProposalId,
-	getAssociatedReferendumId,
+	addDiscussionReferendum,
 	proposalDiscussionExists
 } from './graphql_helpers';
 import { proposalSubscription, referendumSubscription } from './queries';
@@ -89,7 +87,7 @@ async function main (): Promise<void> {
 
 		if (data?.referendum.mutation === subscriptionMutation.Created) {
 			const {
-				primage,
+				preimage,
 				referendumId,
 				referendumStatus
 			} = data.referendum.node;
@@ -102,46 +100,52 @@ async function main (): Promise<void> {
 						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus[0].status}."`
 					)
 				);
+				return;
 			}
-			const referendumCreationBlockHash =
-				referendumStatus[0].blockNumber.hash;
+			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
 			// FIXME This only takes care of democracy proposals going from proposal -> referendum
-			// it does not cater for council proposals that are externally tabled
-			getAssociatedProposalId({
-				preimageHash: primage?.hash,
-				referendumCreationBlockHash
-			})
-				.then(associatedProposalId => {
-					// edge case, proposal id can be 0, which is falsy
-					if (!associatedProposalId && associatedProposalId !== 0) {
-						console.error(chalk.red(`No proposal Id found on chain-db for referendum id: ${referendumId}.`));
-					} else {
-						getAssociatedReferendumId(associatedProposalId)
-							.then(associatedRefendumId => {
-								if (associatedRefendumId || associatedRefendumId === 0) {
-									addReferendumId({
-										onchainProposalId: associatedProposalId,
-										onchainReferendumId: referendumId
-									})
-										.then(() =>
-											console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
-										)
-										.catch((error: any) =>
-											console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
-										);
-								} else {
-									console.error(chalk.red(
-										`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-									)
-									);
-								}
-							})
-							.catch(error => console.error(chalk.red(error)));
-					}
+			// it does not cater for any other proposal/motion that are externally tabled
+			addDiscussionReferendum(
+				{
+					preimageHash: preimage?.hash,
+					referendumCreationBlockHash,
+					referendumId
 				})
 				.catch(e => {
 					console.error(chalk.red(e));
 				});
+			// getAssociatedProposalId({
+			// 	preimageHash: preimage?.hash,
+			// 	referendumCreationBlockHash
+			// })
+			// .then(associatedProposalId => {
+			// 	// edge case, proposal id can be 0, which is falsy
+			// 	if (!associatedProposalId && associatedProposalId !== 0) {
+			// 		console.error(chalk.red(`No proposal Id found on chain-db for referendum id: ${referendumId}.`));
+			// 	} else {
+			// 		getAssociatedReferendumId(associatedProposalId)
+			// 			.then(associatedRefendumId => {
+			// 				if (associatedRefendumId || associatedRefendumId === 0) {
+			// 					addReferendumId({
+			// 						onchainProposalId: associatedProposalId,
+			// 						onchainReferendumId: referendumId
+			// 					})
+			// 						.then(() =>
+			// 							console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
+			// 						)
+			// 						.catch((error) =>
+			// 							console.error(chalk.red('⚠︎ Error adding a new proposal:\n', error))
+			// 						);
+			// 				} else {
+			// 					console.error(chalk.red(
+			// 						`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
+			// 					)
+			// 					);
+			// 				}
+			// 			})
+			// 			.catch(error => console.error(chalk.red(error)));
+			// 	}
+			// })
 		}
 	});
 }
