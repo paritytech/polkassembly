@@ -21,9 +21,11 @@ import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
+import { Keyring } from '@polkadot/api';
+import verifySignature from '../utils/verifySignature';
 
 const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
-const publicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
+const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
 const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
@@ -35,7 +37,7 @@ export default class AuthService {
 	constructor(){}
 
 	public async GetUser(token: string): Promise<UserObjectType> {
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 
 		return getUserFromUserId(userId);
 	}
@@ -84,7 +86,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.NO_CORRESPONDING_REFRESH_TOKEN);
 		}
 
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 
 		if (refreshTokenObj.user_id !== userId) {
 			throw new AuthenticationError(messages.JWT_REFRESH_TOKEN_USER_MISMATCH);
@@ -192,7 +194,7 @@ export default class AuthService {
 			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER);
 		}
 
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
 		const correctPassword = await user.verifyPassword(oldPassword);
@@ -212,8 +214,45 @@ export default class AuthService {
 			.findById(userId);
 	}
 
+	public async AddressLinkConfirm(token: string, address_id: number, signature: string): Promise<string> {
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const dbAddress = await Address
+			.query()
+			.where('id', address_id)
+			.first();
+
+		if (!dbAddress) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		if (dbAddress.user_id !== user.id) {
+			throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
+		}
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(dbAddress.address);
+
+		const isValidSr = verifySignature(dbAddress.sign_message, dbAddress.address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
+		}
+
+		await Address
+			.query()
+			.patch({
+				public_key: Buffer.from(publicKey).toString('hex'),
+				verified: true
+			})
+			.findById(address_id);
+
+		const addresses = await getAddressesFromUserId(user.id);
+		return this.getSignedToken(user, addresses);
+	}
+
 	public async ChangeName(token: string, newName: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 
 		await User
 			.query()
@@ -257,7 +296,7 @@ export default class AuthService {
 	}
 
 	public async ChangeUsername(token: string, username: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
 			.where('username', username)
@@ -281,7 +320,7 @@ export default class AuthService {
 	}
 
 	public async ChangeEmail(token: string, email: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, publicKey);
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
 			.where('email', email)
