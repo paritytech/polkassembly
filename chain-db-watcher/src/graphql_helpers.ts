@@ -2,23 +2,21 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
 
-import {
-	addPostAndProposalMutation,
-	addReferendumIdMutation,
-	getProposalQuery,
-	getProposalWithNullReferendumQuery,
-	getTabledProposalsAtBlockQuery,
-	loginMutation
-} from './queries';
+import { getSdk as getOnchainSdk } from './generated/chain-db-graphql';
+import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
 
 dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
-const botProposalUserId = process.env.BOT_PROPOSAL_USER_ID;
-const authServerUrl = process.env.AUTH_SERVER_URL;
-const chainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+const proposalBotUserId = process.env.BOT_PROPOSAL_USER_ID;
+const proposalBotUsername = process.env.PROPOSAL_BOT_USERNAME;
+const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
+const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+
+const DEFAULT_TITLE = 'On chain democracy proposal';
+const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the proposal author to explain the rationale behind the proposal.';
 
 /**
  * Fetches the JWT from auth server for a "proposal_bot"
@@ -27,24 +25,20 @@ const chainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
  */
 
 export const getToken = async (): Promise<string | void> => {
-	const credentials = {
-		username: process.env.PROPOSAL_BOT_USERNAME,
-		password: process.env.PROPOSAL_BOT_PASSWORD
-	};
-
-	if (!authServerUrl) {
-		throw new Error('Auth server url not set in .env file.');
+	if (!discussionGraphqlUrl) {
+		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
 	}
 
-	if (!credentials.username || !credentials.password) {
+	if (!proposalBotPassword || !proposalBotUsername) {
 		throw new Error(
 			"PROPOSAL_BOT_USERNAME or PROPOSAL_BOT_PASSWORD environment variables haven't been set for the proposal bot to login."
 		);
 	}
 
 	try {
-		const client = new GraphQLClient(authServerUrl, { headers: {} });
-		const data = await client.request(loginMutation, credentials);
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.loginMutation({ password: proposalBotPassword, username: proposalBotUsername });
 
 		if (data.login?.token) {
 			return data?.login?.token;
@@ -54,9 +48,9 @@ export const getToken = async (): Promise<string | void> => {
 	} catch (e) {
 		console.error(chalk.red('getToken execution error', e));
 		e.response?.errors &&
-			console.error(chalk.red('GraphQL response errors', e.response.errors));
+			console.error(chalk.red('GraphQL response errors\n'), e.response.errors);
 		e.response?.data &&
-			console.error(chalk.red('Response data if available', e.response.data));
+			console.error(chalk.red('Response data if available\n'), e.response.data);
 	}
 };
 
@@ -80,15 +74,16 @@ export const proposalDiscussionExists = async (
 			headers: {}
 		});
 
-		const data = await client.request(getProposalQuery, { onchainProposalId });
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionProposalById({ onchainProposalId });
 
-		return !!data?.onchain_links?.length;
+		return !!data.onchain_links?.length;
 	} catch (err) {
 		console.error(chalk.red(`proposalDiscussionExists execution error with proposalId: ${onchainProposalId}`), err);
 		err.response?.errors &&
-			console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
-			console.error(chalk.red('Response data if available', err.response.data));
+			console.error(chalk.red('Response data if available\n'), err.response.data);
 	}
 };
 
@@ -98,7 +93,7 @@ export const proposalDiscussionExists = async (
  *
  * @param onchainProposalId the referendum id that is on chain (not the Prisma db id)
  */
-export const canUpdateDiscussionDB = async (onchainProposalId: number): Promise<boolean | void> => {
+export const getDiscussionAssociatedReferendumId = async (onchainProposalId: number): Promise<number | void> => {
 	if (!discussionGraphqlUrl) {
 		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
 	}
@@ -108,15 +103,16 @@ export const canUpdateDiscussionDB = async (onchainProposalId: number): Promise<
 			headers: {}
 		});
 
-		const data = await client.request(getProposalWithNullReferendumQuery, { onchainProposalId });
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getProposalWithNoAssociatedReferendumQuery({ onchainProposalId });
 
-		return !!data?.onchain_links?.length;
+		return data?.onchain_links?.[0]?.id;
 	} catch (err) {
 		console.error(chalk.red(`canUpdateDiscussionDB execution error - Referendum already linked to proposal ${onchainProposalId} in discussion DB.`), err);
 		err.response?.errors &&
-			console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
-			console.error(chalk.red('Response data if available', err.response.data));
+			console.error(chalk.red('Response data if available\n'), err.response.data);
 	}
 };
 
@@ -127,7 +123,7 @@ export const canUpdateDiscussionDB = async (onchainProposalId: number): Promise<
  * @param onchainProposalId the proposal id that is on chain (not the Prisma db id)
  */
 
-export const addPostAndProposal = async ({
+export const addDiscussionPostAndProposal = async ({
 	proposer,
 	onchainProposalId
 }: {
@@ -144,20 +140,20 @@ export const addPostAndProposal = async ({
 			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
 		);
 	}
-	if (!proposalPostTypeId) {
+	if (!proposalBotUserId) {
 		throw new Error(
 			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
 		);
 	}
 
 	const proposalAndPostVariables = {
-		author_id: botProposalUserId,
+		author_id: Number(proposalBotUserId),
 		onchainProposalId,
-		content: 'Post not yet edited by the proposal author',
+		content: DEFAULT_DESCRIPTION,
 		proposer_address: proposer,
-		title: 'On chain democracy proposal',
-		topic_id: democracyTopicId,
-		type_id: proposalPostTypeId
+		title: DEFAULT_TITLE,
+		topic_id: Number(democracyTopicId),
+		type_id: Number(proposalPostTypeId)
 	};
 
 	try {
@@ -180,15 +176,19 @@ export const addPostAndProposal = async ({
 			}
 		});
 
-		const data = await client.request(addPostAndProposalMutation, proposalAndPostVariables);
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndProposalMutation(proposalAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
-		return data?.['insert_proposals']?.['returning'][0]?.id;
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Proposal ${addedId} added to the database.`);
+		}
 	} catch (err) {
-		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}`, err));
+		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}\n`), err);
 		err.response?.errors &&
-			console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
-			console.error(chalk.red('Response data if available', err.response.data));
+			console.error(chalk.red('Response data if available\n'), err.response.data);
 	}
 };
 
@@ -201,22 +201,22 @@ export const addPostAndProposal = async ({
  */
 
 interface ReferendumInfo {
-	preimageHash: string | null;
+	preimageHash?: string | null;
 	referendumCreationBlockHash: string;
 }
 
-export const getAssociatedProposalId = async ({
+export const getOnchainAssociatedProposalId = async ({
 	preimageHash,
 	referendumCreationBlockHash
 }: ReferendumInfo): Promise<number | void> => {
-	if (!chainGraphqlServerUrl) {
+	if (!chainDBGraphqlUrl) {
 		throw new Error(
 			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
 		);
 	}
 
 	try {
-		const client = new GraphQLClient(chainGraphqlServerUrl, {
+		const client = new GraphQLClient(chainDBGraphqlUrl, {
 			headers: {}
 		});
 
@@ -224,13 +224,8 @@ export const getAssociatedProposalId = async ({
 			blockHash: referendumCreationBlockHash
 		};
 
-		// FIXME This only takes care of democracy proposals going from proposal -> referendum
-		// it does not cater for council proposals that are externally tabled
-		const data = await client
-			.request(
-				getTabledProposalsAtBlockQuery,
-				getTabledProposalsAtBlockVariables
-			);
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getTabledProposalAtBlock(getTabledProposalsAtBlockVariables);
 
 		if (!data?.proposals?.length) {
 			throw new Error(`No democracy proposal was tabled at block: ${referendumCreationBlockHash}.`);
@@ -238,29 +233,29 @@ export const getAssociatedProposalId = async ({
 
 		// if more than one proposal got tabled at this blockHash
 		// we need to find out which one the current referendum
-		// corresponds to.
+		// corresponds to by matching preimage hash if possible.
 		if (data.proposals.length > 1) {
 			const candidates = data.proposals.filter(
-				(proposal: any) =>
+				(proposal) =>
 					preimageHash &&
-			proposal.preimage.hash === preimageHash
+			proposal?.preimage?.hash === preimageHash
 			);
 			if (candidates.length === 1) {
 				// we got lucky, a matching preimage was found
-				return candidates[0].proposalId;
+				return candidates?.[0]?.proposalId;
 			} else {
 				throw new Error(`Several poposals were tabled at block: ${referendumCreationBlockHash}.\n
 				The preimage didn't help identify a matching proposal. Preimage hash: ${preimageHash}.`);
 			}
 		} else {
-			return data.proposals[0].proposalId;
+			return data.proposals?.[0]?.proposalId;
 		}
 	} catch (err) {
 		console.error(chalk.red(`getAssociatedProposal execution error with preimage hash: ${preimageHash}`), err);
 		err.response?.errors &&
-			console.error(chalk.red('GraphQL response errors', err.response.errors));
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
-			console.error(chalk.red('Response data if available', err.response.data));
+			console.error(chalk.red('Response data if available\n'), err.response.data);
 	}
 };
 
@@ -295,17 +290,61 @@ export const addReferendumId = async ({
 			}
 		});
 
-		const data = await client.request(addReferendumIdMutation, {
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addReferendumIdToProposalMutation({
 			proposalId: onchainProposalId,
 			referendumId: onchainReferendumId
 		});
 
-		return !!data?.update_onchain_links?.affected_rows?.length;
+		return !!data?.update_onchain_links?.affected_rows;
 	} catch (err) {
-		console.error(chalk.red(`addReferendumId execution error with proposalId:${onchainProposalId}, referendumId:${onchainReferendumId}`), err);
+		console.error(chalk.red(`addReferendumId execution error with proposalId:${onchainProposalId}, referendumId:${onchainReferendumId}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
 			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+interface AddDiscussionReferendum {
+	preimageHash: string;
+	referendumCreationBlockHash: string;
+	referendumId: number;
+}
+
+export const addDiscussionReferendum = async ({ preimageHash, referendumCreationBlockHash, referendumId }: AddDiscussionReferendum): Promise<void> => {
+	try {
+		const associatedProposalId = await getOnchainAssociatedProposalId({
+			preimageHash,
+			referendumCreationBlockHash
+		});
+
+		// edge case, proposal id can be 0, which is falsy
+		if (!associatedProposalId && associatedProposalId !== 0) {
+			console.error(chalk.red(`No proposal Id found on chain-db for referendum id: ${referendumId}.`));
+			return;
+		}
+
+		const getAssociatedRefendumId = await getDiscussionAssociatedReferendumId(associatedProposalId);
+
+		const shouldUpdateProposal = !!getAssociatedRefendumId || getAssociatedRefendumId === 0;
+		if (shouldUpdateProposal) {
+			const affectedRows = await addReferendumId({
+				onchainProposalId: associatedProposalId,
+				onchainReferendumId: Number(referendumId)
+			});
+
+			if (!affectedRows) {
+				throw new Error(`addReferendumId execution error referendum id:${referendumId}, affected row: ${affectedRows}`);
+			}
+
+			console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
+		} else {
+			console.error(chalk.red(
+				`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
+			));
+		}
+	} catch (error) {
+		console.error(error);
 	}
 };
