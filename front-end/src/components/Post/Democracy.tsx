@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Keyring } from '@polkadot/keyring';
+import keyring from '@polkadot/ui-keyring';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
+import { NotificationContext } from '../../context/NotificationContext';
+import { NotificationStatus } from '../../types';
 
 interface Props {
 	className?: string;
@@ -16,53 +18,121 @@ interface Props {
 }
 
 const APP = 'polkassembly';
+const WS_PROVIDER = 'ws://127.0.0.1:9944';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
-	let api: ApiPromise;
+	const [api, setApi] = useState<ApiPromise>();
+	const [apiReady, setApiReady] = useState(false);
+	const [accountLoaded, setaccountLoaded] = useState(false);
+	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
-		// Construct
 		async function connect() {
-			const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+			const provider = new WsProvider(WS_PROVIDER);
 
-			api = await ApiPromise.create({ provider: wsProvider });
+			const apiResult = await ApiPromise.create({ provider });
+
+			setApi(apiResult);
+
+			apiResult.isReady.then(() => {
+				setApiReady(true);
+				console.log('API ready');
+			});
 
 			await web3Enable(APP);
+
+			const accounts = await web3Accounts();
+
+			keyring.loadAll({}, accounts);
+
+			setaccountLoaded(true);
+
+			console.log('Accounts loaded');
 		}
 
-		connect();
+		connect().catch((error) => {
+			queueNotification({
+				header: 'Failed!',
+				message: error.message,
+				status: NotificationStatus.ERROR
+			});
+		});
 	}, []);
 
 	const secondProposal = async () => {
-		const allAccounts = await web3Accounts();
+		if (!api) {
+			return;
+		}
 
-		const injected = await web3FromSource(allAccounts[0].meta.source);
+		const accounts = keyring.getAccounts();
+
+		const injected = await web3FromSource(accounts[0].meta.source);
 
 		api.setSigner(injected.signer);
-
-		const keyring = new Keyring({ type: 'sr25519' });
-
-		const account = keyring.getPair(allAccounts[0].address);
 
 		const second = api.tx.democracy.second(onchainId || 0);
 
-		await second.signAndSend(account);
+		second.signAndSend(accounts[0].address, ({ status }) => {
+			if (status.isFinalized) {
+				queueNotification({
+					header: 'Success!',
+					message: `Completed at block hash #${status.asFinalized.toString()}`,
+					status: NotificationStatus.SUCCESS
+				});
+			} else {
+				queueNotification({
+					header: 'Info!',
+					message: `Current status: ${status.type}`,
+					status: NotificationStatus.WARNING
+				});
+			}
+		}).catch((error) => {
+			console.log(':( transaction failed');
+			console.error('ERROR:', error);
+			queueNotification({
+				header: 'Failed!',
+				message: error.message,
+				status: NotificationStatus.ERROR
+			});
+		});
 	};
 
 	const voteRefrendum = async (aye: boolean) => {
-		const allAccounts = await web3Accounts();
+		if (!api) {
+			return;
+		}
 
-		const injected = await web3FromSource(allAccounts[0].meta.source);
+		const accounts = keyring.getAccounts();
+
+		const injected = await web3FromSource(accounts[0].meta.source);
 
 		api.setSigner(injected.signer);
 
-		const keyring = new Keyring({ type: 'sr25519' });
-
-		const account = keyring.getPair(allAccounts[0].address);
-
 		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction: 'Locked1x' });
 
-		await vote.signAndSend(account);
+		vote.signAndSend(accounts[0].address, ({ status }) => {
+			if (status.isFinalized) {
+				queueNotification({
+					header: 'Success!',
+					message: `Completed at block hash #${status.asFinalized.toString()}`,
+					status: NotificationStatus.SUCCESS
+				});
+			} else {
+				queueNotification({
+					header: 'Info!',
+					message: `Current status: ${status.type}`,
+					status: NotificationStatus.WARNING
+				});
+			}
+		}).catch((error) => {
+			console.log(':( transaction failed');
+			console.error('ERROR:', error);
+			queueNotification({
+				header: 'Failed!',
+				message: error.message,
+				status: NotificationStatus.ERROR
+			});
+		});
 	};
 
 	if (isProposal) {
