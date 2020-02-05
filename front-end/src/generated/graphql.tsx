@@ -770,7 +770,7 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressUnlink?: Maybe<Message>,
   changeEmail?: Maybe<ChangeResponse>,
@@ -873,7 +873,7 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressUnlink?: Maybe<Message>,
   changeEmail?: Maybe<ChangeResponse>,
@@ -7000,8 +7000,8 @@ export type AddressLinkConfirmMutationVariables = {
 export type AddressLinkConfirmMutation = (
   { __typename?: 'mutation_root' }
   & { addressLinkConfirm: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -8242,6 +8242,7 @@ export const AddressLinkConfirmDocument = gql`
     mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
   addressLinkConfirm(address_id: $address_id, signature: $signature) {
     message
+    token
   }
 }
     `;

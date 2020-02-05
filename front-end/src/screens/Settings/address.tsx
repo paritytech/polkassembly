@@ -6,11 +6,13 @@ import { stringToHex } from '@polkadot/util';
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
-import getExtensionUrl from '../../util/getExtensionUrl';
 import { NotificationContext } from '../../context/NotificationContext';
-import { useAddressesQuery, useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
+import getExtensionUrl from '../../util/getExtensionUrl';
+import { handleTokenChange } from 'src/services/auth.service';
 
 interface Props{
 	className?: string
@@ -20,12 +22,11 @@ const APP = 'polkassembly';
 const NETWORK = 'kasuma';
 
 const Address = ({ className }: Props): JSX.Element => {
-	const [linked, setLinked] = useState<{[key: string]: boolean}>({});
+	const currentUser = useContext(UserDetailsContext);
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [addressLinkStartMutation] = useAddressLinkStartMutation();
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
 	const [addressUnlinkMutation] = useAddressUnlinkMutation();
-	const { data } = useAddressesQuery();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
@@ -39,18 +40,6 @@ const Address = ({ className }: Props): JSX.Element => {
 
 		connect();
 	}, []);
-
-	useEffect(() => {
-		const addresses = (data && data.addresses) || [];
-		addresses.forEach((address) => {
-			if (address && address.address) {
-				linked[address.address] = true;
-			}
-		});
-
-		setLinked(linked);
-
-	}, [data, linked]);
 
 	const handleLink = async (account: any) => {
 		try {
@@ -85,9 +74,16 @@ const Address = ({ className }: Props): JSX.Element => {
 				}
 			});
 
-			linked[account.address] = true;
+			if (addressLinkConfirmResult.data?.addressLinkConfirm?.token) {
+				handleTokenChange(addressLinkConfirmResult.data?.addressLinkConfirm?.token);
+			}
 
-			setLinked(linked);
+			!currentUser.addresses?.includes(account.address) && currentUser.setUserDetailsContextState((prevState) => {
+				return {
+					...prevState,
+					addresses: [...prevState.addresses, account.address]
+				};
+			});
 
 			queueNotification({
 				header: 'Success!',
@@ -111,9 +107,21 @@ const Address = ({ className }: Props): JSX.Element => {
 				}
 			});
 
-			linked[account.address] = false;
+			// if (addressUnlinkConfirmResult.data?.addressUnlink?.token) {
+			// 	handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token);
+			// }
 
-			setLinked(linked);
+			if (currentUser.addresses?.includes(account.address)) {
+				const index = currentUser.addresses.indexOf(account.address);
+				if (index > -1) {
+					currentUser.setUserDetailsContextState((prevState) => {
+						return {
+							...prevState,
+							addresses: prevState?.addresses?.splice(index, 1)
+						};
+					});
+				}
+			}
 
 			queueNotification({
 				header: 'Success!',
@@ -168,10 +176,10 @@ const Address = ({ className }: Props): JSX.Element => {
 										<div className="button-container">
 											<Button
 												className={'social'}
-												negative={linked[account.address] ? true : false}
-												onClick={() => linked[account.address] ? handleUnlink(account) : handleLink(account)}
+												negative={currentUser.addresses?.includes(account.address) ? true : false}
+												onClick={() => currentUser.addresses?.includes(account.address) ? handleUnlink(account) : handleLink(account)}
 											>
-												{linked[account.address] ? unlinkIcon : linkIcon}
+												{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
 											</Button>
 										</div>
 									</Grid.Column>
