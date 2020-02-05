@@ -11,7 +11,7 @@ const Password = (): JSX.Element => {
 	const [currentPassword, setCurrentPassword] = useState<string | null | undefined>('');
 	const [newPassword, setNewPassword] = useState<string | null | undefined>('');
 	const { queueNotification } = useContext(NotificationContext);
-	const [changePasswordMutation, { loading, error }] = useChangePasswordMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [changePasswordMutation, { loading, error }] = useChangePasswordMutation();
 
 	const onCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(event.currentTarget.value);
 	const onNewPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewPassword(event.currentTarget.value);
