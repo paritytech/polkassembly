@@ -12,7 +12,7 @@ import { Form } from '../../ui-components/Form';
 const Fullname = (): JSX.Element => {
 	const [name, setName] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
-	const [changeNameMutation, { loading, error }] = useChangeNameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [changeNameMutation, { loading, error }] = useChangeNameMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {

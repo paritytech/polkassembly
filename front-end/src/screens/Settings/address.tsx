@@ -22,10 +22,10 @@ const NETWORK = 'kasuma';
 const Address = ({ className }: Props): JSX.Element => {
 	const [linked, setLinked] = useState<{[key: string]: boolean}>({});
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
-	const [addressLinkStartMutation] = useAddressLinkStartMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const [addressUnlinkMutation] = useAddressUnlinkMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const { data } = useAddressesQuery({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [addressLinkStartMutation] = useAddressLinkStartMutation();
+	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
+	const [addressUnlinkMutation] = useAddressUnlinkMutation();
+	const { data } = useAddressesQuery();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
