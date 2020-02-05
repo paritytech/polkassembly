@@ -1,21 +1,25 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+/* import { Link } from 'react-router-dom'; */
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import DiscussionCard from '../../components/DiscussionCard';
-import Governancecard from '../../components/GovernanceCard';
+/* import DiscussionCard from '../../components/DiscussionCard';
+import Governancecard from '../../components/GovernanceCard'; */
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { LatestPostsQuery } from '../../generated/graphql';
+/* import { LatestPostsQuery } from '../../generated/graphql'; */
+import { LatestProposalPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
+import DiscussionContainer from './LatestDiscussion';
+import ProposalContainer from './LatestProposal';
+import ReferendumContainer from './LatestReferendum';
 
 interface Props {
   className?: string
-  data: LatestPostsQuery
+  data: LatestProposalPostsQuery
 }
 
-const HomeContent = ({ className, data }: Props) => {
+const HomeContent = ({ className }: Props) => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
@@ -26,51 +30,13 @@ const HomeContent = ({ className, data }: Props) => {
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h3>Latest Activity</h3>
-					<ul className='Home__list'>
-						{!!data.posts &&
-						data.posts.map(
-							(post) => {
-								if (!post.author || !post.author.username) {
-									console.error('Author not found');
-									return null;
-								} else {
-									return !!post && (
-										<li key={post.id} className='Home__item'>
-											{<Link to={`/post/${post.id}`}>
-												{
-													post.type.id === 1
-														?
-														<DiscussionCard
-															displayname={post.author.name}
-															username={post.author.username}
-															comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-																? 'no'
-																: post.comments_aggregate.aggregate!.count!.toString()}
-															created_at={post.created_at}
-															title={post.title}
-														/>
-														:
-														<Governancecard
-															displayname={post.author.name}
-															comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-																? 'no'
-																: post.comments_aggregate.aggregate!.count!.toString()}
-															created_at={post.created_at}
-															onchainId={/* post.onchain_link?.onchain_proposal ? */ post.onchain_link?.onchain_proposal_id /* : post.onchain_link?.onchain_referendum_id */}
-															status={/* post.onchain_link?.onchain_proposal ? */ post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status /* :  /post.onchain_link?.onchain_referendum?.referendumStatus?.[0].status*/}
-															title={post.title}
-															topic={'post.topic.name'}
-															username={post.author.username}
-														/>
-												}
-											</Link>}
-										</li>
-									);}
-							}
-
-						)}
-					</ul>
+					<h1>Latest Activity</h1>
+					<h2>Current Referendum</h2>
+					<ReferendumContainer className='referendumContainer'/>
+					<h2>Latest Proposal</h2>
+					<ProposalContainer className='proposalContainer'/>
+					<h2>Latest Discussion</h2>
+					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<div className='mainButtonContainer'>
@@ -83,6 +49,10 @@ const HomeContent = ({ className, data }: Props) => {
 };
 
 export default styled(HomeContent)`
+
+	.referendumContainer, .proposalContainer, .discussionContainer {
+		margin-bottom: 3rem;
+	}
 
 	@media only screen and (max-width: 768px) {
 

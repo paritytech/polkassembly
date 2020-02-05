@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { useLatestPostsQuery } from '../../generated/graphql';
+import { useLatestProposalPostsQuery } from '../../generated/graphql';
 import HomeContent from './HomeContent';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
 const Home = () => {
-	const { data, error } = useLatestPostsQuery();
+	const { data, error } = useLatestProposalPostsQuery();
 
 	if (error) {
 		return <FilteredError text={error.message}/>;
