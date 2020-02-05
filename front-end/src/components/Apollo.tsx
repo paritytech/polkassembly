@@ -13,7 +13,7 @@ import {
 	getLocalStorageToken,
 	storeLocalStorageToken
 } from '../services/auth.service';
-import { Get_Refresh_TokenQueryResult } from '../generated/auth-graphql';
+import { Get_Refresh_TokenQueryResult } from '../generated/graphql';
 import { UserDetailsContext } from '../context/UserDetailsContext';
 import { JWTPayploadType } from '../types';
 
@@ -22,7 +22,7 @@ import { JWTPayploadType } from '../types';
  * to get a new jwt token.
  */
 const fetchAccessToken = () => (
-	fetch(`${process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL}`, {
+	fetch(`${process.env.REACT_APP_HASURA_GRAPHQL_URL}`, {
 		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
 		credentials: 'same-origin',
 		headers: {

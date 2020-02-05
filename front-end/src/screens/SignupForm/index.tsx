@@ -5,7 +5,7 @@ import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useSignupMutation } from '../../generated/auth-graphql';
+import { useSignupMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
@@ -20,7 +20,7 @@ interface Props {
 const SignupForm = ({ className }:Props): JSX.Element => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
-	const [signupMutation, { loading, error }] = useSignupMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [signupMutation, { loading, error }] = useSignupMutation();
 	const { errors, handleSubmit, register } = useForm();
 
 	const { setModal } = useContext(ModalContext);

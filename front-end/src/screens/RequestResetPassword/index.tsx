@@ -17,7 +17,7 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 	const [email, setEmail] = useState<string | undefined>('');
 	const { history } = useRouter();
 	const { setModal } = useContext(ModalContext);
-	const [requestResetPasswordMutation, { loading, error }] = useRequestResetPasswordMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [requestResetPasswordMutation, { loading, error }] = useRequestResetPasswordMutation();
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
 
