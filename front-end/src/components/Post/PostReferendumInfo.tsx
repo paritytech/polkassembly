@@ -17,7 +17,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 
-	const preimage = onchainReferendum?.preimage;
+	const preimage = onchainReferendum?.[0]?.preimage;
 	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
