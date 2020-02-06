@@ -22,11 +22,12 @@ To make sure we are all using the same ids you need to run the following SQL in 
 ```sql
 insert into post_topics values  (1, 'Democracy');
 insert into post_topics values  (2, 'Council');
-insert into post_topics values  (3, 'Treasury');
-insert into post_topics values  (4, 'Technical Committee');
+insert into post_topics values  (3, 'Technical Committee');
+insert into post_topics values  (4, 'Treasury');
+insert into post_topics values  (5, 'General');
 
 insert into post_types values (1, 'Discussion');
-insert into post_types values (2, 'Proposal');
+insert into post_types values (2, 'On chain');
 ```
 
 ### Migration
