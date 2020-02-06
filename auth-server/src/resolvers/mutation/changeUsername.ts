@@ -11,7 +11,7 @@ interface argsType {
 }
 
 export default async (parent, { username }: argsType, ctx: Context): Promise<ChangeResponseType> => {
-	let token = getTokenFromReq(ctx.req);
+	const token = getTokenFromReq(ctx.req);
 
 	if (username.length < 3) {
 		throw new UserInputError(messages.USERNAME_LENGTH_ERROR);
@@ -22,7 +22,7 @@ export default async (parent, { username }: argsType, ctx: Context): Promise<Cha
 	}
 
 	const authServiceInstance = new AuthService();
-	token = await authServiceInstance.ChangeUsername(token, username);
+	const updatedJWT = await authServiceInstance.ChangeUsername(token, username);
 
-	return { message: messages.USERNAME_CHANGE_SUCCESSFUL, token };
+	return { message: messages.USERNAME_CHANGE_SUCCESSFUL, token: updatedJWT };
 };
