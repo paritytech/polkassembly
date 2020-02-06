@@ -41,7 +41,7 @@ const Address = ({ className }: Props): JSX.Element => {
 		connect();
 	}, []);
 
-	const handleLink = async (account: any) => {
+	const handleLink = async (account: InjectedAccountWithMeta) => {
 		try {
 			const injected = await web3FromSource(account.meta.source);
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
@@ -99,7 +99,7 @@ const Address = ({ className }: Props): JSX.Element => {
 		}
 	};
 
-	const handleUnlink = async (account: any) => {
+	const handleUnlink = async (account: InjectedAccountWithMeta) => {
 		try {
 			const addressUnlinkConfirmResult = await addressUnlinkMutation({
 				variables: {
@@ -107,20 +107,17 @@ const Address = ({ className }: Props): JSX.Element => {
 				}
 			});
 
-			// if (addressUnlinkConfirmResult.data?.addressUnlink?.token) {
-			// 	handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token);
-			// }
+			if (addressUnlinkConfirmResult.data?.addressUnlink?.token) {
+				handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token);
+			}
 
 			if (currentUser.addresses?.includes(account.address)) {
-				const index = currentUser.addresses.indexOf(account.address);
-				if (index > -1) {
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							addresses: prevState?.addresses?.splice(index, 1)
-						};
-					});
-				}
+				currentUser.setUserDetailsContextState((prevState) => {
+					return {
+						...prevState,
+						addresses: prevState?.addresses?.filter((address) => address !== account.address)
+					};
+				});
 			}
 
 			queueNotification({

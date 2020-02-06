@@ -58,6 +58,7 @@ export const ADDRESS_UNLINK = gql`
 	mutation addressUnlink($address: String!) {
 		addressUnlink(address: $address) {
 			message
+			token
 		}
 	}
 `;

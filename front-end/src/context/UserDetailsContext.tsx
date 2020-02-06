@@ -6,6 +6,7 @@ import { UserDetailsContextType, JWTPayploadType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
 
 const initialUserDetailsContext : UserDetailsContextType = {
+	addresses: [],
 	email: null,
 	email_verified: false,
 	id: null,

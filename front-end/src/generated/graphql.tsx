@@ -772,7 +772,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -875,7 +875,7 @@ export type Mutation_Root = {
    __typename?: 'mutation_root',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -7013,20 +7013,9 @@ export type AddressUnlinkMutationVariables = {
 export type AddressUnlinkMutation = (
   { __typename?: 'mutation_root' }
   & { addressUnlink: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
-);
-
-export type AddressesQueryVariables = {};
-
-
-export type AddressesQuery = (
-  { __typename?: 'query_root' }
-  & { addresses: Maybe<Array<Maybe<(
-    { __typename?: 'Address' }
-    & Pick<Address, 'address' | 'public_key'>
-  )>>> }
 );
 
 export type SignupMutationVariables = {
@@ -8276,6 +8265,7 @@ export const AddressUnlinkDocument = gql`
     mutation addressUnlink($address: String!) {
   addressUnlink(address: $address) {
     message
+    token
   }
 }
     `;
@@ -8304,39 +8294,6 @@ export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
-export const AddressesDocument = gql`
-    query addresses {
-  addresses {
-    address
-    public_key
-  }
-}
-    `;
-
-/**
- * __useAddressesQuery__
- *
- * To run a query within a React component, call `useAddressesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAddressesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAddressesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-        return ApolloReactHooks.useQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
-      }
-export function useAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
-        }
-export type AddressesQueryHookResult = ReturnType<typeof useAddressesQuery>;
-export type AddressesLazyQueryHookResult = ReturnType<typeof useAddressesLazyQuery>;
-export type AddressesQueryResult = ApolloReactCommon.QueryResult<AddressesQuery, AddressesQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
