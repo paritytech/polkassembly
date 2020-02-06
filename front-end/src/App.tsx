@@ -22,6 +22,7 @@ import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
+import Search from './screens/Search';
 import SignupForm from './screens/SignupForm';
 import VerifyEmail from './screens/VerifyEmail';
 import UndoEmailChange from './screens/UndoEmailChange';
@@ -83,6 +84,9 @@ const App = () => {
 										</Route>
 										<Route path="/settings">
 											<Settings/>
+										</Route>
+										<Route path="/search">
+											<Search/>
 										</Route>
 										<Route path="*">
 											<NotFound/>

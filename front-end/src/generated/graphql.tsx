@@ -4362,7 +4362,6 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -4387,7 +4386,6 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -6924,6 +6922,26 @@ export type RequestResetPasswordMutation = (
   )> }
 );
 
+export type SearchPostsQueryVariables = {
+  term: Scalars['String']
+};
+
+
+export type SearchPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username'>
+    )>, type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ) }
+  )> }
+);
+
 export type ChangeNameMutationVariables = {
   newName: Scalars['String']
 };
@@ -8060,6 +8078,51 @@ export function useRequestResetPasswordMutation(baseOptions?: ApolloReactHooks.M
 export type RequestResetPasswordMutationHookResult = ReturnType<typeof useRequestResetPasswordMutation>;
 export type RequestResetPasswordMutationResult = ApolloReactCommon.MutationResult<RequestResetPasswordMutation>;
 export type RequestResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
+export const SearchPostsDocument = gql`
+    query SearchPosts($term: String!) {
+  posts(order_by: {created_at: desc}, limit: 20, where: {_or: [{title: {_ilike: $term}}, {content: {_ilike: $term}}]}) {
+    id
+    title
+    author {
+      id
+      name
+      username
+    }
+    created_at
+    updated_at
+    type {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchPostsQuery__
+ *
+ * To run a query within a React component, call `useSearchPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPostsQuery({
+ *   variables: {
+ *      term: // value for 'term'
+ *   },
+ * });
+ */
+export function useSearchPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SearchPostsQuery, SearchPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<SearchPostsQuery, SearchPostsQueryVariables>(SearchPostsDocument, baseOptions);
+      }
+export function useSearchPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchPostsQuery, SearchPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SearchPostsQuery, SearchPostsQueryVariables>(SearchPostsDocument, baseOptions);
+        }
+export type SearchPostsQueryHookResult = ReturnType<typeof useSearchPostsQuery>;
+export type SearchPostsLazyQueryHookResult = ReturnType<typeof useSearchPostsLazyQuery>;
+export type SearchPostsQueryResult = ApolloReactCommon.QueryResult<SearchPostsQuery, SearchPostsQueryVariables>;
 export const ChangeNameDocument = gql`
     mutation changeName($newName: String!) {
   changeName(newName: $newName) {
