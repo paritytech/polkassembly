@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Divider, Grid, Icon } from 'semantic-ui-react';
+import { /* Divider, */ Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
+import { APP, WS_PROVIDER } from '../../constants';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
@@ -17,9 +18,6 @@ interface Props {
 	isReferendum?: boolean
 	onchainId?: number | null | undefined
 }
-
-const APP = 'polkassembly';
-const WS_PROVIDER = 'ws://127.0.0.1:9944';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
@@ -196,13 +194,15 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		});
 	};
 
+	isProposal = true;
+
 	if (isProposal) {
 		return (
 			<div className={className}>
 				<div className='card'>
 					<h2>Seconding</h2>
 					<Grid>
-						<Grid.Column width={6}>
+						{/* <Grid.Column width={6}>
 							<div><b>Deposit Amount</b></div>
 							<div>100 KSM</div>
 						</Grid.Column>
@@ -213,7 +213,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 						<Grid.Column width={5}>
 							<div><b>Locked KSM</b></div>
 							<div>21200 KSM</div>
-						</Grid.Column>
+						</Grid.Column> */}
 						<Form standalone={false}>
 							<Form.Group>
 								<Form.Field>
@@ -237,7 +237,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 	if (isReferendum) {
 		return (
 			<div className={className}>
-				<div className='card'>
+				{/* <div className='card'>
 					<h2>Votes</h2>
 					<Divider/>
 					<Grid>
@@ -269,7 +269,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 							<div>725,826</div>
 						</Grid.Column>
 					</Grid>
-				</div>
+				</div> */}
 				<div className='card'>
 					<h2>Your Vote</h2>
 					<Form standalone={false}>
@@ -283,9 +283,9 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 									<option value='Locked4x'>8 weeks lock</option>
 									<option value='Locked5x'>10 weeks lock</option>
 								</select>
-								<div>
+								{/* <div>
 									120 KSM * 2 Lock periods = <b>240 votes</b>
-								</div>
+								</div> */}
 							</Form.Field>
 						</Form.Group>
 						<Form.Group>
@@ -317,7 +317,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 						</Form.Group>
 					</Form>
 				</div>
-				<div className='card'>
+				{/* <div className='card'>
 					<h2>Timeline</h2>
 					<Grid>
 						<Grid.Column width={8}>
@@ -329,7 +329,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 							<div>Block 240,000</div>
 						</Grid.Column>
 					</Grid>
-				</div>
+				</div> */}
 			</div>
 		);
 	}
