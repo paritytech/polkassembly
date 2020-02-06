@@ -22,21 +22,11 @@ const WS_PROVIDER = 'ws://127.0.0.1:9944';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
-	const [amount, setAmount] = useState<number | ''>('');
 	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 	const [accountLoaded, setaccountLoaded] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
-
-	const onAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const amountValue = Math.floor(parseInt(event.currentTarget.value, 10));
-		if (event.currentTarget.value !== '' && isNaN(amountValue)) {
-			return;
-		}
-
-		setAmount(amountValue || '');
-	};
 
 	const onConvictionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const convictionValue = event.currentTarget.value as ConvictionType;
@@ -228,21 +218,6 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 				<div className='card'>
 					<h2>Your Vote</h2>
 					<Form standalone={false}>
-						<Form.Group>
-							<Form.Field width={16}>
-								<label>Amount</label>
-								<input
-									placeholder='KSM'
-									pattern='[0-9]*'
-									type='text'
-									value={amount}
-									onChange={onAmountChange}
-								/>
-								<div>
-									2341 KSM Available. <a href='#'>Vote all.</a>
-								</div>
-							</Form.Field>
-						</Form.Group>
 						<Form.Group>
 							<Form.Field width={16}>
 								<label>Vote Lock</label>
