@@ -55,6 +55,7 @@ describe('addressUnlink mutation', () => {
 			.where({ id: signupResult.user.id })
 			.del();
 	});
+
 	it('should not be able to unlink an unknown address', async () => {
 		const wrongAddress = 'aaaata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upaaaa';
 
@@ -69,7 +70,6 @@ describe('addressUnlink mutation', () => {
 
 	it('should be able to unlink an address', async () => {
 		const res = await addressUnlink(null, { address: dbAddress.address }, fakectx);
-
 		const dbAddressRes = await Address
 			.query()
 			.findById(dbAddress.id);
@@ -89,5 +89,4 @@ describe('addressUnlink mutation', () => {
 			expect(error.message).to.eq(messages.INVALID_JWT);
 		}
 	});
-
 });

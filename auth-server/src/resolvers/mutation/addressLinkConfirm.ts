@@ -9,10 +9,10 @@ interface argsType {
 }
 
 export default async (parent, { address_id, signature }: argsType, ctx: Context): Promise<ChangeResponseType>  => {
-	let token = getTokenFromReq(ctx.req);
+	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 
-	token = await authServiceInstance.AddressLinkConfirm(token, address_id, signature);
+	const updatedJWT = await authServiceInstance.AddressLinkConfirm(token, address_id, signature);
 
-	return { message: messages.ADDRESS_LINKING_SUCCESSFUL, token };
+	return { message: messages.ADDRESS_LINKING_SUCCESSFUL, token: updatedJWT };
 };

@@ -8,9 +8,9 @@ interface argsType {
 }
 
 export default async (parent, { newName }: argsType, ctx: Context): Promise<ChangeResponseType> => {
-	let token = getTokenFromReq(ctx.req);
+	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
-	token = await authServiceInstance.ChangeName(token, newName);
+	const updatedJWT = await authServiceInstance.ChangeName(token, newName);
 
-	return { message: messages.NAME_CHANGED_SUCCESSFULLY, token };
+	return { message: messages.NAME_CHANGED_SUCCESSFULLY, token: updatedJWT };
 };
