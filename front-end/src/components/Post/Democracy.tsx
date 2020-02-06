@@ -56,18 +56,31 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		});
 	}, []);
 
-	const getLinkedAccount = async (): Promise<InjectedAccountWithMeta> => {
+	const getLinkedAccount = async (): Promise<InjectedAccountWithMeta | undefined> => {
 		const extensions = await web3Enable(APP);
 
 		if (extensions.length === 0) {
 			queueNotification({
 				header: 'Failed!',
-				message: 'Please install polkadot extenstion to use this feature',
+				message: 'Please install polkadot js extenstion to use this feature',
 				status: NotificationStatus.ERROR
 			});
+
+			return;
 		}
 
 		const accounts = await web3Accounts();
+
+		if (accounts.length === 0) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please add accounts to polkadot js extenstion to use this feature',
+				status: NotificationStatus.ERROR
+			});
+
+			return;
+		}
+
 		const accountMap: {[key: string]: InjectedAccountWithMeta} = {};
 
 		accounts.forEach(account => {
@@ -82,6 +95,8 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 				message: 'Please link an address in settings',
 				status: NotificationStatus.ERROR
 			});
+
+			return;
 		}
 
 		const linkedAccount = accountMap[linkedAddress || ''];
@@ -92,6 +107,8 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 				message: 'Linked account not available',
 				status: NotificationStatus.ERROR
 			});
+
+			return;
 		}
 
 		const injected = await web3FromSource(linkedAccount.meta.source);
@@ -109,6 +126,11 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		}
 
 		const linkedAccount = await getLinkedAccount();
+
+		if (!linkedAccount) {
+			return;
+		}
+
 		const second = api.tx.democracy.second(onchainId || 0);
 
 		second.signAndSend(linkedAccount.address, ({ status }) => {
@@ -142,6 +164,11 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		}
 
 		const linkedAccount = await getLinkedAccount();
+
+		if (!linkedAccount) {
+			return;
+		}
+
 		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction });
 
 		vote.signAndSend(linkedAccount.address, ({ status }) => {
