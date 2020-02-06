@@ -63,11 +63,3 @@ export const ADDRESS_UNLINK = gql`
 	}
 `;
 
-// export const ADDRESSES = gql`
-// 	query addresses {
-// 		addresses {
-// 			address
-// 			public_key
-// 		}
-// 	}
-// `;

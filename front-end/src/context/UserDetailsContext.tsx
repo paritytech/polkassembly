@@ -47,7 +47,7 @@ try {
 		initialUserDetailsContext.email_verified = email_verified || false;
 		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);
 	}
-} catch (e){
+} catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.
 }
 
