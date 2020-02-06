@@ -3,8 +3,10 @@ import React, { createContext, useState } from 'react';
 
 import { getLocalStorageToken } from '../services/auth.service';
 import { UserDetailsContextType, JWTPayploadType } from '../types';
+import { decodePostgresArray } from '../util/decodePostgressArray';
 
 const initialUserDetailsContext : UserDetailsContextType = {
+	addresses: [],
 	email: null,
 	email_verified: false,
 	id: null,
@@ -26,7 +28,8 @@ try {
 			name,
 			username,
 			email,
-			email_verified
+			email_verified,
+			'https://hasura.io/jwt/claims': claims
 		} = tokenPayload;
 
 		if (id) {
@@ -42,6 +45,7 @@ try {
 			initialUserDetailsContext.email = email;
 		}
 		initialUserDetailsContext.email_verified = email_verified || false;
+		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);
 	}
 } catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.
