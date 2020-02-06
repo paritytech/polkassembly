@@ -18,7 +18,7 @@ interface Props {
 const Username = ({ className }:Props): JSX.Element => {
 	const [username, setUsername] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
-	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {

@@ -1,0 +1,24 @@
+- args:
+    role: proposal_bot
+    table:
+      name: posts
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - author_id
+      - content
+      - title
+      - topic_id
+      - type_id
+      localPresets:
+      - key: ""
+        value: ""
+      set: {}
+    role: proposal_bot
+    table:
+      name: posts
+      schema: public
+  type: create_insert_permission

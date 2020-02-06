@@ -9,13 +9,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn tsc && ts-node ./src/index.ts",
     "lint": "eslint \"./src/**/*.js|ts\"",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paritytech/polkassembly/chain-db-watcher.git"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.12.1",
+    "@graphql-codegen/introspection": "1.12.1",
+    "@graphql-codegen/typescript": "^1.12.1",
     "@types/ws": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
@@ -30,12 +34,14 @@
     "eslint-plugin-standard": "^4.0.1"
   },
   "dependencies": {
+    "@graphql-codegen/typescript-graphql-request": "^1.12.1",
+    "@graphql-codegen/typescript-operations": "^1.12.1",
     "@types/node": "^13.5.0",
     "@types/node-fetch": "^2.5.4",
     "apollo-link": "^1.2.13",
     "apollo-link-ws": "^1.0.19",
     "chalk": "^3.0.0",
-    "graphql": "^14.5.8",
+    "graphql": "^14.6.0",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.10.1",
     "node-fetch": "^2.6.0",

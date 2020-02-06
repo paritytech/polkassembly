@@ -770,9 +770,9 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -873,9 +873,9 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -6635,6 +6635,17 @@ export type SubscriptionQuery = (
   )> }
 );
 
+export type Get_Refresh_TokenQueryVariables = {};
+
+
+export type Get_Refresh_TokenQuery = (
+  { __typename?: 'query_root' }
+  & { token: Maybe<(
+    { __typename?: 'Token' }
+    & Pick<Token, 'token'>
+  )> }
+);
+
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
   & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
@@ -6886,6 +6897,35 @@ export type LatestPostsQuery = (
         )>> }
       )>> }
     )> }
+  )> }
+);
+
+export type LoginMutationVariables = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type LoginMutation = (
+  { __typename?: 'mutation_root' }
+  & { login: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
+);
+
+export type LogoutMutationVariables = {};
+
+
+export type LogoutMutation = (
+  { __typename?: 'mutation_root' }
+  & { logout: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
   )> }
 );
 
@@ -7227,8 +7267,8 @@ export type AddressLinkConfirmMutationVariables = {
 export type AddressLinkConfirmMutation = (
   { __typename?: 'mutation_root' }
   & { addressLinkConfirm: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -7240,20 +7280,29 @@ export type AddressUnlinkMutationVariables = {
 export type AddressUnlinkMutation = (
   { __typename?: 'mutation_root' }
   & { addressUnlink: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
-export type AddressesQueryVariables = {};
+export type SignupMutationVariables = {
+  email?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  username: Scalars['String'],
+  name?: Maybe<Scalars['String']>
+};
 
 
-export type AddressesQuery = (
-  { __typename?: 'query_root' }
-  & { addresses: Maybe<Array<Maybe<(
-    { __typename?: 'Address' }
-    & Pick<Address, 'address' | 'public_key'>
-  )>>> }
+export type SignupMutation = (
+  { __typename?: 'mutation_root' }
+  & { signup: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
 );
 
 export type UndoEmailChangeMutationVariables = {
@@ -7649,6 +7698,38 @@ export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
 export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
 export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
+export const Get_Refresh_TokenDocument = gql`
+    query GET_REFRESH_TOKEN {
+  token {
+    token
+  }
+}
+    `;
+
+/**
+ * __useGet_Refresh_TokenQuery__
+ *
+ * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_Refresh_TokenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGet_Refresh_TokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+      }
+export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+        }
+export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
+export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
+export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename
@@ -8043,6 +8124,77 @@ export function useLatestPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type LatestPostsQueryHookResult = ReturnType<typeof useLatestPostsQuery>;
 export type LatestPostsLazyQueryHookResult = ReturnType<typeof useLatestPostsLazyQuery>;
 export type LatestPostsQueryResult = ApolloReactCommon.QueryResult<LatestPostsQuery, LatestPostsQueryVariables>;
+export const LoginDocument = gql`
+    mutation LOGIN($password: String!, $username: String!) {
+  login(password: $password, username: $username) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
+  }
+}
+    `;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const LogoutDocument = gql`
+    mutation LOGOUT {
+  logout {
+    message
+  }
+}
+    `;
+export type LogoutMutationFn = ApolloReactCommon.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
+        return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
+      }
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
+export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
+export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const LatestDemocracyProposalPostsDocument = gql`
     query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1) {
   posts(limit: 5, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
@@ -8549,6 +8701,7 @@ export const AddressLinkConfirmDocument = gql`
     mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
   addressLinkConfirm(address_id: $address_id, signature: $signature) {
     message
+    token
   }
 }
     `;
@@ -8582,6 +8735,7 @@ export const AddressUnlinkDocument = gql`
     mutation addressUnlink($address: String!) {
   addressUnlink(address: $address) {
     message
+    token
   }
 }
     `;
@@ -8610,39 +8764,48 @@ export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
-export const AddressesDocument = gql`
-    query addresses {
-  addresses {
-    address
-    public_key
+export const SignupDocument = gql`
+    mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
+  signup(email: $email, password: $password, username: $username, name: $name) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
   }
 }
     `;
+export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
 
 /**
- * __useAddressesQuery__
+ * __useSignupMutation__
  *
- * To run a query within a React component, call `useAddressesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useAddressesQuery({
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
  *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *      name: // value for 'name'
  *   },
  * });
  */
-export function useAddressesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-        return ApolloReactHooks.useQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
+export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, baseOptions);
       }
-export function useAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
-        }
-export type AddressesQueryHookResult = ReturnType<typeof useAddressesQuery>;
-export type AddressesLazyQueryHookResult = ReturnType<typeof useAddressesLazyQuery>;
-export type AddressesQueryResult = ApolloReactCommon.QueryResult<AddressesQuery, AddressesQueryVariables>;
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
+export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const UndoEmailChangeDocument = gql`
     mutation undoEmailChange($token: String!) {
   undoEmailChange(token: $token) {
