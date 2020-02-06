@@ -14,7 +14,6 @@ import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
 import verifyEmail from './mutation/verifyEmail';
 import undoEmailChange from './mutation/undoEmailChange';
-import addresses from './query/addresses';
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';
@@ -22,7 +21,6 @@ import users from './query/users';
 
 export default {
 	Query: {
-		addresses,
 		subscription,
 		token,
 		user,
