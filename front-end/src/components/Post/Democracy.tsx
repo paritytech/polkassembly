@@ -21,10 +21,27 @@ const APP = 'polkassembly';
 const WS_PROVIDER = 'ws://127.0.0.1:9944';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
+	type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
+	const [amount, setAmount] = useState<number | ''>('');
+	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 	const [accountLoaded, setaccountLoaded] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
+
+	const onAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const amountValue = Math.floor(parseInt(event.currentTarget.value, 10));
+		if (event.currentTarget.value !== '' && isNaN(amountValue)) {
+			return;
+		}
+
+		setAmount(amountValue || '');
+	};
+
+	const onConvictionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const convictionValue = event.currentTarget.value as ConvictionType;
+		setConviction(convictionValue);
+	};
 
 	useEffect(() => {
 		async function connect() {
@@ -108,7 +125,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 
 		api.setSigner(injected.signer);
 
-		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction: 'Locked1x' });
+		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction });
 
 		vote.signAndSend(accounts[0].address, ({ status }) => {
 			if (status.isFinalized) {
@@ -215,8 +232,11 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 							<Form.Field width={16}>
 								<label>Amount</label>
 								<input
-									placeholder='120'
+									placeholder='KSM'
+									pattern='[0-9]*'
 									type='text'
+									value={amount}
+									onChange={onAmountChange}
 								/>
 								<div>
 									2341 KSM Available. <a href='#'>Vote all.</a>
@@ -226,11 +246,12 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 						<Form.Group>
 							<Form.Field width={16}>
 								<label>Vote Lock</label>
-								<select>
-									<option value="2">2 weeks lock</option>
-									<option value="4">4 weeks lock</option>
-									<option value="8">8 weeks lock</option>
-									<option value="10">10 weeks lock</option>
+								<select onChange={onConvictionChange}>
+									<option value='Locked1x'>2 weeks lock</option>
+									<option value='Locked2x'>4 weeks lock</option>
+									<option value='Locked3x'>6 weeks lock</option>
+									<option value='Locked4x'>8 weeks lock</option>
+									<option value='Locked5x'>10 weeks lock</option>
 								</select>
 								<div>
 									120 KSM * 2 Lock periods = <b>240 votes</b>
