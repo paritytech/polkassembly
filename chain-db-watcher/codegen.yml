@@ -1,0 +1,23 @@
+overwrite: true
+generates:
+  src/generated/chain-db-graphql.ts:
+    schema: ${CHAIN_DB_GRAPHQL_URL}
+    documents:
+      - "src/**/chain-db.queries.ts"
+      - "!src/generated/*"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
+  src/generated/discussion-db-graphql.ts:
+    schema:
+      - ${REACT_APP_HASURA_GRAPHQL_URL}:
+          headers:
+            X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
+    documents:
+      - "src/**/discussions-db.queries.ts"
+      - "!src/generated/*"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
