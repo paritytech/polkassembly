@@ -194,8 +194,6 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		});
 	};
 
-	isProposal = true;
-
 	if (isProposal) {
 		return (
 			<div className={className}>
