@@ -214,6 +214,34 @@ export default class AuthService {
 			.findById(userId);
 	}
 
+	public async AddressUnlink(token: string, address: string): Promise<string> {
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const dbAddress = await Address
+			.query()
+			.where({
+				address,
+				user_id: user.id
+			})
+			.first();
+
+		if (!dbAddress) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		await Address
+			.query()
+			.where({
+				address,
+				user_id: user.id
+			})
+			.del();
+
+		const addresses = await getAddressesFromUserId(user.id);
+		return this.getSignedToken(user, addresses);
+	}
+
 	public async AddressLinkConfirm(token: string, address_id: number, signature: string): Promise<string> {
 		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
