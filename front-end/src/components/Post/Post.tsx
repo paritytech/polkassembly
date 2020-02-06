@@ -26,7 +26,7 @@ interface Props {
 
 const Post = ( { className, data, isProposal = false, isReferendum = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
-	const { id } = useContext(UserDetailsContext);
+	const { id, addresses } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
@@ -52,6 +52,12 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
 		onchainId = definedOnchainLink.onchain_proposal_id;
 	}
+
+	const canEdit = !isEditing && (
+		(post?.author?.id === id) ||
+		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
+		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address))
+	);
 
 	if (!post) return <NoPostFound/>;
 
@@ -85,7 +91,7 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
-						{!isEditing && post.author && id === post.author.id && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 
 						{ id && isPostReplyFormVisible &&
 							<CreatePostComment
