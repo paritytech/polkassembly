@@ -26,18 +26,14 @@ const PostContent = ({ className, onchainId, post }:Props) => {
 					topic={post.topic.name}
 				/>
 			</div>
-			<StatusTag className='post_tags' status='Proposed'/>
+			{<StatusTag className='post_tags' status='Proposed'/>}
 		</div>
 	);
 };
 
 export default styled(PostContent)`
-	background-color: white;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
-	padding: 3rem;
-	margin-bottom: 1rem;
+	position: relative;
+	margin-bottom: 3rem;
 
 	h2 {
 		font-family: 'Roboto';

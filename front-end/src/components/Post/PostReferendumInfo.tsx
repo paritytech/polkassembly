@@ -78,10 +78,6 @@ export default styled(PostReferendumInfo)`
 		margin-bottom: 1.6rem;
 	}
 
-	code {
-		padding: 0.4rem;
-	}
-
 	.methodArguments {
 		display: inline-block;
 	}

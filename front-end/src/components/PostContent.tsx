@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import styled from '@xstyled/styled-components';
 
-import CreationLabel from '../ui-components/CreationLabel';
+/* import CreationLabel from '../ui-components/CreationLabel'; */
 import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../generated/graphql';
 import UpdateLabel from '../ui-components/UpdateLabel';
 
@@ -22,11 +22,11 @@ const PostContent = ({ className, post }:Props) => {
 			</div> */}
 			<div className='post_content'>
 				<div className='post_info'>
-					<CreationLabel
+					{/* <CreationLabel
 						created_at={created_at}
 						displayname={author.name}
 						username={author.username }
-					/>
+					/> */}
 					<UpdateLabel
 						created_at={created_at}
 						updated_at={updated_at}
@@ -39,13 +39,6 @@ const PostContent = ({ className, post }:Props) => {
 };
 
 export default styled(PostContent)`
-	.post_title, .post_content {
-		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-	}
-
 	h2 {
 		font-family: 'Roboto';
 		font-size: xl;
@@ -61,7 +54,6 @@ export default styled(PostContent)`
 		font-family: 'Roboto';
 		font-size: md;
 		line-height: 150%;
-		padding: 2rem 3rem;
 		margin-bottom: 2rem;
 
 		.post_info {

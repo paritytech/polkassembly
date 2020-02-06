@@ -77,10 +77,6 @@ export default styled(PostProposalInfo)`
 		margin-bottom: 1.6rem;
 	}
 
-	code {
-		padding: 0.4rem;
-	}
-
 	.methodArguments {
 		display: block;
 		margin-bottom: 0.4rem;

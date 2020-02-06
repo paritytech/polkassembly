@@ -60,26 +60,16 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<PostInfo
-						onchainId={onchainId}
-						post={post}
-					/>
-					{ isProposal &&
-						<PostProposalInfo
-							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-						/>
-					}
-					{ isReferendum &&
-						<PostReferendumInfo
-							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-						/>
-					}
 					<div className='PostContent'>
 						{/* <div className='post_tags'>
 							<Tag>{post.topic.name}</Tag>
 							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}></StatusTag>}
 							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}></StatusTag>}
 						</div> */}
+						<PostInfo
+							onchainId={onchainId}
+							post={post}
+						/>
 						<EditablePostContent
 							isEditing={isEditing}
 							onchainId={onchainId}
@@ -100,6 +90,16 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 							/>
 						}
 					</div>
+					{ isProposal &&
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+					}
+					{ isReferendum &&
+						<PostReferendumInfo
+							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+						/>
+					}
 					{ post.comments?.length
 						? <Comments
 							comments={post.comments}
@@ -116,6 +116,11 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 export default styled(Post)`
 
 	.PostContent {
+		background-color: white;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+		padding: 3rem;
 		margin-bottom: 1rem;
 	}
 
@@ -149,7 +154,7 @@ export default styled(Post)`
 		}
 
 		code {
-			padding: 0.2rem 0 0.2rem 0;
+			padding: 0.4rem;
 			margin: 0;
 			font-size: sm;
 			background-color: rgba(0, 0, 0, 0.04);
