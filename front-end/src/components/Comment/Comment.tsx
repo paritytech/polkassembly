@@ -53,7 +53,12 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 };
 
 export default styled(Comment)`
-margin-top: 3rem;
+	background-color: white;
+	padding: 2rem 3rem 2rem 3rem;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey_light;
+	margin-bottom: 1rem;
 
 	.md {
 		margin-top: 1rem;

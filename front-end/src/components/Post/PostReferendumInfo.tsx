@@ -22,6 +22,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 
 	return (
 		<div className={className}>
+			<h4>On-Chain Info</h4>
 			{proposerAddress &&
 				<div className='info_group'>
 					<h6>Proposer</h6>
@@ -58,13 +59,20 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 };
 
 export default styled(PostReferendumInfo)`
-	border-top-width: 1px;
-	border-top-style: solid;
+	background-color: white;
+	padding: 2rem 3rem 2rem 3rem;
+	border-style: solid;
+	border-width: 1px;
 	border-color: grey_light;
-	margin-top: 2rem;
-	padding-top: 2rem;
 	font-size: md;
 	overflow-wrap: break-word;
+	margin-bottom: 1rem;
+
+	h4 {
+		font-size: lg;
+		font-family: 'Roboto Mono';
+		margin-bottom: 2rem;
+	}
 
 	.info_group {
 		margin-bottom: 1.6rem;

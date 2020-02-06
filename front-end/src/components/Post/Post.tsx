@@ -11,10 +11,11 @@ import EditablePostContent from '../EditablePostContent';
 import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
-import Tag from '../../ui-components/Tag';
-import StatusTag from '../../ui-components/StatusTag';
+/* import Tag from '../../ui-components/Tag';
+import StatusTag from '../../ui-components/StatusTag'; */
 import PostProposalInfo from './PostProposalInfo';
 import PostReferendumInfo from './PostReferendumInfo';
+import PostInfo from './PostInfo';
 
 interface Props {
 	className?: string;
@@ -59,12 +60,26 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
+					<PostInfo
+						onchainId={onchainId}
+						post={post}
+					/>
+					{ isProposal &&
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+					}
+					{ isReferendum &&
+						<PostReferendumInfo
+							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+						/>
+					}
 					<div className='PostContent'>
-						<div className='post_tags'>
+						{/* <div className='post_tags'>
 							<Tag>{post.topic.name}</Tag>
 							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}></StatusTag>}
 							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}></StatusTag>}
-						</div>
+						</div> */}
 						<EditablePostContent
 							isEditing={isEditing}
 							onchainId={onchainId}
@@ -72,16 +87,6 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 							refetch={refetch}
 							toggleEdit={toggleEdit}
 						/>
-						{ isProposal &&
-								<PostProposalInfo
-									onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-								/>
-						}
-						{ isReferendum &&
-							<PostReferendumInfo
-								onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-							/>
-						}
 
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
@@ -94,13 +99,13 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 								refetch={refetch}
 							/>
 						}
-						{ post.comments?.length
-							? <Comments
-								comments={post.comments}
-								refetch={refetch}
-							/>
-							: null }
 					</div>
+					{ post.comments?.length
+						? <Comments
+							comments={post.comments}
+							refetch={refetch}
+						/>
+						: null }
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}></Grid.Column>
 			</Grid>
@@ -109,89 +114,18 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 };
 
 export default styled(Post)`
-	.post_info {
-		color: black_text;
-		font-size: sm;
-		padding-bottom: 2rem;
-		margin-bottom: 2rem;
-		border-bottom-style: solid;
-		border-bottom-width: 1px;
-		border-bottom-color: grey_light;
-	}
 
 	.PostContent {
-		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-	}
-
-	.post_tags {
-		margin-bottom: 2.5rem;
+		margin-bottom: 1rem;
 	}
 
 	h3 {
 		font-family: 'Roboto';
 		font-size: xl;
 		margin-bottom: 0.4rem;
+		max-width: calc(100% - 20rem);
+    	display: flex;
 	}
-
-	.post_content {
-		color: black_text;
-		font-family: 'Roboto';
-		font-size: md;
-		line-height: 150%;
-		margin-bottom: 2rem;
-
-		p, blockquote, ul, ol, dl, table {
-			margin: 0 0 1.5rem 0;
-		}
-
-		h1, h2 {
-			margin: 2rem 0 1.5rem 0;
-		}
-
-		h3, h4 {
-			margin: 1.5rem 0 0.5rem 0;
-		}
-
-		h1 {
-			font-size: 2.4rem;
-		}
-
-		h2 {
-			font-size: 1.8rem;
-		}
-
-		h3 {
-			font-size: md;
-		}
-
-		h4 {
-			font-size: md;
-			font-family: 'Roboto Mono';
-		}
-
-		h5, h6 {
-			font-size: sm;
-		}
-
-		ul, ol {
-			padding-left: 2rem;
-			li > input {
-				display: none;
-			}	
-		}
-
-		a {
-			color: red_primary;
-
-			&:hover {
-				text-decoration: none;
-				color: red_secondary;
-			}
-		}
 
 		blockquote {
 			margin-left: 0;
@@ -227,10 +161,18 @@ export default styled(Post)`
 		}
 	}
 
+	.comments:before {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 2rem;
+		display: block;
+		width: 2px;
+		content: "";
+		background-color: grey_light;
+	}
+
 	@media only screen and (max-width: 576px) {
-		.post_info {
-			font-size: 1.3rem;
-		}
 
 		.PostContent {
 			padding: 2rem 2rem 2rem 2rem;

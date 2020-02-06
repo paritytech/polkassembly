@@ -67,15 +67,18 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
 		padding: 0.5rem 1rem;
         &.Proposed, &.Started {
             border-color: blue_primary;
-            color: blue_primary;
+			color: blue_primary;
+			background-color: blue_primary_transparent;
         }
         &.Enacted {
             border-color: green_primary;
-            color: green_primary;
+			color: green_primary;
+			background-color: green_primary_transparent;
         }
         &.Cancelled, &.NotPassed, &.Vetoed {
             border-color: red_primary;
-            color: red_primary;
+			color: red_primary;
+			background-color: red_primary_transparent;
         }
     }
 `;
