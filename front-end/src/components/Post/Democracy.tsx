@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Divider, Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import keyring from '@polkadot/ui-keyring';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -21,11 +22,12 @@ const APP = 'polkassembly';
 const WS_PROVIDER = 'ws://127.0.0.1:9944';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
+	const currentUser = useContext(UserDetailsContext);
+
 	type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
 	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
-	const [accountLoaded, setaccountLoaded] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
 
 	const onConvictionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,25 +38,13 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 	useEffect(() => {
 		async function connect() {
 			const provider = new WsProvider(WS_PROVIDER);
-
 			const apiResult = await ApiPromise.create({ provider });
 
 			setApi(apiResult);
-
 			apiResult.isReady.then(() => {
 				setApiReady(true);
 				console.log('API ready');
 			});
-
-			await web3Enable(APP);
-
-			const accounts = await web3Accounts();
-
-			keyring.loadAll({}, accounts);
-
-			setaccountLoaded(true);
-
-			console.log('Accounts loaded');
 		}
 
 		connect().catch((error) => {
@@ -66,20 +56,62 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		});
 	}, []);
 
+	const getLinkedAccount = async (): Promise<InjectedAccountWithMeta> => {
+		const extensions = await web3Enable(APP);
+
+		if (extensions.length === 0) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please install polkadot extenstion to use this feature',
+				status: NotificationStatus.ERROR
+			});
+		}
+
+		const accounts = await web3Accounts();
+		const accountMap: {[key: string]: InjectedAccountWithMeta} = {};
+
+		accounts.forEach(account => {
+			accountMap[account.address] = account;
+		});
+
+		const linkedAddress = currentUser?.addresses && currentUser?.addresses[0];
+
+		if (!linkedAddress) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please link an address in settings',
+				status: NotificationStatus.ERROR
+			});
+		}
+
+		const linkedAccount = accountMap[linkedAddress || ''];
+
+		if (!linkedAccount) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Linked account not available',
+				status: NotificationStatus.ERROR
+			});
+		}
+
+		const injected = await web3FromSource(linkedAccount.meta.source);
+
+		if (api) {
+			api.setSigner(injected.signer);
+		}
+
+		return linkedAccount;
+	};
+
 	const secondProposal = async () => {
 		if (!api) {
 			return;
 		}
 
-		const accounts = keyring.getAccounts();
-
-		const injected = await web3FromSource(accounts[0].meta.source);
-
-		api.setSigner(injected.signer);
-
+		const linkedAccount = await getLinkedAccount();
 		const second = api.tx.democracy.second(onchainId || 0);
 
-		second.signAndSend(accounts[0].address, ({ status }) => {
+		second.signAndSend(linkedAccount.address, ({ status }) => {
 			if (status.isFinalized) {
 				queueNotification({
 					header: 'Success!',
@@ -109,15 +141,10 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 			return;
 		}
 
-		const accounts = keyring.getAccounts();
-
-		const injected = await web3FromSource(accounts[0].meta.source);
-
-		api.setSigner(injected.signer);
-
+		const linkedAccount = await getLinkedAccount();
 		const vote = api.tx.democracy.vote(onchainId || 0, { aye, conviction });
 
-		vote.signAndSend(accounts[0].address, ({ status }) => {
+		vote.signAndSend(linkedAccount.address, ({ status }) => {
 			if (status.isFinalized) {
 				queueNotification({
 					header: 'Success!',
@@ -166,6 +193,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 									<label>&nbsp;</label>
 									<Button
 										primary
+										disabled={!apiReady}
 										onClick={secondProposal}
 									>
 										SECOND
@@ -240,6 +268,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 									fluid
 									basic
 									color='red'
+									disabled={!apiReady}
 									onClick={() => voteRefrendum(false)}
 								>
 									<Icon name='thumbs down' />
@@ -251,6 +280,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 								<Button
 									fluid
 									primary
+									disabled={!apiReady}
 									onClick={() => voteRefrendum(true)}
 								>
 									<Icon name='thumbs up' />
