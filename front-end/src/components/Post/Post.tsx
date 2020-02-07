@@ -165,17 +165,6 @@ export default styled(Post)`
 		}
 	}
 
-	.comments:before {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 2rem;
-		display: block;
-		width: 2px;
-		content: "";
-		background-color: grey_light;
-	}
-
 	@media only screen and (max-width: 576px) {
 
 		.PostContent {
