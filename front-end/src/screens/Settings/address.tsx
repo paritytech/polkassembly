@@ -6,7 +6,6 @@ import { stringToHex } from '@polkadot/util';
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
-import { APP, NETWORK } from '../../constants';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
@@ -18,6 +17,9 @@ import { handleTokenChange } from 'src/services/auth.service';
 interface Props{
 	className?: string
 }
+
+const APP = process.env.APP || 'polkassembly';
+const NETWORK = process.env.NETWORK || 'kasuma';
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);

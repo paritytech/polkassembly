@@ -5,7 +5,6 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { APP, WS_PROVIDER } from '../../constants';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
@@ -18,6 +17,9 @@ interface Props {
 	isReferendum?: boolean
 	onchainId?: number | null | undefined
 }
+
+const WS_PROVIDER = process.env.WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
+const APP = process.env.APP || 'polkassembly';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
