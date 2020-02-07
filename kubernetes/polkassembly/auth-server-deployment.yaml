@@ -18,6 +18,7 @@ spec:
       containers:
       - name: auth-server
         image: gcr.io/test-installations-222013/polkassembly-auth-server:master
+        imagePullPolicy: Always
         env:
         - name: JWT_KEY_PASSPHRASE
           valueFrom:

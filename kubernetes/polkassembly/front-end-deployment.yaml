@@ -18,18 +18,7 @@ spec:
       containers:
       - name: front-end
         image: gcr.io/test-installations-222013/polkassembly-front-end:master
-        env:
-        - name: REACT_APP_AUTH_SERVER_GRAPHQL_URL
-          value: "http://auth-server-service:8010/auth/graphql"
-        - name: REACT_APP_ENV
-          value: "dev"
-        - name: REACT_APP_HASURA_GRAPHQL_URL
-          value: "http://hasura-service:8080/v1/graphql"
-        - name: REACT_APP_JWT_PUBLIC_KEY
-          valueFrom:
-            secretKeyRef:
-              key: public.key
-              name: auth-jwt-key
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
           name: http
