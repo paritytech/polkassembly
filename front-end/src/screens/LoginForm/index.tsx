@@ -5,7 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useLoginMutation } from '../../generated/auth-graphql';
+import { useLoginMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
@@ -20,7 +20,7 @@ interface Props {
 const LoginForm = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const { history } = useRouter();
-	const [loginMutation, { loading, error }] = useLoginMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [loginMutation, { loading, error }] = useLoginMutation();
 	const { errors, handleSubmit, register } = useForm();
 
 	const handleSubmitForm = (data:Record<string, any>):void => {

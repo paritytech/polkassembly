@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server-express';
 
-import addresses from './query/addresses';
 import userQuery from './query/user';
 import usersQuery from './query/users';
 import subscription from './query/subscription';
@@ -47,7 +46,6 @@ export default gql`
 	${userType}
 
 	type Query {
-		${addresses}
 		${subscription}
 		${tokenQuery}
 		${userQuery}

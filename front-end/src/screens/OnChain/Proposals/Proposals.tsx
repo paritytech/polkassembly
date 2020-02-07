@@ -39,8 +39,7 @@ const Proposals = ({ className, data }: Props) => {
 						</li>
 					));
 				}
-			)
-			}
+			)}
 		</ul>
 	);
 };

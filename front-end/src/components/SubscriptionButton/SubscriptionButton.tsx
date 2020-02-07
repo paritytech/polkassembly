@@ -15,12 +15,11 @@ const SubscriptionButton = function ({
 }:DiscussionProps) {
 
 	const [subscribed, setSubscribed] = useState(false);
-	const [postSubscribeMutation] = usePostSubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
-	const [postUnsubscribeMutation] = usePostUnsubscribeMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [postSubscribeMutation] = usePostSubscribeMutation();
+	const [postUnsubscribeMutation] = usePostUnsubscribeMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	const { data }  = useSubscriptionQuery({
-		context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL },
 		variables: { postId }
 	});
 
