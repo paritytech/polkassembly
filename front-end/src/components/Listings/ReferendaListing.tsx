@@ -2,25 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../../../components/GovernanceCard';
-import { LatestDemocracyReferendumPostQuery } from '../../../generated/graphql';
+import GovernanceCard from '../GovernanceCard';
+import { LatestDemocracyReferendaPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDemocracyReferendumPostQuery
+  data: LatestDemocracyReferendaPostsQuery
 }
 
 const Referenda = ({ className, data }: Props) => {
 	if (!data.posts || !data.posts.length) return <div>No referendum found.</div>;
 
 	return (
-		<ul className={`${className} proposals__list`}>
+		<ul className={`${className} referenda__list`}>
 			{data.posts.map(
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_referendum_id;
 
 					return (!!post?.author?.username && (
-						<li key={post.id} className='proposals__item'>
+						<li key={post.id} className='referenda__item'>
 							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
 									displayname={post.author.name}
@@ -38,8 +38,7 @@ const Referenda = ({ className, data }: Props) => {
 						</li>
 					));
 				}
-			)
-			}
+			)}
 		</ul>
 	);
 };
@@ -49,7 +48,7 @@ export default styled(Referenda)`
 		list-style-type: none;
 	}
 
-	.proposals__item {
+	.referenda__item {
 		margin: 0 0 1rem 0;
 		a:hover {
 			text-decoration: none;

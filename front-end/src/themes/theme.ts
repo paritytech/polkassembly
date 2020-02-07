@@ -6,7 +6,8 @@ export const theme = {
 		blue_primary_transparent: 'rgba(77, 77, 209, 0.05)',
 		green_primary: '#4DD18F',
 		green_primary_transparent: 'rgba(4, 221, 24, 0.05)',
-		grey_light: '#EEE',
+		grey_app_background: '#F7F9F9',
+		grey_light: '#E3E6E6',
 		grey_primary: '#706D6D',
 		grey_secondary: '#B5AEAE',
 		red_light: '#FFF1F0',
@@ -17,7 +18,7 @@ export const theme = {
 	},
 	fontSizes: {
 		input_text_size: '1.3rem',
-		lg: '2.1rem',
+		lg: '1.8rem',
 		md: '1.5rem',
 		sm: '1.2rem',
 		xl: '3rem',

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLatestDemocracyReferendaPostsQuery } from '../../../generated/graphql';
-import Referenda from './Referenda';
+import Referenda from '../../../components/Listings/ReferendaListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -11,7 +11,7 @@ interface Props {
 
 const ReferendaContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyReferendaPostsQuery();
+	const { data, error } = useLatestDemocracyReferendaPostsQuery({ variables: { limit: 2 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 

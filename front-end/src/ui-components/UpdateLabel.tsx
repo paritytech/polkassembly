@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import React from 'react';
 import { Popup } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 interface Props{
     className?: string
@@ -26,4 +26,8 @@ export default styled(UpdateLabel)`
     span {
         color: #B5AEAE;
     }
+
+    &.md {
+		font-size: md;
+	}
 }`;

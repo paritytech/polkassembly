@@ -4,6 +4,7 @@ import styled from '@xstyled/styled-components';
 import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
 import StatusTag from '../../ui-components/StatusTag';
+import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props {
 	className?: string,
@@ -11,7 +12,7 @@ interface Props {
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
 }
 const PostContent = ({ className, onchainId, post }:Props) => {
-	const { author, created_at, content, title } = post;
+	const { author, created_at, content, title, updated_at } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>;
 	return (
@@ -24,6 +25,11 @@ const PostContent = ({ className, onchainId, post }:Props) => {
 					displayname={author.name}
 					username={author.username}
 					topic={post.topic.name}
+				/>
+				<UpdateLabel
+					className='md'
+					created_at={created_at}
+					updated_at={updated_at}
 				/>
 			</div>
 			{<StatusTag className='post_tags' status='Proposed'/>}

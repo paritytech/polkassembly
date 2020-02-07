@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
-import DiscussionCard from '../../../components/DiscussionCard';
-import { LatestDiscussionPostQuery } from '../../../generated/graphql';
+import DiscussionCard from '../DiscussionCard';
+import { LatestDiscussionPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDiscussionPostQuery
+  data: LatestDiscussionPostsQuery
 }
 
-const Discussion = ({ className, data }: Props) => {
+const Discussions = ({ className, data }: Props) => {
 	if (!data.posts || !data.posts.length) return <div>No discussion found.</div>;
 
 	return (
@@ -20,7 +20,7 @@ const Discussion = ({ className, data }: Props) => {
 					(post) => {
 
 						return (!!post?.author?.username && (
-							<li key={post.id} className='proposals__item'>
+							<li key={post.id} className='discussions__item'>
 								{<Link to={`/post/${post.id}`}>
 									<DiscussionCard
 										displayname={post?.author?.name}
@@ -29,7 +29,6 @@ const Discussion = ({ className, data }: Props) => {
 											: 'no'}
 										created_at={post.created_at}
 										title={post.title}
-										/* topic={post.topic.name} */
 										username={post.author.username}
 									/>
 								</Link>}
@@ -42,12 +41,12 @@ const Discussion = ({ className, data }: Props) => {
 	);
 };
 
-export default styled(Discussion)`
+export default styled(Discussions)`
 	li {
 		list-style-type: none;
 	}
 
-	.proposals__item {
+	.discussions__item {
 		margin: 0 0 1rem 0;
 		a:hover {
 			text-decoration: none;

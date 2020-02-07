@@ -4,7 +4,6 @@ import styled from '@xstyled/styled-components';
 
 /* import CreationLabel from '../ui-components/CreationLabel'; */
 import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../generated/graphql';
-import UpdateLabel from '../ui-components/UpdateLabel';
 
 interface Props {
 	className?: string,
@@ -12,7 +11,7 @@ interface Props {
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
 }
 const PostContent = ({ className, post }:Props) => {
-	const { author, content, created_at, updated_at } = post;
+	const { author, content } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>;
 	return (
@@ -27,10 +26,6 @@ const PostContent = ({ className, post }:Props) => {
 						displayname={author.name}
 						username={author.username }
 					/> */}
-					<UpdateLabel
-						created_at={created_at}
-						updated_at={updated_at}
-					/>
 				</div>
 				<ReactMarkdown source={content} />
 			</div>

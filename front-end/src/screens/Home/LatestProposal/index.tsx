@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useLatestDemocracyProposalPostQuery } from '../../../generated/graphql';
-import Proposals from './LatestProposal';
+import { useLatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
+import Proposals from '../../../components/Listings/ProposalsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -11,7 +11,7 @@ interface Props {
 
 const ProposalContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyProposalPostQuery();
+	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 1 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
