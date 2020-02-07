@@ -49,6 +49,7 @@ export const ADDRESS_LINK_CONFIRM = gql`
 	mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
     	addressLinkConfirm(address_id: $address_id, signature: $signature) {
 			message
+			token
 		}
 	}
 `;
@@ -57,15 +58,8 @@ export const ADDRESS_UNLINK = gql`
 	mutation addressUnlink($address: String!) {
 		addressUnlink(address: $address) {
 			message
+			token
 		}
 	}
 `;
 
-export const ADDRESSES = gql`
-	query addresses {
-		addresses {
-			address
-			public_key
-		}
-	}
-`;

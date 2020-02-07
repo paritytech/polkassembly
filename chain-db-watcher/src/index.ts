@@ -6,13 +6,12 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
 import {
-	addPostAndProposal,
-	addReferendumId,
-	canUpdateDiscussionDB,
-	getAssociatedProposalId,
+	addDiscussionPostAndProposal,
+	addDiscussionReferendum,
 	proposalDiscussionExists
 } from './graphql_helpers';
 import { proposalSubscription, referendumSubscription } from './queries';
+import { syncDBs } from './sync';
 
 dotenv.config();
 
@@ -23,24 +22,27 @@ const eventStatus = {
 	Started: 'Started'
 };
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
-const getWsClient = function (wsurl: string): SubscriptionClient {
-	const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
-	return client;
-};
 
-// wsurl: GraphQL endpoint
-// query: GraphQL query (use gql`` from the 'graphql-tag' library)
-// variables: Query variables object
-const createSubscriptionObservable = (
-	wsurl: string,
-	query: any,
-	variables?: any
-) => {
-	const link = new WebSocketLink(getWsClient(wsurl));
-	return execute(link, { query: query, variables: variables });
-};
+async function main (): Promise<void> {
+	console.log('🔄 Syncing chain-db and discussion-db...');
+	await syncDBs();
 
-function main (): void {
+	const getWsClient = function (wsurl: string): SubscriptionClient {
+		const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
+		return client;
+	};
+
+	// wsurl: GraphQL endpoint
+	// query: GraphQL query (use gql`` from the 'graphql-tag' library)
+	// variables: Query variables object
+	const createSubscriptionObservable = (
+		wsurl: string,
+		query: any,
+		variables?: any
+	) => {
+		const link = new WebSocketLink(getWsClient(wsurl));
+		return execute(link, { query: query, variables: variables });
+	};
 	if (!graphQLEndpoint) {
 		console.error(
 			chalk.red('GraphQL endpoint not set in environment variables!')
@@ -62,33 +64,26 @@ function main (): void {
 
 	proposalSubscriptionClient.subscribe(
 		({ data }): void => {
-			// console.log(`Received Proposal event: ${JSON.stringify(data, null, 2)}`);
-
 			if (data?.proposal.mutation === subscriptionMutation.Created) {
 				const { proposalId, author } = data.proposal.node;
 				proposalDiscussionExists(proposalId).then(alreadyExist => {
 					if (!alreadyExist) {
-						addPostAndProposal({ onchainProposalId: proposalId, proposer: author }).then(
-							() => console.log(`${chalk.green('✔︎')} Proposal ${proposalId.toString()} added to the database.`)
-						).catch(error => console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`)));
+						addDiscussionPostAndProposal({ onchainProposalId: Number(proposalId), proposer: author });
 					} else {
 						console.error(chalk.red(`✖︎ Proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
 					}
 				}).catch(error => console.error(chalk.red(error)));
 			}
-		}
-		,
+		},
 		err => {
 			console.error(chalk.red(err));
 		}
 	);
 
 	referendumSubscriptionClient.subscribe(({ data }): void => {
-		// console.log(`Received Referendum event: ${JSON.stringify(data, null, 2)}`);
-
 		if (data?.referendum.mutation === subscriptionMutation.Created) {
 			const {
-				primage,
+				preimage,
 				referendumId,
 				referendumStatus
 			} = data.referendum.node;
@@ -101,49 +96,20 @@ function main (): void {
 						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus[0].status}."`
 					)
 				);
+				return;
 			}
-			const referendumCreationBlockHash =
-				referendumStatus[0].blockNumber.hash;
-
-			getAssociatedProposalId({
-				preimageHash: primage?.hash,
-				referendumCreationBlockHash
-			})
-				.then(associatedProposalId => {
-					if (associatedProposalId === null) {
-						throw new Error(
-							`No proposal Id found on chain-db for referendum id: ${referendumId}.`
-						);
-					}
-
-					canUpdateDiscussionDB(associatedProposalId)
-						.then(canUpdate => {
-							if (canUpdate) {
-								addReferendumId({
-									onchainProposalId: associatedProposalId,
-									onchainReferendumId: referendumId
-								})
-									.then(() =>
-										console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`)
-									)
-									.catch((error: any) =>
-										console.error(chalk.red(`⚠︎ Error adding a new proposal: ${error}`))
-									);
-							} else {
-								console.error(
-									chalk.red(
-										`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-									)
-								);
-							}
-						})
-						.catch(error => console.error(chalk.red(error)));
-				})
-				.catch(e => {
-					throw new Error(e);
-				});
+			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
+			// FIXME This only takes care of democracy proposals going from proposal -> referendum
+			// it does not cater for any other proposal/motion that are externally tabled
+			addDiscussionReferendum({
+				preimageHash: preimage?.hash,
+				referendumCreationBlockHash,
+				referendumId
+			}).catch(e => {
+				console.error(chalk.red(e));
+			});
 		}
 	});
 }
 
-main();
+main().catch(error => console.error(chalk.red(error)));

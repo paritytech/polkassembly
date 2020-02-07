@@ -1,0 +1,21 @@
+- args:
+    role: user
+    table:
+      name: onchain_links
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - onchain_proposal_id
+      - id
+      - post_id
+      - proposer_address
+      - created_at
+      filter: {}
+    role: user
+    table:
+      name: onchain_links
+      schema: public
+  type: create_select_permission
