@@ -68,8 +68,8 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 					<div className='PostContent'>
 						<div className='post_tags'>
 							<Tag>{post.topic.name}</Tag>
-							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}></StatusTag>}
-							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.referendumStatus?.[0].status}></StatusTag>}
+							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}></StatusTag>}
+							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}></StatusTag>}
 						</div>
 						<EditablePostContent
 							isEditing={isEditing}
