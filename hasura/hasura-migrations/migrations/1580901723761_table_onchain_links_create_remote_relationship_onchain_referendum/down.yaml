@@ -1,0 +1,13 @@
+- args:
+    hasura_fields:
+    - onchain_proposal_id
+    remote_field:
+      proposals:
+        arguments:
+          where:
+            proposalId: $onchain_proposal_id
+    remote_schema: chain-db
+    table:
+      name: onchain_links
+      schema: public
+  type: update_remote_relationship
