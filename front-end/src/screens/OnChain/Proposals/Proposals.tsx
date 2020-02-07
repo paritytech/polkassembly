@@ -30,7 +30,7 @@ const Proposals = ({ className, data }: Props) => {
 										: 'no'}
 									created_at={post.created_at}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}
+									status={post.onchain_link?.onchain_proposal?.proposalStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 									username={post.author.username}

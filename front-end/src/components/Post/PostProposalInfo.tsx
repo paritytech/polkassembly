@@ -15,7 +15,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 		onchain_proposal: onchainProposal,
 		proposer_address: proposerAddress
 	} = onchainLink;
-	const preimage = onchainProposal?.[0]?.preimage;
+	const preimage = onchainProposal?.preimage;
 	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
 
 	return (

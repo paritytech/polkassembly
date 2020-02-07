@@ -55,7 +55,7 @@ export const QUERY_LATEST_REFERENDA = gql`
             onchain_referendum_id
             onchain_referendum(where: {}) {
                 id
-                referendumStatus {
+                referendumStatus(last: 1) {
                     id
                     status
                 }
