@@ -88,18 +88,12 @@ dockerize-auth-server:
       - master
   <<: *build_and_push
 
-dockerize-hasura:
-  stage: dockerize
-  environment:
-    name: parity-build
-  only:
-      - master
-  <<: *build_and_push
-
 #### stage:                        deploy
 
 deploy:
   stage: deploy
+  variables:
+    http_upgrade:'$http_upgrade' # hack, to make nginx config work with envsubst
   environment:
     name: dashboards-cluster-1
   tags:
