@@ -18,8 +18,8 @@ interface Props{
 	className?: string
 }
 
-const APP = process.env.APP || 'polkassembly';
-const NETWORK = process.env.NETWORK || 'kasuma';
+const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
+const NETWORK = process.env.REACT_APP_NETWORK || 'kasuma';
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -31,7 +31,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 	useEffect(() => {
 		async function connect() {
-			await web3Enable(APP);
+			await web3Enable(APPNAME);
 
 			const allAccounts = await web3Accounts();
 

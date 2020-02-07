@@ -17,9 +17,9 @@ Create a `.env` file with the following environmen variable
 REACT_APP_ENV="dev"
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
 REACT_APP_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIIBI...wIDAQAB\n-----END PUBLIC KEY-----"
-APP="polkassembly"
-NETWORK="kasuma"
-WS_PROVIDER="wss://kusama-rpc.polkadot.io" # ws://127.0.0.1:9944
+REACT_APP_APPNAME="polkassembly"
+REACT_APP_NETWORK="kasuma"
+REACT_APP_WS_PROVIDER="wss://kusama-rpc.polkadot.io" # ws://127.0.0.1:9944
 
 
 # used for graphql type generation

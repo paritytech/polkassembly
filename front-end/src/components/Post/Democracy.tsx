@@ -15,8 +15,8 @@ interface Props {
 	onchainId?: number | null | undefined
 }
 
-const WS_PROVIDER = process.env.WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
-const APP = process.env.APP || 'polkassembly';
+const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
+const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const Democracy = ({ isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
@@ -47,7 +47,7 @@ const Democracy = ({ isProposal, isReferendum, onchainId }: Props) => {
 	}, []);
 
 	const getLinkedAccount = async (): Promise<InjectedAccountWithMeta | undefined> => {
-		const extensions = await web3Enable(APP);
+		const extensions = await web3Enable(APPNAME);
 
 		if (extensions.length === 0) {
 			queueNotification({
