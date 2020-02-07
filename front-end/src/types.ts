@@ -7,6 +7,7 @@ export interface UserDetailsContextType {
     username?: string | null,
     email?: string | null,
     email_verified?: boolean | null,
+    addresses?: string[] | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
 
@@ -19,10 +20,11 @@ export enum Role {
 
 // these are enforced by Hasura
 export interface HasuraClaimPayload {
-    'x-hasura-allowed-roles': Array<Role>
+    'x-hasura-allowed-roles': Role[]
     'x-hasura-default-role': Role
     'x-hasura-user-email': string
     'x-hasura-user-id': string
+    'x-hasura-kusama': string
 }
 
 export interface JWTPayploadType {

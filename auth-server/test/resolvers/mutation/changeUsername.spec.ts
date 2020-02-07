@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { AuthenticationError, ForbiddenError } from 'apollo-server';
+import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import 'mocha';
 
 import User from '../../../src/model/User';
@@ -67,6 +67,18 @@ describe('changeUsername mutation', () => {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
 			expect(error.message).to.eq(messages.INVALID_JWT);
+		}
+	});
+
+	it('should not be able to change username if username contains whitespace', async () => {
+		const username = 'user name';
+
+		try {
+			await changeUsername(null, { username }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
 		}
 	});
 });

@@ -12,7 +12,7 @@ import { Form } from '../../ui-components/Form';
 const Fullname = (): JSX.Element => {
 	const [name, setName] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
-	const [changeNameMutation, { loading, error }] = useChangeNameMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [changeNameMutation, { loading, error }] = useChangeNameMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ const Fullname = (): JSX.Element => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (name) {
+		if (name || name === '') {
 			changeNameMutation({
 				variables: {
 					newName: name
@@ -63,7 +63,7 @@ const Fullname = (): JSX.Element => {
 		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field width={10}>
-					<label>Full Name</label>
+					<label>Display Name</label>
 					<input
 						value={name || ''}
 						onChange={onNameChange}

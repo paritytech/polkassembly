@@ -1,5 +1,5 @@
 import { UserDetailsContextType } from '../types';
-import { LoginResponse } from '../generated/auth-graphql';
+import { LoginResponse } from '../generated/graphql';
 
 /**
  * Store the JWT token in localstorage

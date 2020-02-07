@@ -11,14 +11,14 @@ interface argsType {
 }
 
 export default async (parent, { email }: argsType, ctx: Context): Promise<ChangeResponseType> => {
-	let token = getTokenFromReq(ctx.req);
+	const token = getTokenFromReq(ctx.req);
 
 	if (!validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
 	const authServiceInstance = new AuthService();
-	token = await authServiceInstance.ChangeEmail(token, email);
+	const updatedJWT = await authServiceInstance.ChangeEmail(token, email);
 
-	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL, token };
+	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL, token: updatedJWT };
 };

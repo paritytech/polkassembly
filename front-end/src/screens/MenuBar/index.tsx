@@ -5,7 +5,7 @@ import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semant
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useLogoutMutation } from '../../generated/auth-graphql';
+import { useLogoutMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { logout } from '../../services/auth.service';
 
@@ -17,12 +17,16 @@ interface Props {
 
 const MenuBar = ({ className } : Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
-	const [logoutMutation] = useLogoutMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [logoutMutation] = useLogoutMutation();
 	const { history } = useRouter();
 	const { setUserDetailsContextState, username } = currentUser;
 
-	const handleLogout = () => {
-		logoutMutation().catch(e => console.error(e));
+	const handleLogout = async () => {
+		try {
+			await logoutMutation();
+		} catch (error) {
+			console.error(error);
+		}
 		logout(setUserDetailsContextState);
 		history.push('/');
 	};
@@ -30,7 +34,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Menu Items
 	const contentItems = [
 		{ content:'Discussions', icon:'comments', key:'discussions', to:'/discussions' },
-		{ content: 'Proposals', icon:'file alternate', key:'proposals', to:'/proposals' }
+		{ content: 'On chain', icon:'file alternate', key:'proposals', to:'/onchain' }
 	];
 
 	const loggedOutItems = [
@@ -167,13 +171,13 @@ export default styled(MenuBar)`
 				top: 0.4rem;
 				border-radius: 0.8rem!important;
 			}
-	
+
 			#rightmenu {
 				right: 2rem;
 				font-size: 1.8rem;
 				max-width: 2rem;
 			}
-	
+
 			.item {
 				font-size: md;
 				display: inline-block;
@@ -229,7 +233,7 @@ export default styled(MenuBar)`
 
 		.user_items {
 			text-transform: capitalize;
-			
+
 		}
 	}
 

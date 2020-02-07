@@ -18,7 +18,7 @@ interface Props{
 const Email = ({ className }: Props): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
-	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation({ context: { uri : process.env.REACT_APP_AUTH_SERVER_GRAPHQL_URL } });
+	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ const Email = ({ className }: Props): JSX.Element => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (email) {
+		if (email || email === '') {
 			changeEmailMutation({
 				variables: {
 					email

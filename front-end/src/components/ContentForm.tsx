@@ -8,7 +8,7 @@ import { TextArea } from '../ui-components/TextArea';
 
 interface Props {
 	className?: string
-	errorContent?: FieldError | NestDataObject<any> | NestDataObject<any>[]
+	errorContent?: FieldError | NestDataObject<any> | NestDataObject<any>[] | FieldError[] | undefined
 	onChange?: (content: string) => void
 	value?: string
 }
