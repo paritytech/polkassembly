@@ -10,13 +10,15 @@ interface Props {
 	className?: string,
 	onchainId?: number | null
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
+	postStatus?: string
 }
-const PostContent = ({ className, onchainId, post }:Props) => {
+const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 	const { author, created_at, content, title, updated_at } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>;
 	return (
 		<div className={className}>
+			{postStatus && <StatusTag className='post_tags' status={postStatus}/>}
 			<h2>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h2>
 			<div className='post_info'>
 				<CreationLabel
@@ -32,7 +34,6 @@ const PostContent = ({ className, onchainId, post }:Props) => {
 					updated_at={updated_at}
 				/>
 			</div>
-			{<StatusTag className='post_tags' status='Proposed'/>}
 		</div>
 	);
 };
@@ -44,6 +45,7 @@ export default styled(PostContent)`
 	h2 {
 		font-family: 'Roboto';
 		font-size: xl;
+		max-width: calc(100%-10rem);
 	}
 
 	.post_info {
@@ -55,6 +57,13 @@ export default styled(PostContent)`
 		top: 0rem;
 		right: 0rem;
 		text-align: right;
-		display: flex;
+	}
+
+	@media only screen and (max-width: 768px) {
+
+		.post_tags {
+			position: relative;
+			margin-bottom: 2rem;
+		}
 	}
 `;

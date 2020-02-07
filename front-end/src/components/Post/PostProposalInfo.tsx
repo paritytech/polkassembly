@@ -25,25 +25,25 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 			<h4>On-Chain Info</h4>
 			{proposerAddress && depositAmount && method && preimageArguments && metaDescription &&
 			<Grid>
-				<Grid.Column width={4}>
+				<Grid.Column mobile={16} tablet={4} computer={4}>
 					<div className='info_group'>
 						<h6>Deposit</h6>
 						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 					</div>
 				</Grid.Column>
-				<Grid.Column width={12}>
+				<Grid.Column mobile={16} tablet={12} computer={12}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
 						{proposerAddress}
 					</div>
 				</Grid.Column>
-				<Grid.Column width={4}>
+				<Grid.Column mobile={16} tablet={4} computer={4}>
 					<div className='info_group'>
 						<h6>Method</h6>
 						{method}
 					</div>
 				</Grid.Column>
-				<Grid.Column width={12}>
+				<Grid.Column mobile={16} tablet={12} computer={12}>
 					{preimageArguments && preimageArguments.length
 						? <div className='info_group'>
 							<h6>Arguments</h6>
@@ -55,7 +55,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 						</div>
 						: null}
 				</Grid.Column>
-				<Grid.Column width={16}>
+				<Grid.Column mobile={16} tablet={16} computer={16}>
 					<div className='info_group'>
 						<h6>Description</h6>
 						{metaDescription}
@@ -75,7 +75,6 @@ export default styled(PostProposalInfo)`
 	font-size: sm;
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;
-
 	font-family: 'Roboto Mono';
 
 	h6 {
@@ -92,5 +91,9 @@ export default styled(PostProposalInfo)`
 	.methodArguments {
 		display: block;
 		margin-bottom: 0.4rem;
+	}
+
+	@media only screen and (max-width: 576px) {
+		padding: 2rem;
 	}
 `;

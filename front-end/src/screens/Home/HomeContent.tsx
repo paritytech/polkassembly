@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
-/* import { Link } from 'react-router-dom'; */
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-/* import DiscussionCard from '../../components/DiscussionCard';
-import Governancecard from '../../components/GovernanceCard'; */
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 /* import { LatestPostsQuery } from '../../generated/graphql'; */
 import { LatestProposalPostsQuery } from '../../generated/graphql';
@@ -72,7 +69,7 @@ export default styled(HomeContent)`
 	}
 
 	@media only screen and (max-width: 576px) {
-		h3 {
+		h1, h2 {
 			margin-left: 1.5rem!important;
 		}
 
@@ -90,13 +87,6 @@ export default styled(HomeContent)`
 	li {
         list-style-type: none;
     }
-
-	.Home__item {
-		margin: 0 0 1rem 0;
-		a:hover {
-			tex	t-decoration: none;
-		}
-	}
 
 	.mainButtonContainer {
 		align-items: flex-start;

@@ -41,17 +41,20 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
 	let definedOnchainLink : OnchainLinkReferendumFragment | OnchainLinkProposalFragment | undefined;
+	let postStatus: string | undefined;
 
 	if (isReferendum){
 		referendumPost = post as ReferendumPostFragment;
 		definedOnchainLink = referendumPost.onchain_link as OnchainLinkReferendumFragment;
 		onchainId = definedOnchainLink.onchain_referendum_id;
+		postStatus = referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status;
 	}
 
 	if (isProposal) {
 		proposalPost = post as ProposalPostFragment;
 		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
 		onchainId = definedOnchainLink.onchain_proposal_id;
+		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 	}
 
 	if (!post) return <NoPostFound/>;
@@ -61,14 +64,10 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='PostContent'>
-						{/* <div className='post_tags'>
-							<Tag>{post.topic.name}</Tag>
-							{isProposal && <StatusTag status={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}></StatusTag>}
-							{isReferendum && <StatusTag status={referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}></StatusTag>}
-						</div> */}
 						<PostInfo
 							onchainId={onchainId}
 							post={post}
+							postStatus={postStatus}
 						/>
 						<EditablePostContent
 							isEditing={isEditing}
@@ -180,7 +179,7 @@ export default styled(Post)`
 	@media only screen and (max-width: 576px) {
 
 		.PostContent {
-			padding: 2rem 2rem 2rem 2rem;
+			padding: 2rem
 		}
 	}
 `;

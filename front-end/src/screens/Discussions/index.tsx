@@ -34,13 +34,24 @@ const Discussions = ({ className } : {className?: string}) => {
 
 export default styled(Discussions)`
 
-	.referendaContainer, .proposalContainer {
-		margin-bottom: 3rem;
-	}
-
 	@media only screen and (max-width: 768px) {
+
 		h1 {
 			margin-left: 3rem;
+		}
+
+		.mainButtonContainer {
+			margin: 0rem;
+		}
+	}
+
+	@media only screen and (max-width: 991px) and (min-width: 768px) {
+		.ui[class*="tablet reversed"].grid {
+			flex-direction: column-reverse;
+		}
+
+		.mainButtonContainer {
+			margin-top: 1rem!important;
 		}
 	}
 
@@ -52,5 +63,22 @@ export default styled(Discussions)`
 		h1 {
 			font-size: 2.1rem;
 		}
+
+		.mainButtonContainer {
+			align-items: stretch!important;
+			margin: 1rem!important;
+
+			.newPostButton {
+				padding: 0.8rem 1rem;
+				border-radius: 0.5rem;
+			}
+		}
+	}
+
+	.mainButtonContainer {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 `;
