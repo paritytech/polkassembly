@@ -11,11 +11,8 @@ import EditablePostContent from '../EditablePostContent';
 import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
-/* import Tag from '../../ui-components/Tag';
-import StatusTag from '../../ui-components/StatusTag'; */
 import PostProposalInfo from './PostProposalInfo';
 import PostReferendumInfo from './PostReferendumInfo';
-import PostInfo from './PostInfo';
 
 interface Props {
 	className?: string;
@@ -63,16 +60,12 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		<Container className={className}>
 			<Grid>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<div className='PostContent'>
-						<PostInfo
-							onchainId={onchainId}
-							post={post}
-							postStatus={postStatus}
-						/>
+					<div className='post_content'>
 						<EditablePostContent
 							isEditing={isEditing}
 							onchainId={onchainId}
 							post={post}
+							postStatus={postStatus}
 							refetch={refetch}
 							toggleEdit={toggleEdit}
 						/>
@@ -114,7 +107,7 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 
 export default styled(Post)`
 
-	.PostContent {
+	.post_content {
 		background-color: white;
 		border-style: solid;
 		border-width: 1px;
@@ -131,43 +124,9 @@ export default styled(Post)`
     	display: flex;
 	}
 
-		blockquote {
-			margin-left: 0;
-			padding: 0 1em;
-			color: grey_primary;
-			border-left-style: solid;
-			border-left-width: 0.25rem;
-			border-left-color: grey_primary;
-			font-size: 1.6rem;
-				& > :first-child {
-					margin-top: 0;
-				}
-				& > :last-child {
-					margin-bottom: 0;
-				}
-		}
-
-		img {
-			max-width: 100%;
-			margin: 2rem 0;
-		}
-
-		code {
-			padding: 0.4rem;
-			margin: 0;
-			font-size: sm;
-			background-color: rgba(0, 0, 0, 0.04);
-			border-radius: 3px;
-			color: black_text;
-			&::before, &::after {
-			  letter-spacing: -0.2em;
-			}
-		}
-	}
-
 	@media only screen and (max-width: 576px) {
 
-		.PostContent {
+		.post_content {
 			padding: 2rem
 		}
 	}
