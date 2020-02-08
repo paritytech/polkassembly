@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLatestDemocracyReferendaPostsQuery } from '../../../generated/graphql';
-import Referenda from '../../../components/Listings/ReferendaListing';
+import ReferendaListing from '../../../components/Listings/ReferendaListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -15,7 +15,7 @@ const ReferendumContainer = ({ className }:Props) => {
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <Referenda className={className} data={data}/>;
+	if (data) return <ReferendaListing className={className} data={data}/>;
 
 	return <Loader/>;
 };

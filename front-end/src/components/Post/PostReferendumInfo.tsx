@@ -24,13 +24,13 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	return (
 		<div className={className}>
 			<h4>On-Chain Info</h4>
-			{proposerAddress && depositAmount && method && preimageArguments && metaDescription &&
 			<Grid>
 				<Grid.Column mobile={16} tablet={4} computer={4}>
+					{depositAmount &&
 					<div className='info_group'>
 						<h6>Deposit</h6>
 						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
-					</div>
+					</div>}
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={12} computer={12}>
 					<div className='info_group'>
@@ -39,10 +39,11 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 					</div>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={4} computer={4}>
+					{method &&
 					<div className='info_group'>
 						<h6>Method</h6>
 						{method}
-					</div>
+					</div>}
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={12} computer={12}>
 					{preimageArguments && preimageArguments.length
@@ -57,12 +58,13 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 						: null}
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={16}>
+					{metaDescription &&
 					<div className='info_group'>
 						<h6>Description</h6>
 						{metaDescription}
-					</div>
+					</div>}
 				</Grid.Column>
-			</Grid>}
+			</Grid>
 		</div>
 	);
 };

@@ -28,12 +28,8 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 				:
 				<span>{username}</span>
 		}
-		{
-			topic
-				?
-				<>in <InlineTag>{topic}</InlineTag> </>
-				:
-				''
+		{topic &&
+			<>in <InlineTag>{topic}</InlineTag> </>
 		}
 		{moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
 	</span>;

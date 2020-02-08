@@ -3,8 +3,6 @@ import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-/* import { LatestPostsQuery } from '../../generated/graphql'; */
-import { LatestProposalPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
 import DiscussionContainer from './LatestDiscussion';
@@ -13,7 +11,6 @@ import ReferendumContainer from './LatestReferendum';
 
 interface Props {
   className?: string
-  data: LatestProposalPostsQuery
 }
 
 const HomeContent = ({ className }: Props) => {

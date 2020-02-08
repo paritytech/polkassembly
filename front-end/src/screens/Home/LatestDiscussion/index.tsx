@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLatestDiscussionPostsQuery } from '../../../generated/graphql';
-import Discussions from '../../../components/Listings/DiscussionsListing';
+import DiscussionsListing from '../../../components/Listings/DiscussionsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -15,7 +15,7 @@ const DiscussionContainer = ({ className }:Props) => {
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <Discussions className={className} data={data}/>;
+	if (data) return <DiscussionsListing className={className} data={data}/>;
 
 	return <Loader/>;
 };

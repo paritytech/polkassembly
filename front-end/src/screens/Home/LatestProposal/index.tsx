@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useLatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
-import Proposals from '../../../components/Listings/ProposalsListing';
+import ProposalsListing from '../../../components/Listings/ProposalsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -15,7 +15,7 @@ const ProposalContainer = ({ className }:Props) => {
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <Proposals className={className} data={data}/>;
+	if (data) return <ProposalsListing className={className} data={data}/>;
 
 	return <Loader/>;
 };
