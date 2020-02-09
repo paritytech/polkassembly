@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import styled from '@xstyled/styled-components';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
 import getExtensionUrl from '../../util/getExtensionUrl';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
@@ -25,9 +24,11 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 	const currentUser = useContext(UserDetailsContext);
 
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
+	const [accountsNotFound, setAccountsNotFound] = useState(false);
+	const [linkedAddressNotFound, setLinkedAddressNotFound] = useState(false);
+	const [linkedAddressNotAvailable, setLinkedAddressNotAvailable] = useState(false);
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
-	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
 		async function connect() {
@@ -60,13 +61,10 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		const accounts = await web3Accounts();
 
 		if (accounts.length === 0) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Please add accounts to polkadot js extenstion to use this feature',
-				status: NotificationStatus.ERROR
-			});
-
+			setAccountsNotFound(true);
 			return;
+		} else {
+			setAccountsNotFound(false);
 		}
 
 		const accountMap: {[key: string]: InjectedAccountWithMeta} = {};
@@ -78,25 +76,19 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		const linkedAddress = currentUser?.addresses && currentUser?.addresses[0];
 
 		if (!linkedAddress) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Please link an address in settings',
-				status: NotificationStatus.ERROR
-			});
-
+			setLinkedAddressNotFound(true);
 			return;
+		} else {
+			setLinkedAddressNotFound(false);
 		}
 
 		const linkedAccount = accountMap[linkedAddress || ''];
 
 		if (!linkedAccount) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Linked account not available',
-				status: NotificationStatus.ERROR
-			});
-
+			setLinkedAddressNotAvailable(true);
 			return;
+		} else {
+			setLinkedAddressNotAvailable(false);
 		}
 
 		const injected = await web3FromSource(linkedAccount.meta.source);
@@ -112,8 +104,41 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		return (
 			<div className={className}>
 				<div className='card'>
-					<div className='text-muted'>Polkadot extension not detected.</div>&nbsp;
+					<div className='text-muted'>Polkadot extension not detected.</div>
 					<div className='text-muted'>Please reload this page after installing <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
+				</div>
+			</div>
+		);
+	}
+
+	if (accountsNotFound) {
+		return (
+			<div className={className}>
+				<div className='card'>
+					<div className='text-muted'>Please add accounts to polkadot js extenstion to use this feature.</div>
+					<div className='text-muted'>Please reload this page after adding accounts.</div>
+				</div>
+			</div>
+		);
+	}
+
+	if (linkedAddressNotFound) {
+		return (
+			<div className={className}>
+				<div className='card'>
+					<div className='text-muted'>Please link an address in <Link to={'/settings'}>settings</Link> to use this feature.</div>
+					<div className='text-muted'>Please reload this page after linking address.</div>
+				</div>
+			</div>
+		);
+	}
+
+	if (linkedAddressNotAvailable) {
+		return (
+			<div className={className}>
+				<div className='card'>
+					<div className='text-muted'>Linked address not available in polkadot extension. Please add linked address in polkadot extension.</div>
+					<div className='text-muted'>Please reload this page after adding address.</div>
 				</div>
 			</div>
 		);
