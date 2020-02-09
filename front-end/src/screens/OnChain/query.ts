@@ -31,7 +31,7 @@ query LatestProposalPosts {
       onchain_referendum_id
       onchain_proposal(where: {}) {
         id
-        proposalStatus {
+        proposalStatus(last: 1) {
           id
           status
         }
