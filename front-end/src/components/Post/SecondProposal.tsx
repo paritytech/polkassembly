@@ -31,7 +31,11 @@ const SecondProposal = ({ className, api, apiReady, getLinkedAccount, proposalId
 			return;
 		}
 
-		const second = api.tx.democracy.second(proposalId || 0);
+		if (!proposalId) {
+			return;
+		}
+
+		const second = api.tx.democracy.second(proposalId);
 
 		second.signAndSend(linkedAccount.address, ({ status }) => {
 			if (status.isFinalized) {

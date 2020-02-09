@@ -40,7 +40,11 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			return;
 		}
 
-		const vote = api.tx.democracy.vote(referendumId || 0, { aye, conviction });
+		if (!referendumId) {
+			return;
+		}
+
+		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
 		vote.signAndSend(linkedAccount.address, ({ status }) => {
 			if (status.isFinalized) {
