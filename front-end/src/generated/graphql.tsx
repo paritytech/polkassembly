@@ -770,9 +770,9 @@ export type Message = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -873,9 +873,9 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -1930,9 +1930,9 @@ export type Onchain_Links = {
    __typename?: 'onchain_links',
   created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
-  onchain_proposal?: Maybe<Proposal>,
+  onchain_proposal: Array<Maybe<Proposal>>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
-  onchain_referendum?: Maybe<Referendum>,
+  onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post: Posts,
   post_id: Scalars['Int'],
@@ -1941,12 +1941,24 @@ export type Onchain_Links = {
 
 
 export type Onchain_LinksOnchain_ProposalArgs = {
-  where: ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal>
 };
 
 
 export type Onchain_LinksOnchain_ReferendumArgs = {
-  where: ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -4344,13 +4356,76 @@ export type ProposalWhereInput = {
   proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
 };
 
+export type ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
+  AND?: Maybe<Array<ProposalWhereInput>>,
+  NOT?: Maybe<Array<ProposalWhereInput>>,
+  OR?: Maybe<Array<ProposalWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  depositAmount_contains?: Maybe<Scalars['String']>,
+  depositAmount_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_gt?: Maybe<Scalars['String']>,
+  depositAmount_gte?: Maybe<Scalars['String']>,
+  depositAmount_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_lt?: Maybe<Scalars['String']>,
+  depositAmount_lte?: Maybe<Scalars['String']>,
+  depositAmount_not?: Maybe<Scalars['String']>,
+  depositAmount_not_contains?: Maybe<Scalars['String']>,
+  depositAmount_not_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_not_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_not_starts_with?: Maybe<Scalars['String']>,
+  depositAmount_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  proposalId_gt?: Maybe<Scalars['Int']>,
+  proposalId_gte?: Maybe<Scalars['Int']>,
+  proposalId_in?: Maybe<Array<Scalars['Int']>>,
+  proposalId_lt?: Maybe<Scalars['Int']>,
+  proposalId_lte?: Maybe<Scalars['Int']>,
+  proposalId_not?: Maybe<Scalars['Int']>,
+  proposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  proposalStatus_every?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_none?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
+};
+
 export type ProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   proposalId?: Maybe<Scalars['Int']>,
-};
-
-export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
-  id?: Maybe<Scalars['Int']>,
 };
 
 export type PublicUser = {
@@ -5468,13 +5543,78 @@ export type ReferendumWhereInput = {
   voteThreshold_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
+  AND?: Maybe<Array<ReferendumWhereInput>>,
+  NOT?: Maybe<Array<ReferendumWhereInput>>,
+  OR?: Maybe<Array<ReferendumWhereInput>>,
+  delay?: Maybe<Scalars['Int']>,
+  delay_gt?: Maybe<Scalars['Int']>,
+  delay_gte?: Maybe<Scalars['Int']>,
+  delay_in?: Maybe<Array<Scalars['Int']>>,
+  delay_lt?: Maybe<Scalars['Int']>,
+  delay_lte?: Maybe<Scalars['Int']>,
+  delay_not?: Maybe<Scalars['Int']>,
+  delay_not_in?: Maybe<Array<Scalars['Int']>>,
+  end?: Maybe<Scalars['Int']>,
+  end_gt?: Maybe<Scalars['Int']>,
+  end_gte?: Maybe<Scalars['Int']>,
+  end_in?: Maybe<Array<Scalars['Int']>>,
+  end_lt?: Maybe<Scalars['Int']>,
+  end_lte?: Maybe<Scalars['Int']>,
+  end_not?: Maybe<Scalars['Int']>,
+  end_not_in?: Maybe<Array<Scalars['Int']>>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  referendumId_gt?: Maybe<Scalars['Int']>,
+  referendumId_gte?: Maybe<Scalars['Int']>,
+  referendumId_in?: Maybe<Array<Scalars['Int']>>,
+  referendumId_lt?: Maybe<Scalars['Int']>,
+  referendumId_lte?: Maybe<Scalars['Int']>,
+  referendumId_not?: Maybe<Scalars['Int']>,
+  referendumId_not_in?: Maybe<Array<Scalars['Int']>>,
+  referendumStatus_every?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_none?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_some?: Maybe<ReferendumStatusWhereInput>,
+  voteThreshold?: Maybe<Scalars['String']>,
+  voteThreshold_contains?: Maybe<Scalars['String']>,
+  voteThreshold_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_gt?: Maybe<Scalars['String']>,
+  voteThreshold_gte?: Maybe<Scalars['String']>,
+  voteThreshold_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_lt?: Maybe<Scalars['String']>,
+  voteThreshold_lte?: Maybe<Scalars['String']>,
+  voteThreshold_not?: Maybe<Scalars['String']>,
+  voteThreshold_not_contains?: Maybe<Scalars['String']>,
+  voteThreshold_not_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_not_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_not_starts_with?: Maybe<Scalars['String']>,
+  voteThreshold_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type ReferendumWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   referendumId?: Maybe<Scalars['Int']>,
-};
-
-export type ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
-  id?: Maybe<Scalars['Int']>,
 };
 
 export type Reward = Node & {
@@ -6698,14 +6838,14 @@ export type LatestDemocracyProposalPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
-      & { onchain_proposal: Maybe<(
+      & { onchain_proposal: Array<Maybe<(
         { __typename?: 'Proposal' }
         & Pick<Proposal, 'id'>
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
         )>> }
-      )> }
+      )>> }
     )> }
   )> }
 );
@@ -6739,14 +6879,14 @@ export type LatestDemocracyReferendaPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
-      & { onchain_referendum: Maybe<(
+      & { onchain_referendum: Array<Maybe<(
         { __typename?: 'Referendum' }
         & Pick<Referendum, 'id'>
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
         )>> }
-      )> }
+      )>> }
     )> }
   )> }
 );
@@ -6777,14 +6917,14 @@ export type LatestProposalPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'onchain_referendum_id'>
-      & { onchain_proposal: Maybe<(
+      & { onchain_proposal: Array<Maybe<(
         { __typename?: 'Proposal' }
         & Pick<Proposal, 'id'>
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
         )>> }
-      )> }
+      )>> }
     )> }
   )> }
 );
@@ -6792,7 +6932,7 @@ export type LatestProposalPostsQuery = (
 export type OnchainLinkProposalFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id'>
-  & { onchain_proposal: Maybe<(
+  & { onchain_proposal: Array<Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'id'>
     & { proposalStatus: Maybe<Array<(
@@ -6806,7 +6946,7 @@ export type OnchainLinkProposalFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )> }
+  )>> }
 );
 
 export type ProposalPostFragment = (
@@ -6846,7 +6986,7 @@ export type ProposalPostAndCommentsQuery = (
 export type OnchainLinkReferendumFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
-  & { onchain_referendum: Maybe<(
+  & { onchain_referendum: Array<Maybe<(
     { __typename?: 'Referendum' }
     & Pick<Referendum, 'id' | 'delay' | 'end' | 'voteThreshold'>
     & { referendumStatus: Maybe<Array<(
@@ -6860,7 +7000,7 @@ export type OnchainLinkReferendumFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )> }
+  )>> }
 );
 
 export type ReferendumPostFragment = (
@@ -7000,8 +7140,8 @@ export type AddressLinkConfirmMutationVariables = {
 export type AddressLinkConfirmMutation = (
   { __typename?: 'mutation_root' }
   & { addressLinkConfirm: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -7013,20 +7153,9 @@ export type AddressUnlinkMutationVariables = {
 export type AddressUnlinkMutation = (
   { __typename?: 'mutation_root' }
   & { addressUnlink: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
-);
-
-export type AddressesQueryVariables = {};
-
-
-export type AddressesQuery = (
-  { __typename?: 'query_root' }
-  & { addresses: Maybe<Array<Maybe<(
-    { __typename?: 'Address' }
-    & Pick<Address, 'address' | 'public_key'>
-  )>>> }
 );
 
 export type SignupMutationVariables = {
@@ -8242,6 +8371,7 @@ export const AddressLinkConfirmDocument = gql`
     mutation addressLinkConfirm($address_id: Int!, $signature: String!) {
   addressLinkConfirm(address_id: $address_id, signature: $signature) {
     message
+    token
   }
 }
     `;
@@ -8275,6 +8405,7 @@ export const AddressUnlinkDocument = gql`
     mutation addressUnlink($address: String!) {
   addressUnlink(address: $address) {
     message
+    token
   }
 }
     `;
@@ -8303,39 +8434,6 @@ export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
-export const AddressesDocument = gql`
-    query addresses {
-  addresses {
-    address
-    public_key
-  }
-}
-    `;
-
-/**
- * __useAddressesQuery__
- *
- * To run a query within a React component, call `useAddressesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAddressesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAddressesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-        return ApolloReactHooks.useQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
-      }
-export function useAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddressesQuery, AddressesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<AddressesQuery, AddressesQueryVariables>(AddressesDocument, baseOptions);
-        }
-export type AddressesQueryHookResult = ReturnType<typeof useAddressesQuery>;
-export type AddressesLazyQueryHookResult = ReturnType<typeof useAddressesLazyQuery>;
-export type AddressesQueryResult = ApolloReactCommon.QueryResult<AddressesQuery, AddressesQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {

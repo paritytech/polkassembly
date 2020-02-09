@@ -1,6 +1,6 @@
 import 'mocha';
 import { Keyring } from '@polkadot/api';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 
@@ -56,9 +56,20 @@ describe('addressUnlink mutation', () => {
 			.del();
 	});
 
+	it('should not be able to unlink an unknown address', async () => {
+		const wrongAddress = 'aaaata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upaaaa';
+
+		try {
+			await addressUnlink(null, { address: wrongAddress }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_NOT_FOUND);
+		}
+	});
+
 	it('should be able to unlink an address', async () => {
 		const res = await addressUnlink(null, { address: dbAddress.address }, fakectx);
-
 		const dbAddressRes = await Address
 			.query()
 			.findById(dbAddress.id);
@@ -69,6 +80,7 @@ describe('addressUnlink mutation', () => {
 
 	it('should not be able to unlink address with wrong jwt', async () => {
 		fakectx.req.headers.authorization = 'Bearer wrong';
+
 		try {
 			await addressUnlink(null, { address: dbAddress.address }, fakectx);
 		} catch (error) {
