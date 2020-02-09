@@ -128,7 +128,6 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={8}>
-							<label>&nbsp;</label>
 							<Button
 								fluid
 								basic
@@ -141,7 +140,6 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 							</Button>
 						</Form.Field>
 						<Form.Field width={8}>
-							<label>&nbsp;</label>
 							<Button
 								fluid
 								primary
