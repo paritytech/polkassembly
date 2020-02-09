@@ -111,7 +111,6 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 				</Grid>
 			</div> */}
 			<div className='card'>
-				<h2>Your Vote</h2>
 				<Form standalone={false}>
 					<Form.Group>
 						<Form.Field width={16}>
