@@ -50,9 +50,10 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			if (status.isFinalized) {
 				queueNotification({
 					header: 'Success!',
-					message: `Completed at block hash #${status.asFinalized.toString()}`,
+					message: `Vote on referendum #${referendumId} successfully finalized`,
 					status: NotificationStatus.SUCCESS
 				});
+				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
 			} else {
 				console.log(`Current status: ${status.type}`);
 			}
