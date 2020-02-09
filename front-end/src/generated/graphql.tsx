@@ -4437,7 +4437,6 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -4462,7 +4461,6 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -7266,7 +7264,7 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_proposal_id
   onchain_proposal(where: {}) {
     id
-    proposalStatus {
+    proposalStatus(last: 1) {
       id
       status
     }
@@ -7324,7 +7322,7 @@ export const OnchainLinkReferendumFragmentDoc = gql`
     delay
     end
     voteThreshold
-    referendumStatus {
+    referendumStatus(last: 1) {
       status
       id
     }
@@ -7902,7 +7900,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
       onchain_proposal_id
       onchain_proposal(where: {}) {
         id
-        proposalStatus {
+        proposalStatus(last: 1) {
           id
           status
         }
@@ -7968,7 +7966,7 @@ export const LatestDemocracyReferendaPostsDocument = gql`
       onchain_referendum_id
       onchain_referendum(where: {}) {
         id
-        referendumStatus {
+        referendumStatus(last: 1) {
           id
           status
         }
@@ -8035,7 +8033,7 @@ export const LatestProposalPostsDocument = gql`
       onchain_referendum_id
       onchain_proposal(where: {}) {
         id
-        proposalStatus {
+        proposalStatus(last: 1) {
           id
           status
         }
