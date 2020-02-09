@@ -54,11 +54,7 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 					status: NotificationStatus.SUCCESS
 				});
 			} else {
-				queueNotification({
-					header: 'Info!',
-					message: `Current status: ${status.type}`,
-					status: NotificationStatus.WARNING
-				});
+				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
 			console.log(':( transaction failed');
