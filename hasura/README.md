@@ -4,16 +4,16 @@ The main application's backend is provided by [Hasura](https://github.com/hasura
 
 ## Setup
 
-- To allow docker containers to reach each other, update your `/etc/hosts` to contain the following line:  
+- To allow docker containers to reach each other, update your `/etc/hosts` to contain the following line:
 `127.0.0.1    postgres`
 
-- Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.  
-Copy docker-compose.yaml.example to docker-compose.yaml  
+- Make sure you have docker and [docker-compose](https://docs.docker.com/compose/) installed on your computer.
+Copy docker-compose.yaml.example to docker-compose.yaml
 `cp docker-compose.yaml.example docker-compose.yaml`
 
-- Add a secret string to `HASURA_GRAPHQL_ADMIN_SECRET` in docker-compose.yaml  
+- Add a secret string to `HASURA_GRAPHQL_ADMIN_SECRET` in docker-compose.yaml
 - Add JWT public key generated in auth server to `HASURA_GRAPHQL_JWT_SECRET`
-- Run the postgres and graphql-engine in docker by running:  
+- Run the postgres and graphql-engine in docker by running:
 `docker-compose up`
 
 ### Needed rows
@@ -28,6 +28,17 @@ insert into post_topics values  (5, 'General');
 
 insert into post_types values (1, 'Discussion');
 insert into post_types values (2, 'On chain');
+```
+
+### Remote schema
+We are using auth server from polkassembly as auth remote schema and node watcher from [Nomidot](https://github.com/paritytech/Nomidot) as another remote schema. Both should be running for hasura migrations to work.
+
+They are configured as http://auth-server-service:8010/auth/graphql and http://nodewatcher.nodewatcher:4466 in hasura migrations yaml files. This is done for kubernetes to work.
+So add these entries in /etc/hosts
+
+```
+127.0.0.1       auth-server-service
+127.0.0.1       nodewatcher.nodewatcher
 ```
 
 ### Migration

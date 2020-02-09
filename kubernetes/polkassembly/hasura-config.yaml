@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: hasura
+  name: hasura-config
+data:
+  HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_GRAPHQL_ADMIN_SECRET
+  HASURA_GRAPHQL_DATABASE_URL: $HASURA_GRAPHQL_DATABASE_URL
+  HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+  HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+  HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+  HASURA_POST_SUBSCRIPTION_HOOK: http://auth-server-service:8010/auth/graphql
+  HASURA_POST_SUBSCRIPTION_SECRET: $HASURA_POST_SUBSCRIPTION_SECRET

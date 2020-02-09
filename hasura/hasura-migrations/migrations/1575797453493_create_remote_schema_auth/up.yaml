@@ -3,6 +3,6 @@
       forward_client_headers: true
       headers: []
       timeout_seconds: 60
-      url: http://localhost:8010/auth/graphql
+      url: http://auth-server-service:8010/auth/graphql
     name: auth
   type: add_remote_schema
