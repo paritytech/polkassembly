@@ -90,6 +90,7 @@ dockerize-auth-server:
     name: parity-build
   only:
       - master
+      - /^fv-.*/
   <<: *build_and_push
 
 #### stage:                        deploy
