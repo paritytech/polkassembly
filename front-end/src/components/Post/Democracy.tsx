@@ -115,7 +115,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		return (
 			<div className={className}>
 				<div className='card'>
-					<div className='text-muted'>Please add accounts to polkadot js extenstion to use this feature.</div>
+					<div className='text-muted'>You need at least one account in Polkadot-js extenstion to use this feature.</div>
 					<div className='text-muted'>Please reload this page after adding accounts.</div>
 				</div>
 			</div>
