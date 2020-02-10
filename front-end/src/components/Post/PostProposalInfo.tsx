@@ -37,7 +37,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 					</div>
 				</Grid.Column>}
-				{method && preimageArguments &&
+				{method &&
 				<Grid.Row>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>
