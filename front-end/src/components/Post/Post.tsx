@@ -13,9 +13,10 @@ import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
 import PostProposalInfo from './PostProposalInfo';
 import PostReferendumInfo from './PostReferendumInfo';
+import Democracy from './Democracy';
 
 interface Props {
-	className?: string;
+	className?: string
 	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data']
 	isProposal?: boolean
 	isReferendum?: boolean
@@ -105,7 +106,9 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 						/>
 						: null }
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={6}></Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
+					<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
+				</Grid.Column>
 			</Grid>
 		</Container>
 	);
@@ -121,17 +124,14 @@ export default styled(Post)`
 		padding: 3rem;
 		margin-bottom: 1rem;
 	}
-
 	h3 {
 		font-family: 'Roboto';
 		font-size: xl;
 		margin-bottom: 0.4rem;
 		max-width: calc(100% - 20rem);
-    	display: flex;
+		display: flex;
 	}
-
 	@media only screen and (max-width: 576px) {
-
 		.post_content {
 			padding: 2rem
 		}
