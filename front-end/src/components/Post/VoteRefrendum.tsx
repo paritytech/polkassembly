@@ -24,11 +24,11 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 	type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
 	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const options = [
-		{ text: '2 weeks lock', value: 'Locked1x' },
-		{ text: '4 weeks lock', value: 'Locked2x' },
-		{ text: '6 weeks lock', value: 'Locked3x' },
-		{ text: '8 weeks lock', value: 'Locked4x' },
-		{ text: '10 weeks lock', value: 'Locked5x' }
+		{ text: '1x time lock', value: 'Locked1x' },
+		{ text: '2x time lock', value: 'Locked2x' },
+		{ text: '3x time lock', value: 'Locked3x' },
+		{ text: '4x time lock', value: 'Locked4x' },
+		{ text: '5x time lock', value: 'Locked5x' }
 	];
 
 	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
