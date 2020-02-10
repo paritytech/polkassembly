@@ -8,7 +8,7 @@ const onchainLinkProposal = gql`
         onchain_proposal_id,
         onchain_proposal(where: {}) {
             id
-            proposalStatus {
+            proposalStatus(last: 1) {
                 id
                 status
             }

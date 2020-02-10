@@ -7209,7 +7209,7 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_proposal_id
   onchain_proposal(where: {}) {
     id
-    proposalStatus {
+    proposalStatus(last: 1) {
       id
       status
     }
@@ -7267,7 +7267,7 @@ export const OnchainLinkReferendumFragmentDoc = gql`
     delay
     end
     voteThreshold
-    referendumStatus {
+    referendumStatus(last: 1) {
       status
       id
     }
@@ -7801,7 +7801,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
       onchain_proposal_id
       onchain_proposal(where: {}) {
         id
-        proposalStatus {
+        proposalStatus(last: 1) {
           id
           status
         }
@@ -7868,7 +7868,7 @@ export const LatestDemocracyReferendaPostsDocument = gql`
       onchain_referendum_id
       onchain_referendum(where: {}) {
         id
-        referendumStatus {
+        referendumStatus(last: 1) {
           id
           status
         }

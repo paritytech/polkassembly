@@ -11,7 +11,7 @@ const onchainLinkReferendum = gql`
             delay
             end
             voteThreshold
-            referendumStatus {
+            referendumStatus(last: 1) {
                 status
                 id
             }
