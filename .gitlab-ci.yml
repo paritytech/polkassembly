@@ -87,7 +87,7 @@ dockerize-auth-server:
   only:
       - master
   <<: *build_and_push
-# dumb
+
 dockerize-chain-db-watcher:
   stage: dockerize
   environment:
