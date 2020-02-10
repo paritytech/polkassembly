@@ -25,45 +25,47 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 		<div className={className}>
 			<h4>On-Chain Info</h4>
 			<Grid>
-				<Grid.Column mobile={16} tablet={4} computer={4}>
-					{depositAmount &&
-					<div className='info_group'>
-						<h6>Deposit</h6>
-						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
-					</div>}
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={12} computer={12}>
+				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
 						{proposerAddress}
 					</div>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={4} computer={4}>
-					{method &&
-					<div className='info_group'>
-						<h6>Method</h6>
-						{method}
-					</div>}
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={12} computer={12}>
-					{preimageArguments && preimageArguments.length
-						? <div className='info_group'>
-							<h6>Arguments</h6>
-							{preimageArguments.map((element, index) => {
-								return <div className={'methodArguments'} key={index}>
-									<span key={index}>{element.name}: {element.value}</span>
-								</div>;
-							})}
+				{depositAmount &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>Deposit</h6>
+							{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 						</div>
-						: null}
-				</Grid.Column>
+					</Grid.Column>}
+				{method && preimageArguments &&
+				<Grid.Row>
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>Method</h6>
+							{method}
+						</div>
+					</Grid.Column>
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						{preimageArguments.length
+							? <div className='info_group'>
+								<h6>Arguments</h6>
+								{preimageArguments.map((element, index) => {
+									return <div className={'methodArguments'} key={index}>
+										<span key={index}>{element.name}: {element.value}</span>
+									</div>;
+								})}
+							</div>
+							: null}
+					</Grid.Column>
+				</Grid.Row>}
+				{metaDescription &&
 				<Grid.Column mobile={16} tablet={16} computer={16}>
-					{metaDescription &&
 					<div className='info_group'>
 						<h6>Description</h6>
 						{metaDescription}
-					</div>}
-				</Grid.Column>
+					</div>
+				</Grid.Column>}
 			</Grid>
 		</div>
 	);
