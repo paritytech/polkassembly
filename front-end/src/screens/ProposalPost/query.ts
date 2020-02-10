@@ -6,6 +6,7 @@ const onchainLinkProposal = gql`
         id,
         proposer_address,
         onchain_proposal_id,
+        onchain_referendum_id,
         onchain_proposal(where: {}) {
             id
             proposalStatus(last: 1) {

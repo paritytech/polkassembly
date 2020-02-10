@@ -6874,7 +6874,7 @@ export type LatestDemocracyReferendaPostsQuery = (
 
 export type OnchainLinkProposalFragment = (
   { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id'>
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
   & { onchain_proposal: Array<Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'id'>
@@ -7207,6 +7207,7 @@ export const OnchainLinkProposalFragmentDoc = gql`
   id
   proposer_address
   onchain_proposal_id
+  onchain_referendum_id
   onchain_proposal(where: {}) {
     id
     proposalStatus(last: 1) {
