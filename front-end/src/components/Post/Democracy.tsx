@@ -137,7 +137,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		return (
 			<div className={className}>
 				<div className='card'>
-					<div className='text-muted'>Linked address not available in polkadot extension. Please add linked address in polkadot extension.</div>
+					<div className='text-muted'>Linked address not available in Polkadot-js extension. Please link an address available in Polkadot-js extension.</div>
 					<div className='text-muted'>Please reload this page after adding address.</div>
 				</div>
 			</div>
