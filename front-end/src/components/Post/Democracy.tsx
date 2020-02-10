@@ -104,8 +104,8 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		return (
 			<div className={className}>
 				<div className='card'>
-					<div className='text-muted'>Polkadot extension not detected.</div>
-					<div className='text-muted'>Please reload this page after installing <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
+					<div className='text-muted'>Polkadot-js extension not detected.</div>
+					<div className='text-muted'>Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 				</div>
 			</div>
 		);
