@@ -127,7 +127,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 			<div className={className}>
 				<div className='card'>
 					<div className='text-muted'>Link at least one address in <Link to={'/settings'}>your account settings</Link> to use this feature.</div>
-					<div className='text-muted'>Please reload this page after linking address.</div>
+					<div className='text-muted'>Please reload this page once you linked an address.</div>
 				</div>
 			</div>
 		);
