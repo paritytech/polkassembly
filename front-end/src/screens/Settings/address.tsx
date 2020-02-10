@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Icon, Grid } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -24,24 +24,29 @@ const NETWORK = 'kasuma';
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
+	const [extensionNotAvailable, setExtensionNotAvailable] = useState(false);
 	const [addressLinkStartMutation] = useAddressLinkStartMutation();
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
 	const [addressUnlinkMutation] = useAddressUnlinkMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
-	useEffect(() => {
-		async function connect() {
-			await web3Enable(APP);
+	const handleDetect = async () => {
+		const extensions = await web3Enable(APP);
 
-			const allAccounts = await web3Accounts();
-
-			setAccounts(allAccounts);
+		if (extensions.length === 0) {
+			setExtensionNotAvailable(true);
+			return;
+		} else {
+			setExtensionNotAvailable(false);
 		}
 
-		connect();
-	}, []);
+		const allAccounts = await web3Accounts();
+
+		setAccounts(allAccounts);
+	};
 
 	const handleLink = async (account: InjectedAccountWithMeta) => {
+
 		try {
 			const injected = await web3FromSource(account.meta.source);
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
@@ -145,53 +150,73 @@ const Address = ({ className }: Props): JSX.Element => {
 	const linkIcon = <><Icon name='chain'/>Link</>;
 	const unlinkIcon = <><Icon name='broken chain'/>Unlink</>;
 
-	// TODO: generate avtar image svg logo
+	if (extensionNotAvailable) {
+		return (
+			<Form className={className} standalone='false'>
+				<Form.Group>
+					<Form.Field width={16}>
+						<div className='text-muted'>No address detected.</div>&nbsp;
+						<div className='text-muted'>Please reload this page with <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
+					</Form.Field>
+				</Form.Group>
+			</Form>
+		);
+	}
+
+	if (accounts.length === 0) {
+		return (
+			<Form className={className} standalone='false'>
+				<Form.Group>
+					<Form.Field width={16}>
+						<Button
+							primary
+							onClick={handleDetect}
+						>
+						Link Address With Polkadot-js Extension
+						</Button>
+					</Form.Field>
+				</Form.Group>
+			</Form>
+		);
+	}
+
 	return (
 		<Form className={className} standalone='false'>
 			<Form.Group>
-				{accounts.length ? (
-					<Form.Field width={16}>
-						<label className="header">Available Addresses</label>
-						<div className="ui list">
-							{accounts.map(account => (
-								<Grid key={account.address}>
-									<Grid.Column width={10}>
-										<div className="item">
-											<Identicon
-												className="image"
-												value={account.address}
-												size={32}
-												theme={'polkadot'}
-											/>
-											<div className="content" style={{ display: 'inline-block' }}>
-												<div className="header">{account.meta.name}</div>
-												<div className="description">{shorten(account.address)}</div>
-											</div>
+				<Form.Field width={16}>
+					<label className="header">Available Addresses</label>
+					<div className="ui list">
+						{accounts.map(account => (
+							<Grid key={account.address}>
+								<Grid.Column width={10}>
+									<div className="item">
+										<Identicon
+											className="image"
+											value={account.address}
+											size={32}
+											theme={'polkadot'}
+										/>
+										<div className="content" style={{ display: 'inline-block' }}>
+											<div className="header">{account.meta.name}</div>
+											<div className="description">{shorten(account.address)}</div>
 										</div>
-									</Grid.Column>
-									<Grid.Column width={6}>
-										<div className="button-container">
-											<Button
-												className={'social'}
-												negative={currentUser.addresses?.includes(account.address) ? true : false}
-												onClick={() => currentUser.addresses?.includes(account.address) ? handleUnlink(account) : handleLink(account)}
-											>
-												{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
-											</Button>
-										</div>
-									</Grid.Column>
-								</Grid>
-							))}
-						</div>
-					</Form.Field>
-				) : (
-					<>
-						<Form.Field width={16}>
-							<div className='text-muted'>No address detected.</div>&nbsp;
-							<div className='text-muted'>Please reload this page with <a href={getExtensionUrl()}>Polkadot extension</a>.</div>
-						</Form.Field>
-					</>
-				)}
+									</div>
+								</Grid.Column>
+								<Grid.Column width={6}>
+									<div className="button-container">
+										<Button
+											className={'social'}
+											negative={currentUser.addresses?.includes(account.address) ? true : false}
+											onClick={() => currentUser.addresses?.includes(account.address) ? handleUnlink(account) : handleLink(account)}
+										>
+											{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
+										</Button>
+									</div>
+								</Grid.Column>
+							</Grid>
+						))}
+					</div>
+				</Form.Field>
 			</Form.Group>
 		</Form>
 	);
