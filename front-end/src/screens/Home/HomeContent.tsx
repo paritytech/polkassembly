@@ -1,20 +1,19 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import DiscussionCard from '../../components/DiscussionCard';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { LatestPostsQuery } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
+import DiscussionContainer from './LatestDiscussion';
+import ProposalContainer from './LatestProposal';
+import ReferendumContainer from './LatestReferendum';
 
 interface Props {
   className?: string
-  data: LatestPostsQuery
 }
 
-const HomeContent = ({ className, data }: Props) => {
+const HomeContent = ({ className }: Props) => {
 	const { history } = useRouter();
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
@@ -24,37 +23,16 @@ const HomeContent = ({ className, data }: Props) => {
 	return (
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
-					<h3>Latest Discussions</h3>
-					<ul className='Home__list'>
-						{!!data.posts &&
-						data.posts.map(
-							(post) => {
-								if (!post.author || !post.author.username) {
-									console.error('Author not found');
-									return null;
-								} else {
-									return !!post && (
-										<li key={post.id} className='Home__item'>
-											{<Link to={`/post/${post.id}`}>
-												<DiscussionCard
-													displayname={post.author.name}
-													username={post.author.username}
-													comments={post.comments_aggregate.aggregate === null || post.comments_aggregate.aggregate!.count === null || post.comments_aggregate.aggregate!.count! === 0
-														? 'no'
-														: post.comments_aggregate.aggregate!.count!.toString()}
-													created_at={post.created_at}
-													title={post.title}
-												/>
-											</Link>}
-										</li>
-									);}
-							}
-
-						)}
-					</ul>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
+					<h1>Latest Activity</h1>
+					<h2>Current Referendum</h2>
+					<ReferendumContainer className='referendumContainer'/>
+					<h2>Latest Proposal</h2>
+					<ProposalContainer className='proposalContainer'/>
+					<h2>Latest Discussion</h2>
+					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={8}>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<div className='mainButtonContainer'>
 						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
@@ -65,6 +43,10 @@ const HomeContent = ({ className, data }: Props) => {
 };
 
 export default styled(HomeContent)`
+
+	.referendumContainer, .proposalContainer, .discussionContainer {
+		margin-bottom: 3rem;
+	}
 
 	@media only screen and (max-width: 768px) {
 
@@ -84,7 +66,7 @@ export default styled(HomeContent)`
 	}
 
 	@media only screen and (max-width: 576px) {
-		h3 {
+		h1, h2 {
 			margin-left: 1.5rem!important;
 		}
 
@@ -102,18 +84,6 @@ export default styled(HomeContent)`
 	li {
         list-style-type: none;
     }
-
-	.Home__item {
-		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
-		a:hover {
-			tex	t-decoration: none;
-		}
-	}
 
 	.mainButtonContainer {
 		align-items: flex-start;

@@ -3,15 +3,18 @@ import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import InlineTag from './InlineTag';
+
 interface Props{
     className?: string
     created_at: Date
     displayname?: string | null
-    text?: string
+	text?: string
+	topic?: string
     username: string
 }
 
-const CreationLabel = ({ className, created_at, displayname, text='posted', username } : Props) => {
+const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
 	return <span className={className}>
 		{text} by {
 			displayname
@@ -24,6 +27,9 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 				/>
 				:
 				<span>{username}</span>
+		}
+		{topic &&
+			<>in <InlineTag>{topic}</InlineTag> </>
 		}
 		{moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
 	</span>;
@@ -39,5 +45,9 @@ export default styled(CreationLabel)`
         color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
-    }
+	}
+
+	&.md {
+		font-size: md;
+	}
 `;

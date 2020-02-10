@@ -12,13 +12,13 @@ const DiscussionCard = styled.div`
     &:hover {
         border-style: solid;
         border-width: 1px;
-        border-color: grey_secondary;
+        border-color: #CCC;
         text-decoration: none;
     }
     h4 {
         color: black_primary;
         font-weight: 500;
-        font-size: 1.6rem;
+        font-size: md;
         margin-bottom: 0.3rem; 
     }
     ul {

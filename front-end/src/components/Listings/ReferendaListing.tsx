@@ -2,27 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../../../components/GovernanceCard';
-import { LatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
+import GovernanceCard from '../GovernanceCard';
+import { LatestDemocracyReferendaPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDemocracyProposalPostsQuery
+  data: LatestDemocracyReferendaPostsQuery
 }
 
-const Proposals = ({ className, data }: Props) => {
-
-	if (!data.posts || !data.posts.length) return <div>No proposal found</div>;
+const Referenda = ({ className, data }: Props) => {
+	if (!data.posts || !data.posts.length) return <div>No referendum found.</div>;
 
 	return (
-		<ul className={`${className} proposals__list`}>
+		<ul className={`${className} referenda__list`}>
 			{data.posts.map(
 				(post) => {
-					const onchainId = post.onchain_link?.onchain_proposal_id;
+					const onchainId = post.onchain_link?.onchain_referendum_id;
 
 					return (!!post?.author?.username && (
-						<li key={post.id} className='proposals__item'>
-							{<Link to={`/proposal/${onchainId}`}>
+						<li key={post.id} className='referenda__item'>
+							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
 									displayname={post.author.name}
 									comments={post.comments_aggregate.aggregate?.count
@@ -30,7 +29,7 @@ const Proposals = ({ className, data }: Props) => {
 										: 'no'}
 									created_at={post.created_at}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}
+									status={post.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 									username={post.author.username}
@@ -44,18 +43,13 @@ const Proposals = ({ className, data }: Props) => {
 	);
 };
 
-export default styled(Proposals)`
+export default styled(Referenda)`
 	li {
 		list-style-type: none;
 	}
 
-	.proposals__item {
+	.referenda__item {
 		margin: 0 0 1rem 0;
-		border: 1px solid #EEE;
-		&:hover {
-			border: 1px solid #BBB;
-			text-decoration: none;
-		}
 		a:hover {
 			text-decoration: none;
 		}
