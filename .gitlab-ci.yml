@@ -59,7 +59,6 @@ lint-back-end:
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://localhost:2375
-    #BUILD_ARGS: "--build-arg REACT_APP_HASURA_GRAPHQL_URL=$REACT_APP_HASURA_GRAPHQL_URL --build-arg REACT_APP_JWT_PUBLIC_KEY=$REACT_APP_JWT_PUBLIC_KEY"
   tags:
     - kubernetes-parity-build
   image: docker:git
@@ -79,7 +78,7 @@ dockerize-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL} --build-arg REACT_APP_JWT_PUBLIC_KEY='${REACT_APP_JWT_PUBLIC_KEY}'"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL}"
   only:
       - master
       - /^fv-.*/
