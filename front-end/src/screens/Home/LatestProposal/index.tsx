@@ -9,9 +9,9 @@ interface Props {
 	className?: string
 }
 
-const ProposalsContainer = ({ className }:Props) => {
+const ProposalContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 10 } });
+	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 1 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
@@ -20,4 +20,4 @@ const ProposalsContainer = ({ className }:Props) => {
 	return <Loader/>;
 };
 
-export default ProposalsContainer;
+export default ProposalContainer;

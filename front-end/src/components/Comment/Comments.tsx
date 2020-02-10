@@ -47,5 +47,6 @@ export default styled(Comments)`
 
 	hr {
 		border-top: 1px solid #EEE;
+		margin: 3rem 0;
 	}
 `;

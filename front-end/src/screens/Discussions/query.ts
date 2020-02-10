@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const QUERY_LATEST_DISCUSSIONS = gql`
-    query LatestDiscussionPosts {
-        posts(order_by: {created_at: desc}, limit: 20, where: {type: {id: {_eq: 1}}}) {
+    query LatestDiscussionPosts($limit: Int! = 20) {
+        posts(order_by: {created_at: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
             id
             title
             author {
