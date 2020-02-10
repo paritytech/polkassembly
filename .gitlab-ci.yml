@@ -79,7 +79,7 @@ dockerize-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL} --build-arg REACT_APP_JWT_PUBLIC_KEY=${REACT_APP_JWT_PUBLIC_KEY}"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL} --build-arg REACT_APP_JWT_PUBLIC_KEY=\'${REACT_APP_JWT_PUBLIC_KEY}\'"
   only:
       - master
       - /^fv-.*/
