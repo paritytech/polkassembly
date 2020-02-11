@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useChangeEmailMutation } from '../../generated/graphql';
+import { useChangeEmailMutation, useResendVerifyEmailTokenMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import { handleTokenChange } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
@@ -19,6 +19,7 @@ const Email = ({ className }: Props): JSX.Element => {
 	const [email, setEmail] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation();
+	const [resendVerifyEmailTokenMutation] = useResendVerifyEmailTokenMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
@@ -68,6 +69,26 @@ const Email = ({ className }: Props): JSX.Element => {
 		}
 	};
 
+	const handleResendVerifyEmailTokenClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+		event.preventDefault();
+		resendVerifyEmailTokenMutation()
+			.then(({ data }) => {
+				if (data && data.resendVerifyEmailToken && data.resendVerifyEmailToken.message) {
+					queueNotification({
+						header: 'Success!',
+						message: data.resendVerifyEmailToken.message,
+						status: NotificationStatus.SUCCESS
+					});
+				}
+			}).catch((e) => {
+				queueNotification({
+					header: 'Failed!',
+					message: e.message,
+					status: NotificationStatus.ERROR
+				});
+			});
+	};
+
 	return (
 		<Form standalone={false}>
 			<Form.Group className={className}>
@@ -82,7 +103,7 @@ const Email = ({ className }: Props): JSX.Element => {
 					{error && <FilteredError text={error.message}/>}
 					{!currentUser.email_verified &&
 				<div className={'warning-text'}>
-					<div><Icon name='warning circle' />Your email is not verified.</div>
+					<div><Icon name='warning circle' />Your email is not verified. <a href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a></div>
 				</div>
 					}
 				</Form.Field>
