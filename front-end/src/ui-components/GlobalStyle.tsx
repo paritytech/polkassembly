@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
             sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background-color: #F7F9F9;
+        background-color: grey_app_background;
         color: black_text;
     }
 
@@ -29,6 +29,9 @@ export const GlobalStyle = createGlobalStyle`
         max-width: 100%;
         font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+        background-color: grey_light;
+        color: black_primary;
+        font-size: sm;
     }
 
     ul {
@@ -51,10 +54,23 @@ export const GlobalStyle = createGlobalStyle`
 
     h1, h2, h3, h4, h5, h6 {
         color: black_primary;
-        font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;
         margin-top: 0;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Roboto Mono';
+    }
+
+    h1 {
+        font-size: 2.6rem;
+        margin-bottom: 3rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.25rem;
     }
 
     h3 {
@@ -65,6 +81,11 @@ export const GlobalStyle = createGlobalStyle`
 
     h4, h5, h6 {
         font-family: 'Roboto';   
+    }
+
+    h6 {
+        font-size: md;
+        margin-bottom: 0.4rem;
     }
 
     strong {

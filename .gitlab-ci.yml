@@ -101,7 +101,7 @@ dockerize-chain-db-watcher:
 deploy:
   stage: deploy
   variables:
-    http_upgrade: '$http_upgrade'
+    http_upgrade: '$http_upgrade' # hack, to make nginx conf work with envsubst
   environment:
     name: dashboards-cluster-1
   tags:
