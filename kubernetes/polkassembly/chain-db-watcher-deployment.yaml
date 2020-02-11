@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: chain-db-watcher
+  name: chain-db-watcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chain-db-watcher
+  template:
+    metadata:
+      labels:
+        app: chain-db-watcher
+    spec:
+      containers:
+      - name: chain-db-watcher
+        image: gcr.io/test-installations-222013/polkassembly-chain-db-watcher:master
+        env:
+        - name: PROPOSAL_BOT_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: PROPOSAL_BOT_USERNAME
+              name: chain-db-watcher-config
+        - name: PROPOSAL_BOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: PROPOSAL_BOT_PASSWORD
+              name: chain-db-watcher-config
+        - name: REACT_APP_HASURA_GRAPHQL_URL
+          valueFrom:
+            configMapKeyRef:
+              key: REACT_APP_HASURA_GRAPHQL_URL
+              name: chain-db-watcher-config
+        - name: AUTH_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_SERVER_URL
+              name: chain-db-watcher-config
+        - name: CHAIN_DB_GRAPHQL_URL
+          valueFrom:
+            configMapKeyRef:
+              key: CHAIN_DB_GRAPHQL_URL
+              name: chain-db-watcher-config
+        - name: HASURA_PROPOSAL_POST_TYPE_ID
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_PROPOSAL_POST_TYPE_ID
+              name: chain-db-watcher-config
+        - name: DEMOCRACY_TOPIC_ID
+          valueFrom:
+            configMapKeyRef:
+              key: DEMOCRACY_TOPIC_ID
+              name: chain-db-watcher-config
+        - name: BOT_PROPOSAL_USER_ID
+          valueFrom:
+            configMapKeyRef:
+              key: BOT_PROPOSAL_USER_ID
+              name: chain-db-watcher-config
