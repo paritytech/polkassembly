@@ -395,6 +395,35 @@ On success, we get the response
 }
 ```
 
+### Resend Email verification Token
+We can resend email verification token by calling the `resendVerifyEmailToken` mutation:
+
+```gql
+mutation {
+  resendVerifyEmailToken{
+    message
+  }
+}
+```
+
+```bash
+curl 'http://localhost:8010/auth/graphql' \
+-H "Content-Type: application/json" \
+--data '{"operationName":null,"variables":{},"query":"mutation {\n  resendVerifyEmailToken {\n    message\n  }\n}\n"}'
+```
+
+On success, we get the response
+
+```json
+{
+  "data": {
+    "resendVerifyEmailToken": {
+      "message": "A new verification mail has been sent to your email."
+    }
+  }
+}
+```
+
 ### Reset Password
 Reset password is a two step process. We can send reset password link to email by calling the `requestResetPassword` mutation and pass the email:
 
