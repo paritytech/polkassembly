@@ -5,11 +5,12 @@
   "private": true,
   "homepage": "http://polkassembly.io/",
   "dependencies": {
+    "@polkadot/api": "1.1.0-beta.16",
     "@polkadot/extension-dapp": "^0.21.0-beta.1",
     "@polkadot/extension-inject": "^0.21.0-beta.1",
     "@polkadot/keyring": "^2.0.1",
     "@polkadot/react-identicon": "^0.48.1",
-    "@polkadot/ui-keyring": "^0.47.1",
+    "@polkadot/ui-keyring": "^0.48.1",
     "@polkadot/ui-settings": "^0.48.1",
     "@polkadot/util": "^2.0.1",
     "@polkadot/util-crypto": "^2.0.1",

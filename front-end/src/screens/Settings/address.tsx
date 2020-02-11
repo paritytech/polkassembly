@@ -18,8 +18,8 @@ interface Props{
 	className?: string
 }
 
-const APP = 'polkassembly';
-const NETWORK = 'kasuma';
+const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
+const NETWORK = process.env.REACT_APP_NETWORK || 'kasuma';
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -31,7 +31,7 @@ const Address = ({ className }: Props): JSX.Element => {
 	const { queueNotification } = useContext(NotificationContext);
 
 	const handleDetect = async () => {
-		const extensions = await web3Enable(APP);
+		const extensions = await web3Enable(APPNAME);
 
 		if (extensions.length === 0) {
 			setExtensionNotAvailable(true);

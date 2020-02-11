@@ -6,8 +6,8 @@ import gql from 'graphql-tag';
 // const topic = post_topic.DEMOCRACY;
 
 export const QUERY_LATEST_REFERENDA = gql`
-  query LatestDemocracyReferendaPosts($postType: Int! = 2, $postTopic: Int! = 1) {
-    posts(limit: 5, where: {
+  query LatestDemocracyReferendaPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5) {
+    posts(limit: $limit, where: {
         type: {
             id: {
                 _eq: $postType

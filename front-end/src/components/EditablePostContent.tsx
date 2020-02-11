@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from './ContentForm';
-import PostContent from './PostContent';
+import PostContent from './Post/PostContent';
 import { NotificationContext } from '../context/NotificationContext';
 import { DiscussionPostFragment, useEditPostMutation, DiscussionPostAndCommentsQueryVariables, DiscussionPostAndCommentsQuery, ProposalPostFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostFragment, ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../generated/graphql';
 import { NotificationStatus } from '../types';
@@ -19,11 +19,12 @@ interface Props {
 	isEditing: boolean
 	onchainId?: number | null
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
+	postStatus?: string
 	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 	toggleEdit: () => void
 }
 
-const EditablePostContent = ({ className, isEditing, onchainId, post, refetch, toggleEdit }: Props) => {
+const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus, refetch, toggleEdit }: Props) => {
 	const { author, content, title } = post;
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
@@ -109,7 +110,7 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, refetch, t
 						</Form>
 						:
 						<>
-							<PostContent onchainId={onchainId} post={post}/>
+							<PostContent onchainId={onchainId} post={post} postStatus={postStatus}/>
 						</>
 				}
 			</div>
