@@ -5,6 +5,7 @@ import styled from '@xstyled/styled-components';
 import Comments from './Comments';
 import EditableCommentContent from './EditableCommentContent';
 import { CommentRecursiveFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
 
@@ -20,8 +21,13 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
 	return (
-		<>
-			<div className={className}>
+		<div className={className}>
+			<Avatar
+				className='avatar'
+				displayname={author.name}
+				username={author.username}
+			/>
+			<div className='comment-box'>
 				<CreationLabel
 					created_at={created_at}
 					displayname={author.name}
@@ -48,17 +54,32 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 						: null
 				}
 			</div>
-		</>
+		</div>
 	);
 };
 
 export default styled(Comment)`
-	background-color: white;
-	padding: 2rem 3rem 2rem 3rem;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
-	margin-bottom: 1rem;
+	display: flex;
+
+	.avatar {
+		display: inline-block;
+		flex: 0 0 4rem;
+		margin-right: 2rem;
+
+		@media only screen and (max-width: 576px) {
+			display: none;
+		}
+	}
+
+	.comment-box {
+		background-color: white;
+		padding: 2rem 3rem 2rem 3rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+		margin-bottom: 1rem;
+		width: 100%;
+	}
 
 	.md {
 		margin-top: 1rem;
