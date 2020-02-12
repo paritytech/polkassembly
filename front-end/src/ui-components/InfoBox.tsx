@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled from '@xstyled/styled-components';
 import { MdClose } from 'react-icons/md';
 
@@ -7,24 +7,37 @@ interface Props{
 	className?: string
 	content?: string
 	dismissable?: boolean
-	onClose?: (() => void)
+	name: string
 	title: string
 }
 
-const InfoBox = ({ children, className, content, dismissable, onClose, title }: Props) => {
+const InfoBox = ({ children, className, content, dismissable, name, title }: Props) => {
+	const infoBoxVisible = localStorage.getItem(name);
+	if (infoBoxVisible === null) {
+		localStorage.setItem(name, 'true');
+	}
+
+	const [infoVisible, setInfoVisible] = useState(JSON.parse(infoBoxVisible!));
+	const handleClose = () => {
+		localStorage.setItem(name, 'false');
+		setInfoVisible(false);
+	};
 
 	return (
-		<div className={className}>
-			<h4>{title}</h4>
-			{dismissable &&
-			<div className='close'>
-				<MdClose
-					onClick={onClose}
-				/>
+		<>
+			{infoVisible &&
+			<div className={className}>
+				<h4>{title}</h4>
+				{dismissable &&
+				<div className='close'>
+					<MdClose
+						onClick={handleClose}
+					/>
+				</div>}
+				{content}
+				{children}
 			</div>}
-			{content}
-			{children}
-		</div>
+		</>
 	);
 };
 

@@ -1,5 +1,5 @@
 import styled from '@xstyled/styled-components';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 
@@ -15,17 +15,6 @@ const Discussions = ({ className } : {className?: string}) => {
 		history.push('/post/create');
 	};
 
-	const infoBoxVisible = localStorage.getItem('discussionsInfoVisible');
-	if (infoBoxVisible === null) {
-		localStorage.setItem('discussionsInfoVisible', 'true');
-	}
-	const [infoVisible, setInfoVisible] = useState(infoBoxVisible);
-
-	const handleDismissInfoBox = () => {
-		localStorage.setItem('discussionsInfoVisible', 'false');
-		setInfoVisible(localStorage.getItem('discussionsInfoVisible'));
-	};
-
 	return (
 		<Container className={className}>
 			<Grid stackable reversed='mobile tablet'>
@@ -34,13 +23,12 @@ const Discussions = ({ className } : {className?: string}) => {
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					{infoVisible === 'true' &&
-						<InfoBox
-							dismissable={true}
-							content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
-							onClose={handleDismissInfoBox}
-							title='About Discussions'
-						/>}
+					<InfoBox
+						dismissable={true}
+						content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
+						name='discussionsInfo'
+						title='About Discussions'
+					/>
 					<div className='mainButtonContainer'>
 						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
 					</div>
