@@ -42,9 +42,6 @@ const Discussions = ({ className } : {className?: string}) => {
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					<div className='mainButtonContainer'>
-						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					</div>
 					{infoBoxVisible &&
 						<InfoBox
 							dismissable={true}
@@ -52,6 +49,9 @@ const Discussions = ({ className } : {className?: string}) => {
 							onClose={handleDismiss}
 							title='About Discussions'
 						/>}
+					<div className='mainButtonContainer'>
+						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
+					</div>
 				</Grid.Column>
 			</Grid>
 		</Container>

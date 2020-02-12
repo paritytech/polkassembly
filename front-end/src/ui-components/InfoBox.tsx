@@ -30,9 +30,13 @@ const InfoBox = ({ children, className, content, dismissable, onClose, title }: 
 
 export default styled(InfoBox)`
     background-color: white;
-    color: black_text;
+	color: black_text;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey_light;
 	padding: 2rem 3rem;
 	position: relative;
+	margin-bottom: 2rem;
 	
 	h4 {
 		font-family: 'Roboto Mono';
