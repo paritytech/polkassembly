@@ -12,7 +12,8 @@ interface Props{
 }
 
 const InfoBox = ({ children, className, content, dismissable, name, title }: Props) => {
-	const infoBoxVisible = localStorage.getItem(name);
+	const localStorageName = name + 'Visible'
+	const infoBoxVisible = localStorage.getItem(localStorageName);
 	const [infoVisible, setInfoVisible] = useState(JSON.parse(infoBoxVisible!));
 	
 	if (infoBoxVisible === null) {
