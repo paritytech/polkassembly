@@ -51,6 +51,8 @@ const StyledForm = styled(SUIForm)`
 
     &.ui.form {
 
+        font-size: sm;
+        
         .field
             > label {
                 font-size: input_text_size;

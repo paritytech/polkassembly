@@ -16,15 +16,14 @@ const DiscussionCard = styled.div`
         text-decoration: none;
     }
     h4 {
-        color: black_primary;
-        font-weight: 500;
+        font-family: font_default;
         font-size: md;
         margin-bottom: 0.3rem; 
     }
     ul {
         color: grey_secondary;
         font-size: xs;
-        font-family: 'Roboto';
+        font-family: font_default;
         font-weight: 500;
         li {
             display: inline;

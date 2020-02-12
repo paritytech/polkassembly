@@ -112,6 +112,7 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			</div> */}
 			<div className='card'>
 				<Form standalone={false}>
+					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Vote Lock&nbsp;
@@ -132,11 +133,11 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
-						<Form.Field width={8}>
+						<Form.Field className='button-container' width={8}>
 							<Button
 								fluid
 								basic
-								color='red'
+								className='primary negative'
 								disabled={!apiReady}
 								onClick={() => voteRefrendum(false)}
 							>
@@ -144,7 +145,7 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 								NAY
 							</Button>
 						</Form.Field>
-						<Form.Field width={8}>
+						<Form.Field className='button-container' width={8}>
 							<Button
 								fluid
 								primary
@@ -183,9 +184,39 @@ export default styled(VoteRefrendum)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+		@media only screen and (max-width: 768px) {
+			padding: 2rem;
+		}
+	}
+
+	.ui.selection.dropdown {
+		border-radius: 0rem;
+	}
+
+	.ui.dropdown .menu .active.item {
+		font-weight: 500;
+	}
+
+	.ui.dropdown .menu>.item:hover {
+		background-color: grey_light;
+	}
+
+	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
+		border-color: grey_light;
 	}
 
 	i.icon.question.circle:before {
 		color: grey_secondary;
 	}
+
+	@media only screen and (max-width: 768px) {
+		.ui.form {
+			padding: 0rem;
+		}
+
+		.button-container {
+			margin-bottom: 1rem!important;
+		}
+	}
+
 `;
