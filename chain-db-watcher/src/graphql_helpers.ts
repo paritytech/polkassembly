@@ -14,8 +14,10 @@ const proposalBotUserId = process.env.BOT_PROPOSAL_USER_ID;
 const proposalBotUsername = process.env.PROPOSAL_BOT_USERNAME;
 const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+const councilTopicId = process.env.COUNCIL_TOPIC_ID;
 
 const DEFAULT_TITLE = 'On chain democracy proposal';
+const DEFAULT_MOTION_TITLE = 'On chain council motion';
 const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the proposal author to explain the rationale behind the proposal.';
 
 /**
@@ -88,6 +90,39 @@ export const proposalDiscussionExists = async (
 };
 
 /**
+ * Tells if there is already a motion in the discussion DB matching the
+ * onchain motion proposal id passed as argument
+ *
+ * @param onchainMotionProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+export const motionDiscussionExists = async (
+	onchainMotionProposalId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionMotionProposalById({ onchainMotionProposalId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`motionDiscussionExists execution error with motionProposalId: ${onchainMotionProposalId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
  * Tells if there is in the discussion DB a proposal to link a referendum to. It will return true
  * if there is no onchain_referendum id associated to the proposal, false otherwise.
  *
@@ -119,7 +154,7 @@ export const getDiscussionAssociatedReferendumId = async (onchainProposalId: num
 /**
  * Creates a generic post and the linked proposal in hasura discussion DB
  *
- * @param proposer address of the proposer of the proposal, encoded with the network prefix
+ * @param proposer address of the proposer of the proposal
  * @param onchainProposalId the proposal id that is on chain (not the Prisma db id)
  */
 
@@ -147,13 +182,13 @@ export const addDiscussionPostAndProposal = async ({
 	}
 
 	const proposalAndPostVariables = {
-		author_id: Number(proposalBotUserId),
+		authorId: Number(proposalBotUserId),
 		onchainProposalId,
 		content: DEFAULT_DESCRIPTION,
-		proposer_address: proposer,
+		proposerAddress: proposer,
 		title: DEFAULT_TITLE,
-		topic_id: Number(democracyTopicId),
-		type_id: Number(proposalPostTypeId)
+		topicId: Number(democracyTopicId),
+		typeId: Number(proposalPostTypeId)
 	};
 
 	try {
@@ -185,6 +220,82 @@ export const addDiscussionPostAndProposal = async ({
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Creates a generic post and the linked motion in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the motion
+ * @param onchainMotionId the motion id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndMotion = async ({
+	proposer,
+	onchainMotionProposalId
+}: {
+	proposer: string;
+	onchainMotionProposalId: number;
+}): Promise<void> => {
+	if (!councilTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the COUNCIL_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
+		);
+	}
+
+	const motionAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		onchainMotionProposalId,
+		content: DEFAULT_DESCRIPTION,
+		proposerAddress: proposer,
+		title: DEFAULT_MOTION_TITLE,
+		topicId: Number(councilTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndMotionMutation(motionAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Motion ${addedId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addPostAndMotion execution error, motion id ${onchainMotionProposalId}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&

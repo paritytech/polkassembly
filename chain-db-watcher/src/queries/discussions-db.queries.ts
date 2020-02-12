@@ -3,23 +3,52 @@ import gql from 'graphql-tag';
 export const addPostAndProposalMutation = gql`
     mutation addPostAndProposalMutation (
         $onchainProposalId:Int!,
-        $author_id: Int!,
-        $proposer_address: String!,
+        $authorId: Int!,
+        $proposerAddress: String!,
         $content: String!,
         $title: String!,
-        $topic_id: Int!,
-        $type_id: Int!
+        $topicId: Int!,
+        $typeId: Int!
         ){
         __typename
         insert_onchain_links(objects: {
             onchain_proposal_id: $onchainProposalId,
-            proposer_address: $proposer_address,
+            proposer_address: $proposerAddress,
             post: {data: {
-                author_id: $author_id,
+                author_id: $authorId,
                 content: $content,
                 title: $title,
-                topic_id: $topic_id,
-                type_id: $type_id
+                topic_id: $topicId,
+                type_id: $typeId
+            }
+        }}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
+export const addPostAndMotionMutation = gql`
+    mutation addPostAndMotionMutation (
+        $onchainMotionProposalId:Int!,
+        $authorId: Int!,
+        $proposerAddress: String!,
+        $content: String!,
+        $title: String!,
+        $topicId: Int!,
+        $typeId: Int!
+        ){
+        __typename
+        insert_onchain_links(objects: {
+            onchain_motion_id: $onchainMotionProposalId,
+            proposer_address: $proposerAddress,
+            post: {data: {
+                author_id: $authorId,
+                content: $content,
+                title: $title,
+                topic_id: $topicId,
+                type_id: $typeId
             }
         }}) {
             returning {
@@ -64,6 +93,14 @@ export const loginMutation = gql`
 export const getDiscussionProposalById = gql`
     query getDiscussionProposalById($onchainProposalId: Int!) {
         onchain_links(where: {onchain_proposal_id: {_eq: $onchainProposalId}}) {
+            id
+        }
+    }
+`;
+
+export const getDiscussionMotionProposalById = gql`
+    query getDiscussionMotionProposalById($onchainMotionProposalId: Int!) {
+        onchain_links(where: {onchain_motion_id: {_eq: $onchainMotionProposalId}}) {
             id
         }
     }
