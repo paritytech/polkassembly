@@ -13,11 +13,13 @@ interface Props{
 
 const InfoBox = ({ children, className, content, dismissable, name, title }: Props) => {
 	const infoBoxVisible = localStorage.getItem(name);
+	const [infoVisible, setInfoVisible] = useState(JSON.parse(infoBoxVisible!));
+	
 	if (infoBoxVisible === null) {
 		localStorage.setItem(name, 'true');
+		setInfoVisible(true);
 	}
 
-	const [infoVisible, setInfoVisible] = useState(JSON.parse(infoBoxVisible!));
 	const handleClose = () => {
 		localStorage.setItem(name, 'false');
 		setInfoVisible(false);
