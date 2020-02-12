@@ -24,6 +24,10 @@ export const theme = {
 		xl: '3rem',
 		xs: '1.1rem'
 	},
+	fonts: {
+		font_default: 'Roboto',
+		font_mono: 'Roboto Mono'
+	},
 	radii: {
 		button_radius: '0.3rem'
 	}

@@ -93,9 +93,8 @@ export default styled(Discussion)`
 	}
 	
     h4, h5 {
-        color: black_primary;
+        font-family: font_default;
         display: block;
-        font-weight: 500;
 		margin-bottom: 0.3rem; 
 	}
 

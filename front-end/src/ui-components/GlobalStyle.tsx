@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
-        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        font-family: font_default, 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
             'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
             sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -27,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     code {
         display: inline-block;
         max-width: 100%;
-        font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        font-family: font_mono, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
         background-color: grey_light;
         color: black_primary;
@@ -59,8 +59,8 @@ export const GlobalStyle = createGlobalStyle`
         margin-top: 0;
     }
 
-    h1, h2, h3 {
-        font-family: 'Roboto Mono';
+    h1, h2, h3, h4 {
+        font-family: font_mono;
     }
 
     h1 {
@@ -74,18 +74,17 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h3 {
-        font-family: 'Roboto Mono';
         font-size: 2.6rem;
         margin-bottom: 1.25rem;
     }
 
     h4 {
-        font-family: 'Roboto Mono';
         font-size: lg;
+        margin-bottom: 1.2rem;
     }
 
     h5, h6 {
-        font-family: 'Roboto';   
+        font-family: font_default;
     }
 
     h6 {
