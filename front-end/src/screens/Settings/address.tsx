@@ -168,12 +168,13 @@ const Address = ({ className }: Props): JSX.Element => {
 			<Form className={className} standalone='false'>
 				<Form.Group>
 					<Form.Field width={16}>
-						<Button
-							primary
-							onClick={handleDetect}
-						>
-						Link Address With Polkadot-js Extension
-						</Button>
+						<label>Linked address</label>
+						<div className='text-muted'>Associate your account with an on chain address using the Polkadot-js extention.</div>&nbsp;
+						<div className='link-button-container'>
+							<Button primary onClick={handleDetect}>
+								Link Address
+							</Button>
+						</div>
 					</Form.Field>
 				</Form.Group>
 			</Form>
