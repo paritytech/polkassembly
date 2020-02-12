@@ -1,12 +1,31 @@
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
+import InfoBox from '../../ui-components/InfoBox';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
+
+	useState(() => {
+		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
+		if (infoVisible === null) {
+			infoVisible = { 'discussionsInfoVisible': true, 'onchainInfoVisible': true };
+			localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
+		}
+	});
+
+	var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
+	const showInfoBox = () => infoVisible.onchainInfoVisible!;
+	const [infoBoxVisible, setInfoBoxVisible] = useState(showInfoBox);
+	const handleDismiss = () => {
+		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
+		infoVisible.onchainInfoVisible = false;
+		localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
+		setInfoBoxVisible(infoVisible.onchainInfoVisible);
+	};
 
 	return (
 		<Container className={className}>
@@ -18,7 +37,17 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<h2>Proposals</h2>
 					<ProposalContainer className='proposalContainer'/>
 				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={6}/>
+				<Grid.Column mobile={16} tablet={16} computer={6}>
+					{infoBoxVisible &&
+						<InfoBox
+							dismissable={true}
+							content='This is the place to discuss on-chain proposals, motions and referenda.
+							On-chain posts are automatically generated as soon as they are created on the chain.
+							Only the proposer is able to edit them.'
+							onClose={handleDismiss}
+							title='About On-chain Posts'
+						/>}
+				</Grid.Column>
 			</Grid>
 		</Container>
 	);
