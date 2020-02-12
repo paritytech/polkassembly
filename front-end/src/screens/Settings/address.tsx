@@ -172,7 +172,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
 							<Button primary onClick={handleDetect}>
-								Link Address
+								{currentUser?.addresses?.length ? 'Show Linked Addresses' : 'Link Address'}
 							</Button>
 						</div>
 					</Form.Field>
