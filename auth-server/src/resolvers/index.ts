@@ -10,6 +10,7 @@ import logout from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
 import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
+import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
 import verifyEmail from './mutation/verifyEmail';
@@ -40,6 +41,7 @@ export default {
 		postSubscribe,
 		postUnsubscribe,
 		requestResetPassword,
+		resendVerifyEmailToken,
 		resetPassword,
 		undoEmailChange,
 		verifyEmail
