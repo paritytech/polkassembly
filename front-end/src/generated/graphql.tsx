@@ -782,6 +782,7 @@ export type Mutation = {
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
+  resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -944,6 +945,7 @@ export type Mutation_Root = {
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
+  resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -7101,6 +7103,17 @@ export type AddressUnlinkMutation = (
   )> }
 );
 
+export type ResendVerifyEmailTokenMutationVariables = {};
+
+
+export type ResendVerifyEmailTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { resendVerifyEmailToken: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type SignupMutationVariables = {
   email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
@@ -8271,6 +8284,37 @@ export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
+export const ResendVerifyEmailTokenDocument = gql`
+    mutation resendVerifyEmailToken {
+  resendVerifyEmailToken {
+    message
+  }
+}
+    `;
+export type ResendVerifyEmailTokenMutationFn = ApolloReactCommon.MutationFunction<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
+
+/**
+ * __useResendVerifyEmailTokenMutation__
+ *
+ * To run a mutation, you first call `useResendVerifyEmailTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResendVerifyEmailTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resendVerifyEmailTokenMutation, { data, loading, error }] = useResendVerifyEmailTokenMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>) {
+        return ApolloReactHooks.useMutation<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>(ResendVerifyEmailTokenDocument, baseOptions);
+      }
+export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
+export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
+export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {

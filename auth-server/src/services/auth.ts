@@ -323,6 +323,32 @@ export default class AuthService {
 		return this.getSignedToken(user, addresses);
 	}
 
+	public async resendVerifyEmailToken(token: string) {
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		if (!user.email) {
+			throw new UserInputError(messages.EMAIL_NOT_FOUND);
+		}
+
+		// Invalidate all email verification token for user
+		await EmailVerificationToken
+			.query()
+			.patch({ valid: false })
+			.where({ user_id: userId });
+
+		const verifyToken = await EmailVerificationToken
+			.query()
+			.allowInsert('[token, user_id, valid]')
+			.insert({
+				token: uuid(),
+				user_id: user.id,
+				valid: true
+			});
+
+		sendVerificationEmail(user, verifyToken);
+	}
+
 	public async ChangeUsername(token: string, username: string): Promise<string> {
 		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User

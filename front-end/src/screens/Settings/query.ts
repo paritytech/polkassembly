@@ -63,3 +63,10 @@ export const ADDRESS_UNLINK = gql`
 	}
 `;
 
+export const RESEND_VERIFY_EMAIL_TOKEN = gql`
+	mutation resendVerifyEmailToken {
+		resendVerifyEmailToken {
+			message
+		}
+	}
+`;
