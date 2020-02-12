@@ -9,15 +9,15 @@ import InfoBox from '../../ui-components/InfoBox';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
-	const infoBoxVisible = localStorage.getItem('onchainInfo');
+	const infoBoxVisible = localStorage.getItem('onchainInfoVisible');
 	if (infoBoxVisible === null) {
-		localStorage.setItem('onchainInfo', 'true');
+		localStorage.setItem('onchainInfoVisible', 'true');
 	}
 	const [infoVisible, setInfoVisible] = useState(infoBoxVisible);
 
-	const handleDismiss = () => {
-		localStorage.setItem('onchainInfo', 'false');
-		setInfoVisible(localStorage.getItem('onchainInfo'));
+	const handleDismissInfoBox = () => {
+		localStorage.setItem('onchainInfoVisible', 'false');
+		setInfoVisible(localStorage.getItem('onchainInfoVisible'));
 	};
 
 	return (
@@ -37,7 +37,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 							content='This is the place to discuss on-chain proposals, motions and referenda.
 							On-chain posts are automatically generated as soon as they are created on the chain.
 							Only the proposer is able to edit them.'
-							onClose={handleDismiss}
+							onClose={handleDismissInfoBox}
 							title='About On-chain Posts'
 						/>}
 				</Grid.Column>

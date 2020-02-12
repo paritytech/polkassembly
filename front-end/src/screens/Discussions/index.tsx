@@ -15,15 +15,15 @@ const Discussions = ({ className } : {className?: string}) => {
 		history.push('/post/create');
 	};
 
-	const infoBoxVisible = localStorage.getItem('discussionsInfo');
+	const infoBoxVisible = localStorage.getItem('discussionsInfoVisible');
 	if (infoBoxVisible === null) {
-		localStorage.setItem('discussionsInfo', 'true');
+		localStorage.setItem('discussionsInfoVisible', 'true');
 	}
 	const [infoVisible, setInfoVisible] = useState(infoBoxVisible);
 
-	const handleDismiss = () => {
-		localStorage.setItem('discussionsInfo', 'false');
-		setInfoVisible(localStorage.getItem('discussionsInfo'));
+	const handleDismissInfoBox = () => {
+		localStorage.setItem('discussionsInfoVisible', 'false');
+		setInfoVisible(localStorage.getItem('discussionsInfoVisible'));
 	};
 
 	return (
@@ -38,7 +38,7 @@ const Discussions = ({ className } : {className?: string}) => {
 						<InfoBox
 							dismissable={true}
 							content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
-							onClose={handleDismiss}
+							onClose={handleDismissInfoBox}
 							title='About Discussions'
 						/>}
 					<div className='mainButtonContainer'>
