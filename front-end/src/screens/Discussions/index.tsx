@@ -23,9 +23,10 @@ const Discussions = ({ className } : {className?: string}) => {
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
+					{currentUser.id &&
 					<div className='mainButtonContainer'>
-						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					</div>
+						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+					</div>}
 					<InfoBox
 						dismissable={true}
 						content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
@@ -42,10 +43,6 @@ const Discussions = ({ className } : {className?: string}) => {
 export default styled(Discussions)`
 
 	@media only screen and (max-width: 768px) {
-
-		h1 {
-			margin-left: 3rem;
-		}
 
 		.mainButtonContainer {
 			margin: 0rem;
@@ -67,13 +64,13 @@ export default styled(Discussions)`
 	}
 
 	@media only screen and (max-width: 576px) {
-		h1, h2 {
-			margin-left: 1.5rem;
-		}
-
 		h1 {
 			font-size: 2.1rem;
 			margin: 3rem 1.5rem 1rem 1.5rem;
+		}
+
+		h2 {
+			margin-left: 1.5rem;
 		}
 
 		.mainButtonContainer {

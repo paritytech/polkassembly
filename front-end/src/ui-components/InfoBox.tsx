@@ -22,7 +22,7 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 	}
 
 	const handleClose = () => {
-		localStorage.setItem(name, 'false');
+		localStorage.setItem(localStorageName, 'false');
 		setInfoVisible(false);
 	};
 

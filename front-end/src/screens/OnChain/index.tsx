@@ -41,12 +41,6 @@ export default styled(OnchainPostsContainer)`
 		margin-bottom: 3rem;
 	}
 
-	@media only screen and (max-width: 768px) {
-		h1 {
-			margin-left: 3rem;
-		}
-	}
-
 	@media only screen and (max-width: 576px) {
 		h1, h2 {
 			margin-left: 1.5rem;
