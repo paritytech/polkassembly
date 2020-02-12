@@ -17,6 +17,7 @@ import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
 import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
+import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
@@ -65,6 +66,7 @@ export default gql`
 		${postSubscribe}
 		${postUnsubscribe}
 		${requestResetPassword}
+		${resendVerifyEmailToken}
 		${resetPassword}
 		${signupMutation}
 		${undoEmailChange}
