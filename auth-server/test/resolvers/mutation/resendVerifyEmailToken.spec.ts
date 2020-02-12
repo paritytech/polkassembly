@@ -45,7 +45,7 @@ describe('resendVerifyEmailToken mutation', () => {
 			.orderBy('id', 'desc')
 			.first();
 
-		expect(verifyToken).to.be.exist;
+		expect(verifyToken).to.exist;
 		expect(verifyToken.valid).to.be.true;
 		expect(verifyToken.token).to.be.a('string');
 	});
