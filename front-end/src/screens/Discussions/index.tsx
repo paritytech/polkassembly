@@ -15,23 +15,15 @@ const Discussions = ({ className } : {className?: string}) => {
 		history.push('/post/create');
 	};
 
-	useState(() => {
-		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-		if (infoVisible === null) {
+	const infoBoxVisible = localStorage.getItem('discussionsInfo');
+	if (infoBoxVisible === null) {
+		localStorage.setItem('discussionsInfo', 'true');
+	}
+	const [infoVisible, setInfoVisible] = useState(infoBoxVisible);
 
-			infoVisible = { 'discussionsInfoVisible': true, 'onchainInfoVisible': true };
-			localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
-		}
-	});
-
-	var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-	const showInfoBox = () => infoVisible.discussionsInfoVisible!;
-	const [infoBoxVisible, setInfoBoxVisible] = useState(showInfoBox);
 	const handleDismiss = () => {
-		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-		infoVisible.discussionsInfoVisible = false;
-		localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
-		setInfoBoxVisible(infoVisible.discussionsInfoVisible);
+		localStorage.setItem('discussionsInfo', 'false');
+		setInfoVisible(localStorage.getItem('discussionsInfo'));
 	};
 
 	return (
@@ -42,7 +34,7 @@ const Discussions = ({ className } : {className?: string}) => {
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					{infoBoxVisible &&
+					{infoVisible === 'true' &&
 						<InfoBox
 							dismissable={true}
 							content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'

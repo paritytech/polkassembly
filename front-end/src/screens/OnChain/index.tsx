@@ -9,22 +9,15 @@ import InfoBox from '../../ui-components/InfoBox';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
-	useState(() => {
-		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-		if (infoVisible === null) {
-			infoVisible = { 'discussionsInfoVisible': true, 'onchainInfoVisible': true };
-			localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
-		}
-	});
+	const infoBoxVisible = localStorage.getItem('onchainInfo');
+	if (infoBoxVisible === null) {
+		localStorage.setItem('onchainInfo', 'true');
+	}
+	const [infoVisible, setInfoVisible] = useState(infoBoxVisible);
 
-	var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-	const showInfoBox = () => infoVisible.onchainInfoVisible!;
-	const [infoBoxVisible, setInfoBoxVisible] = useState(showInfoBox);
 	const handleDismiss = () => {
-		var infoVisible = JSON.parse(localStorage?.getItem('infoVisible')!);
-		infoVisible.onchainInfoVisible = false;
-		localStorage.setItem('infoVisible', JSON.stringify(infoVisible));
-		setInfoBoxVisible(infoVisible.onchainInfoVisible);
+		localStorage.setItem('onchainInfo', 'false');
+		setInfoVisible(localStorage.getItem('onchainInfo'));
 	};
 
 	return (
@@ -38,7 +31,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<ProposalContainer className='proposalContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					{infoBoxVisible &&
+					{infoVisible === 'true' &&
 						<InfoBox
 							dismissable={true}
 							content='This is the place to discuss on-chain proposals, motions and referenda.
