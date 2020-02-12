@@ -36,46 +36,36 @@ export default styled(Button)`
 				outline: none;
 			}
 		}
-		&.ui.primary.negative.button {
+		&.ui.primary.negative.button, &.ui.basic.negative.button {
 			background-color: white;
-			color: red_primary;
-			border-style: solid;
-			border-color: red_primary;
-			border-width: 0.1rem;
+			color: red_primary!important;
+			box-shadow: 0 0 0 1px inset !important;
 			&:hover, &:focus {
-				background-color: red_light;
-				color: red_secondary;
-				border-style: solid;
-				border-color: red_secondary;
-				border-width: 0.1rem;
+				background-color: red_light!important;
+				color: red_secondary!important;
 				outline: none;
+				box-shadow: 0 0 0 1px inset !important;
 			}
 		}
 		&.ui.secondary.button {
 			background-color: white;
 			color: grey_primary;
-			border-style: solid;
-			border-color: grey_secondary;
-			border-width: 0.1rem;
+			box-shadow: 0 0 0 1px #B5AEAE inset !important;
 			&:hover, &:focus {
 				color: black_text;
 				background-color: grey_light;
-				border-style: solid;
-				border-color: grey_primary;
-				border-width: 0.1rem;
+				box-shadow: 0 0 0 1px #706D6D inset !important;
 				outline: none;
 			}
 		}
 		&.ui.secondary.negative.button {
 			background-color: white;
 			color: #E65140;
-			border: 0.1rem solid #E65140;
+			box-shadow: 0 0 0 1px inset !important;
 			&:hover, &:focus {
 				background-color: #E66557;
 				color: white;
-				border-style: solid;
-				border-color: #E66557;
-				border-width: 0.1rem;
+				box-shadow: 0 0 0 1px #E65140 inset !important;
 				outline: none;
 			}	
 		}
