@@ -17,7 +17,7 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 	const [infoVisible, setInfoVisible] = useState(JSON.parse(infoBoxVisible!));
 	
 	if (infoBoxVisible === null) {
-		localStorage.setItem(name, 'true');
+		localStorage.setItem(localStorageName, 'true');
 		setInfoVisible(true);
 	}
 
