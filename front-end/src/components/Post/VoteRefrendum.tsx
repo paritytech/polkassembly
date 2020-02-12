@@ -1,7 +1,7 @@
 
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ DropdownProps, Icon, Select } from 'semantic-ui-react';
+import { /* Divider, */ DropdownProps, Icon, Popup, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
@@ -115,7 +115,13 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Vote Lock</label>
+							<label>Vote Lock&nbsp;
+								<Popup
+									trigger={<Icon name='question circle'/>}
+									content='You can multiply your votes by locking your tokens for longer periods of time.'
+									style={{ marginLeft: '-0.7rem' }}
+								/>
+							</label>
 							<Select
 								onChange={onConvictionChange}
 								options={options}
@@ -197,6 +203,10 @@ export default styled(VoteRefrendum)`
 
 	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
 		border-color: grey_light;
+	}
+
+	i.icon.question.circle:before {
+		color: grey_secondary;
 	}
 
 	@media only screen and (max-width: 768px) {
