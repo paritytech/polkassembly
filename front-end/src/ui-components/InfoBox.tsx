@@ -44,7 +44,7 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 };
 
 export default styled(InfoBox)`
-    background-color: white;
+    background-color: grey_light;
 	color: black_text;
 	border-style: solid;
 	border-width: 1px;
@@ -66,6 +66,7 @@ export default styled(InfoBox)`
 		font-size: lg;
 		&:hover {
 			color: grey_secondary;
+			cursor: pointer;
 		}
 	}
 `;

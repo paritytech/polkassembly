@@ -17,21 +17,21 @@ const Discussions = ({ className } : {className?: string}) => {
 
 	return (
 		<Container className={className}>
+			<h1>Latest Discussions</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h1>Latest Discussions</h1>
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
+					<div className='mainButtonContainer'>
+						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
+					</div>
 					<InfoBox
 						dismissable={true}
 						content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
 						name='discussionsInfo'
 						title='About Discussions'
 					/>
-					<div className='mainButtonContainer'>
-						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					</div>
 				</Grid.Column>
 			</Grid>
 		</Container>
@@ -57,6 +57,10 @@ export default styled(Discussions)`
 			flex-direction: column-reverse;
 		}
 
+		h1 {
+			padding: 0 1rem;
+		}
+
 		.mainButtonContainer {
 			margin-top: 1rem!important;
 		}
@@ -69,11 +73,12 @@ export default styled(Discussions)`
 
 		h1 {
 			font-size: 2.1rem;
+			margin: 3rem 1.5rem 1rem 1.5rem;
 		}
 
 		.mainButtonContainer {
 			align-items: stretch!important;
-			margin: 1rem!important;
+			margin: 0 1rem!important;
 
 			.newPostButton {
 				padding: 0.8rem 1rem;
@@ -87,5 +92,6 @@ export default styled(Discussions)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-bottom: 2rem;
 	}
 `;
