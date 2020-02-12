@@ -79,7 +79,12 @@ export const GlobalStyle = createGlobalStyle`
         margin-bottom: 1.25rem;
     }
 
-    h4, h5, h6 {
+    h4 {
+        font-family: 'Roboto Mono';
+        font-size: lg;
+    }
+
+    h5, h6 {
         font-family: 'Roboto';   
     }
 
@@ -95,6 +100,10 @@ export const GlobalStyle = createGlobalStyle`
     ::selection {
         background-color: #282828;
         color: #FFF;
+    }
+
+    .ui.dropdown .menu, .ui.dropdown .menu>.item {
+        font-size: sm;
     }
 
     @media (max-width: 1200px) {

@@ -112,6 +112,7 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			</div> */}
 			<div className='card'>
 				<Form standalone={false}>
+					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Vote Lock</label>
@@ -130,7 +131,7 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 							<Button
 								fluid
 								basic
-								color='red'
+								className='primary negative'
 								disabled={!apiReady}
 								onClick={() => voteRefrendum(false)}
 							>
@@ -177,5 +178,17 @@ export default styled(VoteRefrendum)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+	}
+
+	.ui.selection.dropdown {
+		border-radius: 0rem;
+	}
+
+	.ui.dropdown .menu .active.item {
+		font-weight: 500;
+	}
+
+	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
+		border-color: grey_light;
 	}
 `;

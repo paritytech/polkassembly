@@ -36,14 +36,14 @@ export default styled(Button)`
 				outline: none;
 			}
 		}
-		&.ui.primary.negative.button {
+		&.ui.primary.negative.button, &.ui.basic.negative.button {
 			background-color: white;
-			color: red_primary;
+			color: red_primary!important;
 			border-style: solid;
 			border-color: red_primary;
 			border-width: 0.1rem;
 			&:hover, &:focus {
-				background-color: red_light;
+				background-color: red_light!important;
 				color: red_secondary;
 				border-style: solid;
 				border-color: red_secondary;
