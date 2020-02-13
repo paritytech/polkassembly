@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
 import GovernanceCard from '../GovernanceCard';
-import { LatestDemocracyReferendaPostsQuery } from '../../generated/graphql';
+import { LatestReferendaPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDemocracyReferendaPostsQuery
+  data: LatestReferendaPostsQuery
 }
 
 const Referenda = ({ className, data }: Props) => {

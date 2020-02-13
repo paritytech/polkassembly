@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useLatestDemocracyReferendaPostsQuery } from '../../../generated/graphql';
+import { useLatestReferendaPostsQuery } from '../../../generated/graphql';
 import ReferendaListing from '../../../components/Listings/ReferendaListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
@@ -11,7 +11,7 @@ interface Props {
 
 const ReferendumContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyReferendaPostsQuery();
+	const { data, error } = useLatestReferendaPostsQuery();
 
 	if (error) return <FilteredError text={error.message}/>;
 
