@@ -44,6 +44,9 @@ const Referenda = ({ className, data }: Props) => {
 };
 
 export default styled(Referenda)`
+	margin-block-start: 0;
+	margin-block-end: 0;
+	
 	li {
 		list-style-type: none;
 	}
