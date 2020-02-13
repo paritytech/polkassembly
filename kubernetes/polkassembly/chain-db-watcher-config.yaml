@@ -9,7 +9,7 @@ data:
   PROPOSAL_BOT_PASSWORD: $PROPOSAL_BOT_PASSWORD
   REACT_APP_HASURA_GRAPHQL_URL: "http://hasura-service:8080/v1/graphql"
   AUTH_SERVER_URL: "http://auth-server-service:8010/auth/graphql"
-  CHAIN_DB_GRAPHQL_URL: "http://nodewatcher.nodewatcher:4466"
+  CHAIN_DB_GRAPHQL_URL: "http://nodewatcher.nodewatcher-staging:4466"
   HASURA_PROPOSAL_POST_TYPE_ID: "2"
   DEMOCRACY_TOPIC_ID: "1"
   BOT_PROPOSAL_USER_ID: "11"
