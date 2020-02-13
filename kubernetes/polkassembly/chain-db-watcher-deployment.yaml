@@ -54,8 +54,8 @@ spec:
             configMapKeyRef:
               key: DEMOCRACY_TOPIC_ID
               name: chain-db-watcher-config
-        - name: BOT_PROPOSAL_USER_ID
+        - name: PROPOSAL_BOT_USER_ID
           valueFrom:
             configMapKeyRef:
-              key: BOT_PROPOSAL_USER_ID
+              key: PROPOSAL_BOT_USER_ID
               name: chain-db-watcher-config
