@@ -2,8 +2,8 @@ export const theme = {
 	colors: {
 		black_primary: '#282828',
 		black_text: '#555',
-		blue_primary: '#4D4DD1',
-		blue_primary_transparent: 'rgba(77, 77, 209, 0.05)',
+		blue_primary: '#4D9999',
+		blue_primary_transparent: 'rgba(77, 153, 153, 0.05)',
 		green_primary: '#4DD18F',
 		green_primary_transparent: 'rgba(4, 221, 24, 0.05)',
 		grey_app_background: '#F7F9F9',

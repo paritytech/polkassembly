@@ -119,7 +119,8 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 								<Popup
 									trigger={<Icon name='question circle'/>}
 									content='You can multiply your votes by locking your tokens for longer periods of time.'
-									style={{ marginLeft: '-0.7rem' }}
+									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+									hoverable={true}
 								/>
 							</label>
 							<Select
