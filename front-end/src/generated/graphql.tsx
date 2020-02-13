@@ -793,10 +793,10 @@ export type Motion = {
   motionProposalArguments?: Maybe<Array<MotionProposalArgument>>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<Array<MotionStatus>>,
   preimage?: Maybe<Preimage>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<Array<MotionStatus>>,
 };
 
 
@@ -811,7 +811,7 @@ export type MotionMotionProposalArgumentsArgs = {
 };
 
 
-export type MotionStatusArgs = {
+export type MotionMotionStatusArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
@@ -836,10 +836,10 @@ export type MotionCreateInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
 };
 
 export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
@@ -847,14 +847,14 @@ export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
   create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>,
 };
 
+export type MotionCreateOneWithoutMotionStatusInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+};
+
 export type MotionCreateOneWithoutPreimageInput = {
   connect?: Maybe<MotionWhereUniqueInput>,
   create?: Maybe<MotionCreateWithoutPreimageInput>,
-};
-
-export type MotionCreateOneWithoutStatusInput = {
-  connect?: Maybe<MotionWhereUniqueInput>,
-  create?: Maybe<MotionCreateWithoutStatusInput>,
 };
 
 export type MotionCreateWithoutMotionProposalArgumentsInput = {
@@ -864,10 +864,23 @@ export type MotionCreateWithoutMotionProposalArgumentsInput = {
   method: Scalars['String'],
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
+};
+
+export type MotionCreateWithoutMotionStatusInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
 };
 
 export type MotionCreateWithoutPreimageInput = {
@@ -878,20 +891,7 @@ export type MotionCreateWithoutPreimageInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
-  preimageHash?: Maybe<Scalars['String']>,
-  section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
-};
-
-export type MotionCreateWithoutStatusInput = {
-  author: Scalars['String'],
-  memberCount: Scalars['Int'],
-  metaDescription: Scalars['String'],
-  method: Scalars['String'],
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
-  motionProposalHash: Scalars['String'],
-  motionProposalId: Scalars['Int'],
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
 };
@@ -1178,7 +1178,7 @@ export type MotionStatusConnection = {
 export type MotionStatusCreateInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
-  motion: MotionCreateOneWithoutStatusInput,
+  motion: MotionCreateOneWithoutMotionStatusInput,
   status: Scalars['String'],
 };
 
@@ -1267,7 +1267,7 @@ export type MotionStatusSubscriptionWhereInput = {
 
 export type MotionStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  motion?: Maybe<MotionUpdateOneRequiredWithoutStatusInput>,
+  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>,
   status?: Maybe<Scalars['String']>,
 };
 
@@ -1379,10 +1379,10 @@ export type MotionUpdateInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
 };
 
 export type MotionUpdateManyMutationInput = {
@@ -1403,11 +1403,11 @@ export type MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput = {
   upsert?: Maybe<MotionUpsertWithoutMotionProposalArgumentsInput>,
 };
 
-export type MotionUpdateOneRequiredWithoutStatusInput = {
+export type MotionUpdateOneRequiredWithoutMotionStatusInput = {
   connect?: Maybe<MotionWhereUniqueInput>,
-  create?: Maybe<MotionCreateWithoutStatusInput>,
-  update?: Maybe<MotionUpdateWithoutStatusDataInput>,
-  upsert?: Maybe<MotionUpsertWithoutStatusInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+  update?: Maybe<MotionUpdateWithoutMotionStatusDataInput>,
+  upsert?: Maybe<MotionUpsertWithoutMotionStatusInput>,
 };
 
 export type MotionUpdateOneWithoutPreimageInput = {
@@ -1426,10 +1426,23 @@ export type MotionUpdateWithoutMotionProposalArgumentsDataInput = {
   method?: Maybe<Scalars['String']>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
+};
+
+export type MotionUpdateWithoutMotionStatusDataInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
 };
 
 export type MotionUpdateWithoutPreimageDataInput = {
@@ -1440,20 +1453,7 @@ export type MotionUpdateWithoutPreimageDataInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
-  preimageHash?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
-};
-
-export type MotionUpdateWithoutStatusDataInput = {
-  author?: Maybe<Scalars['String']>,
-  memberCount?: Maybe<Scalars['Int']>,
-  metaDescription?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
-  motionProposalHash?: Maybe<Scalars['String']>,
-  motionProposalId?: Maybe<Scalars['Int']>,
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
 };
@@ -1463,14 +1463,14 @@ export type MotionUpsertWithoutMotionProposalArgumentsInput = {
   update: MotionUpdateWithoutMotionProposalArgumentsDataInput,
 };
 
+export type MotionUpsertWithoutMotionStatusInput = {
+  create: MotionCreateWithoutMotionStatusInput,
+  update: MotionUpdateWithoutMotionStatusDataInput,
+};
+
 export type MotionUpsertWithoutPreimageInput = {
   create: MotionCreateWithoutPreimageInput,
   update: MotionUpdateWithoutPreimageDataInput,
-};
-
-export type MotionUpsertWithoutStatusInput = {
-  create: MotionCreateWithoutStatusInput,
-  update: MotionUpdateWithoutStatusDataInput,
 };
 
 export type MotionWhereInput = {
@@ -1560,6 +1560,9 @@ export type MotionWhereInput = {
   motionProposalId_lte?: Maybe<Scalars['Int']>,
   motionProposalId_not?: Maybe<Scalars['Int']>,
   motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
   preimage?: Maybe<PreimageWhereInput>,
   preimageHash?: Maybe<Scalars['String']>,
   preimageHash_contains?: Maybe<Scalars['String']>,
@@ -1589,9 +1592,6 @@ export type MotionWhereInput = {
   section_not_in?: Maybe<Array<Scalars['String']>>,
   section_not_starts_with?: Maybe<Scalars['String']>,
   section_starts_with?: Maybe<Scalars['String']>,
-  status_every?: Maybe<MotionStatusWhereInput>,
-  status_none?: Maybe<MotionStatusWhereInput>,
-  status_some?: Maybe<MotionStatusWhereInput>,
 };
 
 export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
@@ -1680,6 +1680,9 @@ export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
   motionProposalId_lte?: Maybe<Scalars['Int']>,
   motionProposalId_not?: Maybe<Scalars['Int']>,
   motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
   preimage?: Maybe<PreimageWhereInput>,
   preimageHash?: Maybe<Scalars['String']>,
   preimageHash_contains?: Maybe<Scalars['String']>,
@@ -1709,9 +1712,6 @@ export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
   section_not_in?: Maybe<Array<Scalars['String']>>,
   section_not_starts_with?: Maybe<Scalars['String']>,
   section_starts_with?: Maybe<Scalars['String']>,
-  status_every?: Maybe<MotionStatusWhereInput>,
-  status_none?: Maybe<MotionStatusWhereInput>,
-  status_some?: Maybe<MotionStatusWhereInput>,
 };
 
 export type MotionWhereUniqueInput = {
@@ -8050,6 +8050,102 @@ export type LogoutMutation = (
   )> }
 );
 
+export type OnchainLinkMotionFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id' | 'onchain_motion_id'>
+  & { onchain_motion: Array<Maybe<(
+    { __typename?: 'Motion' }
+    & Pick<Motion, 'id'>
+    & { motionStatus: Maybe<Array<(
+      { __typename?: 'MotionStatus' }
+      & Pick<MotionStatus, 'id' | 'status'>
+    )>>, preimage: Maybe<(
+      { __typename?: 'Preimage' }
+      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & { preimageArguments: Maybe<Array<(
+        { __typename?: 'PreimageArgument' }
+        & Pick<PreimageArgument, 'id' | 'name' | 'value'>
+      )>> }
+    )> }
+  )>> }
+);
+
+export type MotionPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentRecursiveFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkMotionFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type MotionPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type MotionPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & MotionPostFragment
+  )> }
+);
+
+export type LatestMotionPostsQueryVariables = {
+  postType?: Scalars['Int'],
+  postTopic?: Scalars['Int'],
+  limit?: Scalars['Int']
+};
+
+
+export type LatestMotionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_motion_id'>
+      & { onchain_motion: Array<Maybe<(
+        { __typename?: 'Motion' }
+        & Pick<Motion, 'id'>
+        & { motionStatus: Maybe<Array<(
+          { __typename?: 'MotionStatus' }
+          & Pick<MotionStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type LatestDemocracyProposalPostsQueryVariables = {
   postType?: Scalars['Int'],
   postTopic?: Scalars['Int'],
@@ -8474,6 +8570,62 @@ export const DiscussionPostFragmentDoc = gql`
   }
 }
     ${CommentRecursiveFragmentDoc}`;
+export const OnchainLinkMotionFragmentDoc = gql`
+    fragment onchainLinkMotion on onchain_links {
+  id
+  proposer_address
+  onchain_referendum_id
+  onchain_motion_id
+  onchain_motion(where: {}) {
+    id
+    motionStatus(last: 1) {
+      id
+      status
+    }
+    preimage {
+      depositAmount
+      hash
+      id
+      metaDescription
+      method
+      preimageArguments {
+        id
+        name
+        value
+      }
+    }
+  }
+}
+    `;
+export const MotionPostFragmentDoc = gql`
+    fragment motionPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+    ...commentRecursive
+  }
+  onchain_link {
+    ...onchainLinkMotion
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentRecursiveFragmentDoc}
+${OnchainLinkMotionFragmentDoc}`;
 export const OnchainLinkProposalFragmentDoc = gql`
     fragment onchainLinkProposal on onchain_links {
   id
@@ -9044,6 +9196,106 @@ export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const MotionPostAndCommentsDocument = gql`
+    query MotionPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {
+    ...motionPost
+  }
+}
+    ${MotionPostFragmentDoc}`;
+
+/**
+ * __useMotionPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useMotionPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMotionPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMotionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
+      }
+export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
+        }
+export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
+export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
+export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
+export const LatestMotionPostsDocument = gql`
+    query LatestMotionPosts($postType: Int! = 2, $postTopic: Int! = 2, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_motion_id
+      onchain_motion(where: {}) {
+        id
+        motionStatus(last: 1) {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestMotionPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestMotionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestMotionPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useLatestMotionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
+      }
+export function useLatestMotionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
+        }
+export type LatestMotionPostsQueryHookResult = ReturnType<typeof useLatestMotionPostsQuery>;
+export type LatestMotionPostsLazyQueryHookResult = ReturnType<typeof useLatestMotionPostsLazyQuery>;
+export type LatestMotionPostsQueryResult = ApolloReactCommon.QueryResult<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>;
 export const LatestDemocracyProposalPostsDocument = gql`
     query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {

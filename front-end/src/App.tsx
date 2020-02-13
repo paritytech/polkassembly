@@ -17,6 +17,7 @@ import MenuBar from './screens/MenuBar';
 import NotFound from './screens/NotFound';
 import PostDiscussion from './screens/DiscussionPost';
 import OnChain from './screens/OnChain';
+import PostMotion from './screens/MotionPost';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
@@ -53,6 +54,9 @@ const App = () => {
 										</Route>
 										<Route path="/post/create" >
 											<CreatePost/>
+										</Route>
+										<Route exact path="/motion/:id" >
+											<PostMotion/>
 										</Route>
 										<Route exact path="/proposal/:id" >
 											<PostProposal/>

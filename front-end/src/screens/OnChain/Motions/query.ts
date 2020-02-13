@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 
 // post_type.ON_CHAIN === 2
-// post_topic.DEMOCRACY === 1
+// post_topic.COUNCIL === 2
 
-export const QUERY_LATEST_PROPOSALS = gql`
-  query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5 ) {
+export const QUERY_LATEST_MOTIONSS = gql`
+  query LatestMotionPosts($postType: Int! = 2, $postTopic: Int! = 2, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
@@ -17,7 +17,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
             }
         },
         onchain_link: {
-            onchain_proposal_id: {
+            onchain_motion_id: {
                 _is_null: false
             },
             onchain_referendum_id: {
@@ -26,7 +26,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
         }
     }, order_by: {
         onchain_link: {
-            onchain_proposal_id: desc
+            onchain_motion_id: desc
         }
     }) {
         id
@@ -53,10 +53,10 @@ export const QUERY_LATEST_PROPOSALS = gql`
         }
         onchain_link {
             id
-            onchain_proposal_id
-            onchain_proposal(where: {}) {
+            onchain_motion_id
+            onchain_motion(where: {}) {
                 id
-                proposalStatus(last: 1) {
+                motionStatus(last: 1) {
                     id
                     status
                 }
