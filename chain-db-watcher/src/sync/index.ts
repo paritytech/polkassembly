@@ -80,6 +80,8 @@ export const syncDBs = async (): Promise<void> => {
 		const syncData = await getSyncData();
 		const syncMaps = syncData && getMaps(syncData);
 
+		console.log('syncMap', JSON.stringify(syncMaps, null, 4));
+
 		syncMaps?.onchain?.motions &&
 		syncMaps?.discussion?.motions &&
 		await syncMotions(syncMaps.onchain.motions, syncMaps.discussion.motions);

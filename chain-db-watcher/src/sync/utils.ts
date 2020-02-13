@@ -1,6 +1,31 @@
 import { OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
 
 export const getMaps = (syncData: SyncData): SyncMap => {
+	const discussionMotionMap = syncData?.discussion.motions?.reduce(
+		(prev, curr) => {
+			// edgecase those id can be 0
+			if ((curr?.onchain_motion_id || curr?.onchain_motion_id === 0) && (curr?.id || curr?.id === 0)) {
+				return {
+					...prev,
+					[curr.onchain_motion_id]: curr.proposer_address
+				};
+			} else {
+				return prev || {};
+			}
+		}, {});
+
+	const onchainMotionMap = syncData?.onchain.motions?.reduce(
+		(prev, curr) => {
+			if ((curr?.motionProposalId || curr?.motionProposalId === 0) && (curr?.id || curr?.id === 0)) {
+				return {
+					...prev,
+					[curr.motionProposalId]: curr.author
+				};
+			} else {
+				return prev || {};
+			}
+		}, {});
+
 	const discussionProposalMap = syncData?.discussion.proposals?.reduce(
 			(prev, curr) => {
 				// edgecase those id can be 0
@@ -56,10 +81,12 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 
 	return {
 		onchain: {
+			motions: onchainMotionMap,
 			proposals: onchainProposalMap,
 			referenda: onchainReferendaMap
 		},
 		discussion: {
+			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
 			referenda: discussionReferendaMap
 		}

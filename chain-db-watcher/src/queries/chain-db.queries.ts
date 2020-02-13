@@ -5,7 +5,7 @@ export const getExecutedMotionsWithPreimageHash = gql`
         motions(
             where: {
                 AND: [
-                    { status_every: { status: "Tabled" } }
+                    { motionStatus_some: { status: "Executed" } }
                     { preimageHash: $preimageHash }
                 ]
             }
@@ -20,7 +20,7 @@ export const getTabledProposalsAtBlockQuery = gql`
     query getTabledProposalAtBlock($blockHash: String!) {
         proposals(
             where: {
-                proposalStatus_every: {
+                proposalStatus_some: {
                     AND: [
                         {
                             blockNumber: {
@@ -49,7 +49,7 @@ export const motionSubscription = gql`
                 id
                 motionProposalId
                 motionProposalHash
-                status(orderBy: id_DESC) {
+                motionStatus(orderBy: id_DESC) {
                     blockNumber {
                     hash
                     }
@@ -71,7 +71,7 @@ export const motionSubscription = gql`
 //             "hash": "0x24f65d1cc0dcbf025a12c7fb969f7251b576155c9bff24b6e638c21ab3b3897b"
 //         },
 //         "id": 6,
-//         "status": [
+//         "motionStatus": [
 //             {
 //                 "blockNumber": {
 //                     "hash": "0xf54c4d8f46b9a9e770e1f595ea5ac545fdfe5b9cc485ff425dc72464bf2815f0"

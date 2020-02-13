@@ -368,7 +368,8 @@ export const getOnchainAssociatedProposalId = async ({
 		const data = await onchainSdk.getTabledProposalAtBlock(getTabledProposalsAtBlockVariables);
 
 		if (!data?.proposals?.length) {
-			throw new Error(`No democracy proposal was tabled at block: ${referendumCreationBlockHash}.`);
+			console.log(chalk.yellow(`No democracy proposal Id tabled at block: ${referendumCreationBlockHash}. It must have been initiated by a council motion.`));
+			return undefined;
 		}
 
 		// if more than one proposal got tabled at this blockHash
@@ -391,7 +392,7 @@ export const getOnchainAssociatedProposalId = async ({
 			return data.proposals?.[0]?.proposalId;
 		}
 	} catch (err) {
-		console.error(chalk.red(`getAssociatedProposal execution error with preimage hash: ${preimageHash}`), err);
+		console.error(chalk.red(`getOnchainAssociatedProposalId execution error with preimage hash: ${preimageHash}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -428,7 +429,7 @@ export const getOnchainAssociatedMotionId = async (preimageHash: string): Promis
 
 		return data.motions?.[0]?.motionProposalId;
 	} catch (err) {
-		console.error(chalk.red(`getAssociatedMotion execution error with preimage hash: ${preimageHash}`), err);
+		console.error(chalk.red(`getOnchainAssociatedMotionId execution error with preimage hash: ${preimageHash}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -543,12 +544,11 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 			preimageHash,
 			referendumCreationBlockHash
 		});
-
 		let associatedMotionId: number | undefined;
 
 		if (associatedProposalId || associatedProposalId === 0) {
-		// at this stage the referendum is linked onchain to a proposal
-		// we must verify that this proposal/motion is present in the discussion db.
+			// at this stage the referendum is linked onchain to a proposal
+			// we must verify that this proposal/motion is present in the discussion db.
 			const proposalAssociatedRefendumId = await getProposalDiscussionAssociatedReferendumId(associatedProposalId);
 
 			const shouldUpdateProposal = !!proposalAssociatedRefendumId || proposalAssociatedRefendumId === 0;
@@ -559,7 +559,7 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 				});
 
 				if (!affectedRows) {
-					throw new Error(`addReferendumId execution error with discussion proposal id ${associatedProposalId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
+					throw new Error(`addDiscussionReferendum execution error with discussion proposal id ${associatedProposalId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
 				}
 
 				console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
@@ -569,8 +569,6 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 				));
 			}
 		} else {
-			console.log(chalk.yellow(`No proposal Id found on chain-db for referendum id: ${referendumId}. Trying with a motion...`));
-
 			associatedMotionId = await getOnchainAssociatedMotionId(preimageHash);
 
 			// edge case, motion id can be 0, which is falsy
