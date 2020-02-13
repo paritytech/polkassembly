@@ -2,11 +2,9 @@ import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-// import { GraphQLClient } from 'graphql-request';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
-// import { getSdk as getOnchainSdk, ProposalSubscriptionSubscription } from './generated/chain-db-graphql';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
@@ -71,11 +69,6 @@ async function main (): Promise<void> {
 	);
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
-
-	// const client = new SubscriptionClient(graphQLEndpoint, { reconnect: true }, ws);
-	// const client = new GraphQLClient(graphQLEndpoint);
-	// const onchainSdk = getOnchainSdk(client);
-	// onchainSdk.proposalSubscription().then(data => console.log('Got data:', JSON.stringify(data, null, 4))).catch(e => console.log('Hophophop', e));
 
 	motionSubscriptionClient.subscribe(
 		({ data }): void => {
