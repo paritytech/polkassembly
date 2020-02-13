@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useLatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
-import ProposalsListing from '../../../components/Listings/ProposalsListing';
+import { useLatestMotionPostsQuery } from '../../../generated/graphql';
+import MotionsListing from '../../../components/Listings/MotionsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 
@@ -9,15 +9,15 @@ interface Props {
 	className?: string
 }
 
-const ProposalContainer = ({ className }:Props) => {
+const MotionsContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 2 } });
+	const { data, error } = useLatestMotionPostsQuery({ variables: { limit: 2 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
-	if (data) return <ProposalsListing className={className} data={data}/>;
+	if (data) return <MotionsListing className={className} data={data}/>;
 
 	return <Loader/>;
 };
 
-export default ProposalContainer;
+export default MotionsContainer;

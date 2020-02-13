@@ -6,6 +6,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
 import DiscussionContainer from './LatestDiscussions';
+import MotionsContainer from '../OnChain/Motions';
 import ProposalContainer from './LatestProposals';
 import ReferendaContainer from './LatestReferenda';
 
@@ -29,6 +30,8 @@ const Home = ({ className }: Props) => {
 					<ReferendaContainer className='referendumContainer'/>
 					<h2>Latest Proposals</h2>
 					<ProposalContainer className='proposalContainer'/>
+					<h2>Latest Motions</h2>
+					<MotionsContainer className='MotionContainer'/>
 					<h2>Latest Discussions</h2>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
