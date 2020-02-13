@@ -22,9 +22,9 @@ const HomeContent = ({ className }: Props) => {
 
 	return (
 		<Container className={className}>
+			<h1>Latest Activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h1>Latest Activity</h1>
 					<h2>Current Referendum</h2>
 					<ReferendumContainer className='referendumContainer'/>
 					<h2>Latest Proposal</h2>
@@ -33,9 +33,9 @@ const HomeContent = ({ className }: Props) => {
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					<div className='mainButtonContainer'>
-						{currentUser.id && <Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>}
-					</div>
+					{currentUser.id && <div className='mainButtonContainer'>
+						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+					</div>}
 				</Grid.Column>
 			</Grid>
 		</Container>
@@ -66,8 +66,13 @@ export default styled(HomeContent)`
 	}
 
 	@media only screen and (max-width: 576px) {
-		h1, h2 {
-			margin-left: 1.5rem!important;
+		h1 {
+			font-size: 2.1rem;
+			margin: 3rem 1.5rem 1rem 1.5rem;
+		}
+
+		h2 {
+			margin-left: 1.5rem;
 		}
 
 		.mainButtonContainer {

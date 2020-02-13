@@ -45,6 +45,9 @@ const Proposals = ({ className, data }: Props) => {
 };
 
 export default styled(Proposals)`
+	margin-block-start: 0;
+	margin-block-end: 0;
+	
 	li {
 		list-style-type: none;
 	}

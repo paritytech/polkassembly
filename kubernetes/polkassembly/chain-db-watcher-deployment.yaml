@@ -18,6 +18,7 @@ spec:
       containers:
       - name: chain-db-watcher
         image: gcr.io/test-installations-222013/polkassembly-chain-db-watcher:master
+        imagePullPolicy: Always
         env:
         - name: PROPOSAL_BOT_USERNAME
           valueFrom:
