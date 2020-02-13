@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon, Grid } from 'semantic-ui-react';
+import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import CreationLabel from '../ui-components/CreationLabel';
 import StatusTag from '../ui-components/StatusTag';
@@ -29,11 +29,11 @@ const Discussion = function ({
 
 	return (
 		<div className={className}>
-			<Grid>
-				<Grid.Column width={1}>
-					<h2>#{onchainId}</h2>
-				</Grid.Column>
-				<Grid.Column width={11}>
+			<Segment.Group horizontal>
+				<Segment className='onchain_id'>
+					<h5>#{onchainId}</h5>
+				</Segment>
+				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
 					<CreationLabel
 						created_at={created_at}
@@ -43,37 +43,70 @@ const Discussion = function ({
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
-				</Grid.Column>
-				<Grid.Column className={'statusTag'} width={4}>
-					<StatusTag status={status}></StatusTag>
-				</Grid.Column>
-			</Grid>
+				</Segment>
+				<Segment className='statusSegment'>
+					<StatusTag className='statusTag' status={status}></StatusTag>
+				</Segment>
+			</Segment.Group>
 		</div>
 	);
 };
 
 export default styled(Discussion)`
-    padding: 1.2rem 1.5rem;
+	padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
 	border: 1px solid #EEE;
 	&:hover {
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_secondary;
+		border-color: #CCC;
 		text-decoration: none;
 	}
-    .statusTag {
-        text-align: right;
-    }
-    h4 {
-        color: black_primary;
+	overflow-wrap: break-word;
+
+	.ui.horizontal.segments {
+		box-shadow: none;
+		border: none;
+		margin: 0.5rem 0;
+	}
+	.ui.segment {
+		padding: 0;
+	}
+	.ui.horizontal.segments>.segment {
+		border-left: none;
+	}
+
+	.onchain_id {
+		min-width: 4rem!important;
+		max-width: 6rem;
+	}
+
+	.statusSegment {
+		min-width: 10rem!important;
+		max-width: 10rem;
+	}
+
+    .statusTag{
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	
+    h4, h5 {
+        font-family: font_default;
         display: block;
-        font-weight: 500;
-        font-size: lg;
-		margin-bottom: 0.3rem; 
-        margin-bottom: 0.3rem; 
 		margin-bottom: 0.3rem; 
 	}
+
+	h4 {
+		font-size: lg;
+	}
+
+	h5 {
+		font-size: md;
+		line-height: 1.4;
+	}
+
 	.creationlabel {
 		display: block;
 	}
@@ -86,10 +119,25 @@ export default styled(Discussion)`
             display: inline;
             margin-right: 1.5rem;
         }
-    }
+	}
+	
     @media only screen and (max-width: 576px) {
         & {
             padding: 1.2rem 1.5rem;       
-        }
+		}
+		
+		h4 {
+			font-size: md;
+		}
+
+		h5 {
+			font-size: sm;
+			line-height: 1.2;
+		}
+
+		.statusTag {
+			padding: 0.2rem 0.4rem !important;
+			font-size: 1rem!important;
+		}
     }
 `;

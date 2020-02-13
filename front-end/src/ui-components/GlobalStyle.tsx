@@ -9,12 +9,12 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
-        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        font-family: font_default, 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
             'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
             sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background-color: #F7F9F9;
+        background-color: grey_app_background;
         color: black_text;
     }
 
@@ -27,8 +27,11 @@ export const GlobalStyle = createGlobalStyle`
     code {
         display: inline-block;
         max-width: 100%;
-        font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        font-family: font_mono, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+        background-color: grey_light;
+        color: black_primary;
+        font-size: sm;
     }
 
     ul {
@@ -51,20 +54,42 @@ export const GlobalStyle = createGlobalStyle`
 
     h1, h2, h3, h4, h5, h6 {
         color: black_primary;
-        font-family: 'Roboto';
         font-weight: 500;
         line-height: 100%;
         margin-top: 0;
     }
 
+    h1, h2, h3, h4 {
+        font-family: font_mono;
+    }
+
+    h1 {
+        font-size: 2.6rem;
+        margin-bottom: 3rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.25rem;
+    }
+
     h3 {
-        font-family: 'Roboto Mono';
         font-size: 2.6rem;
         margin-bottom: 1.25rem;
     }
 
-    h4, h5, h6 {
-        font-family: 'Roboto';   
+    h4 {
+        font-size: lg;
+        margin-bottom: 1.2rem;
+    }
+
+    h5, h6 {
+        font-family: font_default;
+    }
+
+    h6 {
+        font-size: md;
+        margin-bottom: 0.4rem;
     }
 
     strong {
@@ -74,6 +99,10 @@ export const GlobalStyle = createGlobalStyle`
     ::selection {
         background-color: #282828;
         color: #FFF;
+    }
+
+    .ui.dropdown .menu, .ui.dropdown .menu>.item {
+        font-size: sm;
     }
 
     @media (max-width: 1200px) {

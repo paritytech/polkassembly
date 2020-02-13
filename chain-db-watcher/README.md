@@ -16,3 +16,5 @@ HASURA_GRAPHQL_ADMIN_SECRET=<your admin secret>
 ## Run
 - `yarn`
 - `yarn start`
+## Docker build
+docker build -t paritytech/polkassembly-chain-db-watcher:master .
