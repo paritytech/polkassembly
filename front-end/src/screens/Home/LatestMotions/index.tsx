@@ -11,7 +11,7 @@ interface Props {
 
 const ProposalContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 1 } });
+	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: { limit: 2 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 

@@ -9,9 +9,9 @@ interface Props {
 	className?: string
 }
 
-const ReferendumContainer = ({ className }:Props) => {
+const ReferendaContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestReferendaPostsQuery();
+	const { data, error } = useLatestReferendaPostsQuery({ variables: { limit: 2 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
@@ -20,4 +20,4 @@ const ReferendumContainer = ({ className }:Props) => {
 	return <Loader/>;
 };
 
-export default ReferendumContainer;
+export default ReferendaContainer;
