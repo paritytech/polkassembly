@@ -15,4 +15,6 @@ RUN yarn
 
 COPY --chown=node:node . .
 
+RUN yarn migrate
+
 CMD yarn start
