@@ -54,6 +54,11 @@ spec:
             configMapKeyRef:
               key: DEMOCRACY_TOPIC_ID
               name: chain-db-watcher-config
+        - name: COUNCIL_TOPIC_ID
+            valueFrom:
+              configMapKeyRef:
+                key: COUNCIL_TOPIC_ID
+                name: chain-db-watcher-config
         - name: BOT_PROPOSAL_USER_ID
           valueFrom:
             configMapKeyRef:

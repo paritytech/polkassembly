@@ -12,4 +12,5 @@ data:
   CHAIN_DB_GRAPHQL_URL: "http://nodewatcher.nodewatcher:4466"
   HASURA_PROPOSAL_POST_TYPE_ID: "2"
   DEMOCRACY_TOPIC_ID: "1"
+  COUNCIL_TOPIC_ID: "2"
   BOT_PROPOSAL_USER_ID: "11"
