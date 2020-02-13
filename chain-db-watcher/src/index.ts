@@ -77,6 +77,24 @@ async function main (): Promise<void> {
 	// const onchainSdk = getOnchainSdk(client);
 	// onchainSdk.proposalSubscription().then(data => console.log('Got data:', JSON.stringify(data, null, 4))).catch(e => console.log('Hophophop', e));
 
+	motionSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.motion.mutation === subscriptionMutation.Created) {
+				const { motionProposalId, author } = data.motion.node;
+				motionDiscussionExists(motionProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
+					} else {
+						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
+	);
+
 	proposalSubscriptionClient.subscribe(
 		({ data }): void => {
 			if (data?.proposal.mutation === subscriptionMutation.Created) {
@@ -114,8 +132,8 @@ async function main (): Promise<void> {
 				return;
 			}
 			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
-			// FIXME This only takes care of democracy proposals going from proposal -> referendum
-			// it does not cater for any other proposal/motion that are externally tabled
+			// FIXME This only takes care of motion and democracy proposals
+			// it does not cater for tech committee proposals
 			addDiscussionReferendum({
 				preimageHash: preimage?.hash,
 				referendumCreationBlockHash,
@@ -125,45 +143,6 @@ async function main (): Promise<void> {
 			});
 		}
 	});
-
-	// "motion": {
-	//     "mutation": "CREATED",
-	//     "node": {
-	//         "motionProposalId": 0,
-	//         "preimage": {
-	//             "hash": "0x24f65d1cc0dcbf025a12c7fb969f7251b576155c9bff24b6e638c21ab3b3897b"
-	//         },
-	//         "id": 6,
-	//         "status": [
-	//             {
-	//                 "blockNumber": {
-	//                     "hash": "0xf54c4d8f46b9a9e770e1f595ea5ac545fdfe5b9cc485ff425dc72464bf2815f0"
-	//                 },
-	//                 "status": "Proposed"
-	//             }
-	//         ],
-	//         "motionProposalHash": "0x4d4dd65ab6f3495525bda9574c58796c3fbda87848074dee6fcc858dad755a2a"
-	//     }
-	// }
-
-	motionSubscriptionClient.subscribe(
-		({ data }): void => {
-			console.log('we got data', JSON.stringify(data, null, 4));
-			if (data?.motion.mutation === subscriptionMutation.Created) {
-				const { motionProposalId, author } = data.motion.node;
-				motionDiscussionExists(motionProposalId).then(alreadyExist => {
-					if (!alreadyExist) {
-						addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
-					} else {
-						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
-					}
-				}).catch(error => console.error(chalk.red(error)));
-			}
-		},
-		err => {
-			console.error(chalk.red(err));
-		}
-	);
 }
 
 main().catch(error => console.error(chalk.red(error)));

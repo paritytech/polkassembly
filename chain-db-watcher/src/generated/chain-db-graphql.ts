@@ -5434,6 +5434,19 @@ export type ValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
+export type GetExecutedMotionsWithPreimageHashQueryVariables = {
+  preimageHash: Scalars['String']
+};
+
+
+export type GetExecutedMotionsWithPreimageHashQuery = (
+  { __typename?: 'Query' }
+  & { motions: Array<Maybe<(
+    { __typename?: 'Motion' }
+    & Pick<Motion, 'motionProposalId'>
+  )>> }
+);
+
 export type GetTabledProposalAtBlockQueryVariables = {
   blockHash: Scalars['String']
 };
@@ -5517,6 +5530,22 @@ export type OnchainProposalFragment = (
   & Pick<Proposal, 'author' | 'id' | 'proposalId'>
 );
 
+export type GetOnchainMotionsQueryVariables = {};
+
+
+export type GetOnchainMotionsQuery = (
+  { __typename?: 'Query' }
+  & { motions: Array<Maybe<(
+    { __typename?: 'Motion' }
+    & OnchainMotionFragment
+  )>> }
+);
+
+export type OnchainMotionFragment = (
+  { __typename?: 'Motion' }
+  & Pick<Motion, 'author' | 'id' | 'motionProposalId'>
+);
+
 export const OnchainReferendumFragmentDoc = gql`
     fragment onchainReferendum on Referendum {
   preimageHash
@@ -5539,9 +5568,23 @@ export const OnchainProposalFragmentDoc = gql`
   proposalId
 }
     `;
+export const OnchainMotionFragmentDoc = gql`
+    fragment onchainMotion on Motion {
+  author
+  id
+  motionProposalId
+}
+    `;
+export const GetExecutedMotionsWithPreimageHashDocument = gql`
+    query getExecutedMotionsWithPreimageHash($preimageHash: String!) {
+  motions(where: {AND: [{status_every: {status: "Tabled"}}, {preimageHash: $preimageHash}]}, orderBy: id_DESC) {
+    motionProposalId
+  }
+}
+    `;
 export const GetTabledProposalAtBlockDocument = gql`
     query getTabledProposalAtBlock($blockHash: String!) {
-  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
+  proposals(where: {proposalStatus_every: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
     proposalId
     preimage {
       hash
@@ -5585,8 +5628,18 @@ export const GetOnchainProposalsDocument = gql`
   }
 }
     ${OnchainProposalFragmentDoc}`;
+export const GetOnchainMotionsDocument = gql`
+    query getOnchainMotions {
+  motions {
+    ...onchainMotion
+  }
+}
+    ${OnchainMotionFragmentDoc}`;
 export function getSdk(client: GraphQLClient) {
   return {
+    getExecutedMotionsWithPreimageHash(variables: GetExecutedMotionsWithPreimageHashQueryVariables): Promise<GetExecutedMotionsWithPreimageHashQuery> {
+      return client.request<GetExecutedMotionsWithPreimageHashQuery>(print(GetExecutedMotionsWithPreimageHashDocument), variables);
+    },
     getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
       return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
     },
@@ -5598,6 +5651,9 @@ export function getSdk(client: GraphQLClient) {
     },
     getOnchainProposals(variables?: GetOnchainProposalsQueryVariables): Promise<GetOnchainProposalsQuery> {
       return client.request<GetOnchainProposalsQuery>(print(GetOnchainProposalsDocument), variables);
+    },
+    getOnchainMotions(variables?: GetOnchainMotionsQueryVariables): Promise<GetOnchainMotionsQuery> {
+      return client.request<GetOnchainMotionsQuery>(print(GetOnchainMotionsDocument), variables);
     }
   };
 }

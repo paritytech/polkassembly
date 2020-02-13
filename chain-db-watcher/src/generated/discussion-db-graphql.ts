@@ -7865,7 +7865,20 @@ export type GetProposalWithNoAssociatedReferendumQueryQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
-    & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+    & Pick<Onchain_Links, 'id'>
+  )> }
+);
+
+export type GetMotionWithNoAssociatedReferendumQueryQueryVariables = {
+  onchainMotionId: Scalars['Int']
+};
+
+
+export type GetMotionWithNoAssociatedReferendumQueryQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id'>
   )> }
 );
 
@@ -7876,6 +7889,20 @@ export type AddReferendumIdToProposalMutationMutationVariables = {
 
 
 export type AddReferendumIdToProposalMutationMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_onchain_links: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type AddReferendumIdToMotionMutationMutationVariables = {
+  motionId: Scalars['Int'],
+  referendumId: Scalars['Int']
+};
+
+
+export type AddReferendumIdToMotionMutationMutation = (
   { __typename?: 'mutation_root' }
   & { update_onchain_links: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
@@ -7923,6 +7950,22 @@ export type GetDiscussionMotionProposalByIdQuery = (
   )> }
 );
 
+export type GetDiscussionMotionsQueryVariables = {};
+
+
+export type GetDiscussionMotionsQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & DiscussionMotionFragment
+  )> }
+);
+
+export type DiscussionMotionFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
+);
+
 export type GetDiscussionProposalsQueryVariables = {};
 
 
@@ -7955,6 +7998,13 @@ export type DiscussionReferendumFragment = (
   & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
 );
 
+export const DiscussionMotionFragmentDoc = gql`
+    fragment discussionMotion on onchain_links {
+  id
+  onchain_motion_id
+  proposer_address
+}
+    `;
 export const DiscussionProposalFragmentDoc = gql`
     fragment discussionProposal on onchain_links {
   id
@@ -7990,15 +8040,28 @@ export const AddPostAndMotionMutationDocument = gql`
     `;
 export const GetProposalWithNoAssociatedReferendumQueryDocument = gql`
     query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
-  onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+  onchain_links(where: {_and: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
     id
-    onchain_proposal_id
+  }
+}
+    `;
+export const GetMotionWithNoAssociatedReferendumQueryDocument = gql`
+    query getMotionWithNoAssociatedReferendumQuery($onchainMotionId: Int!) {
+  onchain_links(where: {_and: {onchain_motion_id: {_eq: $onchainMotionId}, onchain_referendum_id: {_is_null: true}}}) {
+    id
   }
 }
     `;
 export const AddReferendumIdToProposalMutationDocument = gql`
     mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
   update_onchain_links(where: {onchain_proposal_id: {_eq: $proposalId}}, _set: {onchain_referendum_id: $referendumId}) {
+    affected_rows
+  }
+}
+    `;
+export const AddReferendumIdToMotionMutationDocument = gql`
+    mutation addReferendumIdToMotionMutation($motionId: Int!, $referendumId: Int!) {
+  update_onchain_links(where: {onchain_motion_id: {_eq: $motionId}}, _set: {onchain_referendum_id: $referendumId}) {
     affected_rows
   }
 }
@@ -8024,6 +8087,13 @@ export const GetDiscussionMotionProposalByIdDocument = gql`
   }
 }
     `;
+export const GetDiscussionMotionsDocument = gql`
+    query getDiscussionMotions {
+  onchain_links(where: {onchain_motion_id: {_is_null: false}}) {
+    ...discussionMotion
+  }
+}
+    ${DiscussionMotionFragmentDoc}`;
 export const GetDiscussionProposalsDocument = gql`
     query getDiscussionProposals {
   onchain_links(where: {onchain_proposal_id: {_is_null: false}}) {
@@ -8049,8 +8119,14 @@ export function getSdk(client: GraphQLClient) {
     getProposalWithNoAssociatedReferendumQuery(variables: GetProposalWithNoAssociatedReferendumQueryQueryVariables): Promise<GetProposalWithNoAssociatedReferendumQueryQuery> {
       return client.request<GetProposalWithNoAssociatedReferendumQueryQuery>(print(GetProposalWithNoAssociatedReferendumQueryDocument), variables);
     },
+    getMotionWithNoAssociatedReferendumQuery(variables: GetMotionWithNoAssociatedReferendumQueryQueryVariables): Promise<GetMotionWithNoAssociatedReferendumQueryQuery> {
+      return client.request<GetMotionWithNoAssociatedReferendumQueryQuery>(print(GetMotionWithNoAssociatedReferendumQueryDocument), variables);
+    },
     addReferendumIdToProposalMutation(variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
       return client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables);
+    },
+    addReferendumIdToMotionMutation(variables: AddReferendumIdToMotionMutationMutationVariables): Promise<AddReferendumIdToMotionMutationMutation> {
+      return client.request<AddReferendumIdToMotionMutationMutation>(print(AddReferendumIdToMotionMutationDocument), variables);
     },
     loginMutation(variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
       return client.request<LoginMutationMutation>(print(LoginMutationDocument), variables);
@@ -8060,6 +8136,9 @@ export function getSdk(client: GraphQLClient) {
     },
     getDiscussionMotionProposalById(variables: GetDiscussionMotionProposalByIdQueryVariables): Promise<GetDiscussionMotionProposalByIdQuery> {
       return client.request<GetDiscussionMotionProposalByIdQuery>(print(GetDiscussionMotionProposalByIdDocument), variables);
+    },
+    getDiscussionMotions(variables?: GetDiscussionMotionsQueryVariables): Promise<GetDiscussionMotionsQuery> {
+      return client.request<GetDiscussionMotionsQuery>(print(GetDiscussionMotionsDocument), variables);
     },
     getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
       return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);

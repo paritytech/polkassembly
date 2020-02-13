@@ -60,9 +60,22 @@ export const addPostAndMotionMutation = gql`
 
 export const getProposalWithNoAssociatedReferendumQuery = gql`
     query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
-        onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+        onchain_links(where: {_and: {
+                onchain_proposal_id: {_eq: $onchainProposalId},
+                onchain_referendum_id: {_is_null: true}
+            }}) {
             id
-            onchain_proposal_id
+        }
+    }
+`;
+
+export const getMotionWithNoAssociatedReferendumQuery = gql`
+    query getMotionWithNoAssociatedReferendumQuery($onchainMotionId: Int!) {
+        onchain_links(where: {_and: {
+                onchain_motion_id: {_eq: $onchainMotionId},
+                onchain_referendum_id: {_is_null: true}
+            }}) {
+            id
         }
     }
 `;
@@ -72,6 +85,21 @@ export const addReferendumIdToProposalMutation = gql`
             update_onchain_links(
                 where: {
                     onchain_proposal_id: {_eq: $proposalId}
+                },
+                _set: {
+                    onchain_referendum_id: $referendumId
+                }
+            ) {
+            affected_rows
+        }
+    }
+`;
+
+export const addReferendumIdToMotionMutation = gql`
+        mutation addReferendumIdToMotionMutation($motionId: Int!, $referendumId: Int!) {
+            update_onchain_links(
+                where: {
+                    onchain_motion_id: {_eq: $motionId}
                 },
                 _set: {
                     onchain_referendum_id: $referendumId

@@ -123,12 +123,11 @@ export const motionDiscussionExists = async (
 };
 
 /**
- * Tells if there is in the discussion DB a proposal to link a referendum to. It will return true
- * if there is no onchain_referendum id associated to the proposal, false otherwise.
+ * Returns the discussion id linked to a referendum.
  *
  * @param onchainProposalId the referendum id that is on chain (not the Prisma db id)
  */
-export const getDiscussionAssociatedReferendumId = async (onchainProposalId: number): Promise<number | void> => {
+export const getProposalDiscussionAssociatedReferendumId = async (onchainProposalId: number): Promise<number | undefined> => {
 	if (!discussionGraphqlUrl) {
 		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
 	}
@@ -143,11 +142,41 @@ export const getDiscussionAssociatedReferendumId = async (onchainProposalId: num
 
 		return data?.onchain_links?.[0]?.id;
 	} catch (err) {
-		console.error(chalk.red(`canUpdateDiscussionDB execution error - Referendum already linked to proposal ${onchainProposalId} in discussion DB.`), err);
+		console.error(chalk.red(`getProposalDiscussionAssociatedReferendumId execution error - Referendum already linked to proposal ${onchainProposalId} in discussion DB.`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
 			console.error(chalk.red('Response data if available\n'), err.response.data);
+		return undefined;
+	}
+};
+
+/**
+ * Returns the discussion id linked to a referendum.
+ *
+ * @param onchainMotionId the referendum id that is on chain (not the Prisma db id)
+ */
+export const getMotionDiscussionAssociatedReferendumId = async (onchainMotionId: number): Promise<number | undefined> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getMotionWithNoAssociatedReferendumQuery({ onchainMotionId });
+
+		return data?.onchain_links?.[0]?.id;
+	} catch (err) {
+		console.error(chalk.red(`getMotionlDiscussionAssociatedReferendumId execution error - Referendum already linked to proposal ${onchainMotionId} in discussion DB.`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+		return undefined;
 	}
 };
 
@@ -319,7 +348,7 @@ interface ReferendumInfo {
 export const getOnchainAssociatedProposalId = async ({
 	preimageHash,
 	referendumCreationBlockHash
-}: ReferendumInfo): Promise<number | void> => {
+}: ReferendumInfo): Promise<number | undefined> => {
 	if (!chainDBGraphqlUrl) {
 		throw new Error(
 			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
@@ -367,6 +396,44 @@ export const getOnchainAssociatedProposalId = async ({
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
 			console.error(chalk.red('Response data if available\n'), err.response.data);
+
+		return undefined;
+	}
+};
+
+/**
+ * Returns the motion id from chain-db from which the renferendum id originates
+ *
+ * @param {string} preimageHash - The preimage hash for the proposal.
+ */
+
+export const getOnchainAssociatedMotionId = async (preimageHash: string): Promise<number | undefined> => {
+	if (!chainDBGraphqlUrl) {
+		throw new Error(
+			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(chainDBGraphqlUrl, {
+			headers: {}
+		});
+
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getExecutedMotionsWithPreimageHash({ preimageHash });
+
+		if (!data?.motions?.length) {
+			throw new Error(`No council motion was executed with preimage hash: ${preimageHash}.`);
+		}
+
+		return data.motions?.[0]?.motionProposalId;
+	} catch (err) {
+		console.error(chalk.red(`getAssociatedMotion execution error with preimage hash: ${preimageHash}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+		return undefined;
 	}
 };
 
@@ -382,7 +449,7 @@ export const getOnchainAssociatedProposalId = async ({
 	onchainReferendumId: number;
 }
 
-export const addReferendumId = async ({
+export const addReferendumIdToProposal = async ({
 	onchainProposalId,
 	onchainReferendumId
 }: MatchingInfo): Promise<boolean|void> => {
@@ -417,6 +484,53 @@ export const addReferendumId = async ({
 	}
 };
 
+/**
+ * Updates the discussion db to add the referendum id information to an existing on_chain_motion
+ *
+ * @param onchainMotionId - The preimage hash of the referendum, if any.
+ * @param onchainReferendumId - The block hash at which the referendum was created.
+ */
+
+interface MatchingMotionInfo {
+	onchainMotionId: number;
+	onchainReferendumId: number;
+}
+
+export const addReferendumIdToMotion = async ({
+	onchainMotionId,
+	onchainReferendumId
+}: MatchingMotionInfo): Promise<boolean|void> => {
+	try {
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+			);
+		}
+
+		const token = await getToken();
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addReferendumIdToMotionMutation({
+			motionId: onchainMotionId,
+			referendumId: onchainReferendumId
+		});
+
+		return !!data?.update_onchain_links?.affected_rows;
+	} catch (err) {
+		console.error(chalk.red(`addReferendumIdToMotion execution error with motionId:${onchainMotionId}, referendumId:${onchainReferendumId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
 interface AddDiscussionReferendum {
 	preimageHash: string;
 	referendumCreationBlockHash: string;
@@ -430,30 +544,60 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 			referendumCreationBlockHash
 		});
 
-		// edge case, proposal id can be 0, which is falsy
-		if (!associatedProposalId && associatedProposalId !== 0) {
-			console.error(chalk.red(`No proposal Id found on chain-db for referendum id: ${referendumId}.`));
-			return;
-		}
+		let associatedMotionId: number | undefined;
 
-		const getAssociatedRefendumId = await getDiscussionAssociatedReferendumId(associatedProposalId);
+		if (associatedProposalId || associatedProposalId === 0) {
+		// at this stage the referendum is linked onchain to a proposal
+		// we must verify that this proposal/motion is present in the discussion db.
+			const proposalAssociatedRefendumId = await getProposalDiscussionAssociatedReferendumId(associatedProposalId);
 
-		const shouldUpdateProposal = !!getAssociatedRefendumId || getAssociatedRefendumId === 0;
-		if (shouldUpdateProposal) {
-			const affectedRows = await addReferendumId({
-				onchainProposalId: associatedProposalId,
-				onchainReferendumId: Number(referendumId)
-			});
+			const shouldUpdateProposal = !!proposalAssociatedRefendumId || proposalAssociatedRefendumId === 0;
+			if (shouldUpdateProposal) {
+				const affectedRows = await addReferendumIdToProposal({
+					onchainProposalId: associatedProposalId,
+					onchainReferendumId: Number(referendumId)
+				});
 
-			if (!affectedRows) {
-				throw new Error(`addReferendumId execution error referendum id:${referendumId}, affected row: ${affectedRows}`);
+				if (!affectedRows) {
+					throw new Error(`addReferendumId execution error with discussion proposal id ${associatedProposalId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
+				}
+
+				console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
+			} else {
+				console.error(chalk.red(
+					`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
+				));
+			}
+		} else {
+			console.log(chalk.yellow(`No proposal Id found on chain-db for referendum id: ${referendumId}. Trying with a motion...`));
+
+			associatedMotionId = await getOnchainAssociatedMotionId(preimageHash);
+
+			// edge case, motion id can be 0, which is falsy
+			if (!associatedMotionId && associatedMotionId !== 0) {
+				console.log(chalk.red(`No motion Id found on chain-db for referendum id: ${referendumId}.`));
+				return;
 			}
 
-			console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
-		} else {
-			console.error(chalk.red(
-				`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-			));
+			const motionAssociatedRefendumId = await getMotionDiscussionAssociatedReferendumId(associatedMotionId);
+
+			const shouldUpdateMotion = !!motionAssociatedRefendumId || motionAssociatedRefendumId === 0;
+			if (shouldUpdateMotion) {
+				const affectedRows = await addReferendumIdToMotion({
+					onchainMotionId: associatedMotionId,
+					onchainReferendumId: Number(referendumId)
+				});
+
+				if (!affectedRows) {
+					throw new Error(`addReferendumId execution error with discussion motion id ${associatedMotionId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
+				}
+
+				console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with motion id ${associatedMotionId}.`);
+			} else {
+				console.error(chalk.red(
+					`✖︎ Motion id ${associatedMotionId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
+				));
+			}
 		}
 	} catch (error) {
 		console.error(error);
