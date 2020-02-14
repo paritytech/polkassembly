@@ -204,9 +204,10 @@ export default styled(SignupForm)`
 		margin-top: 0!important;
 	}
 
-	.ui.checkbox {
+	.ui.form input[type=checkbox]{
 		margin-right: 1rem;
-		vertical-align: bottom;
-		top: -0.2rem;
+		vertical-align: middle;
+		height: 2rem;
+		width: 2rem;
 	}
 `;
