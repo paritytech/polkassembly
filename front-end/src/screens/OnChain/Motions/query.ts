@@ -1,21 +1,30 @@
 import gql from 'graphql-tag';
 
-export const QUERY_LATEST_REFERENDA = gql`
-  query LatestReferendaPosts($postType: Int!, $limit: Int! = 5) {
+// for motions postType shoud be 2, postTopic should be 2
+export const QUERY_LATEST_MOTIONS = gql`
+  query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
                 _eq: $postType
             }
         },
+        topic: {
+            id: {
+                _eq: $postTopic
+            }
+        },
         onchain_link: {
-            onchain_referendum_id: {
+            onchain_motion_id: {
                 _is_null: false
+            },
+            onchain_referendum_id: {
+                _is_null: true
             }
         }
     }, order_by: {
         onchain_link: {
-            onchain_referendum_id: desc
+            onchain_motion_id: desc
         }
     }) {
         id
@@ -42,10 +51,10 @@ export const QUERY_LATEST_REFERENDA = gql`
         }
         onchain_link {
             id
-            onchain_referendum_id
-            onchain_referendum(where: {}) {
+            onchain_motion_id
+            onchain_motion(where: {}) {
                 id
-                referendumStatus(last: 1) {
+                motionStatus(last: 1) {
                     id
                     status
                 }

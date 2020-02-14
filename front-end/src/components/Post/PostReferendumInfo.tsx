@@ -18,7 +18,11 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 
-	const preimage = onchainReferendum?.[0]?.preimage;
+	if ( !onchainReferendum?.[0] ){
+		return null;
+	}
+
+	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
 	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
@@ -36,6 +40,27 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 						<div className='info_group'>
 							<h6>Deposit</h6>
 							{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
+						</div>
+					</Grid.Column>}
+				{delay &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>Delay</h6>
+							{delay}
+						</div>
+					</Grid.Column>}
+				{end &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>End</h6>
+							{end}
+						</div>
+					</Grid.Column>}
+				{voteThreshold &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>voteThreshold</h6>
+							{voteThreshold}
 						</div>
 					</Grid.Column>}
 				{method &&

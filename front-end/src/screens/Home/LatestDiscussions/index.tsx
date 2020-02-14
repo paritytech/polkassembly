@@ -11,7 +11,7 @@ interface Props {
 
 const DiscussionContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDiscussionPostsQuery({ variables: { limit: 1 } });
+	const { data, error } = useLatestDiscussionPostsQuery({ variables: { limit: 5 } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
