@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm, FieldError } from 'react-hook-form';
-import { Grid, Icon, Popup } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Checkbox, Grid, Icon, Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
@@ -133,6 +134,14 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 						</Form.Field>
 					</Form.Group >
+					<Form.Field>
+						<Checkbox/>
+						<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
+					</Form.Field>
+					<Form.Field>
+						<Checkbox/>				
+						<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
+					</Form.Field>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -158,6 +167,7 @@ export default styled(SignupForm)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-top: 3rem;
 	}
 
 	input.error {
@@ -170,5 +180,16 @@ export default styled(SignupForm)`
 
 	i.icon.question.circle:before {
 		color: grey_secondary;
+	}
+
+	.text-muted {
+		display: inline-block;
+		margin-top: 0!important;
+	}
+
+	.ui.checkbox {
+		margin-right: 1rem;
+		vertical-align: bottom;
+		top: -0.2rem;
 	}
 `;
