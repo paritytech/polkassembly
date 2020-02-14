@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 import { ThemeProvider } from '@xstyled/styled-components';
 
 import Apollo from './components/Apollo';
@@ -42,56 +43,58 @@ const App = () => {
 									<GlobalStyle />
 									<Notifications/>
 									<Modal/>
-									<Switch>
-										<Route exact path="/">
-											<Home/>
-										</Route>
-										<Route path="/discussions">
-											<Discussions/>
-										</Route>
-										<Route path="/login">
-											<LoginForm/>
-										</Route>
-										<Route path="/post/create" >
-											<CreatePost/>
-										</Route>
-										<Route exact path="/motion/:id" >
-											<PostMotion/>
-										</Route>
-										<Route exact path="/proposal/:id" >
-											<PostProposal/>
-										</Route>
-										<Route exact path="/referendum/:id" >
-											<PostReferendum/>
-										</Route>
-										<Route exact path="/post/:id" >
-											<PostDiscussion/>
-										</Route>
-										<Route path="/onchain" >
-											<OnChain/>
-										</Route>
-										<Route path="/request-reset-password">
-											<RequestResetPassword/>
-										</Route>
-										<Route path="/reset-password/:token">
-											<ResetPassword/>
-										</Route>
-										<Route path="/signup">
-											<SignupForm/>
-										</Route>
-										<Route path="/verify-email/:token">
-											<VerifyEmail/>
-										</Route>
-										<Route path="/undo-email-change/:token">
-											<UndoEmailChange/>
-										</Route>
-										<Route path="/settings">
-											<Settings/>
-										</Route>
-										<Route path="*">
-											<NotFound/>
-										</Route>
-									</Switch>
+									<Container>
+										<Switch>
+											<Route exact path="/">
+												<Home/>
+											</Route>
+											<Route path="/discussions">
+												<Discussions/>
+											</Route>
+											<Route path="/login">
+												<LoginForm/>
+											</Route>
+											<Route path="/post/create" >
+												<CreatePost/>
+											</Route>
+											<Route exact path="/motion/:id" >
+												<PostMotion/>
+											</Route>
+											<Route exact path="/proposal/:id" >
+												<PostProposal/>
+											</Route>
+											<Route exact path="/referendum/:id" >
+												<PostReferendum/>
+											</Route>
+											<Route exact path="/post/:id" >
+												<PostDiscussion/>
+											</Route>
+											<Route path="/onchain" >
+												<OnChain/>
+											</Route>
+											<Route path="/request-reset-password">
+												<RequestResetPassword/>
+											</Route>
+											<Route path="/reset-password/:token">
+												<ResetPassword/>
+											</Route>
+											<Route path="/signup">
+												<SignupForm/>
+											</Route>
+											<Route path="/verify-email/:token">
+												<VerifyEmail/>
+											</Route>
+											<Route path="/undo-email-change/:token">
+												<UndoEmailChange/>
+											</Route>
+											<Route path="/settings">
+												<Settings/>
+											</Route>
+											<Route path="*">
+												<NotFound/>
+											</Route>
+										</Switch>
+									</Container>
 								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>

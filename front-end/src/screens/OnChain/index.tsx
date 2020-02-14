@@ -1,6 +1,5 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
 import MotionContainer from './Motions';
@@ -11,7 +10,7 @@ import InfoBox from '../../ui-components/InfoBox';
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 	return (
-		<Container className={className}>
+		<div className={className}>
 			<h1>Latest On Chain Activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
@@ -33,7 +32,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					/>
 				</Grid.Column>
 			</Grid>
-		</Container>
+		</div>
 	);
 
 };

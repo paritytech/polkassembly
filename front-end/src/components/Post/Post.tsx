@@ -1,6 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
-import { Container, Grid, Icon } from 'semantic-ui-react';
+import { Grid, Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import Comments from '../Comment/Comments';
@@ -75,58 +75,66 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	if (!post) return <NoPostFound/>;
 
 	return (
-		<Container className={className}>
-			<Grid>
-				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<div className='post_content'>
-						<EditablePostContent
-							isEditing={isEditing}
-							onchainId={onchainId}
-							post={post}
-							postStatus={postStatus}
+		<Grid className={className}>
+			<Grid.Column mobile={16} tablet={16} computer={10}>
+				<div className='post_content'>
+					<EditablePostContent
+						isEditing={isEditing}
+						onchainId={onchainId}
+						post={post}
+						postStatus={postStatus}
+						refetch={refetch}
+						toggleEdit={toggleEdit}
+					/>
+
+					{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+					{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
+					{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+
+					{ id && isPostReplyFormVisible &&
+						<CreatePostComment
+							onHide={togglePostReplyForm}
+							postId={post.id}
 							refetch={refetch}
-							toggleEdit={toggleEdit}
 						/>
-
-						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
-						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-
-						{ id && isPostReplyFormVisible &&
-							<CreatePostComment
-								onHide={togglePostReplyForm}
-								postId={post.id}
-								refetch={refetch}
-							/>
-						}
-					</div>
-					{ isMotion &&
+					}
+				</div>
+				{ isMotion &&
 						<PostMotionInfo
 							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
 						/>
-					}
-					{ isProposal &&
+				}
+				{ isProposal &&
 						<PostProposalInfo
 							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
 						/>
-					}
-					{ isReferendum &&
+				}
+				{ isReferendum &&
 						<PostReferendumInfo
 							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
 						/>
-					}
-					{ post.comments?.length
-						? <Comments
-							comments={post.comments}
-							refetch={refetch}
-						/>
-						: null }
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={6}>
-					<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
-				</Grid.Column>
-			</Grid>
-		</Container>
+				}
+				{ isProposal &&
+					<PostProposalInfo
+						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+					/>
+				}
+				{ isReferendum &&
+					<PostReferendumInfo
+						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+					/>
+				}
+				{ post.comments?.length &&
+					<Comments
+						comments={post.comments}
+						refetch={refetch}
+					/>
+				}
+			</Grid.Column>
+			<Grid.Column mobile={16} tablet={16} computer={6}>
+				<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
+			</Grid.Column>
+		</Grid>
 	);
 };
 

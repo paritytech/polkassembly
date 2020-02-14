@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .ui.container {
-        margin: 3.75rem auto 0 auto;
+        margin: 4rem auto 0 auto;
     }
 
     h1, h2, h3, h4, h5, h6 {

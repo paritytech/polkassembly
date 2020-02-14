@@ -1,7 +1,7 @@
 import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import DiscussionsContainer from './Discussions';
@@ -16,7 +16,7 @@ const Discussions = ({ className } : {className?: string}) => {
 	};
 
 	return (
-		<Container className={className}>
+		<div className={className}>
 			<h1>Latest Discussions</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
@@ -35,7 +35,7 @@ const Discussions = ({ className } : {className?: string}) => {
 					/>
 				</Grid.Column>
 			</Grid>
-		</Container>
+		</div>
 	);
 
 };
