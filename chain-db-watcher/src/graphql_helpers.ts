@@ -10,7 +10,7 @@ dotenv.config();
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
-const proposalBotUserId = process.env.BOT_PROPOSAL_USER_ID;
+const proposalBotUserId = process.env.PROPOSAL_BOT_USER_ID;
 const proposalBotUsername = process.env.PROPOSAL_BOT_USERNAME;
 const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
@@ -206,7 +206,7 @@ export const addDiscussionPostAndProposal = async ({
 	}
 	if (!proposalBotUserId) {
 		throw new Error(
-			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
 		);
 	}
 

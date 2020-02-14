@@ -549,7 +549,7 @@ export default class AuthService {
 		let currentRole: Role = Role.USER;
 
 		// if our user is the proposal bot, give additional role.
-		if (id == process.env.BOT_PROPOSAL_USER_ID) { // eslint-disable-line
+		if (id == process.env.PROPOSAL_BOT_USER_ID) { // eslint-disable-line
 			allowedRoles.push(Role.PROPOSAL_BOT);
 			currentRole = Role.PROPOSAL_BOT;
 		}
