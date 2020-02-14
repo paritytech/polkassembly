@@ -13,7 +13,7 @@ const Footer = ({ className }:Props ): JSX.Element => {
 		<footer className={className}>
 			<Menu>
 				<Menu.Item>
-                    &copy; {moment.utc().year()} Legal Entity
+                    &copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms">
                     Terms &amp; Conditions
@@ -44,6 +44,11 @@ export default styled(Footer)`
             &:hover {
                 color: white;
             }
+        }
+
+        @media only screen and (max-width: 768px)  {
+            flex-direction: column;
+            height: auto;
         }
     }
 `;
