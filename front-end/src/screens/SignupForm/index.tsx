@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm, FieldError } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Checkbox, Grid, Icon, Popup } from 'semantic-ui-react';
+import { Checkbox, Container, Grid, Icon, Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
@@ -54,109 +54,111 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 	};
 
 	return (
-		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
-				<Form onSubmit={handleSubmit(handleSubmitForm)}>
-					<h3>Sign Up</h3>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Username</label>
-							<input
-								className={errors.username ? 'error' : ''}
-								name='username'
-								placeholder='john'
-								ref={register({ maxLength:20, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
-								type='text'
-							/>
-							{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}
-							{(errors.username as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MINLENGTH_ERROR}</span>}
-							{(errors.username as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_PATTERN_ERROR}</span>}
-							{(errors.username as FieldError)?.type === 'required' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_REQUIRED_ERROR}</span>}
-						</Form.Field>
-					</Form.Group>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>
-								Display Name&nbsp;
-								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='We only use your display name as a more readable alternative to your username.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
+		<Container>
+			<Grid className={className}>
+				<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+				<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
+					<Form onSubmit={handleSubmit(handleSubmitForm)}>
+						<h3>Sign Up</h3>
+						<Form.Group>
+							<Form.Field width={16}>
+								<label>Username</label>
+								<input
+									className={errors.username ? 'error' : ''}
+									name='username'
+									placeholder='john'
+									ref={register({ maxLength:20, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
+									type='text'
 								/>
-							</label>
-							<input
-								className={errors.name ? 'error' : ''}
-								name='name'
-								placeholder='Firstname Lastname'
-								type='text'
-								ref={register({ required: false })}
-							/>
-						</Form.Field>
-					</Form.Group>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>
-								Email&nbsp;
-								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
+								{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}
+								{(errors.username as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MINLENGTH_ERROR}</span>}
+								{(errors.username as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_PATTERN_ERROR}</span>}
+								{(errors.username as FieldError)?.type === 'required' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_REQUIRED_ERROR}</span>}
+							</Form.Field>
+						</Form.Group>
+						<Form.Group>
+							<Form.Field width={16}>
+								<label>
+									Display Name&nbsp;
+									<Popup
+										trigger={<Icon name='question circle'/>}
+										content='We only use your display name as a more readable alternative to your username.'
+										style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+										hoverable={true}
+									/>
+								</label>
+								<input
+									className={errors.name ? 'error' : ''}
+									name='name'
+									placeholder='Firstname Lastname'
+									type='text'
+									ref={register({ required: false })}
 								/>
-							</label>
-							<input
-								className={errors.email ? 'error' : ''}
-								name='email'
-								placeholder='john@doe.com'
-								ref={register({
-									pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
-								})}
-								type='text'
-							/>
-							{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
-							<div className="text-muted">
-								We&apos;ll never share your email with anyone else.
-							</div>
+							</Form.Field>
+						</Form.Group>
+						<Form.Group>
+							<Form.Field width={16}>
+								<label>
+									Email&nbsp;
+									<Popup
+										trigger={<Icon name='question circle'/>}
+										content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
+										style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+										hoverable={true}
+									/>
+								</label>
+								<input
+									className={errors.email ? 'error' : ''}
+									name='email'
+									placeholder='john@doe.com'
+									ref={register({
+										pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
+									})}
+									type='text'
+								/>
+								{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
+								<div className="text-muted">
+									We&apos;ll never share your email with anyone else.
+								</div>
+							</Form.Field>
+						</Form.Group>
+						<Form.Group>
+							<Form.Field width={16}>
+								<label>Password</label>
+								<input
+									className={errors.password ? 'error' : ''}
+									name='password'
+									placeholder='Password'
+									ref={register({ minLength: 6, required: true })}
+									type='password'
+								/>
+								{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
+							</Form.Field>
+						</Form.Group >
+						<Form.Field>
+							<Checkbox/>
+							<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
 						</Form.Field>
-					</Form.Group>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Password</label>
-							<input
-								className={errors.password ? 'error' : ''}
-								name='password'
-								placeholder='Password'
-								ref={register({ minLength: 6, required: true })}
-								type='password'
-							/>
-							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
+						<Form.Field>
+							<Checkbox/>				
+							<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
 						</Form.Field>
-					</Form.Group >
-					<Form.Field>
-						<Checkbox/>
-						<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
-					</Form.Field>
-					<Form.Field>
-						<Checkbox/>				
-						<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
-					</Form.Field>
-					<div className={'mainButtonContainer'}>
-						<Button
-							primary
-							disabled={loading}
-							onClick={handleSubmitForm}
-							type="submit"
-						>
-							Sign-up
-						</Button>
-						{error && <FilteredError text={error.message}/>}
-					</div>
-				</Form>
-			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-		</Grid>
+						<div className={'mainButtonContainer'}>
+							<Button
+								primary
+								disabled={loading}
+								onClick={handleSubmitForm}
+								type="submit"
+							>
+								Sign-up
+							</Button>
+							{error && <FilteredError text={error.message}/>}
+						</div>
+					</Form>
+				</Grid.Column>
+				<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			</Grid>
+		</Container>
 	);
 };
 
