@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Container, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from '../../components/ContentForm';
@@ -61,50 +61,48 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 
 	return (
-		<Container>
-			<Grid>
-				<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
-					<Form className={className}>
-						<h3>New Post</h3>
-						<Controller
-							as={<TitleForm
-								errorTitle={errors.title}
-							/>}
-							control={control}
-							name='title'
-							onChange={onTitleChange}
-							rules={{ required: true }}
-						/>
-						<Controller
-							as={<ContentForm
-								errorContent={errors.content}
-							/>}
-							control={control}
-							name='content'
-							onChange={onContentChange}
-							rules={{ required: true }}
-						/>
+		<Grid>
+			<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
+				<Form className={className}>
+					<h3>New Post</h3>
+					<Controller
+						as={<TitleForm
+							errorTitle={errors.title}
+						/>}
+						control={control}
+						name='title'
+						onChange={onTitleChange}
+						rules={{ required: true }}
+					/>
+					<Controller
+						as={<ContentForm
+							errorContent={errors.content}
+						/>}
+						control={control}
+						name='content'
+						onChange={onContentChange}
+						rules={{ required: true }}
+					/>
 
-						<TopicsRadio
-							onTopicSelection={(id) => setSetlectedTopic(id)}
-						/>
+					<TopicsRadio
+						onTopicSelection={(id) => setSetlectedTopic(id)}
+					/>
 
-						<div className={'mainButtonContainer'}>
-							<Button
-								primary
-								onClick={handleSubmit(handleSend)}
-								disabled={isSending || loading}
-								type='submit'
-							>
-								{isSending || loading ? 'Creating...' : 'Create'}
-							</Button>
-						</div>
-						{error && <FilteredError text={error.message}/>}
-					</Form>
-				</Grid.Column>
-				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
-			</Grid>
-		</Container>
+					<div className={'mainButtonContainer'}>
+						<Button
+							primary
+							onClick={handleSubmit(handleSend)}
+							disabled={isSending || loading}
+							type='submit'
+						>
+							{isSending || loading ? 'Creating...' : 'Create'}
+						</Button>
+					</div>
+					{error && <FilteredError text={error.message}/>}
+				</Form>
+			</Grid.Column>
+			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
+		</Grid>
 	);
 };
 
