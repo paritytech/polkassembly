@@ -50,10 +50,10 @@ spec:
             configMapKeyRef:
               key: PORT
               name: auth-server-config
-        - name: BOT_PROPOSAL_USER_ID
+        - name: PROPOSAL_BOT_USER_ID
           valueFrom:
             configMapKeyRef:
-              key: BOT_PROPOSAL_USER_ID
+              key: PROPOSAL_BOT_USER_ID
               name: auth-server-config
         - name: NODE_ENV
           valueFrom:
