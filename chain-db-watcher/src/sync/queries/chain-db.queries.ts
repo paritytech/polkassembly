@@ -36,3 +36,16 @@ export const getOnchainProposals = gql`
         proposalId
     }
 `;
+
+export const getOnchainMotions = gql`
+    query getOnchainMotions {
+        motions {
+            ...onchainMotion
+        }
+    }
+    fragment onchainMotion on Motion {
+        author
+        id
+        motionProposalId
+    }
+`;

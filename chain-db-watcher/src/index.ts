@@ -6,11 +6,14 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
 import {
+	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
 	addDiscussionReferendum,
+	motionDiscussionExists,
 	proposalDiscussionExists
 } from './graphql_helpers';
 import { proposalSubscription, referendumSubscription } from './queries';
+import { motionSubscription } from './queries/chain-db.queries';
 import { syncDBs } from './sync';
 
 dotenv.config();
@@ -60,7 +63,30 @@ async function main (): Promise<void> {
 		referendumSubscription
 	);
 
+	const motionSubscriptionClient = createSubscriptionObservable(
+		graphQLEndpoint,
+		motionSubscription
+	);
+
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
+
+	motionSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.motion.mutation === subscriptionMutation.Created) {
+				const { motionProposalId, author } = data.motion.node;
+				motionDiscussionExists(motionProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
+					} else {
+						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
+	);
 
 	proposalSubscriptionClient.subscribe(
 		({ data }): void => {
@@ -99,8 +125,8 @@ async function main (): Promise<void> {
 				return;
 			}
 			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
-			// FIXME This only takes care of democracy proposals going from proposal -> referendum
-			// it does not cater for any other proposal/motion that are externally tabled
+			// FIXME This only takes care of motion and democracy proposals
+			// it does not cater for tech committee proposals
 			addDiscussionReferendum({
 				preimageHash: preimage?.hash,
 				referendumCreationBlockHash,
