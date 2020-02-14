@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm, FieldError } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Checkbox, Container, Grid, Icon, Popup } from 'semantic-ui-react';
+import { Container, Grid, Icon, Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
@@ -13,6 +13,7 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import messages from '../../util/messages';
+import { useState } from 'react';
 
 interface Props {
 	className?: string
@@ -136,12 +137,26 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							</Form.Field>
 						</Form.Group >
 						<Form.Field>
-							<Checkbox/>
+							<input
+								className={errors.termsandconditions ? 'error' : ''}
+								name='termsandconditions'
+								value='yes'
+								ref={register({ required: true})}
+								type='checkbox'
+							/>
 							<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
+							{errors.termsandconditions && <div className={'errorText'}>Please accept the Terms and Conditions.</div>}
 						</Form.Field>
 						<Form.Field>
-							<Checkbox/>				
+							<input
+								className={errors.privacypolicy ? 'error' : ''}
+								name='privacypolicy'
+								value='yes'
+								ref={register({ required: true})}
+								type='checkbox'
+							/>			
 							<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
+							{errors.privacypolicy && <div className={'errorText'}>Please accept the Privacy Policy.</div>}
 						</Form.Field>
 						<div className={'mainButtonContainer'}>
 							<Button
