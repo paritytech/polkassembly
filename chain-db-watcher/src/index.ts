@@ -109,7 +109,7 @@ async function main (): Promise<void> {
 	referendumSubscriptionClient.subscribe(({ data }): void => {
 		if (data?.referendum.mutation === subscriptionMutation.Created) {
 			const {
-				preimage,
+				preimageHash,
 				referendumId,
 				referendumStatus
 			} = data.referendum.node;
@@ -124,12 +124,12 @@ async function main (): Promise<void> {
 				);
 				return;
 			}
-			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
+
 			// FIXME This only takes care of motion and democracy proposals
 			// it does not cater for tech committee proposals
 			addDiscussionReferendum({
-				preimageHash: preimage?.hash,
-				referendumCreationBlockHash,
+				preimageHash,
+				referendumCreationBlockHash: referendumStatus[0].blockNumber.hash,
 				referendumId
 			}).catch(e => {
 				console.error(chalk.red(e));
