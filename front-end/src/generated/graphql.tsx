@@ -8108,8 +8108,8 @@ export type MotionPostAndCommentsQuery = (
 );
 
 export type LatestMotionPostsQueryVariables = {
-  postType?: Scalars['Int'],
-  postTopic?: Scalars['Int'],
+  postType: Scalars['Int'],
+  postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
@@ -8150,8 +8150,8 @@ export type LatestMotionPostsQuery = (
 );
 
 export type LatestDemocracyProposalPostsQueryVariables = {
-  postType?: Scalars['Int'],
-  postTopic?: Scalars['Int'],
+  postType: Scalars['Int'],
+  postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
@@ -8192,7 +8192,7 @@ export type LatestDemocracyProposalPostsQuery = (
 );
 
 export type LatestReferendaPostsQueryVariables = {
-  postType?: Scalars['Int'],
+  postType: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
@@ -9240,7 +9240,7 @@ export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPo
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
 export const LatestMotionPostsDocument = gql`
-    query LatestMotionPosts($postType: Int! = 2, $postTopic: Int! = 2, $limit: Int! = 5) {
+    query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
     id
     title
@@ -9307,7 +9307,7 @@ export type LatestMotionPostsQueryHookResult = ReturnType<typeof useLatestMotion
 export type LatestMotionPostsLazyQueryHookResult = ReturnType<typeof useLatestMotionPostsLazyQuery>;
 export type LatestMotionPostsQueryResult = ApolloReactCommon.QueryResult<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>;
 export const LatestDemocracyProposalPostsDocument = gql`
-    query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5) {
+    query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
     id
     title
@@ -9374,7 +9374,7 @@ export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useL
 export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
 export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
 export const LatestReferendaPostsDocument = gql`
-    query LatestReferendaPosts($postType: Int! = 2, $limit: Int! = 5) {
+    query LatestReferendaPosts($postType: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
     id
     title

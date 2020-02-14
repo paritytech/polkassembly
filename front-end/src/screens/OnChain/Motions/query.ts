@@ -1,10 +1,8 @@
 import gql from 'graphql-tag';
 
-// post_type.ON_CHAIN === 2
-// post_topic.COUNCIL === 2
-
-export const QUERY_LATEST_MOTIONSS = gql`
-  query LatestMotionPosts($postType: Int! = 2, $postTopic: Int! = 2, $limit: Int! = 5 ) {
+// for motions postType shoud be 2, postTopic should be 2
+export const QUERY_LATEST_MOTIONS = gql`
+  query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {

@@ -1,9 +1,7 @@
 import gql from 'graphql-tag';
 
-// post_type.ON_CHAIN === 2
-
 export const QUERY_LATEST_REFERENDA = gql`
-  query LatestReferendaPosts($postType: Int! = 2, $limit: Int! = 5) {
+  query LatestReferendaPosts($postType: Int!, $limit: Int! = 5) {
     posts(limit: $limit, where: {
         type: {
             id: {

@@ -1,10 +1,7 @@
 import gql from 'graphql-tag';
 
-// post_type.ON_CHAIN === 2
-// post_topic.DEMOCRACY === 1
-
 export const QUERY_LATEST_PROPOSALS = gql`
-  query LatestDemocracyProposalPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5 ) {
+  query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
