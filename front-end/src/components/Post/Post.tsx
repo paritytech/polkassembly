@@ -105,16 +105,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						/>
 				}
 				{ isProposal &&
-						<PostProposalInfo
-							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-						/>
-				}
-				{ isReferendum &&
-						<PostReferendumInfo
-							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-						/>
-				}
-				{ isProposal &&
 					<PostProposalInfo
 						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
 					/>
