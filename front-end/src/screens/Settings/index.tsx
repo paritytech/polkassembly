@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Divider, Container } from 'semantic-ui-react';
+import { Grid, Divider } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import Email from './email';
@@ -14,23 +14,21 @@ interface Props {
 
 const Settings = ({ className }:Props): JSX.Element => {
 	return (
-		<Container>
-			<Grid>
-				<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
-					<h3>Settings</h3>
-					<Divider/>
-					<Username/>
-					<Fullname/>
-					<Divider/>
-					<Email/>
-					<Divider/>
-					<Password/>
-					<Divider/>
-					<Address/>
-				</Grid.Column>
-				<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
-			</Grid>
-		</Container>
+		<Grid>
+			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
+				<h3>Settings</h3>
+				<Divider/>
+				<Username/>
+				<Fullname/>
+				<Divider/>
+				<Email/>
+				<Divider/>
+				<Password/>
+				<Divider/>
+				<Address/>
+			</Grid.Column>
+			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
+		</Grid>
 	);
 };
 

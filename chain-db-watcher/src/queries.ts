@@ -47,9 +47,7 @@ export const referendumSubscription = gql`
 					}
 					status
 				}
-				preimage {
-					hash
-				}
+				preimageHash
 			}
 		}
 	}
@@ -67,7 +65,7 @@ export const referendumSubscription = gql`
 //         "status": "Started"
 //       }
 //     ],
-//     "preimage": null
+//     "preimageHash": "0xd81b9aefdaf562df8e7b503523eeca599ed89ef91e4828da82fb2030ca15d01e"
 //   }
 // }
 
