@@ -1,7 +1,7 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Container, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 interface Props {
 	className?: string
@@ -10,17 +10,15 @@ interface Props {
 const TermsAndConditions = ({ className }:Props): JSX.Element => {
 
 	return (
-		<Container className={className}>
-			<Grid>
-				<Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
-					<h1>Terms &amp; Conditions</h1>
-					<ReactMarkdown className='markdown'>
-                        ## Placeholder MD
-					</ReactMarkdown>
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
-			</Grid>
-		</Container>
+		<Grid className={className}>
+			<Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
+				<h1>Terms &amp; Conditions</h1>
+				<ReactMarkdown className='markdown'>
+					## Placeholder MD
+				</ReactMarkdown>
+			</Grid.Column>
+			<Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
+		</Grid>
 	);
 };
 
