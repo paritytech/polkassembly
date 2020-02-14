@@ -11,6 +11,7 @@ import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
 import Discussions from './screens/Discussions';
+import Footer from './screens/Footer';
 import Home from './screens/Home';
 import LoginForm from './screens/LoginForm';
 import MenuBar from './screens/MenuBar';
@@ -96,6 +97,7 @@ const App = () => {
 											<NotFound/>
 										</Route>
 									</Switch>
+									<Footer />
 								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>
