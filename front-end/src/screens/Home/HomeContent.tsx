@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -21,7 +21,7 @@ const HomeContent = ({ className }: Props) => {
 	};
 
 	return (
-		<Container className={className}>
+		<div className={className}>
 			<h1>Latest Activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
@@ -38,7 +38,7 @@ const HomeContent = ({ className }: Props) => {
 					</div>}
 				</Grid.Column>
 			</Grid>
-		</Container>
+		</div>
 	);
 };
 
