@@ -1,19 +1,21 @@
-import { OnchainProposalFragment, OnchainReferendumFragment } from './generated/chain-db-graphql';
-import { DiscussionProposalFragment, DiscussionReferendumFragment } from './generated/discussion-db-graphql';
+import { OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment } from './generated/chain-db-graphql';
+import { DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment } from './generated/discussion-db-graphql';
 
 export interface OnchainSyncData {
+    motions?: Array<OnchainMotionFragment | null> | null;
     proposals?: Array<OnchainProposalFragment | null> | null;
     referenda?: Array<OnchainReferendumFragment | null> | null;
 }
 
 export interface DiscussionSyncData {
+    motions?: Array<DiscussionMotionFragment | null> | null;
     proposals?: Array<DiscussionProposalFragment | null> | null;
     referenda?: Array<DiscussionReferendumFragment | null> | null;
 }
 
 export interface SyncData {
-    onchain: OnchainSyncData;
     discussion: DiscussionSyncData;
+    onchain: OnchainSyncData;
 }
 
 export interface SyncMap {
@@ -22,6 +24,7 @@ export interface SyncMap {
 }
 
 export interface OnchainSyncMap {
+    motions?: objectMap;
     proposals?: objectMap;
     referenda?: referendumObjectMap;
 }
@@ -32,6 +35,7 @@ export interface OnchainReferendaValueSyncType {
 }
 
 export interface DiscussionSyncMap {
+    motions?: objectMap;
     proposals?: objectMap;
     referenda?: objectMap;
 }

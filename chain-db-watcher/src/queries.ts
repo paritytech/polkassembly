@@ -70,3 +70,4 @@ export const referendumSubscription = gql`
 //     "preimage": null
 //   }
 // }
+

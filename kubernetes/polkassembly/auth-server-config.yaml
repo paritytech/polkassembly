@@ -5,10 +5,10 @@ metadata:
     app: auth-server
   name: auth-server-config
 data:
-  BOT_PROPOSAL_USER_ID: "11"
+  PROPOSAL_BOT_USER_ID: "11"
   DATABASE_URL: $DATABASE_URL
-  DOMAIN_NAME: polkassembly.io
-  DOMAIN_PROTOCOL: http://
+  DOMAIN_NAME: test.polkassembly.io
+  DOMAIN_PROTOCOL: https://
   HASURA_POST_SUBSCRIPTION_SECRET: $HASURA_POST_SUBSCRIPTION_SECRET
   JWT_KEY_PASSPHRASE: $JWT_KEY_PASSPHRASE
   NODE_ENV: development
