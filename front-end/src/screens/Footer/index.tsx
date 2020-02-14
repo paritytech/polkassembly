@@ -5,26 +5,26 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 interface Props {
-    className?: string
+	className?: string
 }
 
 const Footer = ({ className }:Props ): JSX.Element => {
-    return (
-        <footer className={className}>
-            <Menu>
-                <Menu.Item>
+	return (
+		<footer className={className}>
+			<Menu>
+				<Menu.Item>
                     &copy; {moment.utc().year()} Legal Entity
-                </Menu.Item>
-                <Menu.Item as={Link} to="/terms">
+				</Menu.Item>
+				<Menu.Item as={Link} to="/terms">
                     Terms &amp; Conditions
-                </Menu.Item>
-                <Menu.Item as={Link} to="/privacy">
+				</Menu.Item>
+				<Menu.Item as={Link} to="/privacy">
                     Privacy Policy
-                </Menu.Item>
-            </Menu>
-        </footer>
-    )
-}
+				</Menu.Item>
+			</Menu>
+		</footer>
+	);
+};
 
 export default styled(Footer)`
     bottom: 0;

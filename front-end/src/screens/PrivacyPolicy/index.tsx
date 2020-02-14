@@ -9,20 +9,20 @@ interface Props {
 
 const PrivacyPolicy = ({ className }:Props): JSX.Element => {
 
-    return (
-        <Container className={className}>
-            <Grid>
-                <Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
-                    <h1>Privacy Policy</h1>
-                    <ReactMarkdown className='markdown'>
+	return (
+		<Container className={className}>
+			<Grid>
+				<Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
+					<h1>Privacy Policy</h1>
+					<ReactMarkdown className='markdown'>
                         ## Placeholder MD
-                    </ReactMarkdown>
-                </Grid.Column>
-                <Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
-            </Grid>
-        </Container>
-    );
-}
+					</ReactMarkdown>
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
+			</Grid>
+		</Container>
+	);
+};
 
 export default styled(PrivacyPolicy)`
     .policy_box {

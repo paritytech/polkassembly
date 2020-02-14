@@ -13,7 +13,6 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import messages from '../../util/messages';
-import { useState } from 'react';
 
 interface Props {
 	className?: string
@@ -141,7 +140,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.termsandconditions ? 'error' : ''}
 								name='termsandconditions'
 								value='yes'
-								ref={register({ required: true})}
+								ref={register({ required: true })}
 								type='checkbox'
 							/>
 							<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
@@ -152,9 +151,9 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.privacypolicy ? 'error' : ''}
 								name='privacypolicy'
 								value='yes'
-								ref={register({ required: true})}
+								ref={register({ required: true })}
 								type='checkbox'
-							/>			
+							/>
 							<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
 							{errors.privacypolicy && <div className={'errorText'}>Please accept the Privacy Policy.</div>}
 						</Form.Field>
