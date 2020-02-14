@@ -22,7 +22,7 @@ services:
       REACT_APP_AUTH_URL: "http://localhost:8010"
       REACT_APP_SERVER_URL: "http://localhost:8080/v1/graphql"
       PORT: 8010
-      BOT_PROPOSAL_USER_ID: 7
+      PROPOSAL_BOT_USER_ID: 7
       JWT_KEY_PASSPHRASE_TEST: "pass"
       # Intentionally checking in private key for running transient docker container.
       # This private key is only used here and nowhere else.
