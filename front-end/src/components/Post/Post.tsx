@@ -8,22 +8,24 @@ import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import CreatePostComment from './PostCommentForm';
 import EditablePostContent from '../EditablePostContent';
-import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../../generated/graphql';
+import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, MotionPostAndCommentsQueryHookResult, MotionPostAndCommentsQueryVariables, MotionPostAndCommentsQuery, OnchainLinkMotionFragment, MotionPostFragment } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
+import PostMotionInfo from './PostMotionInfo';
 import PostProposalInfo from './PostProposalInfo';
 import PostReferendumInfo from './PostReferendumInfo';
 import Democracy from './Democracy';
 
 interface Props {
 	className?: string
-	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data']
+	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data'] | MotionPostAndCommentsQueryHookResult['data']
+	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const Post = ( { className, data, isProposal = false, isReferendum = false, refetch }: Props ) => {
+const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
@@ -33,12 +35,13 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
 
-	// if an onchain_link has both the a proposal_id and referendum_id, it means it's a referendum now
+	// if an onchain_link has both the a (proposal_id or motion_id) and a referendum_id, it means it's a referendum now
 	// the referendum id should be shown.
 	let onchainId: number | null | undefined;
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
-	let definedOnchainLink : OnchainLinkReferendumFragment | OnchainLinkProposalFragment | undefined;
+	let motionPost: MotionPostFragment | undefined;
+	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | undefined;
 	let postStatus: string | undefined;
 
 	if (isReferendum){
@@ -55,10 +58,18 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 	}
 
+	if (isMotion) {
+		motionPost = post as MotionPostFragment;
+		definedOnchainLink = motionPost.onchain_link as OnchainLinkMotionFragment;
+		onchainId = definedOnchainLink.onchain_motion_id;
+		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
+	}
+
 	const canEdit = !isEditing && (
 		(post?.author?.id === id) ||
 		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
-		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address))
+		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address)) ||
+		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address))
 	);
 
 	if (!post) return <NoPostFound/>;
@@ -88,6 +99,11 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 						/>
 					}
 				</div>
+				{ isMotion &&
+						<PostMotionInfo
+							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+						/>
+				}
 				{ isProposal &&
 					<PostProposalInfo
 						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
@@ -98,12 +114,12 @@ const Post = ( { className, data, isProposal = false, isReferendum = false, refe
 						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
 					/>
 				}
-				{ post.comments?.length
-					? <Comments
+				{ post.comments?.length &&
+					<Comments
 						comments={post.comments}
 						refetch={refetch}
 					/>
-					: null }
+				}
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={16} computer={6}>
 				<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />

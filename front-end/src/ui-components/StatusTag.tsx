@@ -26,6 +26,9 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 	case 'Enacted':
 		icon = 'check';
 		break;
+	case 'Executed':
+		icon = 'check';
+		break;
 	case 'NotPassed':
 		icon = 'times';
 		break;
@@ -70,7 +73,7 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
 			color: blue_primary;
 			background-color: blue_primary_transparent;
         }
-        &.Enacted {
+        &.Enacted, &.Executed {
             border-color: green_primary;
 			color: green_primary;
 			background-color: green_primary_transparent;

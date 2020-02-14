@@ -2,6 +2,7 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
+import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
 import InfoBox from '../../ui-components/InfoBox';
@@ -17,6 +18,8 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<ReferendaContainer className='referendaContainer'/>
 					<h2>Proposals</h2>
 					<ProposalContainer className='proposalContainer'/>
+					<h2>Motions</h2>
+					<MotionContainer className='motionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -59,4 +62,5 @@ export default styled(OnchainPostsContainer)`
 		h1 {
 			padding: 0 1rem;
 		}
+	}
 `;
