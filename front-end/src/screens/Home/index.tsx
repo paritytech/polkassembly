@@ -31,7 +31,7 @@ const Home = ({ className }: Props) => {
 					<h2>Latest Proposals</h2>
 					<ProposalContainer className='proposalContainer'/>
 					<h2>Latest Motions</h2>
-					<MotionsContainer className='MotionContainer'/>
+					<MotionsContainer className='motionContainer'/>
 					<h2>Latest Discussions</h2>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
@@ -47,7 +47,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer {
 		margin-bottom: 3rem;
 	}
 

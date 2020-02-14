@@ -13,6 +13,13 @@ const onchainLinkMotion = gql`
                 id
                 status
             }
+            memberCount
+            method
+            motionProposalHash
+            motionProposalArguments{
+                name
+                value
+            }
             preimage {
                 depositAmount
                 hash

@@ -17,8 +17,13 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 		onchain_motion: onchainMotion,
 		proposer_address: proposerAddress
 	} = onchainLink;
-	const preimage = onchainMotion?.[0]?.preimage;
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+
+	if (! onchainMotion?.[0]) {
+		return null;
+	}
+
+	const { memberCount, method, motionProposalArguments, motionProposalHash, preimage } = onchainMotion[0];
+	const { depositAmount, metaDescription, method: preimageMethod, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -30,19 +35,52 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 						{proposerAddress}
 					</div>
 				</Grid.Column>
-				{depositAmount &&
+				<Grid.Column mobile={16} tablet={8} computer={8}>
+					<div className='info_group'>
+						<h6>Member Count</h6>
+						{memberCount}
+					</div>
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={16}>
+					<div className='info_group'>
+						<h6>Motion hash</h6>
+						{motionProposalHash}
+					</div>
+				</Grid.Column>
+				<Grid.Row>
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>Motion&apos;s Method</h6>
+							{method}
+						</div>
+					</Grid.Column>
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						{motionProposalArguments && motionProposalArguments.length
+							? <div className='info_group'>
+								<h6>Arguments</h6>
+								{motionProposalArguments.map((element, index) => {
+									return <div className={'methodArguments'} key={index}>
+										<span key={index}>{element.name}: {element.value}</span>
+									</div>;
+								})}
+							</div>
+							: null}
+					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row className='preimage'>
+					{depositAmount &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Deposit</h6>
 						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 					</div>
 				</Grid.Column>}
-				{method &&
+					{preimageMethod &&
 				<Grid.Row>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>
 							<h6>Method</h6>
-							{method}
+							{preimageMethod}
 						</div>
 					</Grid.Column>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -58,13 +96,14 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 							: null}
 					</Grid.Column>
 				</Grid.Row>}
-				<Grid.Column mobile={16} tablet={16} computer={16}>
-					{ metaDescription &&
+					<Grid.Column mobile={16} tablet={16} computer={16}>
+						{ metaDescription &&
 					<div className='info_group'>
 						<h6>Description</h6>
 						{metaDescription}
 					</div>}
-				</Grid.Column>
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		</div>
 	);
@@ -95,6 +134,10 @@ export default styled(PostMotionInfo)`
 	.methodArguments {
 		display: block;
 		margin-bottom: 0.4rem;
+	}
+
+	.preimage {
+		background-color: grey_light;
 	}
 
 	@media only screen and (max-width: 576px) {

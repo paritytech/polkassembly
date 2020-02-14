@@ -8055,10 +8055,13 @@ export type OnchainLinkMotionFragment = (
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id' | 'onchain_motion_id'>
   & { onchain_motion: Array<Maybe<(
     { __typename?: 'Motion' }
-    & Pick<Motion, 'id'>
+    & Pick<Motion, 'id' | 'memberCount' | 'method' | 'motionProposalHash'>
     & { motionStatus: Maybe<Array<(
       { __typename?: 'MotionStatus' }
       & Pick<MotionStatus, 'id' | 'status'>
+    )>>, motionProposalArguments: Maybe<Array<(
+      { __typename?: 'MotionProposalArgument' }
+      & Pick<MotionProposalArgument, 'name' | 'value'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -8581,6 +8584,13 @@ export const OnchainLinkMotionFragmentDoc = gql`
     motionStatus(last: 1) {
       id
       status
+    }
+    memberCount
+    method
+    motionProposalHash
+    motionProposalArguments {
+      name
+      value
     }
     preimage {
       depositAmount
