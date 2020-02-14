@@ -19,10 +19,12 @@ import PostDiscussion from './screens/DiscussionPost';
 import OnChain from './screens/OnChain';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
+import PrivacyPolicy from './screens/PrivacyPolicy';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
+import TermsAndConditions from './screens/TermsAndConditions';
 import VerifyEmail from './screens/VerifyEmail';
 import UndoEmailChange from './screens/UndoEmailChange';
 import { theme } from './themes/theme';
@@ -83,6 +85,12 @@ const App = () => {
 										</Route>
 										<Route path="/settings">
 											<Settings/>
+										</Route>
+										<Route path="/privacy">
+											<PrivacyPolicy/>
+										</Route>
+										<Route path="/terms">
+											<TermsAndConditions/>
 										</Route>
 										<Route path="*">
 											<NotFound/>
