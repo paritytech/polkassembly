@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { /* Divider, */ Grid } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps, Icon, Popup, Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -14,30 +14,31 @@ interface Props {
 	proposalId?: number | null | undefined
 	api?: ApiPromise,
 	apiReady?: boolean,
-	getLinkedAccount: () => Promise<InjectedAccountWithMeta | undefined>
+	address: string
+	defaultAddress: string
+	addressOptions: DropdownItemProps[]
+	accounts: InjectedAccountWithMeta[]
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	getAccounts: () => Promise<undefined>
 }
 
-const SecondProposal = ({ className, api, apiReady, getLinkedAccount, proposalId }: Props) => {
+const SecondProposal = ({ className, api, apiReady, proposalId, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 
 	const secondProposal = async () => {
 		if (!api) {
-			return;
-		}
-
-		const linkedAccount = await getLinkedAccount();
-
-		if (!linkedAccount) {
+			console.error('polkadot/api not set');
 			return;
 		}
 
 		if (!proposalId) {
+			console.error('proposalId not set');
 			return;
 		}
 
 		const second = api.tx.democracy.second(proposalId);
 
-		second.signAndSend(linkedAccount.address, ({ status }) => {
+		second.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
 				queueNotification({
 					header: 'Success!',
@@ -60,6 +61,28 @@ const SecondProposal = ({ className, api, apiReady, getLinkedAccount, proposalId
 		});
 	};
 
+	if (accounts.length === 0) {
+		return (
+			<div className={className}>
+				<div className='card'>
+					<Form standalone={false}>
+						<h4>Vote</h4>
+						<Form.Group>
+							<Form.Field className='button-container'>
+								<Button
+									primary
+									onClick={getAccounts}
+								>
+									Second
+								</Button>
+							</Form.Field>
+						</Form.Group>
+					</Form>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className={className}>
 			<div className='card'>
@@ -80,7 +103,20 @@ const SecondProposal = ({ className, api, apiReady, getLinkedAccount, proposalId
 					<Form standalone={false}>
 						<Form.Group>
 							<Form.Field>
-								<label>&nbsp;</label>
+								<label>Vote with account&nbsp;
+									<Popup
+										trigger={<Icon name='question circle'/>}
+										content='You can choose account from polkadot-js extension.'
+										style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+										hoverable={true}
+									/>
+								</label>
+								<Dropdown
+									onChange={onAccountChange}
+									defaultValue={defaultAddress || accounts[0].address}
+									selection
+									options={addressOptions}
+								/>
 								<Button
 									primary
 									disabled={!apiReady}
@@ -105,5 +141,15 @@ export default styled(SecondProposal)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+	}
+
+	@media only screen and (max-width: 768px) {
+		.ui.form {
+			padding: 0rem;
+		}
+
+		.button-container {
+			margin-bottom: 1rem!important;
+		}
 	}
 `;
