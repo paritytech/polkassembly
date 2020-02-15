@@ -114,7 +114,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
 					/>
 				}
-				{ post.comments?.length &&
+				{ !!post.comments?.length &&
 					<Comments
 						comments={post.comments}
 						refetch={refetch}
