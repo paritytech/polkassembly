@@ -1,7 +1,7 @@
 
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ DropdownProps, Icon, Popup, Select } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
@@ -10,18 +10,23 @@ import Button from '../../ui-components/Button';
 import { NotificationContext } from '../../context/NotificationContext';
 import { NotificationStatus } from '../../types';
 
+type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
+
 interface Props {
 	className?: string
 	referendumId?: number | null | undefined
-	api?: ApiPromise,
-	apiReady?: boolean,
-	getLinkedAccount: () => Promise<InjectedAccountWithMeta | undefined>
+	api?: ApiPromise
+	apiReady?: boolean
+	address: string
+	defaultAddress: string
+	addressOptions: DropdownItemProps[]
+	accounts: InjectedAccountWithMeta[]
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	getAccounts: () => Promise<undefined>
 }
 
-const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumId }: Props) => {
+const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
-
-	type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
 	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const options = [
 		{ text: '1x time lock', value: 'Locked1x' },
@@ -41,19 +46,13 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			return;
 		}
 
-		const linkedAccount = await getLinkedAccount();
-
-		if (!linkedAccount) {
-			return;
-		}
-
 		if (!referendumId) {
 			return;
 		}
 
 		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
-		vote.signAndSend(linkedAccount.address, ({ status }) => {
+		vote.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
 				queueNotification({
 					header: 'Success!',
@@ -74,6 +73,28 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 			});
 		});
 	};
+
+	if (accounts.length === 0) {
+		return (
+			<div className={className}>
+				<div className='card'>
+					<Form standalone={false}>
+						<h4>Vote</h4>
+						<Form.Group>
+							<Form.Field className='button-container'>
+								<Button
+									primary
+									onClick={getAccounts}
+								>
+									Vote
+								</Button>
+							</Form.Field>
+						</Form.Group>
+					</Form>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className={className}>
@@ -115,6 +136,20 @@ const VoteRefrendum = ({ className, api, apiReady, getLinkedAccount, referendumI
 					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
+							<label>Vote with account&nbsp;
+								<Popup
+									trigger={<Icon name='question circle'/>}
+									content='You can choose account from polkadot-js extension.'
+									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+									hoverable={true}
+								/>
+							</label>
+							<Dropdown
+								onChange={onAccountChange}
+								defaultValue={defaultAddress || accounts[0].address}
+								selection
+								options={addressOptions}
+							/>
 							<label>Vote Lock&nbsp;
 								<Popup
 									trigger={<Icon name='question circle'/>}

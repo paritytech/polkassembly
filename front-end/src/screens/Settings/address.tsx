@@ -12,6 +12,7 @@ import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressU
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 import getExtensionUrl from '../../util/getExtensionUrl';
+import shortenAddress from '../../util/shortenAddress';
 import { handleTokenChange } from 'src/services/auth.service';
 
 interface Props{
@@ -139,14 +140,6 @@ const Address = ({ className }: Props): JSX.Element => {
 		}
 	};
 
-	const shorten = (address: string) => {
-		if (!address || address.length < 8) {
-			return address;
-		}
-
-		return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
-	};
-
 	const linkIcon = <><Icon name='chain'/>Link</>;
 	const unlinkIcon = <><Icon name='broken chain'/>Unlink</>;
 
@@ -199,7 +192,7 @@ const Address = ({ className }: Props): JSX.Element => {
 										/>
 										<div className="content" style={{ display: 'inline-block' }}>
 											<div className="header">{account.meta.name}</div>
-											<div className="description">{shorten(account.address)}</div>
+											<div className="description">{shortenAddress(account.address)}</div>
 										</div>
 									</div>
 								</Grid.Column>

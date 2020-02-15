@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { DropdownProps, DropdownItemProps } from 'semantic-ui-react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import styled from '@xstyled/styled-components';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import Identicon from '@polkadot/react-identicon';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import getExtensionUrl from '../../util/getExtensionUrl';
+import shortenAddress from '../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
 
@@ -22,11 +24,11 @@ const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
-
+	const defaultAddress = currentUser?.addresses?.[0] || '';
+	const [address, setAddress] = useState<string>('');
+	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
-	const [linkedAddressNotFound, setLinkedAddressNotFound] = useState(false);
-	const [linkedAddressNotAvailable, setLinkedAddressNotAvailable] = useState(false);
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 
@@ -48,7 +50,12 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		});
 	}, []);
 
-	const getLinkedAccount = async (): Promise<InjectedAccountWithMeta | undefined> => {
+	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		const addressValue = data.value as string;
+		setAddress(addressValue);
+	};
+
+	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
 
 		if (extensions.length === 0) {
@@ -67,38 +74,40 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 			setAccountsNotFound(false);
 		}
 
-		const accountMap: {[key: string]: InjectedAccountWithMeta} = {};
+		setAccounts(accounts);
+		if (accounts.length > 0) {
+			setAddress(accounts[0].address);
 
-		accounts.forEach(account => {
-			accountMap[account.address] = account;
-		});
+			const injected = await web3FromSource(accounts[0].meta.source);
 
-		const linkedAddress = currentUser?.addresses && currentUser?.addresses[0];
-
-		if (!linkedAddress) {
-			setLinkedAddressNotFound(true);
-			return;
-		} else {
-			setLinkedAddressNotFound(false);
+			if (api) {
+				api.setSigner(injected.signer);
+			}
 		}
 
-		const linkedAccount = accountMap[linkedAddress || ''];
-
-		if (!linkedAccount) {
-			setLinkedAddressNotAvailable(true);
-			return;
-		} else {
-			setLinkedAddressNotAvailable(false);
-		}
-
-		const injected = await web3FromSource(linkedAccount.meta.source);
-
-		if (api) {
-			api.setSigner(injected.signer);
-		}
-
-		return linkedAccount;
+		return;
 	};
+
+	const addressOptions: DropdownItemProps[] = accounts.map(
+		account => ({
+			children: (
+				<>
+					<Identicon
+						className="image"
+						value={account.address}
+						size={32}
+						theme={'polkadot'}
+					/>
+					<div className="content" style={{ display: 'inline-block' }}>
+						<div className="header">{account.meta.name}</div>
+						<div className="description">{shortenAddress(account.address)}</div>
+					</div>
+				</>
+			),
+			text: `${account.meta.name} - ${shortenAddress(account.address)}`,
+			value: account.address
+		})
+	);
 
 	if (extensionNotFound) {
 		return (
@@ -122,34 +131,36 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		);
 	}
 
-	if (linkedAddressNotFound) {
-		return (
-			<div className={className}>
-				<div className='card'>
-					<div className='text-muted'>Link at least one address in <Link to={'/settings'}>your account settings</Link> to use this feature.</div>
-					<div className='text-muted'>Please reload this page once you linked an address.</div>
-				</div>
-			</div>
-		);
-	}
-
-	if (linkedAddressNotAvailable) {
-		return (
-			<div className={className}>
-				<div className='card'>
-					<div className='text-muted'>Linked address not available in Polkadot-js extension. Please link an address available in Polkadot-js extension.</div>
-					<div className='text-muted'>Please reload this page once you&apos;re done.</div>
-				</div>
-			</div>
-		);
-	}
-
 	if (isProposal) {
-		return <SecondProposal proposalId={onchainId} api={api} apiReady={apiReady} getLinkedAccount={getLinkedAccount} />;
+		return (
+			<SecondProposal
+				proposalId={onchainId}
+				api={api}
+				apiReady={apiReady}
+				getAccounts={getAccounts}
+				onAccountChange={onAccountChange}
+				accounts={accounts}
+				address={address}
+				defaultAddress={defaultAddress}
+				addressOptions={addressOptions}
+			/>
+		);
 	}
 
 	if (isReferendum) {
-		return <VoteRefrendum referendumId={onchainId} api={api} apiReady={apiReady} getLinkedAccount={getLinkedAccount} />;
+		return (
+			<VoteRefrendum
+				referendumId={onchainId}
+				api={api}
+				apiReady={apiReady}
+				getAccounts={getAccounts}
+				onAccountChange={onAccountChange}
+				accounts={accounts}
+				address={address}
+				defaultAddress={defaultAddress}
+				addressOptions={addressOptions}
+			/>
+		);
 	}
 
 	return null;
