@@ -27,10 +27,12 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 
 	const secondProposal = async () => {
 		if (!api) {
+			console.error('polkadot/api not set');
 			return;
 		}
 
 		if (!proposalId) {
+			console.error('proposalId not set');
 			return;
 		}
 

@@ -80,9 +80,12 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 
 			const injected = await web3FromSource(accounts[0].meta.source);
 
-			if (api) {
-				api.setSigner(injected.signer);
+			if (!api) {
+				console.error('polkadot/api not set');
+				return;
 			}
+
+			api.setSigner(injected.signer);
 		}
 
 		return;

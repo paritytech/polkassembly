@@ -43,10 +43,12 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 
 	const voteRefrendum = async (aye: boolean) => {
 		if (!api) {
+			console.error('polkadot/api not set');
 			return;
 		}
 
 		if (!referendumId) {
+			console.error('referendumId not set');
 			return;
 		}
 
