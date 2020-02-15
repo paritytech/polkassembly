@@ -117,7 +117,6 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 									selection
 									options={addressOptions}
 								/>
-								<label>&nbsp;</label>
 								<Button
 									primary
 									disabled={!apiReady}
