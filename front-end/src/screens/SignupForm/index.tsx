@@ -142,7 +142,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							ref={register({ required: true })}
 							type='checkbox'
 						/>
-						<div className='text-muted'>I agree to the <Link to='/terms'>Terms and Conditions</Link></div>
+						<div className='text-muted'>I agree to the <Link to='/terms-and-conditions'>Terms and Conditions</Link></div>
 						{errors.termsandconditions && <div className={'errorText'}>Please accept the Terms and Conditions.</div>}
 					</Form.Field>
 					<Form.Field>
