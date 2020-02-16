@@ -5905,7 +5905,9 @@ export type GetTabledProposalAtBlockQuery = (
   )>> }
 );
 
-export type GetOnchainReferendaQueryVariables = {};
+export type GetOnchainReferendaQueryVariables = {
+  startBlock: Scalars['Int']
+};
 
 
 export type GetOnchainReferendaQuery = (
@@ -5929,7 +5931,9 @@ export type OnchainReferendumFragment = (
   )>> }
 );
 
-export type GetOnchainProposalsQueryVariables = {};
+export type GetOnchainProposalsQueryVariables = {
+  startBlock: Scalars['Int']
+};
 
 
 export type GetOnchainProposalsQuery = (
@@ -5945,7 +5949,9 @@ export type OnchainProposalFragment = (
   & Pick<Proposal, 'author' | 'id' | 'proposalId'>
 );
 
-export type GetOnchainMotionsQueryVariables = {};
+export type GetOnchainMotionsQueryVariables = {
+  startBlock: Scalars['Int']
+};
 
 
 export type GetOnchainMotionsQuery = (
@@ -6008,22 +6014,22 @@ export const GetTabledProposalAtBlockDocument = gql`
 }
     `;
 export const GetOnchainReferendaDocument = gql`
-    query getOnchainReferenda {
-  referendums {
+    query getOnchainReferenda($startBlock: Int!) {
+  referendums(where: {referendumStatus_some: {AND: [{status: "Started"}, {blockNumber: {number_gte: $startBlock}}]}}) {
     ...onchainReferendum
   }
 }
     ${OnchainReferendumFragmentDoc}`;
 export const GetOnchainProposalsDocument = gql`
-    query getOnchainProposals {
-  proposals {
+    query getOnchainProposals($startBlock: Int!) {
+  proposals(where: {proposalStatus_some: {AND: [{status: "Proposed"}, {blockNumber: {number_gte: $startBlock}}]}}) {
     ...onchainProposal
   }
 }
     ${OnchainProposalFragmentDoc}`;
 export const GetOnchainMotionsDocument = gql`
-    query getOnchainMotions {
-  motions {
+    query getOnchainMotions($startBlock: Int!) {
+  motions(where: {motionStatus_some: {AND: [{status: "Proposed"}, {blockNumber: {number_gte: $startBlock}}]}}) {
     ...onchainMotion
   }
 }
@@ -6036,13 +6042,13 @@ export function getSdk(client: GraphQLClient) {
     getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
       return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
     },
-    getOnchainReferenda(variables?: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
+    getOnchainReferenda(variables: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
       return client.request<GetOnchainReferendaQuery>(print(GetOnchainReferendaDocument), variables);
     },
-    getOnchainProposals(variables?: GetOnchainProposalsQueryVariables): Promise<GetOnchainProposalsQuery> {
+    getOnchainProposals(variables: GetOnchainProposalsQueryVariables): Promise<GetOnchainProposalsQuery> {
       return client.request<GetOnchainProposalsQuery>(print(GetOnchainProposalsDocument), variables);
     },
-    getOnchainMotions(variables?: GetOnchainMotionsQueryVariables): Promise<GetOnchainMotionsQuery> {
+    getOnchainMotions(variables: GetOnchainMotionsQueryVariables): Promise<GetOnchainMotionsQuery> {
       return client.request<GetOnchainMotionsQuery>(print(GetOnchainMotionsDocument), variables);
     }
   };

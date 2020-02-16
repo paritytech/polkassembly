@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const proposalSubscription = gql`
-	subscription proposalSubscription ($startBlock: Int!) {
+	subscription proposalSubscription($startBlock: Int!) {
 		proposal (
 			where: {
 				node: {
@@ -46,7 +46,7 @@ export const proposalSubscription = gql`
 // };
 
 export const referendumSubscription = gql`
-	subscription referendumSubscription ($startBlock: Int!) {
+	subscription referendumSubscription($startBlock: Int!) {
 		referendum (
 			where: {
 				node: {
@@ -92,7 +92,7 @@ export const referendumSubscription = gql`
 // }
 
 export const motionSubscription = gql`
-	subscription motionSubscription ($startBlock: !Int) {
+	subscription motionSubscription($startBlock: Int!) {
         motion (
             where: {
 				node: {
