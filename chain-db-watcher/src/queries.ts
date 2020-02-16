@@ -46,8 +46,8 @@ export const proposalSubscription = gql`
 // };
 
 export const referendumSubscription = gql`
-	subscription ProposalsSubscription ($startBlock: Int!) {
-		referendum(
+	subscription referendumSubscription ($startBlock: Int!) {
+		referendum (
 			where: {
 				node: {
 					referendumStatus_some: {

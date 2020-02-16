@@ -14,7 +14,7 @@ export const getExecutedMotionsWithPreimageHash = gql`
             motionProposalId
         }
     }
-  `;
+`;
 
 export const getTabledProposalsAtBlockQuery = gql`
     query getTabledProposalAtBlock($blockHash: String!) {
@@ -38,4 +38,4 @@ export const getTabledProposalsAtBlockQuery = gql`
                 }
         }
     }
-  `;
+`;

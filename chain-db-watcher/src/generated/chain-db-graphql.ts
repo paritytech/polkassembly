@@ -10,8 +10,8 @@ export type Scalars = {
   Int: number,
   Float: number,
   DateTime: any,
-  Long: any,
   Json: any,
+  Long: any,
 };
 
 export type AggregateBlockNumber = {
@@ -21,6 +21,11 @@ export type AggregateBlockNumber = {
 
 export type AggregateEra = {
    __typename?: 'AggregateEra',
+  count: Scalars['Int'],
+};
+
+export type AggregateHeartBeat = {
+   __typename?: 'AggregateHeartBeat',
   count: Scalars['Int'],
 };
 
@@ -41,6 +46,11 @@ export type AggregateMotionStatus = {
 
 export type AggregateNomination = {
    __typename?: 'AggregateNomination',
+  count: Scalars['Int'],
+};
+
+export type AggregateOfflineValidator = {
+   __typename?: 'AggregateOfflineValidator',
   count: Scalars['Int'],
 };
 
@@ -427,6 +437,112 @@ export type EraWhereInput = {
 export type EraWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
   index?: Maybe<Scalars['Int']>,
+};
+
+export type HeartBeat = Node & {
+   __typename?: 'HeartBeat',
+  id: Scalars['ID'],
+  sessionIndex: Session,
+  authorityId: Scalars['String'],
+};
+
+export type HeartBeatConnection = {
+   __typename?: 'HeartBeatConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<HeartBeatEdge>>,
+  aggregate: AggregateHeartBeat,
+};
+
+export type HeartBeatCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  authorityId: Scalars['String'],
+  sessionIndex: SessionCreateOneInput,
+};
+
+export type HeartBeatEdge = {
+   __typename?: 'HeartBeatEdge',
+  node: HeartBeat,
+  cursor: Scalars['String'],
+};
+
+export enum HeartBeatOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  AuthorityIdAsc = 'authorityId_ASC',
+  AuthorityIdDesc = 'authorityId_DESC'
+}
+
+export type HeartBeatPreviousValues = {
+   __typename?: 'HeartBeatPreviousValues',
+  id: Scalars['ID'],
+  authorityId: Scalars['String'],
+};
+
+export type HeartBeatSubscriptionPayload = {
+   __typename?: 'HeartBeatSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<HeartBeat>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<HeartBeatPreviousValues>,
+};
+
+export type HeartBeatSubscriptionWhereInput = {
+  AND?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  OR?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<HeartBeatWhereInput>,
+};
+
+export type HeartBeatUpdateInput = {
+  authorityId?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
+};
+
+export type HeartBeatUpdateManyMutationInput = {
+  authorityId?: Maybe<Scalars['String']>,
+};
+
+export type HeartBeatWhereInput = {
+  AND?: Maybe<Array<HeartBeatWhereInput>>,
+  OR?: Maybe<Array<HeartBeatWhereInput>>,
+  NOT?: Maybe<Array<HeartBeatWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  authorityId?: Maybe<Scalars['String']>,
+  authorityId_not?: Maybe<Scalars['String']>,
+  authorityId_in?: Maybe<Array<Scalars['String']>>,
+  authorityId_not_in?: Maybe<Array<Scalars['String']>>,
+  authorityId_lt?: Maybe<Scalars['String']>,
+  authorityId_lte?: Maybe<Scalars['String']>,
+  authorityId_gt?: Maybe<Scalars['String']>,
+  authorityId_gte?: Maybe<Scalars['String']>,
+  authorityId_contains?: Maybe<Scalars['String']>,
+  authorityId_not_contains?: Maybe<Scalars['String']>,
+  authorityId_starts_with?: Maybe<Scalars['String']>,
+  authorityId_not_starts_with?: Maybe<Scalars['String']>,
+  authorityId_ends_with?: Maybe<Scalars['String']>,
+  authorityId_not_ends_with?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionWhereInput>,
+};
+
+export type HeartBeatWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
 };
 
 
@@ -1249,6 +1365,8 @@ export type MotionWhereUniqueInput = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  createHeartBeat: HeartBeat,
+  createOfflineValidator: OfflineValidator,
   createEra: Era,
   createSlashing: Slashing,
   createValidator: Validator,
@@ -1268,6 +1386,8 @@ export type Mutation = {
   createReferendumStatus: ReferendumStatus,
   createBlockNumber: BlockNumber,
   createSession: Session,
+  updateHeartBeat?: Maybe<HeartBeat>,
+  updateOfflineValidator?: Maybe<OfflineValidator>,
   updateEra?: Maybe<Era>,
   updateSlashing?: Maybe<Slashing>,
   updateValidator?: Maybe<Validator>,
@@ -1287,6 +1407,8 @@ export type Mutation = {
   updateReferendumStatus?: Maybe<ReferendumStatus>,
   updateBlockNumber?: Maybe<BlockNumber>,
   updateSession?: Maybe<Session>,
+  deleteHeartBeat?: Maybe<HeartBeat>,
+  deleteOfflineValidator?: Maybe<OfflineValidator>,
   deleteEra?: Maybe<Era>,
   deleteSlashing?: Maybe<Slashing>,
   deleteValidator?: Maybe<Validator>,
@@ -1306,6 +1428,8 @@ export type Mutation = {
   deleteReferendumStatus?: Maybe<ReferendumStatus>,
   deleteBlockNumber?: Maybe<BlockNumber>,
   deleteSession?: Maybe<Session>,
+  upsertHeartBeat: HeartBeat,
+  upsertOfflineValidator: OfflineValidator,
   upsertEra: Era,
   upsertSlashing: Slashing,
   upsertValidator: Validator,
@@ -1325,6 +1449,8 @@ export type Mutation = {
   upsertReferendumStatus: ReferendumStatus,
   upsertBlockNumber: BlockNumber,
   upsertSession: Session,
+  updateManyHeartBeats: BatchPayload,
+  updateManyOfflineValidators: BatchPayload,
   updateManyEras: BatchPayload,
   updateManySlashings: BatchPayload,
   updateManyValidators: BatchPayload,
@@ -1344,6 +1470,8 @@ export type Mutation = {
   updateManyReferendumStatuses: BatchPayload,
   updateManyBlockNumbers: BatchPayload,
   updateManySessions: BatchPayload,
+  deleteManyHeartBeats: BatchPayload,
+  deleteManyOfflineValidators: BatchPayload,
   deleteManyEras: BatchPayload,
   deleteManySlashings: BatchPayload,
   deleteManyValidators: BatchPayload,
@@ -1364,6 +1492,16 @@ export type Mutation = {
   deleteManyBlockNumbers: BatchPayload,
   deleteManySessions: BatchPayload,
   executeRaw: Scalars['Json'],
+};
+
+
+export type MutationCreateHeartBeatArgs = {
+  data: HeartBeatCreateInput
+};
+
+
+export type MutationCreateOfflineValidatorArgs = {
+  data: OfflineValidatorCreateInput
 };
 
 
@@ -1459,6 +1597,18 @@ export type MutationCreateBlockNumberArgs = {
 
 export type MutationCreateSessionArgs = {
   data: SessionCreateInput
+};
+
+
+export type MutationUpdateHeartBeatArgs = {
+  data: HeartBeatUpdateInput,
+  where: HeartBeatWhereUniqueInput
+};
+
+
+export type MutationUpdateOfflineValidatorArgs = {
+  data: OfflineValidatorUpdateInput,
+  where: OfflineValidatorWhereUniqueInput
 };
 
 
@@ -1576,6 +1726,16 @@ export type MutationUpdateSessionArgs = {
 };
 
 
+export type MutationDeleteHeartBeatArgs = {
+  where: HeartBeatWhereUniqueInput
+};
+
+
+export type MutationDeleteOfflineValidatorArgs = {
+  where: OfflineValidatorWhereUniqueInput
+};
+
+
 export type MutationDeleteEraArgs = {
   where: EraWhereUniqueInput
 };
@@ -1668,6 +1828,20 @@ export type MutationDeleteBlockNumberArgs = {
 
 export type MutationDeleteSessionArgs = {
   where: SessionWhereUniqueInput
+};
+
+
+export type MutationUpsertHeartBeatArgs = {
+  where: HeartBeatWhereUniqueInput,
+  create: HeartBeatCreateInput,
+  update: HeartBeatUpdateInput
+};
+
+
+export type MutationUpsertOfflineValidatorArgs = {
+  where: OfflineValidatorWhereUniqueInput,
+  create: OfflineValidatorCreateInput,
+  update: OfflineValidatorUpdateInput
 };
 
 
@@ -1804,6 +1978,18 @@ export type MutationUpsertSessionArgs = {
 };
 
 
+export type MutationUpdateManyHeartBeatsArgs = {
+  data: HeartBeatUpdateManyMutationInput,
+  where?: Maybe<HeartBeatWhereInput>
+};
+
+
+export type MutationUpdateManyOfflineValidatorsArgs = {
+  data: OfflineValidatorUpdateManyMutationInput,
+  where?: Maybe<OfflineValidatorWhereInput>
+};
+
+
 export type MutationUpdateManyErasArgs = {
   data: EraUpdateManyMutationInput,
   where?: Maybe<EraWhereInput>
@@ -1915,6 +2101,16 @@ export type MutationUpdateManyBlockNumbersArgs = {
 export type MutationUpdateManySessionsArgs = {
   data: SessionUpdateManyMutationInput,
   where?: Maybe<SessionWhereInput>
+};
+
+
+export type MutationDeleteManyHeartBeatsArgs = {
+  where?: Maybe<HeartBeatWhereInput>
+};
+
+
+export type MutationDeleteManyOfflineValidatorsArgs = {
+  where?: Maybe<OfflineValidatorWhereInput>
 };
 
 
@@ -2036,7 +2232,7 @@ export type Nomination = Node & {
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
   session: Session,
-  bonded: Scalars['String'],
+  stakedAmount: Scalars['String'],
 };
 
 export type NominationConnection = {
@@ -2052,7 +2248,7 @@ export type NominationCreateInput = {
   validatorStash: Scalars['String'],
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
-  bonded: Scalars['String'],
+  stakedAmount: Scalars['String'],
   session: SessionCreateOneInput,
 };
 
@@ -2073,8 +2269,8 @@ export enum NominationOrderByInput {
   NominatorControllerDesc = 'nominatorController_DESC',
   NominatorStashAsc = 'nominatorStash_ASC',
   NominatorStashDesc = 'nominatorStash_DESC',
-  BondedAsc = 'bonded_ASC',
-  BondedDesc = 'bonded_DESC'
+  StakedAmountAsc = 'stakedAmount_ASC',
+  StakedAmountDesc = 'stakedAmount_DESC'
 }
 
 export type NominationPreviousValues = {
@@ -2084,7 +2280,7 @@ export type NominationPreviousValues = {
   validatorStash: Scalars['String'],
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
-  bonded: Scalars['String'],
+  stakedAmount: Scalars['String'],
 };
 
 export type NominationSubscriptionPayload = {
@@ -2111,7 +2307,7 @@ export type NominationUpdateInput = {
   validatorStash?: Maybe<Scalars['String']>,
   nominatorController?: Maybe<Scalars['String']>,
   nominatorStash?: Maybe<Scalars['String']>,
-  bonded?: Maybe<Scalars['String']>,
+  stakedAmount?: Maybe<Scalars['String']>,
   session?: Maybe<SessionUpdateOneRequiredInput>,
 };
 
@@ -2120,7 +2316,7 @@ export type NominationUpdateManyMutationInput = {
   validatorStash?: Maybe<Scalars['String']>,
   nominatorController?: Maybe<Scalars['String']>,
   nominatorStash?: Maybe<Scalars['String']>,
-  bonded?: Maybe<Scalars['String']>,
+  stakedAmount?: Maybe<Scalars['String']>,
 };
 
 export type NominationWhereInput = {
@@ -2197,24 +2393,185 @@ export type NominationWhereInput = {
   nominatorStash_not_starts_with?: Maybe<Scalars['String']>,
   nominatorStash_ends_with?: Maybe<Scalars['String']>,
   nominatorStash_not_ends_with?: Maybe<Scalars['String']>,
-  bonded?: Maybe<Scalars['String']>,
-  bonded_not?: Maybe<Scalars['String']>,
-  bonded_in?: Maybe<Array<Scalars['String']>>,
-  bonded_not_in?: Maybe<Array<Scalars['String']>>,
-  bonded_lt?: Maybe<Scalars['String']>,
-  bonded_lte?: Maybe<Scalars['String']>,
-  bonded_gt?: Maybe<Scalars['String']>,
-  bonded_gte?: Maybe<Scalars['String']>,
-  bonded_contains?: Maybe<Scalars['String']>,
-  bonded_not_contains?: Maybe<Scalars['String']>,
-  bonded_starts_with?: Maybe<Scalars['String']>,
-  bonded_not_starts_with?: Maybe<Scalars['String']>,
-  bonded_ends_with?: Maybe<Scalars['String']>,
-  bonded_not_ends_with?: Maybe<Scalars['String']>,
+  stakedAmount?: Maybe<Scalars['String']>,
+  stakedAmount_not?: Maybe<Scalars['String']>,
+  stakedAmount_in?: Maybe<Array<Scalars['String']>>,
+  stakedAmount_not_in?: Maybe<Array<Scalars['String']>>,
+  stakedAmount_lt?: Maybe<Scalars['String']>,
+  stakedAmount_lte?: Maybe<Scalars['String']>,
+  stakedAmount_gt?: Maybe<Scalars['String']>,
+  stakedAmount_gte?: Maybe<Scalars['String']>,
+  stakedAmount_contains?: Maybe<Scalars['String']>,
+  stakedAmount_not_contains?: Maybe<Scalars['String']>,
+  stakedAmount_starts_with?: Maybe<Scalars['String']>,
+  stakedAmount_not_starts_with?: Maybe<Scalars['String']>,
+  stakedAmount_ends_with?: Maybe<Scalars['String']>,
+  stakedAmount_not_ends_with?: Maybe<Scalars['String']>,
   session?: Maybe<SessionWhereInput>,
 };
 
 export type NominationWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type OfflineValidator = Node & {
+   __typename?: 'OfflineValidator',
+  id: Scalars['ID'],
+  sessionIndex: Session,
+  validatorId: Scalars['String'],
+  total: Scalars['String'],
+  own: Scalars['String'],
+  others: Array<Scalars['Json']>,
+};
+
+export type OfflineValidatorConnection = {
+   __typename?: 'OfflineValidatorConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<OfflineValidatorEdge>>,
+  aggregate: AggregateOfflineValidator,
+};
+
+export type OfflineValidatorCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  validatorId: Scalars['String'],
+  total: Scalars['String'],
+  own: Scalars['String'],
+  others?: Maybe<OfflineValidatorCreateothersInput>,
+  sessionIndex: SessionCreateOneInput,
+};
+
+export type OfflineValidatorCreateothersInput = {
+  set?: Maybe<Array<Scalars['Json']>>,
+};
+
+export type OfflineValidatorEdge = {
+   __typename?: 'OfflineValidatorEdge',
+  node: OfflineValidator,
+  cursor: Scalars['String'],
+};
+
+export enum OfflineValidatorOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  ValidatorIdAsc = 'validatorId_ASC',
+  ValidatorIdDesc = 'validatorId_DESC',
+  TotalAsc = 'total_ASC',
+  TotalDesc = 'total_DESC',
+  OwnAsc = 'own_ASC',
+  OwnDesc = 'own_DESC'
+}
+
+export type OfflineValidatorPreviousValues = {
+   __typename?: 'OfflineValidatorPreviousValues',
+  id: Scalars['ID'],
+  validatorId: Scalars['String'],
+  total: Scalars['String'],
+  own: Scalars['String'],
+  others: Array<Scalars['Json']>,
+};
+
+export type OfflineValidatorSubscriptionPayload = {
+   __typename?: 'OfflineValidatorSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<OfflineValidator>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<OfflineValidatorPreviousValues>,
+};
+
+export type OfflineValidatorSubscriptionWhereInput = {
+  AND?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  OR?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<OfflineValidatorWhereInput>,
+};
+
+export type OfflineValidatorUpdateInput = {
+  validatorId?: Maybe<Scalars['String']>,
+  total?: Maybe<Scalars['String']>,
+  own?: Maybe<Scalars['String']>,
+  others?: Maybe<OfflineValidatorUpdateothersInput>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
+};
+
+export type OfflineValidatorUpdateManyMutationInput = {
+  validatorId?: Maybe<Scalars['String']>,
+  total?: Maybe<Scalars['String']>,
+  own?: Maybe<Scalars['String']>,
+  others?: Maybe<OfflineValidatorUpdateothersInput>,
+};
+
+export type OfflineValidatorUpdateothersInput = {
+  set?: Maybe<Array<Scalars['Json']>>,
+};
+
+export type OfflineValidatorWhereInput = {
+  AND?: Maybe<Array<OfflineValidatorWhereInput>>,
+  OR?: Maybe<Array<OfflineValidatorWhereInput>>,
+  NOT?: Maybe<Array<OfflineValidatorWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  validatorId?: Maybe<Scalars['String']>,
+  validatorId_not?: Maybe<Scalars['String']>,
+  validatorId_in?: Maybe<Array<Scalars['String']>>,
+  validatorId_not_in?: Maybe<Array<Scalars['String']>>,
+  validatorId_lt?: Maybe<Scalars['String']>,
+  validatorId_lte?: Maybe<Scalars['String']>,
+  validatorId_gt?: Maybe<Scalars['String']>,
+  validatorId_gte?: Maybe<Scalars['String']>,
+  validatorId_contains?: Maybe<Scalars['String']>,
+  validatorId_not_contains?: Maybe<Scalars['String']>,
+  validatorId_starts_with?: Maybe<Scalars['String']>,
+  validatorId_not_starts_with?: Maybe<Scalars['String']>,
+  validatorId_ends_with?: Maybe<Scalars['String']>,
+  validatorId_not_ends_with?: Maybe<Scalars['String']>,
+  total?: Maybe<Scalars['String']>,
+  total_not?: Maybe<Scalars['String']>,
+  total_in?: Maybe<Array<Scalars['String']>>,
+  total_not_in?: Maybe<Array<Scalars['String']>>,
+  total_lt?: Maybe<Scalars['String']>,
+  total_lte?: Maybe<Scalars['String']>,
+  total_gt?: Maybe<Scalars['String']>,
+  total_gte?: Maybe<Scalars['String']>,
+  total_contains?: Maybe<Scalars['String']>,
+  total_not_contains?: Maybe<Scalars['String']>,
+  total_starts_with?: Maybe<Scalars['String']>,
+  total_not_starts_with?: Maybe<Scalars['String']>,
+  total_ends_with?: Maybe<Scalars['String']>,
+  total_not_ends_with?: Maybe<Scalars['String']>,
+  own?: Maybe<Scalars['String']>,
+  own_not?: Maybe<Scalars['String']>,
+  own_in?: Maybe<Array<Scalars['String']>>,
+  own_not_in?: Maybe<Array<Scalars['String']>>,
+  own_lt?: Maybe<Scalars['String']>,
+  own_lte?: Maybe<Scalars['String']>,
+  own_gt?: Maybe<Scalars['String']>,
+  own_gte?: Maybe<Scalars['String']>,
+  own_contains?: Maybe<Scalars['String']>,
+  own_not_contains?: Maybe<Scalars['String']>,
+  own_starts_with?: Maybe<Scalars['String']>,
+  own_not_starts_with?: Maybe<Scalars['String']>,
+  own_ends_with?: Maybe<Scalars['String']>,
+  own_not_ends_with?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionWhereInput>,
+};
+
+export type OfflineValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
@@ -3561,6 +3918,8 @@ export type ProposalWhereUniqueInput = {
 
 export type Query = {
    __typename?: 'Query',
+  heartBeats: Array<Maybe<HeartBeat>>,
+  offlineValidators: Array<Maybe<OfflineValidator>>,
   eras: Array<Maybe<Era>>,
   slashings: Array<Maybe<Slashing>>,
   validators: Array<Maybe<Validator>>,
@@ -3580,6 +3939,8 @@ export type Query = {
   referendumStatuses: Array<Maybe<ReferendumStatus>>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   sessions: Array<Maybe<Session>>,
+  heartBeat?: Maybe<HeartBeat>,
+  offlineValidator?: Maybe<OfflineValidator>,
   era?: Maybe<Era>,
   slashing?: Maybe<Slashing>,
   validator?: Maybe<Validator>,
@@ -3599,6 +3960,8 @@ export type Query = {
   referendumStatus?: Maybe<ReferendumStatus>,
   blockNumber?: Maybe<BlockNumber>,
   session?: Maybe<Session>,
+  heartBeatsConnection: HeartBeatConnection,
+  offlineValidatorsConnection: OfflineValidatorConnection,
   erasConnection: EraConnection,
   slashingsConnection: SlashingConnection,
   validatorsConnection: ValidatorConnection,
@@ -3619,6 +3982,28 @@ export type Query = {
   blockNumbersConnection: BlockNumberConnection,
   sessionsConnection: SessionConnection,
   node?: Maybe<Node>,
+};
+
+
+export type QueryHeartBeatsArgs = {
+  where?: Maybe<HeartBeatWhereInput>,
+  orderBy?: Maybe<HeartBeatOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QueryOfflineValidatorsArgs = {
+  where?: Maybe<OfflineValidatorWhereInput>,
+  orderBy?: Maybe<OfflineValidatorOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
 };
 
 
@@ -3831,6 +4216,16 @@ export type QuerySessionsArgs = {
 };
 
 
+export type QueryHeartBeatArgs = {
+  where: HeartBeatWhereUniqueInput
+};
+
+
+export type QueryOfflineValidatorArgs = {
+  where: OfflineValidatorWhereUniqueInput
+};
+
+
 export type QueryEraArgs = {
   where: EraWhereUniqueInput
 };
@@ -3923,6 +4318,28 @@ export type QueryBlockNumberArgs = {
 
 export type QuerySessionArgs = {
   where: SessionWhereUniqueInput
+};
+
+
+export type QueryHeartBeatsConnectionArgs = {
+  where?: Maybe<HeartBeatWhereInput>,
+  orderBy?: Maybe<HeartBeatOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QueryOfflineValidatorsConnectionArgs = {
+  where?: Maybe<OfflineValidatorWhereInput>,
+  orderBy?: Maybe<OfflineValidatorOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
 };
 
 
@@ -4589,9 +5006,10 @@ export type ReferendumWhereUniqueInput = {
 export type Reward = Node & {
    __typename?: 'Reward',
   id: Scalars['ID'],
-  amount: Scalars['String'],
   authoredBlock: BlockNumber,
-  recipients: Array<Scalars['String']>,
+  sessionIndex: Session,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
 };
 
 export type RewardConnection = {
@@ -4603,13 +5021,10 @@ export type RewardConnection = {
 
 export type RewardCreateInput = {
   id?: Maybe<Scalars['ID']>,
-  amount: Scalars['String'],
-  recipients?: Maybe<RewardCreaterecipientsInput>,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
   authoredBlock: BlockNumberCreateOneInput,
-};
-
-export type RewardCreaterecipientsInput = {
-  set?: Maybe<Array<Scalars['String']>>,
+  sessionIndex: SessionCreateOneInput,
 };
 
 export type RewardEdge = {
@@ -4621,15 +5036,17 @@ export type RewardEdge = {
 export enum RewardOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
-  AmountAsc = 'amount_ASC',
-  AmountDesc = 'amount_DESC'
+  TreasuryRewardAsc = 'treasuryReward_ASC',
+  TreasuryRewardDesc = 'treasuryReward_DESC',
+  ValidatorRewardAsc = 'validatorReward_ASC',
+  ValidatorRewardDesc = 'validatorReward_DESC'
 }
 
 export type RewardPreviousValues = {
    __typename?: 'RewardPreviousValues',
   id: Scalars['ID'],
-  amount: Scalars['String'],
-  recipients: Array<Scalars['String']>,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
 };
 
 export type RewardSubscriptionPayload = {
@@ -4652,18 +5069,15 @@ export type RewardSubscriptionWhereInput = {
 };
 
 export type RewardUpdateInput = {
-  amount?: Maybe<Scalars['String']>,
-  recipients?: Maybe<RewardUpdaterecipientsInput>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
   authoredBlock?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
 };
 
 export type RewardUpdateManyMutationInput = {
-  amount?: Maybe<Scalars['String']>,
-  recipients?: Maybe<RewardUpdaterecipientsInput>,
-};
-
-export type RewardUpdaterecipientsInput = {
-  set?: Maybe<Array<Scalars['String']>>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
 };
 
 export type RewardWhereInput = {
@@ -4684,21 +5098,36 @@ export type RewardWhereInput = {
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
   id_not_ends_with?: Maybe<Scalars['ID']>,
-  amount?: Maybe<Scalars['String']>,
-  amount_not?: Maybe<Scalars['String']>,
-  amount_in?: Maybe<Array<Scalars['String']>>,
-  amount_not_in?: Maybe<Array<Scalars['String']>>,
-  amount_lt?: Maybe<Scalars['String']>,
-  amount_lte?: Maybe<Scalars['String']>,
-  amount_gt?: Maybe<Scalars['String']>,
-  amount_gte?: Maybe<Scalars['String']>,
-  amount_contains?: Maybe<Scalars['String']>,
-  amount_not_contains?: Maybe<Scalars['String']>,
-  amount_starts_with?: Maybe<Scalars['String']>,
-  amount_not_starts_with?: Maybe<Scalars['String']>,
-  amount_ends_with?: Maybe<Scalars['String']>,
-  amount_not_ends_with?: Maybe<Scalars['String']>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  treasuryReward_not?: Maybe<Scalars['String']>,
+  treasuryReward_in?: Maybe<Array<Scalars['String']>>,
+  treasuryReward_not_in?: Maybe<Array<Scalars['String']>>,
+  treasuryReward_lt?: Maybe<Scalars['String']>,
+  treasuryReward_lte?: Maybe<Scalars['String']>,
+  treasuryReward_gt?: Maybe<Scalars['String']>,
+  treasuryReward_gte?: Maybe<Scalars['String']>,
+  treasuryReward_contains?: Maybe<Scalars['String']>,
+  treasuryReward_not_contains?: Maybe<Scalars['String']>,
+  treasuryReward_starts_with?: Maybe<Scalars['String']>,
+  treasuryReward_not_starts_with?: Maybe<Scalars['String']>,
+  treasuryReward_ends_with?: Maybe<Scalars['String']>,
+  treasuryReward_not_ends_with?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
+  validatorReward_not?: Maybe<Scalars['String']>,
+  validatorReward_in?: Maybe<Array<Scalars['String']>>,
+  validatorReward_not_in?: Maybe<Array<Scalars['String']>>,
+  validatorReward_lt?: Maybe<Scalars['String']>,
+  validatorReward_lte?: Maybe<Scalars['String']>,
+  validatorReward_gt?: Maybe<Scalars['String']>,
+  validatorReward_gte?: Maybe<Scalars['String']>,
+  validatorReward_contains?: Maybe<Scalars['String']>,
+  validatorReward_not_contains?: Maybe<Scalars['String']>,
+  validatorReward_starts_with?: Maybe<Scalars['String']>,
+  validatorReward_not_starts_with?: Maybe<Scalars['String']>,
+  validatorReward_ends_with?: Maybe<Scalars['String']>,
+  validatorReward_not_ends_with?: Maybe<Scalars['String']>,
   authoredBlock?: Maybe<BlockNumberWhereInput>,
+  sessionIndex?: Maybe<SessionWhereInput>,
 };
 
 export type RewardWhereUniqueInput = {
@@ -5064,6 +5493,8 @@ export type StakeWhereUniqueInput = {
 
 export type Subscription = {
    __typename?: 'Subscription',
+  heartBeat?: Maybe<HeartBeatSubscriptionPayload>,
+  offlineValidator?: Maybe<OfflineValidatorSubscriptionPayload>,
   era?: Maybe<EraSubscriptionPayload>,
   slashing?: Maybe<SlashingSubscriptionPayload>,
   validator?: Maybe<ValidatorSubscriptionPayload>,
@@ -5083,6 +5514,16 @@ export type Subscription = {
   referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>,
   blockNumber?: Maybe<BlockNumberSubscriptionPayload>,
   session?: Maybe<SessionSubscriptionPayload>,
+};
+
+
+export type SubscriptionHeartBeatArgs = {
+  where?: Maybe<HeartBeatSubscriptionWhereInput>
+};
+
+
+export type SubscriptionOfflineValidatorArgs = {
+  where?: Maybe<OfflineValidatorSubscriptionWhereInput>
 };
 
 
@@ -5464,32 +5905,6 @@ export type GetTabledProposalAtBlockQuery = (
   )>> }
 );
 
-export type MotionSubscriptionSubscriptionVariables = {};
-
-
-export type MotionSubscriptionSubscription = (
-  { __typename?: 'Subscription' }
-  & { motion: Maybe<(
-    { __typename?: 'MotionSubscriptionPayload' }
-    & Pick<MotionSubscriptionPayload, 'mutation'>
-    & { node: Maybe<(
-      { __typename?: 'Motion' }
-      & Pick<Motion, 'author' | 'id' | 'motionProposalId' | 'motionProposalHash'>
-      & { motionStatus: Maybe<Array<(
-        { __typename?: 'MotionStatus' }
-        & Pick<MotionStatus, 'status'>
-        & { blockNumber: (
-          { __typename?: 'BlockNumber' }
-          & Pick<BlockNumber, 'hash'>
-        ) }
-      )>>, preimage: Maybe<(
-        { __typename?: 'Preimage' }
-        & Pick<Preimage, 'hash'>
-      )> }
-    )> }
-  )> }
-);
-
 export type GetOnchainReferendaQueryVariables = {};
 
 
@@ -5592,28 +6007,6 @@ export const GetTabledProposalAtBlockDocument = gql`
   }
 }
     `;
-export const MotionSubscriptionDocument = gql`
-    subscription motionSubscription {
-  motion {
-    mutation
-    node {
-      author
-      id
-      motionProposalId
-      motionProposalHash
-      motionStatus(orderBy: id_DESC) {
-        blockNumber {
-          hash
-        }
-        status
-      }
-      preimage {
-        hash
-      }
-    }
-  }
-}
-    `;
 export const GetOnchainReferendaDocument = gql`
     query getOnchainReferenda {
   referendums {
@@ -5642,9 +6035,6 @@ export function getSdk(client: GraphQLClient) {
     },
     getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
       return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
-    },
-    motionSubscription(variables?: MotionSubscriptionSubscriptionVariables): Promise<MotionSubscriptionSubscription> {
-      return client.request<MotionSubscriptionSubscription>(print(MotionSubscriptionDocument), variables);
     },
     getOnchainReferenda(variables?: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
       return client.request<GetOnchainReferendaQuery>(print(GetOnchainReferendaDocument), variables);
