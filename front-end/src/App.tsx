@@ -93,7 +93,7 @@ const App = () => {
 											<Route path="/settings">
 												<Settings/>
 											</Route>
-											<Route path="/terms">
+											<Route path="/terms-and-conditions">
 												<TermsAndConditions/>
 											</Route>
 											<Route path="/privacy">
