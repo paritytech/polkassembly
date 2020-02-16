@@ -19,6 +19,7 @@ dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const onchainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+const startBlock = Number(process.env.START_FROM) || 0;
 
 export const getDiscussionMotions = async (): Promise<Array<DiscussionMotionFragment> | null | undefined> => {
 	if (!discussionGraphqlUrl) {
@@ -100,7 +101,7 @@ export const getOnChainMotions = async (): Promise<Array<OnchainMotionFragment |
 		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getOnchainMotions();
+		const data = await onchainSdk.getOnchainMotions({ startBlock });
 
 		return data?.motions;
 	} catch (err) {
@@ -123,7 +124,7 @@ export const getOnChainProposals = async (): Promise<Array<OnchainProposalFragme
 		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getOnchainProposals();
+		const data = await onchainSdk.getOnchainProposals({ startBlock });
 
 		return data?.proposals;
 	} catch (err) {
@@ -146,7 +147,7 @@ export const getOnchainReferenda = async (): Promise<Array<OnchainReferendumFrag
 		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getOnchainReferenda();
+		const data = await onchainSdk.getOnchainReferenda({ startBlock });
 
 		return data?.referendums;
 	} catch (err) {
