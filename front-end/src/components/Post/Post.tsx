@@ -121,7 +121,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					/>
 				}
 			</Grid.Column>
-			<Grid.Column mobile={16} tablet={16} computer={6}>
+			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
 				<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
 			</Grid.Column>
 		</Grid>
@@ -148,6 +148,11 @@ export default styled(Post)`
 	@media only screen and (max-width: 576px) {
 		.post_content {
 			padding: 2rem
+		}
+	}
+	@media only screen and (max-width: 992px) {
+		.democracy_card {
+			visibility: hidden;
 		}
 	}
 `;
