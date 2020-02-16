@@ -15,7 +15,7 @@ const Footer = ({ className }:Props ): JSX.Element => {
 				<Menu.Item>
                     &copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
-				<Menu.Item as={Link} to="/terms">
+				<Menu.Item as={Link} to="/terms-and-conditions">
                     Terms &amp; Conditions
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
