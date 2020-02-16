@@ -1,8 +1,19 @@
 import gql from 'graphql-tag';
 
 export const proposalSubscription = gql`
-	subscription proposalSubscription {
-		proposal {
+	subscription proposalSubscription ($startBlock: Int!) {
+		proposal (
+			where: {
+				node: {
+					proposalStatus_some: {
+						AND: [
+							{ status: "Proposed" }
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+			}
+		) {
 			mutation
 			node {
 				id
@@ -35,8 +46,19 @@ export const proposalSubscription = gql`
 // };
 
 export const referendumSubscription = gql`
-	subscription ProposalsSubscription {
-		referendum {
+	subscription ProposalsSubscription ($startBlock: Int!) {
+		referendum(
+			where: {
+				node: {
+					referendumStatus_some: {
+						AND: [
+							{ status: "Started" }
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+			}
+		) {
 			mutation
 			node {
 				id
@@ -69,3 +91,56 @@ export const referendumSubscription = gql`
 //   }
 // }
 
+export const motionSubscription = gql`
+	subscription motionSubscription ($startBlock: !Int) {
+        motion (
+            where: {
+				node: {
+					motionStatus_some: {
+						AND: [
+							{ status: "Proposed" },
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+            }
+        ){
+            mutation
+            node {
+                author
+                id
+                motionProposalId
+                motionProposalHash
+                motionStatus(orderBy: id_DESC) {
+                    blockNumber {
+                        hash
+                    }
+                    status
+                }
+                preimage {
+                    hash
+                }
+            }
+        }
+    }
+`;
+
+// "motion": {
+//     "mutation": "CREATED",
+//     "node": {
+//         "motionProposalId": 0,
+//         "preimage": {
+//             "hash": "0x24f65d1cc0dcbf025a12c7fb969f7251b576155c9bff24b6e638c21ab3b3897b"
+//         },
+//         "id": 6,
+//         "motionStatus": [
+//             {
+//                 "blockNumber": {
+//                     "hash": "0xf54c4d8f46b9a9e770e1f595ea5ac545fdfe5b9cc485ff425dc72464bf2815f0"
+//                 },
+//                 "status": "Proposed"
+//             }
+//         ],
+//         "motionProposalHash": "0x4d4dd65ab6f3495525bda9574c58796c3fbda87848074dee6fcc858dad755a2a"
+//     }
+// }
