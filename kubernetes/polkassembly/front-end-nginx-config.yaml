@@ -6,7 +6,7 @@ data:
   default.conf: |-
         server {
           listen 80;
-          server_name _;
+          server_name test.polkassembly.io;
 
           location /auth {
             proxy_pass http://auth-server-service:8010;
