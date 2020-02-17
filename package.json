@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@polkadot/ui-keyring": "^0.50.1"
+  }
+}

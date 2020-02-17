@@ -10,11 +10,12 @@ import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
-import Button from '../../ui-components/Button';
+import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
+import getEncodedAddress from '../../util/getEncodedAddress';
 import getExtensionUrl from '../../util/getExtensionUrl';
 import shortenAddress from '../../util/shortenAddress';
-import { handleTokenChange } from 'src/services/auth.service';
 
 interface Props{
 	className?: string
@@ -180,35 +181,39 @@ const Address = ({ className }: Props): JSX.Element => {
 				<Form.Field width={16}>
 					<label className="header">Available Addresses</label>
 					<div className="ui list">
-						{accounts.map(account => (
-							<Grid key={account.address}>
-								<Grid.Column width={10}>
-									<div className="item">
-										<Identicon
-											className="image"
-											value={account.address}
-											size={32}
-											theme={'polkadot'}
-										/>
-										<div className="content" style={{ display: 'inline-block' }}>
-											<div className="header">{account.meta.name}</div>
-											<div className="description">{shortenAddress(account.address)}</div>
+						{accounts.map(account => {
+							const address = getEncodedAddress(account.address);
+
+							return (address &&
+								<Grid key={address}>
+									<Grid.Column width={10}>
+										<div className="item">
+											<Identicon
+												className="image"
+												value={address}
+												size={32}
+												theme={'polkadot'}
+											/>
+											<div className="content" style={{ display: 'inline-block' }}>
+												<div className="header">{account.meta.name}</div>
+												<div className="description">{shortenAddress(address)}</div>
+											</div>
 										</div>
-									</div>
-								</Grid.Column>
-								<Grid.Column width={6}>
-									<div className="button-container">
-										<Button
-											className={'social'}
-											negative={currentUser.addresses?.includes(account.address) ? true : false}
-											onClick={() => currentUser.addresses?.includes(account.address) ? handleUnlink(account) : handleLink(account)}
-										>
-											{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
-										</Button>
-									</div>
-								</Grid.Column>
-							</Grid>
-						))}
+									</Grid.Column>
+									<Grid.Column width={6}>
+										<div className="button-container">
+											<Button
+												className={'social'}
+												negative={currentUser.addresses?.includes(address) ? true : false}
+												onClick={() => currentUser.addresses?.includes(address) ? handleUnlink(account) : handleLink(account)}
+											>
+												{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
+											</Button>
+										</div>
+									</Grid.Column>
+								</Grid>
+							);}
+						)}
 					</div>
 				</Form.Field>
 			</Form.Group>

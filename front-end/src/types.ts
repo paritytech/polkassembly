@@ -77,3 +77,15 @@ export interface Account {
     address: string
     meta: AccountMeta
 }
+
+export type ChainPropType = {
+    [index: string]: ChainProps;
+};
+
+export type tokenSymbol = 'KSM' | 'DOT';
+
+export interface ChainProps {
+	'ss58Format': number,
+	'tokenDecimals': number,
+	'tokenSymbol': tokenSymbol
+}

@@ -4,11 +4,14 @@ import styled from '@xstyled/styled-components';
 
 import { OnchainLinkReferendumFragment } from '../../generated/graphql';
 import { chainProperties } from '../../global/chainProperties';
+import getNetwork from '../../util/getNetwork';
 
 interface Props{
 	className?: string
 	onchainLink: OnchainLinkReferendumFragment
 }
+
+const currentNetwork = getNetwork();
 
 const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
@@ -35,11 +38,11 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 						{proposerAddress}
 					</div>
 				</Grid.Column>
-				{depositAmount &&
+				{depositAmount && currentNetwork &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>
 							<h6>Deposit</h6>
-							{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
+							{parseInt(depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 						</div>
 					</Grid.Column>}
 				{delay &&
