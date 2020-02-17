@@ -47,7 +47,7 @@ export default styled(PostContent)`
 	h2 {
 		font-family: 'Roboto';
 		font-size: xl;
-		max-width: calc(100%-10rem);
+		max-width: calc(100% - 10rem);
 	}
 
 	.post_info {
