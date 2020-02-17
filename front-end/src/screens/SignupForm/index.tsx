@@ -205,6 +205,5 @@ export default styled(SignupForm)`
 		margin-right: 1rem;
 		vertical-align: middle;
 		height: 2rem;
-		width: 2rem;
 	}
 `;
