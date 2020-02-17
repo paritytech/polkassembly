@@ -6,8 +6,8 @@ import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-da
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from '@polkadot/react-identicon';
 
+import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import getExtensionUrl from '../../util/getExtensionUrl';
 import shortenAddress from '../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
@@ -116,8 +116,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		return (
 			<div className={className}>
 				<div className='card'>
-					<div className='text-muted'>Polkadot-js extension not detected.</div>
-					<div className='text-muted'>Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+					<ExtensionNotDetected />
 				</div>
 			</div>
 		);

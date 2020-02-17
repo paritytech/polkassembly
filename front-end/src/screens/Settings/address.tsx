@@ -6,6 +6,7 @@ import { stringToHex } from '@polkadot/util';
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
+import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
@@ -148,8 +149,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			<Form className={className} standalone='false'>
 				<Form.Group>
 					<Form.Field width={16}>
-						<div className='text-muted'>No extension detected.</div>&nbsp;
-						<div className='text-muted'>Please install the <a href={getExtensionUrl()}>Polkadot-js extension</a> and reload this page.</div>
+						<ExtensionNotDetected />
 					</Form.Field>
 				</Form.Group>
 			</Form>
