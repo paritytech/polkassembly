@@ -3,16 +3,15 @@ import { Form, Icon, Grid } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
-import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import { NotificationStatus } from '../../types';
 import getExtensionUrl from '../../util/getExtensionUrl';
-import shortenAddress from '../../util/shortenAddress';
 import { handleTokenChange } from 'src/services/auth.service';
 
 interface Props{
@@ -183,18 +182,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						{accounts.map(account => (
 							<Grid key={account.address}>
 								<Grid.Column width={10}>
-									<div className="item">
-										<Identicon
-											className="image"
-											value={account.address}
-											size={32}
-											theme={'polkadot'}
-										/>
-										<div className="content" style={{ display: 'inline-block' }}>
-											<div className="header">{account.meta.name}</div>
-											<div className="description">{shortenAddress(account.address)}</div>
-										</div>
-									</div>
+									<AddressComponent className="item" address={account.address} accountName={account.meta.name || ''} />
 								</Grid.Column>
 								<Grid.Column width={6}>
 									<div className="button-container">

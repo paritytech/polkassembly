@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { OnchainLinkProposalFragment } from '../../generated/graphql';
 import { chainProperties } from '../../global/chainProperties';
 
@@ -27,7 +28,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'} />
 					</div>
 				</Grid.Column>
 				{depositAmount &&
