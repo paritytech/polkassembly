@@ -13,13 +13,13 @@ const Footer = ({ className }:Props ): JSX.Element => {
 		<footer className={className}>
 			<Menu>
 				<Menu.Item>
-                    &copy; {moment.utc().year()} Parity Technologies
+					&copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-and-conditions">
-                    Terms &amp; Conditions
+					Terms &amp; Conditions
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
-                    Privacy Policy
+					Privacy Policy
 				</Menu.Item>
 			</Menu>
 		</footer>
@@ -30,18 +30,19 @@ export default styled(Footer)`
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 8rem;
+    height: 4rem;
 
     .ui.menu {
         background-color: black_full;
         font-family: font_default;
-        padding: 2rem 3rem;
+        padding: 1rem 3rem;
         border-radius: 0rem;
         height: 100%;
 
         .item {
             color: grey_secondary;
-            font-size: sm;
+			font-size: sm;
+			padding: 1rem;
             &:hover {
                 color: white;
             }

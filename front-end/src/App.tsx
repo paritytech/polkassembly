@@ -42,69 +42,71 @@ const App = () => {
 						<ModalProvider>
 							<UserDetailsProvider>
 								<Apollo>
-									<MenuBar />
 									<GlobalStyle />
 									<Notifications/>
 									<Modal/>
-									<Container>
-										<Switch>
-											<Route exact path="/">
-												<Home/>
-											</Route>
-											<Route path="/discussions">
-												<Discussions/>
-											</Route>
-											<Route path="/login">
-												<LoginForm/>
-											</Route>
-											<Route path="/post/create" >
-												<CreatePost/>
-											</Route>
-											<Route exact path="/motion/:id" >
-												<PostMotion/>
-											</Route>
-											<Route exact path="/proposal/:id" >
-												<PostProposal/>
-											</Route>
-											<Route exact path="/referendum/:id" >
-												<PostReferendum/>
-											</Route>
-											<Route exact path="/post/:id" >
-												<PostDiscussion/>
-											</Route>
-											<Route path="/onchain" >
-												<OnChain/>
-											</Route>
-											<Route path="/request-reset-password">
-												<RequestResetPassword/>
-											</Route>
-											<Route path="/reset-password/:token">
-												<ResetPassword/>
-											</Route>
-											<Route path="/signup">
-												<SignupForm/>
-											</Route>
-											<Route path="/verify-email/:token">
-												<VerifyEmail/>
-											</Route>
-											<Route path="/undo-email-change/:token">
-												<UndoEmailChange/>
-											</Route>
-											<Route path="/settings">
-												<Settings/>
-											</Route>
-											<Route path="/terms-and-conditions">
-												<TermsAndConditions/>
-											</Route>
-											<Route path="/privacy">
-												<PrivacyPolicy/>
-											</Route>
-											<Route path="*">
-												<NotFound/>
-											</Route>
-										</Switch>
+									<div id='page-container'>
+										<MenuBar />
+										<Container>
+											<Switch>
+												<Route exact path="/">
+													<Home/>
+												</Route>
+												<Route path="/discussions">
+													<Discussions/>
+												</Route>
+												<Route path="/login">
+													<LoginForm/>
+												</Route>
+												<Route path="/post/create" >
+													<CreatePost/>
+												</Route>
+												<Route exact path="/motion/:id" >
+													<PostMotion/>
+												</Route>
+												<Route exact path="/proposal/:id" >
+													<PostProposal/>
+												</Route>
+												<Route exact path="/referendum/:id" >
+													<PostReferendum/>
+												</Route>
+												<Route exact path="/post/:id" >
+													<PostDiscussion/>
+												</Route>
+												<Route path="/onchain" >
+													<OnChain/>
+												</Route>
+												<Route path="/request-reset-password">
+													<RequestResetPassword/>
+												</Route>
+												<Route path="/reset-password/:token">
+													<ResetPassword/>
+												</Route>
+												<Route path="/signup">
+													<SignupForm/>
+												</Route>
+												<Route path="/verify-email/:token">
+													<VerifyEmail/>
+												</Route>
+												<Route path="/undo-email-change/:token">
+													<UndoEmailChange/>
+												</Route>
+												<Route path="/settings">
+													<Settings/>
+												</Route>
+												<Route path="/terms-and-conditions">
+													<TermsAndConditions/>
+												</Route>
+												<Route path="/privacy">
+													<PrivacyPolicy/>
+												</Route>
+												<Route path="*">
+													<NotFound/>
+												</Route>
+											</Switch>
+										</Container>
 										<Footer />
-									</Container>
+									</div>
 								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>
