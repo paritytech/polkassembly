@@ -27,12 +27,13 @@ const Footer = ({ className }:Props ): JSX.Element => {
 };
 
 export default styled(Footer)`
+    position: absolute;
     bottom: 0;
     width: 100%;
     height: 8rem;
 
     .ui.menu {
-        background-color: black_primary;
+        background-color: black_full;
         font-family: font_default;
         padding: 2rem 3rem;
         border-radius: 0rem;

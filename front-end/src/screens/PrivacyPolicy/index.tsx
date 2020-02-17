@@ -3,6 +3,8 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Grid } from 'semantic-ui-react';
 
+import { privacyPolicyMd } from '../../assets/privacy-policy';
+
 interface Props {
 	className?: string
 }
@@ -12,10 +14,7 @@ const PrivacyPolicy = ({ className }:Props): JSX.Element => {
 	return (
 		<Grid className={className}>
 			<Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
-				<h1>Privacy Policy</h1>
-				<ReactMarkdown className='markdown'>
-					## Placeholder MD
-				</ReactMarkdown>
+				<ReactMarkdown className='markdown' source={privacyPolicyMd}/>
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
 		</Grid>
