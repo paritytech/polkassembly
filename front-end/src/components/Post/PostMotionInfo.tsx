@@ -67,43 +67,45 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 							: null}
 					</Grid.Column>
 				</Grid.Row>
-				<Grid.Row className='preimage'>
+				{preimage && <Grid.Row className='preimage'>
 					{depositAmount &&
-				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<div className='info_group'>
-						<h6>Deposit</h6>
-						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
-					</div>
-				</Grid.Column>}
-					{preimageMethod &&
-				<Grid.Row>
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>Method</h6>
-							{preimageMethod}
-						</div>
-					</Grid.Column>
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						{preimageArguments && preimageArguments.length
-							? <div className='info_group'>
-								<h6>Arguments</h6>
-								{preimageArguments.map((element, index) => {
-									return <div className={'methodArguments'} key={index}>
-										<span key={index}>{element.name}: {element.value}</span>
-									</div>;
-								})}
+						<Grid.Column mobile={16} tablet={8} computer={8}>
+							<div className='info_group'>
+								<h6>Deposit</h6>
+								{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
 							</div>
-							: null}
-					</Grid.Column>
-				</Grid.Row>}
+						</Grid.Column>}
+					{preimageMethod &&
+						<Grid.Row>
+							<Grid.Column mobile={16} tablet={8} computer={8}>
+								<div className='info_group'>
+									<h6>Method</h6>
+									{preimageMethod}
+								</div>
+							</Grid.Column>
+							<Grid.Column mobile={16} tablet={8} computer={8}>
+								{preimageArguments && preimageArguments.length
+									? <div className='info_group'>
+										<h6>Arguments</h6>
+										{preimageArguments.map((element, index) => {
+											return <div className={'methodArguments'} key={index}>
+												<span key={index}>{element.name}: {element.value}</span>
+											</div>;
+										})}
+									</div>
+									: null}
+							</Grid.Column>
+						</Grid.Row>
+					}
 					<Grid.Column mobile={16} tablet={16} computer={16}>
 						{ metaDescription &&
-					<div className='info_group'>
-						<h6>Description</h6>
-						{metaDescription}
-					</div>}
+							<div className='info_group'>
+								<h6>Description</h6>
+								{metaDescription}
+							</div>
+						}
 					</Grid.Column>
-				</Grid.Row>
+				</Grid.Row>}
 			</Grid>
 		</div>
 	);
@@ -132,8 +134,10 @@ export default styled(PostMotionInfo)`
 	}
 
 	.methodArguments {
-		display: block;
-		margin-bottom: 0.4rem;
+		display: inline-block;
+		overflow-x: auto;
+		width: 100%;
+		word-wrap: normal;
 	}
 
 	.preimage {
