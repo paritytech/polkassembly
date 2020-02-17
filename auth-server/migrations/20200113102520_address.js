@@ -3,7 +3,7 @@ exports.up = function(knex) {
 	return knex.schema.createTable('address', (table) => {
 		table.increments('id').primary().notNullable();
 		table.integer('user_id').notNullable();
-		table.enu('network', ['kasuma', 'polkadot']).notNullable();
+		table.enu('network', ['kusama', 'polkadot']).notNullable();
 		table.string('address');
 		table.string('public_key');
 		table.uuid('sign_message');

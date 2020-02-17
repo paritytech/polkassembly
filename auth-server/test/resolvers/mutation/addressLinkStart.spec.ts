@@ -37,7 +37,7 @@ describe('addressLinkStart mutation', () => {
 	});
 
 	it('should be able to start linking address', async () => {
-		const network = 'kasuma';
+		const network = 'kusama';
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		const res = await addressLinkStart(null, { network, address }, fakectx);
 
@@ -57,7 +57,7 @@ describe('addressLinkStart mutation', () => {
 	});
 
 	it('should not be able to start linking address with wrong jwt', async () => {
-		const network = 'kasuma';
+		const network = 'kusama';
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {

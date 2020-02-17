@@ -31,7 +31,7 @@ const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRA
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
-const KUSAMA = 'kasuma';
+const KUSAMA = 'kusama';
 
 export default class AuthService {
 	constructor(){}

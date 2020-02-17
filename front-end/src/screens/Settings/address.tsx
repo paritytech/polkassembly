@@ -21,7 +21,7 @@ interface Props{
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
-const NETWORK = process.env.REACT_APP_NETWORK || 'kasuma';
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
