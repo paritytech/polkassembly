@@ -149,7 +149,15 @@ const Address = ({ className }: Props): JSX.Element => {
 				<Form.Group>
 					<Form.Field width={16}>
 						<div className='text-muted'>No extension detected.</div>&nbsp;
-						<div className='text-muted'>Please install the <a href={getExtensionUrl()}>Polkadot-js extension</a> and reload this page.</div>
+						{getExtensionUrl() ? (
+							<div className='text-muted'>
+								Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.
+							</div>
+						) : (
+							<div className='text-muted'>
+								Please install <a href='https://www.mozilla.org/en-US/firefox/'>Firefox</a> or <a href='https://www.google.com/chrome/'>Chrome</a> browser to use this feature.
+							</div>
+						)}
 					</Form.Field>
 				</Form.Group>
 			</Form>

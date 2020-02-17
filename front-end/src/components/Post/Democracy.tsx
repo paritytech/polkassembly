@@ -117,7 +117,15 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 			<div className={className}>
 				<div className='card'>
 					<div className='text-muted'>Polkadot-js extension not detected.</div>
-					<div className='text-muted'>Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+					{getExtensionUrl() ? (
+						<div className='text-muted'>
+							Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.
+						</div>
+					) : (
+						<div className='text-muted'>
+							Please install <a href='https://www.mozilla.org/en-US/firefox/'>Firefox</a> or <a href='https://www.google.com/chrome/'>Chrome</a> browser to use this feature.
+						</div>
+					)}
 				</div>
 			</div>
 		);
