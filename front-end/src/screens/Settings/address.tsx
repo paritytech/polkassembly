@@ -6,6 +6,7 @@ import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 
 import AddressComponent from '../../components/Address';
+import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
@@ -19,7 +20,7 @@ interface Props{
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
-const NETWORK = process.env.REACT_APP_NETWORK || 'kasuma';
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -147,8 +148,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			<Form className={className} standalone='false'>
 				<Form.Group>
 					<Form.Field width={16}>
-						<div className='text-muted'>No extension detected.</div>&nbsp;
-						<div className='text-muted'>Please install the <a href={getExtensionUrl()}>Polkadot-js extension</a> and reload this page.</div>
+						<ExtensionNotDetected />
 					</Form.Field>
 				</Form.Group>
 			</Form>
