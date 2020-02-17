@@ -48,9 +48,14 @@ export const GlobalStyle = createGlobalStyle`
         margin: 3.75rem auto 0 auto;
     }
 
+    #page-container {
+        position: relative;
+        min-height: 100vh;
+    }
+
     .ui.container {
         margin: 4rem auto 0 auto;
-        min-height: calc(100vH);
+        padding-bottom: 16rem;
     }
 
     h1, h2, h3, h4, h5, h6 {

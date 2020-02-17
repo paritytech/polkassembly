@@ -13,13 +13,13 @@ const Footer = ({ className }:Props ): JSX.Element => {
 		<footer className={className}>
 			<Menu>
 				<Menu.Item>
-                    &copy; {moment.utc().year()} Parity Technologies
+					&copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-and-conditions">
-                    Terms &amp; Conditions
+					Terms &amp; Conditions
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
-                    Privacy Policy
+					Privacy Policy
 				</Menu.Item>
 			</Menu>
 		</footer>
