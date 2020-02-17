@@ -135,25 +135,30 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						</Form.Field>
 					</Form.Group >
 					<Form.Field>
-						<input
-							className={errors.termsandconditions ? 'error' : ''}
-							name='termsandconditions'
-							value='yes'
-							ref={register({ required: true })}
-							type='checkbox'
-						/>
-						<div className='text-muted'>I agree to the <Link to='/terms-and-conditions'>Terms and Conditions</Link></div>
+						<label className='checkbox-label'>
+							<input
+								className={errors.termsandconditions ? 'error' : ''}
+								name='termsandconditions'
+								value='yes'
+								ref={register({ required: true })}
+								type='checkbox'
+							/>
+							I agree to the <Link to='/terms-and-conditions'>Terms and Conditions</Link>
+						</label>
 						{errors.termsandconditions && <div className={'errorText'}>Please accept the Terms and Conditions.</div>}
 					</Form.Field>
 					<Form.Field>
-						<input
-							className={errors.privacypolicy ? 'error' : ''}
-							name='privacypolicy'
-							value='yes'
-							ref={register({ required: true })}
-							type='checkbox'
-						/>
-						<div className='text-muted'>I agree to the <Link to='/privacy'>Privacy Policy</Link></div>
+						<label className='checkbox-label'>
+							<input
+								className={errors.privacypolicy ? 'error' : ''}
+								id='pp_checkbox'
+								name='privacypolicy'
+								value='yes'
+								ref={register({ required: true })}
+								type='checkbox'
+							/>
+							I agree to the <Link to='/privacy'>Privacy Policy</Link>
+						</label>
 						{errors.privacypolicy && <div className={'errorText'}>Please accept the Privacy Policy.</div>}
 					</Form.Field>
 					<div className={'mainButtonContainer'}>
@@ -196,15 +201,25 @@ export default styled(SignupForm)`
 		color: grey_secondary;
 	}
 
-	.text-muted {
-		display: inline-block;
-		margin-top: 0!important;
+	.checkbox-label {
+		position: relative;
+		bottom: 0.1rem;
+		display: inline-block !important;
+		font-size: sm !important;
+		font-weight: 400 !important;
+		color: grey_primary !important;
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
 	}
 
 	.ui.form input[type=checkbox]{
+		position: relative;
+		bottom: 0.2rem;
 		margin-right: 1rem;
 		vertical-align: middle;
-		height: 2rem;
-		width: 2rem;
 	}
 `;
