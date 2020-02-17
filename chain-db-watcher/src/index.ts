@@ -12,8 +12,7 @@ import {
 	motionDiscussionExists,
 	proposalDiscussionExists
 } from './graphql_helpers';
-import { proposalSubscription, referendumSubscription } from './queries';
-import { motionSubscription } from './queries/chain-db.queries';
+import { motionSubscription, proposalSubscription, referendumSubscription } from './queries';
 import { syncDBs } from './sync';
 
 dotenv.config();
@@ -25,9 +24,10 @@ const eventStatus = {
 	Started: 'Started'
 };
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
+const startBlock = Number(process.env.START_FROM) || 0;
 
 async function main (): Promise<void> {
-	console.log('🔄 Syncing chain-db and discussion-db...');
+	console.log(`🔄 Syncing chain-db and discussion-db from block ${startBlock}...`);
 	await syncDBs();
 
 	const getWsClient = function (wsurl: string): SubscriptionClient {
@@ -55,20 +55,23 @@ async function main (): Promise<void> {
 
 	const proposalSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		proposalSubscription
+		proposalSubscription,
+		{ startBlock }
 	);
 
 	const referendumSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		referendumSubscription
+		referendumSubscription,
+		{ startBlock }
 	);
 
 	const motionSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		motionSubscription
+		motionSubscription,
+		{ startBlock }
 	);
 
-	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
+	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
 	motionSubscriptionClient.subscribe(
 		({ data }): void => {

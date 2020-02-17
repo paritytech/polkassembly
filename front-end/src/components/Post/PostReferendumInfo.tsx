@@ -120,6 +120,9 @@ export default styled(PostReferendumInfo)`
 
 	.methodArguments {
 		display: inline-block;
+		overflow-x: auto;
+		width: 100%;
+		word-wrap: normal;
 	}
 
 	@media only screen and (max-width: 576px) {

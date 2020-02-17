@@ -793,10 +793,10 @@ export type Motion = {
   motionProposalArguments?: Maybe<Array<MotionProposalArgument>>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<Array<MotionStatus>>,
   preimage?: Maybe<Preimage>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<Array<MotionStatus>>,
 };
 
 
@@ -811,7 +811,7 @@ export type MotionMotionProposalArgumentsArgs = {
 };
 
 
-export type MotionStatusArgs = {
+export type MotionMotionStatusArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
@@ -836,10 +836,10 @@ export type MotionCreateInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
 };
 
 export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
@@ -847,14 +847,14 @@ export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
   create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>,
 };
 
+export type MotionCreateOneWithoutMotionStatusInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+};
+
 export type MotionCreateOneWithoutPreimageInput = {
   connect?: Maybe<MotionWhereUniqueInput>,
   create?: Maybe<MotionCreateWithoutPreimageInput>,
-};
-
-export type MotionCreateOneWithoutStatusInput = {
-  connect?: Maybe<MotionWhereUniqueInput>,
-  create?: Maybe<MotionCreateWithoutStatusInput>,
 };
 
 export type MotionCreateWithoutMotionProposalArgumentsInput = {
@@ -864,10 +864,23 @@ export type MotionCreateWithoutMotionProposalArgumentsInput = {
   method: Scalars['String'],
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
+};
+
+export type MotionCreateWithoutMotionStatusInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
 };
 
 export type MotionCreateWithoutPreimageInput = {
@@ -878,20 +891,7 @@ export type MotionCreateWithoutPreimageInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
   motionProposalHash: Scalars['String'],
   motionProposalId: Scalars['Int'],
-  preimageHash?: Maybe<Scalars['String']>,
-  section: Scalars['String'],
-  status?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
-};
-
-export type MotionCreateWithoutStatusInput = {
-  author: Scalars['String'],
-  memberCount: Scalars['Int'],
-  metaDescription: Scalars['String'],
-  method: Scalars['String'],
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
-  motionProposalHash: Scalars['String'],
-  motionProposalId: Scalars['Int'],
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section: Scalars['String'],
 };
@@ -1178,7 +1178,7 @@ export type MotionStatusConnection = {
 export type MotionStatusCreateInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
-  motion: MotionCreateOneWithoutStatusInput,
+  motion: MotionCreateOneWithoutMotionStatusInput,
   status: Scalars['String'],
 };
 
@@ -1267,7 +1267,7 @@ export type MotionStatusSubscriptionWhereInput = {
 
 export type MotionStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  motion?: Maybe<MotionUpdateOneRequiredWithoutStatusInput>,
+  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>,
   status?: Maybe<Scalars['String']>,
 };
 
@@ -1379,10 +1379,10 @@ export type MotionUpdateInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
 };
 
 export type MotionUpdateManyMutationInput = {
@@ -1403,11 +1403,11 @@ export type MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput = {
   upsert?: Maybe<MotionUpsertWithoutMotionProposalArgumentsInput>,
 };
 
-export type MotionUpdateOneRequiredWithoutStatusInput = {
+export type MotionUpdateOneRequiredWithoutMotionStatusInput = {
   connect?: Maybe<MotionWhereUniqueInput>,
-  create?: Maybe<MotionCreateWithoutStatusInput>,
-  update?: Maybe<MotionUpdateWithoutStatusDataInput>,
-  upsert?: Maybe<MotionUpsertWithoutStatusInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+  update?: Maybe<MotionUpdateWithoutMotionStatusDataInput>,
+  upsert?: Maybe<MotionUpsertWithoutMotionStatusInput>,
 };
 
 export type MotionUpdateOneWithoutPreimageInput = {
@@ -1426,10 +1426,23 @@ export type MotionUpdateWithoutMotionProposalArgumentsDataInput = {
   method?: Maybe<Scalars['String']>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
+};
+
+export type MotionUpdateWithoutMotionStatusDataInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
 };
 
 export type MotionUpdateWithoutPreimageDataInput = {
@@ -1440,20 +1453,7 @@ export type MotionUpdateWithoutPreimageDataInput = {
   motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
   motionProposalHash?: Maybe<Scalars['String']>,
   motionProposalId?: Maybe<Scalars['Int']>,
-  preimageHash?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
-  status?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
-};
-
-export type MotionUpdateWithoutStatusDataInput = {
-  author?: Maybe<Scalars['String']>,
-  memberCount?: Maybe<Scalars['Int']>,
-  metaDescription?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
-  motionProposalHash?: Maybe<Scalars['String']>,
-  motionProposalId?: Maybe<Scalars['Int']>,
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
   preimageHash?: Maybe<Scalars['String']>,
   section?: Maybe<Scalars['String']>,
 };
@@ -1463,14 +1463,14 @@ export type MotionUpsertWithoutMotionProposalArgumentsInput = {
   update: MotionUpdateWithoutMotionProposalArgumentsDataInput,
 };
 
+export type MotionUpsertWithoutMotionStatusInput = {
+  create: MotionCreateWithoutMotionStatusInput,
+  update: MotionUpdateWithoutMotionStatusDataInput,
+};
+
 export type MotionUpsertWithoutPreimageInput = {
   create: MotionCreateWithoutPreimageInput,
   update: MotionUpdateWithoutPreimageDataInput,
-};
-
-export type MotionUpsertWithoutStatusInput = {
-  create: MotionCreateWithoutStatusInput,
-  update: MotionUpdateWithoutStatusDataInput,
 };
 
 export type MotionWhereInput = {
@@ -1560,6 +1560,9 @@ export type MotionWhereInput = {
   motionProposalId_lte?: Maybe<Scalars['Int']>,
   motionProposalId_not?: Maybe<Scalars['Int']>,
   motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
   preimage?: Maybe<PreimageWhereInput>,
   preimageHash?: Maybe<Scalars['String']>,
   preimageHash_contains?: Maybe<Scalars['String']>,
@@ -1589,9 +1592,6 @@ export type MotionWhereInput = {
   section_not_in?: Maybe<Array<Scalars['String']>>,
   section_not_starts_with?: Maybe<Scalars['String']>,
   section_starts_with?: Maybe<Scalars['String']>,
-  status_every?: Maybe<MotionStatusWhereInput>,
-  status_none?: Maybe<MotionStatusWhereInput>,
-  status_some?: Maybe<MotionStatusWhereInput>,
 };
 
 export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
@@ -1680,6 +1680,9 @@ export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
   motionProposalId_lte?: Maybe<Scalars['Int']>,
   motionProposalId_not?: Maybe<Scalars['Int']>,
   motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
   preimage?: Maybe<PreimageWhereInput>,
   preimageHash?: Maybe<Scalars['String']>,
   preimageHash_contains?: Maybe<Scalars['String']>,
@@ -1709,9 +1712,6 @@ export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
   section_not_in?: Maybe<Array<Scalars['String']>>,
   section_not_starts_with?: Maybe<Scalars['String']>,
   section_starts_with?: Maybe<Scalars['String']>,
-  status_every?: Maybe<MotionStatusWhereInput>,
-  status_none?: Maybe<MotionStatusWhereInput>,
-  status_some?: Maybe<MotionStatusWhereInput>,
 };
 
 export type MotionWhereUniqueInput = {

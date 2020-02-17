@@ -93,8 +93,10 @@ export default styled(PostProposalInfo)`
 	}
 
 	.methodArguments {
-		display: block;
-		margin-bottom: 0.4rem;
+		display: inline-block;
+		overflow-x: auto;
+		width: 100%;
+		word-wrap: normal;
 	}
 
 	@media only screen and (max-width: 576px) {
