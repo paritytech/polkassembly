@@ -57,7 +57,7 @@ const StyledForm = styled(SUIForm)`
             > label {
                 font-size: input_text_size;
                 font-weight: 500;
-                color: black_primary !important;
+                color: black_primary;
                 margin-bottom: 0.6rem;
         }
 
