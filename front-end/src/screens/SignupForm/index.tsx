@@ -204,6 +204,5 @@ export default styled(SignupForm)`
 	.ui.form input[type=checkbox]{
 		margin-right: 1rem;
 		vertical-align: middle;
-		height: 2rem;
 	}
 `;
