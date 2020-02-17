@@ -45,8 +45,8 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
 				<Form onSubmit={handleSubmit(handleSubmitForm)}>
 					<h3>Login</h3>
 					<Form.Group>
@@ -95,7 +95,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>
 	);
 };
