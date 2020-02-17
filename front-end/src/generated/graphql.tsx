@@ -336,34 +336,12 @@ export type Comments = {
    __typename?: 'comments',
   author?: Maybe<User>,
   author_id: Scalars['Int'],
-  comment?: Maybe<Comments>,
-  comments: Array<Comments>,
-  comments_aggregate: Comments_Aggregate,
   content: Scalars['String'],
   created_at: Scalars['timestamptz'],
   id: Scalars['uuid'],
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post: Posts,
   post_id: Scalars['Int'],
   updated_at: Scalars['timestamptz'],
-};
-
-
-export type CommentsCommentsArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
-};
-
-
-export type CommentsComments_AggregateArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -428,12 +406,9 @@ export type Comments_Bool_Exp = {
   _not?: Maybe<Comments_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Comments_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
-  comment?: Maybe<Comments_Bool_Exp>,
-  comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Uuid_Comparison_Exp>,
-  parent_comment_id?: Maybe<Uuid_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   updated_at?: Maybe<Timestamptz_Comparison_Exp>,
@@ -450,12 +425,9 @@ export type Comments_Inc_Input = {
 
 export type Comments_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  comment?: Maybe<Comments_Obj_Rel_Insert_Input>,
-  comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
@@ -514,12 +486,9 @@ export type Comments_On_Conflict = {
 
 export type Comments_Order_By = {
   author_id?: Maybe<Order_By>,
-  comment?: Maybe<Comments_Order_By>,
-  comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  parent_comment_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
@@ -530,7 +499,6 @@ export enum Comments_Select_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -540,7 +508,6 @@ export type Comments_Set_Input = {
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -594,7 +561,6 @@ export enum Comments_Update_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -8964,7 +8930,7 @@ export const DiscussionPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+  comments(order_by: {created_at: asc}) {
     ...commentFields
   }
   title
@@ -9023,7 +8989,7 @@ export const MotionPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+  comments(order_by: {created_at: asc}) {
     ...commentFields
   }
   onchain_link {
@@ -9079,7 +9045,7 @@ export const ProposalPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+  comments(order_by: {created_at: asc}) {
     ...commentFields
   }
   onchain_link {
@@ -9137,7 +9103,7 @@ export const ReferendumPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+  comments(order_by: {created_at: asc}) {
     ...commentFields
   }
   onchain_link {

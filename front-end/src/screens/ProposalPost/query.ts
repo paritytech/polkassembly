@@ -40,7 +40,7 @@ const proposalPost = gql`
         created_at
         id
         updated_at
-        comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
+        comments(order_by: {created_at: asc}) {
             ...commentFields
         }
         onchain_link{
