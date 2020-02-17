@@ -34,7 +34,6 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 					<div className='info_group'>
 						<h6>Proposer</h6>
 						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
-						{proposerAddress}
 					</div>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
