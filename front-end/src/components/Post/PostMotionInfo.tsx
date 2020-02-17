@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { OnchainLinkMotionFragment } from '../../generated/graphql';
 import { chainProperties } from '../../global/chainProperties';
 
@@ -32,7 +33,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
