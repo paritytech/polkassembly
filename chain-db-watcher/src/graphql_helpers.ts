@@ -4,6 +4,7 @@ import { GraphQLClient } from 'graphql-request';
 
 import { getSdk as getOnchainSdk } from './generated/chain-db-graphql';
 import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
+import { getEncodedAddress } from './sync/utils';
 
 dotenv.config();
 
@@ -210,11 +211,19 @@ export const addDiscussionPostAndProposal = async ({
 		);
 	}
 
+	const proposerAddress = getEncodedAddress(proposer);
+
+	if (!proposerAddress) {
+		throw new Error(
+			`Unexpected Proposer address, got:${proposer}, encoded:${proposerAddress}`
+		);
+	}
+
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
 		onchainProposalId,
 		content: DEFAULT_DESCRIPTION,
-		proposerAddress: proposer,
+		proposerAddress,
 		title: DEFAULT_TITLE,
 		topicId: Number(democracyTopicId),
 		typeId: Number(proposalPostTypeId)
@@ -286,11 +295,19 @@ export const addDiscussionPostAndMotion = async ({
 		);
 	}
 
+	const proposerAddress = getEncodedAddress(proposer);
+
+	if (!proposerAddress) {
+		throw new Error(
+			`Unexpected Proposer address, got:${proposer}, encoded:${proposerAddress}`
+		);
+	}
+
 	const motionAndPostVariables = {
 		authorId: Number(proposalBotUserId),
 		onchainMotionProposalId,
 		content: DEFAULT_DESCRIPTION,
-		proposerAddress: proposer,
+		proposerAddress,
 		title: DEFAULT_MOTION_TITLE,
 		topicId: Number(councilTopicId),
 		typeId: Number(proposalPostTypeId)
