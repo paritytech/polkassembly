@@ -12,8 +12,8 @@ export type Scalars = {
   DateTime: any,
   timestamptz: any,
   uuid: any,
-  Long: any,
   Json: any,
+  Long: any,
   Upload: any,
 };
 
@@ -42,6 +42,11 @@ export type AggregateEra = {
   count: Scalars['Int'],
 };
 
+export type AggregateHeartBeat = {
+   __typename?: 'AggregateHeartBeat',
+  count: Scalars['Int'],
+};
+
 export type AggregateMotion = {
    __typename?: 'AggregateMotion',
   count: Scalars['Int'],
@@ -59,6 +64,11 @@ export type AggregateMotionStatus = {
 
 export type AggregateNomination = {
    __typename?: 'AggregateNomination',
+  count: Scalars['Int'],
+};
+
+export type AggregateOfflineValidator = {
+   __typename?: 'AggregateOfflineValidator',
   count: Scalars['Int'],
 };
 
@@ -326,34 +336,12 @@ export type Comments = {
    __typename?: 'comments',
   author?: Maybe<User>,
   author_id: Scalars['Int'],
-  comment?: Maybe<Comments>,
-  comments: Array<Comments>,
-  comments_aggregate: Comments_Aggregate,
   content: Scalars['String'],
   created_at: Scalars['timestamptz'],
   id: Scalars['uuid'],
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post: Posts,
   post_id: Scalars['Int'],
   updated_at: Scalars['timestamptz'],
-};
-
-
-export type CommentsCommentsArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
-};
-
-
-export type CommentsComments_AggregateArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -418,12 +406,9 @@ export type Comments_Bool_Exp = {
   _not?: Maybe<Comments_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Comments_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
-  comment?: Maybe<Comments_Bool_Exp>,
-  comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Uuid_Comparison_Exp>,
-  parent_comment_id?: Maybe<Uuid_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   updated_at?: Maybe<Timestamptz_Comparison_Exp>,
@@ -440,12 +425,9 @@ export type Comments_Inc_Input = {
 
 export type Comments_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  comment?: Maybe<Comments_Obj_Rel_Insert_Input>,
-  comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
@@ -504,12 +486,9 @@ export type Comments_On_Conflict = {
 
 export type Comments_Order_By = {
   author_id?: Maybe<Order_By>,
-  comment?: Maybe<Comments_Order_By>,
-  comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  parent_comment_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
@@ -520,7 +499,6 @@ export enum Comments_Select_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -530,7 +508,6 @@ export type Comments_Set_Input = {
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -584,7 +561,6 @@ export enum Comments_Update_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -756,6 +732,112 @@ export type EraWhereInput = {
 export type EraWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
   index?: Maybe<Scalars['Int']>,
+};
+
+export type HeartBeat = Node & {
+   __typename?: 'HeartBeat',
+  authorityId: Scalars['String'],
+  id: Scalars['ID'],
+  sessionIndex: Session,
+};
+
+export type HeartBeatConnection = {
+   __typename?: 'HeartBeatConnection',
+  aggregate: AggregateHeartBeat,
+  edges: Array<Maybe<HeartBeatEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type HeartBeatCreateInput = {
+  authorityId: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+  sessionIndex: SessionCreateOneInput,
+};
+
+export type HeartBeatEdge = {
+   __typename?: 'HeartBeatEdge',
+  cursor: Scalars['String'],
+  node: HeartBeat,
+};
+
+export enum HeartBeatOrderByInput {
+  AuthorityIdAsc = 'authorityId_ASC',
+  AuthorityIdDesc = 'authorityId_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC'
+}
+
+export type HeartBeatPreviousValues = {
+   __typename?: 'HeartBeatPreviousValues',
+  authorityId: Scalars['String'],
+  id: Scalars['ID'],
+};
+
+export type HeartBeatSubscriptionPayload = {
+   __typename?: 'HeartBeatSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<HeartBeat>,
+  previousValues?: Maybe<HeartBeatPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type HeartBeatSubscriptionWhereInput = {
+  AND?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  OR?: Maybe<Array<HeartBeatSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<HeartBeatWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type HeartBeatUpdateInput = {
+  authorityId?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
+};
+
+export type HeartBeatUpdateManyMutationInput = {
+  authorityId?: Maybe<Scalars['String']>,
+};
+
+export type HeartBeatWhereInput = {
+  AND?: Maybe<Array<HeartBeatWhereInput>>,
+  NOT?: Maybe<Array<HeartBeatWhereInput>>,
+  OR?: Maybe<Array<HeartBeatWhereInput>>,
+  authorityId?: Maybe<Scalars['String']>,
+  authorityId_contains?: Maybe<Scalars['String']>,
+  authorityId_ends_with?: Maybe<Scalars['String']>,
+  authorityId_gt?: Maybe<Scalars['String']>,
+  authorityId_gte?: Maybe<Scalars['String']>,
+  authorityId_in?: Maybe<Array<Scalars['String']>>,
+  authorityId_lt?: Maybe<Scalars['String']>,
+  authorityId_lte?: Maybe<Scalars['String']>,
+  authorityId_not?: Maybe<Scalars['String']>,
+  authorityId_not_contains?: Maybe<Scalars['String']>,
+  authorityId_not_ends_with?: Maybe<Scalars['String']>,
+  authorityId_not_in?: Maybe<Array<Scalars['String']>>,
+  authorityId_not_starts_with?: Maybe<Scalars['String']>,
+  authorityId_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  sessionIndex?: Maybe<SessionWhereInput>,
+};
+
+export type HeartBeatWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
 };
 
 export type Int_Comparison_Exp = {
@@ -1834,10 +1916,12 @@ export type Mutation_Root = {
   changeUsername?: Maybe<ChangeResponse>,
   createBlockNumber: BlockNumber,
   createEra: Era,
+  createHeartBeat: HeartBeat,
   createMotion: Motion,
   createMotionProposalArgument: MotionProposalArgument,
   createMotionStatus: MotionStatus,
   createNomination: Nomination,
+  createOfflineValidator: OfflineValidator,
   createPreimage: Preimage,
   createPreimageArgument: PreimageArgument,
   createPreimageStatus: PreimageStatus,
@@ -1853,12 +1937,15 @@ export type Mutation_Root = {
   createValidator: Validator,
   deleteBlockNumber?: Maybe<BlockNumber>,
   deleteEra?: Maybe<Era>,
+  deleteHeartBeat?: Maybe<HeartBeat>,
   deleteManyBlockNumbers: BatchPayload,
   deleteManyEras: BatchPayload,
+  deleteManyHeartBeats: BatchPayload,
   deleteManyMotionProposalArguments: BatchPayload,
   deleteManyMotionStatuses: BatchPayload,
   deleteManyMotions: BatchPayload,
   deleteManyNominations: BatchPayload,
+  deleteManyOfflineValidators: BatchPayload,
   deleteManyPreimageArguments: BatchPayload,
   deleteManyPreimageStatuses: BatchPayload,
   deleteManyPreimages: BatchPayload,
@@ -1876,6 +1963,7 @@ export type Mutation_Root = {
   deleteMotionProposalArgument?: Maybe<MotionProposalArgument>,
   deleteMotionStatus?: Maybe<MotionStatus>,
   deleteNomination?: Maybe<Nomination>,
+  deleteOfflineValidator?: Maybe<OfflineValidator>,
   deletePreimage?: Maybe<Preimage>,
   deletePreimageArgument?: Maybe<PreimageArgument>,
   deletePreimageStatus?: Maybe<PreimageStatus>,
@@ -1911,12 +1999,15 @@ export type Mutation_Root = {
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   updateBlockNumber?: Maybe<BlockNumber>,
   updateEra?: Maybe<Era>,
+  updateHeartBeat?: Maybe<HeartBeat>,
   updateManyBlockNumbers: BatchPayload,
   updateManyEras: BatchPayload,
+  updateManyHeartBeats: BatchPayload,
   updateManyMotionProposalArguments: BatchPayload,
   updateManyMotionStatuses: BatchPayload,
   updateManyMotions: BatchPayload,
   updateManyNominations: BatchPayload,
+  updateManyOfflineValidators: BatchPayload,
   updateManyPreimageArguments: BatchPayload,
   updateManyPreimageStatuses: BatchPayload,
   updateManyPreimages: BatchPayload,
@@ -1934,6 +2025,7 @@ export type Mutation_Root = {
   updateMotionProposalArgument?: Maybe<MotionProposalArgument>,
   updateMotionStatus?: Maybe<MotionStatus>,
   updateNomination?: Maybe<Nomination>,
+  updateOfflineValidator?: Maybe<OfflineValidator>,
   updatePreimage?: Maybe<Preimage>,
   updatePreimageArgument?: Maybe<PreimageArgument>,
   updatePreimageStatus?: Maybe<PreimageStatus>,
@@ -1954,10 +2046,12 @@ export type Mutation_Root = {
   update_posts?: Maybe<Posts_Mutation_Response>,
   upsertBlockNumber: BlockNumber,
   upsertEra: Era,
+  upsertHeartBeat: HeartBeat,
   upsertMotion: Motion,
   upsertMotionProposalArgument: MotionProposalArgument,
   upsertMotionStatus: MotionStatus,
   upsertNomination: Nomination,
+  upsertOfflineValidator: OfflineValidator,
   upsertPreimage: Preimage,
   upsertPreimageArgument: PreimageArgument,
   upsertPreimageStatus: PreimageStatus,
@@ -2023,6 +2117,11 @@ export type Mutation_RootCreateEraArgs = {
 };
 
 
+export type Mutation_RootCreateHeartBeatArgs = {
+  data: HeartBeatCreateInput
+};
+
+
 export type Mutation_RootCreateMotionArgs = {
   data: MotionCreateInput
 };
@@ -2040,6 +2139,11 @@ export type Mutation_RootCreateMotionStatusArgs = {
 
 export type Mutation_RootCreateNominationArgs = {
   data: NominationCreateInput
+};
+
+
+export type Mutation_RootCreateOfflineValidatorArgs = {
+  data: OfflineValidatorCreateInput
 };
 
 
@@ -2118,6 +2222,11 @@ export type Mutation_RootDeleteEraArgs = {
 };
 
 
+export type Mutation_RootDeleteHeartBeatArgs = {
+  where: HeartBeatWhereUniqueInput
+};
+
+
 export type Mutation_RootDeleteManyBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>
 };
@@ -2125,6 +2234,11 @@ export type Mutation_RootDeleteManyBlockNumbersArgs = {
 
 export type Mutation_RootDeleteManyErasArgs = {
   where?: Maybe<EraWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyHeartBeatsArgs = {
+  where?: Maybe<HeartBeatWhereInput>
 };
 
 
@@ -2145,6 +2259,11 @@ export type Mutation_RootDeleteManyMotionsArgs = {
 
 export type Mutation_RootDeleteManyNominationsArgs = {
   where?: Maybe<NominationWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyOfflineValidatorsArgs = {
+  where?: Maybe<OfflineValidatorWhereInput>
 };
 
 
@@ -2230,6 +2349,11 @@ export type Mutation_RootDeleteMotionStatusArgs = {
 
 export type Mutation_RootDeleteNominationArgs = {
   where: NominationWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteOfflineValidatorArgs = {
+  where: OfflineValidatorWhereUniqueInput
 };
 
 
@@ -2411,6 +2535,12 @@ export type Mutation_RootUpdateEraArgs = {
 };
 
 
+export type Mutation_RootUpdateHeartBeatArgs = {
+  data: HeartBeatUpdateInput,
+  where: HeartBeatWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateManyBlockNumbersArgs = {
   data: BlockNumberUpdateManyMutationInput,
   where?: Maybe<BlockNumberWhereInput>
@@ -2420,6 +2550,12 @@ export type Mutation_RootUpdateManyBlockNumbersArgs = {
 export type Mutation_RootUpdateManyErasArgs = {
   data: EraUpdateManyMutationInput,
   where?: Maybe<EraWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyHeartBeatsArgs = {
+  data: HeartBeatUpdateManyMutationInput,
+  where?: Maybe<HeartBeatWhereInput>
 };
 
 
@@ -2444,6 +2580,12 @@ export type Mutation_RootUpdateManyMotionsArgs = {
 export type Mutation_RootUpdateManyNominationsArgs = {
   data: NominationUpdateManyMutationInput,
   where?: Maybe<NominationWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyOfflineValidatorsArgs = {
+  data: OfflineValidatorUpdateManyMutationInput,
+  where?: Maybe<OfflineValidatorWhereInput>
 };
 
 
@@ -2546,6 +2688,12 @@ export type Mutation_RootUpdateMotionStatusArgs = {
 export type Mutation_RootUpdateNominationArgs = {
   data: NominationUpdateInput,
   where: NominationWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateOfflineValidatorArgs = {
+  data: OfflineValidatorUpdateInput,
+  where: OfflineValidatorWhereUniqueInput
 };
 
 
@@ -2676,6 +2824,13 @@ export type Mutation_RootUpsertEraArgs = {
 };
 
 
+export type Mutation_RootUpsertHeartBeatArgs = {
+  create: HeartBeatCreateInput,
+  update: HeartBeatUpdateInput,
+  where: HeartBeatWhereUniqueInput
+};
+
+
 export type Mutation_RootUpsertMotionArgs = {
   create: MotionCreateInput,
   update: MotionUpdateInput,
@@ -2701,6 +2856,13 @@ export type Mutation_RootUpsertNominationArgs = {
   create: NominationCreateInput,
   update: NominationUpdateInput,
   where: NominationWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertOfflineValidatorArgs = {
+  create: OfflineValidatorCreateInput,
+  update: OfflineValidatorUpdateInput,
+  where: OfflineValidatorWhereUniqueInput
 };
 
 
@@ -2811,11 +2973,11 @@ export type Node = {
 
 export type Nomination = Node & {
    __typename?: 'Nomination',
-  bonded: Scalars['String'],
   id: Scalars['ID'],
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
   session: Session,
+  stakedAmount: Scalars['String'],
   validatorController: Scalars['String'],
   validatorStash: Scalars['String'],
 };
@@ -2828,11 +2990,11 @@ export type NominationConnection = {
 };
 
 export type NominationCreateInput = {
-  bonded: Scalars['String'],
   id?: Maybe<Scalars['ID']>,
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
   session: SessionCreateOneInput,
+  stakedAmount: Scalars['String'],
   validatorController: Scalars['String'],
   validatorStash: Scalars['String'],
 };
@@ -2844,14 +3006,14 @@ export type NominationEdge = {
 };
 
 export enum NominationOrderByInput {
-  BondedAsc = 'bonded_ASC',
-  BondedDesc = 'bonded_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NominatorControllerAsc = 'nominatorController_ASC',
   NominatorControllerDesc = 'nominatorController_DESC',
   NominatorStashAsc = 'nominatorStash_ASC',
   NominatorStashDesc = 'nominatorStash_DESC',
+  StakedAmountAsc = 'stakedAmount_ASC',
+  StakedAmountDesc = 'stakedAmount_DESC',
   ValidatorControllerAsc = 'validatorController_ASC',
   ValidatorControllerDesc = 'validatorController_DESC',
   ValidatorStashAsc = 'validatorStash_ASC',
@@ -2860,10 +3022,10 @@ export enum NominationOrderByInput {
 
 export type NominationPreviousValues = {
    __typename?: 'NominationPreviousValues',
-  bonded: Scalars['String'],
   id: Scalars['ID'],
   nominatorController: Scalars['String'],
   nominatorStash: Scalars['String'],
+  stakedAmount: Scalars['String'],
   validatorController: Scalars['String'],
   validatorStash: Scalars['String'],
 };
@@ -2888,18 +3050,18 @@ export type NominationSubscriptionWhereInput = {
 };
 
 export type NominationUpdateInput = {
-  bonded?: Maybe<Scalars['String']>,
   nominatorController?: Maybe<Scalars['String']>,
   nominatorStash?: Maybe<Scalars['String']>,
   session?: Maybe<SessionUpdateOneRequiredInput>,
+  stakedAmount?: Maybe<Scalars['String']>,
   validatorController?: Maybe<Scalars['String']>,
   validatorStash?: Maybe<Scalars['String']>,
 };
 
 export type NominationUpdateManyMutationInput = {
-  bonded?: Maybe<Scalars['String']>,
   nominatorController?: Maybe<Scalars['String']>,
   nominatorStash?: Maybe<Scalars['String']>,
+  stakedAmount?: Maybe<Scalars['String']>,
   validatorController?: Maybe<Scalars['String']>,
   validatorStash?: Maybe<Scalars['String']>,
 };
@@ -2908,20 +3070,6 @@ export type NominationWhereInput = {
   AND?: Maybe<Array<NominationWhereInput>>,
   NOT?: Maybe<Array<NominationWhereInput>>,
   OR?: Maybe<Array<NominationWhereInput>>,
-  bonded?: Maybe<Scalars['String']>,
-  bonded_contains?: Maybe<Scalars['String']>,
-  bonded_ends_with?: Maybe<Scalars['String']>,
-  bonded_gt?: Maybe<Scalars['String']>,
-  bonded_gte?: Maybe<Scalars['String']>,
-  bonded_in?: Maybe<Array<Scalars['String']>>,
-  bonded_lt?: Maybe<Scalars['String']>,
-  bonded_lte?: Maybe<Scalars['String']>,
-  bonded_not?: Maybe<Scalars['String']>,
-  bonded_not_contains?: Maybe<Scalars['String']>,
-  bonded_not_ends_with?: Maybe<Scalars['String']>,
-  bonded_not_in?: Maybe<Array<Scalars['String']>>,
-  bonded_not_starts_with?: Maybe<Scalars['String']>,
-  bonded_starts_with?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['ID']>,
   id_contains?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
@@ -2965,6 +3113,20 @@ export type NominationWhereInput = {
   nominatorStash_not_starts_with?: Maybe<Scalars['String']>,
   nominatorStash_starts_with?: Maybe<Scalars['String']>,
   session?: Maybe<SessionWhereInput>,
+  stakedAmount?: Maybe<Scalars['String']>,
+  stakedAmount_contains?: Maybe<Scalars['String']>,
+  stakedAmount_ends_with?: Maybe<Scalars['String']>,
+  stakedAmount_gt?: Maybe<Scalars['String']>,
+  stakedAmount_gte?: Maybe<Scalars['String']>,
+  stakedAmount_in?: Maybe<Array<Scalars['String']>>,
+  stakedAmount_lt?: Maybe<Scalars['String']>,
+  stakedAmount_lte?: Maybe<Scalars['String']>,
+  stakedAmount_not?: Maybe<Scalars['String']>,
+  stakedAmount_not_contains?: Maybe<Scalars['String']>,
+  stakedAmount_not_ends_with?: Maybe<Scalars['String']>,
+  stakedAmount_not_in?: Maybe<Array<Scalars['String']>>,
+  stakedAmount_not_starts_with?: Maybe<Scalars['String']>,
+  stakedAmount_starts_with?: Maybe<Scalars['String']>,
   validatorController?: Maybe<Scalars['String']>,
   validatorController_contains?: Maybe<Scalars['String']>,
   validatorController_ends_with?: Maybe<Scalars['String']>,
@@ -2996,6 +3158,167 @@ export type NominationWhereInput = {
 };
 
 export type NominationWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type OfflineValidator = Node & {
+   __typename?: 'OfflineValidator',
+  id: Scalars['ID'],
+  others: Array<Scalars['Json']>,
+  own: Scalars['String'],
+  sessionIndex: Session,
+  total: Scalars['String'],
+  validatorId: Scalars['String'],
+};
+
+export type OfflineValidatorConnection = {
+   __typename?: 'OfflineValidatorConnection',
+  aggregate: AggregateOfflineValidator,
+  edges: Array<Maybe<OfflineValidatorEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type OfflineValidatorCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  others?: Maybe<OfflineValidatorCreateothersInput>,
+  own: Scalars['String'],
+  sessionIndex: SessionCreateOneInput,
+  total: Scalars['String'],
+  validatorId: Scalars['String'],
+};
+
+export type OfflineValidatorCreateothersInput = {
+  set?: Maybe<Array<Scalars['Json']>>,
+};
+
+export type OfflineValidatorEdge = {
+   __typename?: 'OfflineValidatorEdge',
+  cursor: Scalars['String'],
+  node: OfflineValidator,
+};
+
+export enum OfflineValidatorOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  OwnAsc = 'own_ASC',
+  OwnDesc = 'own_DESC',
+  TotalAsc = 'total_ASC',
+  TotalDesc = 'total_DESC',
+  ValidatorIdAsc = 'validatorId_ASC',
+  ValidatorIdDesc = 'validatorId_DESC'
+}
+
+export type OfflineValidatorPreviousValues = {
+   __typename?: 'OfflineValidatorPreviousValues',
+  id: Scalars['ID'],
+  others: Array<Scalars['Json']>,
+  own: Scalars['String'],
+  total: Scalars['String'],
+  validatorId: Scalars['String'],
+};
+
+export type OfflineValidatorSubscriptionPayload = {
+   __typename?: 'OfflineValidatorSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<OfflineValidator>,
+  previousValues?: Maybe<OfflineValidatorPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type OfflineValidatorSubscriptionWhereInput = {
+  AND?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  OR?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<OfflineValidatorWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type OfflineValidatorUpdateInput = {
+  others?: Maybe<OfflineValidatorUpdateothersInput>,
+  own?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
+  total?: Maybe<Scalars['String']>,
+  validatorId?: Maybe<Scalars['String']>,
+};
+
+export type OfflineValidatorUpdateManyMutationInput = {
+  others?: Maybe<OfflineValidatorUpdateothersInput>,
+  own?: Maybe<Scalars['String']>,
+  total?: Maybe<Scalars['String']>,
+  validatorId?: Maybe<Scalars['String']>,
+};
+
+export type OfflineValidatorUpdateothersInput = {
+  set?: Maybe<Array<Scalars['Json']>>,
+};
+
+export type OfflineValidatorWhereInput = {
+  AND?: Maybe<Array<OfflineValidatorWhereInput>>,
+  NOT?: Maybe<Array<OfflineValidatorWhereInput>>,
+  OR?: Maybe<Array<OfflineValidatorWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  own?: Maybe<Scalars['String']>,
+  own_contains?: Maybe<Scalars['String']>,
+  own_ends_with?: Maybe<Scalars['String']>,
+  own_gt?: Maybe<Scalars['String']>,
+  own_gte?: Maybe<Scalars['String']>,
+  own_in?: Maybe<Array<Scalars['String']>>,
+  own_lt?: Maybe<Scalars['String']>,
+  own_lte?: Maybe<Scalars['String']>,
+  own_not?: Maybe<Scalars['String']>,
+  own_not_contains?: Maybe<Scalars['String']>,
+  own_not_ends_with?: Maybe<Scalars['String']>,
+  own_not_in?: Maybe<Array<Scalars['String']>>,
+  own_not_starts_with?: Maybe<Scalars['String']>,
+  own_starts_with?: Maybe<Scalars['String']>,
+  sessionIndex?: Maybe<SessionWhereInput>,
+  total?: Maybe<Scalars['String']>,
+  total_contains?: Maybe<Scalars['String']>,
+  total_ends_with?: Maybe<Scalars['String']>,
+  total_gt?: Maybe<Scalars['String']>,
+  total_gte?: Maybe<Scalars['String']>,
+  total_in?: Maybe<Array<Scalars['String']>>,
+  total_lt?: Maybe<Scalars['String']>,
+  total_lte?: Maybe<Scalars['String']>,
+  total_not?: Maybe<Scalars['String']>,
+  total_not_contains?: Maybe<Scalars['String']>,
+  total_not_ends_with?: Maybe<Scalars['String']>,
+  total_not_in?: Maybe<Array<Scalars['String']>>,
+  total_not_starts_with?: Maybe<Scalars['String']>,
+  total_starts_with?: Maybe<Scalars['String']>,
+  validatorId?: Maybe<Scalars['String']>,
+  validatorId_contains?: Maybe<Scalars['String']>,
+  validatorId_ends_with?: Maybe<Scalars['String']>,
+  validatorId_gt?: Maybe<Scalars['String']>,
+  validatorId_gte?: Maybe<Scalars['String']>,
+  validatorId_in?: Maybe<Array<Scalars['String']>>,
+  validatorId_lt?: Maybe<Scalars['String']>,
+  validatorId_lte?: Maybe<Scalars['String']>,
+  validatorId_not?: Maybe<Scalars['String']>,
+  validatorId_not_contains?: Maybe<Scalars['String']>,
+  validatorId_not_ends_with?: Maybe<Scalars['String']>,
+  validatorId_not_in?: Maybe<Array<Scalars['String']>>,
+  validatorId_not_starts_with?: Maybe<Scalars['String']>,
+  validatorId_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type OfflineValidatorWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
@@ -5642,6 +5965,9 @@ export type Query_Root = {
   era?: Maybe<Era>,
   eras: Array<Maybe<Era>>,
   erasConnection: EraConnection,
+  heartBeat?: Maybe<HeartBeat>,
+  heartBeats: Array<Maybe<HeartBeat>>,
+  heartBeatsConnection: HeartBeatConnection,
   motion?: Maybe<Motion>,
   motionProposalArgument?: Maybe<MotionProposalArgument>,
   motionProposalArguments: Array<Maybe<MotionProposalArgument>>,
@@ -5655,6 +5981,9 @@ export type Query_Root = {
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
   nominationsConnection: NominationConnection,
+  offlineValidator?: Maybe<OfflineValidator>,
+  offlineValidators: Array<Maybe<OfflineValidator>>,
+  offlineValidatorsConnection: OfflineValidatorConnection,
   onchain_links: Array<Onchain_Links>,
   onchain_links_aggregate: Onchain_Links_Aggregate,
   onchain_links_by_pk?: Maybe<Onchain_Links>,
@@ -5790,6 +6119,33 @@ export type Query_RootErasConnectionArgs = {
 };
 
 
+export type Query_RootHeartBeatArgs = {
+  where: HeartBeatWhereUniqueInput
+};
+
+
+export type Query_RootHeartBeatsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<HeartBeatOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<HeartBeatWhereInput>
+};
+
+
+export type Query_RootHeartBeatsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<HeartBeatOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<HeartBeatWhereInput>
+};
+
+
 export type Query_RootMotionArgs = {
   where: MotionWhereUniqueInput
 };
@@ -5900,6 +6256,33 @@ export type Query_RootNominationsConnectionArgs = {
   orderBy?: Maybe<NominationOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<NominationWhereInput>
+};
+
+
+export type Query_RootOfflineValidatorArgs = {
+  where: OfflineValidatorWhereUniqueInput
+};
+
+
+export type Query_RootOfflineValidatorsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<OfflineValidatorOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<OfflineValidatorWhereInput>
+};
+
+
+export type Query_RootOfflineValidatorsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<OfflineValidatorOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<OfflineValidatorWhereInput>
 };
 
 
@@ -6879,10 +7262,11 @@ export type ReferendumWhereUniqueInput = {
 
 export type Reward = Node & {
    __typename?: 'Reward',
-  amount: Scalars['String'],
   authoredBlock: BlockNumber,
   id: Scalars['ID'],
-  recipients: Array<Scalars['String']>,
+  sessionIndex: Session,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
 };
 
 export type RewardConnection = {
@@ -6893,14 +7277,11 @@ export type RewardConnection = {
 };
 
 export type RewardCreateInput = {
-  amount: Scalars['String'],
   authoredBlock: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
-  recipients?: Maybe<RewardCreaterecipientsInput>,
-};
-
-export type RewardCreaterecipientsInput = {
-  set?: Maybe<Array<Scalars['String']>>,
+  sessionIndex: SessionCreateOneInput,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
 };
 
 export type RewardEdge = {
@@ -6910,17 +7291,19 @@ export type RewardEdge = {
 };
 
 export enum RewardOrderByInput {
-  AmountAsc = 'amount_ASC',
-  AmountDesc = 'amount_DESC',
   IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC'
+  IdDesc = 'id_DESC',
+  TreasuryRewardAsc = 'treasuryReward_ASC',
+  TreasuryRewardDesc = 'treasuryReward_DESC',
+  ValidatorRewardAsc = 'validatorReward_ASC',
+  ValidatorRewardDesc = 'validatorReward_DESC'
 }
 
 export type RewardPreviousValues = {
    __typename?: 'RewardPreviousValues',
-  amount: Scalars['String'],
   id: Scalars['ID'],
-  recipients: Array<Scalars['String']>,
+  treasuryReward: Scalars['String'],
+  validatorReward: Scalars['String'],
 };
 
 export type RewardSubscriptionPayload = {
@@ -6943,38 +7326,21 @@ export type RewardSubscriptionWhereInput = {
 };
 
 export type RewardUpdateInput = {
-  amount?: Maybe<Scalars['String']>,
   authoredBlock?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  recipients?: Maybe<RewardUpdaterecipientsInput>,
+  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
 };
 
 export type RewardUpdateManyMutationInput = {
-  amount?: Maybe<Scalars['String']>,
-  recipients?: Maybe<RewardUpdaterecipientsInput>,
-};
-
-export type RewardUpdaterecipientsInput = {
-  set?: Maybe<Array<Scalars['String']>>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
 };
 
 export type RewardWhereInput = {
   AND?: Maybe<Array<RewardWhereInput>>,
   NOT?: Maybe<Array<RewardWhereInput>>,
   OR?: Maybe<Array<RewardWhereInput>>,
-  amount?: Maybe<Scalars['String']>,
-  amount_contains?: Maybe<Scalars['String']>,
-  amount_ends_with?: Maybe<Scalars['String']>,
-  amount_gt?: Maybe<Scalars['String']>,
-  amount_gte?: Maybe<Scalars['String']>,
-  amount_in?: Maybe<Array<Scalars['String']>>,
-  amount_lt?: Maybe<Scalars['String']>,
-  amount_lte?: Maybe<Scalars['String']>,
-  amount_not?: Maybe<Scalars['String']>,
-  amount_not_contains?: Maybe<Scalars['String']>,
-  amount_not_ends_with?: Maybe<Scalars['String']>,
-  amount_not_in?: Maybe<Array<Scalars['String']>>,
-  amount_not_starts_with?: Maybe<Scalars['String']>,
-  amount_starts_with?: Maybe<Scalars['String']>,
   authoredBlock?: Maybe<BlockNumberWhereInput>,
   id?: Maybe<Scalars['ID']>,
   id_contains?: Maybe<Scalars['ID']>,
@@ -6990,6 +7356,35 @@ export type RewardWhereInput = {
   id_not_in?: Maybe<Array<Scalars['ID']>>,
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_starts_with?: Maybe<Scalars['ID']>,
+  sessionIndex?: Maybe<SessionWhereInput>,
+  treasuryReward?: Maybe<Scalars['String']>,
+  treasuryReward_contains?: Maybe<Scalars['String']>,
+  treasuryReward_ends_with?: Maybe<Scalars['String']>,
+  treasuryReward_gt?: Maybe<Scalars['String']>,
+  treasuryReward_gte?: Maybe<Scalars['String']>,
+  treasuryReward_in?: Maybe<Array<Scalars['String']>>,
+  treasuryReward_lt?: Maybe<Scalars['String']>,
+  treasuryReward_lte?: Maybe<Scalars['String']>,
+  treasuryReward_not?: Maybe<Scalars['String']>,
+  treasuryReward_not_contains?: Maybe<Scalars['String']>,
+  treasuryReward_not_ends_with?: Maybe<Scalars['String']>,
+  treasuryReward_not_in?: Maybe<Array<Scalars['String']>>,
+  treasuryReward_not_starts_with?: Maybe<Scalars['String']>,
+  treasuryReward_starts_with?: Maybe<Scalars['String']>,
+  validatorReward?: Maybe<Scalars['String']>,
+  validatorReward_contains?: Maybe<Scalars['String']>,
+  validatorReward_ends_with?: Maybe<Scalars['String']>,
+  validatorReward_gt?: Maybe<Scalars['String']>,
+  validatorReward_gte?: Maybe<Scalars['String']>,
+  validatorReward_in?: Maybe<Array<Scalars['String']>>,
+  validatorReward_lt?: Maybe<Scalars['String']>,
+  validatorReward_lte?: Maybe<Scalars['String']>,
+  validatorReward_not?: Maybe<Scalars['String']>,
+  validatorReward_not_contains?: Maybe<Scalars['String']>,
+  validatorReward_not_ends_with?: Maybe<Scalars['String']>,
+  validatorReward_not_in?: Maybe<Array<Scalars['String']>>,
+  validatorReward_not_starts_with?: Maybe<Scalars['String']>,
+  validatorReward_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type RewardWhereUniqueInput = {
@@ -7915,19 +8310,6 @@ export type CommentFieldsFragment = (
   )> }
 );
 
-export type CommentRecursiveFragment = (
-  { __typename?: 'comments' }
-  & { comments: Array<(
-    { __typename?: 'comments' }
-    & { comments: Array<(
-      { __typename?: 'comments' }
-      & CommentFieldsFragment
-    )> }
-    & CommentFieldsFragment
-  )> }
-  & CommentFieldsFragment
-);
-
 export type CreatePostMutationVariables = {
   userId: Scalars['Int'],
   content: Scalars['String'],
@@ -7972,7 +8354,7 @@ export type DiscussionPostFragment = (
     & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
-    & CommentRecursiveFragment
+    & CommentFieldsFragment
   )>, topic: (
     { __typename?: 'post_topics' }
     & Pick<Post_Topics, 'id' | 'name'>
@@ -8081,7 +8463,7 @@ export type MotionPostFragment = (
     & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
-    & CommentRecursiveFragment
+    & CommentFieldsFragment
   )>, onchain_link: Maybe<(
     { __typename?: 'onchain_links' }
     & OnchainLinkMotionFragment
@@ -8260,7 +8642,7 @@ export type ProposalPostFragment = (
     & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
-    & CommentRecursiveFragment
+    & CommentFieldsFragment
   )>, onchain_link: Maybe<(
     { __typename?: 'onchain_links' }
     & OnchainLinkProposalFragment
@@ -8314,7 +8696,7 @@ export type ReferendumPostFragment = (
     & Pick<User, 'id' | 'name' | 'username'>
   )>, comments: Array<(
     { __typename?: 'comments' }
-    & CommentRecursiveFragment
+    & CommentFieldsFragment
   )>, onchain_link: Maybe<(
     { __typename?: 'onchain_links' }
     & OnchainLinkReferendumFragment
@@ -8537,17 +8919,6 @@ export const CommentFieldsFragmentDoc = gql`
   updated_at
 }
     `;
-export const CommentRecursiveFragmentDoc = gql`
-    fragment commentRecursive on comments {
-  ...commentFields
-  comments {
-    ...commentFields
-    comments {
-      ...commentFields
-    }
-  }
-}
-    ${CommentFieldsFragmentDoc}`;
 export const DiscussionPostFragmentDoc = gql`
     fragment discussionPost on posts {
   author {
@@ -8559,8 +8930,8 @@ export const DiscussionPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-    ...commentRecursive
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
   }
   title
   topic {
@@ -8572,7 +8943,7 @@ export const DiscussionPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentRecursiveFragmentDoc}`;
+    ${CommentFieldsFragmentDoc}`;
 export const OnchainLinkMotionFragmentDoc = gql`
     fragment onchainLinkMotion on onchain_links {
   id
@@ -8618,8 +8989,8 @@ export const MotionPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-    ...commentRecursive
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
   }
   onchain_link {
     ...onchainLinkMotion
@@ -8634,7 +9005,7 @@ export const MotionPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentRecursiveFragmentDoc}
+    ${CommentFieldsFragmentDoc}
 ${OnchainLinkMotionFragmentDoc}`;
 export const OnchainLinkProposalFragmentDoc = gql`
     fragment onchainLinkProposal on onchain_links {
@@ -8674,8 +9045,8 @@ export const ProposalPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-    ...commentRecursive
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
   }
   onchain_link {
     ...onchainLinkProposal
@@ -8690,7 +9061,7 @@ export const ProposalPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentRecursiveFragmentDoc}
+    ${CommentFieldsFragmentDoc}
 ${OnchainLinkProposalFragmentDoc}`;
 export const OnchainLinkReferendumFragmentDoc = gql`
     fragment onchainLinkReferendum on onchain_links {
@@ -8732,8 +9103,8 @@ export const ReferendumPostFragmentDoc = gql`
   created_at
   id
   updated_at
-  comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-    ...commentRecursive
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
   }
   onchain_link {
     ...onchainLinkReferendum
@@ -8748,7 +9119,7 @@ export const ReferendumPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentRecursiveFragmentDoc}
+    ${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
