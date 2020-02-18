@@ -41,4 +41,5 @@ const Comments = ({ className, comments, refetch }: Props) => {
 };
 
 export default styled(Comments)`
+	margin-top: 4rem;
 `;
