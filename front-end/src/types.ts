@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { network, tokenSymbol } from './global/networkConstants';
 
 export interface UserDetailsContextType {
     id?: number | null,
@@ -76,4 +77,17 @@ export interface AccountMeta {
 export interface Account {
     address: string
     meta: AccountMeta
+}
+
+export type Network = typeof network[keyof typeof network];
+export type TokenSymbol = typeof tokenSymbol[keyof typeof tokenSymbol];
+
+export type ChainPropType = {
+    [index: string]: ChainProps;
+};
+
+export interface ChainProps {
+	'ss58Format': number;
+	'tokenDecimals': number;
+	'tokenSymbol': TokenSymbol;
 }
