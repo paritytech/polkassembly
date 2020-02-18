@@ -1,4 +1,7 @@
-import { OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
+import { Keyring } from '@polkadot/api';
+
+import { chainProperties, network as networkConstants } from '../constants';
+import { Network, OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
 
 export const getMaps = (syncData: SyncData): SyncMap => {
 	const discussionMotionMap = syncData?.discussion.motions?.reduce(
@@ -93,3 +96,44 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 	};
 };
 
+/**
+ * Return the current network
+ *
+ */
+
+export const getNetwork = function (): Network {
+	const network = process.env.NETWORK;
+
+	if (!network) {
+		throw Error('Please set the NETWORK environment variable');
+	}
+
+	const possibleNetworks = Object.values(networkConstants);
+
+	if (!possibleNetworks.includes(network)) {
+		throw Error(`NETWORK environment variable must be one of ${possibleNetworks} `);
+	}
+
+	return network;
+};
+
+/**
+ * Return an address encoded for the current network
+ *
+ * @param address An address
+ *
+ */
+
+export const getEncodedAddress = function (address: string): string|null {
+	const network = getNetwork();
+	const ss58Format = chainProperties?.[network]?.ss58Format;
+	if (!network || !ss58Format) {
+		return null;
+	}
+
+	const keyring = new Keyring({ type: 'sr25519' });
+
+	return keyring.encodeAddress(
+		keyring.decodeAddress(address),
+		chainProperties[network].ss58Format);
+};

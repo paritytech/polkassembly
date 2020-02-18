@@ -1,3 +1,4 @@
+import { network, tokenSymbol } from './constants';
 import { OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment } from './generated/chain-db-graphql';
 import { DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment } from './generated/discussion-db-graphql';
 
@@ -42,3 +43,16 @@ export interface DiscussionSyncMap {
 
 export type objectMap = {[index: string]: string};
 export type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
+
+export type Network = typeof network[keyof typeof network];
+export type TokenSymbol = typeof tokenSymbol[keyof typeof tokenSymbol];
+
+export type ChainPropType = {
+    [index: string]: ChainProps;
+};
+
+export interface ChainProps {
+	'ss58Format': number;
+	'tokenDecimals': number;
+	'tokenSymbol': TokenSymbol;
+}
