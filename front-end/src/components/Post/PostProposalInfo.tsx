@@ -4,7 +4,7 @@ import styled from '@xstyled/styled-components';
 
 import AddressComponent from '../../components/Address';
 import { OnchainLinkProposalFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/chainProperties';
+import { chainProperties } from '../../global/networkConstants';
 import getNetwork from '../../util/getNetwork';
 
 interface Props{
