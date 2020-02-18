@@ -70,3 +70,8 @@ spec:
             configMapKeyRef:
               key: START_FROM
               name: chain-db-watcher-config
+        - name: NETWORK
+          valueFrom:
+            configMapKeyRef:
+              key: NETWORK
+              name: chain-db-watcher-config
