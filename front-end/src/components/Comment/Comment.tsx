@@ -83,13 +83,17 @@ export default styled(Comment)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
-		width: 100%;
+		width: calc(100% - 6rem);
+
+		@media only screen and (max-width: 576px) {
+			width: 100%;
+		}
 	}
 
 	.md {
 		margin-top: 1rem;
-
 		font-size: 1.4rem;
+		overflow-wrap: break-word;
 
 		h1, h2 {
 			font-size: 1.6rem;
