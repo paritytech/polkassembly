@@ -25,6 +25,7 @@ const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
+	const [balance, setBalance] = useState<string>('0');
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
@@ -53,6 +54,18 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
 		setAddress(addressValue);
+
+		if (!api) {
+			console.error('polkadot/api not set');
+			return;
+		}
+
+		api.query.balances
+			.freeBalance(addressValue, (currentBalance) => {
+				setBalance(currentBalance.toString());
+			})
+			.then(unsubscribe => { unsubscribe(); })
+			.catch(console.error);
 	};
 
 	const getAccounts = async (): Promise<undefined> => {
@@ -86,6 +99,13 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 			}
 
 			api.setSigner(injected.signer);
+
+			api.query.balances
+				.freeBalance(accounts[0].address, (currentBalance) => {
+					setBalance(currentBalance.toString());
+				})
+				.then(unsubscribe => { unsubscribe(); })
+				.catch(console.error);
 		}
 
 		return;
@@ -161,6 +181,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 				address={address}
 				defaultAddress={defaultAddress}
 				addressOptions={addressOptions}
+				balance={balance}
 			/>
 		);
 	}
