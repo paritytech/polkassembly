@@ -73,6 +73,7 @@ export default styled(PostContent)`
 		font-size: md;
 		line-height: 150%;
 		margin-bottom: 2rem;
+		overflow-wrap: break-word;
 
 		p, blockquote, ul, ol, dl, table {
 			margin: 0 0 1.5rem 0;
