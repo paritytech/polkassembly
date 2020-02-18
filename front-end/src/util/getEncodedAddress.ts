@@ -1,8 +1,7 @@
 import { Keyring } from '@polkadot/api';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import getNetwork from './getNetwork';
-import { chainProperties } from '../global/chainProperties';
+import { chainProperties } from '../global/networkConstants';
 
 /**
  * Return an address encoded for the current network
@@ -11,19 +10,16 @@ import { chainProperties } from '../global/chainProperties';
  *
  */
 
-export default function(address: InjectedAccountWithMeta['address']) {
-
+export default function (address: string): string|null {
 	const network = getNetwork();
-
-	if (!network || !chainProperties?.[network]?.ss58Format) {
+	const ss58Format = chainProperties?.[network]?.ss58Format;
+	if (!network || !ss58Format) {
 		return null;
 	}
 
 	const keyring = new Keyring({ type: 'sr25519' });
 
-	return chainProperties?.[network]?.ss58Format
-		? keyring.encodeAddress(
-			keyring.decodeAddress(address),
-			chainProperties[network].ss58Format as number)
-		: null;
+	return keyring.encodeAddress(
+		keyring.decodeAddress(address),
+		chainProperties[network].ss58Format);
 }
