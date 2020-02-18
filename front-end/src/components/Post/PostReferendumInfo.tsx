@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { OnchainLinkReferendumFragment } from '../../generated/graphql';
 import { chainProperties } from '../../global/chainProperties';
 import getNetwork from '../../util/getNetwork';
@@ -35,7 +36,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
 				{depositAmount && currentNetwork &&
@@ -109,7 +110,7 @@ export default styled(PostReferendumInfo)`
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;
 	font-family: 'Roboto Mono';
-	
+
 	h6 {
 		font-family: 'Roboto Mono';
 		font-size: sm;

@@ -1,0 +1,7 @@
+- args:
+    sql: ALTER TABLE "public"."comments" ADD COLUMN "parent_comment_id" uuid
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."comments" ALTER COLUMN "parent_comment_id" DROP NOT
+      NULL
+  type: run_sql
