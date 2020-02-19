@@ -10,6 +10,7 @@ stages:
   - test
   - dockerize
   - deploy
+  - post-deploy
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -80,8 +81,8 @@ dockerize-front-end:
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL}"
   only:
-      - master
-      - /^fv-.*/
+    - master
+    - /^fv-.*/
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -89,8 +90,8 @@ dockerize-auth-server:
   environment:
     name: parity-build
   only:
-      - master
-      - /^fv-.*/
+    - master
+    - /^fv-.*/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -98,7 +99,7 @@ dockerize-chain-db-watcher:
   environment:
     name: parity-build
   only:
-      - master
+    - master
   <<: *build_and_push
 
 #### stage:                        deploy
@@ -120,3 +121,22 @@ deploy:
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
     # deploy yaml to cluster
     - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
+
+#### stage:                        post-deploy
+
+post-deploy:
+  stage: post-deploy
+  environment:
+    name: dashboards-cluster-1
+  tags:
+    - kubernetes-parity-build
+  only:
+    - master
+  script:
+    # redeploy all pod's
+    - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
+      do
+        r=$(kubectl -n $KUBE_NAMESPACE get -o template deployments "$d" --template={{.spec.replicas}});
+        kubectl scale deployment $d --replicas=0 -n $KUBE_NAMESPACE &&
+        kubectl scale deployment $d --replicas=$r -n $KUBE_NAMESPACE;
+      done
