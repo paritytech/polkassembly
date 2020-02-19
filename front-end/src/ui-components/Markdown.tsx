@@ -7,10 +7,7 @@ interface Props {
 	md: string
 }
 
-const Markdown = ({ className, md }: Props) => {
-
-	return <ReactMarkdown className={className} source={md}/>;
-};
+const Markdown = ({ className, md }: Props) => <ReactMarkdown className={className} source={md}/>;
 
 export default styled(Markdown)`
 	color: black_text;
