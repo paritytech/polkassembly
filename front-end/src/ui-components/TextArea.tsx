@@ -4,7 +4,6 @@ import ReactMde, { commands }  from 'react-mde';
 import styled from '@xstyled/styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import MarkdownStyle from './MarkdownStyle';
 
 const StyledTextArea = styled.div`
 
@@ -76,15 +75,15 @@ const StyledTextArea = styled.div`
 				}
 
 				h1, h2 {
+					font-size: 2.4rem;
 					font-weight: 400;
+					margin-bottom: 1.2rem;
 				}
-				
-				h3, h4, h5, h6 {
+		
+				h3, h4 {
+					font-size: lg;
 					font-weight: 500;
-				}
-
-				h4 {
-					font-size: 1.4rem;
+					margin-bottom: 0.8rem;
 				}
 
 				a {
@@ -92,14 +91,14 @@ const StyledTextArea = styled.div`
 
 					&:hover {
 						text-decoration: none;
-						color: #D94C3D;
-						border-bottom: 1px solid #D94C3D;
+						color: red_secondary;
+						border-bottom-style: solid;
+						border-bottom-width: 1px;
+						border-bottom-color: red_secondary;
 					}
 				}
 
 				p {
-					font-size: 1.4rem;
-
 					img {
 						opacity: 0.6;
 						max-width: 100%;
@@ -107,7 +106,7 @@ const StyledTextArea = styled.div`
 				}
 
 				blockquote {
-					color: #7E7A7A;
+					color: grey_primary;
 					font-size: 1.6rem;
 				}
 
@@ -181,14 +180,16 @@ const StyledTextArea = styled.div`
 					}
 
 					.react-mde-dropdown {
-						border: 1px solid #EEE;
+						border-style: solid;
+						border-width: 1px;
+						border-color: grey_light;
 						border-radius: 0.5rem;
 
 						.mde-header-item {
 
 							button {
 								p {
-									color: #706D6D;
+									color: grey_primary;
 								}
 
 								p:hover {
@@ -231,18 +232,16 @@ export function TextArea(props: Props): React.ReactElement {
 
 	return (
 		<StyledTextArea className="container">
-			<MarkdownStyle>
-				<ReactMde
-					commands={listCommands}
-					generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
-					name={props.name}
-					onChange={props.onChange}
-					onTabChange={setSelectedTab}
-					selectedTab={selectedTab}
-					value={props.value}
-					{...props}
-				/>
-			</MarkdownStyle>
+			<ReactMde
+				commands={listCommands}
+				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+				name={props.name}
+				onChange={props.onChange}
+				onTabChange={setSelectedTab}
+				selectedTab={selectedTab}
+				value={props.value}
+				{...props}
+			/>
 		</StyledTextArea>
 	);
 }
