@@ -33,6 +33,11 @@ export default {
 	PASSWORD_RESET_TOKEN_NOT_FOUND: 'Password reset token not found.',
 	PASSWORD_RESET_TOKEN_INVALID: 'Password reset token expired.',
 	PASSWORD_RESET_SUCCESSFUL: 'Password successfully reset.',
+	PROPOSER_ADDRESS_NOT_EXIST: 'Proposer address doesn\'t exist',
+	PROPOSER_ADDRESS_NOT_LINKED: 'Proposer address not linked',
+	PROPOSER_EMAIL_NOT_EXIST: 'Proposer email not exist',
+	PROPOSER_EMAIL_NOT_VERIFIED: 'Proposer email not verified',
+	PROPOSAL_CREATED_MAIL_SENT_SUCCESSFULLY: 'Proposal mail sent successfully',
 	REFRESH_TOKEN_EXPIRED: 'Refresh token expired',
 	REFRESH_TOKEN_NOT_PROVIDED: 'Refresh-token not provided.',
 	RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL: 'A new verification mail has been sent to your email.',
@@ -47,5 +52,6 @@ export default {
 	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',
 	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed successfuly.',
 	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
-	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.'
+	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.',
+	WRONG_API_SECRET: 'Wrong api secret'
 };

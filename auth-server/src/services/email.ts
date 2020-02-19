@@ -146,3 +146,34 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 	sgMail.send(msg).catch(e =>
 		console.error('Email undo email not sent', e));
 };
+
+export const sendProposalCreatedEmail = (user: User, postId: number) => {
+	if (!apiKey) {
+		console.warn('Proposal Created Email not sent due to missing API key');
+		return;
+	}
+
+	const text = `
+		<p>
+			Hi ${user.name || ''}!<br/><br/>
+
+			You have submitted a motion/proposal on chain.<br />
+			Click here to login to polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/post/${postId}">${DOMAIN}/post/${postId}</a>.<br /><br />
+
+			You can deactivate this notifications on the notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
+
+			Polkassembly Team
+		</p>
+	`;
+
+	const msg = {
+		to: user.email,
+		from: FROM,
+		subject: 'You have submitted a motion/proposal on chain',
+		text,
+		html: text
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Proposal Created Email not sent', e));
+};
