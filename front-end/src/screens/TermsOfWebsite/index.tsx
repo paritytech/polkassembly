@@ -3,7 +3,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Grid } from 'semantic-ui-react';
 
-import termsAndConditionsMd from '../../assets/terms-and-conditions';
+import termsOfWebsite from '../../assets/terms-of-website';
 
 interface Props {
 	className?: string
@@ -14,7 +14,7 @@ const TermsAndConditions = ({ className }:Props): JSX.Element => {
 	return (
 		<Grid className={className}>
 			<Grid.Column className='policy_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={4}>
-				<ReactMarkdown className='markdown' source={termsAndConditionsMd} />
+				<ReactMarkdown className='markdown' source={termsOfWebsite} />
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={4} computer={2} largeScreen={2} widescreen={12}/>
 		</Grid>

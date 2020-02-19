@@ -3,7 +3,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Grid } from 'semantic-ui-react';
 
-import { privacyPolicyMd } from '../../assets/privacy-policy';
+import privacyPolicyMd from '../../assets/privacy-policy';
 
 interface Props {
 	className?: string
