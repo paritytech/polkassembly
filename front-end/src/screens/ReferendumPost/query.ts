@@ -16,7 +16,6 @@ const onchainLinkReferendum = gql`
                 id
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription
@@ -27,6 +26,9 @@ const onchainLinkReferendum = gql`
                     value
                 }
             }
+        }
+        onchain_proposal {
+            depositAmount
         }
     }
 `;

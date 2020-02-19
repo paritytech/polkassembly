@@ -9,12 +9,12 @@ const onchainLinkProposal = gql`
         onchain_referendum_id,
         onchain_proposal(where: {}) {
             id
+            depositAmount
             proposalStatus(last: 1) {
                 id
                 status
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription

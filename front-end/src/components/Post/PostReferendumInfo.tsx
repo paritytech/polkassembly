@@ -18,6 +18,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
+		onchain_proposal: onchainProposal,
 		onchain_referendum: onchainReferendum,
 		proposer_address: proposerAddress
 	} = onchainLink;
@@ -27,7 +28,7 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	}
 
 	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -39,11 +40,11 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
-				{depositAmount && currentNetwork &&
+				{onchainProposal?.[0]?.depositAmount && currentNetwork &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>
 							<h6>Deposit</h6>
-							{parseInt(depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
+							{parseInt(onchainProposal?.[0]?.depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 						</div>
 					</Grid.Column>}
 				{delay &&
