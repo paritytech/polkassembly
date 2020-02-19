@@ -1,4 +1,4 @@
-export default `# Polkassembly privacy notice
+export default `Polkassembly privacy notice
 ====================
 
 Parity Technologies Limited (&quot; **Parity**&quot;, &quot; **we**&quot;, &quot; **us**&quot;) collects, uses, and handles your personal information when you use Polkassembly.
