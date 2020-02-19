@@ -132,16 +132,3 @@ deploy-production:
     - tags
   <<: *deploy-k8s
 
-
-#### stage:                        post-deploy
-
-post-deploy:
-  stage: post-deploy
-  script:
-    # redeploy all pod's
-    - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
-      do
-        r=$(kubectl -n $KUBE_NAMESPACE get -o template deployments "$d" --template={{.spec.replicas}});
-        kubectl scale deployment $d --replicas=0 -n $KUBE_NAMESPACE &&
-        kubectl scale deployment $d --replicas=$r -n $KUBE_NAMESPACE;
-      done
