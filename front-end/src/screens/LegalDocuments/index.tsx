@@ -14,10 +14,10 @@ interface Props{
 const MdScreen = ({ md, className } : Props) => {
 	return (
 		<Grid className={className}>
-			<Grid.Column className='md_box' mobile={16} tablet={12} computer={10} largeScreen={10} widescreen={10}>
+			<Grid.Column tablet={4} computer={2} largeScreen={2} widescreen={2}/>
+			<Grid.Column className='md_box' mobile={16} tablet={12} computer={12} largeScreen={12} widescreen={12}>
 				<Markdown className='markdown' md={md}/>
 			</Grid.Column>
-			<Grid.Column tablet={4} computer={6} largeScreen={6} widescreen={6}/>
 		</Grid>
 	);
 };
