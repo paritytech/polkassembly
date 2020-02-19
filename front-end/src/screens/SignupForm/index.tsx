@@ -55,13 +55,13 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={4} widescreen={4}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={8} widescreen={8}>
 				<Form onSubmit={handleSubmit(handleSubmitForm)}>
 					<h3>Sign Up</h3>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Username</label>
+							<label>Username<sup>*</sup></label>
 							<input
 								className={errors.username ? 'error' : ''}
 								name='username'
@@ -78,10 +78,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>
-								Display Name&nbsp;
+								Display Name
 								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='We only use your display name as a more readable alternative to your username.'
+									trigger={<Icon name='question circle' style={{ marginLeft: '0.2rem' }}/>}
+									content='This name is used as a more readable alternative to your username.'
 									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
 									hoverable={true}
 								/>
@@ -98,10 +98,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>
-								Email&nbsp;
+								Email
 								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
+									trigger={<Icon name='question circle' style={{ marginLeft: '0.2rem' }}/>}
+									content='Your email is used for password recovery or discussion notifications.'
 									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
 									hoverable={true}
 								/>
@@ -116,14 +116,11 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								type='text'
 							/>
 							{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
-							<div className="text-muted">
-								We&apos;ll never share your email with anyone else.
-							</div>
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Password</label>
+							<label>Password<sup>*</sup></label>
 							<input
 								className={errors.password ? 'error' : ''}
 								name='password'
@@ -143,24 +140,11 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								ref={register({ required: true })}
 								type='checkbox'
 							/>
-							I agree to the <Link to='/terms-and-conditions'>Terms and Conditions</Link>
+							I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
 						</label>
-						{errors.termsandconditions && <div className={'errorText'}>Please accept the Terms and Conditions.</div>}
+						{errors.termsandconditions && <div className={'errorText'}>Please agree to the terms of the Polkassembly end user agreement.</div>}
 					</Form.Field>
-					<Form.Field>
-						<label className='checkbox-label'>
-							<input
-								className={errors.privacypolicy ? 'error' : ''}
-								id='pp_checkbox'
-								name='privacypolicy'
-								value='yes'
-								ref={register({ required: true })}
-								type='checkbox'
-							/>
-							I agree to the <Link to='/privacy'>Privacy Policy</Link>
-						</label>
-						{errors.privacypolicy && <div className={'errorText'}>Please accept the Privacy Policy.</div>}
-					</Form.Field>
+					<div>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -174,13 +158,21 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>
 	);
 };
 
 export default styled(SignupForm)`
 
+	a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
+	sup {
+		color: grey_primary;
+	}
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
@@ -208,12 +200,6 @@ export default styled(SignupForm)`
 		font-size: sm !important;
 		font-weight: 400 !important;
 		color: grey_primary !important;
-		a {
-			color: grey_primary;
-			border-bottom-style: solid;
-			border-bottom-width: 1px;
-			border-bottom-color: grey_primary;
-		}
 	}
 
 	.ui.form input[type=checkbox]{
