@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import ReactMde, { commands }  from 'react-mde';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import MarkdownStyle from './MarkdownStyle';
 
 const StyledTextArea = styled.div`
 
@@ -71,6 +72,14 @@ const StyledTextArea = styled.div`
 
 				h1, h2, h3, h4, h5, h6 {
 					font-family: Roboto;
+					border-bottom: none;
+				}
+
+				h1, h2 {
+					font-weight: 400;
+				}
+				
+				h3, h4, h5, h6 {
 					font-weight: 500;
 				}
 
@@ -79,7 +88,7 @@ const StyledTextArea = styled.div`
 				}
 
 				a {
-					color: #FF5A47;
+					color: red_primary;
 
 					&:hover {
 						text-decoration: none;
@@ -110,7 +119,7 @@ const StyledTextArea = styled.div`
 
 		.grip {
 			border-top: none;
-			color: #B5AEAE;
+			color: grey_secondary;
 
 			.icon {
 				margin-bottom: 1rem;
@@ -118,30 +127,34 @@ const StyledTextArea = styled.div`
 		}
 
 		.mde-header {
-			background: #FBFAFA;
-			border-bottom: 1px solid #DED7D7;
+			background-color: grey_app_background;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_light;
 
 			.mde-tabs {
 				margin: 0rem 0.5rem;
 
 				button {
-					font-family: 'Roboto Mono';
-					font-size: 1.2rem;
-					font-weight: 500;
+					font-family: 'Roboto';
+					font-size: sm;
+					font-weight: 400;
 					padding: 0.8rem 1.6rem;
-					color: #706D6D;
-					background: #FBFAFA;
+					color: black_text;
+					background: grey_app_background;
 					border-radius: 0.3em;
-					border-bottom-color: #DED7D7;
+					border-bottom-color: grey_light;
 					margin-bottom: -1px;
 					margin-top: 1rem;
 
 					&.selected, &:focus {
-						background: #FFF;
-						color: #282828;
-						border: 1px solid #DED7D7;
+						background: white;
+						color: black_primary;
+						border-style: solid;
+						border-width: 1px;
+						border-color: grey_light;
 						outline: none;
-						border-bottom-color: #fffdfd;
+						border-bottom-color: white;
 						margin-bottom: -1px;
 						border-bottom-right-radius: 0;
 						border-bottom-left-radius: 0;
@@ -149,7 +162,7 @@ const StyledTextArea = styled.div`
 					}
 
 					&:hover {
-						color: #282828;
+						color: black_primary;
 					}
 				}
 			}
@@ -159,11 +172,11 @@ const StyledTextArea = styled.div`
 
 				.mde-header-item {
 					button {
-						color: #706D6D;
+						color: grey_primary;
 						font-size: 1.4rem;
 
 						&:hover, &:active, &:focus {
-							color: #282828;
+							color: black_primary;
 						}
 					}
 
@@ -179,7 +192,7 @@ const StyledTextArea = styled.div`
 								}
 
 								p:hover {
-									color: #282828;
+									color: black_primary;
 								}
 							}
 						}
@@ -218,16 +231,18 @@ export function TextArea(props: Props): React.ReactElement {
 
 	return (
 		<StyledTextArea className="container">
-			<ReactMde
-				commands={listCommands}
-				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
-				name={props.name}
-				onChange={props.onChange}
-				onTabChange={setSelectedTab}
-				selectedTab={selectedTab}
-				value={props.value}
-				{...props}
-			/>
+			<MarkdownStyle>
+				<ReactMde
+					commands={listCommands}
+					generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+					name={props.name}
+					onChange={props.onChange}
+					onTabChange={setSelectedTab}
+					selectedTab={selectedTab}
+					value={props.value}
+					{...props}
+				/>
+			</MarkdownStyle>
 		</StyledTextArea>
 	);
 }

@@ -16,7 +16,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 	return (
 		<Grid>
 			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
-				<h3>Settings</h3>
+				<h2>Settings</h2>
 				<Divider/>
 				<Username/>
 				<Fullname/>

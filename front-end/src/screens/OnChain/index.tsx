@@ -14,11 +14,11 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 			<h1>Latest On Chain Activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h2>Referenda</h2>
+					<h3>Referenda</h3>
 					<ReferendaContainer className='referendaContainer'/>
-					<h2>Proposals</h2>
+					<h3>Proposals</h3>
 					<ProposalContainer className='proposalContainer'/>
-					<h2>Motions</h2>
+					<h3>Motions</h3>
 					<MotionContainer className='motionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>

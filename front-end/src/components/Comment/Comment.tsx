@@ -14,6 +14,7 @@ import {
 } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
+import MarkdownStyle from '../../ui-components/MarkdownStyle';
 import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props{
@@ -52,12 +53,15 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					created_at={created_at}
 					updated_at={updated_at}
 				/>
-				<EditableCommentContent
-					authorId={author.id}
-					commentId={id}
-					content={content}
-					refetch={refetch}
-				/>
+				<MarkdownStyle>
+					<EditableCommentContent
+						authorId={author.id}
+						className='comment-content'
+						commentId={id}
+						content={content}
+						refetch={refetch}
+					/>
+				</MarkdownStyle>
 			</div>
 		</div>
 	);
@@ -90,78 +94,7 @@ export default styled(Comment)`
 		}
 	}
 
-	.md {
-		margin-top: 1rem;
-		font-size: 1.4rem;
-		overflow-wrap: break-word;
-
-		h1, h2 {
-			font-size: 1.6rem;
-			line-height: 120%;
-			margin-bottom: 0.5rem;
-		}
-		
-		h3, h4 {
-			font-size: 1.4rem;
-			line-height: 120%;
-			margin-bottom: 0.5rem;
-		}
-
-		p, blockquote, ul, ol, dl, table {
-			margin-bottom: 0.8rem;
-		}
-
-		ul {
-			margin-left: 3rem;
-			li > input {
-				display: none;
-			}
-		}
-
-		ol {
-			padding-inline-start: 3rem;
-		}
-
-		a {
-			color: red_primary;
-
-			&:hover {
-				text-decoration: none;
-				color: red_secondary;
-			}
-		}
-
-		blockquote {
-			margin-left: 0;
-			padding: 0 1em;
-			color: grey_primary;
-			border-left-style: solid;
-			border-left-width: 0.25rem;
-			border-left-color: grey_primary;
-			font-size: md;
-				& > :first-child {
-					margin-top: 0;
-				}
-				& > :last-child {
-					margin-bottom: 0;
-				}
-		}
-
-		img {
-			max-width: 100%;
-			margin: 2rem 0;
-		}
-
-		code {
-			padding: 0.2em 0 0.2em 0;
-			margin: 0;
-			font-size: 1.2rem;
-			background-color: rgba(0, 0, 0, 0.04);
-			border-radius: 3px;
-			color: black_text;
-			&::before, &::after {
-			  letter-spacing: -0.2em;
-			}
-		}
+	.comment-content {
+		margin-top: 1.2rem;
 	}
 `;
