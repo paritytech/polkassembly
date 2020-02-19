@@ -55,12 +55,15 @@ const Discussion = function ({
 export default styled(Discussion)`
 	padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
-	border: 1px solid #EEE;
+	border-style: solid;
+    border-width: 1px;
+	border-color: grey_light;
+	
 	&:hover {
-		border-style: solid;
-		border-width: 1px;
-		border-color: #CCC;
-		text-decoration: none;
+		background-color: grey_app_background;
+        border-style: solid;
+        border-width: 1px;
+        text-decoration: none;
 	}
 	overflow-wrap: break-word;
 
@@ -68,6 +71,7 @@ export default styled(Discussion)`
 		box-shadow: none;
 		border: none;
 		margin: 0.5rem 0;
+		background-color: rgba(0,0,0,0);
 	}
 	.ui.segment {
 		padding: 0;
