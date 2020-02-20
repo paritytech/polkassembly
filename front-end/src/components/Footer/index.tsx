@@ -18,6 +18,9 @@ const Footer = ({ className }:Props ): JSX.Element => {
 				<Menu.Item as={Link} to="/terms-and-conditions">
 					Terms &amp; Conditions
 				</Menu.Item>
+				<Menu.Item as={Link} to="/terms-of-website">
+					Terms of Website
+				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
 					Privacy Policy
 				</Menu.Item>
