@@ -14,7 +14,6 @@ import {
 } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
-import MarkdownStyle from '../../ui-components/MarkdownStyle';
 import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props{
@@ -53,15 +52,13 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					created_at={created_at}
 					updated_at={updated_at}
 				/>
-				<MarkdownStyle>
-					<EditableCommentContent
-						authorId={author.id}
-						className='comment-content'
-						commentId={id}
-						content={content}
-						refetch={refetch}
-					/>
-				</MarkdownStyle>
+				<EditableCommentContent
+					authorId={author.id}
+					className='comment-content'
+					commentId={id}
+					content={content}
+					refetch={refetch}
+				/>
 			</div>
 		</div>
 	);

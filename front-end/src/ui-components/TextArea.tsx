@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import ReactMde, { commands }  from 'react-mde';
 import styled from '@xstyled/styled-components';
+import Markdown from './Markdown';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
@@ -234,7 +234,7 @@ export function TextArea(props: Props): React.ReactElement {
 		<StyledTextArea className="container">
 			<ReactMde
 				commands={listCommands}
-				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+				generateMarkdownPreview={markdown => Promise.resolve(<Markdown md={markdown} />) }
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}

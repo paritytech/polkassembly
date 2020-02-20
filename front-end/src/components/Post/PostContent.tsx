@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import styled from '@xstyled/styled-components';
 
 import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
-import MarkdownStyle from '../../ui-components/MarkdownStyle';
 import StatusTag from '../../ui-components/StatusTag';
 import UpdateLabel from '../../ui-components/UpdateLabel';
+import Markdown from '../../ui-components/Markdown';
 
 interface Props {
 	className?: string,
@@ -36,9 +35,7 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 					updated_at={updated_at}
 				/>
 			</div>
-			<MarkdownStyle>
-				<ReactMarkdown className='markdown' source={content} />
-			</MarkdownStyle>
+			<Markdown md={content} />
 		</div>
 	);
 };

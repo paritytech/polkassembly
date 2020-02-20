@@ -10,43 +10,23 @@ interface Props {
 const Markdown = ({ className, md }: Props) => <ReactMarkdown className={className} source={md}/>;
 
 export default styled(Markdown)`
-	color: black_text;
-	font-family: 'Roboto';
 	font-size: md;
-	line-height: 150%;
 	margin-bottom: 2rem;
+	overflow-wrap: break-word;
 
 	p, blockquote, ul, ol, dl, table {
+		line-height: 150%;
 		margin: 0 0 1.5rem 0;
 	}
 
 	h1, h2 {
-		margin: 2rem 0 1.5rem 0;
+		font-size: 2.4rem;
+		margin-bottom: 1.2rem;
 	}
 
 	h3, h4 {
-		margin: 1.5rem 0 0.5rem 0;
-	}
-
-	h1 {
-		font-size: 2.4rem;
-	}
-
-	h2 {
-		font-size: 1.8rem;
-	}
-
-	h3 {
-		font-size: md;
-	}
-
-	h4 {
-		font-size: md;
-		font-family: 'Roboto Mono';
-	}
-
-	h5, h6 {
-		font-size: sm;
+		font-size: lg;
+		margin-bottom: 0.8rem;
 	}
 
 	ul, ol {
@@ -94,7 +74,7 @@ export default styled(Markdown)`
 		border-radius: 3px;
 		color: black_text;
 		&::before, &::after {
-			letter-spacing: -0.2em;
+		letter-spacing: -0.2em;
 		}
 	}
 `;
