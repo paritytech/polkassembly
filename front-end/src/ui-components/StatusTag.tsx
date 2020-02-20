@@ -73,7 +73,7 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
 			color: blue_primary;
 			background-color: blue_primary_transparent;
         }
-        &.Enacted, &.Executed {
+        &.Passed, &.Enacted, &.Executed {
             border-color: green_primary;
 			color: green_primary;
 			background-color: green_primary_transparent;
