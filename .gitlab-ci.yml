@@ -10,6 +10,7 @@ stages:
   - test
   - dockerize
   - deploy
+  - post-deploy
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -70,7 +71,7 @@ lint-back-end:
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     - echo "$BUILD_ARGS"
     - echo "$DOCKER_REGISTRY_JSON" | docker login -u _json_key --password-stdin https://gcr.io
-    - docker build -t "$DOCKER_IMAGE_FULL_NAME" $(echo -E $BUILD_ARGS) $POD_NAME
+    - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
     - docker push "$DOCKER_IMAGE_FULL_NAME"
 
 dockerize-front-end:
@@ -78,10 +79,10 @@ dockerize-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL}"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$REACT_APP_HASURA_GRAPHQL_URL\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
-      - master
-      - /^fv-.*/
+    - master
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -89,8 +90,7 @@ dockerize-auth-server:
   environment:
     name: parity-build
   only:
-      - master
-      - /^fv-.*/
+    - master
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -98,7 +98,7 @@ dockerize-chain-db-watcher:
   environment:
     name: parity-build
   only:
-      - master
+    - master
   <<: *build_and_push
 
 #### stage:                        deploy
@@ -120,3 +120,22 @@ deploy:
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
     # deploy yaml to cluster
     - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
+
+#### stage:                        post-deploy
+
+post-deploy:
+  stage: post-deploy
+  environment:
+    name: dashboards-cluster-1
+  tags:
+    - kubernetes-parity-build
+  only:
+    - master
+  script:
+    # redeploy all pod's
+    - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
+      do
+        r=$(kubectl -n $KUBE_NAMESPACE get -o template deployments "$d" --template={{.spec.replicas}});
+        kubectl scale deployment $d --replicas=0 -n $KUBE_NAMESPACE &&
+        kubectl scale deployment $d --replicas=$r -n $KUBE_NAMESPACE;
+      done
