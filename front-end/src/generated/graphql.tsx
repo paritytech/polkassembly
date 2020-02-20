@@ -8446,7 +8446,7 @@ export type OnchainLinkMotionFragment = (
       & Pick<MotionProposalArgument, 'name' | 'value'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8619,13 +8619,13 @@ export type OnchainLinkProposalFragment = (
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
   & { onchain_proposal: Array<Maybe<(
     { __typename?: 'Proposal' }
-    & Pick<Proposal, 'id'>
+    & Pick<Proposal, 'id' | 'depositAmount'>
     & { proposalStatus: Maybe<Array<(
       { __typename?: 'ProposalStatus' }
       & Pick<ProposalStatus, 'id' | 'status'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8679,7 +8679,7 @@ export type OnchainLinkReferendumFragment = (
       & Pick<ReferendumStatus, 'status' | 'id'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8964,7 +8964,6 @@ export const OnchainLinkMotionFragmentDoc = gql`
       value
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription
@@ -9015,12 +9014,12 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_referendum_id
   onchain_proposal(where: {}) {
     id
+    depositAmount
     proposalStatus(last: 1) {
       id
       status
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription
@@ -9078,7 +9077,6 @@ export const OnchainLinkReferendumFragmentDoc = gql`
       id
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription

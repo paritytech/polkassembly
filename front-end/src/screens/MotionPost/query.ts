@@ -21,7 +21,6 @@ const onchainLinkMotion = gql`
                 value
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription
