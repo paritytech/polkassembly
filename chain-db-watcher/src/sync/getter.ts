@@ -4,10 +4,12 @@ import { GraphQLClient } from 'graphql-request';
 
 import {
 	getSdk as getOnchainSdk,
+	OnchainMotionFragment,
 	OnchainProposalFragment,
 	OnchainReferendumFragment
 } from '../generated/chain-db-graphql';
 import {
+	DiscussionMotionFragment,
 	DiscussionProposalFragment,
 	DiscussionReferendumFragment,
 	getSdk as getDiscussionSdk
@@ -17,6 +19,30 @@ dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const onchainGraphqlServerUrl = process.env.CHAIN_DB_GRAPHQL_URL;
+const startBlock = Number(process.env.START_FROM) || 0;
+
+export const getDiscussionMotions = async (): Promise<Array<DiscussionMotionFragment> | null | undefined> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionMotions();
+
+		return data?.onchain_links;
+	} catch (err) {
+		console.error(chalk.red('getDiscussionMotions execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
 
 export const getDiscussionProposals = async (): Promise<Array<DiscussionProposalFragment> | null | undefined> => {
 	if (!discussionGraphqlUrl) {
@@ -64,6 +90,29 @@ export const getDiscussionReferenda = async (): Promise<Array<DiscussionReferend
 	}
 };
 
+export const getOnChainMotions = async (): Promise<Array<OnchainMotionFragment | null> | undefined> => {
+	if (!onchainGraphqlServerUrl) {
+		throw new Error(
+			'Environment variable for the CHAIN_DB_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
+
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getOnchainMotions({ startBlock });
+
+		return data?.motions;
+	} catch (err) {
+		console.error(chalk.red('getOnChainMotions execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
 export const getOnChainProposals = async (): Promise<Array<OnchainProposalFragment | null> | undefined> => {
 	if (!onchainGraphqlServerUrl) {
 		throw new Error(
@@ -75,7 +124,7 @@ export const getOnChainProposals = async (): Promise<Array<OnchainProposalFragme
 		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getOnchainProposals();
+		const data = await onchainSdk.getOnchainProposals({ startBlock });
 
 		return data?.proposals;
 	} catch (err) {
@@ -98,7 +147,7 @@ export const getOnchainReferenda = async (): Promise<Array<OnchainReferendumFrag
 		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getOnchainReferenda();
+		const data = await onchainSdk.getOnchainReferenda({ startBlock });
 
 		return data?.referendums;
 	} catch (err) {

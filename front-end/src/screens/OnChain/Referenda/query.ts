@@ -1,21 +1,11 @@
 import gql from 'graphql-tag';
-// import { post_type } from '../../../global/post_types';
-// import { post_topic } from '../../../global/post_topics';
-
-// const type = post_type.ON_CHAIN;
-// const topic = post_topic.DEMOCRACY;
 
 export const QUERY_LATEST_REFERENDA = gql`
-  query LatestDemocracyReferendaPosts($postType: Int! = 2, $postTopic: Int! = 1, $limit: Int! = 5) {
+  query LatestReferendaPosts($postType: Int!, $limit: Int! = 5) {
     posts(limit: $limit, where: {
         type: {
             id: {
                 _eq: $postType
-            }
-        },
-        topic: {
-            id: {
-                _eq: $postTopic
             }
         },
         onchain_link: {

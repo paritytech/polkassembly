@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm, FieldError } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { Grid, Icon, Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -54,8 +55,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
+			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
 				<Form onSubmit={handleSubmit(handleSubmitForm)}>
 					<h3>Sign Up</h3>
 					<Form.Group>
@@ -81,7 +82,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								<Popup
 									trigger={<Icon name='question circle'/>}
 									content='We only use your display name as a more readable alternative to your username.'
-									style={{ marginLeft: '-0.7rem' }}
+									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+									hoverable={true}
 								/>
 							</label>
 							<input
@@ -100,7 +102,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								<Popup
 									trigger={<Icon name='question circle'/>}
 									content='We only use your email for password recovery and to receive notifications if you wish to opt-in.'
-									style={{ marginLeft: '-0.7rem' }}
+									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+									hoverable={true}
 								/>
 							</label>
 							<input
@@ -131,6 +134,33 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 							{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 						</Form.Field>
 					</Form.Group >
+					<Form.Field>
+						<label className='checkbox-label'>
+							<input
+								className={errors.termsandconditions ? 'error' : ''}
+								name='termsandconditions'
+								value='yes'
+								ref={register({ required: true })}
+								type='checkbox'
+							/>
+							I agree to the <Link to='/terms-and-conditions'>Terms and Conditions</Link>
+						</label>
+						{errors.termsandconditions && <div className={'errorText'}>Please accept the Terms and Conditions.</div>}
+					</Form.Field>
+					<Form.Field>
+						<label className='checkbox-label'>
+							<input
+								className={errors.privacypolicy ? 'error' : ''}
+								id='pp_checkbox'
+								name='privacypolicy'
+								value='yes'
+								ref={register({ required: true })}
+								type='checkbox'
+							/>
+							I agree to the <Link to='/privacy'>Privacy Policy</Link>
+						</label>
+						{errors.privacypolicy && <div className={'errorText'}>Please accept the Privacy Policy.</div>}
+					</Form.Field>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -144,7 +174,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 					</div>
 				</Form>
 			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
+			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>
 	);
 };
@@ -156,6 +186,7 @@ export default styled(SignupForm)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-top: 3rem;
 	}
 
 	input.error {
@@ -168,5 +199,27 @@ export default styled(SignupForm)`
 
 	i.icon.question.circle:before {
 		color: grey_secondary;
+	}
+
+	.checkbox-label {
+		position: relative;
+		bottom: 0.1rem;
+		display: inline-block !important;
+		font-size: sm !important;
+		font-weight: 400 !important;
+		color: grey_primary !important;
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
+	}
+
+	.ui.form input[type=checkbox]{
+		position: relative;
+		bottom: 0.2rem;
+		margin-right: 1rem;
+		vertical-align: middle;
 	}
 `;

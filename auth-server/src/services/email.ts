@@ -8,7 +8,7 @@ import PasswordResetToken from '../model/PasswordResetToken';
 
 const apiKey = process.env.SENDGRID_API_KEY;
 const FROM = 'noreply@polkassembly.io';
-const DOMAIN = 'http://polkassembly.io';
+const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
 
 if (apiKey) {
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);

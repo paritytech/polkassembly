@@ -6,11 +6,13 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
 import {
+	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
 	addDiscussionReferendum,
+	motionDiscussionExists,
 	proposalDiscussionExists
 } from './graphql_helpers';
-import { proposalSubscription, referendumSubscription } from './queries';
+import { motionSubscription, proposalSubscription, referendumSubscription } from './queries';
 import { syncDBs } from './sync';
 
 dotenv.config();
@@ -22,9 +24,10 @@ const eventStatus = {
 	Started: 'Started'
 };
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
+const startBlock = Number(process.env.START_FROM) || 0;
 
 async function main (): Promise<void> {
-	console.log('🔄 Syncing chain-db and discussion-db...');
+	console.log(`🔄 Syncing chain-db and discussion-db from block ${startBlock}...`);
 	await syncDBs();
 
 	const getWsClient = function (wsurl: string): SubscriptionClient {
@@ -52,15 +55,41 @@ async function main (): Promise<void> {
 
 	const proposalSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		proposalSubscription
+		proposalSubscription,
+		{ startBlock }
 	);
 
 	const referendumSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
-		referendumSubscription
+		referendumSubscription,
+		{ startBlock }
 	);
 
-	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint}`);
+	const motionSubscriptionClient = createSubscriptionObservable(
+		graphQLEndpoint,
+		motionSubscription,
+		{ startBlock }
+	);
+
+	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
+
+	motionSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.motion.mutation === subscriptionMutation.Created) {
+				const { motionProposalId, author } = data.motion.node;
+				motionDiscussionExists(motionProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
+					} else {
+						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
+	);
 
 	proposalSubscriptionClient.subscribe(
 		({ data }): void => {
@@ -83,27 +112,35 @@ async function main (): Promise<void> {
 	referendumSubscriptionClient.subscribe(({ data }): void => {
 		if (data?.referendum.mutation === subscriptionMutation.Created) {
 			const {
-				preimage,
+				preimageHash,
 				referendumId,
 				referendumStatus
-			} = data.referendum.node;
+			} = data?.referendum?.node;
 
 			// At referendum creation, there should be only
 			// a "Started" status event.
-			if (!(referendumStatus[0].status === eventStatus.Started)) {
+			if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
 				console.error(
 					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus[0].status}."`
+						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
 					)
 				);
 				return;
 			}
-			const referendumCreationBlockHash = referendumStatus[0].blockNumber.hash;
-			// FIXME This only takes care of democracy proposals going from proposal -> referendum
-			// it does not cater for any other proposal/motion that are externally tabled
+
+			if (!preimageHash) {
+				throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
+			}
+
+			if (!referendumId && referendumId !== 0) {
+				throw new Error(`Unexpect referendumId, got ${referendumId}`);
+			}
+
+			// FIXME This only takes care of motion and democracy proposals
+			// it does not cater for tech committee proposals
 			addDiscussionReferendum({
-				preimageHash: preimage?.hash,
-				referendumCreationBlockHash,
+				preimageHash,
+				referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
 				referendumId
 			}).catch(e => {
 				console.error(chalk.red(e));

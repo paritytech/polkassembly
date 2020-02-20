@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const commentFields = gql`
+export const commentFields = gql`
     fragment commentFields on comments {
         author {
             id
@@ -12,17 +12,4 @@ const commentFields = gql`
         id
         updated_at
     }
-`;
-
-export const commentRecursive = gql`
-    fragment commentRecursive on comments {
-        ...commentFields
-        comments {
-            ...commentFields
-            comments {
-                ...commentFields
-            }
-        }
-    }
-    ${commentFields}
 `;

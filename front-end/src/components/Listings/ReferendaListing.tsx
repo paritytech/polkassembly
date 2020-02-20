@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
 import GovernanceCard from '../GovernanceCard';
-import { LatestDemocracyReferendaPostsQuery } from '../../generated/graphql';
+import { LatestReferendaPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDemocracyReferendaPostsQuery
+  data: LatestReferendaPostsQuery
 }
 
 const Referenda = ({ className, data }: Props) => {
@@ -44,6 +44,9 @@ const Referenda = ({ className, data }: Props) => {
 };
 
 export default styled(Referenda)`
+	margin-block-start: 0;
+	margin-block-end: 0;
+	
 	li {
 		list-style-type: none;
 	}

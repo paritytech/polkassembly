@@ -47,7 +47,7 @@ export default styled(PostContent)`
 	h2 {
 		font-family: 'Roboto';
 		font-size: xl;
-		max-width: calc(100%-10rem);
+		max-width: calc(100% - 10rem);
 	}
 
 	.post_info {
@@ -73,6 +73,7 @@ export default styled(PostContent)`
 		font-size: md;
 		line-height: 150%;
 		margin-bottom: 2rem;
+		overflow-wrap: break-word;
 
 		p, blockquote, ul, ol, dl, table {
 			margin: 0 0 1.5rem 0;

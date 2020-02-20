@@ -42,6 +42,21 @@ export type AggregateEra = {
   count: Scalars['Int'],
 };
 
+export type AggregateMotion = {
+   __typename?: 'AggregateMotion',
+  count: Scalars['Int'],
+};
+
+export type AggregateMotionProposalArgument = {
+   __typename?: 'AggregateMotionProposalArgument',
+  count: Scalars['Int'],
+};
+
+export type AggregateMotionStatus = {
+   __typename?: 'AggregateMotionStatus',
+  count: Scalars['Int'],
+};
+
 export type AggregateNomination = {
    __typename?: 'AggregateNomination',
   count: Scalars['Int'],
@@ -768,11 +783,947 @@ export type Message = {
   message?: Maybe<Scalars['String']>,
 };
 
+export type Motion = {
+   __typename?: 'Motion',
+  author: Scalars['String'],
+  id: Scalars['Int'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<Array<MotionProposalArgument>>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<Array<MotionStatus>>,
+  preimage?: Maybe<Preimage>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+
+export type MotionMotionProposalArgumentsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionProposalArgumentOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionProposalArgumentWhereInput>
+};
+
+
+export type MotionMotionStatusArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionStatusWhereInput>
+};
+
+export type MotionConnection = {
+   __typename?: 'MotionConnection',
+  aggregate: AggregateMotion,
+  edges: Array<Maybe<MotionEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type MotionCreateInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
+  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>,
+};
+
+export type MotionCreateOneWithoutMotionStatusInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+};
+
+export type MotionCreateOneWithoutPreimageInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutPreimageInput>,
+};
+
+export type MotionCreateWithoutMotionProposalArgumentsInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
+  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+export type MotionCreateWithoutMotionStatusInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+export type MotionCreateWithoutPreimageInput = {
+  author: Scalars['String'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>,
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+export type MotionEdge = {
+   __typename?: 'MotionEdge',
+  cursor: Scalars['String'],
+  node: Motion,
+};
+
+export enum MotionOrderByInput {
+  AuthorAsc = 'author_ASC',
+  AuthorDesc = 'author_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  MemberCountAsc = 'memberCount_ASC',
+  MemberCountDesc = 'memberCount_DESC',
+  MetaDescriptionAsc = 'metaDescription_ASC',
+  MetaDescriptionDesc = 'metaDescription_DESC',
+  MethodAsc = 'method_ASC',
+  MethodDesc = 'method_DESC',
+  MotionProposalHashAsc = 'motionProposalHash_ASC',
+  MotionProposalHashDesc = 'motionProposalHash_DESC',
+  MotionProposalIdAsc = 'motionProposalId_ASC',
+  MotionProposalIdDesc = 'motionProposalId_DESC',
+  PreimageHashAsc = 'preimageHash_ASC',
+  PreimageHashDesc = 'preimageHash_DESC',
+  SectionAsc = 'section_ASC',
+  SectionDesc = 'section_DESC'
+}
+
+export type MotionPreviousValues = {
+   __typename?: 'MotionPreviousValues',
+  author: Scalars['String'],
+  id: Scalars['Int'],
+  memberCount: Scalars['Int'],
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  motionProposalHash: Scalars['String'],
+  motionProposalId: Scalars['Int'],
+  preimageHash?: Maybe<Scalars['String']>,
+  section: Scalars['String'],
+};
+
+export type MotionProposalArgument = Node & {
+   __typename?: 'MotionProposalArgument',
+  id: Scalars['ID'],
+  motion: Motion,
+  name: Scalars['String'],
+  value: Scalars['String'],
+};
+
+export type MotionProposalArgumentConnection = {
+   __typename?: 'MotionProposalArgumentConnection',
+  aggregate: AggregateMotionProposalArgument,
+  edges: Array<Maybe<MotionProposalArgumentEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type MotionProposalArgumentCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  motion: MotionCreateOneWithoutMotionProposalArgumentsInput,
+  name: Scalars['String'],
+  value: Scalars['String'],
+};
+
+export type MotionProposalArgumentCreateManyWithoutMotionInput = {
+  connect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>,
+  create?: Maybe<Array<MotionProposalArgumentCreateWithoutMotionInput>>,
+};
+
+export type MotionProposalArgumentCreateWithoutMotionInput = {
+  id?: Maybe<Scalars['ID']>,
+  name: Scalars['String'],
+  value: Scalars['String'],
+};
+
+export type MotionProposalArgumentEdge = {
+   __typename?: 'MotionProposalArgumentEdge',
+  cursor: Scalars['String'],
+  node: MotionProposalArgument,
+};
+
+export enum MotionProposalArgumentOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type MotionProposalArgumentPreviousValues = {
+   __typename?: 'MotionProposalArgumentPreviousValues',
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  value: Scalars['String'],
+};
+
+export type MotionProposalArgumentScalarWhereInput = {
+  AND?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>,
+  NOT?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>,
+  OR?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  name?: Maybe<Scalars['String']>,
+  name_contains?: Maybe<Scalars['String']>,
+  name_ends_with?: Maybe<Scalars['String']>,
+  name_gt?: Maybe<Scalars['String']>,
+  name_gte?: Maybe<Scalars['String']>,
+  name_in?: Maybe<Array<Scalars['String']>>,
+  name_lt?: Maybe<Scalars['String']>,
+  name_lte?: Maybe<Scalars['String']>,
+  name_not?: Maybe<Scalars['String']>,
+  name_not_contains?: Maybe<Scalars['String']>,
+  name_not_ends_with?: Maybe<Scalars['String']>,
+  name_not_in?: Maybe<Array<Scalars['String']>>,
+  name_not_starts_with?: Maybe<Scalars['String']>,
+  name_starts_with?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentSubscriptionPayload = {
+   __typename?: 'MotionProposalArgumentSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<MotionProposalArgument>,
+  previousValues?: Maybe<MotionProposalArgumentPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionProposalArgumentSubscriptionWhereInput = {
+  AND?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>,
+  OR?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<MotionProposalArgumentWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionProposalArgumentUpdateInput = {
+  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput>,
+  name?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentUpdateManyDataInput = {
+  name?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentUpdateManyMutationInput = {
+  name?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentUpdateManyWithoutMotionInput = {
+  connect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>,
+  create?: Maybe<Array<MotionProposalArgumentCreateWithoutMotionInput>>,
+  delete?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>,
+  disconnect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>,
+  set?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>,
+  update?: Maybe<Array<MotionProposalArgumentUpdateWithWhereUniqueWithoutMotionInput>>,
+  updateMany?: Maybe<Array<MotionProposalArgumentUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<MotionProposalArgumentUpsertWithWhereUniqueWithoutMotionInput>>,
+};
+
+export type MotionProposalArgumentUpdateManyWithWhereNestedInput = {
+  data: MotionProposalArgumentUpdateManyDataInput,
+  where: MotionProposalArgumentScalarWhereInput,
+};
+
+export type MotionProposalArgumentUpdateWithoutMotionDataInput = {
+  name?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentUpdateWithWhereUniqueWithoutMotionInput = {
+  data: MotionProposalArgumentUpdateWithoutMotionDataInput,
+  where: MotionProposalArgumentWhereUniqueInput,
+};
+
+export type MotionProposalArgumentUpsertWithWhereUniqueWithoutMotionInput = {
+  create: MotionProposalArgumentCreateWithoutMotionInput,
+  update: MotionProposalArgumentUpdateWithoutMotionDataInput,
+  where: MotionProposalArgumentWhereUniqueInput,
+};
+
+export type MotionProposalArgumentWhereInput = {
+  AND?: Maybe<Array<MotionProposalArgumentWhereInput>>,
+  NOT?: Maybe<Array<MotionProposalArgumentWhereInput>>,
+  OR?: Maybe<Array<MotionProposalArgumentWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  motion?: Maybe<MotionWhereInput>,
+  name?: Maybe<Scalars['String']>,
+  name_contains?: Maybe<Scalars['String']>,
+  name_ends_with?: Maybe<Scalars['String']>,
+  name_gt?: Maybe<Scalars['String']>,
+  name_gte?: Maybe<Scalars['String']>,
+  name_in?: Maybe<Array<Scalars['String']>>,
+  name_lt?: Maybe<Scalars['String']>,
+  name_lte?: Maybe<Scalars['String']>,
+  name_not?: Maybe<Scalars['String']>,
+  name_not_contains?: Maybe<Scalars['String']>,
+  name_not_ends_with?: Maybe<Scalars['String']>,
+  name_not_in?: Maybe<Array<Scalars['String']>>,
+  name_not_starts_with?: Maybe<Scalars['String']>,
+  name_starts_with?: Maybe<Scalars['String']>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionProposalArgumentWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type MotionStatus = Node & {
+   __typename?: 'MotionStatus',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  motion: Motion,
+  status: Scalars['String'],
+};
+
+export type MotionStatusConnection = {
+   __typename?: 'MotionStatusConnection',
+  aggregate: AggregateMotionStatus,
+  edges: Array<Maybe<MotionStatusEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type MotionStatusCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  motion: MotionCreateOneWithoutMotionStatusInput,
+  status: Scalars['String'],
+};
+
+export type MotionStatusCreateManyWithoutMotionInput = {
+  connect?: Maybe<Array<MotionStatusWhereUniqueInput>>,
+  create?: Maybe<Array<MotionStatusCreateWithoutMotionInput>>,
+};
+
+export type MotionStatusCreateWithoutMotionInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+};
+
+export type MotionStatusEdge = {
+   __typename?: 'MotionStatusEdge',
+  cursor: Scalars['String'],
+  node: MotionStatus,
+};
+
+export enum MotionStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC'
+}
+
+export type MotionStatusPreviousValues = {
+   __typename?: 'MotionStatusPreviousValues',
+  id: Scalars['ID'],
+  status: Scalars['String'],
+};
+
+export type MotionStatusScalarWhereInput = {
+  AND?: Maybe<Array<MotionStatusScalarWhereInput>>,
+  NOT?: Maybe<Array<MotionStatusScalarWhereInput>>,
+  OR?: Maybe<Array<MotionStatusScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusSubscriptionPayload = {
+   __typename?: 'MotionStatusSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<MotionStatus>,
+  previousValues?: Maybe<MotionStatusPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionStatusSubscriptionWhereInput = {
+  AND?: Maybe<Array<MotionStatusSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<MotionStatusSubscriptionWhereInput>>,
+  OR?: Maybe<Array<MotionStatusSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<MotionStatusWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionStatusUpdateInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusUpdateManyWithoutMotionInput = {
+  connect?: Maybe<Array<MotionStatusWhereUniqueInput>>,
+  create?: Maybe<Array<MotionStatusCreateWithoutMotionInput>>,
+  delete?: Maybe<Array<MotionStatusWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<MotionStatusScalarWhereInput>>,
+  disconnect?: Maybe<Array<MotionStatusWhereUniqueInput>>,
+  set?: Maybe<Array<MotionStatusWhereUniqueInput>>,
+  update?: Maybe<Array<MotionStatusUpdateWithWhereUniqueWithoutMotionInput>>,
+  updateMany?: Maybe<Array<MotionStatusUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<MotionStatusUpsertWithWhereUniqueWithoutMotionInput>>,
+};
+
+export type MotionStatusUpdateManyWithWhereNestedInput = {
+  data: MotionStatusUpdateManyDataInput,
+  where: MotionStatusScalarWhereInput,
+};
+
+export type MotionStatusUpdateWithoutMotionDataInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusUpdateWithWhereUniqueWithoutMotionInput = {
+  data: MotionStatusUpdateWithoutMotionDataInput,
+  where: MotionStatusWhereUniqueInput,
+};
+
+export type MotionStatusUpsertWithWhereUniqueWithoutMotionInput = {
+  create: MotionStatusCreateWithoutMotionInput,
+  update: MotionStatusUpdateWithoutMotionDataInput,
+  where: MotionStatusWhereUniqueInput,
+};
+
+export type MotionStatusWhereInput = {
+  AND?: Maybe<Array<MotionStatusWhereInput>>,
+  NOT?: Maybe<Array<MotionStatusWhereInput>>,
+  OR?: Maybe<Array<MotionStatusWhereInput>>,
+  blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  motion?: Maybe<MotionWhereInput>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type MotionSubscriptionPayload = {
+   __typename?: 'MotionSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Motion>,
+  previousValues?: Maybe<MotionPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionSubscriptionWhereInput = {
+  AND?: Maybe<Array<MotionSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<MotionSubscriptionWhereInput>>,
+  OR?: Maybe<Array<MotionSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<MotionWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type MotionUpdateInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
+  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type MotionUpdateManyMutationInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>,
+  update?: Maybe<MotionUpdateWithoutMotionProposalArgumentsDataInput>,
+  upsert?: Maybe<MotionUpsertWithoutMotionProposalArgumentsInput>,
+};
+
+export type MotionUpdateOneRequiredWithoutMotionStatusInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutMotionStatusInput>,
+  update?: Maybe<MotionUpdateWithoutMotionStatusDataInput>,
+  upsert?: Maybe<MotionUpsertWithoutMotionStatusInput>,
+};
+
+export type MotionUpdateOneWithoutPreimageInput = {
+  connect?: Maybe<MotionWhereUniqueInput>,
+  create?: Maybe<MotionCreateWithoutPreimageInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<MotionUpdateWithoutPreimageDataInput>,
+  upsert?: Maybe<MotionUpsertWithoutPreimageInput>,
+};
+
+export type MotionUpdateWithoutMotionProposalArgumentsDataInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
+  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type MotionUpdateWithoutMotionStatusDataInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type MotionUpdateWithoutPreimageDataInput = {
+  author?: Maybe<Scalars['String']>,
+  memberCount?: Maybe<Scalars['Int']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+};
+
+export type MotionUpsertWithoutMotionProposalArgumentsInput = {
+  create: MotionCreateWithoutMotionProposalArgumentsInput,
+  update: MotionUpdateWithoutMotionProposalArgumentsDataInput,
+};
+
+export type MotionUpsertWithoutMotionStatusInput = {
+  create: MotionCreateWithoutMotionStatusInput,
+  update: MotionUpdateWithoutMotionStatusDataInput,
+};
+
+export type MotionUpsertWithoutPreimageInput = {
+  create: MotionCreateWithoutPreimageInput,
+  update: MotionUpdateWithoutPreimageDataInput,
+};
+
+export type MotionWhereInput = {
+  AND?: Maybe<Array<MotionWhereInput>>,
+  NOT?: Maybe<Array<MotionWhereInput>>,
+  OR?: Maybe<Array<MotionWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  memberCount?: Maybe<Scalars['Int']>,
+  memberCount_gt?: Maybe<Scalars['Int']>,
+  memberCount_gte?: Maybe<Scalars['Int']>,
+  memberCount_in?: Maybe<Array<Scalars['Int']>>,
+  memberCount_lt?: Maybe<Scalars['Int']>,
+  memberCount_lte?: Maybe<Scalars['Int']>,
+  memberCount_not?: Maybe<Scalars['Int']>,
+  memberCount_not_in?: Maybe<Array<Scalars['Int']>>,
+  metaDescription?: Maybe<Scalars['String']>,
+  metaDescription_contains?: Maybe<Scalars['String']>,
+  metaDescription_ends_with?: Maybe<Scalars['String']>,
+  metaDescription_gt?: Maybe<Scalars['String']>,
+  metaDescription_gte?: Maybe<Scalars['String']>,
+  metaDescription_in?: Maybe<Array<Scalars['String']>>,
+  metaDescription_lt?: Maybe<Scalars['String']>,
+  metaDescription_lte?: Maybe<Scalars['String']>,
+  metaDescription_not?: Maybe<Scalars['String']>,
+  metaDescription_not_contains?: Maybe<Scalars['String']>,
+  metaDescription_not_ends_with?: Maybe<Scalars['String']>,
+  metaDescription_not_in?: Maybe<Array<Scalars['String']>>,
+  metaDescription_not_starts_with?: Maybe<Scalars['String']>,
+  metaDescription_starts_with?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  method_contains?: Maybe<Scalars['String']>,
+  method_ends_with?: Maybe<Scalars['String']>,
+  method_gt?: Maybe<Scalars['String']>,
+  method_gte?: Maybe<Scalars['String']>,
+  method_in?: Maybe<Array<Scalars['String']>>,
+  method_lt?: Maybe<Scalars['String']>,
+  method_lte?: Maybe<Scalars['String']>,
+  method_not?: Maybe<Scalars['String']>,
+  method_not_contains?: Maybe<Scalars['String']>,
+  method_not_ends_with?: Maybe<Scalars['String']>,
+  method_not_in?: Maybe<Array<Scalars['String']>>,
+  method_not_starts_with?: Maybe<Scalars['String']>,
+  method_starts_with?: Maybe<Scalars['String']>,
+  motionProposalArguments_every?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalArguments_none?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalArguments_some?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalHash_contains?: Maybe<Scalars['String']>,
+  motionProposalHash_ends_with?: Maybe<Scalars['String']>,
+  motionProposalHash_gt?: Maybe<Scalars['String']>,
+  motionProposalHash_gte?: Maybe<Scalars['String']>,
+  motionProposalHash_in?: Maybe<Array<Scalars['String']>>,
+  motionProposalHash_lt?: Maybe<Scalars['String']>,
+  motionProposalHash_lte?: Maybe<Scalars['String']>,
+  motionProposalHash_not?: Maybe<Scalars['String']>,
+  motionProposalHash_not_contains?: Maybe<Scalars['String']>,
+  motionProposalHash_not_ends_with?: Maybe<Scalars['String']>,
+  motionProposalHash_not_in?: Maybe<Array<Scalars['String']>>,
+  motionProposalHash_not_starts_with?: Maybe<Scalars['String']>,
+  motionProposalHash_starts_with?: Maybe<Scalars['String']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+  motionProposalId_gt?: Maybe<Scalars['Int']>,
+  motionProposalId_gte?: Maybe<Scalars['Int']>,
+  motionProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  motionProposalId_lt?: Maybe<Scalars['Int']>,
+  motionProposalId_lte?: Maybe<Scalars['Int']>,
+  motionProposalId_not?: Maybe<Scalars['Int']>,
+  motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+  section_contains?: Maybe<Scalars['String']>,
+  section_ends_with?: Maybe<Scalars['String']>,
+  section_gt?: Maybe<Scalars['String']>,
+  section_gte?: Maybe<Scalars['String']>,
+  section_in?: Maybe<Array<Scalars['String']>>,
+  section_lt?: Maybe<Scalars['String']>,
+  section_lte?: Maybe<Scalars['String']>,
+  section_not?: Maybe<Scalars['String']>,
+  section_not_contains?: Maybe<Scalars['String']>,
+  section_not_ends_with?: Maybe<Scalars['String']>,
+  section_not_in?: Maybe<Array<Scalars['String']>>,
+  section_not_starts_with?: Maybe<Scalars['String']>,
+  section_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
+  AND?: Maybe<Array<MotionWhereInput>>,
+  NOT?: Maybe<Array<MotionWhereInput>>,
+  OR?: Maybe<Array<MotionWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  memberCount?: Maybe<Scalars['Int']>,
+  memberCount_gt?: Maybe<Scalars['Int']>,
+  memberCount_gte?: Maybe<Scalars['Int']>,
+  memberCount_in?: Maybe<Array<Scalars['Int']>>,
+  memberCount_lt?: Maybe<Scalars['Int']>,
+  memberCount_lte?: Maybe<Scalars['Int']>,
+  memberCount_not?: Maybe<Scalars['Int']>,
+  memberCount_not_in?: Maybe<Array<Scalars['Int']>>,
+  metaDescription?: Maybe<Scalars['String']>,
+  metaDescription_contains?: Maybe<Scalars['String']>,
+  metaDescription_ends_with?: Maybe<Scalars['String']>,
+  metaDescription_gt?: Maybe<Scalars['String']>,
+  metaDescription_gte?: Maybe<Scalars['String']>,
+  metaDescription_in?: Maybe<Array<Scalars['String']>>,
+  metaDescription_lt?: Maybe<Scalars['String']>,
+  metaDescription_lte?: Maybe<Scalars['String']>,
+  metaDescription_not?: Maybe<Scalars['String']>,
+  metaDescription_not_contains?: Maybe<Scalars['String']>,
+  metaDescription_not_ends_with?: Maybe<Scalars['String']>,
+  metaDescription_not_in?: Maybe<Array<Scalars['String']>>,
+  metaDescription_not_starts_with?: Maybe<Scalars['String']>,
+  metaDescription_starts_with?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  method_contains?: Maybe<Scalars['String']>,
+  method_ends_with?: Maybe<Scalars['String']>,
+  method_gt?: Maybe<Scalars['String']>,
+  method_gte?: Maybe<Scalars['String']>,
+  method_in?: Maybe<Array<Scalars['String']>>,
+  method_lt?: Maybe<Scalars['String']>,
+  method_lte?: Maybe<Scalars['String']>,
+  method_not?: Maybe<Scalars['String']>,
+  method_not_contains?: Maybe<Scalars['String']>,
+  method_not_ends_with?: Maybe<Scalars['String']>,
+  method_not_in?: Maybe<Array<Scalars['String']>>,
+  method_not_starts_with?: Maybe<Scalars['String']>,
+  method_starts_with?: Maybe<Scalars['String']>,
+  motionProposalArguments_every?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalArguments_none?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalArguments_some?: Maybe<MotionProposalArgumentWhereInput>,
+  motionProposalHash?: Maybe<Scalars['String']>,
+  motionProposalHash_contains?: Maybe<Scalars['String']>,
+  motionProposalHash_ends_with?: Maybe<Scalars['String']>,
+  motionProposalHash_gt?: Maybe<Scalars['String']>,
+  motionProposalHash_gte?: Maybe<Scalars['String']>,
+  motionProposalHash_in?: Maybe<Array<Scalars['String']>>,
+  motionProposalHash_lt?: Maybe<Scalars['String']>,
+  motionProposalHash_lte?: Maybe<Scalars['String']>,
+  motionProposalHash_not?: Maybe<Scalars['String']>,
+  motionProposalHash_not_contains?: Maybe<Scalars['String']>,
+  motionProposalHash_not_ends_with?: Maybe<Scalars['String']>,
+  motionProposalHash_not_in?: Maybe<Array<Scalars['String']>>,
+  motionProposalHash_not_starts_with?: Maybe<Scalars['String']>,
+  motionProposalHash_starts_with?: Maybe<Scalars['String']>,
+  motionProposalId_gt?: Maybe<Scalars['Int']>,
+  motionProposalId_gte?: Maybe<Scalars['Int']>,
+  motionProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  motionProposalId_lt?: Maybe<Scalars['Int']>,
+  motionProposalId_lte?: Maybe<Scalars['Int']>,
+  motionProposalId_not?: Maybe<Scalars['Int']>,
+  motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  motionStatus_every?: Maybe<MotionStatusWhereInput>,
+  motionStatus_none?: Maybe<MotionStatusWhereInput>,
+  motionStatus_some?: Maybe<MotionStatusWhereInput>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  section?: Maybe<Scalars['String']>,
+  section_contains?: Maybe<Scalars['String']>,
+  section_ends_with?: Maybe<Scalars['String']>,
+  section_gt?: Maybe<Scalars['String']>,
+  section_gte?: Maybe<Scalars['String']>,
+  section_in?: Maybe<Array<Scalars['String']>>,
+  section_lt?: Maybe<Scalars['String']>,
+  section_lte?: Maybe<Scalars['String']>,
+  section_not?: Maybe<Scalars['String']>,
+  section_not_contains?: Maybe<Scalars['String']>,
+  section_not_ends_with?: Maybe<Scalars['String']>,
+  section_not_in?: Maybe<Array<Scalars['String']>>,
+  section_not_starts_with?: Maybe<Scalars['String']>,
+  section_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type MotionWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
@@ -782,6 +1733,7 @@ export type Mutation = {
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
+  resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -873,15 +1825,18 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  addressLinkConfirm?: Maybe<Message>,
+  addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
-  addressUnlink?: Maybe<Message>,
+  addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockNumber: BlockNumber,
   createEra: Era,
+  createMotion: Motion,
+  createMotionProposalArgument: MotionProposalArgument,
+  createMotionStatus: MotionStatus,
   createNomination: Nomination,
   createPreimage: Preimage,
   createPreimageArgument: PreimageArgument,
@@ -900,6 +1855,9 @@ export type Mutation_Root = {
   deleteEra?: Maybe<Era>,
   deleteManyBlockNumbers: BatchPayload,
   deleteManyEras: BatchPayload,
+  deleteManyMotionProposalArguments: BatchPayload,
+  deleteManyMotionStatuses: BatchPayload,
+  deleteManyMotions: BatchPayload,
   deleteManyNominations: BatchPayload,
   deleteManyPreimageArguments: BatchPayload,
   deleteManyPreimageStatuses: BatchPayload,
@@ -914,6 +1872,9 @@ export type Mutation_Root = {
   deleteManyStakes: BatchPayload,
   deleteManyTotalIssuances: BatchPayload,
   deleteManyValidators: BatchPayload,
+  deleteMotion?: Maybe<Motion>,
+  deleteMotionProposalArgument?: Maybe<MotionProposalArgument>,
+  deleteMotionStatus?: Maybe<MotionStatus>,
   deleteNomination?: Maybe<Nomination>,
   deletePreimage?: Maybe<Preimage>,
   deletePreimageArgument?: Maybe<PreimageArgument>,
@@ -944,6 +1905,7 @@ export type Mutation_Root = {
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
+  resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -951,6 +1913,9 @@ export type Mutation_Root = {
   updateEra?: Maybe<Era>,
   updateManyBlockNumbers: BatchPayload,
   updateManyEras: BatchPayload,
+  updateManyMotionProposalArguments: BatchPayload,
+  updateManyMotionStatuses: BatchPayload,
+  updateManyMotions: BatchPayload,
   updateManyNominations: BatchPayload,
   updateManyPreimageArguments: BatchPayload,
   updateManyPreimageStatuses: BatchPayload,
@@ -965,6 +1930,9 @@ export type Mutation_Root = {
   updateManyStakes: BatchPayload,
   updateManyTotalIssuances: BatchPayload,
   updateManyValidators: BatchPayload,
+  updateMotion?: Maybe<Motion>,
+  updateMotionProposalArgument?: Maybe<MotionProposalArgument>,
+  updateMotionStatus?: Maybe<MotionStatus>,
   updateNomination?: Maybe<Nomination>,
   updatePreimage?: Maybe<Preimage>,
   updatePreimageArgument?: Maybe<PreimageArgument>,
@@ -986,6 +1954,9 @@ export type Mutation_Root = {
   update_posts?: Maybe<Posts_Mutation_Response>,
   upsertBlockNumber: BlockNumber,
   upsertEra: Era,
+  upsertMotion: Motion,
+  upsertMotionProposalArgument: MotionProposalArgument,
+  upsertMotionStatus: MotionStatus,
   upsertNomination: Nomination,
   upsertPreimage: Preimage,
   upsertPreimageArgument: PreimageArgument,
@@ -1049,6 +2020,21 @@ export type Mutation_RootCreateBlockNumberArgs = {
 
 export type Mutation_RootCreateEraArgs = {
   data: EraCreateInput
+};
+
+
+export type Mutation_RootCreateMotionArgs = {
+  data: MotionCreateInput
+};
+
+
+export type Mutation_RootCreateMotionProposalArgumentArgs = {
+  data: MotionProposalArgumentCreateInput
+};
+
+
+export type Mutation_RootCreateMotionStatusArgs = {
+  data: MotionStatusCreateInput
 };
 
 
@@ -1142,6 +2128,21 @@ export type Mutation_RootDeleteManyErasArgs = {
 };
 
 
+export type Mutation_RootDeleteManyMotionProposalArgumentsArgs = {
+  where?: Maybe<MotionProposalArgumentWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyMotionStatusesArgs = {
+  where?: Maybe<MotionStatusWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyMotionsArgs = {
+  where?: Maybe<MotionWhereInput>
+};
+
+
 export type Mutation_RootDeleteManyNominationsArgs = {
   where?: Maybe<NominationWhereInput>
 };
@@ -1209,6 +2210,21 @@ export type Mutation_RootDeleteManyTotalIssuancesArgs = {
 
 export type Mutation_RootDeleteManyValidatorsArgs = {
   where?: Maybe<ValidatorWhereInput>
+};
+
+
+export type Mutation_RootDeleteMotionArgs = {
+  where: MotionWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteMotionProposalArgumentArgs = {
+  where: MotionProposalArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteMotionStatusArgs = {
+  where: MotionStatusWhereUniqueInput
 };
 
 
@@ -1407,6 +2423,24 @@ export type Mutation_RootUpdateManyErasArgs = {
 };
 
 
+export type Mutation_RootUpdateManyMotionProposalArgumentsArgs = {
+  data: MotionProposalArgumentUpdateManyMutationInput,
+  where?: Maybe<MotionProposalArgumentWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyMotionStatusesArgs = {
+  data: MotionStatusUpdateManyMutationInput,
+  where?: Maybe<MotionStatusWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyMotionsArgs = {
+  data: MotionUpdateManyMutationInput,
+  where?: Maybe<MotionWhereInput>
+};
+
+
 export type Mutation_RootUpdateManyNominationsArgs = {
   data: NominationUpdateManyMutationInput,
   where?: Maybe<NominationWhereInput>
@@ -1488,6 +2522,24 @@ export type Mutation_RootUpdateManyTotalIssuancesArgs = {
 export type Mutation_RootUpdateManyValidatorsArgs = {
   data: ValidatorUpdateManyMutationInput,
   where?: Maybe<ValidatorWhereInput>
+};
+
+
+export type Mutation_RootUpdateMotionArgs = {
+  data: MotionUpdateInput,
+  where: MotionWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateMotionProposalArgumentArgs = {
+  data: MotionProposalArgumentUpdateInput,
+  where: MotionProposalArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateMotionStatusArgs = {
+  data: MotionStatusUpdateInput,
+  where: MotionStatusWhereUniqueInput
 };
 
 
@@ -1621,6 +2673,27 @@ export type Mutation_RootUpsertEraArgs = {
   create: EraCreateInput,
   update: EraUpdateInput,
   where: EraWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertMotionArgs = {
+  create: MotionCreateInput,
+  update: MotionUpdateInput,
+  where: MotionWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertMotionProposalArgumentArgs = {
+  create: MotionProposalArgumentCreateInput,
+  update: MotionProposalArgumentUpdateInput,
+  where: MotionProposalArgumentWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertMotionStatusArgs = {
+  create: MotionStatusCreateInput,
+  update: MotionStatusUpdateInput,
+  where: MotionStatusWhereUniqueInput
 };
 
 
@@ -1930,9 +3003,11 @@ export type Onchain_Links = {
    __typename?: 'onchain_links',
   created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
-  onchain_proposal?: Maybe<Proposal>,
+  onchain_motion: Array<Maybe<Motion>>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
+  onchain_proposal: Array<Maybe<Proposal>>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
-  onchain_referendum?: Maybe<Referendum>,
+  onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post: Posts,
   post_id: Scalars['Int'],
@@ -1940,13 +3015,36 @@ export type Onchain_Links = {
 };
 
 
+export type Onchain_LinksOnchain_MotionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion>
+};
+
+
 export type Onchain_LinksOnchain_ProposalArgs = {
-  where: ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal>
 };
 
 
 export type Onchain_LinksOnchain_ReferendumArgs = {
-  where: ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<ReferendumOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -1998,6 +3096,7 @@ export type Onchain_Links_Arr_Rel_Insert_Input = {
 export type Onchain_Links_Avg_Fields = {
    __typename?: 'onchain_links_avg_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2005,6 +3104,7 @@ export type Onchain_Links_Avg_Fields = {
 
 export type Onchain_Links_Avg_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2016,6 +3116,7 @@ export type Onchain_Links_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Onchain_Links_Bool_Exp>>>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
+  onchain_motion_id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
@@ -2024,6 +3125,7 @@ export type Onchain_Links_Bool_Exp = {
 };
 
 export enum Onchain_Links_Constraint {
+  OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
@@ -2032,6 +3134,7 @@ export enum Onchain_Links_Constraint {
 
 export type Onchain_Links_Inc_Input = {
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
@@ -2040,6 +3143,7 @@ export type Onchain_Links_Inc_Input = {
 export type Onchain_Links_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
@@ -2051,6 +3155,7 @@ export type Onchain_Links_Max_Fields = {
    __typename?: 'onchain_links_max_fields',
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
@@ -2060,6 +3165,7 @@ export type Onchain_Links_Max_Fields = {
 export type Onchain_Links_Max_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2070,6 +3176,7 @@ export type Onchain_Links_Min_Fields = {
    __typename?: 'onchain_links_min_fields',
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
@@ -2079,6 +3186,7 @@ export type Onchain_Links_Min_Fields = {
 export type Onchain_Links_Min_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2105,6 +3213,7 @@ export type Onchain_Links_On_Conflict = {
 export type Onchain_Links_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
@@ -2115,6 +3224,7 @@ export type Onchain_Links_Order_By = {
 export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
+  OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
   PostId = 'post_id',
@@ -2124,6 +3234,7 @@ export enum Onchain_Links_Select_Column {
 export type Onchain_Links_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
@@ -2133,6 +3244,7 @@ export type Onchain_Links_Set_Input = {
 export type Onchain_Links_Stddev_Fields = {
    __typename?: 'onchain_links_stddev_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2140,6 +3252,7 @@ export type Onchain_Links_Stddev_Fields = {
 
 export type Onchain_Links_Stddev_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2148,6 +3261,7 @@ export type Onchain_Links_Stddev_Order_By = {
 export type Onchain_Links_Stddev_Pop_Fields = {
    __typename?: 'onchain_links_stddev_pop_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2155,6 +3269,7 @@ export type Onchain_Links_Stddev_Pop_Fields = {
 
 export type Onchain_Links_Stddev_Pop_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2163,6 +3278,7 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
 export type Onchain_Links_Stddev_Samp_Fields = {
    __typename?: 'onchain_links_stddev_samp_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2170,6 +3286,7 @@ export type Onchain_Links_Stddev_Samp_Fields = {
 
 export type Onchain_Links_Stddev_Samp_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2178,6 +3295,7 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
 export type Onchain_Links_Sum_Fields = {
    __typename?: 'onchain_links_sum_fields',
   id?: Maybe<Scalars['Int']>,
+  onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
@@ -2185,6 +3303,7 @@ export type Onchain_Links_Sum_Fields = {
 
 export type Onchain_Links_Sum_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2193,6 +3312,7 @@ export type Onchain_Links_Sum_Order_By = {
 export enum Onchain_Links_Update_Column {
   CreatedAt = 'created_at',
   Id = 'id',
+  OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
   PostId = 'post_id',
@@ -2202,6 +3322,7 @@ export enum Onchain_Links_Update_Column {
 export type Onchain_Links_Var_Pop_Fields = {
    __typename?: 'onchain_links_var_pop_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2209,6 +3330,7 @@ export type Onchain_Links_Var_Pop_Fields = {
 
 export type Onchain_Links_Var_Pop_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2217,6 +3339,7 @@ export type Onchain_Links_Var_Pop_Order_By = {
 export type Onchain_Links_Var_Samp_Fields = {
    __typename?: 'onchain_links_var_samp_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2224,6 +3347,7 @@ export type Onchain_Links_Var_Samp_Fields = {
 
 export type Onchain_Links_Var_Samp_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -2232,6 +3356,7 @@ export type Onchain_Links_Var_Samp_Order_By = {
 export type Onchain_Links_Variance_Fields = {
    __typename?: 'onchain_links_variance_fields',
   id?: Maybe<Scalars['Float']>,
+  onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
@@ -2239,6 +3364,7 @@ export type Onchain_Links_Variance_Fields = {
 
 export type Onchain_Links_Variance_Order_By = {
   id?: Maybe<Order_By>,
+  onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
@@ -3082,6 +4208,7 @@ export type Preimage = Node & {
   id: Scalars['ID'],
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<Motion>,
   preimageArguments?: Maybe<Array<PreimageArgument>>,
   preimageStatus?: Maybe<Array<PreimageStatus>>,
   proposal?: Maybe<Proposal>,
@@ -3349,11 +4476,17 @@ export type PreimageCreateInput = {
   id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<MotionCreateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
   referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
   section: Scalars['String'],
+};
+
+export type PreimageCreateOneWithoutMotionInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutMotionInput>,
 };
 
 export type PreimageCreateOneWithoutPreimageArgumentsInput = {
@@ -3376,6 +4509,20 @@ export type PreimageCreateOneWithoutReferendumInput = {
   create?: Maybe<PreimageCreateWithoutReferendumInput>,
 };
 
+export type PreimageCreateWithoutMotionInput = {
+  author: Scalars['String'],
+  depositAmount: Scalars['String'],
+  hash: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+  metaDescription: Scalars['String'],
+  method: Scalars['String'],
+  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
+  section: Scalars['String'],
+};
+
 export type PreimageCreateWithoutPreimageArgumentsInput = {
   author: Scalars['String'],
   depositAmount: Scalars['String'],
@@ -3383,6 +4530,7 @@ export type PreimageCreateWithoutPreimageArgumentsInput = {
   id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<MotionCreateOneWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
   referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
@@ -3396,6 +4544,7 @@ export type PreimageCreateWithoutPreimageStatusInput = {
   id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<MotionCreateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
   referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
@@ -3409,6 +4558,7 @@ export type PreimageCreateWithoutProposalInput = {
   id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<MotionCreateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
   referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>,
@@ -3422,6 +4572,7 @@ export type PreimageCreateWithoutReferendumInput = {
   id?: Maybe<Scalars['ID']>,
   metaDescription: Scalars['String'],
   method: Scalars['String'],
+  motion?: Maybe<MotionCreateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>,
@@ -3679,6 +4830,7 @@ export type PreimageUpdateInput = {
   hash?: Maybe<Scalars['String']>,
   metaDescription?: Maybe<Scalars['String']>,
   method?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
@@ -3709,6 +4861,15 @@ export type PreimageUpdateOneRequiredWithoutPreimageStatusInput = {
   upsert?: Maybe<PreimageUpsertWithoutPreimageStatusInput>,
 };
 
+export type PreimageUpdateOneWithoutMotionInput = {
+  connect?: Maybe<PreimageWhereUniqueInput>,
+  create?: Maybe<PreimageCreateWithoutMotionInput>,
+  delete?: Maybe<Scalars['Boolean']>,
+  disconnect?: Maybe<Scalars['Boolean']>,
+  update?: Maybe<PreimageUpdateWithoutMotionDataInput>,
+  upsert?: Maybe<PreimageUpsertWithoutMotionInput>,
+};
+
 export type PreimageUpdateOneWithoutProposalInput = {
   connect?: Maybe<PreimageWhereUniqueInput>,
   create?: Maybe<PreimageCreateWithoutProposalInput>,
@@ -3727,12 +4888,26 @@ export type PreimageUpdateOneWithoutReferendumInput = {
   upsert?: Maybe<PreimageUpsertWithoutReferendumInput>,
 };
 
+export type PreimageUpdateWithoutMotionDataInput = {
+  author?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  hash?: Maybe<Scalars['String']>,
+  metaDescription?: Maybe<Scalars['String']>,
+  method?: Maybe<Scalars['String']>,
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
+  section?: Maybe<Scalars['String']>,
+};
+
 export type PreimageUpdateWithoutPreimageArgumentsDataInput = {
   author?: Maybe<Scalars['String']>,
   depositAmount?: Maybe<Scalars['String']>,
   hash?: Maybe<Scalars['String']>,
   metaDescription?: Maybe<Scalars['String']>,
   method?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
   referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
@@ -3745,6 +4920,7 @@ export type PreimageUpdateWithoutPreimageStatusDataInput = {
   hash?: Maybe<Scalars['String']>,
   metaDescription?: Maybe<Scalars['String']>,
   method?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
   referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
@@ -3757,6 +4933,7 @@ export type PreimageUpdateWithoutProposalDataInput = {
   hash?: Maybe<Scalars['String']>,
   metaDescription?: Maybe<Scalars['String']>,
   method?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
   referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>,
@@ -3769,10 +4946,16 @@ export type PreimageUpdateWithoutReferendumDataInput = {
   hash?: Maybe<Scalars['String']>,
   metaDescription?: Maybe<Scalars['String']>,
   method?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>,
   preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>,
   preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>,
   proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>,
   section?: Maybe<Scalars['String']>,
+};
+
+export type PreimageUpsertWithoutMotionInput = {
+  create: PreimageCreateWithoutMotionInput,
+  update: PreimageUpdateWithoutMotionDataInput,
 };
 
 export type PreimageUpsertWithoutPreimageArgumentsInput = {
@@ -3883,6 +5066,7 @@ export type PreimageWhereInput = {
   method_not_in?: Maybe<Array<Scalars['String']>>,
   method_not_starts_with?: Maybe<Scalars['String']>,
   method_starts_with?: Maybe<Scalars['String']>,
+  motion?: Maybe<MotionWhereInput>,
   preimageArguments_every?: Maybe<PreimageArgumentWhereInput>,
   preimageArguments_none?: Maybe<PreimageArgumentWhereInput>,
   preimageArguments_some?: Maybe<PreimageArgumentWhereInput>,
@@ -4344,13 +5528,76 @@ export type ProposalWhereInput = {
   proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
 };
 
+export type ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
+  AND?: Maybe<Array<ProposalWhereInput>>,
+  NOT?: Maybe<Array<ProposalWhereInput>>,
+  OR?: Maybe<Array<ProposalWhereInput>>,
+  author?: Maybe<Scalars['String']>,
+  author_contains?: Maybe<Scalars['String']>,
+  author_ends_with?: Maybe<Scalars['String']>,
+  author_gt?: Maybe<Scalars['String']>,
+  author_gte?: Maybe<Scalars['String']>,
+  author_in?: Maybe<Array<Scalars['String']>>,
+  author_lt?: Maybe<Scalars['String']>,
+  author_lte?: Maybe<Scalars['String']>,
+  author_not?: Maybe<Scalars['String']>,
+  author_not_contains?: Maybe<Scalars['String']>,
+  author_not_ends_with?: Maybe<Scalars['String']>,
+  author_not_in?: Maybe<Array<Scalars['String']>>,
+  author_not_starts_with?: Maybe<Scalars['String']>,
+  author_starts_with?: Maybe<Scalars['String']>,
+  depositAmount?: Maybe<Scalars['String']>,
+  depositAmount_contains?: Maybe<Scalars['String']>,
+  depositAmount_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_gt?: Maybe<Scalars['String']>,
+  depositAmount_gte?: Maybe<Scalars['String']>,
+  depositAmount_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_lt?: Maybe<Scalars['String']>,
+  depositAmount_lte?: Maybe<Scalars['String']>,
+  depositAmount_not?: Maybe<Scalars['String']>,
+  depositAmount_not_contains?: Maybe<Scalars['String']>,
+  depositAmount_not_ends_with?: Maybe<Scalars['String']>,
+  depositAmount_not_in?: Maybe<Array<Scalars['String']>>,
+  depositAmount_not_starts_with?: Maybe<Scalars['String']>,
+  depositAmount_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  proposalId_gt?: Maybe<Scalars['Int']>,
+  proposalId_gte?: Maybe<Scalars['Int']>,
+  proposalId_in?: Maybe<Array<Scalars['Int']>>,
+  proposalId_lt?: Maybe<Scalars['Int']>,
+  proposalId_lte?: Maybe<Scalars['Int']>,
+  proposalId_not?: Maybe<Scalars['Int']>,
+  proposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  proposalStatus_every?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_none?: Maybe<ProposalStatusWhereInput>,
+  proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
+};
+
 export type ProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   proposalId?: Maybe<Scalars['Int']>,
-};
-
-export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
-  id?: Maybe<Scalars['Int']>,
 };
 
 export type PublicUser = {
@@ -4362,7 +5609,6 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -4387,7 +5633,6 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
-  addresses?: Maybe<Array<Maybe<Address>>>,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -4397,6 +5642,15 @@ export type Query_Root = {
   era?: Maybe<Era>,
   eras: Array<Maybe<Era>>,
   erasConnection: EraConnection,
+  motion?: Maybe<Motion>,
+  motionProposalArgument?: Maybe<MotionProposalArgument>,
+  motionProposalArguments: Array<Maybe<MotionProposalArgument>>,
+  motionProposalArgumentsConnection: MotionProposalArgumentConnection,
+  motionStatus?: Maybe<MotionStatus>,
+  motionStatuses: Array<Maybe<MotionStatus>>,
+  motionStatusesConnection: MotionStatusConnection,
+  motions: Array<Maybe<Motion>>,
+  motionsConnection: MotionConnection,
   node?: Maybe<Node>,
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
@@ -4533,6 +5787,87 @@ export type Query_RootErasConnectionArgs = {
   orderBy?: Maybe<EraOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<EraWhereInput>
+};
+
+
+export type Query_RootMotionArgs = {
+  where: MotionWhereUniqueInput
+};
+
+
+export type Query_RootMotionProposalArgumentArgs = {
+  where: MotionProposalArgumentWhereUniqueInput
+};
+
+
+export type Query_RootMotionProposalArgumentsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionProposalArgumentOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionProposalArgumentWhereInput>
+};
+
+
+export type Query_RootMotionProposalArgumentsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionProposalArgumentOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionProposalArgumentWhereInput>
+};
+
+
+export type Query_RootMotionStatusArgs = {
+  where: MotionStatusWhereUniqueInput
+};
+
+
+export type Query_RootMotionStatusesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionStatusWhereInput>
+};
+
+
+export type Query_RootMotionStatusesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionStatusWhereInput>
+};
+
+
+export type Query_RootMotionsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionWhereInput>
+};
+
+
+export type Query_RootMotionsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<MotionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<MotionWhereInput>
 };
 
 
@@ -5468,13 +6803,78 @@ export type ReferendumWhereInput = {
   voteThreshold_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
+  AND?: Maybe<Array<ReferendumWhereInput>>,
+  NOT?: Maybe<Array<ReferendumWhereInput>>,
+  OR?: Maybe<Array<ReferendumWhereInput>>,
+  delay?: Maybe<Scalars['Int']>,
+  delay_gt?: Maybe<Scalars['Int']>,
+  delay_gte?: Maybe<Scalars['Int']>,
+  delay_in?: Maybe<Array<Scalars['Int']>>,
+  delay_lt?: Maybe<Scalars['Int']>,
+  delay_lte?: Maybe<Scalars['Int']>,
+  delay_not?: Maybe<Scalars['Int']>,
+  delay_not_in?: Maybe<Array<Scalars['Int']>>,
+  end?: Maybe<Scalars['Int']>,
+  end_gt?: Maybe<Scalars['Int']>,
+  end_gte?: Maybe<Scalars['Int']>,
+  end_in?: Maybe<Array<Scalars['Int']>>,
+  end_lt?: Maybe<Scalars['Int']>,
+  end_lte?: Maybe<Scalars['Int']>,
+  end_not?: Maybe<Scalars['Int']>,
+  end_not_in?: Maybe<Array<Scalars['Int']>>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  preimage?: Maybe<PreimageWhereInput>,
+  preimageHash?: Maybe<Scalars['String']>,
+  preimageHash_contains?: Maybe<Scalars['String']>,
+  preimageHash_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_gt?: Maybe<Scalars['String']>,
+  preimageHash_gte?: Maybe<Scalars['String']>,
+  preimageHash_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_lt?: Maybe<Scalars['String']>,
+  preimageHash_lte?: Maybe<Scalars['String']>,
+  preimageHash_not?: Maybe<Scalars['String']>,
+  preimageHash_not_contains?: Maybe<Scalars['String']>,
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
+  preimageHash_starts_with?: Maybe<Scalars['String']>,
+  referendumId_gt?: Maybe<Scalars['Int']>,
+  referendumId_gte?: Maybe<Scalars['Int']>,
+  referendumId_in?: Maybe<Array<Scalars['Int']>>,
+  referendumId_lt?: Maybe<Scalars['Int']>,
+  referendumId_lte?: Maybe<Scalars['Int']>,
+  referendumId_not?: Maybe<Scalars['Int']>,
+  referendumId_not_in?: Maybe<Array<Scalars['Int']>>,
+  referendumStatus_every?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_none?: Maybe<ReferendumStatusWhereInput>,
+  referendumStatus_some?: Maybe<ReferendumStatusWhereInput>,
+  voteThreshold?: Maybe<Scalars['String']>,
+  voteThreshold_contains?: Maybe<Scalars['String']>,
+  voteThreshold_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_gt?: Maybe<Scalars['String']>,
+  voteThreshold_gte?: Maybe<Scalars['String']>,
+  voteThreshold_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_lt?: Maybe<Scalars['String']>,
+  voteThreshold_lte?: Maybe<Scalars['String']>,
+  voteThreshold_not?: Maybe<Scalars['String']>,
+  voteThreshold_not_contains?: Maybe<Scalars['String']>,
+  voteThreshold_not_ends_with?: Maybe<Scalars['String']>,
+  voteThreshold_not_in?: Maybe<Array<Scalars['String']>>,
+  voteThreshold_not_starts_with?: Maybe<Scalars['String']>,
+  voteThreshold_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type ReferendumWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   referendumId?: Maybe<Scalars['Int']>,
-};
-
-export type ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
-  id?: Maybe<Scalars['Int']>,
 };
 
 export type Reward = Node & {
@@ -6414,16 +7814,38 @@ export type ValidatorWhereUniqueInput = {
 
 export type AddPostAndProposalMutationMutationVariables = {
   onchainProposalId: Scalars['Int'],
-  author_id: Scalars['Int'],
-  proposer_address: Scalars['String'],
+  authorId: Scalars['Int'],
+  proposerAddress: Scalars['String'],
   content: Scalars['String'],
   title: Scalars['String'],
-  topic_id: Scalars['Int'],
-  type_id: Scalars['Int']
+  topicId: Scalars['Int'],
+  typeId: Scalars['Int']
 };
 
 
 export type AddPostAndProposalMutationMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_onchain_links: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id'>
+    )> }
+  )> }
+);
+
+export type AddPostAndMotionMutationMutationVariables = {
+  onchainMotionProposalId: Scalars['Int'],
+  authorId: Scalars['Int'],
+  proposerAddress: Scalars['String'],
+  content: Scalars['String'],
+  title: Scalars['String'],
+  topicId: Scalars['Int'],
+  typeId: Scalars['Int']
+};
+
+
+export type AddPostAndMotionMutationMutation = (
   { __typename: 'mutation_root' }
   & { insert_onchain_links: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
@@ -6443,7 +7865,20 @@ export type GetProposalWithNoAssociatedReferendumQueryQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
-    & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+    & Pick<Onchain_Links, 'id'>
+  )> }
+);
+
+export type GetMotionWithNoAssociatedReferendumQueryQueryVariables = {
+  onchainMotionId: Scalars['Int']
+};
+
+
+export type GetMotionWithNoAssociatedReferendumQueryQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id'>
   )> }
 );
 
@@ -6454,6 +7889,20 @@ export type AddReferendumIdToProposalMutationMutationVariables = {
 
 
 export type AddReferendumIdToProposalMutationMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_onchain_links: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type AddReferendumIdToMotionMutationMutationVariables = {
+  motionId: Scalars['Int'],
+  referendumId: Scalars['Int']
+};
+
+
+export type AddReferendumIdToMotionMutationMutation = (
   { __typename?: 'mutation_root' }
   & { update_onchain_links: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
@@ -6488,6 +7937,35 @@ export type GetDiscussionProposalByIdQuery = (
   )> }
 );
 
+export type GetDiscussionMotionProposalByIdQueryVariables = {
+  onchainMotionProposalId: Scalars['Int']
+};
+
+
+export type GetDiscussionMotionProposalByIdQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id'>
+  )> }
+);
+
+export type GetDiscussionMotionsQueryVariables = {};
+
+
+export type GetDiscussionMotionsQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & DiscussionMotionFragment
+  )> }
+);
+
+export type DiscussionMotionFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
+);
+
 export type GetDiscussionProposalsQueryVariables = {};
 
 
@@ -6520,6 +7998,13 @@ export type DiscussionReferendumFragment = (
   & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
 );
 
+export const DiscussionMotionFragmentDoc = gql`
+    fragment discussionMotion on onchain_links {
+  id
+  onchain_motion_id
+  proposer_address
+}
+    `;
 export const DiscussionProposalFragmentDoc = gql`
     fragment discussionProposal on onchain_links {
   id
@@ -6534,9 +8019,19 @@ export const DiscussionReferendumFragmentDoc = gql`
 }
     `;
 export const AddPostAndProposalMutationDocument = gql`
-    mutation addPostAndProposalMutation($onchainProposalId: Int!, $author_id: Int!, $proposer_address: String!, $content: String!, $title: String!, $topic_id: Int!, $type_id: Int!) {
+    mutation addPostAndProposalMutation($onchainProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $title: String!, $topicId: Int!, $typeId: Int!) {
   __typename
-  insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposer_address, post: {data: {author_id: $author_id, content: $content, title: $title, topic_id: $topic_id, type_id: $type_id}}}) {
+  insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+export const AddPostAndMotionMutationDocument = gql`
+    mutation addPostAndMotionMutation($onchainMotionProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $title: String!, $topicId: Int!, $typeId: Int!) {
+  __typename
+  insert_onchain_links(objects: {onchain_motion_id: $onchainMotionProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
     }
@@ -6545,15 +8040,28 @@ export const AddPostAndProposalMutationDocument = gql`
     `;
 export const GetProposalWithNoAssociatedReferendumQueryDocument = gql`
     query getProposalWithNoAssociatedReferendumQuery($onchainProposalId: Int!) {
-  onchain_links(where: {_or: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
+  onchain_links(where: {_and: {onchain_proposal_id: {_eq: $onchainProposalId}, onchain_referendum_id: {_is_null: true}}}) {
     id
-    onchain_proposal_id
+  }
+}
+    `;
+export const GetMotionWithNoAssociatedReferendumQueryDocument = gql`
+    query getMotionWithNoAssociatedReferendumQuery($onchainMotionId: Int!) {
+  onchain_links(where: {_and: {onchain_motion_id: {_eq: $onchainMotionId}, onchain_referendum_id: {_is_null: true}}}) {
+    id
   }
 }
     `;
 export const AddReferendumIdToProposalMutationDocument = gql`
     mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
   update_onchain_links(where: {onchain_proposal_id: {_eq: $proposalId}}, _set: {onchain_referendum_id: $referendumId}) {
+    affected_rows
+  }
+}
+    `;
+export const AddReferendumIdToMotionMutationDocument = gql`
+    mutation addReferendumIdToMotionMutation($motionId: Int!, $referendumId: Int!) {
+  update_onchain_links(where: {onchain_motion_id: {_eq: $motionId}}, _set: {onchain_referendum_id: $referendumId}) {
     affected_rows
   }
 }
@@ -6572,6 +8080,20 @@ export const GetDiscussionProposalByIdDocument = gql`
   }
 }
     `;
+export const GetDiscussionMotionProposalByIdDocument = gql`
+    query getDiscussionMotionProposalById($onchainMotionProposalId: Int!) {
+  onchain_links(where: {onchain_motion_id: {_eq: $onchainMotionProposalId}}) {
+    id
+  }
+}
+    `;
+export const GetDiscussionMotionsDocument = gql`
+    query getDiscussionMotions {
+  onchain_links(where: {onchain_motion_id: {_is_null: false}}) {
+    ...discussionMotion
+  }
+}
+    ${DiscussionMotionFragmentDoc}`;
 export const GetDiscussionProposalsDocument = gql`
     query getDiscussionProposals {
   onchain_links(where: {onchain_proposal_id: {_is_null: false}}) {
@@ -6591,17 +8113,32 @@ export function getSdk(client: GraphQLClient) {
     addPostAndProposalMutation(variables: AddPostAndProposalMutationMutationVariables): Promise<AddPostAndProposalMutationMutation> {
       return client.request<AddPostAndProposalMutationMutation>(print(AddPostAndProposalMutationDocument), variables);
     },
+    addPostAndMotionMutation(variables: AddPostAndMotionMutationMutationVariables): Promise<AddPostAndMotionMutationMutation> {
+      return client.request<AddPostAndMotionMutationMutation>(print(AddPostAndMotionMutationDocument), variables);
+    },
     getProposalWithNoAssociatedReferendumQuery(variables: GetProposalWithNoAssociatedReferendumQueryQueryVariables): Promise<GetProposalWithNoAssociatedReferendumQueryQuery> {
       return client.request<GetProposalWithNoAssociatedReferendumQueryQuery>(print(GetProposalWithNoAssociatedReferendumQueryDocument), variables);
     },
+    getMotionWithNoAssociatedReferendumQuery(variables: GetMotionWithNoAssociatedReferendumQueryQueryVariables): Promise<GetMotionWithNoAssociatedReferendumQueryQuery> {
+      return client.request<GetMotionWithNoAssociatedReferendumQueryQuery>(print(GetMotionWithNoAssociatedReferendumQueryDocument), variables);
+    },
     addReferendumIdToProposalMutation(variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
       return client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables);
+    },
+    addReferendumIdToMotionMutation(variables: AddReferendumIdToMotionMutationMutationVariables): Promise<AddReferendumIdToMotionMutationMutation> {
+      return client.request<AddReferendumIdToMotionMutationMutation>(print(AddReferendumIdToMotionMutationDocument), variables);
     },
     loginMutation(variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
       return client.request<LoginMutationMutation>(print(LoginMutationDocument), variables);
     },
     getDiscussionProposalById(variables: GetDiscussionProposalByIdQueryVariables): Promise<GetDiscussionProposalByIdQuery> {
       return client.request<GetDiscussionProposalByIdQuery>(print(GetDiscussionProposalByIdDocument), variables);
+    },
+    getDiscussionMotionProposalById(variables: GetDiscussionMotionProposalByIdQueryVariables): Promise<GetDiscussionMotionProposalByIdQuery> {
+      return client.request<GetDiscussionMotionProposalByIdQuery>(print(GetDiscussionMotionProposalByIdDocument), variables);
+    },
+    getDiscussionMotions(variables?: GetDiscussionMotionsQueryVariables): Promise<GetDiscussionMotionsQuery> {
+      return client.request<GetDiscussionMotionsQuery>(print(GetDiscussionMotionsDocument), variables);
     },
     getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
       return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);

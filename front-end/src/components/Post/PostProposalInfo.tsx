@@ -2,13 +2,17 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { OnchainLinkProposalFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/chainProperties';
+import { chainProperties } from '../../global/networkConstants';
+import getNetwork from '../../util/getNetwork';
 
 interface Props{
 	className?: string
 	onchainLink: OnchainLinkProposalFragment
 }
+
+const currentNetwork = getNetwork();
 
 const PostProposalInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
@@ -18,7 +22,9 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 	const preimage = onchainProposal?.[0]?.preimage;
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+	const depositAmount = onchainProposal?.[0]?.depositAmount;
+
+	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -27,14 +33,14 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'} />
 					</div>
 				</Grid.Column>
-				{depositAmount &&
+				{depositAmount && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Deposit</h6>
-						{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
+						{parseInt(depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 					</div>
 				</Grid.Column>}
 				{method &&
@@ -93,8 +99,10 @@ export default styled(PostProposalInfo)`
 	}
 
 	.methodArguments {
-		display: block;
-		margin-bottom: 0.4rem;
+		display: inline-block;
+		overflow-x: auto;
+		width: 100%;
+		word-wrap: normal;
 	}
 
 	@media only screen and (max-width: 576px) {

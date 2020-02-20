@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../components/Address';
 import { OnchainLinkReferendumFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/chainProperties';
 
 interface Props{
 	className?: string
@@ -18,8 +18,12 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 
-	const preimage = onchainReferendum?.[0]?.preimage;
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+	if ( !onchainReferendum?.[0] ){
+		return null;
+	}
+
+	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
+	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -28,14 +32,28 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
-				{depositAmount &&
+				{delay &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>
-							<h6>Deposit</h6>
-							{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
+							<h6>Delay</h6>
+							{delay}
+						</div>
+					</Grid.Column>}
+				{end &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>End</h6>
+							{end}
+						</div>
+					</Grid.Column>}
+				{voteThreshold &&
+					<Grid.Column mobile={16} tablet={8} computer={8}>
+						<div className='info_group'>
+							<h6>voteThreshold</h6>
+							{voteThreshold}
 						</div>
 					</Grid.Column>}
 				{method &&
@@ -81,7 +99,7 @@ export default styled(PostReferendumInfo)`
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;
 	font-family: 'Roboto Mono';
-	
+
 	h6 {
 		font-family: 'Roboto Mono';
 		font-size: sm;
@@ -95,6 +113,9 @@ export default styled(PostReferendumInfo)`
 
 	.methodArguments {
 		display: inline-block;
+		overflow-x: auto;
+		width: 100%;
+		word-wrap: normal;
 	}
 
 	@media only screen and (max-width: 576px) {

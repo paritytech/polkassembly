@@ -67,6 +67,7 @@ const StyledTextArea = styled.div`
 
 			.mde-preview-content {
 				padding: 1rem 1.2rem!important;
+				overflow-wrap: break-word;
 
 				h1, h2, h3, h4, h5, h6 {
 					font-family: Roboto;

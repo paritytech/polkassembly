@@ -2,8 +2,17 @@ import gql from 'graphql-tag';
 
 // get the referenda with their block creation number
 export const getOnchainReferenda = gql`
-    query getOnchainReferenda {
-        referendums {
+    query getOnchainReferenda($startBlock: Int!) {
+        referendums (
+			where: {
+                referendumStatus_some: {
+                    AND: [
+                        { status: "Started" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
             ...onchainReferendum
         }
     }
@@ -25,8 +34,17 @@ export const getOnchainReferenda = gql`
 `;
 
 export const getOnchainProposals = gql`
-    query getOnchainProposals {
-        proposals {
+    query getOnchainProposals($startBlock: Int!) {
+        proposals (
+			where: {
+                proposalStatus_some: {
+                    AND: [
+                        { status: "Proposed" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
             ...onchainProposal
         }
     }
@@ -34,5 +52,27 @@ export const getOnchainProposals = gql`
         author
         id
         proposalId
+    }
+`;
+
+export const getOnchainMotions = gql`
+    query getOnchainMotions($startBlock: Int!) {
+        motions (
+			where: {
+                motionStatus_some: {
+                    AND: [
+                        { status: "Proposed" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
+            ...onchainMotion
+        }
+    }
+    fragment onchainMotion on Motion {
+        author
+        id
+        motionProposalId
     }
 `;

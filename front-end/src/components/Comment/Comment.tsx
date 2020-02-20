@@ -2,21 +2,35 @@ import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
 import styled from '@xstyled/styled-components';
 
-import Comments from './Comments';
 import EditableCommentContent from './EditableCommentContent';
-import { CommentRecursiveFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import {
+	CommentFieldsFragment,
+	ProposalPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	DiscussionPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	DiscussionPostAndCommentsQuery
+} from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props{
 	className?: string,
-	comment: CommentRecursiveFragment,
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	comment: CommentFieldsFragment,
+	refetch: (variables?:
+		ReferendumPostAndCommentsQueryVariables |
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		undefined) =>
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 export const Comment = ({ className, comment, refetch } : Props) => {
-	const { author, comments:c2, content, created_at, id, updated_at } = comment;
+	const { author, content, created_at, id, updated_at } = comment;
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
@@ -44,15 +58,6 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					content={content}
 					refetch={refetch}
 				/>
-				{
-					c2 && c2.length
-						? <Comments
-							comments={c2 as CommentRecursiveFragment[]}
-							firstComment={false}
-							refetch={refetch}
-						/>
-						: null
-				}
 			</div>
 		</div>
 	);
@@ -78,13 +83,17 @@ export default styled(Comment)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
-		width: 100%;
+		width: calc(100% - 6rem);
+
+		@media only screen and (max-width: 576px) {
+			width: 100%;
+		}
 	}
 
 	.md {
 		margin-top: 1rem;
-
 		font-size: 1.4rem;
+		overflow-wrap: break-word;
 
 		h1, h2 {
 			font-size: 1.6rem;

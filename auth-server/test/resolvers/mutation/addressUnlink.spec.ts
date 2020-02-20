@@ -39,7 +39,7 @@ describe('addressUnlink mutation', () => {
 			.query()
 			.allowInsert('[network, address, user_id, public_key, sign_message, verified]')
 			.insert({
-				network: 'kasuma',
+				network: 'kusama',
 				address,
 				user_id: signupResult.user.id,
 				public_key: Buffer.from(publicKey).toString('hex'),

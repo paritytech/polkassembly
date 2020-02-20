@@ -1,14 +1,10 @@
 # JWT Authentication server
 
-JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode. We use symetric encryption for now. There's a shared secret between the hasura graphql-engine and the auth server (`ENCRYPTION_KEY` in `.env` file).
+JWT Authentication server for generating a JWT to use in the `Authentication` header by the built in JWT decoder in Hasura GraphQL Engine when started in JWT mode.
 
 ## Getting Started
 
 ### Deploy locally
-
-#### Local Prerequisites
-
-- `auth` postgreSQL up and accepting connections
 
 #### Local instructions
 
@@ -51,13 +47,15 @@ JWT_PUBLIC_KEY="<escaped public key>"
 REACT_APP_AUTH_URL="http://localhost:8010"
 REACT_APP_SERVER_URL="http://localhost:8080/v1/graphql"
 PORT=8010
-BOT_PROPOSAL_USER_ID=1234
+PROPOSAL_BOT_USER_ID=1234
 NODE_ENV=development
 DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
 HASURA_POST_SUBSCRIPTION_SECRET="<shared secret key with hasura>"
+DOMAIN_NAME="polkassembly.io"
+DOMAIN_PROTOCOL="http://"
 ```
 
-A special user identified by its id is our proposal bot. We should grant it with the `bot_proposal` role when it signs-in.
+`proposal_bot` is a special user identified by its id. We should grant it with the `proposal_bot` role when it signs-in.
 Note: you can delete the `private.pem` and `public.pem` files now.
 
 ##### Run
@@ -107,35 +105,7 @@ Make sure you know what you are doing. This will run the tests locally on the te
 yarn test:dangerous
 ```
 
-## Usage
-
-### Get users
-
-We can get the public information available for all our users:
-
-```bash
-curl 'http://localhost:8010/auth/graphql'
-  -H "Content-Type: application/json" \
-  --request POST \
-  --data '{"operationName":null,"variables":{},"query":"{\n  users {\n    id\n    name\n    username\n  }\n}\n"}' \
-
-```
-
-On success, we get the response:
-```json
-{
-  "data": {
-    "users": [
-      {
-        "id": 2,
-        "name": "John Doe",
-        "username": "john"
-      },
-      ...
-    ]
-  }
-}
-```
+## Usage Examples
 
 ### Signup
 
@@ -216,36 +186,6 @@ On success, we get the response:
   }
 }
 ```
-### Refresh token
-A long living "refresh token" is automatically stored in an `http only` cookie at signup or login. To refresh the short living JWT token (to use for front-end requests) you can call the `/token` endpoint.
-
-First login and store the cookie (see above), then using the same cookie, you can get a refreshed short living JWT token.
-
-Using the following graphQL query:
-```gql
-query Get_new_token {
-  token {
-    token
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
-  -H 'content-type: application/json' \
-  --data '{"operationName":null,"variables":{},"query":"query Get_new_token {\n  token {\n    token\n  }\n}\n"}' \
-  --cookie 'cookie-file' \
-  --cookie-jar 'cookie-file'
-```
-on success, we get:
-
-```bash
-{
-  "data" :{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI...net__NZHeUaIyruV2Q"
-  }
-}
-```
 
 ### Logout
 We can logout user with `logout` mutation. Note that it needs an authorization header:
@@ -275,339 +215,3 @@ On success, we get the response
     }
   }
 }
-
-### Change password
-We can change a user password with the `changePassword` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Change_password{
-  changePassword(oldPassword:"sup3er5ecurePassw0rd" newPassword:"newSup3er5ecurePassw0rd"){
-    message
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU...Hx0WG53yS4yhfRzxsQ2Q" \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_password {\n  changePassword(oldPassword: \"sup3er5ecurePassw0rd\", newPassword: \"newSup3er5ecurePassw0rd\") {\n    message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "changePassword":{
-      "message":"Password succefully changed"
-    }
-  }
-}
-```
-
-### Change Email
-We can change a user email with the `changeEmail` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Change_email
-  changeEmail(email:"test.new@example.com")
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_email {\n  changeEmail(email: \"test.new@example.com\") {\n  token\n  message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data":{
-    "changeEmail":{
-      "message":"Name succefully changed",
-      "token": "<New JWT token>"
-    }
-  }
-}
-```
-
-### Change name
-We can change a user name with the `changeName` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Change_name{
-  changeName(newName:"Johnny Doe")
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_name {\n  changeName(newName: \"Johnny Doe\") {\n  token\n  message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data":{
-    "changeName":{
-      "message":"Name succefully changed",
-      "token": "<New JWT token>"
-    }
-  }
-}
-```
-
-### Email verification
-We can verify a user email by calling the `verifyEmail` mutation and pass the verification token:
-
-```gql
-mutation {
-  verifyEmail(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
-    message,
-    token
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation {\n  verifyEmail(token: \"1a068d3f-4260-4538-b0ef-2a6c91d562f4\") {\n    message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "verifyEmail": {
-      "message": "Thank you for verifying your account",
-      "token": "<new JWT>"
-    }
-  }
-}
-```
-
-### Reset Password
-Reset password is a two step process. We can send reset password link to email by calling the `requestResetPassword` mutation and pass the email:
-
-```gql
-mutation {
-  requestResetPassword(email: "test@example.com"){
-    message
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation {\n  requestResetPassword(email: \"test@example.com\") {\n    message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "requestResetPassword": {
-      "message": "The reset password link was sent to this email, if it exists in our database."
-    }
-  }
-}
-```
-
-Next on receiving the reset password token in email we have to call `resetPassword` mutation with token
-and new Password.
-
-```gql
-mutation {
-  resetPassword(
-    token: "23ads-asd-asda-asd"
-    newPassword: "superSecret"
-  ) {
-    message
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation {\n  resetPassword(token: \"23ads-asd-asda-asd\", newPassword: \"superSecret\" \n) {\n    message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "resetPassword": {
-      "message": "Password successfully reset."
-    }
-  }
-}
-```
-
-### Change username
-We can change a user username with the `changeUsername` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Change_username{
-  changeUsername(username:"johnny") {
-    message
-    token
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation Change_username {\n  changeUsername(username: \"johnny\") {\n  token\n  message\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data":{
-    "changeUsername":{
-      "message":"Username changed successfully",
-      "token": "<New JWT token>"
-    }
-  }
-}
-```
-
-### Subscribe to a post new comments
-We can be notified for any new comment from a given post by calling the `changeUsername` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Post_subscribe{
-  postSubscribe(post_id:19) {
-    message
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
--H 'Content-Type: application/json' \
---data-binary '{"query":"mutation {\n  postSubscribe(post_id:19){\n    message\n  }\n}"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "postSubscribe": {
-      "message": "You successfully subscribed to new comments."
-    }
-  }
-}
-```
-
-### Unsubscribe to a post
-We can be notified for any new comment from a given post by calling the `changeUsername` mutation. Note that it needs an authorization header:
-
-```gql
-mutation Post_unsubscribe{
-  postUnsubscribe(post_id:19) {
-    message
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Authorization: Bearer eyJhbGciOiJSU..7lpHx0WG53yS4yhfRzxsQ2Q" \
--H 'Content-Type: application/json' \
---data-binary '{"query":"mutation {\n  postUnsubscribe(post_id:19){\n    message\n  }\n}"}'
-```
-
-### Get Subscription to a post
-We can get if user is subscribed to a particular post by calling the `subscription` query. Note that it needs an authorization header:
-
-```gql
-query Post_subscription{
-  subscription(post_id: 19) {
-    subscribed
-  }
-}
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "subscription": {
-      "subscribed": true
-    }
-  }
-}
-```
-
-### Undo Email Change
-We can undo a email change by calling the `undoEmailChange` mutation and pass the undo email token:
-
-```gql
-mutation {
-  undoEmailChange(token: "1a068d3f-4260-4538-b0ef-2a6c91d562f4"){
-    message,
-    token
-  }
-}
-```
-
-```bash
-curl 'http://localhost:8010/auth/graphql' \
--H "Content-Type: application/json" \
---data '{"operationName":null,"variables":{},"query":"mutation {\n  undoEmailChange(token: \"1a068d3f-4260-4538-b0ef-2a6c91d562f4\") {\n    message\n token\n  }\n}\n"}'
-```
-
-On success, we get the response
-
-```json
-{
-  "data": {
-    "undoEmailChange": {
-      "message": "Your email has been reverted to old email.",
-      "token": "<new JWT>"
-    }
-  }
-}
-```
-
-
-## Testing
-
-To run tests:
-
-Build the docker container for test:
-
-```bash
-docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test .
-```
-
-Run test
-
-```bash
-docker-compose -f docker-compose-test.yaml up --abort-on-container-exit
-```
-
-It will create a local postgres and test will run on top of that.
-
-=============IMPORTANT===============
-Please note: TEST DATABASE WILL BE CLEANED BEFORE STARTING TEST SUITE.
