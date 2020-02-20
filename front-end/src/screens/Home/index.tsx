@@ -85,10 +85,6 @@ export default styled(Home)`
 
 	@media only screen and (max-width: 576px) {
 
-		h2 {
-			margin-left: 1.5rem;
-		}
-
 		.mainButtonContainer {
 			align-items: stretch!important;
 			margin: 1rem!important;
