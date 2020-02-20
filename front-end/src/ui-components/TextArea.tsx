@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import ReactMde, { commands }  from 'react-mde';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
@@ -70,7 +70,7 @@ const StyledTextArea = styled.div`
 				overflow-wrap: break-word;
 
 				h1, h2, h3, h4, h5, h6 {
-					font-family: Roboto;
+					font-family: font_default;
 					font-weight: 500;
 				}
 
@@ -125,7 +125,7 @@ const StyledTextArea = styled.div`
 				margin: 0rem 0.5rem;
 
 				button {
-					font-family: 'Roboto Mono';
+					font-family: font_default;
 					font-size: 1.2rem;
 					font-weight: 500;
 					padding: 0.8rem 1.6rem;

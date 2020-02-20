@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Radio, CheckboxProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import { usePost_TopicsQuery } from '../../generated/graphql';
 import FilteredError from '../../ui-components/FilteredError';
@@ -67,7 +67,7 @@ export default styled(TopicsRadio)`
 			background-color: #9A9494;
 			color: #FFF!important;
 			padding: 0.5rem 0.8rem;
-			font-family: 'Roboto';
+			font-family: font_default;
 			font-size: 1rem;
 			line-height: 1;
 			border-radius: 0.2rem;

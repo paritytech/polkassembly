@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import { Message, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react';
 import { NotificationStatus, NotificationType } from '../types';
@@ -51,12 +51,12 @@ export default styled(DismissableNotification)`
 	cursor: pointer;
 
 	.ui.message {
-		font-family: 'Roboto';
+		font-family: font_default;
 		border: none;
 		outline: none;
 		box-shadow: none!important;
 		.header {
-			font-family: 'Roboto Mono';
+			font-family: font_mono;
 			font-weight: 500;
 			font-size: 1.8rem;
 		}		

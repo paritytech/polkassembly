@@ -8,7 +8,7 @@ const Button = (props : ButtonProps) => {
 
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;

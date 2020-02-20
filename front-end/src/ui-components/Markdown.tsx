@@ -11,7 +11,7 @@ const Markdown = ({ className, md }: Props) => <ReactMarkdown className={classNa
 
 export default styled(Markdown)`
 	color: black_text;
-	font-family: 'Roboto';
+	font-family: font_default;
 	font-size: md;
 	line-height: 150%;
 	margin-bottom: 2rem;
@@ -42,7 +42,7 @@ export default styled(Markdown)`
 
 	h4 {
 		font-size: md;
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 	}
 
 	h5, h6 {

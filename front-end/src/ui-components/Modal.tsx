@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal as SUIModal, ModalProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 type Props = ModalProps & {
 	buttons: React.ReactNode
@@ -50,7 +50,7 @@ export default styled(Modal)`
 
 	> .header {
 		border-bottom:0px!important;
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		font-weight: 500!important;
 		font-size: 1.8rem!important;
 		padding: 2rem 3rem 0 3rem!important;

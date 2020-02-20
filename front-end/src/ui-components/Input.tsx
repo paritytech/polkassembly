@@ -7,7 +7,7 @@ function Input (props : SUIFormInputProps){
 }
 
 export default styled(Input)`
-    font-family: 'Roboto';
+    font-family: font_default;
     font-size: input_text;
     color: black_primary;
     border: 1 px solid #EEE;

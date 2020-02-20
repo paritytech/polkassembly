@@ -72,7 +72,7 @@ const StyledForm = styled(SUIForm)`
         input:not([type]), input[type=date], input[type=datetime-local], input[type=email], 
         input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
         input[type=text], input[type=time], input[type=url] {
-            font-family: 'Roboto';
+            font-family: font_default;
             font-size: 1.3rem;
             color: black_primary;
             border: 1 px solid #EEE;
@@ -81,7 +81,7 @@ const StyledForm = styled(SUIForm)`
             text-indent: 0rem;
             padding: 1rem;
             &:focus {
-                font-family: 'Roboto';
+                font-family: font_default;
                 font-size: 1.3rem;
                 color: black_text;
                 border-color: grey_primary;

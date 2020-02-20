@@ -215,7 +215,7 @@ const Address = ({ className }: Props): JSX.Element => {
 };
 
 export default styled(Address)`
-	font-family: 'Roboto';
+	font-family: font_default;
 
 	&.ui.form .field>label {
 		font-size: input_text_size;

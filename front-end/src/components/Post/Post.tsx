@@ -139,7 +139,7 @@ export default styled(Post)`
 		margin-bottom: 1rem;
 	}
 	h3 {
-		font-family: 'Roboto';
+		font-family: font_default;
 		font-size: xl;
 		margin-bottom: 0.4rem;
 		max-width: calc(100% - 20rem);
