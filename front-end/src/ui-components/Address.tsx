@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
