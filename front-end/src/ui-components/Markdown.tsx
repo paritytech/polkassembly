@@ -19,9 +19,14 @@ export default styled(Markdown)`
 		margin: 0 0 1.5rem 0;
 	}
 
-	h1, h2 {
+	h1 {
+		font-size: 3rem;
+		margin-bottom: 3rem;
+	} 
+	
+	h2 {
 		font-size: 2.4rem;
-		margin-bottom: 1.2rem;
+		margin: 3rem 0 2rem 0;
 	}
 
 	h3, h4 {
@@ -31,6 +36,12 @@ export default styled(Markdown)`
 
 	ul, ol {
 		padding-left: 2rem;
+
+		li {
+			padding-left: 0.8rem;
+			margin-bottom: 1.2rem;
+		}
+
 		li > input {
 			display: none;
 		}	
