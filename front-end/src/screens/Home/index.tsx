@@ -53,15 +53,15 @@ export default styled(Home)`
 
 	h1 {
 		@media only screen and (max-width: 576px) {
-			margin: 3rem 1.5rem 1rem 1.5rem;
+			margin: 3rem 1rem 1rem 1rem;
 		}
 
 		@media only screen and (max-width: 768px) and (min-width: 576px) {
-			margin-left: 1.5rem;
+			margin-left: 1rem;
 		}
 
 		@media only screen and (max-width: 991px) and (min-width: 768px) {
-			margin-left: 1.5rem;
+			margin-left: 1rem;
 		}
 	}
 	
