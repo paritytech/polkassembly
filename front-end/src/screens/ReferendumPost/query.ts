@@ -16,7 +16,6 @@ const onchainLinkReferendum = gql`
                 id
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription
