@@ -21,13 +21,9 @@ const UpdateLabel = ({ className, created_at, updated_at } : Props) => {
 
 export default styled(UpdateLabel)`
     margin-left: .5rem;
-    font-size: 1.2rem;
+    font-size: sm;
     
     span {
-        color: #B5AEAE;
+        color: grey_secondary;
     }
-
-    &.md {
-		font-size: md;
-	}
 }`;

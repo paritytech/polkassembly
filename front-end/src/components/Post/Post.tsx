@@ -138,18 +138,13 @@ export default styled(Post)`
 		padding: 3rem;
 		margin-bottom: 1rem;
 	}
-	h3 {
-		font-family: font_default;
-		font-size: xl;
-		margin-bottom: 0.4rem;
-		max-width: calc(100% - 20rem);
-		display: flex;
-	}
+
 	@media only screen and (max-width: 576px) {
 		.post_content {
 			padding: 2rem
 		}
 	}
+	
 	@media only screen and (max-width: 992px) {
 		.democracy_card {
 			visibility: hidden;

@@ -23,82 +23,85 @@ export function Form({ standalone=true, ...props } : FormProps): React.ReactElem
 }
 
 const StyledForm = styled(SUIForm)`
-    background-color: ${(): string => _standalone ? '#FFF' : 'default'};
-    padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
-    margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
-    border: ${(): string => _standalone ? '1px solid #EEE' : 'none'};
+	background-color: ${(): string => _standalone ? '#FFF' : 'default'};
+	padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
+	margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
+	border: ${(): string => _standalone ? '1px solid #EEE' : 'none'};
 
-    h3 {
-        margin-bottom: 3rem;
-    }
 
-    .field {
-        label {
-            font-weight: 500;
-        }
-    }
+	h3 {
+		font-family: font_mono;
+		font-size: 2.4rem;
+		margin-bottom: 3rem;
+	}
 
-    .text-muted {
-        color: grey_primary;
+	.field {
+		label {
+			font-weight: 500;
+		}
+	}
 
-        a {
-            color: grey_primary;
-            border-bottom-style: solid;
-            border-bottom-width: 1px;
-            border-bottom-color: grey_primary;
-        }
-    }
+	.text-muted {
+		color: grey_primary;
 
-    &.ui.form {
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
+	}
 
-        font-size: sm;
-        
-        .field
-            > label {
-                font-size: input_text_size;
-                font-weight: 500;
-                color: black_primary;
-                margin-bottom: 0.6rem;
-        }
+	&.ui.form {
 
-        .fields {
-            margin-bottom: 2rem;
-    
-            @media only screen and (max-width: 767px) {
-                margin-bottom: 1.25rem;
-            }
-        }
+		font-size: sm;
+		
+		.field
+			> label {
+				font-size: input_text_size;
+				font-weight: 500;
+				color: black_primary;
+				margin-bottom: 0.6rem;
+		}
 
-        input:not([type]), input[type=date], input[type=datetime-local], input[type=email], 
-        input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
-        input[type=text], input[type=time], input[type=url] {
-            font-family: font_default;
-            font-size: 1.3rem;
-            color: black_primary;
-            border: 1 px solid #EEE;
-            border-color: grey_light;
-            border-radius: 0rem;
-            text-indent: 0rem;
-            padding: 1rem;
-            &:focus {
-                font-family: font_default;
-                font-size: 1.3rem;
-                color: black_text;
-                border-color: grey_primary;
-                border-radius: 0rem;
-            }
-            &:hover {
-                border-color: grey_secondary;
-            }
-        }
+		.fields {
+			margin-bottom: 2rem;
 
-        input::selection, textarea::selection {
-            color: black_text;
-            background-color: grey_light;
-        }
+			@media only screen and (max-width: 767px) {
+				margin-bottom: 1.25rem;
+			}
+		}
 
-    @media only screen and (max-width: 576px) {
-        margin-top: 0rem;
-        padding: 2rem;
-    }
-`;
+		input:not([type]), input[type=date], input[type=datetime-local], input[type=email], 
+		input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
+		input[type=text], input[type=time], input[type=url] {
+			font-family: 'Roboto';
+			font-size: 1.3rem;
+			color: black_primary;
+			border: 1 px solid #EEE;
+			border-color: grey_light;
+			border-radius: 0rem;
+			text-indent: 0rem;
+			padding: 1rem;
+			&:focus {
+				font-family: 'Roboto';
+				font-size: 1.3rem;
+				color: black_text;
+				border-color: grey_primary;
+				border-radius: 0rem;
+			}
+			&:hover {
+				border-color: grey_secondary;
+			}
+		}
+
+		input::selection, textarea::selection {
+			color: black_text;
+			background-color: grey_light;
+		}
+
+	@media only screen and (max-width: 576px) {
+		margin-top: 0rem;
+		padding: 2rem;
+	}
+	`;
