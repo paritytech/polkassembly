@@ -27,9 +27,6 @@ const onchainLinkReferendum = gql`
                 }
             }
         }
-        onchain_proposal {
-            depositAmount
-        }
     }
 `;
 

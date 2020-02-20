@@ -4,21 +4,16 @@ import styled from '@xstyled/styled-components';
 
 import AddressComponent from '../../components/Address';
 import { OnchainLinkReferendumFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/networkConstants';
-import getNetwork from '../../util/getNetwork';
 
 interface Props{
 	className?: string
 	onchainLink: OnchainLinkReferendumFragment
 }
 
-const currentNetwork = getNetwork();
-
 const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
-		onchain_proposal: onchainProposal,
 		onchain_referendum: onchainReferendum,
 		proposer_address: proposerAddress
 	} = onchainLink;
@@ -40,13 +35,6 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
-				{onchainProposal?.[0]?.depositAmount && currentNetwork &&
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>Deposit</h6>
-							{parseInt(onchainProposal?.[0]?.depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
-						</div>
-					</Grid.Column>}
 				{delay &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<div className='info_group'>

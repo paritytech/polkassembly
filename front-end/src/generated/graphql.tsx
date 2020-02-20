@@ -8685,9 +8685,6 @@ export type OnchainLinkReferendumFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )>>, onchain_proposal: Array<Maybe<(
-    { __typename?: 'Proposal' }
-    & Pick<Proposal, 'depositAmount'>
   )>> }
 );
 
@@ -9090,9 +9087,6 @@ export const OnchainLinkReferendumFragmentDoc = gql`
         value
       }
     }
-  }
-  onchain_proposal {
-    depositAmount
   }
 }
     `;
