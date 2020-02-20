@@ -20,15 +20,15 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 	switch (status){
 	case ERROR:
 		color = 'red';
-		icon = 'ambulance';
+		icon = 'times circle';
 		break;
 	case WARNING:
 		color = 'orange';
-		icon = 'warning';
+		icon = 'warning circle';
 		break;
 	case SUCCESS:
 		color = 'green';
-		icon = 'check';
+		icon = 'check circle';
 		break;
 	}
 
@@ -47,51 +47,31 @@ const DismissableNotification = ({ className, notification, onDismiss }: Props) 
 };
 
 export default styled(DismissableNotification)`
-	margin-bottom: 1rem;
+	margin: 1rem 0;
 	cursor: pointer;
 
 	.ui.message {
 		font-family: font_default;
+		background-color: white;
 		border: none;
 		outline: none;
-		box-shadow: none!important;
+		box-shadow: 0px 0.2rem 0.2rem rgba(0,0,0,0.05);
 		.header {
-			font-family: font_mono;
+			font-family: font_default;
 			font-weight: 500;
-			font-size: 1.8rem;
+			font-size: md;
+			color: black_text;
 		}		
 		p {
 			opacity: 1;
-			font-size: 1.5rem;
+			font-size: sm;
+			color: black_text;
 		}
 		.close {
 			text-shadow: none;
 			font-size: 1.8rem;
 			margin-right 1rem!important;
-		}
-	}
-
-	.ui.green.message {
-		background-color: #44B87E;
-		color: #114129;
-		.header, .close {
-			color: #114129;
-		}
-	}
-
-	.ui.orange.icon.message {
-		background-color: #FF822E;
-		color: #662900;
-		.header, .close {
-			color: #662900;
-		}
-	}
-	
-	.ui.red.icon.message {
-		background-color: #FF474E;
-		color: #520003;
-		.header, .close {
-			color: #520003;
+			color: grey_secondary;
 		}
 	}
 

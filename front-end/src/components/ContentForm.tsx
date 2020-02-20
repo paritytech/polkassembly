@@ -40,7 +40,7 @@ export default styled(ContentForm)`
 	}
 
 	.errorText {
-		color: #fe4850;
+		color: red_secondary;
 		margin-bottom: 1rem;
 		padding-left: 0.5rem;
 	}
@@ -50,7 +50,9 @@ export default styled(ContentForm)`
 	}
 
 	.react-mde.error > textarea {
-		border: solid 1px #fe4850 !important;
+		border-style: solid;
+		border-width: 1px;
+		border-color: red_secondary !important;
 	}
 
 	.container {

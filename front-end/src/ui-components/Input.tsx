@@ -10,11 +10,13 @@ export default styled(Input)`
     font-family: font_default;
     font-size: input_text;
     color: black_primary;
-    border: 1 px solid #EEE;
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey_light;
     border-radius: 0rem;
     padding: 0.625rem 0 0.5rem 0;
     &:focus {
         outline: 0;
-        border-color: #EEE;
+        border-color: grey_light;
     }	
 `;

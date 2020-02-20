@@ -39,7 +39,7 @@ export default styled(Modal)`
 
 	> .actions {
 		border-top: 0px!important;
-		background-color: #FFF!important;
+		background-color: white !important;
 		padding: 0 3rem 3rem 3rem;
 		margin-top: 2rem;
 		align-items: center;

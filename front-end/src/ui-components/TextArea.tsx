@@ -10,7 +10,7 @@ const StyledTextArea = styled.div`
     textarea {
 		border-radius: 0rem;
 		border: none!important;
-		color: #555!important;
+		color: black_text !important;
 		padding: 1rem 1.2rem!important;
 		line-height: 1.4!important;
 	}
@@ -19,11 +19,9 @@ const StyledTextArea = styled.div`
 		.react-mde {
 			.mde-header {
 				.mde-header-group {
-					border-top: 1px solid #DED7D7;
-					border-bottom-color: #DED7D7;
 					margin-left: 0!important;
 					padding: 1rem 0.5rem;
-					background-color: #FFF;
+					background-color: white;
 					width: 100%;
 
 					&.hidden {
@@ -49,7 +47,7 @@ const StyledTextArea = styled.div`
 						border-bottom-left-radius: 0!important;
 
 						&.selected {
-							border-bottom-color: #FFF!important;
+							border-bottom-color: white !important;
 							z-index: 1;
 						}
 					}
@@ -59,7 +57,7 @@ const StyledTextArea = styled.div`
 	}
 	
 	.react-mde  {
-		border-color: #EEE;
+		border-color: grey_light;
 		font-size: 1.4rem;
 
 		.mde-preview {

@@ -97,8 +97,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::selection {
-        background-color: #282828;
-        color: #FFF;
+        background-color: black_primary;
+        color: white;
     }
 
     .ui.dropdown .menu, .ui.dropdown .menu>.item {

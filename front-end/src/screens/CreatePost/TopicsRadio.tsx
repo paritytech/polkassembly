@@ -64,8 +64,8 @@ export default styled(TopicsRadio)`
 
 		& label {
 			display: inline-block;
-			background-color: #9A9494;
-			color: #FFF!important;
+			background-color: grey_light;
+			color: black_text;
 			padding: 0.5rem 0.8rem;
 			font-family: font_default;
 			font-size: 1rem;
@@ -74,13 +74,14 @@ export default styled(TopicsRadio)`
 			letter-spacing: 0.05rem;
 			margin-right: 0.8rem;
 			&:hover {
-				background-color: #393838;
+				background-color: grey_primary;
+				color: white;
 			}
 		}
 	}
 
 	.ui.checked.radio.checkbox label {
-		background-color: #393838;
-		color: #FFF;	
+		background-color: grey_primary;
+		color: white;	
 	}
 `;

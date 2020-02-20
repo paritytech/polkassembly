@@ -60,12 +60,12 @@ export default styled(Button)`
 		}
 		&.ui.secondary.negative.button {
 			background-color: white;
-			color: #E65140;
+			color: red_secondary;
 			box-shadow: 0 0 0 1px inset !important;
 			&:hover, &:focus {
-				background-color: #E66557;
+				background-color: red_secondary;
 				color: white;
-				box-shadow: 0 0 0 1px #E65140 inset !important;
+				box-shadow: 0 0 0 1px #A6ACB3 inset !important;
 				outline: none;
 			}	
 		}
