@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps, Icon, Popup, Grid } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps, Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
+import HelperTooltip from '../../ui-components/HelperTooltip';
 import { NotificationContext } from '../../context/NotificationContext';
 import { NotificationStatus } from '../../types';
 
@@ -104,11 +105,8 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 						<Form.Group>
 							<Form.Field>
 								<label>Vote with account&nbsp;
-									<Popup
-										trigger={<Icon name='question circle'/>}
-										content='You can choose account from polkadot-js extension.'
-										style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-										hoverable={true}
+									<HelperTooltip
+										content='You can choose an account from the polkadot-js extension.'
 									/>
 								</label>
 								<Dropdown

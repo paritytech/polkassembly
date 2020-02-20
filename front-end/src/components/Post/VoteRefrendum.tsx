@@ -1,12 +1,13 @@
 
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../ui-components/Form';
 import Button from '../../ui-components/Button';
+import HelperTooltip from '../../ui-components/HelperTooltip';
 import { NotificationContext } from '../../context/NotificationContext';
 import { NotificationStatus } from '../../types';
 
@@ -139,11 +140,8 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Vote with account&nbsp;
-								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='You can choose account from polkadot-js extension.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
+								<HelperTooltip
+									content='You can choose an account from the polkadot-js extension.'
 								/>
 							</label>
 							<Dropdown
@@ -153,11 +151,8 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								options={addressOptions}
 							/>
 							<label>Vote Lock&nbsp;
-								<Popup
-									trigger={<Icon name='question circle'/>}
+								<HelperTooltip
 									content='You can multiply your votes by locking your tokens for longer periods of time.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
 								/>
 							</label>
 							<Select

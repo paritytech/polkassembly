@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm, FieldError } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Grid, Icon, Popup } from 'semantic-ui-react';
+import { Grid  } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { ModalContext } from '../../context/ModalContext';
@@ -12,6 +12,7 @@ import { handleLoginUser } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import HelperTooltip from '../../ui-components/HelperTooltip';
 import messages from '../../util/messages';
 
 interface Props {
@@ -79,11 +80,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>
 								Display Name
-								<Popup
-									trigger={<Icon name='question circle' style={{ marginLeft: '0.2rem' }}/>}
+								<HelperTooltip
 									content='This name is used as a more readable alternative to your username.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
 								/>
 							</label>
 							<input
@@ -99,11 +97,8 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						<Form.Field width={16}>
 							<label>
 								Email
-								<Popup
-									trigger={<Icon name='question circle' style={{ marginLeft: '0.2rem' }}/>}
+								<HelperTooltip
 									content='Your email is used for password recovery or discussion notifications.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
 								/>
 							</label>
 							<input
