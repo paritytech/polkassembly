@@ -104,7 +104,7 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 					<Form standalone={false}>
 						<Form.Group>
 							<Form.Field>
-								<label>Vote with account&nbsp;
+								<label>Vote with account
 									<HelperTooltip
 										content='You can choose an account from the polkadot-js extension.'
 									/>
