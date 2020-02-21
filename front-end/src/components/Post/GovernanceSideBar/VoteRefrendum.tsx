@@ -5,11 +5,11 @@ import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Select
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { Form } from '../../ui-components/Form';
-import Button from '../../ui-components/Button';
-import HelperTooltip from '../../ui-components/HelperTooltip';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { Form } from '../../../ui-components/Form';
+import Button from '../../../ui-components/Button';
+import HelperTooltip from '../../../ui-components/HelperTooltip';
+import { NotificationContext } from '../../../context/NotificationContext';
+import { NotificationStatus } from '../../../types';
 
 type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
 

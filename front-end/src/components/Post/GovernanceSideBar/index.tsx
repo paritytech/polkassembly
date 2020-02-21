@@ -6,9 +6,9 @@ import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-da
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from '@polkadot/react-identicon';
 
-import ExtensionNotDetected from '../../components/ExtensionNotDetected';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
-import shortenAddress from '../../util/shortenAddress';
+import ExtensionNotDetected from '../../ExtensionNotDetected';
+import { UserDetailsContext } from '../../../context/UserDetailsContext';
+import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
 
@@ -22,7 +22,7 @@ interface Props {
 const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
+const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
 	const [address, setAddress] = useState<string>('');
@@ -168,7 +168,7 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 	return null;
 };
 
-export default styled(Democracy)`
+export default styled(GovenanceSideBar)`
 	.card {
 		background-color: white;
 		padding: 2rem 3rem 4rem 3rem;
