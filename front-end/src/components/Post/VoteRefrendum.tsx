@@ -141,7 +141,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 						<Form.Field width={16}>
 							<label>Vote with account
 								<HelperTooltip
-									content='You can choose an account from the polkadot-js extension.'
+									content='You can choose an account from the Polkadot-js extension.'
 								/>
 							</label>
 							<Dropdown
