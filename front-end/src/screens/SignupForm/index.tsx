@@ -184,10 +184,6 @@ export default styled(SignupForm)`
 		color: #fe4850
 	}
 
-	i.icon.question.circle:before {
-		color: grey_secondary;
-	}
-
 	.checkbox-label {
 		position: relative;
 		bottom: 0.1rem;
