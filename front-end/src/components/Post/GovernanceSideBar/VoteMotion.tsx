@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
 import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
@@ -9,22 +9,38 @@ import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
+import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 
 interface Props {
-	className?: string
-	motionId?: number | null | undefined
+	accounts: InjectedAccountWithMeta[]
+	address: string
+	addressOptions: DropdownItemProps[]
 	api?: ApiPromise
 	apiReady?: boolean
-	address: string
+	className?: string
 	defaultAddress: string
-	addressOptions: DropdownItemProps[]
-	accounts: InjectedAccountWithMeta[]
-	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 	getAccounts: () => Promise<undefined>
+	motionId?: number | null | undefined
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
 const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const [isCouncil, setIsCouncil] = useState(false);
+	const councilQueryresult = useGetCouncilMembersQuery();
+	const currentCouncil: string[] = [];
+	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
+
+	useEffect( () => {
+		accounts.some(account => {
+			if (currentCouncil.includes(account.address)){
+				setIsCouncil(true);
+				// this breaks the loop as soon as we find a matching address
+				return true;
+			}
+
+		});
+	}, [accounts, currentCouncil]);
 
 	const voteMotion = async (aye: boolean) => {
 		if (!api) {
@@ -83,63 +99,65 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 		);
 	}
 
+	const VotingForm = () =>
+		<Form standalone={false}>
+			<h4>Vote</h4>
+			<Form.Group>
+				<Form.Field width={16}>
+					<label>Vote with account
+						<Popup
+							trigger={<Icon name='question circle'/>}
+							content='You can choose account from polkadot-js extension.'
+							style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+							hoverable={true}
+						/>
+					</label>
+					<Dropdown
+						onChange={onAccountChange}
+						defaultValue={defaultAddress || accounts[0].address}
+						selection
+						options={addressOptions}
+					/>
+				</Form.Field>
+			</Form.Group>
+			<Form.Group>
+				<Form.Field className='button-container' width={8}>
+					<Button
+						fluid
+						basic
+						className='primary negative'
+						disabled={!apiReady}
+						onClick={() => voteMotion(false)}
+					>
+						<Icon name='thumbs down' />
+								NAY
+					</Button>
+				</Form.Field>
+				<Form.Field className='button-container' width={8}>
+					<Button
+						fluid
+						primary
+						disabled={!apiReady}
+						onClick={() => voteMotion(true)}
+					>
+						<Icon name='thumbs up' />
+								AYE
+					</Button>
+				</Form.Field>
+			</Form.Group>
+		</Form>;
+
+	const NotCouncil = () =>
+		<div>You are obviously not from the council and cannot vote here.</div>;
+
 	return (
 		<div className={className}>
 			<div className='card'>
-				<Form standalone={false}>
-					<h4>Vote</h4>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Vote with account
-								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='You can choose account from polkadot-js extension.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
-								/>
-							</label>
-							<Dropdown
-								onChange={onAccountChange}
-								defaultValue={defaultAddress || accounts[0].address}
-								selection
-								options={addressOptions}
-							/>
-							<label>Vote Lock&nbsp;
-								<Popup
-									trigger={<Icon name='question circle'/>}
-									content='You can multiply your votes by locking your tokens for longer periods of time.'
-									style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-									hoverable={true}
-								/>
-							</label>
-						</Form.Field>
-					</Form.Group>
-					<Form.Group>
-						<Form.Field className='button-container' width={8}>
-							<Button
-								fluid
-								basic
-								className='primary negative'
-								disabled={!apiReady}
-								onClick={() => voteMotion(false)}
-							>
-								<Icon name='thumbs down' />
-								NAY
-							</Button>
-						</Form.Field>
-						<Form.Field className='button-container' width={8}>
-							<Button
-								fluid
-								primary
-								disabled={!apiReady}
-								onClick={() => voteMotion(true)}
-							>
-								<Icon name='thumbs up' />
-								AYE
-							</Button>
-						</Form.Field>
-					</Form.Group>
-				</Form>
+				{isCouncil
+					? <VotingForm/>
+					: <NotCouncil/>
+				}
+
 			</div>
 		</div>
 	);
