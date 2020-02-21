@@ -71,7 +71,7 @@ lint-back-end:
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     - echo "$BUILD_ARGS"
     - echo "$DOCKER_REGISTRY_JSON" | docker login -u _json_key --password-stdin https://gcr.io
-    - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
+    - docker build -t "$DOCKER_IMAGE_FULL_NAME" $(echo -E $BUILD_ARGS) $POD_NAME
     - docker push "$DOCKER_IMAGE_FULL_NAME"
 
 dockerize-front-end:
@@ -79,10 +79,10 @@ dockerize-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$REACT_APP_HASURA_GRAPHQL_URL\")"
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$REACT_APP_JWT_PUBLIC_KEY"\')"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL}"
   only:
-    - master
+      - master
+      - /^fv-.*/
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -90,7 +90,8 @@ dockerize-auth-server:
   environment:
     name: parity-build
   only:
-    - master
+      - master
+      - /^fv-.*/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -98,7 +99,7 @@ dockerize-chain-db-watcher:
   environment:
     name: parity-build
   only:
-    - master
+      - master
   <<: *build_and_push
 
 #### stage:                        deploy
