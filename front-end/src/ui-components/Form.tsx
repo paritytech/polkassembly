@@ -15,18 +15,19 @@ Form.Input = Input;
 Form.Field = Field;
 Form.Group = Group;
 
-let _standalone=true;
-
 export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
-	_standalone = standalone;
-	return <StyledForm {...props} />;
+	return <StyledForm className={standalone? 'standalone':''} {...props} />;
 }
 
 const StyledForm = styled(SUIForm)`
-	background-color: ${(): string => _standalone ? 'white' : 'default'};
-	padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
-	margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
-	border: ${(): string => _standalone ? '1px solid #EBF0F5' : 'none'};
+	&.standalone {
+		background-color: white;
+		margin-top: 4rem;
+		padding: 2rem 3rem 3rem 3rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+	}
 
 	h3 {
 		font-family: font_mono;
