@@ -60,60 +60,6 @@ const StyledTextArea = styled.div`
 		border-color: grey_light;
 		font-size: 1.4rem;
 
-		.mde-preview {
-			font-size: 1.4rem;
-
-			.mde-preview-content {
-				padding: 1rem 1.2rem!important;
-				overflow-wrap: break-word;
-
-				h1, h2, h3, h4, h5, h6 {
-					font-family: font_default;
-					border-bottom: none;
-				}
-
-				h1, h2 {
-					font-size: 2.4rem;
-					font-weight: 400;
-					margin-bottom: 1.2rem;
-				}
-		
-				h3, h4 {
-					font-size: lg;
-					font-weight: 500;
-					margin-bottom: 0.8rem;
-				}
-
-				a {
-					color: red_primary;
-
-					&:hover {
-						text-decoration: none;
-						color: red_secondary;
-						border-bottom-style: solid;
-						border-bottom-width: 1px;
-						border-bottom-color: red_secondary;
-					}
-				}
-
-				p {
-					img {
-						opacity: 0.6;
-						max-width: 100%;
-					}
-				}
-
-				blockquote {
-					color: grey_primary;
-					font-size: 1.6rem;
-				}
-
-				ul > li > input {
-					display: none;
-				}
-			}
-		}
-
 		.grip {
 			border-top: none;
 			color: grey_secondary;
@@ -232,7 +178,7 @@ export function TextArea(props: Props): React.ReactElement {
 		<StyledTextArea className="container">
 			<ReactMde
 				commands={listCommands}
-				generateMarkdownPreview={markdown => Promise.resolve(<Markdown md={markdown} />) }
+				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}

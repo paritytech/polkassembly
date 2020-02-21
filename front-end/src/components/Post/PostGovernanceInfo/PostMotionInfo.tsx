@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import AddressComponent from '../../components/Address';
-import { OnchainLinkMotionFragment } from '../../generated/graphql';
+import AddressComponent from '../../../ui-components/Address';
+import { OnchainLinkMotionFragment } from '../../../generated/graphql';
 
 interface Props{
 	className?: string
