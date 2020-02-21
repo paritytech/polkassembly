@@ -9,7 +9,7 @@ interface Props {
 const HelperTooltip = ({ className, content }:Props) =>
 	<Popup
 		className={className}
-		trigger={<Icon name='question circle' style={{ marginLeft: '0.2rem' }}/>}
+		trigger={<Icon name='question circle' style={{ color: '#A6ACB3', marginLeft: '0.2rem' }}/>}
 		content={content}
 		style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
 		hoverable={true}
