@@ -12,7 +12,7 @@ const Markdown = ({ className, isPreview, md }: Props) => {
 	return (
 		<>
 			{isPreview
-				? <ReactMarkdown className={className + ' ' + 'mde-preview-content'} source={md}/>
+				? <ReactMarkdown className={className + ' mde-preview-content'} source={md}/>
 				: <ReactMarkdown className={className} source={md}/>
 			}
 		</>
