@@ -28,7 +28,6 @@ const StyledForm = styled(SUIForm)`
 	margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
 	border: ${(): string => _standalone ? '1px solid #EBF0F5' : 'none'};
 
-
 	h3 {
 		font-family: font_mono;
 		font-size: 2.4rem;
