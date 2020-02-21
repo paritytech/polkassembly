@@ -139,7 +139,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Vote with account&nbsp;
+							<label>Vote with account
 								<HelperTooltip
 									content='You can choose an account from the polkadot-js extension.'
 								/>
