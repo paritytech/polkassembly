@@ -100,6 +100,7 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
       - master
+      - /^fv-.*/
   <<: *build_and_push
 
 #### stage:                        deploy
@@ -114,6 +115,7 @@ deploy:
     - kubernetes-parity-build
   only:
     - master
+    - /^fv-.*/
   script:
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
@@ -132,6 +134,7 @@ post-deploy:
     - kubernetes-parity-build
   only:
     - master
+    - /^fv-.*/
   script:
     # redeploy all pod's
     - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
