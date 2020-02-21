@@ -150,7 +150,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								selection
 								options={addressOptions}
 							/>
-							<label>Vote Lock&nbsp;
+							<label>Vote Lock
 								<HelperTooltip
 									content='You can multiply your votes by locking your tokens for longer periods of time.'
 								/>
