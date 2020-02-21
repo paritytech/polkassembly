@@ -82,7 +82,6 @@ dockerize-front-end:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=${REACT_APP_HASURA_GRAPHQL_URL}"
   only:
       - master
-      - /^fv-.*/
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -91,7 +90,6 @@ dockerize-auth-server:
     name: parity-build
   only:
       - master
-      - /^fv-.*/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -100,7 +98,6 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
       - master
-      - /^fv-.*/
   <<: *build_and_push
 
 #### stage:                        deploy
