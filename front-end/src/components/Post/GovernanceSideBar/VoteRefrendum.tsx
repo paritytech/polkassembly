@@ -139,9 +139,9 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 					<h4>Vote</h4>
 					<Form.Group>
 						<Form.Field width={16}>
-							<label>Vote with account&nbsp;
+							<label>Vote with account
 								<HelperTooltip
-									content='You can choose an account from the polkadot-js extension.'
+									content='You can choose an account from the Polkadot-js extension.'
 								/>
 							</label>
 							<Dropdown
@@ -150,7 +150,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								selection
 								options={addressOptions}
 							/>
-							<label>Vote Lock&nbsp;
+							<label>Vote Lock
 								<HelperTooltip
 									content='You can multiply your votes by locking your tokens for longer periods of time.'
 								/>
