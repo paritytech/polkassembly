@@ -15,19 +15,19 @@ Form.Input = Input;
 Form.Field = Field;
 Form.Group = Group;
 
-let _standalone=true;
-
 export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
-	_standalone = standalone;
-	return <StyledForm {...props} />;
+	return <StyledForm className={standalone? 'standalone':''} {...props} />;
 }
 
 const StyledForm = styled(SUIForm)`
-	background-color: ${(): string => _standalone ? '#FFF' : 'default'};
-	padding: ${(): string => _standalone ? '2rem 3rem 3rem 3rem' : '0'};
-	margin-top: ${(): string => _standalone ? ' 4rem' : '0'};
-	border: ${(): string => _standalone ? '1px solid #EEE' : 'none'};
-
+	&.standalone {
+		background-color: white;
+		margin-top: 4rem;
+		padding: 2rem 3rem 3rem 3rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+	}
 
 	h3 {
 		font-family: font_mono;
@@ -75,16 +75,17 @@ const StyledForm = styled(SUIForm)`
 		input:not([type]), input[type=date], input[type=datetime-local], input[type=email], 
 		input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
 		input[type=text], input[type=time], input[type=url] {
-			font-family: 'Roboto';
+			font-family: font_default;
 			font-size: 1.3rem;
 			color: black_primary;
-			border: 1 px solid #EEE;
+			border-style: solid;
+			border-width: 1px;
 			border-color: grey_light;
 			border-radius: 0rem;
 			text-indent: 0rem;
 			padding: 1rem;
 			&:focus {
-				font-family: 'Roboto';
+				font-family: font_default;
 				font-size: 1.3rem;
 				color: black_text;
 				border-color: grey_primary;

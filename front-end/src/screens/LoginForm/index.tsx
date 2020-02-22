@@ -109,10 +109,12 @@ export default styled(LoginForm)`
 	}
 
 	input.error {
-		border-color: #fe4850 !important;
+		border-style: solid;
+		border-width: 1px;
+		border-color: red_secondary;
 	}
 
 	.errorText {
-		color: #fe4850
+		color: red_secondary;
 	}
 `;

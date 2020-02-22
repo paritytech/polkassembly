@@ -144,6 +144,7 @@ export default styled(Post)`
 			padding: 2rem
 		}
 	}
+	
 	@media only screen and (max-width: 992px) {
 		.democracy_card {
 			visibility: hidden;

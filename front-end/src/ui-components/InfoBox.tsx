@@ -55,7 +55,7 @@ export default styled(InfoBox)`
 	margin-bottom: 2rem;
 	
 	h4 {
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		font-size: md;
 		margin-bottom: 1.2rem;
 	}
