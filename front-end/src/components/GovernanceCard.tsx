@@ -44,9 +44,11 @@ const Discussion = function ({
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
 				</Segment>
-				<Segment className='statusSegment'>
-					<StatusTag className='statusTag' status={status}></StatusTag>
-				</Segment>
+				{status &&
+					<Segment className='statusSegment'>
+						<StatusTag className='statusTag' status={status}/>
+					</Segment>
+				}
 			</Segment.Group>
 		</div>
 	);

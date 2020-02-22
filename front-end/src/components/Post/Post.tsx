@@ -122,7 +122,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
-				<GovenanceSideBar isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
+				<GovenanceSideBar
+					isProposal={isProposal}
+					isReferendum={isReferendum}
+					onchainId={onchainId}
+					status={postStatus}
+				/>
 			</Grid.Column>
 		</Grid>
 	);
