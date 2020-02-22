@@ -8,13 +8,10 @@ interface Props {
 	md: string
 }
 
-const Markdown = ({ className, isPreview, md }: Props) => {
+const Markdown = ({ className, isPreview=false, md }: Props) => {
 	return (
 		<>
-			{isPreview
-				? <ReactMarkdown className={className + ' mde-preview-content'} source={md}/>
-				: <ReactMarkdown className={className} source={md}/>
-			}
+			<ReactMarkdown className={isPreview ? className + ' mde-preview-content' : className} source={md}/>
 		</>
 	);
 };
@@ -103,6 +100,7 @@ export default styled(Markdown)`
 	}
 	
 	&.mde-preview-content {
+
 		h1, h2, h3, h4 {
 			border-bottom: none;
 		}
