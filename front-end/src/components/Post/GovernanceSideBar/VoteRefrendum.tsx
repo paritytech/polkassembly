@@ -4,8 +4,8 @@ import styled from '@xstyled/styled-components';
 import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { formatBalance } from '@polkadot/util';
 
-import parseBalance from '../../../util/parseBalance';
 import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import { NotificationContext } from '../../../context/NotificationContext';
@@ -155,7 +155,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								options={addressOptions}
 							/>
 							<div className='text-muted'>
-								{parseBalance(balance)} KSM available
+								{formatBalance(balance)} KSM available
 							</div>
 							<label>Vote Lock&nbsp;
 								<Popup
