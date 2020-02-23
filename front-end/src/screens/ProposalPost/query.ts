@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { commentRecursive } from '../../fragments/comments';
+import { commentFields } from '../../fragments/comments';
 
 const onchainLinkProposal = gql`
     fragment onchainLinkProposal on onchain_links {
@@ -9,12 +9,12 @@ const onchainLinkProposal = gql`
         onchain_referendum_id,
         onchain_proposal(where: {}) {
             id
+            depositAmount
             proposalStatus(last: 1) {
                 id
                 status
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription
@@ -40,8 +40,8 @@ const proposalPost = gql`
         created_at
         id
         updated_at
-        comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-            ...commentRecursive
+        comments(order_by: {created_at: asc}) {
+            ...commentFields
         }
         onchain_link{
             ...onchainLinkProposal
@@ -56,7 +56,7 @@ const proposalPost = gql`
             name
         }
     }
-    ${commentRecursive}
+    ${commentFields}
     ${onchainLinkProposal}
 `;
 

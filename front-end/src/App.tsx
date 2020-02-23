@@ -4,7 +4,8 @@ import { Container } from 'semantic-ui-react';
 import { ThemeProvider } from '@xstyled/styled-components';
 
 import Apollo from './components/Apollo';
-import { GlobalStyle } from './ui-components/GlobalStyle';
+import Footer from './components/Footer';
+import MenuBar from './components/MenuBar';
 import Modal from './components/Modal';
 import Notifications from './components/Notifications';
 import { ModalProvider } from './context/ModalContext';
@@ -12,25 +13,23 @@ import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import CreatePost from './screens/CreatePost';
 import Discussions from './screens/Discussions';
-import Footer from './screens/Footer';
 import Home from './screens/Home';
+import { PrivacyPolicy, TermsAndConditions, TermsOfWebsite } from './screens/LegalDocuments';
 import LoginForm from './screens/LoginForm';
-import MenuBar from './screens/MenuBar';
 import NotFound from './screens/NotFound';
 import PostDiscussion from './screens/DiscussionPost';
 import OnChain from './screens/OnChain';
 import PostMotion from './screens/MotionPost';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
-import PrivacyPolicy from './screens/PrivacyPolicy';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
-import TermsAndConditions from './screens/TermsAndConditions';
 import VerifyEmail from './screens/VerifyEmail';
 import UndoEmailChange from './screens/UndoEmailChange';
 import { theme } from './themes/theme';
+import { GlobalStyle } from './ui-components/GlobalStyle';
 
 const App = () => {
 
@@ -96,6 +95,9 @@ const App = () => {
 												</Route>
 												<Route path="/terms-and-conditions">
 													<TermsAndConditions/>
+												</Route>
+												<Route path="/terms-of-website">
+													<TermsOfWebsite/>
 												</Route>
 												<Route path="/privacy">
 													<PrivacyPolicy/>

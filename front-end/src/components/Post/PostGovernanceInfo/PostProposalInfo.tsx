@@ -2,28 +2,29 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import { OnchainLinkReferendumFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/chainProperties';
+import AddressComponent from '../../../ui-components/Address';
+import { OnchainLinkProposalFragment } from '../../../generated/graphql';
+import { chainProperties } from '../../../global/networkConstants';
+import getNetwork from '../../../util/getNetwork';
 
 interface Props{
 	className?: string
-	onchainLink: OnchainLinkReferendumFragment
+	onchainLink: OnchainLinkProposalFragment
 }
 
-const PostReferendumInfo = ({ className, onchainLink }: Props) => {
+const currentNetwork = getNetwork();
+
+const PostProposalInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
-		onchain_referendum: onchainReferendum,
+		onchain_proposal: onchainProposal,
 		proposer_address: proposerAddress
 	} = onchainLink;
+	const preimage = onchainProposal?.[0]?.preimage;
+	const depositAmount = onchainProposal?.[0]?.depositAmount;
 
-	if ( !onchainReferendum?.[0] ){
-		return null;
-	}
-
-	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -32,37 +33,16 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'} />
 					</div>
 				</Grid.Column>
-				{depositAmount &&
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>Deposit</h6>
-							{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
-						</div>
-					</Grid.Column>}
-				{delay &&
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>Delay</h6>
-							{delay}
-						</div>
-					</Grid.Column>}
-				{end &&
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>End</h6>
-							{end}
-						</div>
-					</Grid.Column>}
-				{voteThreshold &&
-					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<div className='info_group'>
-							<h6>voteThreshold</h6>
-							{voteThreshold}
-						</div>
-					</Grid.Column>}
+				{depositAmount && currentNetwork &&
+				<Grid.Column mobile={16} tablet={8} computer={8}>
+					<div className='info_group'>
+						<h6>Deposit</h6>
+						{parseInt(depositAmount) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
+					</div>
+				</Grid.Column>}
 				{method &&
 				<Grid.Row>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -84,19 +64,19 @@ const PostReferendumInfo = ({ className, onchainLink }: Props) => {
 							: null}
 					</Grid.Column>
 				</Grid.Row>}
-				{metaDescription &&
 				<Grid.Column mobile={16} tablet={16} computer={16}>
+					{ metaDescription &&
 					<div className='info_group'>
 						<h6>Description</h6>
 						{metaDescription}
-					</div>
-				</Grid.Column>}
+					</div>}
+				</Grid.Column>
 			</Grid>
 		</div>
 	);
 };
 
-export default styled(PostReferendumInfo)`
+export default styled(PostProposalInfo)`
 	background-color: white;
 	padding: 2rem 3rem 2rem 3rem;
 	border-style: solid;
@@ -106,7 +86,7 @@ export default styled(PostReferendumInfo)`
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;
 	font-family: 'Roboto Mono';
-	
+
 	h6 {
 		font-family: 'Roboto Mono';
 		font-size: sm;

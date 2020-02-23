@@ -4,10 +4,10 @@ import styled from '@xstyled/styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { Form } from '../../ui-components/Form';
-import Button from '../../ui-components/Button';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { Form } from '../../../ui-components/Form';
+import Button from '../../../ui-components/Button';
+import { NotificationContext } from '../../../context/NotificationContext';
+import { NotificationStatus } from '../../../types';
 
 interface Props {
 	className?: string

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { commentRecursive } from '../../fragments/comments';
+import { commentFields } from '../../fragments/comments';
 
 const onchainLinkMotion = gql`
     fragment onchainLinkMotion on onchain_links {
@@ -21,7 +21,6 @@ const onchainLinkMotion = gql`
                 value
             }
             preimage {
-                depositAmount
                 hash
                 id
                 metaDescription
@@ -47,8 +46,8 @@ const motionPost = gql`
         created_at
         id
         updated_at
-        comments(where: {parent_comment_id: {_is_null: true}}, order_by: {created_at: asc}) {
-            ...commentRecursive
+        comments(order_by: {created_at: asc}) {
+            ...commentFields
         }
         onchain_link{
             ...onchainLinkMotion
@@ -63,7 +62,7 @@ const motionPost = gql`
             name
         }
     }
-    ${commentRecursive}
+    ${commentFields}
     ${onchainLinkMotion}
 `;
 

@@ -30,6 +30,17 @@ insert into post_types values (1, 'Discussion');
 insert into post_types values (2, 'On chain');
 ```
 
+### Indexes
+
+To make sure queries are fast on hasura db we need to run the following SQL in the hasura SQL conse
+
+```sql
+create index "posts_topic_id_index" on "posts" ("topic_id");
+create index "posts_type_id_index" on "posts" ("type_id");
+create index "comments_post_id_index" on "comments" ("post_id");
+create index "onchain_links_post_id_index" on "onchain_links" ("post_id");
+```
+
 ### Remote schema
 We are using auth server from polkassembly as auth remote schema and node watcher from [Nomidot](https://github.com/paritytech/Nomidot) as another remote schema. Both should be running for hasura migrations to work.
 

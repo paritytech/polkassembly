@@ -3,18 +3,18 @@ import { Form, Icon, Grid } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
-import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
+import AddressComponent from '../../ui-components/Address';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
-import Button from '../../ui-components/Button';
+import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
+import getEncodedAddress from '../../util/getEncodedAddress';
 import getExtensionUrl from '../../util/getExtensionUrl';
-import shortenAddress from '../../util/shortenAddress';
-import { handleTokenChange } from 'src/services/auth.service';
 
 interface Props{
 	className?: string
@@ -47,7 +47,7 @@ const Address = ({ className }: Props): JSX.Element => {
 		setAccounts(allAccounts);
 	};
 
-	const handleLink = async (account: InjectedAccountWithMeta) => {
+	const handleLink = async (address: InjectedAccountWithMeta['address'], account: InjectedAccountWithMeta) => {
 
 		try {
 			const injected = await web3FromSource(account.meta.source);
@@ -59,7 +59,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			const addressLinkStartResult = await addressLinkStartMutation({
 				variables: {
-					address: account.address,
+					address,
 					network: NETWORK
 				}
 			});
@@ -69,7 +69,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			}
 
 			const { signature } = await signRaw({
-				address: account.address,
+				address,
 				data: stringToHex(addressLinkStartResult.data.addressLinkStart.sign_message || ''),
 				type: 'bytes'
 			});
@@ -85,10 +85,10 @@ const Address = ({ className }: Props): JSX.Element => {
 				handleTokenChange(addressLinkConfirmResult.data?.addressLinkConfirm?.token);
 			}
 
-			!currentUser.addresses?.includes(account.address) && currentUser.setUserDetailsContextState((prevState) => {
+			!currentUser.addresses?.includes(address) && currentUser.setUserDetailsContextState((prevState) => {
 				return {
 					...prevState,
-					addresses: [...prevState.addresses, account.address]
+					addresses: [...prevState.addresses, address]
 				};
 			});
 
@@ -98,6 +98,7 @@ const Address = ({ className }: Props): JSX.Element => {
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
+			console.error(error);
 			queueNotification({
 				header: 'Failed!',
 				message: error.message,
@@ -106,11 +107,11 @@ const Address = ({ className }: Props): JSX.Element => {
 		}
 	};
 
-	const handleUnlink = async (account: InjectedAccountWithMeta) => {
+	const handleUnlink = async (address: InjectedAccountWithMeta['address']) => {
 		try {
 			const addressUnlinkConfirmResult = await addressUnlinkMutation({
 				variables: {
-					address: account.address
+					address
 				}
 			});
 
@@ -118,11 +119,11 @@ const Address = ({ className }: Props): JSX.Element => {
 				handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token);
 			}
 
-			if (currentUser.addresses?.includes(account.address)) {
+			if (currentUser.addresses?.includes(address)) {
 				currentUser.setUserDetailsContextState((prevState) => {
 					return {
 						...prevState,
-						addresses: prevState?.addresses?.filter((address) => address !== account.address)
+						addresses: prevState?.addresses?.filter((prevAddress) => prevAddress !== address)
 					};
 				});
 			}
@@ -133,6 +134,7 @@ const Address = ({ className }: Props): JSX.Element => {
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
+			console.error(error);
 			queueNotification({
 				header: 'Failed!',
 				message: error.message,
@@ -180,35 +182,31 @@ const Address = ({ className }: Props): JSX.Element => {
 				<Form.Field width={16}>
 					<label className="header">Available Addresses</label>
 					<div className="ui list">
-						{accounts.map(account => (
-							<Grid key={account.address}>
-								<Grid.Column width={10}>
-									<div className="item">
-										<Identicon
-											className="image"
-											value={account.address}
-											size={32}
-											theme={'polkadot'}
-										/>
-										<div className="content" style={{ display: 'inline-block' }}>
-											<div className="header">{account.meta.name}</div>
-											<div className="description">{shortenAddress(account.address)}</div>
+						{accounts.map(account => {
+							const address = getEncodedAddress(account.address);
+
+							return (address &&
+								<Grid key={address}>
+									<Grid.Column width={10}>
+										<div className="item">
+											<AddressComponent className="item" address={address} accountName={account.meta.name || ''} />
 										</div>
-									</div>
-								</Grid.Column>
-								<Grid.Column width={6}>
-									<div className="button-container">
-										<Button
-											className={'social'}
-											negative={currentUser.addresses?.includes(account.address) ? true : false}
-											onClick={() => currentUser.addresses?.includes(account.address) ? handleUnlink(account) : handleLink(account)}
-										>
-											{currentUser.addresses?.includes(account.address) ? unlinkIcon : linkIcon}
-										</Button>
-									</div>
-								</Grid.Column>
-							</Grid>
-						))}
+									</Grid.Column>
+									<Grid.Column width={6}>
+										<div className="button-container">
+											<Button
+												className={'social'}
+												negative={currentUser.addresses?.includes(address) ? true : false}
+												onClick={() => currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
+											>
+												{currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
+											</Button>
+										</div>
+									</Grid.Column>
+								</Grid>
+							);}
+						)}
+
 					</div>
 				</Form.Field>
 			</Form.Group>

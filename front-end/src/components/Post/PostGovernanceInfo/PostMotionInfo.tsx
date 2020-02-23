@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import { OnchainLinkMotionFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/chainProperties';
+import AddressComponent from '../../../ui-components/Address';
+import { OnchainLinkMotionFragment } from '../../../generated/graphql';
 
 interface Props{
 	className?: string
@@ -23,7 +23,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 	}
 
 	const { memberCount, method, motionProposalArguments, motionProposalHash, preimage } = onchainMotion[0];
-	const { depositAmount, metaDescription, method: preimageMethod, preimageArguments } = preimage || {};
+	const { metaDescription, method: preimageMethod, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>
@@ -32,7 +32,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<div className='info_group'>
 						<h6>Proposer</h6>
-						{proposerAddress}
+						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'}/>
 					</div>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -68,13 +68,6 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 					</Grid.Column>
 				</Grid.Row>
 				{preimage && <Grid.Row className='preimage'>
-					{depositAmount &&
-						<Grid.Column mobile={16} tablet={8} computer={8}>
-							<div className='info_group'>
-								<h6>Deposit</h6>
-								{parseInt(depositAmount) / Math.pow(10, chainProperties.kusama.tokenDecimals) + ' ' + chainProperties.kusama.tokenSymbol}
-							</div>
-						</Grid.Column>}
 					{preimageMethod &&
 						<Grid.Row>
 							<Grid.Column mobile={16} tablet={8} computer={8}>
