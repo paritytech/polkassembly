@@ -60,40 +60,34 @@ export const GlobalStyle = createGlobalStyle`
 
     h1, h2, h3, h4, h5, h6 {
         color: black_primary;
-        font-weight: 500;
+        font-family: font_default;
         line-height: 100%;
         margin-top: 0;
     }
 
-    h1, h2, h3, h4 {
-        font-family: font_mono;
+    h1, h2 {
+        font-weight: 400;
+        font-size: xl;
+    }
+
+    h3, h4, h5, h6 {
+        font-weight: 500; 
     }
 
     h1 {
-        font-size: 2.6rem;
         margin-bottom: 3rem;
     }
 
     h2 {
-        font-size: 1.8rem;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.2rem;
     }
 
-    h3 {
-        font-size: 2.6rem;
-        margin-bottom: 1.25rem;
-    }
-
-    h4 {
+    h3, h4 {
         font-size: lg;
         margin-bottom: 1.2rem;
     }
 
     h5, h6 {
-        font-family: font_default;
-    }
-
-    h6 {
         font-size: md;
         margin-bottom: 0.4rem;
     }
@@ -103,8 +97,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::selection {
-        background-color: #282828;
-        color: #FFF;
+        background-color: black_primary;
+        color: white;
     }
 
     .ui.dropdown .menu, .ui.dropdown .menu>.item {

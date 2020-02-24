@@ -126,8 +126,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 export default styled(MenuBar)`
 	&.ui.menu, .ui.inverted.menu {
-		font-family: 'Roboto Mono';
-		background: #000;
+		font-family: font_mono;
+		background: black_full;
 		border-radius: 0rem;
 		letter-spacing: 1.1;
 

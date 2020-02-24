@@ -127,6 +127,6 @@ export default styled(Email)`
 
 	.warning-text {
 		margin-top: 0.5rem;
-		color: #FF5A47;
+		color: red_secondaryM
 	}
 `;
