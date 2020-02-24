@@ -2,42 +2,41 @@ import React, { ReactNode } from 'react';
 import { Label, SemanticICONS } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import { motionStatus, proposalStatus, referendumStatus } from 'src/global/statuses';
+
 interface Props{
 	children?: ReactNode,
 	className?: string,
 	content?: string,
 	icon?: string,
-	status?: string | null
+	status: string
 }
 
 const StatusTag = ({ children, className, content, status }: Props) => {
+
 	let icon: SemanticICONS = 'circle';
 
-	switch (status){
-	case 'Passed':
+	if ([referendumStatus.PASSED,
+		referendumStatus.STARTED,
+		proposalStatus.PROPOSED,
+		motionStatus.PROPOSED,
+		motionStatus.APPROVED
+	].includes(status)){
 		icon = 'circle';
-		break;
-	case 'Started':
-		icon = 'circle';
-		break;
-	case 'Proposed':
-		icon = 'circle';
-		break;
-	case 'Enacted':
+	}
+
+	if ([referendumStatus.CANCELLED,
+		referendumStatus.NOTPASSED,
+		referendumStatus.VETOED,
+		motionStatus.DISAPPROVED
+	].includes(status)){
+		icon = 'times';
+	}
+
+	if ([referendumStatus.EXECUTED,
+		motionStatus.EXECUTED
+	].includes(status)){
 		icon = 'check';
-		break;
-	case 'Executed':
-		icon = 'check';
-		break;
-	case 'NotPassed':
-		icon = 'times';
-		break;
-	case 'Cancelled':
-		icon = 'times';
-		break;
-	case 'Vetoed':
-		icon = 'times';
-		break;
 	}
 
 	return (
@@ -53,7 +52,7 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 	);
 };
 
-export default styled(StatusTag).attrs(( { status }:Props ) => ({
+export default styled(StatusTag).attrs(( { status }: Props) => ({
 	className: status,
 	content: status
 }))`
@@ -68,17 +67,24 @@ export default styled(StatusTag).attrs(( { status }:Props ) => ({
 		letter-spacing: 0.05rem;
 		text-transform: capitalize;
 		padding: 0.5rem 1rem;
-        &.Proposed, &.Started {
+        &.${referendumStatus.STARTED},
+		&.${proposalStatus.PROPOSED},
+		&.${motionStatus.PROPOSED} {
             border-color: blue_primary;
 			color: blue_primary;
 			background-color: blue_primary_transparent;
         }
-        &.Enacted, &.Executed {
+        &.${referendumStatus.PASSED},
+		&.${referendumStatus.EXECUTED},
+		&.${motionStatus.EXECUTED} {
             border-color: green_primary;
 			color: green_primary;
 			background-color: green_primary_transparent;
         }
-        &.Cancelled, &.NotPassed, &.Vetoed {
+        &.${referendumStatus.CANCELLED},
+		&.${referendumStatus.NOTPASSED},
+		&.${referendumStatus.VETOED},
+		&.${motionStatus.DISAPPROVED} {
             border-color: red_primary;
 			color: red_primary;
 			background-color: red_primary_transparent;

@@ -37,6 +37,16 @@ export type AggregateBlockNumber = {
   count: Scalars['Int'],
 };
 
+export type AggregateCouncil = {
+   __typename?: 'AggregateCouncil',
+  count: Scalars['Int'],
+};
+
+export type AggregateCouncilMember = {
+   __typename?: 'AggregateCouncilMember',
+  count: Scalars['Int'],
+};
+
 export type AggregateEra = {
    __typename?: 'AggregateEra',
   count: Scalars['Int'],
@@ -596,6 +606,361 @@ export type Comments_Variance_Fields = {
 export type Comments_Variance_Order_By = {
   author_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
+};
+
+export type Council = Node & {
+   __typename?: 'Council',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  members?: Maybe<Array<CouncilMember>>,
+};
+
+
+export type CouncilMembersArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilMemberOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilMemberWhereInput>
+};
+
+export type CouncilConnection = {
+   __typename?: 'CouncilConnection',
+  aggregate: AggregateCouncil,
+  edges: Array<Maybe<CouncilEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type CouncilCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>,
+};
+
+export type CouncilCreateManyWithoutMembersInput = {
+  connect?: Maybe<Array<CouncilWhereUniqueInput>>,
+  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>,
+};
+
+export type CouncilCreateWithoutMembersInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilEdge = {
+   __typename?: 'CouncilEdge',
+  cursor: Scalars['String'],
+  node: Council,
+};
+
+export type CouncilMember = Node & {
+   __typename?: 'CouncilMember',
+  address: Scalars['String'],
+  councils?: Maybe<Array<Council>>,
+  id: Scalars['ID'],
+};
+
+
+export type CouncilMemberCouncilsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilWhereInput>
+};
+
+export type CouncilMemberConnection = {
+   __typename?: 'CouncilMemberConnection',
+  aggregate: AggregateCouncilMember,
+  edges: Array<Maybe<CouncilMemberEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type CouncilMemberCreateInput = {
+  address: Scalars['String'],
+  councils?: Maybe<CouncilCreateManyWithoutMembersInput>,
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilMemberCreateManyWithoutCouncilsInput = {
+  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
+  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>,
+};
+
+export type CouncilMemberCreateWithoutCouncilsInput = {
+  address: Scalars['String'],
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilMemberEdge = {
+   __typename?: 'CouncilMemberEdge',
+  cursor: Scalars['String'],
+  node: CouncilMember,
+};
+
+export enum CouncilMemberOrderByInput {
+  AddressAsc = 'address_ASC',
+  AddressDesc = 'address_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC'
+}
+
+export type CouncilMemberPreviousValues = {
+   __typename?: 'CouncilMemberPreviousValues',
+  address: Scalars['String'],
+  id: Scalars['ID'],
+};
+
+export type CouncilMemberScalarWhereInput = {
+  AND?: Maybe<Array<CouncilMemberScalarWhereInput>>,
+  NOT?: Maybe<Array<CouncilMemberScalarWhereInput>>,
+  OR?: Maybe<Array<CouncilMemberScalarWhereInput>>,
+  address?: Maybe<Scalars['String']>,
+  address_contains?: Maybe<Scalars['String']>,
+  address_ends_with?: Maybe<Scalars['String']>,
+  address_gt?: Maybe<Scalars['String']>,
+  address_gte?: Maybe<Scalars['String']>,
+  address_in?: Maybe<Array<Scalars['String']>>,
+  address_lt?: Maybe<Scalars['String']>,
+  address_lte?: Maybe<Scalars['String']>,
+  address_not?: Maybe<Scalars['String']>,
+  address_not_contains?: Maybe<Scalars['String']>,
+  address_not_ends_with?: Maybe<Scalars['String']>,
+  address_not_in?: Maybe<Array<Scalars['String']>>,
+  address_not_starts_with?: Maybe<Scalars['String']>,
+  address_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilMemberSubscriptionPayload = {
+   __typename?: 'CouncilMemberSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<CouncilMember>,
+  previousValues?: Maybe<CouncilMemberPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type CouncilMemberSubscriptionWhereInput = {
+  AND?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
+  OR?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<CouncilMemberWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type CouncilMemberUpdateInput = {
+  address?: Maybe<Scalars['String']>,
+  councils?: Maybe<CouncilUpdateManyWithoutMembersInput>,
+};
+
+export type CouncilMemberUpdateManyDataInput = {
+  address?: Maybe<Scalars['String']>,
+};
+
+export type CouncilMemberUpdateManyMutationInput = {
+  address?: Maybe<Scalars['String']>,
+};
+
+export type CouncilMemberUpdateManyWithoutCouncilsInput = {
+  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
+  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>,
+  delete?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<CouncilMemberScalarWhereInput>>,
+  disconnect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
+  set?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
+  update?: Maybe<Array<CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput>>,
+  updateMany?: Maybe<Array<CouncilMemberUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput>>,
+};
+
+export type CouncilMemberUpdateManyWithWhereNestedInput = {
+  data: CouncilMemberUpdateManyDataInput,
+  where: CouncilMemberScalarWhereInput,
+};
+
+export type CouncilMemberUpdateWithoutCouncilsDataInput = {
+  address?: Maybe<Scalars['String']>,
+};
+
+export type CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput = {
+  data: CouncilMemberUpdateWithoutCouncilsDataInput,
+  where: CouncilMemberWhereUniqueInput,
+};
+
+export type CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput = {
+  create: CouncilMemberCreateWithoutCouncilsInput,
+  update: CouncilMemberUpdateWithoutCouncilsDataInput,
+  where: CouncilMemberWhereUniqueInput,
+};
+
+export type CouncilMemberWhereInput = {
+  AND?: Maybe<Array<CouncilMemberWhereInput>>,
+  NOT?: Maybe<Array<CouncilMemberWhereInput>>,
+  OR?: Maybe<Array<CouncilMemberWhereInput>>,
+  address?: Maybe<Scalars['String']>,
+  address_contains?: Maybe<Scalars['String']>,
+  address_ends_with?: Maybe<Scalars['String']>,
+  address_gt?: Maybe<Scalars['String']>,
+  address_gte?: Maybe<Scalars['String']>,
+  address_in?: Maybe<Array<Scalars['String']>>,
+  address_lt?: Maybe<Scalars['String']>,
+  address_lte?: Maybe<Scalars['String']>,
+  address_not?: Maybe<Scalars['String']>,
+  address_not_contains?: Maybe<Scalars['String']>,
+  address_not_ends_with?: Maybe<Scalars['String']>,
+  address_not_in?: Maybe<Array<Scalars['String']>>,
+  address_not_starts_with?: Maybe<Scalars['String']>,
+  address_starts_with?: Maybe<Scalars['String']>,
+  councils_every?: Maybe<CouncilWhereInput>,
+  councils_none?: Maybe<CouncilWhereInput>,
+  councils_some?: Maybe<CouncilWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilMemberWhereUniqueInput = {
+  address?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['ID']>,
+};
+
+export enum CouncilOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC'
+}
+
+export type CouncilPreviousValues = {
+   __typename?: 'CouncilPreviousValues',
+  id: Scalars['ID'],
+};
+
+export type CouncilScalarWhereInput = {
+  AND?: Maybe<Array<CouncilScalarWhereInput>>,
+  NOT?: Maybe<Array<CouncilScalarWhereInput>>,
+  OR?: Maybe<Array<CouncilScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+};
+
+export type CouncilSubscriptionPayload = {
+   __typename?: 'CouncilSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Council>,
+  previousValues?: Maybe<CouncilPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type CouncilSubscriptionWhereInput = {
+  AND?: Maybe<Array<CouncilSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<CouncilSubscriptionWhereInput>>,
+  OR?: Maybe<Array<CouncilSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<CouncilWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type CouncilUpdateInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  members?: Maybe<CouncilMemberUpdateManyWithoutCouncilsInput>,
+};
+
+export type CouncilUpdateManyWithoutMembersInput = {
+  connect?: Maybe<Array<CouncilWhereUniqueInput>>,
+  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>,
+  delete?: Maybe<Array<CouncilWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<CouncilScalarWhereInput>>,
+  disconnect?: Maybe<Array<CouncilWhereUniqueInput>>,
+  set?: Maybe<Array<CouncilWhereUniqueInput>>,
+  update?: Maybe<Array<CouncilUpdateWithWhereUniqueWithoutMembersInput>>,
+  upsert?: Maybe<Array<CouncilUpsertWithWhereUniqueWithoutMembersInput>>,
+};
+
+export type CouncilUpdateWithoutMembersDataInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+};
+
+export type CouncilUpdateWithWhereUniqueWithoutMembersInput = {
+  data: CouncilUpdateWithoutMembersDataInput,
+  where: CouncilWhereUniqueInput,
+};
+
+export type CouncilUpsertWithWhereUniqueWithoutMembersInput = {
+  create: CouncilCreateWithoutMembersInput,
+  update: CouncilUpdateWithoutMembersDataInput,
+  where: CouncilWhereUniqueInput,
+};
+
+export type CouncilWhereInput = {
+  AND?: Maybe<Array<CouncilWhereInput>>,
+  NOT?: Maybe<Array<CouncilWhereInput>>,
+  OR?: Maybe<Array<CouncilWhereInput>>,
+  blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  members_every?: Maybe<CouncilMemberWhereInput>,
+  members_none?: Maybe<CouncilMemberWhereInput>,
+  members_some?: Maybe<CouncilMemberWhereInput>,
+};
+
+export type CouncilWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
 };
 
 
@@ -1915,6 +2280,8 @@ export type Mutation_Root = {
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockNumber: BlockNumber,
+  createCouncil: Council,
+  createCouncilMember: CouncilMember,
   createEra: Era,
   createHeartBeat: HeartBeat,
   createMotion: Motion,
@@ -1936,9 +2303,13 @@ export type Mutation_Root = {
   createTotalIssuance: TotalIssuance,
   createValidator: Validator,
   deleteBlockNumber?: Maybe<BlockNumber>,
+  deleteCouncil?: Maybe<Council>,
+  deleteCouncilMember?: Maybe<CouncilMember>,
   deleteEra?: Maybe<Era>,
   deleteHeartBeat?: Maybe<HeartBeat>,
   deleteManyBlockNumbers: BatchPayload,
+  deleteManyCouncilMembers: BatchPayload,
+  deleteManyCouncils: BatchPayload,
   deleteManyEras: BatchPayload,
   deleteManyHeartBeats: BatchPayload,
   deleteManyMotionProposalArguments: BatchPayload,
@@ -1998,9 +2369,12 @@ export type Mutation_Root = {
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   updateBlockNumber?: Maybe<BlockNumber>,
+  updateCouncil?: Maybe<Council>,
+  updateCouncilMember?: Maybe<CouncilMember>,
   updateEra?: Maybe<Era>,
   updateHeartBeat?: Maybe<HeartBeat>,
   updateManyBlockNumbers: BatchPayload,
+  updateManyCouncilMembers: BatchPayload,
   updateManyEras: BatchPayload,
   updateManyHeartBeats: BatchPayload,
   updateManyMotionProposalArguments: BatchPayload,
@@ -2045,6 +2419,8 @@ export type Mutation_Root = {
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
   upsertBlockNumber: BlockNumber,
+  upsertCouncil: Council,
+  upsertCouncilMember: CouncilMember,
   upsertEra: Era,
   upsertHeartBeat: HeartBeat,
   upsertMotion: Motion,
@@ -2109,6 +2485,16 @@ export type Mutation_RootChangeUsernameArgs = {
 
 export type Mutation_RootCreateBlockNumberArgs = {
   data: BlockNumberCreateInput
+};
+
+
+export type Mutation_RootCreateCouncilArgs = {
+  data: CouncilCreateInput
+};
+
+
+export type Mutation_RootCreateCouncilMemberArgs = {
+  data: CouncilMemberCreateInput
 };
 
 
@@ -2217,6 +2603,16 @@ export type Mutation_RootDeleteBlockNumberArgs = {
 };
 
 
+export type Mutation_RootDeleteCouncilArgs = {
+  where: CouncilWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteCouncilMemberArgs = {
+  where: CouncilMemberWhereUniqueInput
+};
+
+
 export type Mutation_RootDeleteEraArgs = {
   where: EraWhereUniqueInput
 };
@@ -2229,6 +2625,16 @@ export type Mutation_RootDeleteHeartBeatArgs = {
 
 export type Mutation_RootDeleteManyBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyCouncilMembersArgs = {
+  where?: Maybe<CouncilMemberWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyCouncilsArgs = {
+  where?: Maybe<CouncilWhereInput>
 };
 
 
@@ -2529,6 +2935,18 @@ export type Mutation_RootUpdateBlockNumberArgs = {
 };
 
 
+export type Mutation_RootUpdateCouncilArgs = {
+  data: CouncilUpdateInput,
+  where: CouncilWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateCouncilMemberArgs = {
+  data: CouncilMemberUpdateInput,
+  where: CouncilMemberWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateEraArgs = {
   data: EraUpdateInput,
   where: EraWhereUniqueInput
@@ -2544,6 +2962,12 @@ export type Mutation_RootUpdateHeartBeatArgs = {
 export type Mutation_RootUpdateManyBlockNumbersArgs = {
   data: BlockNumberUpdateManyMutationInput,
   where?: Maybe<BlockNumberWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyCouncilMembersArgs = {
+  data: CouncilMemberUpdateManyMutationInput,
+  where?: Maybe<CouncilMemberWhereInput>
 };
 
 
@@ -2814,6 +3238,20 @@ export type Mutation_RootUpsertBlockNumberArgs = {
   create: BlockNumberCreateInput,
   update: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertCouncilArgs = {
+  create: CouncilCreateInput,
+  update: CouncilUpdateInput,
+  where: CouncilWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertCouncilMemberArgs = {
+  create: CouncilMemberCreateInput,
+  update: CouncilMemberUpdateInput,
+  where: CouncilMemberWhereUniqueInput
 };
 
 
@@ -5962,6 +6400,12 @@ export type Query_Root = {
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
+  council?: Maybe<Council>,
+  councilMember?: Maybe<CouncilMember>,
+  councilMembers: Array<Maybe<CouncilMember>>,
+  councilMembersConnection: CouncilMemberConnection,
+  councils: Array<Maybe<Council>>,
+  councilsConnection: CouncilConnection,
   era?: Maybe<Era>,
   eras: Array<Maybe<Era>>,
   erasConnection: EraConnection,
@@ -6089,6 +6533,60 @@ export type Query_RootComments_AggregateArgs = {
 
 export type Query_RootComments_By_PkArgs = {
   id: Scalars['uuid']
+};
+
+
+export type Query_RootCouncilArgs = {
+  where: CouncilWhereUniqueInput
+};
+
+
+export type Query_RootCouncilMemberArgs = {
+  where: CouncilMemberWhereUniqueInput
+};
+
+
+export type Query_RootCouncilMembersArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilMemberOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilMemberWhereInput>
+};
+
+
+export type Query_RootCouncilMembersConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilMemberOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilMemberWhereInput>
+};
+
+
+export type Query_RootCouncilsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilWhereInput>
+};
+
+
+export type Query_RootCouncilsConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<CouncilOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<CouncilWhereInput>
 };
 
 
@@ -8221,6 +8719,17 @@ export type EditCommentMutation = (
   )> }
 );
 
+export type LogoutMutationVariables = {};
+
+
+export type LogoutMutation = (
+  { __typename?: 'mutation_root' }
+  & { logout: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type EditPostMutationVariables = {
   id: Scalars['Int'],
   content: Scalars['String'],
@@ -8421,17 +8930,6 @@ export type LoginMutation = (
   )> }
 );
 
-export type LogoutMutationVariables = {};
-
-
-export type LogoutMutation = (
-  { __typename?: 'mutation_root' }
-  & { logout: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
-  )> }
-);
-
 export type OnchainLinkMotionFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id' | 'onchain_motion_id'>
@@ -8446,7 +8944,7 @@ export type OnchainLinkMotionFragment = (
       & Pick<MotionProposalArgument, 'name' | 'value'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8619,13 +9117,13 @@ export type OnchainLinkProposalFragment = (
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
   & { onchain_proposal: Array<Maybe<(
     { __typename?: 'Proposal' }
-    & Pick<Proposal, 'id'>
+    & Pick<Proposal, 'id' | 'depositAmount'>
     & { proposalStatus: Maybe<Array<(
       { __typename?: 'ProposalStatus' }
       & Pick<ProposalStatus, 'id' | 'status'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8679,7 +9177,7 @@ export type OnchainLinkReferendumFragment = (
       & Pick<ReferendumStatus, 'status' | 'id'>
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
-      & Pick<Preimage, 'depositAmount' | 'hash' | 'id' | 'metaDescription' | 'method'>
+      & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
       & { preimageArguments: Maybe<Array<(
         { __typename?: 'PreimageArgument' }
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
@@ -8964,7 +9462,6 @@ export const OnchainLinkMotionFragmentDoc = gql`
       value
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription
@@ -9015,12 +9512,12 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_referendum_id
   onchain_proposal(where: {}) {
     id
+    depositAmount
     proposalStatus(last: 1) {
       id
       status
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription
@@ -9078,7 +9575,6 @@ export const OnchainLinkReferendumFragmentDoc = gql`
       id
     }
     preimage {
-      depositAmount
       hash
       id
       metaDescription
@@ -9154,6 +9650,37 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
+export const LogoutDocument = gql`
+    mutation LOGOUT {
+  logout {
+    message
+  }
+}
+    `;
+export type LogoutMutationFn = ApolloReactCommon.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
+        return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
+      }
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
+export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
+export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
@@ -9546,37 +10073,6 @@ export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOpti
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const LogoutDocument = gql`
-    mutation LOGOUT {
-  logout {
-    message
-  }
-}
-    `;
-export type LogoutMutationFn = ApolloReactCommon.MutationFunction<LogoutMutation, LogoutMutationVariables>;
-
-/**
- * __useLogoutMutation__
- *
- * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLogoutMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
- *   variables: {
- *   },
- * });
- */
-export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
-        return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
-      }
-export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
-export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
-export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const MotionPostAndCommentsDocument = gql`
     query MotionPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {

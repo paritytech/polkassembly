@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import AddressComponent from '../../components/Address';
-import { OnchainLinkProposalFragment } from '../../generated/graphql';
-import { chainProperties } from '../../global/networkConstants';
-import getNetwork from '../../util/getNetwork';
+import AddressComponent from '../../../ui-components/Address';
+import { OnchainLinkProposalFragment } from '../../../generated/graphql';
+import { chainProperties } from '../../../global/networkConstants';
+import getNetwork from '../../../util/getNetwork';
 
 interface Props{
 	className?: string
@@ -22,7 +22,9 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 	const preimage = onchainProposal?.[0]?.preimage;
-	const { depositAmount, metaDescription, method, preimageArguments } = preimage || {};
+	const depositAmount = onchainProposal?.[0]?.depositAmount;
+
+	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
 		<div className={className}>

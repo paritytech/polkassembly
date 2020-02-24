@@ -11,10 +11,10 @@ import EditablePostContent from '../EditablePostContent';
 import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, MotionPostAndCommentsQueryHookResult, MotionPostAndCommentsQueryVariables, MotionPostAndCommentsQuery, OnchainLinkMotionFragment, MotionPostFragment } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
-import PostMotionInfo from './PostMotionInfo';
-import PostProposalInfo from './PostProposalInfo';
-import PostReferendumInfo from './PostReferendumInfo';
-import Democracy from './Democracy';
+import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
+import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
+import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
+import GovenanceSideBar from './GovernanceSideBar';
 
 interface Props {
 	className?: string
@@ -122,7 +122,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
-				<Democracy isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
+				<GovenanceSideBar
+					isProposal={isProposal}
+					isReferendum={isReferendum}
+					onchainId={onchainId}
+					status={postStatus}
+				/>
 			</Grid.Column>
 		</Grid>
 	);

@@ -6,23 +6,25 @@ import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-da
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Identicon from '@polkadot/react-identicon';
 
-import ExtensionNotDetected from '../../components/ExtensionNotDetected';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
-import shortenAddress from '../../util/shortenAddress';
+import ExtensionNotDetected from '../../ExtensionNotDetected';
+import { UserDetailsContext } from '../../../context/UserDetailsContext';
+import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
+import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 
 interface Props {
 	className?: string
 	isProposal?: boolean
 	isReferendum?: boolean
 	onchainId?: number | null | undefined
+	status?: string
 }
 
 const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) => {
+const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, status }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
 	const [address, setAddress] = useState<string>('');
@@ -133,42 +135,44 @@ const Democracy = ({ className, isProposal, isReferendum, onchainId }: Props) =>
 		);
 	}
 
-	if (isProposal) {
-		return (
-			<SecondProposal
-				proposalId={onchainId}
-				api={api}
-				apiReady={apiReady}
-				getAccounts={getAccounts}
-				onAccountChange={onAccountChange}
-				accounts={accounts}
-				address={address}
-				defaultAddress={defaultAddress}
-				addressOptions={addressOptions}
-			/>
-		);
-	}
+	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
+		{
+			return (
+				<>
+					{isProposal &&
+						<SecondProposal
+							proposalId={onchainId}
+							api={api}
+							apiReady={apiReady}
+							getAccounts={getAccounts}
+							onAccountChange={onAccountChange}
+							accounts={accounts}
+							address={address}
+							defaultAddress={defaultAddress}
+							addressOptions={addressOptions}
+						/>}
 
-	if (isReferendum) {
-		return (
-			<VoteRefrendum
-				referendumId={onchainId}
-				api={api}
-				apiReady={apiReady}
-				getAccounts={getAccounts}
-				onAccountChange={onAccountChange}
-				accounts={accounts}
-				address={address}
-				defaultAddress={defaultAddress}
-				addressOptions={addressOptions}
-			/>
-		);
+					{isReferendum &&
+						<VoteRefrendum
+							referendumId={onchainId}
+							api={api}
+							apiReady={apiReady}
+							getAccounts={getAccounts}
+							onAccountChange={onAccountChange}
+							accounts={accounts}
+							address={address}
+							defaultAddress={defaultAddress}
+							addressOptions={addressOptions}
+						/>}
+				</>
+			);
+		}
 	}
 
 	return null;
 };
 
-export default styled(Democracy)`
+export default styled(GovenanceSideBar)`
 	.card {
 		background-color: white;
 		padding: 2rem 3rem 4rem 3rem;
