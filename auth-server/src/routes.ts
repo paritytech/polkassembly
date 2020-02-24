@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import subscriptionHook from './controllers/subscriptionHook';
+import { postSubscriptionHook, postAuthorSubscriptionHook } from './controllers/subscriptionHook';
 import { upload, uploadController } from './controllers/upload';
 
 const router = Router();
@@ -12,6 +12,7 @@ router.get('/healthcheck', (req, res) => {
 // unused
 router.post('/auth/upload-profile-pic', upload.single('file'), uploadController);
 
-router.post('/auth/post/subscription', subscriptionHook);
+router.post('/auth/post/subscription', postSubscriptionHook);
+router.post('/auth/post/author/subscription', postAuthorSubscriptionHook);
 
 export default router;

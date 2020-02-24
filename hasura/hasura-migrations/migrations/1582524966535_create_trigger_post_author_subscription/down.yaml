@@ -1,0 +1,3 @@
+- args:
+    name: post_author_subscription
+  type: delete_event_trigger
