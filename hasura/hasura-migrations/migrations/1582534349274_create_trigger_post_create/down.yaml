@@ -1,0 +1,3 @@
+- args:
+    name: post_create
+  type: delete_event_trigger

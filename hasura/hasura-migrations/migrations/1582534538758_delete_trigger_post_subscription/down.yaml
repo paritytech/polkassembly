@@ -5,23 +5,13 @@
       value_from_env: HASURA_POST_SUBSCRIPTION_SECRET
     insert:
       columns: '*'
-    name: post_author_subscription
+    name: post_subscription
     retry_conf:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
     table:
-      name: posts
+      name: comments
       schema: public
-    update:
-      columns:
-      - author_id
-      - id
-      - type_id
-      - content
-      - title
-      - created_at
-      - updated_at
-      - topic_id
-    webhook_from_env: HASURA_POST_AUTHOR_SUBSCRIPTION_HOOK
+    webhook_from_env: HASURA_POST_SUBSCRIPTION_HOOK
   type: create_event_trigger

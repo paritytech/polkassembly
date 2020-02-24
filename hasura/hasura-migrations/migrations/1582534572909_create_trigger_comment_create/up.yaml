@@ -1,0 +1,17 @@
+- args:
+    enable_manual: false
+    headers:
+    - name: HASURA_EVENT_SECRET
+      value_from_env: HASURA_EVENT_SECRET
+    insert:
+      columns: '*'
+    name: comment_create
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    table:
+      name: comments
+      schema: public
+    webhook_from_env: HASURA_COMMENT_CREATE_EVENT_HOOK
+  type: create_event_trigger
