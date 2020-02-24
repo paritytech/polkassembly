@@ -57,6 +57,21 @@ spec:
             configMapKeyRef:
               key: HASURA_POST_SUBSCRIPTION_SECRET
               name: hasura-config
+        - name: HASURA_POST_CREATE_EVENT_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_POST_CREATE_EVENT_HOOK
+              name: hasura-config
+        - name: HASURA_COMMENT_CREATE_EVENT_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_COMMENT_CREATE_EVENT_HOOK
+              name: hasura-config
+        - name: HASURA_EVENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_EVENT_SECRET
+              name: hasura-config
         image: hasura/graphql-engine:pull2395-7ea7f82c
         imagePullPolicy: IfNotPresent
         name: graphql-engine
