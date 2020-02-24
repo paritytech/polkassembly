@@ -30,7 +30,7 @@ export const postCreateHook = async (req: Request, res: Response) => {
 		.first();
 
 	if (dbSubscription) {
-		return { message: messages.SUBSCRIPTION_ALREADY_EXISTS };
+		return res.json({ status: messages.SUBSCRIPTION_ALREADY_EXISTS });
 	}
 
 	await PostSubscription
