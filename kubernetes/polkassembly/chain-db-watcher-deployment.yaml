@@ -70,8 +70,4 @@ spec:
             configMapKeyRef:
               key: START_FROM
               name: chain-db-watcher-config
-        - name: NOTIFY_API_SECRET
-          valueFrom:
-            configMapKeyRef:
-              key: NOTIFY_API_SECRET
-              name: chain-db-watcher-config
+

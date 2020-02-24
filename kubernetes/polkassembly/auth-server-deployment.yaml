@@ -75,11 +75,6 @@ spec:
             configMapKeyRef:
               key: DOMAIN_PROTOCOL
               name: auth-server-config
-        - name: NOTIFY_API_SECRET
-          valueFrom:
-            configMapKeyRef:
-              key: NOTIFY_API_SECRET
-              name: auth-server-config
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.14
         command: ["/cloud_sql_proxy",
