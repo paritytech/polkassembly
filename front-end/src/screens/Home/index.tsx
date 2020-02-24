@@ -26,13 +26,13 @@ const Home = ({ className }: Props) => {
 			<h1>Latest Activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h2>Current Referenda</h2>
+					<h3>Current Referenda</h3>
 					<ReferendaContainer className='referendumContainer'/>
-					<h2>Latest Proposals</h2>
+					<h3>Latest Proposals</h3>
 					<ProposalContainer className='proposalContainer'/>
-					<h2>Latest Motions</h2>
+					<h3>Latest Motions</h3>
 					<MotionsContainer className='motionContainer'/>
-					<h2>Latest Discussions</h2>
+					<h3>Latest Discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
@@ -50,6 +50,21 @@ export default styled(Home)`
 	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer {
 		margin-bottom: 3rem;
 	}
+
+	h1 {
+		@media only screen and (max-width: 576px) {
+			margin: 3rem 1rem 1rem 1rem;
+		}
+
+		@media only screen and (max-width: 768px) and (min-width: 576px) {
+			margin-left: 1rem;
+		}
+
+		@media only screen and (max-width: 991px) and (min-width: 768px) {
+			margin-left: 1rem;
+		}
+	}
+	
 
 	@media only screen and (max-width: 768px) {
 
@@ -69,14 +84,6 @@ export default styled(Home)`
 	}
 
 	@media only screen and (max-width: 576px) {
-		h1 {
-			font-size: 2.1rem;
-			margin: 3rem 1.5rem 1rem 1.5rem;
-		}
-
-		h2 {
-			margin-left: 1.5rem;
-		}
 
 		.mainButtonContainer {
 			align-items: stretch!important;
