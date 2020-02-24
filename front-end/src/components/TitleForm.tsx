@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 import { Form } from '../ui-components/Form';
 import messages from '../util/messages';
@@ -44,10 +44,10 @@ export default styled(TitleForm)`
 	}
 
 	input.error {
-		border-color: #fe4850 !important;
+		border-color: red_secondary !important;
 	}
 
 	.errorText {
-		color: #fe4850
+		color: red_secondary;
 	}
 `;

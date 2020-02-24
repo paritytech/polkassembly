@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
 
 interface ErrorProps{
 	className?: string,
@@ -17,6 +17,6 @@ const FilteredError = ({ className, text } : ErrorProps) => {
 };
 
 export default styled(FilteredError)`
-	color: #D94C3D;
-	font-size: 1.2rem;
+	color: red_secondary;
+	font-size: sm;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import ReactMde, { commands }  from 'react-mde';
-import styled from 'styled-components';
+import styled from '@xstyled/styled-components';
+import Markdown from './Markdown';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
@@ -10,7 +10,7 @@ const StyledTextArea = styled.div`
     textarea {
 		border-radius: 0rem;
 		border: none!important;
-		color: #555!important;
+		color: black_text !important;
 		padding: 1rem 1.2rem!important;
 		line-height: 1.4!important;
 	}
@@ -19,11 +19,9 @@ const StyledTextArea = styled.div`
 		.react-mde {
 			.mde-header {
 				.mde-header-group {
-					border-top: 1px solid #DED7D7;
-					border-bottom-color: #DED7D7;
 					margin-left: 0!important;
 					padding: 1rem 0.5rem;
-					background-color: #FFF;
+					background-color: white;
 					width: 100%;
 
 					&.hidden {
@@ -49,7 +47,7 @@ const StyledTextArea = styled.div`
 						border-bottom-left-radius: 0!important;
 
 						&.selected {
-							border-bottom-color: #FFF!important;
+							border-bottom-color: white !important;
 							z-index: 1;
 						}
 					}
@@ -59,58 +57,12 @@ const StyledTextArea = styled.div`
 	}
 	
 	.react-mde  {
-		border-color: #EEE;
+		border-color: grey_light;
 		font-size: 1.4rem;
-
-		.mde-preview {
-			font-size: 1.4rem;
-
-			.mde-preview-content {
-				padding: 1rem 1.2rem!important;
-				overflow-wrap: break-word;
-
-				h1, h2, h3, h4, h5, h6 {
-					font-family: Roboto;
-					font-weight: 500;
-				}
-
-				h4 {
-					font-size: 1.4rem;
-				}
-
-				a {
-					color: #FF5A47;
-
-					&:hover {
-						text-decoration: none;
-						color: #D94C3D;
-						border-bottom: 1px solid #D94C3D;
-					}
-				}
-
-				p {
-					font-size: 1.4rem;
-
-					img {
-						opacity: 0.6;
-						max-width: 100%;
-					}
-				}
-
-				blockquote {
-					color: #7E7A7A;
-					font-size: 1.6rem;
-				}
-
-				ul > li > input {
-					display: none;
-				}
-			}
-		}
 
 		.grip {
 			border-top: none;
-			color: #B5AEAE;
+			color: grey_secondary;
 
 			.icon {
 				margin-bottom: 1rem;
@@ -118,30 +70,34 @@ const StyledTextArea = styled.div`
 		}
 
 		.mde-header {
-			background: #FBFAFA;
-			border-bottom: 1px solid #DED7D7;
+			background-color: grey_app_background;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_light;
 
 			.mde-tabs {
 				margin: 0rem 0.5rem;
 
 				button {
-					font-family: 'Roboto Mono';
-					font-size: 1.2rem;
+					font-family: font_default;
+					font-size: sm;
 					font-weight: 500;
 					padding: 0.8rem 1.6rem;
-					color: #706D6D;
-					background: #FBFAFA;
+					color: black_text;
+					background: grey_app_background;
 					border-radius: 0.3em;
-					border-bottom-color: #DED7D7;
+					border-bottom-color: grey_light;
 					margin-bottom: -1px;
 					margin-top: 1rem;
 
 					&.selected, &:focus {
-						background: #FFF;
-						color: #282828;
-						border: 1px solid #DED7D7;
+						background: white;
+						color: black_primary;
+						border-style: solid;
+						border-width: 1px;
+						border-color: grey_light;
 						outline: none;
-						border-bottom-color: #fffdfd;
+						border-bottom-color: white;
 						margin-bottom: -1px;
 						border-bottom-right-radius: 0;
 						border-bottom-left-radius: 0;
@@ -149,7 +105,7 @@ const StyledTextArea = styled.div`
 					}
 
 					&:hover {
-						color: #282828;
+						color: black_primary;
 					}
 				}
 			}
@@ -159,27 +115,29 @@ const StyledTextArea = styled.div`
 
 				.mde-header-item {
 					button {
-						color: #706D6D;
+						color: grey_primary;
 						font-size: 1.4rem;
 
 						&:hover, &:active, &:focus {
-							color: #282828;
+							color: black_primary;
 						}
 					}
 
 					.react-mde-dropdown {
-						border: 1px solid #EEE;
+						border-style: solid;
+						border-width: 1px;
+						border-color: grey_light;
 						border-radius: 0.5rem;
 
 						.mde-header-item {
 
 							button {
 								p {
-									color: #706D6D;
+									color: grey_primary;
 								}
 
 								p:hover {
-									color: #282828;
+									color: black_primary;
 								}
 							}
 						}
@@ -220,7 +178,7 @@ export function TextArea(props: Props): React.ReactElement {
 		<StyledTextArea className="container">
 			<ReactMde
 				commands={listCommands}
-				generateMarkdownPreview={markdown => Promise.resolve(<ReactMarkdown source={markdown} />) }
+				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}

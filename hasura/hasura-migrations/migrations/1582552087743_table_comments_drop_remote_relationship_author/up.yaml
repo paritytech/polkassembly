@@ -1,0 +1,6 @@
+- args:
+    name: author
+    table:
+      name: comments
+      schema: public
+  type: delete_remote_relationship

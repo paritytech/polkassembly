@@ -177,11 +177,11 @@ export default styled(SignupForm)`
 	}
 
 	input.error {
-		border-color: #fe4850 !important;
+		border-color: red_secondary !important;
 	}
 
 	.errorText {
-		color: #fe4850
+		color: red_secondary;
 	}
 
 	.checkbox-label {

@@ -8,7 +8,7 @@ const Button = (props : ButtonProps) => {
 
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		font-size: md;
 		font-weight: 500;
 		text-transform: uppercase;
@@ -60,12 +60,12 @@ export default styled(Button)`
 		}
 		&.ui.secondary.negative.button {
 			background-color: white;
-			color: #E65140;
+			color: red_secondary;
 			box-shadow: 0 0 0 1px inset !important;
 			&:hover, &:focus {
-				background-color: #E66557;
+				background-color: red_secondary;
 				color: white;
-				box-shadow: 0 0 0 1px #E65140 inset !important;
+				box-shadow: 0 0 0 1px #A6ACB3 inset !important;
 				outline: none;
 			}	
 		}

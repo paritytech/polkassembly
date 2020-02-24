@@ -1,0 +1,6 @@
+- args:
+    name: onchain_proposal
+    table:
+      name: onchain_links
+      schema: public
+  type: delete_remote_relationship

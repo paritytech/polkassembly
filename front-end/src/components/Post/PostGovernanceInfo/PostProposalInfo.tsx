@@ -85,16 +85,16 @@ export default styled(PostProposalInfo)`
 	font-size: sm;
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;
-	font-family: 'Roboto Mono';
+	font-family: font_mono;
 
 	h6 {
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		font-size: sm;
 	}
 
 	h4 {
 		font-size: lg;
-		font-family: 'Roboto Mono';
+		font-family: font_mono;
 		margin-bottom: 2rem;
 	}
 
