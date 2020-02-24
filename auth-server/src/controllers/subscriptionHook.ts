@@ -46,13 +46,9 @@ export const postSubscriptionHook = async (req: Request, res: Response) => {
 };
 
 export const postAuthorSubscriptionHook = async (req: Request, res: Response) => {
-	console.log(req.headers);
-
 	if (process.env.HASURA_POST_SUBSCRIPTION_SECRET !== req.headers.hasura_post_subscription_secret) {
 		return res.status(403).json({ message: messages.UNAUTHORISED });
 	}
-
-	console.log(JSON.stringify(req.body, null, 2));
 
 	const post = req.body?.event?.data?.new || {};
 
