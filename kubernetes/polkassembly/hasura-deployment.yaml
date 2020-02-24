@@ -67,6 +67,11 @@ spec:
             configMapKeyRef:
               key: HASURA_COMMENT_CREATE_EVENT_HOOK
               name: hasura-config
+        - name: HASURA_ONCHAIN_LINK_CREATE_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_ONCHAIN_LINK_CREATE_HOOK
+              name: hasura-config
         - name: HASURA_EVENT_SECRET
           valueFrom:
             configMapKeyRef:
