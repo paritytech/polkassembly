@@ -32,6 +32,6 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: <YOUR_HASURA_ADMIN_SECRET>
       HASURA_GRAPHQL_JWT_SECRET: '{ "type": "RS256", "key": "<JWT_PUBLIC_KEY_FROM_AUTH_SERVER>" }'
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: 'anonymous'
-      HASURA_POST_SUBSCRIPTION_HOOK: "http://localhost:8010/auth/post/subscription"
-      HASURA_POST_AUTHOR_SUBSCRIPTION_HOOK: "http://localhost:8010/auth/post/author/subscription"
-      HASURA_POST_SUBSCRIPTION_SECRET: "<shared secret key with auth server>"
+      HASURA_POST_CREATE_EVENT_HOOK: "http://localhost:8010/auth/event/post/create"
+      HASURA_COMMENT_CREATE_EVENT_HOOK: "http://localhost:8010/auth/event/comment/create"
+      HASURA_EVENT_SECRET: "<shared secret key with auth server>"
