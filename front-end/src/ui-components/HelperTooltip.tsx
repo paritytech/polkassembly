@@ -1,25 +1,26 @@
 import React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
 interface Props {
-	className?: string
 	content: string
 }
-
-const circleStyle = {
-	color: '#A6ACB3',
-	marginLeft: '0.2rem'
-};
 
 const popupStyle = {
 	fontSize: '1.2rem',
 	marginLeft: '-1rem'
 };
 
-const HelperTooltip = ({ className, content }:Props) =>
+const myIcon = ({ className }:{className?: string}) => <Icon className={className} name='question circle'/>;
+
+export const StyledIcon = styled(myIcon)`
+	color: grey_secondary;
+	margin-left: 0.2rem !important;
+`;
+
+const HelperTooltip = ({ content }:Props) =>
 	<Popup
-		className={className}
-		trigger={<Icon name='question circle' style={circleStyle}/>}
+		trigger={<span><StyledIcon/></span>}
 		content={content}
 		style={popupStyle}
 		hoverable={true}
