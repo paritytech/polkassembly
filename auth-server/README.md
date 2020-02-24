@@ -53,7 +53,6 @@ DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
 HASURA_POST_SUBSCRIPTION_SECRET="<shared secret key with hasura>"
 DOMAIN_NAME="polkassembly.io"
 DOMAIN_PROTOCOL="http://"
-NOTIFY_API_SECRET="<notify api secret in chain db watcher>"
 ```
 
 `proposal_bot` is a special user identified by its id. We should grant it with the `proposal_bot` role when it signs-in.

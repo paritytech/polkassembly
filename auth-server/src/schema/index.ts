@@ -14,7 +14,6 @@ import changePasswordMutation from './mutation/changePassword';
 import changeNameMutation from './mutation/changeName';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
-import notifyOnProposal from './mutation/notifyOnProposal';
 import postSubscribe from './mutation/postSubscribe';
 import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
@@ -64,7 +63,6 @@ export default gql`
 		${changeNameMutation}
 		${loginMutation}
 		${logoutMutation}
-		${notifyOnProposal}
 		${postSubscribe}
 		${postUnsubscribe}
 		${requestResetPassword}

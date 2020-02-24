@@ -7,7 +7,6 @@ import changePassword from './mutation/changePassword';
 import changeName from './mutation/changeName';
 import login from './mutation/login';
 import logout from './mutation/logout';
-import notifyOnProposal from './mutation/notifyOnProposal';
 import postSubscribe from './mutation/postSubscribe';
 import postUnsubscribe from './mutation/postUnsubscribe';
 import requestResetPassword from './mutation/requestResetPassword';
@@ -39,7 +38,6 @@ export default {
 		changeEmail,
 		changePassword,
 		changeName,
-		notifyOnProposal,
 		postSubscribe,
 		postUnsubscribe,
 		requestResetPassword,
