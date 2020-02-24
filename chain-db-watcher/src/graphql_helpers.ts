@@ -57,31 +57,6 @@ export const getToken = async (): Promise<string | void> => {
 };
 
 /**
- * Notify Users when a on chain post is created.
- */
-export const notifyUser = async (proposerAddress: string, postId: number): Promise<void> => {
-	if (!postId) {
-		return;
-	}
-
-	if (!discussionGraphqlUrl) {
-		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
-	}
-
-	try {
-		const client = new GraphQLClient(discussionGraphqlUrl, { headers: { 'notify-api-secret': process.env.NOTIFY_API_SECRET || '' } });
-		const discussionSdk = getDiscussionSdk(client);
-		await discussionSdk.notifyOnProposal({ proposerAddress, postId });
-	} catch (e) {
-		console.error(chalk.red('getToken execution error', e));
-		e.response?.errors &&
-			console.error(chalk.red('GraphQL response errors\n'), e.response.errors);
-		e.response?.data &&
-			console.error(chalk.red('Response data if available\n'), e.response.data);
-	}
-};
-
-/**
  * Tells if there is already a proposal in the discussion DB matching the
  * onchain proposal id passed as argument
  *
@@ -269,8 +244,6 @@ export const addDiscussionPostAndProposal = async ({
 		const data = await discussionSdk.addPostAndProposalMutation(proposalAndPostVariables);
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
-		notifyUser(proposer, data?.insert_onchain_links?.returning[0]?.post_id || 0);
-
 		if (addedId || addedId === 0) {
 			console.log(`${chalk.green('✔︎')} Proposal ${addedId} added to the database.`);
 		}
@@ -346,8 +319,6 @@ export const addDiscussionPostAndMotion = async ({
 		const discussionSdk = getDiscussionSdk(client);
 		const data = await discussionSdk.addPostAndMotionMutation(motionAndPostVariables);
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
-
-		notifyUser(proposer, data?.insert_onchain_links?.returning[0]?.post_id || 0);
 
 		if (addedId || addedId === 0) {
 			console.log(`${chalk.green('✔︎')} Motion ${addedId} added to the database.`);

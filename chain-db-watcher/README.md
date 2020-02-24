@@ -15,7 +15,6 @@ DEMOCRACY_TOPIC_ID=1
 COUNCIL_TOPIC_ID=2
 HASURA_GRAPHQL_ADMIN_SECRET=<your admin secret>
 START_FROM=0
-NOTIFY_API_SECRET=<notify api secret>
 ```
 ## Run
 - `yarn`
