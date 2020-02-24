@@ -24,7 +24,6 @@ export const addPostAndProposalMutation = gql`
         }}) {
             returning {
                 id
-                post_id
             }
         }
     }
@@ -54,7 +53,6 @@ export const addPostAndMotionMutation = gql`
         }}) {
             returning {
                 id
-                post_id
             }
         }
     }
@@ -116,14 +114,6 @@ export const loginMutation = gql`
     mutation loginMutation($password: String!, $username: String!) {
         login(password: $password, username: $username) {
             token
-        }
-    }
-`;
-
-export const notifyOnProposalMutation = gql`
-    mutation notifyOnProposal($proposerAddress: String!, $postId: Int!) {
-        notifyOnProposal(proposerAddress: $proposerAddress, postId: $postId) {
-            message
         }
     }
 `;

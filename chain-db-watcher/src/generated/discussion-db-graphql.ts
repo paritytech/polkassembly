@@ -32,6 +32,11 @@ export type AddressLinkType = {
   sign_message?: Maybe<Scalars['String']>,
 };
 
+export type AggregateBlockIndex = {
+   __typename?: 'AggregateBlockIndex',
+  count: Scalars['Int'],
+};
+
 export type AggregateBlockNumber = {
    __typename?: 'AggregateBlockNumber',
   count: Scalars['Int'],
@@ -132,6 +137,16 @@ export type AggregateTotalIssuance = {
   count: Scalars['Int'],
 };
 
+export type AggregateTreasury = {
+   __typename?: 'AggregateTreasury',
+  count: Scalars['Int'],
+};
+
+export type AggregateTreasuryStatus = {
+   __typename?: 'AggregateTreasuryStatus',
+  count: Scalars['Int'],
+};
+
 export type AggregateValidator = {
    __typename?: 'AggregateValidator',
   count: Scalars['Int'],
@@ -140,6 +155,139 @@ export type AggregateValidator = {
 export type BatchPayload = {
    __typename?: 'BatchPayload',
   count: Scalars['Long'],
+};
+
+export type BlockIndex = Node & {
+   __typename?: 'BlockIndex',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexConnection = {
+   __typename?: 'BlockIndexConnection',
+  aggregate: AggregateBlockIndex,
+  edges: Array<Maybe<BlockIndexEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type BlockIndexCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexEdge = {
+   __typename?: 'BlockIndexEdge',
+  cursor: Scalars['String'],
+  node: BlockIndex,
+};
+
+export enum BlockIndexOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  IdentifierAsc = 'identifier_ASC',
+  IdentifierDesc = 'identifier_DESC',
+  IndexAsc = 'index_ASC',
+  IndexDesc = 'index_DESC',
+  StartFromAsc = 'startFrom_ASC',
+  StartFromDesc = 'startFrom_DESC'
+}
+
+export type BlockIndexPreviousValues = {
+   __typename?: 'BlockIndexPreviousValues',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexSubscriptionPayload = {
+   __typename?: 'BlockIndexSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<BlockIndex>,
+  previousValues?: Maybe<BlockIndexPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type BlockIndexSubscriptionWhereInput = {
+  AND?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  OR?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<BlockIndexWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type BlockIndexUpdateInput = {
+  identifier?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  startFrom?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexUpdateManyMutationInput = {
+  identifier?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  startFrom?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexWhereInput = {
+  AND?: Maybe<Array<BlockIndexWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexWhereInput>>,
+  OR?: Maybe<Array<BlockIndexWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
+  identifier_contains?: Maybe<Scalars['String']>,
+  identifier_ends_with?: Maybe<Scalars['String']>,
+  identifier_gt?: Maybe<Scalars['String']>,
+  identifier_gte?: Maybe<Scalars['String']>,
+  identifier_in?: Maybe<Array<Scalars['String']>>,
+  identifier_lt?: Maybe<Scalars['String']>,
+  identifier_lte?: Maybe<Scalars['String']>,
+  identifier_not?: Maybe<Scalars['String']>,
+  identifier_not_contains?: Maybe<Scalars['String']>,
+  identifier_not_ends_with?: Maybe<Scalars['String']>,
+  identifier_not_in?: Maybe<Array<Scalars['String']>>,
+  identifier_not_starts_with?: Maybe<Scalars['String']>,
+  identifier_starts_with?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  index_gt?: Maybe<Scalars['Int']>,
+  index_gte?: Maybe<Scalars['Int']>,
+  index_in?: Maybe<Array<Scalars['Int']>>,
+  index_lt?: Maybe<Scalars['Int']>,
+  index_lte?: Maybe<Scalars['Int']>,
+  index_not?: Maybe<Scalars['Int']>,
+  index_not_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom?: Maybe<Scalars['Int']>,
+  startFrom_gt?: Maybe<Scalars['Int']>,
+  startFrom_gte?: Maybe<Scalars['Int']>,
+  startFrom_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom_lt?: Maybe<Scalars['Int']>,
+  startFrom_lte?: Maybe<Scalars['Int']>,
+  startFrom_not?: Maybe<Scalars['Int']>,
+  startFrom_not_in?: Maybe<Array<Scalars['Int']>>,
+};
+
+export type BlockIndexWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
 };
 
 export type BlockNumber = Node & {
@@ -336,34 +484,12 @@ export type Comments = {
    __typename?: 'comments',
   author?: Maybe<User>,
   author_id: Scalars['Int'],
-  comment?: Maybe<Comments>,
-  comments: Array<Comments>,
-  comments_aggregate: Comments_Aggregate,
   content: Scalars['String'],
   created_at: Scalars['timestamptz'],
   id: Scalars['uuid'],
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post: Posts,
   post_id: Scalars['Int'],
   updated_at: Scalars['timestamptz'],
-};
-
-
-export type CommentsCommentsArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
-};
-
-
-export type CommentsComments_AggregateArgs = {
-  distinct_on?: Maybe<Array<Comments_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comments_Order_By>>,
-  where?: Maybe<Comments_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -428,12 +554,9 @@ export type Comments_Bool_Exp = {
   _not?: Maybe<Comments_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Comments_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
-  comment?: Maybe<Comments_Bool_Exp>,
-  comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Uuid_Comparison_Exp>,
-  parent_comment_id?: Maybe<Uuid_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   updated_at?: Maybe<Timestamptz_Comparison_Exp>,
@@ -450,12 +573,9 @@ export type Comments_Inc_Input = {
 
 export type Comments_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  comment?: Maybe<Comments_Obj_Rel_Insert_Input>,
-  comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
@@ -514,12 +634,9 @@ export type Comments_On_Conflict = {
 
 export type Comments_Order_By = {
   author_id?: Maybe<Order_By>,
-  comment?: Maybe<Comments_Order_By>,
-  comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  parent_comment_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
@@ -530,7 +647,6 @@ export enum Comments_Select_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -540,7 +656,6 @@ export type Comments_Set_Input = {
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
-  parent_comment_id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -594,7 +709,6 @@ export enum Comments_Update_Column {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
-  ParentCommentId = 'parent_comment_id',
   PostId = 'post_id',
   UpdatedAt = 'updated_at'
 }
@@ -1846,7 +1960,6 @@ export type Mutation = {
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
-  notifyOnProposal?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
@@ -1902,12 +2015,6 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationNotifyOnProposalArgs = {
-  postId: Scalars['Int'],
-  proposerAddress: Scalars['String']
-};
-
-
 export type MutationPostSubscribeArgs = {
   post_id: Scalars['Int']
 };
@@ -1955,6 +2062,7 @@ export type Mutation_Root = {
   changeName?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
+  createBlockIndex: BlockIndex,
   createBlockNumber: BlockNumber,
   createEra: Era,
   createHeartBeat: HeartBeat,
@@ -1975,10 +2083,14 @@ export type Mutation_Root = {
   createSlashing: Slashing,
   createStake: Stake,
   createTotalIssuance: TotalIssuance,
+  createTreasury: Treasury,
+  createTreasuryStatus: TreasuryStatus,
   createValidator: Validator,
+  deleteBlockIndex?: Maybe<BlockIndex>,
   deleteBlockNumber?: Maybe<BlockNumber>,
   deleteEra?: Maybe<Era>,
   deleteHeartBeat?: Maybe<HeartBeat>,
+  deleteManyBlockIndexes: BatchPayload,
   deleteManyBlockNumbers: BatchPayload,
   deleteManyEras: BatchPayload,
   deleteManyHeartBeats: BatchPayload,
@@ -1999,6 +2111,8 @@ export type Mutation_Root = {
   deleteManySlashings: BatchPayload,
   deleteManyStakes: BatchPayload,
   deleteManyTotalIssuances: BatchPayload,
+  deleteManyTreasuries: BatchPayload,
+  deleteManyTreasuryStatuses: BatchPayload,
   deleteManyValidators: BatchPayload,
   deleteMotion?: Maybe<Motion>,
   deleteMotionProposalArgument?: Maybe<MotionProposalArgument>,
@@ -2017,6 +2131,8 @@ export type Mutation_Root = {
   deleteSlashing?: Maybe<Slashing>,
   deleteStake?: Maybe<Stake>,
   deleteTotalIssuance?: Maybe<TotalIssuance>,
+  deleteTreasury?: Maybe<Treasury>,
+  deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
@@ -2031,7 +2147,6 @@ export type Mutation_Root = {
   insert_posts?: Maybe<Posts_Mutation_Response>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
-  notifyOnProposal?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
@@ -2039,9 +2154,11 @@ export type Mutation_Root = {
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
+  updateBlockIndex?: Maybe<BlockIndex>,
   updateBlockNumber?: Maybe<BlockNumber>,
   updateEra?: Maybe<Era>,
   updateHeartBeat?: Maybe<HeartBeat>,
+  updateManyBlockIndexes: BatchPayload,
   updateManyBlockNumbers: BatchPayload,
   updateManyEras: BatchPayload,
   updateManyHeartBeats: BatchPayload,
@@ -2062,6 +2179,8 @@ export type Mutation_Root = {
   updateManySlashings: BatchPayload,
   updateManyStakes: BatchPayload,
   updateManyTotalIssuances: BatchPayload,
+  updateManyTreasuries: BatchPayload,
+  updateManyTreasuryStatuses: BatchPayload,
   updateManyValidators: BatchPayload,
   updateMotion?: Maybe<Motion>,
   updateMotionProposalArgument?: Maybe<MotionProposalArgument>,
@@ -2080,12 +2199,15 @@ export type Mutation_Root = {
   updateSlashing?: Maybe<Slashing>,
   updateStake?: Maybe<Stake>,
   updateTotalIssuance?: Maybe<TotalIssuance>,
+  updateTreasury?: Maybe<Treasury>,
+  updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
   update_comments?: Maybe<Comments_Mutation_Response>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
+  upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertEra: Era,
   upsertHeartBeat: HeartBeat,
@@ -2106,6 +2228,8 @@ export type Mutation_Root = {
   upsertSlashing: Slashing,
   upsertStake: Stake,
   upsertTotalIssuance: TotalIssuance,
+  upsertTreasury: Treasury,
+  upsertTreasuryStatus: TreasuryStatus,
   upsertValidator: Validator,
   verifyEmail?: Maybe<ChangeResponse>,
 };
@@ -2146,6 +2270,11 @@ export type Mutation_RootChangePasswordArgs = {
 
 export type Mutation_RootChangeUsernameArgs = {
   username: Scalars['String']
+};
+
+
+export type Mutation_RootCreateBlockIndexArgs = {
+  data: BlockIndexCreateInput
 };
 
 
@@ -2249,8 +2378,23 @@ export type Mutation_RootCreateTotalIssuanceArgs = {
 };
 
 
+export type Mutation_RootCreateTreasuryArgs = {
+  data: TreasuryCreateInput
+};
+
+
+export type Mutation_RootCreateTreasuryStatusArgs = {
+  data: TreasuryStatusCreateInput
+};
+
+
 export type Mutation_RootCreateValidatorArgs = {
   data: ValidatorCreateInput
+};
+
+
+export type Mutation_RootDeleteBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
 };
 
 
@@ -2266,6 +2410,11 @@ export type Mutation_RootDeleteEraArgs = {
 
 export type Mutation_RootDeleteHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteManyBlockIndexesArgs = {
+  where?: Maybe<BlockIndexWhereInput>
 };
 
 
@@ -2369,6 +2518,16 @@ export type Mutation_RootDeleteManyTotalIssuancesArgs = {
 };
 
 
+export type Mutation_RootDeleteManyTreasuriesArgs = {
+  where?: Maybe<TreasuryWhereInput>
+};
+
+
+export type Mutation_RootDeleteManyTreasuryStatusesArgs = {
+  where?: Maybe<TreasuryStatusWhereInput>
+};
+
+
 export type Mutation_RootDeleteManyValidatorsArgs = {
   where?: Maybe<ValidatorWhereInput>
 };
@@ -2459,6 +2618,16 @@ export type Mutation_RootDeleteTotalIssuanceArgs = {
 };
 
 
+export type Mutation_RootDeleteTreasuryArgs = {
+  where: TreasuryWhereUniqueInput
+};
+
+
+export type Mutation_RootDeleteTreasuryStatusArgs = {
+  where: TreasuryStatusWhereUniqueInput
+};
+
+
 export type Mutation_RootDeleteValidatorArgs = {
   where: ValidatorWhereUniqueInput
 };
@@ -2531,12 +2700,6 @@ export type Mutation_RootLoginArgs = {
 };
 
 
-export type Mutation_RootNotifyOnProposalArgs = {
-  postId: Scalars['Int'],
-  proposerAddress: Scalars['String']
-};
-
-
 export type Mutation_RootPostSubscribeArgs = {
   post_id: Scalars['Int']
 };
@@ -2571,6 +2734,12 @@ export type Mutation_RootUndoEmailChangeArgs = {
 };
 
 
+export type Mutation_RootUpdateBlockIndexArgs = {
+  data: BlockIndexUpdateInput,
+  where: BlockIndexWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateBlockNumberArgs = {
   data: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
@@ -2586,6 +2755,12 @@ export type Mutation_RootUpdateEraArgs = {
 export type Mutation_RootUpdateHeartBeatArgs = {
   data: HeartBeatUpdateInput,
   where: HeartBeatWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateManyBlockIndexesArgs = {
+  data: BlockIndexUpdateManyMutationInput,
+  where?: Maybe<BlockIndexWhereInput>
 };
 
 
@@ -2709,6 +2884,18 @@ export type Mutation_RootUpdateManyTotalIssuancesArgs = {
 };
 
 
+export type Mutation_RootUpdateManyTreasuriesArgs = {
+  data: TreasuryUpdateManyMutationInput,
+  where?: Maybe<TreasuryWhereInput>
+};
+
+
+export type Mutation_RootUpdateManyTreasuryStatusesArgs = {
+  data: TreasuryStatusUpdateManyMutationInput,
+  where?: Maybe<TreasuryStatusWhereInput>
+};
+
+
 export type Mutation_RootUpdateManyValidatorsArgs = {
   data: ValidatorUpdateManyMutationInput,
   where?: Maybe<ValidatorWhereInput>
@@ -2817,6 +3004,18 @@ export type Mutation_RootUpdateTotalIssuanceArgs = {
 };
 
 
+export type Mutation_RootUpdateTreasuryArgs = {
+  data: TreasuryUpdateInput,
+  where: TreasuryWhereUniqueInput
+};
+
+
+export type Mutation_RootUpdateTreasuryStatusArgs = {
+  data: TreasuryStatusUpdateInput,
+  where: TreasuryStatusWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateValidatorArgs = {
   data: ValidatorUpdateInput,
   where: ValidatorWhereUniqueInput
@@ -2855,6 +3054,13 @@ export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
   _set?: Maybe<Posts_Set_Input>,
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootUpsertBlockIndexArgs = {
+  create: BlockIndexCreateInput,
+  update: BlockIndexUpdateInput,
+  where: BlockIndexWhereUniqueInput
 };
 
 
@@ -2995,6 +3201,20 @@ export type Mutation_RootUpsertTotalIssuanceArgs = {
   create: TotalIssuanceCreateInput,
   update: TotalIssuanceUpdateInput,
   where: TotalIssuanceWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertTreasuryArgs = {
+  create: TreasuryCreateInput,
+  update: TreasuryUpdateInput,
+  where: TreasuryWhereUniqueInput
+};
+
+
+export type Mutation_RootUpsertTreasuryStatusArgs = {
+  create: TreasuryStatusCreateInput,
+  update: TreasuryStatusUpdateInput,
+  where: TreasuryStatusWhereUniqueInput
 };
 
 
@@ -6004,6 +6224,9 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
+  blockIndex?: Maybe<BlockIndex>,
+  blockIndexes: Array<Maybe<BlockIndex>>,
+  blockIndexesConnection: BlockIndexConnection,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
@@ -6082,11 +6305,44 @@ export type Query_Root = {
   totalIssuance?: Maybe<TotalIssuance>,
   totalIssuances: Array<Maybe<TotalIssuance>>,
   totalIssuancesConnection: TotalIssuanceConnection,
+  treasuries: Array<Maybe<Treasury>>,
+  treasuriesConnection: TreasuryConnection,
+  treasury?: Maybe<Treasury>,
+  treasuryStatus?: Maybe<TreasuryStatus>,
+  treasuryStatuses: Array<Maybe<TreasuryStatus>>,
+  treasuryStatusesConnection: TreasuryStatusConnection,
   user?: Maybe<User>,
   users?: Maybe<Array<Maybe<PublicUser>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,
+};
+
+
+export type Query_RootBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
+};
+
+
+export type Query_RootBlockIndexesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<BlockIndexWhereInput>
+};
+
+
+export type Query_RootBlockIndexesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<BlockIndexWhereInput>
 };
 
 
@@ -6752,6 +7008,60 @@ export type Query_RootTotalIssuancesConnectionArgs = {
   orderBy?: Maybe<TotalIssuanceOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<TotalIssuanceWhereInput>
+};
+
+
+export type Query_RootTreasuriesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasuryOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasuryWhereInput>
+};
+
+
+export type Query_RootTreasuriesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasuryOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasuryWhereInput>
+};
+
+
+export type Query_RootTreasuryArgs = {
+  where: TreasuryWhereUniqueInput
+};
+
+
+export type Query_RootTreasuryStatusArgs = {
+  where: TreasuryStatusWhereUniqueInput
+};
+
+
+export type Query_RootTreasuryStatusesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasuryStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasuryStatusWhereInput>
+};
+
+
+export type Query_RootTreasuryStatusesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasuryStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasuryStatusWhereInput>
 };
 
 
@@ -8077,6 +8387,422 @@ export type TotalIssuanceWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
+export type Treasury = {
+   __typename?: 'Treasury',
+  beneficiary: Scalars['String'],
+  bond: Scalars['String'],
+  id: Scalars['Int'],
+  proposer: Scalars['String'],
+  treasuryProposalId: Scalars['Int'],
+  treasuryStatus?: Maybe<Array<TreasuryStatus>>,
+  value: Scalars['String'],
+};
+
+
+export type TreasuryTreasuryStatusArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasuryStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasuryStatusWhereInput>
+};
+
+export type TreasuryConnection = {
+   __typename?: 'TreasuryConnection',
+  aggregate: AggregateTreasury,
+  edges: Array<Maybe<TreasuryEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type TreasuryCreateInput = {
+  beneficiary: Scalars['String'],
+  bond: Scalars['String'],
+  proposer: Scalars['String'],
+  treasuryProposalId: Scalars['Int'],
+  treasuryStatus?: Maybe<TreasuryStatusCreateManyWithoutTreasuryInput>,
+  value: Scalars['String'],
+};
+
+export type TreasuryCreateOneWithoutTreasuryStatusInput = {
+  connect?: Maybe<TreasuryWhereUniqueInput>,
+  create?: Maybe<TreasuryCreateWithoutTreasuryStatusInput>,
+};
+
+export type TreasuryCreateWithoutTreasuryStatusInput = {
+  beneficiary: Scalars['String'],
+  bond: Scalars['String'],
+  proposer: Scalars['String'],
+  treasuryProposalId: Scalars['Int'],
+  value: Scalars['String'],
+};
+
+export type TreasuryEdge = {
+   __typename?: 'TreasuryEdge',
+  cursor: Scalars['String'],
+  node: Treasury,
+};
+
+export enum TreasuryOrderByInput {
+  BeneficiaryAsc = 'beneficiary_ASC',
+  BeneficiaryDesc = 'beneficiary_DESC',
+  BondAsc = 'bond_ASC',
+  BondDesc = 'bond_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  ProposerAsc = 'proposer_ASC',
+  ProposerDesc = 'proposer_DESC',
+  TreasuryProposalIdAsc = 'treasuryProposalId_ASC',
+  TreasuryProposalIdDesc = 'treasuryProposalId_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type TreasuryPreviousValues = {
+   __typename?: 'TreasuryPreviousValues',
+  beneficiary: Scalars['String'],
+  bond: Scalars['String'],
+  id: Scalars['Int'],
+  proposer: Scalars['String'],
+  treasuryProposalId: Scalars['Int'],
+  value: Scalars['String'],
+};
+
+export type TreasuryStatus = Node & {
+   __typename?: 'TreasuryStatus',
+  blockNumber: BlockNumber,
+  id: Scalars['ID'],
+  status: Scalars['String'],
+  treasury: Treasury,
+};
+
+export type TreasuryStatusConnection = {
+   __typename?: 'TreasuryStatusConnection',
+  aggregate: AggregateTreasuryStatus,
+  edges: Array<Maybe<TreasuryStatusEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type TreasuryStatusCreateInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+  treasury: TreasuryCreateOneWithoutTreasuryStatusInput,
+};
+
+export type TreasuryStatusCreateManyWithoutTreasuryInput = {
+  connect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>,
+  create?: Maybe<Array<TreasuryStatusCreateWithoutTreasuryInput>>,
+};
+
+export type TreasuryStatusCreateWithoutTreasuryInput = {
+  blockNumber: BlockNumberCreateOneInput,
+  id?: Maybe<Scalars['ID']>,
+  status: Scalars['String'],
+};
+
+export type TreasuryStatusEdge = {
+   __typename?: 'TreasuryStatusEdge',
+  cursor: Scalars['String'],
+  node: TreasuryStatus,
+};
+
+export enum TreasuryStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC'
+}
+
+export type TreasuryStatusPreviousValues = {
+   __typename?: 'TreasuryStatusPreviousValues',
+  id: Scalars['ID'],
+  status: Scalars['String'],
+};
+
+export type TreasuryStatusScalarWhereInput = {
+  AND?: Maybe<Array<TreasuryStatusScalarWhereInput>>,
+  NOT?: Maybe<Array<TreasuryStatusScalarWhereInput>>,
+  OR?: Maybe<Array<TreasuryStatusScalarWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryStatusSubscriptionPayload = {
+   __typename?: 'TreasuryStatusSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<TreasuryStatus>,
+  previousValues?: Maybe<TreasuryStatusPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type TreasuryStatusSubscriptionWhereInput = {
+  AND?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>,
+  OR?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<TreasuryStatusWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type TreasuryStatusUpdateInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  status?: Maybe<Scalars['String']>,
+  treasury?: Maybe<TreasuryUpdateOneRequiredWithoutTreasuryStatusInput>,
+};
+
+export type TreasuryStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryStatusUpdateManyWithoutTreasuryInput = {
+  connect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>,
+  create?: Maybe<Array<TreasuryStatusCreateWithoutTreasuryInput>>,
+  delete?: Maybe<Array<TreasuryStatusWhereUniqueInput>>,
+  deleteMany?: Maybe<Array<TreasuryStatusScalarWhereInput>>,
+  disconnect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>,
+  set?: Maybe<Array<TreasuryStatusWhereUniqueInput>>,
+  update?: Maybe<Array<TreasuryStatusUpdateWithWhereUniqueWithoutTreasuryInput>>,
+  updateMany?: Maybe<Array<TreasuryStatusUpdateManyWithWhereNestedInput>>,
+  upsert?: Maybe<Array<TreasuryStatusUpsertWithWhereUniqueWithoutTreasuryInput>>,
+};
+
+export type TreasuryStatusUpdateManyWithWhereNestedInput = {
+  data: TreasuryStatusUpdateManyDataInput,
+  where: TreasuryStatusScalarWhereInput,
+};
+
+export type TreasuryStatusUpdateWithoutTreasuryDataInput = {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
+  status?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryStatusUpdateWithWhereUniqueWithoutTreasuryInput = {
+  data: TreasuryStatusUpdateWithoutTreasuryDataInput,
+  where: TreasuryStatusWhereUniqueInput,
+};
+
+export type TreasuryStatusUpsertWithWhereUniqueWithoutTreasuryInput = {
+  create: TreasuryStatusCreateWithoutTreasuryInput,
+  update: TreasuryStatusUpdateWithoutTreasuryDataInput,
+  where: TreasuryStatusWhereUniqueInput,
+};
+
+export type TreasuryStatusWhereInput = {
+  AND?: Maybe<Array<TreasuryStatusWhereInput>>,
+  NOT?: Maybe<Array<TreasuryStatusWhereInput>>,
+  OR?: Maybe<Array<TreasuryStatusWhereInput>>,
+  blockNumber?: Maybe<BlockNumberWhereInput>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  status?: Maybe<Scalars['String']>,
+  status_contains?: Maybe<Scalars['String']>,
+  status_ends_with?: Maybe<Scalars['String']>,
+  status_gt?: Maybe<Scalars['String']>,
+  status_gte?: Maybe<Scalars['String']>,
+  status_in?: Maybe<Array<Scalars['String']>>,
+  status_lt?: Maybe<Scalars['String']>,
+  status_lte?: Maybe<Scalars['String']>,
+  status_not?: Maybe<Scalars['String']>,
+  status_not_contains?: Maybe<Scalars['String']>,
+  status_not_ends_with?: Maybe<Scalars['String']>,
+  status_not_in?: Maybe<Array<Scalars['String']>>,
+  status_not_starts_with?: Maybe<Scalars['String']>,
+  status_starts_with?: Maybe<Scalars['String']>,
+  treasury?: Maybe<TreasuryWhereInput>,
+};
+
+export type TreasuryStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type TreasurySubscriptionPayload = {
+   __typename?: 'TreasurySubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Treasury>,
+  previousValues?: Maybe<TreasuryPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type TreasurySubscriptionWhereInput = {
+  AND?: Maybe<Array<TreasurySubscriptionWhereInput>>,
+  NOT?: Maybe<Array<TreasurySubscriptionWhereInput>>,
+  OR?: Maybe<Array<TreasurySubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<TreasuryWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type TreasuryUpdateInput = {
+  beneficiary?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  proposer?: Maybe<Scalars['String']>,
+  treasuryProposalId?: Maybe<Scalars['Int']>,
+  treasuryStatus?: Maybe<TreasuryStatusUpdateManyWithoutTreasuryInput>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryUpdateManyMutationInput = {
+  beneficiary?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  proposer?: Maybe<Scalars['String']>,
+  treasuryProposalId?: Maybe<Scalars['Int']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryUpdateOneRequiredWithoutTreasuryStatusInput = {
+  connect?: Maybe<TreasuryWhereUniqueInput>,
+  create?: Maybe<TreasuryCreateWithoutTreasuryStatusInput>,
+  update?: Maybe<TreasuryUpdateWithoutTreasuryStatusDataInput>,
+  upsert?: Maybe<TreasuryUpsertWithoutTreasuryStatusInput>,
+};
+
+export type TreasuryUpdateWithoutTreasuryStatusDataInput = {
+  beneficiary?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  proposer?: Maybe<Scalars['String']>,
+  treasuryProposalId?: Maybe<Scalars['Int']>,
+  value?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryUpsertWithoutTreasuryStatusInput = {
+  create: TreasuryCreateWithoutTreasuryStatusInput,
+  update: TreasuryUpdateWithoutTreasuryStatusDataInput,
+};
+
+export type TreasuryWhereInput = {
+  AND?: Maybe<Array<TreasuryWhereInput>>,
+  NOT?: Maybe<Array<TreasuryWhereInput>>,
+  OR?: Maybe<Array<TreasuryWhereInput>>,
+  beneficiary?: Maybe<Scalars['String']>,
+  beneficiary_contains?: Maybe<Scalars['String']>,
+  beneficiary_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_gt?: Maybe<Scalars['String']>,
+  beneficiary_gte?: Maybe<Scalars['String']>,
+  beneficiary_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_lt?: Maybe<Scalars['String']>,
+  beneficiary_lte?: Maybe<Scalars['String']>,
+  beneficiary_not?: Maybe<Scalars['String']>,
+  beneficiary_not_contains?: Maybe<Scalars['String']>,
+  beneficiary_not_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_not_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_not_starts_with?: Maybe<Scalars['String']>,
+  beneficiary_starts_with?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  bond_contains?: Maybe<Scalars['String']>,
+  bond_ends_with?: Maybe<Scalars['String']>,
+  bond_gt?: Maybe<Scalars['String']>,
+  bond_gte?: Maybe<Scalars['String']>,
+  bond_in?: Maybe<Array<Scalars['String']>>,
+  bond_lt?: Maybe<Scalars['String']>,
+  bond_lte?: Maybe<Scalars['String']>,
+  bond_not?: Maybe<Scalars['String']>,
+  bond_not_contains?: Maybe<Scalars['String']>,
+  bond_not_ends_with?: Maybe<Scalars['String']>,
+  bond_not_in?: Maybe<Array<Scalars['String']>>,
+  bond_not_starts_with?: Maybe<Scalars['String']>,
+  bond_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  proposer?: Maybe<Scalars['String']>,
+  proposer_contains?: Maybe<Scalars['String']>,
+  proposer_ends_with?: Maybe<Scalars['String']>,
+  proposer_gt?: Maybe<Scalars['String']>,
+  proposer_gte?: Maybe<Scalars['String']>,
+  proposer_in?: Maybe<Array<Scalars['String']>>,
+  proposer_lt?: Maybe<Scalars['String']>,
+  proposer_lte?: Maybe<Scalars['String']>,
+  proposer_not?: Maybe<Scalars['String']>,
+  proposer_not_contains?: Maybe<Scalars['String']>,
+  proposer_not_ends_with?: Maybe<Scalars['String']>,
+  proposer_not_in?: Maybe<Array<Scalars['String']>>,
+  proposer_not_starts_with?: Maybe<Scalars['String']>,
+  proposer_starts_with?: Maybe<Scalars['String']>,
+  treasuryProposalId?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryProposalId_lt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_lte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryStatus_every?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_none?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_some?: Maybe<TreasuryStatusWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
+export type TreasuryWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>,
+  treasuryProposalId?: Maybe<Scalars['Int']>,
+};
+
 export type UndoEmailChangeResponse = {
    __typename?: 'UndoEmailChangeResponse',
   email?: Maybe<Scalars['String']>,
@@ -8272,7 +8998,7 @@ export type AddPostAndProposalMutationMutation = (
     { __typename?: 'onchain_links_mutation_response' }
     & { returning: Array<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'post_id'>
+      & Pick<Onchain_Links, 'id'>
     )> }
   )> }
 );
@@ -8294,7 +9020,7 @@ export type AddPostAndMotionMutationMutation = (
     { __typename?: 'onchain_links_mutation_response' }
     & { returning: Array<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'post_id'>
+      & Pick<Onchain_Links, 'id'>
     )> }
   )> }
 );
@@ -8364,20 +9090,6 @@ export type LoginMutationMutation = (
   & { login: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-  )> }
-);
-
-export type NotifyOnProposalMutationVariables = {
-  proposerAddress: Scalars['String'],
-  postId: Scalars['Int']
-};
-
-
-export type NotifyOnProposalMutation = (
-  { __typename?: 'mutation_root' }
-  & { notifyOnProposal: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
   )> }
 );
 
@@ -8481,7 +9193,6 @@ export const AddPostAndProposalMutationDocument = gql`
   insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
-      post_id
     }
   }
 }
@@ -8492,7 +9203,6 @@ export const AddPostAndMotionMutationDocument = gql`
   insert_onchain_links(objects: {onchain_motion_id: $onchainMotionProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
-      post_id
     }
   }
 }
@@ -8529,13 +9239,6 @@ export const LoginMutationDocument = gql`
     mutation loginMutation($password: String!, $username: String!) {
   login(password: $password, username: $username) {
     token
-  }
-}
-    `;
-export const NotifyOnProposalDocument = gql`
-    mutation notifyOnProposal($proposerAddress: String!, $postId: Int!) {
-  notifyOnProposal(proposerAddress: $proposerAddress, postId: $postId) {
-    message
   }
 }
     `;
@@ -8596,9 +9299,6 @@ export function getSdk(client: GraphQLClient) {
     },
     loginMutation(variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
       return client.request<LoginMutationMutation>(print(LoginMutationDocument), variables);
-    },
-    notifyOnProposal(variables: NotifyOnProposalMutationVariables): Promise<NotifyOnProposalMutation> {
-      return client.request<NotifyOnProposalMutation>(print(NotifyOnProposalDocument), variables);
     },
     getDiscussionProposalById(variables: GetDiscussionProposalByIdQueryVariables): Promise<GetDiscussionProposalByIdQuery> {
       return client.request<GetDiscussionProposalByIdQuery>(print(GetDiscussionProposalByIdDocument), variables);
