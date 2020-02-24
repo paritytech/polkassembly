@@ -11,7 +11,7 @@ interface Props {
 const Markdown = ({ className, isPreview=false, md }: Props) => {
 	return (
 		<>
-			<ReactMarkdown className={isPreview ? className + ' mde-preview-content' : className} source={md}/>
+			<ReactMarkdown className={isPreview ? `${className} mde-preview-content` : className} source={md}/>
 		</>
 	);
 };
