@@ -6,7 +6,7 @@ import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
 export const postCreateHook = async (req: Request, res: Response) => {
-	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_post_subscription_secret) {
+	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
 		return res.status(403).json({ message: messages.UNAUTHORISED });
 	}
 
@@ -45,7 +45,7 @@ export const postCreateHook = async (req: Request, res: Response) => {
 };
 
 export const commentCreateHook = async (req: Request, res: Response) => {
-	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_post_subscription_secret) {
+	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
 		return res.status(403).json({ message: messages.UNAUTHORISED });
 	}
 
