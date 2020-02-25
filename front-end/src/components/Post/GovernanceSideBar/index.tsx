@@ -55,11 +55,6 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
 		setAddress(addressValue);
-
-		if (!api) {
-			console.error('polkadot/api not set');
-			return;
-		}
 	};
 
 	const getAccounts = async (): Promise<undefined> => {
