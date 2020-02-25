@@ -13,8 +13,9 @@ import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
-import verifyEmail from './mutation/verifyEmail';
 import undoEmailChange from './mutation/undoEmailChange';
+import updateNotification from './mutation/updateNotification';
+import verifyEmail from './mutation/verifyEmail';
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';
@@ -44,6 +45,7 @@ export default {
 		resendVerifyEmailToken,
 		resetPassword,
 		undoEmailChange,
+		updateNotification,
 		verifyEmail
 	}
 };

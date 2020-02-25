@@ -33,6 +33,12 @@ const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
 const KUSAMA = 'kusama';
+const NOTIFICATION_DEFAULTS = {
+	post_participated: true,
+	post_created: true,
+	new_proposal: false,
+	own_proposal: true
+};
 
 export default class AuthService {
 	constructor(){}
@@ -137,13 +143,10 @@ export default class AuthService {
 
 		await Notification
 			.query()
-			.allowInsert('[email, password, username, name]')
+			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
 			.insert({
 				user_id: user.id,
-				post_participated: true,
-				post_created: true,
-				new_proposal: false,
-				own_proposal: true
+				...NOTIFICATION_DEFAULTS
 			});
 
 		if (email) {
@@ -333,6 +336,35 @@ export default class AuthService {
 		const addresses = await getAddressesFromUserId(user.id);
 
 		return this.getSignedToken(user, addresses);
+	}
+
+	public async ChangeNotificationPrefrence(token: string, post_participated: boolean, post_created: boolean, new_proposal: boolean, own_proposal: boolean) {
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+		let notification = await Notification
+			.query()
+			.where('user_id', user.id)
+			.first();
+
+		if (!notification) {
+			notification = await Notification
+				.query()
+				.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+				.insert({
+					user_id: user.id,
+					...NOTIFICATION_DEFAULTS
+				});
+		}
+
+		await Notification
+			.query()
+			.patch({
+				post_participated: post_participated,
+				post_created: post_created,
+				new_proposal: new_proposal,
+				own_proposal: own_proposal
+			})
+			.findById(notification.id);
 	}
 
 	public async resendVerifyEmailToken(token: string) {

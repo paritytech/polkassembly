@@ -21,6 +21,7 @@ import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
+import updateNotification from './mutation/updateNotification';
 import verifyEmail from './mutation/verifyEmail';
 
 import addressLinkType from './type/addressLinkType';
@@ -70,6 +71,7 @@ export default gql`
 		${resetPassword}
 		${signupMutation}
 		${undoEmailChange}
+		${updateNotification}
 		${verifyEmail}
 	}
 `;
