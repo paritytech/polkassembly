@@ -4,10 +4,10 @@ import { Context, MessageType } from '../../types';
 import messages from '../../utils/messages';
 
 interface argsType {
-    post_participated: boolean
-    post_created: boolean
-    new_proposal: boolean
-    own_proposal: boolean
+	post_participated: boolean
+	post_created: boolean
+	new_proposal: boolean
+	own_proposal: boolean
 }
 
 export default async (parent, { post_participated, post_created, new_proposal, own_proposal }: argsType, ctx: Context): Promise<MessageType> => {

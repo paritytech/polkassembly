@@ -356,14 +356,16 @@ export default class AuthService {
 				});
 		}
 
+		const update = {
+			post_participated: post_participated === undefined ? notification.post_participated: post_participated,
+			post_created: post_created === undefined ? notification.post_created: post_created,
+			new_proposal: new_proposal === undefined ? notification.new_proposal: new_proposal,
+			own_proposal: own_proposal === undefined ? notification.own_proposal: own_proposal
+		};
+
 		await Notification
 			.query()
-			.patch({
-				post_participated: post_participated,
-				post_created: post_created,
-				new_proposal: new_proposal,
-				own_proposal: own_proposal
-			})
+			.patch(update)
 			.findById(notification.id);
 	}
 
