@@ -55,8 +55,12 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 		onchain_referendum_id
 	} = onchainLink;
 
-	if (!proposer_address || !post_id) {
-		return;
+	if (!proposer_address) {
+		return { message: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND } ;
+	}
+
+	if (!post_id) {
+		return { message: messages.EVENT_POST_ID_NOT_FOUND } ;
 	}
 
 	const address = await Address
@@ -67,11 +71,11 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 		.first();
 
 	if (!address) {
-		return;
+		return { message: messages.EVENT_ADDRESS_NOT_FOUND } ;
 	}
 
 	if (!address.verified) {
-		return;
+		return { message: messages.EVENT_ADDRESS_NOT_VERIFIED };
 	}
 
 	const user = await User
@@ -79,15 +83,15 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 		.findById(address.user_id);
 
 	if (!user) {
-		return;
+		return { message: messages.EVENT_USER_NOT_FOUND };
 	}
 
 	if (!user.email) {
-		return;
+		return { message: messages.EVENT_USER_EMAIL_NOT_FOUND };
 	}
 
 	if (!user.email_verified) {
-		return;
+		return { message: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
 	}
 
 	let link = '';
