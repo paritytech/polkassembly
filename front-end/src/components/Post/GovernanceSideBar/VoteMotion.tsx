@@ -42,7 +42,6 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 				// this breaks the loop as soon as we find a matching address
 				return true;
 			}
-
 		});
 	}, [accounts, currentCouncil]);
 
@@ -118,7 +117,7 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 					</label>
 					<Dropdown
 						onChange={onAccountChange}
-						defaultValue={defaultAddress || accounts[0].address}
+						defaultValue={defaultAddress || accounts[0]?.address}
 						selection
 						options={addressOptions}
 					/>
@@ -134,7 +133,7 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 						onClick={() => voteMotion(false)}
 					>
 						<Icon name='thumbs down' />
-								NAY
+						NAY
 					</Button>
 				</Form.Field>
 				<Form.Field className='button-container' width={8}>
@@ -145,7 +144,7 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 						onClick={() => voteMotion(true)}
 					>
 						<Icon name='thumbs up' />
-								AYE
+						AYE
 					</Button>
 				</Form.Field>
 			</Form.Group>

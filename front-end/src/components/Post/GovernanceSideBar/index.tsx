@@ -12,9 +12,11 @@ import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
+import VoteMotion from './VoteMotion';
 
 interface Props {
 	className?: string
+	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
 	onchainId?: number | null | undefined
@@ -24,7 +26,7 @@ interface Props {
 const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, status }: Props) => {
+const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, status }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
 	const [address, setAddress] = useState<string>('');
@@ -136,10 +138,21 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 	}
 
 	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
-		{
-			return (
-				<>
-					{isProposal &&
+		return (
+			<>
+				{isMotion &&
+						<VoteMotion
+							motionId={onchainId}
+							api={api}
+							apiReady={apiReady}
+							getAccounts={getAccounts}
+							onAccountChange={onAccountChange}
+							accounts={accounts}
+							address={address}
+							defaultAddress={defaultAddress}
+							addressOptions={addressOptions}
+						/>}
+				{isProposal &&
 						<SecondProposal
 							proposalId={onchainId}
 							api={api}
@@ -152,7 +165,7 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 							addressOptions={addressOptions}
 						/>}
 
-					{isReferendum &&
+				{isReferendum &&
 						<VoteRefrendum
 							referendumId={onchainId}
 							api={api}
@@ -164,9 +177,8 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 							defaultAddress={defaultAddress}
 							addressOptions={addressOptions}
 						/>}
-				</>
-			);
-		}
+			</>
+		);
 	}
 
 	return null;
