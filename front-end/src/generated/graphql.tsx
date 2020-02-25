@@ -2041,128 +2041,12 @@ export type MotionWhereInput = {
   section_starts_with?: Maybe<Scalars['String']>,
 };
 
-export type MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
-  AND?: Maybe<Array<MotionWhereInput>>,
-  NOT?: Maybe<Array<MotionWhereInput>>,
-  OR?: Maybe<Array<MotionWhereInput>>,
-  author?: Maybe<Scalars['String']>,
-  author_contains?: Maybe<Scalars['String']>,
-  author_ends_with?: Maybe<Scalars['String']>,
-  author_gt?: Maybe<Scalars['String']>,
-  author_gte?: Maybe<Scalars['String']>,
-  author_in?: Maybe<Array<Scalars['String']>>,
-  author_lt?: Maybe<Scalars['String']>,
-  author_lte?: Maybe<Scalars['String']>,
-  author_not?: Maybe<Scalars['String']>,
-  author_not_contains?: Maybe<Scalars['String']>,
-  author_not_ends_with?: Maybe<Scalars['String']>,
-  author_not_in?: Maybe<Array<Scalars['String']>>,
-  author_not_starts_with?: Maybe<Scalars['String']>,
-  author_starts_with?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  id_gt?: Maybe<Scalars['Int']>,
-  id_gte?: Maybe<Scalars['Int']>,
-  id_in?: Maybe<Array<Scalars['Int']>>,
-  id_lt?: Maybe<Scalars['Int']>,
-  id_lte?: Maybe<Scalars['Int']>,
-  id_not?: Maybe<Scalars['Int']>,
-  id_not_in?: Maybe<Array<Scalars['Int']>>,
-  memberCount?: Maybe<Scalars['Int']>,
-  memberCount_gt?: Maybe<Scalars['Int']>,
-  memberCount_gte?: Maybe<Scalars['Int']>,
-  memberCount_in?: Maybe<Array<Scalars['Int']>>,
-  memberCount_lt?: Maybe<Scalars['Int']>,
-  memberCount_lte?: Maybe<Scalars['Int']>,
-  memberCount_not?: Maybe<Scalars['Int']>,
-  memberCount_not_in?: Maybe<Array<Scalars['Int']>>,
-  metaDescription?: Maybe<Scalars['String']>,
-  metaDescription_contains?: Maybe<Scalars['String']>,
-  metaDescription_ends_with?: Maybe<Scalars['String']>,
-  metaDescription_gt?: Maybe<Scalars['String']>,
-  metaDescription_gte?: Maybe<Scalars['String']>,
-  metaDescription_in?: Maybe<Array<Scalars['String']>>,
-  metaDescription_lt?: Maybe<Scalars['String']>,
-  metaDescription_lte?: Maybe<Scalars['String']>,
-  metaDescription_not?: Maybe<Scalars['String']>,
-  metaDescription_not_contains?: Maybe<Scalars['String']>,
-  metaDescription_not_ends_with?: Maybe<Scalars['String']>,
-  metaDescription_not_in?: Maybe<Array<Scalars['String']>>,
-  metaDescription_not_starts_with?: Maybe<Scalars['String']>,
-  metaDescription_starts_with?: Maybe<Scalars['String']>,
-  method?: Maybe<Scalars['String']>,
-  method_contains?: Maybe<Scalars['String']>,
-  method_ends_with?: Maybe<Scalars['String']>,
-  method_gt?: Maybe<Scalars['String']>,
-  method_gte?: Maybe<Scalars['String']>,
-  method_in?: Maybe<Array<Scalars['String']>>,
-  method_lt?: Maybe<Scalars['String']>,
-  method_lte?: Maybe<Scalars['String']>,
-  method_not?: Maybe<Scalars['String']>,
-  method_not_contains?: Maybe<Scalars['String']>,
-  method_not_ends_with?: Maybe<Scalars['String']>,
-  method_not_in?: Maybe<Array<Scalars['String']>>,
-  method_not_starts_with?: Maybe<Scalars['String']>,
-  method_starts_with?: Maybe<Scalars['String']>,
-  motionProposalArguments_every?: Maybe<MotionProposalArgumentWhereInput>,
-  motionProposalArguments_none?: Maybe<MotionProposalArgumentWhereInput>,
-  motionProposalArguments_some?: Maybe<MotionProposalArgumentWhereInput>,
-  motionProposalHash?: Maybe<Scalars['String']>,
-  motionProposalHash_contains?: Maybe<Scalars['String']>,
-  motionProposalHash_ends_with?: Maybe<Scalars['String']>,
-  motionProposalHash_gt?: Maybe<Scalars['String']>,
-  motionProposalHash_gte?: Maybe<Scalars['String']>,
-  motionProposalHash_in?: Maybe<Array<Scalars['String']>>,
-  motionProposalHash_lt?: Maybe<Scalars['String']>,
-  motionProposalHash_lte?: Maybe<Scalars['String']>,
-  motionProposalHash_not?: Maybe<Scalars['String']>,
-  motionProposalHash_not_contains?: Maybe<Scalars['String']>,
-  motionProposalHash_not_ends_with?: Maybe<Scalars['String']>,
-  motionProposalHash_not_in?: Maybe<Array<Scalars['String']>>,
-  motionProposalHash_not_starts_with?: Maybe<Scalars['String']>,
-  motionProposalHash_starts_with?: Maybe<Scalars['String']>,
-  motionProposalId_gt?: Maybe<Scalars['Int']>,
-  motionProposalId_gte?: Maybe<Scalars['Int']>,
-  motionProposalId_in?: Maybe<Array<Scalars['Int']>>,
-  motionProposalId_lt?: Maybe<Scalars['Int']>,
-  motionProposalId_lte?: Maybe<Scalars['Int']>,
-  motionProposalId_not?: Maybe<Scalars['Int']>,
-  motionProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
-  motionStatus_every?: Maybe<MotionStatusWhereInput>,
-  motionStatus_none?: Maybe<MotionStatusWhereInput>,
-  motionStatus_some?: Maybe<MotionStatusWhereInput>,
-  preimage?: Maybe<PreimageWhereInput>,
-  preimageHash?: Maybe<Scalars['String']>,
-  preimageHash_contains?: Maybe<Scalars['String']>,
-  preimageHash_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_gt?: Maybe<Scalars['String']>,
-  preimageHash_gte?: Maybe<Scalars['String']>,
-  preimageHash_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_lt?: Maybe<Scalars['String']>,
-  preimageHash_lte?: Maybe<Scalars['String']>,
-  preimageHash_not?: Maybe<Scalars['String']>,
-  preimageHash_not_contains?: Maybe<Scalars['String']>,
-  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
-  preimageHash_starts_with?: Maybe<Scalars['String']>,
-  section?: Maybe<Scalars['String']>,
-  section_contains?: Maybe<Scalars['String']>,
-  section_ends_with?: Maybe<Scalars['String']>,
-  section_gt?: Maybe<Scalars['String']>,
-  section_gte?: Maybe<Scalars['String']>,
-  section_in?: Maybe<Array<Scalars['String']>>,
-  section_lt?: Maybe<Scalars['String']>,
-  section_lte?: Maybe<Scalars['String']>,
-  section_not?: Maybe<Scalars['String']>,
-  section_not_contains?: Maybe<Scalars['String']>,
-  section_not_ends_with?: Maybe<Scalars['String']>,
-  section_not_in?: Maybe<Array<Scalars['String']>>,
-  section_not_starts_with?: Maybe<Scalars['String']>,
-  section_starts_with?: Maybe<Scalars['String']>,
-};
-
 export type MotionWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
+  motionProposalId?: Maybe<Scalars['Int']>,
+};
+
+export type MotionWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Motion = {
   motionProposalId?: Maybe<Scalars['Int']>,
 };
 
@@ -2353,12 +2237,14 @@ export type Mutation_Root = {
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
+  delete_referendum_link?: Maybe<Referendum_Link_Mutation_Response>,
   executeRaw: Scalars['Json'],
   insert_comments?: Maybe<Comments_Mutation_Response>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
+  insert_referendum_link?: Maybe<Referendum_Link_Mutation_Response>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
@@ -2418,6 +2304,7 @@ export type Mutation_Root = {
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
+  update_referendum_link?: Maybe<Referendum_Link_Mutation_Response>,
   upsertBlockNumber: BlockNumber,
   upsertCouncil: Council,
   upsertCouncilMember: CouncilMember,
@@ -2853,6 +2740,11 @@ export type Mutation_RootDelete_PostsArgs = {
 };
 
 
+export type Mutation_RootDelete_Referendum_LinkArgs = {
+  where: Referendum_Link_Bool_Exp
+};
+
+
 export type Mutation_RootExecuteRawArgs = {
   database?: Maybe<PrismaDatabase>,
   query: Scalars['String']
@@ -2886,6 +2778,12 @@ export type Mutation_RootInsert_Post_TypesArgs = {
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>,
   on_conflict?: Maybe<Posts_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Referendum_LinkArgs = {
+  objects: Array<Referendum_Link_Insert_Input>,
+  on_conflict?: Maybe<Referendum_Link_On_Conflict>
 };
 
 
@@ -3231,6 +3129,13 @@ export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
   _set?: Maybe<Posts_Set_Input>,
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Referendum_LinkArgs = {
+  _inc?: Maybe<Referendum_Link_Inc_Input>,
+  _set?: Maybe<Referendum_Link_Set_Input>,
+  where: Referendum_Link_Bool_Exp
 };
 
 
@@ -3764,11 +3669,11 @@ export type Onchain_Links = {
    __typename?: 'onchain_links',
   created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
-  onchain_motion: Array<Maybe<Motion>>,
+  onchain_motion?: Maybe<Motion>,
   onchain_motion_id?: Maybe<Scalars['Int']>,
-  onchain_proposal: Array<Maybe<Proposal>>,
+  onchain_proposal?: Maybe<Proposal>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
-  onchain_referendum: Array<Maybe<Referendum>>,
+  onchain_referendum?: Maybe<Referendum>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
   post: Posts,
   post_id: Scalars['Int'],
@@ -3777,35 +3682,17 @@ export type Onchain_Links = {
 
 
 export type Onchain_LinksOnchain_MotionArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<MotionOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion>
+  where: MotionWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Motion
 };
 
 
 export type Onchain_LinksOnchain_ProposalArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<ProposalOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal>
+  where: ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal
 };
 
 
 export type Onchain_LinksOnchain_ReferendumArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<ReferendumOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
+  where: ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum
 };
 
 export type Onchain_Links_Aggregate = {
@@ -6289,75 +6176,12 @@ export type ProposalWhereInput = {
   proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
 };
 
-export type ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
-  AND?: Maybe<Array<ProposalWhereInput>>,
-  NOT?: Maybe<Array<ProposalWhereInput>>,
-  OR?: Maybe<Array<ProposalWhereInput>>,
-  author?: Maybe<Scalars['String']>,
-  author_contains?: Maybe<Scalars['String']>,
-  author_ends_with?: Maybe<Scalars['String']>,
-  author_gt?: Maybe<Scalars['String']>,
-  author_gte?: Maybe<Scalars['String']>,
-  author_in?: Maybe<Array<Scalars['String']>>,
-  author_lt?: Maybe<Scalars['String']>,
-  author_lte?: Maybe<Scalars['String']>,
-  author_not?: Maybe<Scalars['String']>,
-  author_not_contains?: Maybe<Scalars['String']>,
-  author_not_ends_with?: Maybe<Scalars['String']>,
-  author_not_in?: Maybe<Array<Scalars['String']>>,
-  author_not_starts_with?: Maybe<Scalars['String']>,
-  author_starts_with?: Maybe<Scalars['String']>,
-  depositAmount?: Maybe<Scalars['String']>,
-  depositAmount_contains?: Maybe<Scalars['String']>,
-  depositAmount_ends_with?: Maybe<Scalars['String']>,
-  depositAmount_gt?: Maybe<Scalars['String']>,
-  depositAmount_gte?: Maybe<Scalars['String']>,
-  depositAmount_in?: Maybe<Array<Scalars['String']>>,
-  depositAmount_lt?: Maybe<Scalars['String']>,
-  depositAmount_lte?: Maybe<Scalars['String']>,
-  depositAmount_not?: Maybe<Scalars['String']>,
-  depositAmount_not_contains?: Maybe<Scalars['String']>,
-  depositAmount_not_ends_with?: Maybe<Scalars['String']>,
-  depositAmount_not_in?: Maybe<Array<Scalars['String']>>,
-  depositAmount_not_starts_with?: Maybe<Scalars['String']>,
-  depositAmount_starts_with?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['Int']>,
-  id_gt?: Maybe<Scalars['Int']>,
-  id_gte?: Maybe<Scalars['Int']>,
-  id_in?: Maybe<Array<Scalars['Int']>>,
-  id_lt?: Maybe<Scalars['Int']>,
-  id_lte?: Maybe<Scalars['Int']>,
-  id_not?: Maybe<Scalars['Int']>,
-  id_not_in?: Maybe<Array<Scalars['Int']>>,
-  preimage?: Maybe<PreimageWhereInput>,
-  preimageHash?: Maybe<Scalars['String']>,
-  preimageHash_contains?: Maybe<Scalars['String']>,
-  preimageHash_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_gt?: Maybe<Scalars['String']>,
-  preimageHash_gte?: Maybe<Scalars['String']>,
-  preimageHash_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_lt?: Maybe<Scalars['String']>,
-  preimageHash_lte?: Maybe<Scalars['String']>,
-  preimageHash_not?: Maybe<Scalars['String']>,
-  preimageHash_not_contains?: Maybe<Scalars['String']>,
-  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
-  preimageHash_starts_with?: Maybe<Scalars['String']>,
-  proposalId_gt?: Maybe<Scalars['Int']>,
-  proposalId_gte?: Maybe<Scalars['Int']>,
-  proposalId_in?: Maybe<Array<Scalars['Int']>>,
-  proposalId_lt?: Maybe<Scalars['Int']>,
-  proposalId_lte?: Maybe<Scalars['Int']>,
-  proposalId_not?: Maybe<Scalars['Int']>,
-  proposalId_not_in?: Maybe<Array<Scalars['Int']>>,
-  proposalStatus_every?: Maybe<ProposalStatusWhereInput>,
-  proposalStatus_none?: Maybe<ProposalStatusWhereInput>,
-  proposalStatus_some?: Maybe<ProposalStatusWhereInput>,
-};
-
 export type ProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
+  proposalId?: Maybe<Scalars['Int']>,
+};
+
+export type ProposalWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal = {
   proposalId?: Maybe<Scalars['Int']>,
 };
 
@@ -6459,6 +6283,9 @@ export type Query_Root = {
   referendumStatus?: Maybe<ReferendumStatus>,
   referendumStatuses: Array<Maybe<ReferendumStatus>>,
   referendumStatusesConnection: ReferendumStatusConnection,
+  referendum_link: Array<Referendum_Link>,
+  referendum_link_aggregate: Referendum_Link_Aggregate,
+  referendum_link_by_pk?: Maybe<Referendum_Link>,
   referendums: Array<Maybe<Referendum>>,
   referendumsConnection: ReferendumConnection,
   reward?: Maybe<Reward>,
@@ -7043,6 +6870,29 @@ export type Query_RootReferendumStatusesConnectionArgs = {
 };
 
 
+export type Query_RootReferendum_LinkArgs = {
+  distinct_on?: Maybe<Array<Referendum_Link_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Referendum_Link_Order_By>>,
+  where?: Maybe<Referendum_Link_Bool_Exp>
+};
+
+
+export type Query_RootReferendum_Link_AggregateArgs = {
+  distinct_on?: Maybe<Array<Referendum_Link_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Referendum_Link_Order_By>>,
+  where?: Maybe<Referendum_Link_Bool_Exp>
+};
+
+
+export type Query_RootReferendum_Link_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Query_RootReferendumsArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7263,6 +7113,272 @@ export type ReferendumReferendumStatusArgs = {
   orderBy?: Maybe<ReferendumStatusOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumStatusWhereInput>
+};
+
+export type Referendum_Link = {
+   __typename?: 'referendum_link',
+  created_at: Scalars['timestamptz'],
+  id: Scalars['Int'],
+  post: Posts,
+  post_id: Scalars['Int'],
+  referendum_id: Scalars['Int'],
+};
+
+export type Referendum_Link_Aggregate = {
+   __typename?: 'referendum_link_aggregate',
+  aggregate?: Maybe<Referendum_Link_Aggregate_Fields>,
+  nodes: Array<Referendum_Link>,
+};
+
+export type Referendum_Link_Aggregate_Fields = {
+   __typename?: 'referendum_link_aggregate_fields',
+  avg?: Maybe<Referendum_Link_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Referendum_Link_Max_Fields>,
+  min?: Maybe<Referendum_Link_Min_Fields>,
+  stddev?: Maybe<Referendum_Link_Stddev_Fields>,
+  stddev_pop?: Maybe<Referendum_Link_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Referendum_Link_Stddev_Samp_Fields>,
+  sum?: Maybe<Referendum_Link_Sum_Fields>,
+  var_pop?: Maybe<Referendum_Link_Var_Pop_Fields>,
+  var_samp?: Maybe<Referendum_Link_Var_Samp_Fields>,
+  variance?: Maybe<Referendum_Link_Variance_Fields>,
+};
+
+
+export type Referendum_Link_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Referendum_Link_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+export type Referendum_Link_Aggregate_Order_By = {
+  avg?: Maybe<Referendum_Link_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Referendum_Link_Max_Order_By>,
+  min?: Maybe<Referendum_Link_Min_Order_By>,
+  stddev?: Maybe<Referendum_Link_Stddev_Order_By>,
+  stddev_pop?: Maybe<Referendum_Link_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Referendum_Link_Stddev_Samp_Order_By>,
+  sum?: Maybe<Referendum_Link_Sum_Order_By>,
+  var_pop?: Maybe<Referendum_Link_Var_Pop_Order_By>,
+  var_samp?: Maybe<Referendum_Link_Var_Samp_Order_By>,
+  variance?: Maybe<Referendum_Link_Variance_Order_By>,
+};
+
+export type Referendum_Link_Arr_Rel_Insert_Input = {
+  data: Array<Referendum_Link_Insert_Input>,
+  on_conflict?: Maybe<Referendum_Link_On_Conflict>,
+};
+
+export type Referendum_Link_Avg_Fields = {
+   __typename?: 'referendum_link_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Referendum_Link_Bool_Exp>>>,
+  _not?: Maybe<Referendum_Link_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Referendum_Link_Bool_Exp>>>,
+  created_at?: Maybe<Timestamptz_Comparison_Exp>,
+  id?: Maybe<Int_Comparison_Exp>,
+  post?: Maybe<Posts_Bool_Exp>,
+  post_id?: Maybe<Int_Comparison_Exp>,
+  referendum_id?: Maybe<Int_Comparison_Exp>,
+};
+
+export enum Referendum_Link_Constraint {
+  ReferendumLinkPkey = 'referendum_link_pkey',
+  ReferendumLinkPostIdKey = 'referendum_link_post_id_key',
+  ReferendumLinkReferendumIdKey = 'referendum_link_referendum_id_key'
+}
+
+export type Referendum_Link_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  post?: Maybe<Posts_Obj_Rel_Insert_Input>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Max_Fields = {
+   __typename?: 'referendum_link_max_fields',
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Max_Order_By = {
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Min_Fields = {
+   __typename?: 'referendum_link_min_fields',
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Min_Order_By = {
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Mutation_Response = {
+   __typename?: 'referendum_link_mutation_response',
+  affected_rows: Scalars['Int'],
+  returning: Array<Referendum_Link>,
+};
+
+export type Referendum_Link_Obj_Rel_Insert_Input = {
+  data: Referendum_Link_Insert_Input,
+  on_conflict?: Maybe<Referendum_Link_On_Conflict>,
+};
+
+export type Referendum_Link_On_Conflict = {
+  constraint: Referendum_Link_Constraint,
+  update_columns: Array<Referendum_Link_Update_Column>,
+  where?: Maybe<Referendum_Link_Bool_Exp>,
+};
+
+export type Referendum_Link_Order_By = {
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  post?: Maybe<Posts_Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export enum Referendum_Link_Select_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  ReferendumId = 'referendum_id'
+}
+
+export type Referendum_Link_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Stddev_Fields = {
+   __typename?: 'referendum_link_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Stddev_Pop_Fields = {
+   __typename?: 'referendum_link_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Stddev_Samp_Fields = {
+   __typename?: 'referendum_link_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Sum_Fields = {
+   __typename?: 'referendum_link_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  referendum_id?: Maybe<Scalars['Int']>,
+};
+
+export type Referendum_Link_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export enum Referendum_Link_Update_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  ReferendumId = 'referendum_id'
+}
+
+export type Referendum_Link_Var_Pop_Fields = {
+   __typename?: 'referendum_link_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Var_Samp_Fields = {
+   __typename?: 'referendum_link_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
+};
+
+export type Referendum_Link_Variance_Fields = {
+   __typename?: 'referendum_link_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  referendum_id?: Maybe<Scalars['Float']>,
+};
+
+export type Referendum_Link_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  referendum_id?: Maybe<Order_By>,
 };
 
 export type ReferendumConnection = {
@@ -7684,77 +7800,12 @@ export type ReferendumWhereInput = {
   voteThreshold_starts_with?: Maybe<Scalars['String']>,
 };
 
-export type ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
-  AND?: Maybe<Array<ReferendumWhereInput>>,
-  NOT?: Maybe<Array<ReferendumWhereInput>>,
-  OR?: Maybe<Array<ReferendumWhereInput>>,
-  delay?: Maybe<Scalars['Int']>,
-  delay_gt?: Maybe<Scalars['Int']>,
-  delay_gte?: Maybe<Scalars['Int']>,
-  delay_in?: Maybe<Array<Scalars['Int']>>,
-  delay_lt?: Maybe<Scalars['Int']>,
-  delay_lte?: Maybe<Scalars['Int']>,
-  delay_not?: Maybe<Scalars['Int']>,
-  delay_not_in?: Maybe<Array<Scalars['Int']>>,
-  end?: Maybe<Scalars['Int']>,
-  end_gt?: Maybe<Scalars['Int']>,
-  end_gte?: Maybe<Scalars['Int']>,
-  end_in?: Maybe<Array<Scalars['Int']>>,
-  end_lt?: Maybe<Scalars['Int']>,
-  end_lte?: Maybe<Scalars['Int']>,
-  end_not?: Maybe<Scalars['Int']>,
-  end_not_in?: Maybe<Array<Scalars['Int']>>,
-  id?: Maybe<Scalars['Int']>,
-  id_gt?: Maybe<Scalars['Int']>,
-  id_gte?: Maybe<Scalars['Int']>,
-  id_in?: Maybe<Array<Scalars['Int']>>,
-  id_lt?: Maybe<Scalars['Int']>,
-  id_lte?: Maybe<Scalars['Int']>,
-  id_not?: Maybe<Scalars['Int']>,
-  id_not_in?: Maybe<Array<Scalars['Int']>>,
-  preimage?: Maybe<PreimageWhereInput>,
-  preimageHash?: Maybe<Scalars['String']>,
-  preimageHash_contains?: Maybe<Scalars['String']>,
-  preimageHash_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_gt?: Maybe<Scalars['String']>,
-  preimageHash_gte?: Maybe<Scalars['String']>,
-  preimageHash_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_lt?: Maybe<Scalars['String']>,
-  preimageHash_lte?: Maybe<Scalars['String']>,
-  preimageHash_not?: Maybe<Scalars['String']>,
-  preimageHash_not_contains?: Maybe<Scalars['String']>,
-  preimageHash_not_ends_with?: Maybe<Scalars['String']>,
-  preimageHash_not_in?: Maybe<Array<Scalars['String']>>,
-  preimageHash_not_starts_with?: Maybe<Scalars['String']>,
-  preimageHash_starts_with?: Maybe<Scalars['String']>,
-  referendumId_gt?: Maybe<Scalars['Int']>,
-  referendumId_gte?: Maybe<Scalars['Int']>,
-  referendumId_in?: Maybe<Array<Scalars['Int']>>,
-  referendumId_lt?: Maybe<Scalars['Int']>,
-  referendumId_lte?: Maybe<Scalars['Int']>,
-  referendumId_not?: Maybe<Scalars['Int']>,
-  referendumId_not_in?: Maybe<Array<Scalars['Int']>>,
-  referendumStatus_every?: Maybe<ReferendumStatusWhereInput>,
-  referendumStatus_none?: Maybe<ReferendumStatusWhereInput>,
-  referendumStatus_some?: Maybe<ReferendumStatusWhereInput>,
-  voteThreshold?: Maybe<Scalars['String']>,
-  voteThreshold_contains?: Maybe<Scalars['String']>,
-  voteThreshold_ends_with?: Maybe<Scalars['String']>,
-  voteThreshold_gt?: Maybe<Scalars['String']>,
-  voteThreshold_gte?: Maybe<Scalars['String']>,
-  voteThreshold_in?: Maybe<Array<Scalars['String']>>,
-  voteThreshold_lt?: Maybe<Scalars['String']>,
-  voteThreshold_lte?: Maybe<Scalars['String']>,
-  voteThreshold_not?: Maybe<Scalars['String']>,
-  voteThreshold_not_contains?: Maybe<Scalars['String']>,
-  voteThreshold_not_ends_with?: Maybe<Scalars['String']>,
-  voteThreshold_not_in?: Maybe<Array<Scalars['String']>>,
-  voteThreshold_not_starts_with?: Maybe<Scalars['String']>,
-  voteThreshold_starts_with?: Maybe<Scalars['String']>,
-};
-
 export type ReferendumWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
+  referendumId?: Maybe<Scalars['Int']>,
+};
+
+export type ReferendumWhereUniqueInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum = {
   referendumId?: Maybe<Scalars['Int']>,
 };
 
@@ -8286,6 +8337,9 @@ export type Subscription_Root = {
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
+  referendum_link: Array<Referendum_Link>,
+  referendum_link_aggregate: Referendum_Link_Aggregate,
+  referendum_link_by_pk?: Maybe<Referendum_Link>,
 };
 
 
@@ -8400,6 +8454,29 @@ export type Subscription_RootPosts_AggregateArgs = {
 
 
 export type Subscription_RootPosts_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+export type Subscription_RootReferendum_LinkArgs = {
+  distinct_on?: Maybe<Array<Referendum_Link_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Referendum_Link_Order_By>>,
+  where?: Maybe<Referendum_Link_Bool_Exp>
+};
+
+
+export type Subscription_RootReferendum_Link_AggregateArgs = {
+  distinct_on?: Maybe<Array<Referendum_Link_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Referendum_Link_Order_By>>,
+  where?: Maybe<Referendum_Link_Bool_Exp>
+};
+
+
+export type Subscription_RootReferendum_Link_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -8947,7 +9024,7 @@ export type LoginMutation = (
 export type OnchainLinkMotionFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id' | 'onchain_motion_id'>
-  & { onchain_motion: Array<Maybe<(
+  & { onchain_motion: Maybe<(
     { __typename?: 'Motion' }
     & Pick<Motion, 'id' | 'memberCount' | 'method' | 'motionProposalHash'>
     & { motionStatus: Maybe<Array<(
@@ -8964,7 +9041,7 @@ export type OnchainLinkMotionFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )>> }
+  )> }
 );
 
 export type MotionPostFragment = (
@@ -9031,14 +9108,14 @@ export type LatestMotionPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_motion_id'>
-      & { onchain_motion: Array<Maybe<(
+      & { onchain_motion: Maybe<(
         { __typename?: 'Motion' }
         & Pick<Motion, 'id'>
         & { motionStatus: Maybe<Array<(
           { __typename?: 'MotionStatus' }
           & Pick<MotionStatus, 'id' | 'status'>
         )>> }
-      )>> }
+      )> }
     )> }
   )> }
 );
@@ -9073,14 +9150,14 @@ export type LatestDemocracyProposalPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
-      & { onchain_proposal: Array<Maybe<(
+      & { onchain_proposal: Maybe<(
         { __typename?: 'Proposal' }
         & Pick<Proposal, 'id'>
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
         )>> }
-      )>> }
+      )> }
     )> }
   )> }
 );
@@ -9114,14 +9191,14 @@ export type LatestReferendaPostsQuery = (
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
-      & { onchain_referendum: Array<Maybe<(
+      & { onchain_referendum: Maybe<(
         { __typename?: 'Referendum' }
         & Pick<Referendum, 'id'>
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
         )>> }
-      )>> }
+      )> }
     )> }
   )> }
 );
@@ -9129,7 +9206,7 @@ export type LatestReferendaPostsQuery = (
 export type OnchainLinkProposalFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
-  & { onchain_proposal: Array<Maybe<(
+  & { onchain_proposal: Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'id' | 'depositAmount'>
     & { proposalStatus: Maybe<Array<(
@@ -9143,7 +9220,7 @@ export type OnchainLinkProposalFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )>> }
+  )> }
 );
 
 export type ProposalPostFragment = (
@@ -9183,7 +9260,7 @@ export type ProposalPostAndCommentsQuery = (
 export type OnchainLinkReferendumFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
-  & { onchain_referendum: Array<Maybe<(
+  & { onchain_referendum: Maybe<(
     { __typename?: 'Referendum' }
     & Pick<Referendum, 'id' | 'delay' | 'end' | 'voteThreshold'>
     & { referendumStatus: Maybe<Array<(
@@ -9197,7 +9274,7 @@ export type OnchainLinkReferendumFragment = (
         & Pick<PreimageArgument, 'id' | 'name' | 'value'>
       )>> }
     )> }
-  )>> }
+  )> }
 );
 
 export type ReferendumPostFragment = (

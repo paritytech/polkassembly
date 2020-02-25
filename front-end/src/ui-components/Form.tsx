@@ -101,8 +101,9 @@ const StyledForm = styled(SUIForm)`
 			background-color: grey_light;
 		}
 
-	@media only screen and (max-width: 576px) {
-		margin-top: 0rem;
-		padding: 2rem;
+		@media only screen and (max-width: 576px) {
+			margin-top: 0rem;
+			padding: 2rem;
+		}
 	}
-	`;
+`;
