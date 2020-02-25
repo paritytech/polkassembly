@@ -4,8 +4,8 @@ import styled from '@xstyled/styled-components';
 import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { formatBalance } from '@polkadot/util';
 
+import Balance from '../../Balance';
 import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import { NotificationContext } from '../../../context/NotificationContext';
@@ -22,12 +22,11 @@ interface Props {
 	defaultAddress: string
 	addressOptions: DropdownItemProps[]
 	accounts: InjectedAccountWithMeta[]
-	balance: string
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 	getAccounts: () => Promise<undefined>
 }
 
-const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaultAddress, accounts, addressOptions, balance, onAccountChange, getAccounts }: Props) => {
+const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
 	const options = [
@@ -154,9 +153,9 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								selection
 								options={addressOptions}
 							/>
-							<div className='text-muted'>
-								{formatBalance(balance)} KSM available
-							</div>
+							{api ? (
+								<Balance api={api} address={address} />
+							) : null}
 							<label>Vote Lock&nbsp;
 								<Popup
 									trigger={<Icon name='question circle'/>}

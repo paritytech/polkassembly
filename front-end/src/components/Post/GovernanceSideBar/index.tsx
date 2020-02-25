@@ -27,7 +27,6 @@ const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, status }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
-	const [balance, setBalance] = useState<string>('0');
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
@@ -61,13 +60,6 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 			console.error('polkadot/api not set');
 			return;
 		}
-
-		api.query.balances
-			.freeBalance(addressValue, (currentBalance) => {
-				setBalance(currentBalance.toString());
-			})
-			.then(unsubscribe => { unsubscribe(); })
-			.catch(console.error);
 	};
 
 	const getAccounts = async (): Promise<undefined> => {
@@ -101,13 +93,6 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 			}
 
 			api.setSigner(injected.signer);
-
-			api.query.balances
-				.freeBalance(accounts[0].address, (currentBalance) => {
-					setBalance(currentBalance.toString());
-				})
-				.then(unsubscribe => { unsubscribe(); })
-				.catch(console.error);
 		}
 
 		return;
@@ -183,7 +168,6 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 							address={address}
 							defaultAddress={defaultAddress}
 							addressOptions={addressOptions}
-							balance={balance}
 						/>}
 				</>
 			);
