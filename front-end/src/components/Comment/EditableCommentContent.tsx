@@ -1,7 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import ReactMarkdown from 'react-markdown';
 import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -12,6 +11,7 @@ import { useEditCommentMutation, ProposalPostAndCommentsQueryVariables, Proposal
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
+import Markdown from '../../ui-components/Markdown';
 
 interface Props {
 	authorId: number,
@@ -89,7 +89,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 						</Form>
 						:
 						<>
-							<ReactMarkdown className='md' source={content} />
+							<Markdown md={content} />
 							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						</>
 				}

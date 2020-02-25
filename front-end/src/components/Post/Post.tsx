@@ -122,7 +122,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
-				<GovenanceSideBar isProposal={isProposal} isReferendum={isReferendum} onchainId={onchainId} />
+				<GovenanceSideBar
+					isProposal={isProposal}
+					isReferendum={isReferendum}
+					onchainId={onchainId}
+					status={postStatus}
+				/>
 			</Grid.Column>
 		</Grid>
 	);
@@ -138,18 +143,13 @@ export default styled(Post)`
 		padding: 3rem;
 		margin-bottom: 1rem;
 	}
-	h3 {
-		font-family: 'Roboto';
-		font-size: xl;
-		margin-bottom: 0.4rem;
-		max-width: calc(100% - 20rem);
-		display: flex;
-	}
+
 	@media only screen and (max-width: 576px) {
 		.post_content {
 			padding: 2rem
 		}
 	}
+	
 	@media only screen and (max-width: 992px) {
 		.democracy_card {
 			visibility: hidden;
