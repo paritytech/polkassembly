@@ -12,7 +12,6 @@ data:
   HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
   HASURA_POST_SUBSCRIPTION_HOOK: http://auth-server-service:8010/auth/graphql
   HASURA_POST_SUBSCRIPTION_SECRET: $HASURA_POST_SUBSCRIPTION_SECRET
-  HASURA_POST_CREATE_EVENT_HOOK: http://auth-server-service:8010/auth/event/post/create
   HASURA_COMMENT_CREATE_EVENT_HOOK: http://auth-server-service:8010/auth/event/comment/create
   HASURA_ONCHAIN_LINK_CREATE_HOOK: http://auth-server-service:8010/auth/event/onchain_link/create
   HASURA_EVENT_SECRET: $HASURA_EVENT_SECRET

@@ -57,11 +57,6 @@ spec:
             configMapKeyRef:
               key: HASURA_POST_SUBSCRIPTION_SECRET
               name: hasura-config
-        - name: HASURA_POST_CREATE_EVENT_HOOK
-          valueFrom:
-            configMapKeyRef:
-              key: HASURA_POST_CREATE_EVENT_HOOK
-              name: hasura-config
         - name: HASURA_COMMENT_CREATE_EVENT_HOOK
           valueFrom:
             configMapKeyRef:
