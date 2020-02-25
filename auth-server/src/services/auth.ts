@@ -11,6 +11,7 @@ import {
 	sendResetPasswordEmail
 } from './email';
 import Address from '../model/Address';
+import Notification from '../model/Notification';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
@@ -132,6 +133,17 @@ export default class AuthService {
 				username,
 				name,
 				email_verified: false
+			});
+
+		await Notification
+			.query()
+			.allowInsert('[email, password, username, name]')
+			.insert({
+				user_id: user.id,
+				post_participated: true,
+				post_created: true,
+				new_proposal: false,
+				own_proposal: true
 			});
 
 		if (email) {
