@@ -111,6 +111,8 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 	link += `/${post_id}`;
 
 	sendProposalCreatedEmail(user, link);
+
+	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
 
 export const commentCreateHook = async (req: Request, res: Response) => {

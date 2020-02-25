@@ -71,6 +71,15 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: HASURA_EVENT_SECRET
+        - name: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+              name: hasura-config
+        - name: HASURA_CHAIN_DB_REMOTE_SHCEMA
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_CHAIN_DB_REMOTE_SHCEMA
               name: hasura-config
         image: hasura/graphql-engine:pull2395-7ea7f82c
         imagePullPolicy: IfNotPresent
