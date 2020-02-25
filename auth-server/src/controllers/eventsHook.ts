@@ -7,35 +7,6 @@ import { sendPostSubscriptionMail, sendProposalCreatedEmail } from '../services/
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
-const createSubscription = async (post) => {
-	const { id, author_id } = post;
-
-	if (!id || !author_id) {
-		return;
-	}
-
-	const dbSubscription = await PostSubscription
-		.query()
-		.where({
-			user_id: author_id,
-			post_id: id
-		})
-		.first();
-
-	if (dbSubscription) {
-		return;
-	}
-
-	await PostSubscription
-		.query()
-		.allowInsert('[user_id, post_id]')
-		.insert({
-			user_id: author_id,
-			post_id: id
-		});
-
-};
-
 const sendSubscriptionMail = async (comment) => {
 	const { post_id, author_id } = comment;
 
@@ -129,18 +100,6 @@ const sendProposalCreatedMail = async (onchainLink) => {
 	link += `/${post_id}`;
 
 	sendProposalCreatedEmail(user, link);
-};
-
-export const postCreateHook = async (req: Request, res: Response) => {
-	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		return res.status(403).json({ message: messages.UNAUTHORISED });
-	}
-
-	const post = req.body?.event?.data?.new || {};
-
-	await createSubscription(post);
-
-	res.json({ status: messages.SUCCESS });
 };
 
 export const commentCreateHook = async (req: Request, res: Response) => {
