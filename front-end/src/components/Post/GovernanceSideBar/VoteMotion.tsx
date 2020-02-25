@@ -32,8 +32,12 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
 	useEffect( () => {
+		console.log('current council', currentCouncil);
+		console.log('current accounts', accounts);
+
 		accounts.some(account => {
 			if (currentCouncil.includes(account.address)){
+				console.log('He is council!');
 				setIsCouncil(true);
 				// this breaks the loop as soon as we find a matching address
 				return true;
