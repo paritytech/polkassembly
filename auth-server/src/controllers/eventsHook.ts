@@ -6,12 +6,17 @@ import User from '../model/User';
 import { sendPostSubscriptionMail, sendProposalCreatedEmail } from '../services/email';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
+import { MessageType } from '../types';
 
-const sendSubscriptionMail = async (comment) => {
+const sendSubscriptionMail = async (comment): Promise<MessageType> => {
 	const { post_id, author_id } = comment;
 
 	if (!post_id) {
-		return;
+		return { message: messages.EVENT_POST_ID_NOT_FOUND };
+	}
+
+	if (!author_id) {
+		return { message: messages.EVENT_AUTHOR_ID_NOT_FOUND };
 	}
 
 	const subscriptions = await PostSubscription
@@ -23,7 +28,7 @@ const sendSubscriptionMail = async (comment) => {
 	const author = await getUserFromUserId(author_id);
 
 	if (!author) {
-		return;
+		return { message: messages.EVENT_AUTHOR_NOT_FOUND };
 	}
 
 	if (Array.isArray(subscriptions)) {
@@ -37,9 +42,11 @@ const sendSubscriptionMail = async (comment) => {
 			sendPostSubscriptionMail(user, author, comment);
 		});
 	}
+
+	return { message: messages.EVENT_POST_SUBSCRIPTION_MAIL_SENT };
 };
 
-const sendProposalCreatedMail = async (onchainLink) => {
+const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 	const {
 		proposer_address,
 		post_id,
@@ -109,9 +116,9 @@ export const commentCreateHook = async (req: Request, res: Response) => {
 
 	const comment = req.body?.event?.data?.new || {};
 
-	await sendSubscriptionMail(comment);
+	const result = await sendSubscriptionMail(comment);
 
-	res.json({ status: messages.SUCCESS });
+	res.json(result);
 };
 
 export const onchainLinksCreateHook = async (req: Request, res: Response) => {
@@ -121,7 +128,7 @@ export const onchainLinksCreateHook = async (req: Request, res: Response) => {
 
 	const onchainLink = req.body?.event?.data?.new || {};
 
-	await sendProposalCreatedMail(onchainLink);
+	const result = await sendProposalCreatedMail(onchainLink);
 
-	res.json({ status: messages.SUCCESS });
+	res.json(result);
 };
