@@ -103,7 +103,7 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 		.first();
 
 	if (!notification || !notification.own_proposal) {
-		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE}
+		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE };
 	}
 
 	let link = '';
