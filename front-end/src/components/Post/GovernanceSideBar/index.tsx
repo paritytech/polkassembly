@@ -113,7 +113,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 					</div>
 				</>
 			),
-			// text: `${account.meta.name} - ${shortenAddress(account.address)}`,
+			text: `${account.meta.name} - ${shortenAddress(account.address)}`,
 			value: account.address
 		})
 	);
