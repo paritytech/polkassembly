@@ -18,7 +18,7 @@ export default styled(Button)`
 		border: none;
 		padding: 0.8rem 1.6rem;
 		transition-property: background-color;
-        transition-duration: 0.2s;
+		transition-duration: 0.2s;
 		&.ui.tiny.button {
 			font-size: sm;
 			padding: 0.6rem 1.2rem;
