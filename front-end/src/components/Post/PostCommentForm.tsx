@@ -1,7 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Icon } from 'semantic-ui-react';
+import { GoReply, GoX } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from '../ContentForm';
@@ -67,8 +67,8 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button secondary size='small' onClick={handleCancel}><Icon name='cancel'/>Cancel</Button>
-					<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='reply'/>Reply</Button>
+					<Button secondary size='small' onClick={handleCancel}><GoX className='icon'/>Cancel</Button>
+					<Button primary size='small' onClick={handleSubmit(handleSave)}><GoReply className='icon'/>Reply</Button>
 				</div>
 			</>
 		</div>
@@ -82,10 +82,5 @@ export default styled(PostCommentForm)`
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;	
-	}
-
-	.icon {
-		margin-top: -0.2rem!important;
-		opacity: 1;
 	}
 `;

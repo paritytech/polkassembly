@@ -249,7 +249,10 @@ export default styled(Address)`
 		font-size: sm;
 		color: grey_primary;
 		a {
-			color: red_primary;
+			color: pink_primary;
+			&:hover{
+				color: pink_secondary;
+			}
 		}
 	}
 

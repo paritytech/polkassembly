@@ -8,14 +8,17 @@ const Button = (props : ButtonProps) => {
 
 export default styled(Button)`
 	&.ui.button, &.active, &:active  {   
-		font-family: font_mono;
+		font-family: font_default;
 		font-size: md;
 		font-weight: 500;
-		text-transform: uppercase;
+		text-transform: capitalize;
 		letter-spacing: 0.06rem;
+		line-height: 1.6rem;
 		border-radius: button_radius;
 		border: none;
 		padding: 0.8rem 1.6rem;
+		transition-property: background-color;
+        transition-duration: 0.2s;
 		&.ui.tiny.button {
 			font-size: sm;
 			padding: 0.6rem 1.2rem;
@@ -29,25 +32,35 @@ export default styled(Button)`
 			padding: 0.8rem 1.6rem;
 		}
 		&.ui.primary.button {
-			background-color: red_primary;
-			color: black_primary;
+			background-color: pink_primary;
+			color: white;
 			&:hover, &:focus {
-				background-color: red_secondary;
+				background-color: pink_secondary;
 				outline: none;
 			}
 		}
-		&.ui.primary.negative.button, &.ui.basic.negative.button {
-			background-color: white;
-			color: red_primary!important;
-			box-shadow: 0 0 0 1px inset !important;
+		&.ui.primary.positive.button {
+			background-color: green_primary !important;
+			color: white!important;
 			&:hover, &:focus {
-				background-color: red_light!important;
-				color: red_secondary!important;
+				background-color: green_secondary !important;
+				color: white !important;
+				box-shadow: none !important;
 				outline: none;
-				box-shadow: 0 0 0 1px inset !important;
 			}
 		}
-		&.ui.secondary.button {
+		&.ui.primary.negative.button {
+			background-color: red_primary !important;
+			color: white!important;
+			box-shadow: none !important;
+			&:hover, &:focus {
+				background-color: red_secondary !important;
+				color: white !important;
+				box-shadow: none !important;
+				outline: none;
+			}
+		}
+		&.ui.secondary.button{
 			background-color: white;
 			color: grey_primary;
 			box-shadow: 0 0 0 1px #B5AEAE inset !important;
@@ -65,7 +78,7 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: red_secondary;
 				color: white;
-				box-shadow: 0 0 0 1px #A6ACB3 inset !important;
+				box-shadow: 0 0 0 1px #D94C3D inset;
 				outline: none;
 			}	
 		}
@@ -99,5 +112,15 @@ export default styled(Button)`
 				border: none;
 			}
 		}
+	}
+
+	&.ui.button>.icon:not(.button), &.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
+		margin: 0 0.4rem 0 0;
+		height: 1.6rem;
+	}
+
+	.icon {
+		vertical-align: middle;
+		font-size: md;
 	}
 `;
