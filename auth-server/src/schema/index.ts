@@ -12,6 +12,7 @@ import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
 import changeNameMutation from './mutation/changeName';
+import changeNotificationPreference from './mutation/changeNotificationPreference';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
@@ -60,6 +61,7 @@ export default gql`
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}
+		${changeNotificationPreference}
 		${changeNameMutation}
 		${loginMutation}
 		${logoutMutation}

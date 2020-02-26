@@ -3,6 +3,7 @@ import addressLinkStart from './mutation/addressLinkStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeUsername from './mutation/changeUsername';
 import changeEmail from './mutation/changeEmail';
+import changeNotificationPreference from './mutation/changeNotificationPreference';
 import changePassword from './mutation/changePassword';
 import changeName from './mutation/changeName';
 import login from './mutation/login';
@@ -13,8 +14,8 @@ import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
-import verifyEmail from './mutation/verifyEmail';
 import undoEmailChange from './mutation/undoEmailChange';
+import verifyEmail from './mutation/verifyEmail';
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';
@@ -36,6 +37,7 @@ export default {
 		signup,
 		changeUsername,
 		changeEmail,
+		changeNotificationPreference,
 		changePassword,
 		changeName,
 		postSubscribe,
