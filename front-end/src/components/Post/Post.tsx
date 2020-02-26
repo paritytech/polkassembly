@@ -127,6 +127,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					isProposal={isProposal}
 					isReferendum={isReferendum}
 					onchainId={onchainId}
+					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
 			</Grid.Column>

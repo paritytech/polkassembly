@@ -20,11 +20,24 @@ interface Props {
 	className?: string
 	defaultAddress: string
 	getAccounts: () => Promise<undefined>
-	motionId?: number | null | undefined
+	motionId?: number | null
+	motionProposalHash?: string
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
+const VoteMotion = ({
+	accounts,
+	address,
+	addressOptions,
+	api,
+	apiReady,
+	className,
+	defaultAddress,
+	getAccounts,
+	motionId,
+	motionProposalHash,
+	onAccountChange
+}: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [isCouncil, setIsCouncil] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
@@ -36,6 +49,7 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 		console.log('current accounts', accounts);
 
 		accounts.some(account => {
+			console.log('acconut', account);
 			if (currentCouncil.includes(account.address)){
 				console.log('He is council!');
 				setIsCouncil(true);
@@ -51,12 +65,17 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 			return;
 		}
 
-		if (!motionId) {
+		if (!motionId && motionId !== 0) {
 			console.error('motionId not set');
 			return;
 		}
 
-		const vote = api.tx.council.vote('',motionId, aye);
+		if (!motionProposalHash) {
+			console.error('motionProposalHash not set');
+			return;
+		}
+
+		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
 
 		vote.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
@@ -116,10 +135,10 @@ const VoteMotion = ({ className, motionId, api, apiReady, address, defaultAddres
 						/>
 					</label>
 					<Dropdown
-						onChange={onAccountChange}
 						defaultValue={defaultAddress || accounts[0]?.address}
-						selection
+						onChange={onAccountChange}
 						options={addressOptions}
+						selection
 					/>
 				</Form.Field>
 			</Form.Group>

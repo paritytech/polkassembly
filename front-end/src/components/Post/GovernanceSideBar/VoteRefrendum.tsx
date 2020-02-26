@@ -48,7 +48,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 			return;
 		}
 
-		if (!referendumId) {
+		if (!referendumId && referendumId !==0) {
 			console.error('referendumId not set');
 			return;
 		}
