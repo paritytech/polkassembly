@@ -40,6 +40,7 @@ const VoteMotion = ({
 }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [isCouncil, setIsCouncil] = useState(false);
+	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
@@ -102,6 +103,7 @@ const VoteMotion = ({
 						<h4>Vote</h4>
 						<Form.Group>
 							<Form.Field className='button-container'>
+								<div>Only council members can vote on motions.</div><br/>
 								<Button
 									primary
 									onClick={getAccounts}
@@ -165,12 +167,15 @@ const VoteMotion = ({
 		</Form>;
 
 	const NotCouncil = () =>
-		<div>You are obviously not from the council and cannot vote here.</div>;
+		<>
+			<div>No account found from the council :(</div>
+			<a href='#' onClick={() => setForceVote(true)}>Let me try still.</a>
+		</>
 
 	return (
 		<div className={className}>
 			<div className='card'>
-				{isCouncil
+				{isCouncil || forceVote
 					? <VotingForm/>
 					: <NotCouncil/>
 				}
