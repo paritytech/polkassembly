@@ -12,6 +12,7 @@ import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
 import changeNameMutation from './mutation/changeName';
+import changeNotificationPreference from './mutation/changeNotificationPreference';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
@@ -21,7 +22,6 @@ import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
-import updateNotification from './mutation/updateNotification';
 import verifyEmail from './mutation/verifyEmail';
 
 import addressLinkType from './type/addressLinkType';
@@ -61,6 +61,7 @@ export default gql`
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}
+		${changeNotificationPreference}
 		${changeNameMutation}
 		${loginMutation}
 		${logoutMutation}
@@ -71,7 +72,6 @@ export default gql`
 		${resetPassword}
 		${signupMutation}
 		${undoEmailChange}
-		${updateNotification}
 		${verifyEmail}
 	}
 `;
