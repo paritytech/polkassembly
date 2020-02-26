@@ -27,7 +27,8 @@ export const theme = {
 	},
 	fonts: {
 		font_default: 'Roboto',
-		font_mono: 'Roboto Mono'
+		font_mono: 'Roboto Mono',
+		font_secondary: 'Work Sans'
 	},
 	radii: {
 		button_radius: '0.3rem'
