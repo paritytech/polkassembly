@@ -1,0 +1,14 @@
+- args:
+    hasura_fields:
+    - onchain_motion_id
+    name: onchain_motion
+    remote_field:
+      motions:
+        arguments:
+          where:
+            motionProposalId: $onchain_motion_id
+    remote_schema: chain-db
+    table:
+      name: onchain_links
+      schema: public
+  type: update_remote_relationship
