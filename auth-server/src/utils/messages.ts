@@ -20,6 +20,7 @@ export default {
 	EVENT_PROPOSAL_CREATED_MAIL_SENT: 'Proposal created mail sent.',
 	EVENT_ADDRESS_NOT_FOUND: 'Address not found.',
 	EVENT_ADDRESS_NOT_VERIFIED: 'Address not verified.',
+	EVENT_USER_NOTIFICATION_PREFERENCE_FALSE: 'Notification preference is set to not send email.',
 	EVENT_USER_NOT_FOUND: 'User not found.',
 	EVENT_USER_EMAIL_NOT_FOUND: 'User email not found.',
 	EVENT_USER_EMAIL_NOT_VERIFIED: 'User email not verified.',

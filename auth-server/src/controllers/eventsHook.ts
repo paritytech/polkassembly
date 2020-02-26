@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import Address from '../model/Address';
+import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendPostSubscriptionMail, sendProposalCreatedEmail } from '../services/email';
@@ -92,6 +93,17 @@ const sendProposalCreatedMail = async (onchainLink): Promise<MessageType> => {
 
 	if (!user.email_verified) {
 		return { message: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
+	}
+
+	const notification = await Notification
+		.query()
+		.where({
+			user_id: user.id
+		})
+		.first();
+
+	if (!notification || !notification.own_proposal) {
+		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE}
 	}
 
 	let link = '';
