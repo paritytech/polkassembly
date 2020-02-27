@@ -57,17 +57,14 @@ const Notification = (): JSX.Element => {
 
 	const handlePostCreatedChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_post_created(data.checked || false);
-		updatePreference();
 	};
 
 	const handleNewProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_new_proposal(data.checked || false);
-		updatePreference();
 	};
 
 	const handleOwnProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_own_proposal(data.checked || false);
-		updatePreference();
 	};
 
 	return (

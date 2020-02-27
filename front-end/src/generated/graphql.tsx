@@ -32,18 +32,13 @@ export type AddressLinkType = {
   sign_message?: Maybe<Scalars['String']>,
 };
 
+export type AggregateBlockIndex = {
+   __typename?: 'AggregateBlockIndex',
+  count: Scalars['Int'],
+};
+
 export type AggregateBlockNumber = {
    __typename?: 'AggregateBlockNumber',
-  count: Scalars['Int'],
-};
-
-export type AggregateCouncil = {
-   __typename?: 'AggregateCouncil',
-  count: Scalars['Int'],
-};
-
-export type AggregateCouncilMember = {
-   __typename?: 'AggregateCouncilMember',
   count: Scalars['Int'],
 };
 
@@ -150,6 +145,139 @@ export type AggregateValidator = {
 export type BatchPayload = {
    __typename?: 'BatchPayload',
   count: Scalars['Long'],
+};
+
+export type BlockIndex = Node & {
+   __typename?: 'BlockIndex',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexConnection = {
+   __typename?: 'BlockIndexConnection',
+  aggregate: AggregateBlockIndex,
+  edges: Array<Maybe<BlockIndexEdge>>,
+  pageInfo: PageInfo,
+};
+
+export type BlockIndexCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexEdge = {
+   __typename?: 'BlockIndexEdge',
+  cursor: Scalars['String'],
+  node: BlockIndex,
+};
+
+export enum BlockIndexOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  IdentifierAsc = 'identifier_ASC',
+  IdentifierDesc = 'identifier_DESC',
+  IndexAsc = 'index_ASC',
+  IndexDesc = 'index_DESC',
+  StartFromAsc = 'startFrom_ASC',
+  StartFromDesc = 'startFrom_DESC'
+}
+
+export type BlockIndexPreviousValues = {
+   __typename?: 'BlockIndexPreviousValues',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  index: Scalars['Int'],
+  startFrom: Scalars['Int'],
+};
+
+export type BlockIndexSubscriptionPayload = {
+   __typename?: 'BlockIndexSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<BlockIndex>,
+  previousValues?: Maybe<BlockIndexPreviousValues>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+};
+
+export type BlockIndexSubscriptionWhereInput = {
+  AND?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  OR?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  node?: Maybe<BlockIndexWhereInput>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+};
+
+export type BlockIndexUpdateInput = {
+  identifier?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  startFrom?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexUpdateManyMutationInput = {
+  identifier?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  startFrom?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexWhereInput = {
+  AND?: Maybe<Array<BlockIndexWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexWhereInput>>,
+  OR?: Maybe<Array<BlockIndexWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
+  identifier_contains?: Maybe<Scalars['String']>,
+  identifier_ends_with?: Maybe<Scalars['String']>,
+  identifier_gt?: Maybe<Scalars['String']>,
+  identifier_gte?: Maybe<Scalars['String']>,
+  identifier_in?: Maybe<Array<Scalars['String']>>,
+  identifier_lt?: Maybe<Scalars['String']>,
+  identifier_lte?: Maybe<Scalars['String']>,
+  identifier_not?: Maybe<Scalars['String']>,
+  identifier_not_contains?: Maybe<Scalars['String']>,
+  identifier_not_ends_with?: Maybe<Scalars['String']>,
+  identifier_not_in?: Maybe<Array<Scalars['String']>>,
+  identifier_not_starts_with?: Maybe<Scalars['String']>,
+  identifier_starts_with?: Maybe<Scalars['String']>,
+  index?: Maybe<Scalars['Int']>,
+  index_gt?: Maybe<Scalars['Int']>,
+  index_gte?: Maybe<Scalars['Int']>,
+  index_in?: Maybe<Array<Scalars['Int']>>,
+  index_lt?: Maybe<Scalars['Int']>,
+  index_lte?: Maybe<Scalars['Int']>,
+  index_not?: Maybe<Scalars['Int']>,
+  index_not_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom?: Maybe<Scalars['Int']>,
+  startFrom_gt?: Maybe<Scalars['Int']>,
+  startFrom_gte?: Maybe<Scalars['Int']>,
+  startFrom_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom_lt?: Maybe<Scalars['Int']>,
+  startFrom_lte?: Maybe<Scalars['Int']>,
+  startFrom_not?: Maybe<Scalars['Int']>,
+  startFrom_not_in?: Maybe<Array<Scalars['Int']>>,
+};
+
+export type BlockIndexWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
 };
 
 export type BlockNumber = Node & {
@@ -606,361 +734,6 @@ export type Comments_Variance_Fields = {
 export type Comments_Variance_Order_By = {
   author_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-};
-
-export type Council = Node & {
-   __typename?: 'Council',
-  blockNumber: BlockNumber,
-  id: Scalars['ID'],
-  members?: Maybe<Array<CouncilMember>>,
-};
-
-
-export type CouncilMembersArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilMemberOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilMemberWhereInput>
-};
-
-export type CouncilConnection = {
-   __typename?: 'CouncilConnection',
-  aggregate: AggregateCouncil,
-  edges: Array<Maybe<CouncilEdge>>,
-  pageInfo: PageInfo,
-};
-
-export type CouncilCreateInput = {
-  blockNumber: BlockNumberCreateOneInput,
-  id?: Maybe<Scalars['ID']>,
-  members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>,
-};
-
-export type CouncilCreateManyWithoutMembersInput = {
-  connect?: Maybe<Array<CouncilWhereUniqueInput>>,
-  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>,
-};
-
-export type CouncilCreateWithoutMembersInput = {
-  blockNumber: BlockNumberCreateOneInput,
-  id?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilEdge = {
-   __typename?: 'CouncilEdge',
-  cursor: Scalars['String'],
-  node: Council,
-};
-
-export type CouncilMember = Node & {
-   __typename?: 'CouncilMember',
-  address: Scalars['String'],
-  councils?: Maybe<Array<Council>>,
-  id: Scalars['ID'],
-};
-
-
-export type CouncilMemberCouncilsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilWhereInput>
-};
-
-export type CouncilMemberConnection = {
-   __typename?: 'CouncilMemberConnection',
-  aggregate: AggregateCouncilMember,
-  edges: Array<Maybe<CouncilMemberEdge>>,
-  pageInfo: PageInfo,
-};
-
-export type CouncilMemberCreateInput = {
-  address: Scalars['String'],
-  councils?: Maybe<CouncilCreateManyWithoutMembersInput>,
-  id?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilMemberCreateManyWithoutCouncilsInput = {
-  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
-  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>,
-};
-
-export type CouncilMemberCreateWithoutCouncilsInput = {
-  address: Scalars['String'],
-  id?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilMemberEdge = {
-   __typename?: 'CouncilMemberEdge',
-  cursor: Scalars['String'],
-  node: CouncilMember,
-};
-
-export enum CouncilMemberOrderByInput {
-  AddressAsc = 'address_ASC',
-  AddressDesc = 'address_DESC',
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC'
-}
-
-export type CouncilMemberPreviousValues = {
-   __typename?: 'CouncilMemberPreviousValues',
-  address: Scalars['String'],
-  id: Scalars['ID'],
-};
-
-export type CouncilMemberScalarWhereInput = {
-  AND?: Maybe<Array<CouncilMemberScalarWhereInput>>,
-  NOT?: Maybe<Array<CouncilMemberScalarWhereInput>>,
-  OR?: Maybe<Array<CouncilMemberScalarWhereInput>>,
-  address?: Maybe<Scalars['String']>,
-  address_contains?: Maybe<Scalars['String']>,
-  address_ends_with?: Maybe<Scalars['String']>,
-  address_gt?: Maybe<Scalars['String']>,
-  address_gte?: Maybe<Scalars['String']>,
-  address_in?: Maybe<Array<Scalars['String']>>,
-  address_lt?: Maybe<Scalars['String']>,
-  address_lte?: Maybe<Scalars['String']>,
-  address_not?: Maybe<Scalars['String']>,
-  address_not_contains?: Maybe<Scalars['String']>,
-  address_not_ends_with?: Maybe<Scalars['String']>,
-  address_not_in?: Maybe<Array<Scalars['String']>>,
-  address_not_starts_with?: Maybe<Scalars['String']>,
-  address_starts_with?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['ID']>,
-  id_contains?: Maybe<Scalars['ID']>,
-  id_ends_with?: Maybe<Scalars['ID']>,
-  id_gt?: Maybe<Scalars['ID']>,
-  id_gte?: Maybe<Scalars['ID']>,
-  id_in?: Maybe<Array<Scalars['ID']>>,
-  id_lt?: Maybe<Scalars['ID']>,
-  id_lte?: Maybe<Scalars['ID']>,
-  id_not?: Maybe<Scalars['ID']>,
-  id_not_contains?: Maybe<Scalars['ID']>,
-  id_not_ends_with?: Maybe<Scalars['ID']>,
-  id_not_in?: Maybe<Array<Scalars['ID']>>,
-  id_not_starts_with?: Maybe<Scalars['ID']>,
-  id_starts_with?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilMemberSubscriptionPayload = {
-   __typename?: 'CouncilMemberSubscriptionPayload',
-  mutation: MutationType,
-  node?: Maybe<CouncilMember>,
-  previousValues?: Maybe<CouncilMemberPreviousValues>,
-  updatedFields?: Maybe<Array<Scalars['String']>>,
-};
-
-export type CouncilMemberSubscriptionWhereInput = {
-  AND?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
-  NOT?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
-  OR?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>,
-  mutation_in?: Maybe<Array<MutationType>>,
-  node?: Maybe<CouncilMemberWhereInput>,
-  updatedFields_contains?: Maybe<Scalars['String']>,
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
-};
-
-export type CouncilMemberUpdateInput = {
-  address?: Maybe<Scalars['String']>,
-  councils?: Maybe<CouncilUpdateManyWithoutMembersInput>,
-};
-
-export type CouncilMemberUpdateManyDataInput = {
-  address?: Maybe<Scalars['String']>,
-};
-
-export type CouncilMemberUpdateManyMutationInput = {
-  address?: Maybe<Scalars['String']>,
-};
-
-export type CouncilMemberUpdateManyWithoutCouncilsInput = {
-  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
-  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>,
-  delete?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
-  deleteMany?: Maybe<Array<CouncilMemberScalarWhereInput>>,
-  disconnect?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
-  set?: Maybe<Array<CouncilMemberWhereUniqueInput>>,
-  update?: Maybe<Array<CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput>>,
-  updateMany?: Maybe<Array<CouncilMemberUpdateManyWithWhereNestedInput>>,
-  upsert?: Maybe<Array<CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput>>,
-};
-
-export type CouncilMemberUpdateManyWithWhereNestedInput = {
-  data: CouncilMemberUpdateManyDataInput,
-  where: CouncilMemberScalarWhereInput,
-};
-
-export type CouncilMemberUpdateWithoutCouncilsDataInput = {
-  address?: Maybe<Scalars['String']>,
-};
-
-export type CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput = {
-  data: CouncilMemberUpdateWithoutCouncilsDataInput,
-  where: CouncilMemberWhereUniqueInput,
-};
-
-export type CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput = {
-  create: CouncilMemberCreateWithoutCouncilsInput,
-  update: CouncilMemberUpdateWithoutCouncilsDataInput,
-  where: CouncilMemberWhereUniqueInput,
-};
-
-export type CouncilMemberWhereInput = {
-  AND?: Maybe<Array<CouncilMemberWhereInput>>,
-  NOT?: Maybe<Array<CouncilMemberWhereInput>>,
-  OR?: Maybe<Array<CouncilMemberWhereInput>>,
-  address?: Maybe<Scalars['String']>,
-  address_contains?: Maybe<Scalars['String']>,
-  address_ends_with?: Maybe<Scalars['String']>,
-  address_gt?: Maybe<Scalars['String']>,
-  address_gte?: Maybe<Scalars['String']>,
-  address_in?: Maybe<Array<Scalars['String']>>,
-  address_lt?: Maybe<Scalars['String']>,
-  address_lte?: Maybe<Scalars['String']>,
-  address_not?: Maybe<Scalars['String']>,
-  address_not_contains?: Maybe<Scalars['String']>,
-  address_not_ends_with?: Maybe<Scalars['String']>,
-  address_not_in?: Maybe<Array<Scalars['String']>>,
-  address_not_starts_with?: Maybe<Scalars['String']>,
-  address_starts_with?: Maybe<Scalars['String']>,
-  councils_every?: Maybe<CouncilWhereInput>,
-  councils_none?: Maybe<CouncilWhereInput>,
-  councils_some?: Maybe<CouncilWhereInput>,
-  id?: Maybe<Scalars['ID']>,
-  id_contains?: Maybe<Scalars['ID']>,
-  id_ends_with?: Maybe<Scalars['ID']>,
-  id_gt?: Maybe<Scalars['ID']>,
-  id_gte?: Maybe<Scalars['ID']>,
-  id_in?: Maybe<Array<Scalars['ID']>>,
-  id_lt?: Maybe<Scalars['ID']>,
-  id_lte?: Maybe<Scalars['ID']>,
-  id_not?: Maybe<Scalars['ID']>,
-  id_not_contains?: Maybe<Scalars['ID']>,
-  id_not_ends_with?: Maybe<Scalars['ID']>,
-  id_not_in?: Maybe<Array<Scalars['ID']>>,
-  id_not_starts_with?: Maybe<Scalars['ID']>,
-  id_starts_with?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilMemberWhereUniqueInput = {
-  address?: Maybe<Scalars['String']>,
-  id?: Maybe<Scalars['ID']>,
-};
-
-export enum CouncilOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC'
-}
-
-export type CouncilPreviousValues = {
-   __typename?: 'CouncilPreviousValues',
-  id: Scalars['ID'],
-};
-
-export type CouncilScalarWhereInput = {
-  AND?: Maybe<Array<CouncilScalarWhereInput>>,
-  NOT?: Maybe<Array<CouncilScalarWhereInput>>,
-  OR?: Maybe<Array<CouncilScalarWhereInput>>,
-  id?: Maybe<Scalars['ID']>,
-  id_contains?: Maybe<Scalars['ID']>,
-  id_ends_with?: Maybe<Scalars['ID']>,
-  id_gt?: Maybe<Scalars['ID']>,
-  id_gte?: Maybe<Scalars['ID']>,
-  id_in?: Maybe<Array<Scalars['ID']>>,
-  id_lt?: Maybe<Scalars['ID']>,
-  id_lte?: Maybe<Scalars['ID']>,
-  id_not?: Maybe<Scalars['ID']>,
-  id_not_contains?: Maybe<Scalars['ID']>,
-  id_not_ends_with?: Maybe<Scalars['ID']>,
-  id_not_in?: Maybe<Array<Scalars['ID']>>,
-  id_not_starts_with?: Maybe<Scalars['ID']>,
-  id_starts_with?: Maybe<Scalars['ID']>,
-};
-
-export type CouncilSubscriptionPayload = {
-   __typename?: 'CouncilSubscriptionPayload',
-  mutation: MutationType,
-  node?: Maybe<Council>,
-  previousValues?: Maybe<CouncilPreviousValues>,
-  updatedFields?: Maybe<Array<Scalars['String']>>,
-};
-
-export type CouncilSubscriptionWhereInput = {
-  AND?: Maybe<Array<CouncilSubscriptionWhereInput>>,
-  NOT?: Maybe<Array<CouncilSubscriptionWhereInput>>,
-  OR?: Maybe<Array<CouncilSubscriptionWhereInput>>,
-  mutation_in?: Maybe<Array<MutationType>>,
-  node?: Maybe<CouncilWhereInput>,
-  updatedFields_contains?: Maybe<Scalars['String']>,
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
-};
-
-export type CouncilUpdateInput = {
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-  members?: Maybe<CouncilMemberUpdateManyWithoutCouncilsInput>,
-};
-
-export type CouncilUpdateManyWithoutMembersInput = {
-  connect?: Maybe<Array<CouncilWhereUniqueInput>>,
-  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>,
-  delete?: Maybe<Array<CouncilWhereUniqueInput>>,
-  deleteMany?: Maybe<Array<CouncilScalarWhereInput>>,
-  disconnect?: Maybe<Array<CouncilWhereUniqueInput>>,
-  set?: Maybe<Array<CouncilWhereUniqueInput>>,
-  update?: Maybe<Array<CouncilUpdateWithWhereUniqueWithoutMembersInput>>,
-  upsert?: Maybe<Array<CouncilUpsertWithWhereUniqueWithoutMembersInput>>,
-};
-
-export type CouncilUpdateWithoutMembersDataInput = {
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
-};
-
-export type CouncilUpdateWithWhereUniqueWithoutMembersInput = {
-  data: CouncilUpdateWithoutMembersDataInput,
-  where: CouncilWhereUniqueInput,
-};
-
-export type CouncilUpsertWithWhereUniqueWithoutMembersInput = {
-  create: CouncilCreateWithoutMembersInput,
-  update: CouncilUpdateWithoutMembersDataInput,
-  where: CouncilWhereUniqueInput,
-};
-
-export type CouncilWhereInput = {
-  AND?: Maybe<Array<CouncilWhereInput>>,
-  NOT?: Maybe<Array<CouncilWhereInput>>,
-  OR?: Maybe<Array<CouncilWhereInput>>,
-  blockNumber?: Maybe<BlockNumberWhereInput>,
-  id?: Maybe<Scalars['ID']>,
-  id_contains?: Maybe<Scalars['ID']>,
-  id_ends_with?: Maybe<Scalars['ID']>,
-  id_gt?: Maybe<Scalars['ID']>,
-  id_gte?: Maybe<Scalars['ID']>,
-  id_in?: Maybe<Array<Scalars['ID']>>,
-  id_lt?: Maybe<Scalars['ID']>,
-  id_lte?: Maybe<Scalars['ID']>,
-  id_not?: Maybe<Scalars['ID']>,
-  id_not_contains?: Maybe<Scalars['ID']>,
-  id_not_ends_with?: Maybe<Scalars['ID']>,
-  id_not_in?: Maybe<Array<Scalars['ID']>>,
-  id_not_starts_with?: Maybe<Scalars['ID']>,
-  id_starts_with?: Maybe<Scalars['ID']>,
-  members_every?: Maybe<CouncilMemberWhereInput>,
-  members_none?: Maybe<CouncilMemberWhereInput>,
-  members_some?: Maybe<CouncilMemberWhereInput>,
-};
-
-export type CouncilWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>,
 };
 
 
@@ -2173,6 +1946,7 @@ export type Mutation = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
+  changeNotificationPreference?: Maybe<Message>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
@@ -2212,6 +1986,14 @@ export type MutationChangeEmailArgs = {
 
 export type MutationChangeNameArgs = {
   newName: Scalars['String']
+};
+
+
+export type MutationChangeNotificationPreferenceArgs = {
+  new_proposal?: Maybe<Scalars['Boolean']>,
+  own_proposal?: Maybe<Scalars['Boolean']>,
+  post_created?: Maybe<Scalars['Boolean']>,
+  post_participated?: Maybe<Scalars['Boolean']>
 };
 
 
@@ -2277,11 +2059,11 @@ export type Mutation_Root = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
+  changeNotificationPreference?: Maybe<Message>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
+  createBlockIndex: BlockIndex,
   createBlockNumber: BlockNumber,
-  createCouncil: Council,
-  createCouncilMember: CouncilMember,
   createEra: Era,
   createHeartBeat: HeartBeat,
   createMotion: Motion,
@@ -2302,14 +2084,12 @@ export type Mutation_Root = {
   createStake: Stake,
   createTotalIssuance: TotalIssuance,
   createValidator: Validator,
+  deleteBlockIndex?: Maybe<BlockIndex>,
   deleteBlockNumber?: Maybe<BlockNumber>,
-  deleteCouncil?: Maybe<Council>,
-  deleteCouncilMember?: Maybe<CouncilMember>,
   deleteEra?: Maybe<Era>,
   deleteHeartBeat?: Maybe<HeartBeat>,
+  deleteManyBlockIndexes: BatchPayload,
   deleteManyBlockNumbers: BatchPayload,
-  deleteManyCouncilMembers: BatchPayload,
-  deleteManyCouncils: BatchPayload,
   deleteManyEras: BatchPayload,
   deleteManyHeartBeats: BatchPayload,
   deleteManyMotionProposalArguments: BatchPayload,
@@ -2368,13 +2148,12 @@ export type Mutation_Root = {
   resetPassword?: Maybe<Message>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
+  updateBlockIndex?: Maybe<BlockIndex>,
   updateBlockNumber?: Maybe<BlockNumber>,
-  updateCouncil?: Maybe<Council>,
-  updateCouncilMember?: Maybe<CouncilMember>,
   updateEra?: Maybe<Era>,
   updateHeartBeat?: Maybe<HeartBeat>,
+  updateManyBlockIndexes: BatchPayload,
   updateManyBlockNumbers: BatchPayload,
-  updateManyCouncilMembers: BatchPayload,
   updateManyEras: BatchPayload,
   updateManyHeartBeats: BatchPayload,
   updateManyMotionProposalArguments: BatchPayload,
@@ -2418,9 +2197,8 @@ export type Mutation_Root = {
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
+  upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
-  upsertCouncil: Council,
-  upsertCouncilMember: CouncilMember,
   upsertEra: Era,
   upsertHeartBeat: HeartBeat,
   upsertMotion: Motion,
@@ -2472,6 +2250,14 @@ export type Mutation_RootChangeNameArgs = {
 };
 
 
+export type Mutation_RootChangeNotificationPreferenceArgs = {
+  new_proposal?: Maybe<Scalars['Boolean']>,
+  own_proposal?: Maybe<Scalars['Boolean']>,
+  post_created?: Maybe<Scalars['Boolean']>,
+  post_participated?: Maybe<Scalars['Boolean']>
+};
+
+
 export type Mutation_RootChangePasswordArgs = {
   newPassword: Scalars['String'],
   oldPassword: Scalars['String']
@@ -2483,18 +2269,13 @@ export type Mutation_RootChangeUsernameArgs = {
 };
 
 
+export type Mutation_RootCreateBlockIndexArgs = {
+  data: BlockIndexCreateInput
+};
+
+
 export type Mutation_RootCreateBlockNumberArgs = {
   data: BlockNumberCreateInput
-};
-
-
-export type Mutation_RootCreateCouncilArgs = {
-  data: CouncilCreateInput
-};
-
-
-export type Mutation_RootCreateCouncilMemberArgs = {
-  data: CouncilMemberCreateInput
 };
 
 
@@ -2598,18 +2379,13 @@ export type Mutation_RootCreateValidatorArgs = {
 };
 
 
+export type Mutation_RootDeleteBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
+};
+
+
 export type Mutation_RootDeleteBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput
-};
-
-
-export type Mutation_RootDeleteCouncilArgs = {
-  where: CouncilWhereUniqueInput
-};
-
-
-export type Mutation_RootDeleteCouncilMemberArgs = {
-  where: CouncilMemberWhereUniqueInput
 };
 
 
@@ -2623,18 +2399,13 @@ export type Mutation_RootDeleteHeartBeatArgs = {
 };
 
 
+export type Mutation_RootDeleteManyBlockIndexesArgs = {
+  where?: Maybe<BlockIndexWhereInput>
+};
+
+
 export type Mutation_RootDeleteManyBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>
-};
-
-
-export type Mutation_RootDeleteManyCouncilMembersArgs = {
-  where?: Maybe<CouncilMemberWhereInput>
-};
-
-
-export type Mutation_RootDeleteManyCouncilsArgs = {
-  where?: Maybe<CouncilWhereInput>
 };
 
 
@@ -2929,21 +2700,15 @@ export type Mutation_RootUndoEmailChangeArgs = {
 };
 
 
+export type Mutation_RootUpdateBlockIndexArgs = {
+  data: BlockIndexUpdateInput,
+  where: BlockIndexWhereUniqueInput
+};
+
+
 export type Mutation_RootUpdateBlockNumberArgs = {
   data: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
-};
-
-
-export type Mutation_RootUpdateCouncilArgs = {
-  data: CouncilUpdateInput,
-  where: CouncilWhereUniqueInput
-};
-
-
-export type Mutation_RootUpdateCouncilMemberArgs = {
-  data: CouncilMemberUpdateInput,
-  where: CouncilMemberWhereUniqueInput
 };
 
 
@@ -2959,15 +2724,15 @@ export type Mutation_RootUpdateHeartBeatArgs = {
 };
 
 
-export type Mutation_RootUpdateManyBlockNumbersArgs = {
-  data: BlockNumberUpdateManyMutationInput,
-  where?: Maybe<BlockNumberWhereInput>
+export type Mutation_RootUpdateManyBlockIndexesArgs = {
+  data: BlockIndexUpdateManyMutationInput,
+  where?: Maybe<BlockIndexWhereInput>
 };
 
 
-export type Mutation_RootUpdateManyCouncilMembersArgs = {
-  data: CouncilMemberUpdateManyMutationInput,
-  where?: Maybe<CouncilMemberWhereInput>
+export type Mutation_RootUpdateManyBlockNumbersArgs = {
+  data: BlockNumberUpdateManyMutationInput,
+  where?: Maybe<BlockNumberWhereInput>
 };
 
 
@@ -3234,24 +2999,17 @@ export type Mutation_RootUpdate_PostsArgs = {
 };
 
 
+export type Mutation_RootUpsertBlockIndexArgs = {
+  create: BlockIndexCreateInput,
+  update: BlockIndexUpdateInput,
+  where: BlockIndexWhereUniqueInput
+};
+
+
 export type Mutation_RootUpsertBlockNumberArgs = {
   create: BlockNumberCreateInput,
   update: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
-};
-
-
-export type Mutation_RootUpsertCouncilArgs = {
-  create: CouncilCreateInput,
-  update: CouncilUpdateInput,
-  where: CouncilWhereUniqueInput
-};
-
-
-export type Mutation_RootUpsertCouncilMemberArgs = {
-  create: CouncilMemberCreateInput,
-  update: CouncilMemberUpdateInput,
-  where: CouncilMemberWhereUniqueInput
 };
 
 
@@ -3597,6 +3355,14 @@ export type NominationWhereInput = {
 
 export type NominationWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+};
+
+export type Notification = {
+   __typename?: 'Notification',
+  new_proposal?: Maybe<Scalars['Boolean']>,
+  own_proposal?: Maybe<Scalars['Boolean']>,
+  post_created?: Maybe<Scalars['Boolean']>,
+  post_participated?: Maybe<Scalars['Boolean']>,
 };
 
 export type OfflineValidator = Node & {
@@ -6370,6 +6136,7 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
+  notification?: Maybe<Notification>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -6394,18 +6161,15 @@ export type QueryUsersArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root',
+  blockIndex?: Maybe<BlockIndex>,
+  blockIndexes: Array<Maybe<BlockIndex>>,
+  blockIndexesConnection: BlockIndexConnection,
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
-  council?: Maybe<Council>,
-  councilMember?: Maybe<CouncilMember>,
-  councilMembers: Array<Maybe<CouncilMember>>,
-  councilMembersConnection: CouncilMemberConnection,
-  councils: Array<Maybe<Council>>,
-  councilsConnection: CouncilConnection,
   era?: Maybe<Era>,
   eras: Array<Maybe<Era>>,
   erasConnection: EraConnection,
@@ -6425,6 +6189,7 @@ export type Query_Root = {
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
   nominationsConnection: NominationConnection,
+  notification?: Maybe<Notification>,
   offlineValidator?: Maybe<OfflineValidator>,
   offlineValidators: Array<Maybe<OfflineValidator>>,
   offlineValidatorsConnection: OfflineValidatorConnection,
@@ -6486,6 +6251,33 @@ export type Query_Root = {
 };
 
 
+export type Query_RootBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
+};
+
+
+export type Query_RootBlockIndexesArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<BlockIndexWhereInput>
+};
+
+
+export type Query_RootBlockIndexesConnectionArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<BlockIndexWhereInput>
+};
+
+
 export type Query_RootBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput
 };
@@ -6533,60 +6325,6 @@ export type Query_RootComments_AggregateArgs = {
 
 export type Query_RootComments_By_PkArgs = {
   id: Scalars['uuid']
-};
-
-
-export type Query_RootCouncilArgs = {
-  where: CouncilWhereUniqueInput
-};
-
-
-export type Query_RootCouncilMemberArgs = {
-  where: CouncilMemberWhereUniqueInput
-};
-
-
-export type Query_RootCouncilMembersArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilMemberOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilMemberWhereInput>
-};
-
-
-export type Query_RootCouncilMembersConnectionArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilMemberOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilMemberWhereInput>
-};
-
-
-export type Query_RootCouncilsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilWhereInput>
-};
-
-
-export type Query_RootCouncilsConnectionArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>,
-  orderBy?: Maybe<CouncilOrderByInput>,
-  skip?: Maybe<Scalars['Int']>,
-  where?: Maybe<CouncilWhereInput>
 };
 
 
@@ -9352,6 +9090,33 @@ export type ResendVerifyEmailTokenMutation = (
   )> }
 );
 
+export type ChangeNotificationPreferenceMutationVariables = {
+  post_participated?: Maybe<Scalars['Boolean']>,
+  post_created?: Maybe<Scalars['Boolean']>,
+  new_proposal?: Maybe<Scalars['Boolean']>,
+  own_proposal?: Maybe<Scalars['Boolean']>
+};
+
+
+export type ChangeNotificationPreferenceMutation = (
+  { __typename?: 'mutation_root' }
+  & { changeNotificationPreference: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type NotificationQueryVariables = {};
+
+
+export type NotificationQuery = (
+  { __typename?: 'query_root' }
+  & { notification: Maybe<(
+    { __typename?: 'Notification' }
+    & Pick<Notification, 'post_created' | 'post_participated' | 'new_proposal' | 'own_proposal'>
+  )> }
+);
+
 export type SignupMutationVariables = {
   email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
@@ -9826,7 +9591,7 @@ export const SubscriptionDocument = gql`
  * __useSubscriptionQuery__
  *
  * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -9859,7 +9624,7 @@ export const Get_Refresh_TokenDocument = gql`
  * __useGet_Refresh_TokenQuery__
  *
  * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -9930,7 +9695,7 @@ export const Post_TopicsDocument = gql`
  * __usePost_TopicsQuery__
  *
  * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -9962,7 +9727,7 @@ export const DiscussionPostAndCommentsDocument = gql`
  * __useDiscussionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10012,7 +9777,7 @@ export const LatestDiscussionPostsDocument = gql`
  * __useLatestDiscussionPostsQuery__
  *
  * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10085,7 +9850,7 @@ export const MotionPostAndCommentsDocument = gql`
  * __useMotionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useMotionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10150,7 +9915,7 @@ export const LatestMotionPostsDocument = gql`
  * __useLatestMotionPostsQuery__
  *
  * To run a query within a React component, call `useLatestMotionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10217,7 +9982,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
  * __useLatestDemocracyProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10284,7 +10049,7 @@ export const LatestReferendaPostsDocument = gql`
  * __useLatestReferendaPostsQuery__
  *
  * To run a query within a React component, call `useLatestReferendaPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10318,7 +10083,7 @@ export const ProposalPostAndCommentsDocument = gql`
  * __useProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10351,7 +10116,7 @@ export const ReferendumPostAndCommentsDocument = gql`
  * __useReferendumPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10702,6 +10467,76 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
+export const ChangeNotificationPreferenceDocument = gql`
+    mutation changeNotificationPreference($post_participated: Boolean, $post_created: Boolean, $new_proposal: Boolean, $own_proposal: Boolean) {
+  changeNotificationPreference(post_participated: $post_participated, post_created: $post_created, new_proposal: $new_proposal, own_proposal: $own_proposal) {
+    message
+  }
+}
+    `;
+export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
+
+/**
+ * __useChangeNotificationPreferenceMutation__
+ *
+ * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
+ *   variables: {
+ *      post_participated: // value for 'post_participated'
+ *      post_created: // value for 'post_created'
+ *      new_proposal: // value for 'new_proposal'
+ *      own_proposal: // value for 'own_proposal'
+ *   },
+ * });
+ */
+export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
+      }
+export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
+export const NotificationDocument = gql`
+    query Notification {
+  notification {
+    post_created
+    post_participated
+    new_proposal
+    own_proposal
+  }
+}
+    `;
+
+/**
+ * __useNotificationQuery__
+ *
+ * To run a query within a React component, call `useNotificationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
+        return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
+      }
+export function useNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
+        }
+export type NotificationQueryHookResult = ReturnType<typeof useNotificationQuery>;
+export type NotificationLazyQueryHookResult = ReturnType<typeof useNotificationLazyQuery>;
+export type NotificationQueryResult = ApolloReactCommon.QueryResult<NotificationQuery, NotificationQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
