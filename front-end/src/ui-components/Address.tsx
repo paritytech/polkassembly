@@ -6,9 +6,9 @@ import styled from '@xstyled/styled-components';
 import shortenAddress from '../util/shortenAddress';
 
 interface Props {
-	className: string
+	className?: string
 	address: string
-	accountName: string
+	accountName?: string
 }
 
 const Address = ({ address, accountName, className }: Props): JSX.Element => (
@@ -20,7 +20,7 @@ const Address = ({ address, accountName, className }: Props): JSX.Element => (
 			theme={'polkadot'}
 		/>
 		<div className='content'>
-			<div className='header'>{accountName}</div>
+			<div className='header'>{accountName || ''}</div>
 			<div className='description'>{shortenAddress(address)}</div>
 		</div>
 	</div>

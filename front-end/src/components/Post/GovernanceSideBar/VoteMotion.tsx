@@ -1,7 +1,7 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
@@ -10,6 +10,7 @@ import Button from '../../../ui-components/Button';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
+import AddressDropdown from '../AddressDropdown';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -131,11 +132,11 @@ const VoteMotion = ({
 							hoverable={true}
 						/>
 					</label>
-					<Dropdown
-						defaultValue={defaultAddress || accounts[0]?.address}
-						onChange={onAccountChange}
-						options={addressOptions}
-						selection
+					<AddressDropdown
+						accounts={accounts}
+						defaultAddress={address || accounts[0]?.address}
+						defaultAddressName={accounts[0]?.meta.name || ''}
+						onAccountChange={onAccountChange}
 					/>
 				</Form.Field>
 			</Form.Group>
@@ -170,7 +171,7 @@ const VoteMotion = ({
 		<>
 			<div>No account found from the council :(</div>
 			<a href='#' onClick={() => setForceVote(true)}>Let me try still.</a>
-		</>
+		</>;
 
 	return (
 		<div className={className}>
