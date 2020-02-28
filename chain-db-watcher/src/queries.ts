@@ -144,3 +144,39 @@ export const motionSubscription = gql`
 //         "motionProposalHash": "0x4d4dd65ab6f3495525bda9574c58796c3fbda87848074dee6fcc858dad755a2a"
 //     }
 // }
+
+export const treasurySpendProposalSubscription = gql`
+	subscription treasurySpendProposalSubscription($startBlock: Int!) {
+        treasurySpendProposal (
+            where: {
+				node: {
+					treasuryStatus_some: {
+						AND: [
+							{ status: "Proposed" },
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+            }
+        ){
+            mutation
+            node {
+                id
+                proposer
+				beneficiary
+				value
+				bond
+				treasuryProposalId
+                treasuryStatus(orderBy: id_DESC) {
+                    blockNumber {
+                        hash
+                    }
+                    status
+                }
+                preimage {
+                    hash
+                }
+            }
+        }
+    }
+`;

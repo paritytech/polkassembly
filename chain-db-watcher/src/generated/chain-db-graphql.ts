@@ -14,6 +14,11 @@ export type Scalars = {
   Long: any,
 };
 
+export type AggregateBlockIndex = {
+   __typename?: 'AggregateBlockIndex',
+  count: Scalars['Int'],
+};
+
 export type AggregateBlockNumber = {
    __typename?: 'AggregateBlockNumber',
   count: Scalars['Int'],
@@ -122,6 +127,139 @@ export type AggregateValidator = {
 export type BatchPayload = {
    __typename?: 'BatchPayload',
   count: Scalars['Long'],
+};
+
+export type BlockIndex = Node & {
+   __typename?: 'BlockIndex',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  startFrom: Scalars['Int'],
+  index: Scalars['Int'],
+};
+
+export type BlockIndexConnection = {
+   __typename?: 'BlockIndexConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<BlockIndexEdge>>,
+  aggregate: AggregateBlockIndex,
+};
+
+export type BlockIndexCreateInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier: Scalars['String'],
+  startFrom: Scalars['Int'],
+  index: Scalars['Int'],
+};
+
+export type BlockIndexEdge = {
+   __typename?: 'BlockIndexEdge',
+  node: BlockIndex,
+  cursor: Scalars['String'],
+};
+
+export enum BlockIndexOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  IdentifierAsc = 'identifier_ASC',
+  IdentifierDesc = 'identifier_DESC',
+  StartFromAsc = 'startFrom_ASC',
+  StartFromDesc = 'startFrom_DESC',
+  IndexAsc = 'index_ASC',
+  IndexDesc = 'index_DESC'
+}
+
+export type BlockIndexPreviousValues = {
+   __typename?: 'BlockIndexPreviousValues',
+  id: Scalars['ID'],
+  identifier: Scalars['String'],
+  startFrom: Scalars['Int'],
+  index: Scalars['Int'],
+};
+
+export type BlockIndexSubscriptionPayload = {
+   __typename?: 'BlockIndexSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<BlockIndex>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<BlockIndexPreviousValues>,
+};
+
+export type BlockIndexSubscriptionWhereInput = {
+  AND?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  OR?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexSubscriptionWhereInput>>,
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<BlockIndexWhereInput>,
+};
+
+export type BlockIndexUpdateInput = {
+  identifier?: Maybe<Scalars['String']>,
+  startFrom?: Maybe<Scalars['Int']>,
+  index?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexUpdateManyMutationInput = {
+  identifier?: Maybe<Scalars['String']>,
+  startFrom?: Maybe<Scalars['Int']>,
+  index?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexWhereInput = {
+  AND?: Maybe<Array<BlockIndexWhereInput>>,
+  OR?: Maybe<Array<BlockIndexWhereInput>>,
+  NOT?: Maybe<Array<BlockIndexWhereInput>>,
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
+  identifier_not?: Maybe<Scalars['String']>,
+  identifier_in?: Maybe<Array<Scalars['String']>>,
+  identifier_not_in?: Maybe<Array<Scalars['String']>>,
+  identifier_lt?: Maybe<Scalars['String']>,
+  identifier_lte?: Maybe<Scalars['String']>,
+  identifier_gt?: Maybe<Scalars['String']>,
+  identifier_gte?: Maybe<Scalars['String']>,
+  identifier_contains?: Maybe<Scalars['String']>,
+  identifier_not_contains?: Maybe<Scalars['String']>,
+  identifier_starts_with?: Maybe<Scalars['String']>,
+  identifier_not_starts_with?: Maybe<Scalars['String']>,
+  identifier_ends_with?: Maybe<Scalars['String']>,
+  identifier_not_ends_with?: Maybe<Scalars['String']>,
+  startFrom?: Maybe<Scalars['Int']>,
+  startFrom_not?: Maybe<Scalars['Int']>,
+  startFrom_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom_not_in?: Maybe<Array<Scalars['Int']>>,
+  startFrom_lt?: Maybe<Scalars['Int']>,
+  startFrom_lte?: Maybe<Scalars['Int']>,
+  startFrom_gt?: Maybe<Scalars['Int']>,
+  startFrom_gte?: Maybe<Scalars['Int']>,
+  index?: Maybe<Scalars['Int']>,
+  index_not?: Maybe<Scalars['Int']>,
+  index_in?: Maybe<Array<Scalars['Int']>>,
+  index_not_in?: Maybe<Array<Scalars['Int']>>,
+  index_lt?: Maybe<Scalars['Int']>,
+  index_lte?: Maybe<Scalars['Int']>,
+  index_gt?: Maybe<Scalars['Int']>,
+  index_gte?: Maybe<Scalars['Int']>,
+};
+
+export type BlockIndexWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+  identifier?: Maybe<Scalars['String']>,
 };
 
 export type BlockNumber = Node & {
@@ -1384,6 +1522,7 @@ export type Mutation = {
   createPreimageArgument: PreimageArgument,
   createReferendum: Referendum,
   createReferendumStatus: ReferendumStatus,
+  createBlockIndex: BlockIndex,
   createBlockNumber: BlockNumber,
   createSession: Session,
   updateHeartBeat?: Maybe<HeartBeat>,
@@ -1405,6 +1544,7 @@ export type Mutation = {
   updatePreimageArgument?: Maybe<PreimageArgument>,
   updateReferendum?: Maybe<Referendum>,
   updateReferendumStatus?: Maybe<ReferendumStatus>,
+  updateBlockIndex?: Maybe<BlockIndex>,
   updateBlockNumber?: Maybe<BlockNumber>,
   updateSession?: Maybe<Session>,
   deleteHeartBeat?: Maybe<HeartBeat>,
@@ -1426,6 +1566,7 @@ export type Mutation = {
   deletePreimageArgument?: Maybe<PreimageArgument>,
   deleteReferendum?: Maybe<Referendum>,
   deleteReferendumStatus?: Maybe<ReferendumStatus>,
+  deleteBlockIndex?: Maybe<BlockIndex>,
   deleteBlockNumber?: Maybe<BlockNumber>,
   deleteSession?: Maybe<Session>,
   upsertHeartBeat: HeartBeat,
@@ -1447,6 +1588,7 @@ export type Mutation = {
   upsertPreimageArgument: PreimageArgument,
   upsertReferendum: Referendum,
   upsertReferendumStatus: ReferendumStatus,
+  upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertSession: Session,
   updateManyHeartBeats: BatchPayload,
@@ -1468,6 +1610,7 @@ export type Mutation = {
   updateManyPreimageArguments: BatchPayload,
   updateManyReferendums: BatchPayload,
   updateManyReferendumStatuses: BatchPayload,
+  updateManyBlockIndexes: BatchPayload,
   updateManyBlockNumbers: BatchPayload,
   updateManySessions: BatchPayload,
   deleteManyHeartBeats: BatchPayload,
@@ -1489,6 +1632,7 @@ export type Mutation = {
   deleteManyPreimageArguments: BatchPayload,
   deleteManyReferendums: BatchPayload,
   deleteManyReferendumStatuses: BatchPayload,
+  deleteManyBlockIndexes: BatchPayload,
   deleteManyBlockNumbers: BatchPayload,
   deleteManySessions: BatchPayload,
   executeRaw: Scalars['Json'],
@@ -1587,6 +1731,11 @@ export type MutationCreateReferendumArgs = {
 
 export type MutationCreateReferendumStatusArgs = {
   data: ReferendumStatusCreateInput
+};
+
+
+export type MutationCreateBlockIndexArgs = {
+  data: BlockIndexCreateInput
 };
 
 
@@ -1714,6 +1863,12 @@ export type MutationUpdateReferendumStatusArgs = {
 };
 
 
+export type MutationUpdateBlockIndexArgs = {
+  data: BlockIndexUpdateInput,
+  where: BlockIndexWhereUniqueInput
+};
+
+
 export type MutationUpdateBlockNumberArgs = {
   data: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
@@ -1818,6 +1973,11 @@ export type MutationDeleteReferendumArgs = {
 
 export type MutationDeleteReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput
+};
+
+
+export type MutationDeleteBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
 };
 
 
@@ -1964,6 +2124,13 @@ export type MutationUpsertReferendumStatusArgs = {
 };
 
 
+export type MutationUpsertBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput,
+  create: BlockIndexCreateInput,
+  update: BlockIndexUpdateInput
+};
+
+
 export type MutationUpsertBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput,
   create: BlockNumberCreateInput,
@@ -2092,6 +2259,12 @@ export type MutationUpdateManyReferendumStatusesArgs = {
 };
 
 
+export type MutationUpdateManyBlockIndexesArgs = {
+  data: BlockIndexUpdateManyMutationInput,
+  where?: Maybe<BlockIndexWhereInput>
+};
+
+
 export type MutationUpdateManyBlockNumbersArgs = {
   data: BlockNumberUpdateManyMutationInput,
   where?: Maybe<BlockNumberWhereInput>
@@ -2196,6 +2369,11 @@ export type MutationDeleteManyReferendumsArgs = {
 
 export type MutationDeleteManyReferendumStatusesArgs = {
   where?: Maybe<ReferendumStatusWhereInput>
+};
+
+
+export type MutationDeleteManyBlockIndexesArgs = {
+  where?: Maybe<BlockIndexWhereInput>
 };
 
 
@@ -3937,6 +4115,7 @@ export type Query = {
   preimageArguments: Array<Maybe<PreimageArgument>>,
   referendums: Array<Maybe<Referendum>>,
   referendumStatuses: Array<Maybe<ReferendumStatus>>,
+  blockIndexes: Array<Maybe<BlockIndex>>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   sessions: Array<Maybe<Session>>,
   heartBeat?: Maybe<HeartBeat>,
@@ -3958,6 +4137,7 @@ export type Query = {
   preimageArgument?: Maybe<PreimageArgument>,
   referendum?: Maybe<Referendum>,
   referendumStatus?: Maybe<ReferendumStatus>,
+  blockIndex?: Maybe<BlockIndex>,
   blockNumber?: Maybe<BlockNumber>,
   session?: Maybe<Session>,
   heartBeatsConnection: HeartBeatConnection,
@@ -3979,6 +4159,7 @@ export type Query = {
   preimageArgumentsConnection: PreimageArgumentConnection,
   referendumsConnection: ReferendumConnection,
   referendumStatusesConnection: ReferendumStatusConnection,
+  blockIndexesConnection: BlockIndexConnection,
   blockNumbersConnection: BlockNumberConnection,
   sessionsConnection: SessionConnection,
   node?: Maybe<Node>,
@@ -4194,6 +4375,17 @@ export type QueryReferendumStatusesArgs = {
 };
 
 
+export type QueryBlockIndexesArgs = {
+  where?: Maybe<BlockIndexWhereInput>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
 export type QueryBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>,
   orderBy?: Maybe<BlockNumberOrderByInput>,
@@ -4308,6 +4500,11 @@ export type QueryReferendumArgs = {
 
 export type QueryReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput
+};
+
+
+export type QueryBlockIndexArgs = {
+  where: BlockIndexWhereUniqueInput
 };
 
 
@@ -4522,6 +4719,17 @@ export type QueryReferendumsConnectionArgs = {
 export type QueryReferendumStatusesConnectionArgs = {
   where?: Maybe<ReferendumStatusWhereInput>,
   orderBy?: Maybe<ReferendumStatusOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QueryBlockIndexesConnectionArgs = {
+  where?: Maybe<BlockIndexWhereInput>,
+  orderBy?: Maybe<BlockIndexOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -5512,6 +5720,7 @@ export type Subscription = {
   preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>,
   referendum?: Maybe<ReferendumSubscriptionPayload>,
   referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>,
+  blockIndex?: Maybe<BlockIndexSubscriptionPayload>,
   blockNumber?: Maybe<BlockNumberSubscriptionPayload>,
   session?: Maybe<SessionSubscriptionPayload>,
 };
@@ -5609,6 +5818,11 @@ export type SubscriptionReferendumArgs = {
 
 export type SubscriptionReferendumStatusArgs = {
   where?: Maybe<ReferendumStatusSubscriptionWhereInput>
+};
+
+
+export type SubscriptionBlockIndexArgs = {
+  where?: Maybe<BlockIndexSubscriptionWhereInput>
 };
 
 

@@ -90,6 +90,39 @@ export const proposalDiscussionExists = async (
 };
 
 /**
+ * Tells if there is already a treasurySpendProposal in the discussion DB matching the
+ * onchain treasury proposal id passed as argument
+ *
+ * @param treasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+export const treasurySpendProposalDiscussionExists = async (
+	onchainTreasuryProposalId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionTreasurySpendProposalById({ onchainTreasuryProposalId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`treasurySpendProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
  * Tells if there is already a motion in the discussion DB matching the
  * onchain motion proposal id passed as argument
  *
@@ -249,6 +282,82 @@ export const addDiscussionPostAndProposal = async ({
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Creates a generic post and the linked treasury spend proposal in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal
+ * @param onchainTreasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndTreasurySpendProposal = async ({
+	proposer,
+	onchainTreasuryProposalId
+}: {
+	proposer: string;
+	onchainTreasuryProposalId: number;
+}): Promise<void> => {
+	if (!democracyTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the DEMOCRACY_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
+		);
+	}
+
+	const proposalAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		onchainTreasuryProposalId,
+		content: DEFAULT_DESCRIPTION,
+		proposerAddress: proposer,
+		title: DEFAULT_TITLE,
+		topicId: Number(democracyTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndTreasurySpendProposalMutation(proposalAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Proposal ${addedId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addPostAndTreasurySpendProposal execution error, proposal id ${onchainTreasuryProposalId}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&

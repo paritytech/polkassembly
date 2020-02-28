@@ -8,11 +8,13 @@ import ws from 'ws';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTreasurySpendProposal,
 	addDiscussionReferendum,
 	motionDiscussionExists,
-	proposalDiscussionExists
+	proposalDiscussionExists,
+	treasurySpendProposalDiscussionExists
 } from './graphql_helpers';
-import { motionSubscription, proposalSubscription, referendumSubscription } from './queries';
+import { motionSubscription, proposalSubscription, referendumSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
 
 dotenv.config();
@@ -68,6 +70,12 @@ async function main (): Promise<void> {
 	const motionSubscriptionClient = createSubscriptionObservable(
 		graphQLEndpoint,
 		motionSubscription,
+		{ startBlock }
+	);
+
+	const treasurySpendProposalSubscriptionClient = createSubscriptionObservable(
+		graphQLEndpoint,
+		treasurySpendProposalSubscription,
 		{ startBlock }
 	);
 
@@ -147,6 +155,24 @@ async function main (): Promise<void> {
 			});
 		}
 	});
+
+	treasurySpendProposalSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
+				const { treasuryProposalId, proposer } = data.proposal.node;
+				treasurySpendProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndTreasurySpendProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
+					} else {
+						console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
+	);
 }
 
 main().catch(error => console.error(chalk.red(error)));
