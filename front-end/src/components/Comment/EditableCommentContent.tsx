@@ -1,6 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { GoCheck, GoX } from 'react-icons/go';
 import { Icon } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -83,8 +84,8 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button secondary size='small' onClick={handleCancel}><Icon name='cancel' className='icon'/>Cancel</Button>
-								<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/>Save</Button>
+								<Button secondary size='small' onClick={handleCancel}><GoX className='icon'/>Cancel</Button>
+								<Button primary size='small' onClick={handleSubmit(handleSave)}><GoCheck className='icon' />Save</Button>
 							</div>
 						</Form>
 						:
@@ -103,10 +104,5 @@ export default styled(EditableCommentContent)`
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;	
-	}
-
-	.icon {
-		margin-top: -0.2rem!important;
-		opacity: 1;
 	}
 `;
