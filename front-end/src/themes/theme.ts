@@ -7,15 +7,19 @@ export const theme = {
 		blue_primary_transparent: 'rgba(77, 153, 153, 0.05)',
 		green_primary: '#4DD18F',
 		green_primary_transparent: 'rgba(4, 221, 24, 0.05)',
+		green_secondary: '#399969',
 		grey_app_background: '#F5F7F8',
 		grey_light: '#EBF0F5',
 		grey_primary: '#777B80',
 		grey_secondary: '#A6ACB3',
+		pink_primary: '#E5007A',
+		pink_secondary: '#C40061',
 		red_light: '#FFF1F0',
 		red_primary: '#FF5A47',
 		red_primary_transparent: 'rgba(255, 90, 71, 0.05)',
 		red_secondary: '#D94C3D',
-		white: '#FFF'
+		white: '#FFF',
+		white_transparent: 'rgba(255, 255, 255, 0.2)'
 	},
 	fontSizes: {
 		input_text_size: '1.3rem',
@@ -32,5 +36,9 @@ export const theme = {
 	},
 	radii: {
 		button_radius: '0.3rem'
+	},
+	shadows: {
+		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
+		box_shadow_secondary_red: '0 0 0 1px #D94C3D inset'
 	}
 };

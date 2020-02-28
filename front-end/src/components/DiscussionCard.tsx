@@ -10,7 +10,7 @@ const DiscussionCard = styled.div`
     border-width: 1px;
     border-color: grey_light;
     &:hover {
-        background-color: grey_app_background;
+        background-color: white_transparent;
         border-style: solid;
         border-width: 1px;
         text-decoration: none;
