@@ -63,11 +63,11 @@ export default styled(Button)`
 		&.ui.secondary.button{
 			background-color: white;
 			color: grey_primary;
-			box-shadow: 0 0 0 1px #B5AEAE inset !important;
+			box-shadow: 0 0 0 1px inset !important;
 			&:hover, &:focus {
 				color: black_text;
 				background-color: grey_light;
-				box-shadow: 0 0 0 1px #706D6D inset !important;
+				box-shadow: box_shadow_secondary_grey !important;
 				outline: none;
 			}
 		}
@@ -78,7 +78,7 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: red_secondary;
 				color: white;
-				box-shadow: 0 0 0 1px #D94C3D inset;
+				box-shadow: box_shadow_secondary_red;
 				outline: none;
 			}	
 		}

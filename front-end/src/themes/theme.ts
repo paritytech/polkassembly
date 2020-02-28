@@ -35,5 +35,9 @@ export const theme = {
 	},
 	radii: {
 		button_radius: '0.3rem'
+	},
+	shadows: {
+		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
+		box_shadow_secondary_red: '0 0 0 1px #D94C3D inset'
 	}
 };
