@@ -15,8 +15,8 @@ Form.Input = Input;
 Form.Field = Field;
 Form.Group = Group;
 
-export function Form({ standalone=true, ...props } : FormProps): React.ReactElement{
-	return <StyledForm className={standalone? 'standalone':''} {...props} />;
+export function Form({ className, standalone=true, ...props } : FormProps): React.ReactElement{
+	return <StyledForm className={standalone ? `${className} standalone`  : className } {...props} />;
 }
 
 const StyledForm = styled(SUIForm)`
