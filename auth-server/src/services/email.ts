@@ -160,7 +160,7 @@ export const sendProposalCreatedEmail = (user: User, link: string) => {
 			You have submitted a motion/proposal on chain.<br />
 			Click here to login to polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/${link}">${DOMAIN}/${link}</a>.<br /><br />
 
-			You can deactivate this notifications on the notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
+			You can deactivate this notification in your notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
 
 			Polkassembly Team
 		</p>
