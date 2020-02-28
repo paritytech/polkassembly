@@ -57,11 +57,11 @@ export default styled(Markdown)`
 		}
 
 		a {
-			color: red_primary;
+			color: pink_primary;
 
 			&:hover {
 				text-decoration: none;
-				color: red_secondary;
+				color: pink_secondary;
 			}
 		}
 

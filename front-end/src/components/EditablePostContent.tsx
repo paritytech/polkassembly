@@ -1,7 +1,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Icon } from 'semantic-ui-react';
+import { GoCheck, GoX } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from './ContentForm';
@@ -104,8 +104,8 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus
 								rules={{ required: true }}
 							/>
 							<div className='button-container'>
-								<Button secondary size='small' onClick={handleCancel}><Icon name='cancel' className='icon'/>Cancel</Button>
-								<Button primary size='small' onClick={handleSubmit(handleSave)}><Icon name='check' className='icon'/>Save</Button>
+								<Button secondary size='small' onClick={handleCancel}><GoX className='icon'/>Cancel</Button>
+								<Button primary size='small' onClick={handleSubmit(handleSave)}><GoCheck className='icon'/>Save</Button>
 							</div>
 						</Form>
 						:
