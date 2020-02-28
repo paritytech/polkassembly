@@ -1,20 +1,21 @@
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import AuthService from '../../services/auth';
-import { Context, MessageType } from '../../types';
+import { Context, MessageType, NotificationPreferencesType } from '../../types';
 import messages from '../../utils/messages';
 
-interface argsType {
-	post_participated: boolean
-	post_created: boolean
-	new_proposal: boolean
-	own_proposal: boolean
-}
-
-export default async (parent, { post_participated, post_created, new_proposal, own_proposal }: argsType, ctx: Context): Promise<MessageType> => {
+export default async (parent, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	const authServiceInstance = new AuthService();
-	await authServiceInstance.ChangeNotificationPrefrence(token, post_participated, post_created, new_proposal, own_proposal);
+	await authServiceInstance.ChangeNotificationPreference(
+		token,
+		{
+			postParticipated,
+			postCreated,
+			newProposal,
+			ownProposal
+		}
+	);
 
 	return { message: messages.NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL };
 };
