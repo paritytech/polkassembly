@@ -49,10 +49,10 @@ describe('changeNotificationPreference mutation', () => {
 
 	it('should be able to change Notification Preference', async () => {
 		await changeNotificationPreference(null, {
-			post_participated: false,
-			post_created: false,
-			new_proposal: true,
-			own_proposal: false
+			postParticipated: false,
+			postCreated: false,
+			newProposal: true,
+			ownProposal: false
 		}, fakectx);
 
 		const notification = await Notification
@@ -70,10 +70,10 @@ describe('changeNotificationPreference mutation', () => {
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
 			await changeNotificationPreference(null, {
-				post_participated: false,
-				post_created: false,
-				new_proposal: true,
-				own_proposal: false
+				postParticipated: false,
+				postCreated: false,
+				newProposal: true,
+				ownProposal: false
 			}, fakectx);
 		} catch (error) {
 			expect(error).to.exist;

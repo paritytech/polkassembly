@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { bool } from '@polkadot/types';
 
 interface FileType {
     path: string
