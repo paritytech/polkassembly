@@ -16,5 +16,5 @@ export default async (parent, { post_participated, post_created, new_proposal, o
 	const authServiceInstance = new AuthService();
 	await authServiceInstance.ChangeNotificationPrefrence(token, post_participated, post_created, new_proposal, own_proposal);
 
-	return { message: messages.NOTIFICATION_PREFRENCE_CHANGE_SUCCESSFUL };
+	return { message: messages.NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL };
 };
