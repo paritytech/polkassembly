@@ -34,6 +34,7 @@ const sendSubscriptionMail = async (comment): Promise<MessageType> => {
 
 	if (Array.isArray(subscriptions)) {
 		subscriptions.forEach(async subscription => {
+			// users shouldn't be notified for their own comments
 			if (subscription.user_id === author_id) {
 				return;
 			}
