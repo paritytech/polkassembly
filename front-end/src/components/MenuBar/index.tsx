@@ -1,9 +1,11 @@
 import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
@@ -68,11 +70,9 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		<>
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={className} inverted widths={2} id='menubar'>
-					<Menu.Item onClick={handleClose} as={Link} to="/" id='title'>
-						Polkassembly
-					</Menu.Item>
+					<Menu.Item as={Link} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <Icon name="close" />}
+						{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
 					</Menu.Item>
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
@@ -102,7 +102,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
-					<Menu.Item as={Link} to="/" id='title'>Polkassembly</Menu.Item>
+					<Menu.Item as={Link} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map(item => <Menu.Item as={Link} className='desktop_items' key={item.key} {...item} />)}
 					<Menu.Menu position="right">
 						{username
@@ -126,10 +126,10 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 export default styled(MenuBar)`
 	&.ui.menu, .ui.inverted.menu {
-		font-family: font_mono;
-		background: black_full;
+		font-family: font_secondary;
+		background-color: black_full;
 		border-radius: 0rem;
-		letter-spacing: 1.1;
+		letter-spacing: 0.2px;
 
 		.item {
 			color: grey_secondary;
@@ -145,6 +145,16 @@ export default styled(MenuBar)`
 
 		i.icon {
 			color: grey_secondary;
+		}
+
+		.logo {
+			img {
+				width: 16rem;
+
+				@media only screen and (max-width: 992px) {
+					width: 10rem;
+				}
+			}
 		}
 	}
 
@@ -169,7 +179,8 @@ export default styled(MenuBar)`
 				text-align: left;
 				margin: auto 0;
 				left: 2rem;
-				top: 0.4rem;
+				top: 0.3rem;
+				padding-top: 1rem;
 				border-radius: 0.8rem!important;
 			}
 
@@ -218,11 +229,14 @@ export default styled(MenuBar)`
 
 	@media only screen and (min-width: 992px) {
 		&.ui.menu {
-			padding: 1.5rem 2rem;
-			font-size: md;
+			padding: 0.5rem 2rem;
+			font-size: 1.75rem;
 			.item {
 				padding: 0.5rem 0.5rem;
 				margin: 0 1.5rem;
+				:hover {
+					background-color: black_full !important;
+				}
 			}
 		}
 

@@ -62,7 +62,7 @@ export default styled(Discussion)`
 	border-color: grey_light;
 	
 	&:hover {
-		background-color: grey_app_background;
+		background-color: white_transparent;
         border-style: solid;
         border-width: 1px;
         text-decoration: none;
@@ -89,7 +89,7 @@ export default styled(Discussion)`
 
 	.statusSegment {
 		min-width: 10rem!important;
-		max-width: 10rem;
+		max-width: 11rem;
 	}
 
     .statusTag{
