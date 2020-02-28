@@ -89,7 +89,7 @@ export default styled(Discussion)`
 
 	.statusSegment {
 		min-width: 10rem!important;
-		max-width: 10rem;
+		max-width: 11rem;
 	}
 
     .statusTag{
