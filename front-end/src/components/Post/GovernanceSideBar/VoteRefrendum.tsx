@@ -185,7 +185,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 						<Form.Field className='button-container' width={8}>
 							<Button
 								fluid
-								primary
+								className='primary positive'
 								disabled={!apiReady}
 								onClick={() => voteRefrendum(true)}
 							>
