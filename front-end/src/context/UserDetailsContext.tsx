@@ -11,6 +11,12 @@ const initialUserDetailsContext : UserDetailsContextType = {
 	email_verified: false,
 	id: null,
 	name: null,
+	notification: {
+		newProposal: false,
+		ownProposal: true,
+		postCreated: true,
+		postParticipated: true
+	},
 	picture: null,
 	setUserDetailsContextState : (): void => {
 		throw new Error('setUserDetailsContextState function must be overridden');
@@ -29,6 +35,7 @@ try {
 			username,
 			email,
 			email_verified,
+			notification,
 			'https://hasura.io/jwt/claims': claims
 		} = tokenPayload;
 
@@ -43,6 +50,9 @@ try {
 		}
 		if (email) {
 			initialUserDetailsContext.email = email;
+		}
+		if (notification) {
+			initialUserDetailsContext.notification = notification;
 		}
 		initialUserDetailsContext.email_verified = email_verified || false;
 		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);

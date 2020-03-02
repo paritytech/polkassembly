@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 
 import ContentForm from '../ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddPostCommentMutation, useNotificationQuery, usePostSubscribeMutation, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import { useAddPostCommentMutation, usePostSubscribeMutation, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
@@ -25,7 +25,6 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
-	const { data } = useNotificationQuery();
 
 	if (!id) return <div>You must loggin to comment.</div>;
 
