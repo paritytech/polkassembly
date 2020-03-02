@@ -8,6 +8,7 @@ import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
 dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
+const treasuryTopicId = process.env.TREASURY_TOPIC_ID;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 const proposalBotUserId = process.env.PROPOSAL_BOT_USER_ID;
@@ -303,9 +304,9 @@ export const addDiscussionPostAndTreasurySpendProposal = async ({
 	proposer: string;
 	onchainTreasuryProposalId: number;
 }): Promise<void> => {
-	if (!democracyTopicId) {
+	if (!treasuryTopicId) {
 		throw new Error(
-			'Please specify an environment variable for the DEMOCRACY_TOPIC_ID.'
+			'Please specify an environment variable for the TREASURY_TOPIC_ID.'
 		);
 	}
 	if (!proposalPostTypeId) {
@@ -325,7 +326,7 @@ export const addDiscussionPostAndTreasurySpendProposal = async ({
 		content: DEFAULT_DESCRIPTION,
 		proposerAddress: proposer,
 		title: DEFAULT_TITLE,
-		topicId: Number(democracyTopicId),
+		topicId: Number(treasuryTopicId),
 		typeId: Number(proposalPostTypeId)
 	};
 
