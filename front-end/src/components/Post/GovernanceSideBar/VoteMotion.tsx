@@ -135,7 +135,6 @@ const VoteMotion = ({
 					<AddressDropdown
 						accounts={accounts}
 						defaultAddress={address || accounts[0]?.address}
-						defaultAddressName={accounts[0]?.meta.name || ''}
 						onAccountChange={onAccountChange}
 					/>
 				</Form.Field>
