@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express';
 
+import notification from './query/notification';
 import userQuery from './query/user';
 import usersQuery from './query/users';
 import subscription from './query/subscription';
@@ -29,7 +30,8 @@ import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
-import notificationPreferencesType from './type/notificationPreferencesType';
+import notificationPreferencesType from './type/notificationPreferences';
+import notificationPreferencesInput from './type/notificationPreferencesInput';
 import publicUser from './type/publicUser';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
@@ -43,6 +45,7 @@ export default gql`
 	${loginResponseType}
 	${messageType}
 	${notificationPreferencesType}
+	${notificationPreferencesInput}
 	${publicUser}
 	${subscriptionType}
 	${tokenType}
@@ -50,6 +53,7 @@ export default gql`
 	${userType}
 
 	type Query {
+		${notification}
 		${subscription}
 		${tokenQuery}
 		${userQuery}

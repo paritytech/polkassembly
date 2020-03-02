@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 
 import ContentForm from '../ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddPostCommentMutation, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import { useAddPostCommentMutation, useNotificationQuery, usePostSubscribeMutation, ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
@@ -24,12 +24,32 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
 	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
+	const [postSubscribeMutation] = usePostSubscribeMutation();
+	const { data } = useNotificationQuery();
 
 	if (!id) return <div>You must loggin to comment.</div>;
 
 	const handleCancel = () => {
 		setContent('');
 		onHide();
+	};
+
+	const createSubscription = (postId: number) => {
+		if (!data?.notification?.postParticipated) {
+			return;
+		}
+
+		postSubscribeMutation({
+			variables: {
+				postId
+			}
+		})
+			.then(({ data }) => {
+				if (data && data.postSubscribe && data.postSubscribe.message) {
+					console.log(data.postSubscribe.message);
+				}
+			})
+			.catch((e) => console.error('Error subscribing to post',e));
 	};
 
 	const handleSave = () => {
@@ -45,6 +65,7 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 					setContent('');
 					onHide();
 					refetch();
+					createSubscription(postId);
 				} else {
 					throw new Error('No data returned from the saving comment query');
 				}
@@ -81,6 +102,6 @@ export default styled(PostCommentForm)`
 	.button-container {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;	
+		justify-content: flex-end;
 	}
 `;

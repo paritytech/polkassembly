@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation } from '../../generated/graphql';
+import { useCreatePostMutation, useNotificationQuery, usePostSubscribeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import TopicsRadio from './TopicsRadio';
 import { NotificationStatus } from '../../types';
@@ -28,8 +28,28 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { control, errors, handleSubmit } = useForm();
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
+	const [postSubscribeMutation] = usePostSubscribeMutation();
+	const { data } = useNotificationQuery();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
+
+	const createSubscription = (postId: number) => {
+		if (!data?.notification?.postCreated) {
+			return;
+		}
+
+		postSubscribeMutation({
+			variables: {
+				postId
+			}
+		})
+			.then(({ data }) => {
+				if (data && data.postSubscribe && data.postSubscribe.message) {
+					console.log(data.postSubscribe.message);
+				}
+			})
+			.catch((e) => console.error('Error subscribing to post',e));
+	};
 
 	const handleSend = () => {
 		if (currentUser.id && title && content && selectedTopic){
@@ -48,6 +68,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						message: 'Post created successfully.',
 						status: NotificationStatus.SUCCESS
 					});
+					createSubscription(postId);
 				} else {
 					throw Error('Error in post creation');
 				}

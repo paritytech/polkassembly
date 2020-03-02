@@ -7,6 +7,7 @@ import Fullname from './fullname';
 import Password from  './password';
 import Username from './username';
 import Address from './address';
+import Notification from './notification';
 
 interface Props {
 	className?: string
@@ -26,6 +27,8 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<Password/>
 				<Divider/>
 				<Address/>
+				<Divider/>
+				<Notification />
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
 		</Grid>
@@ -51,7 +54,7 @@ export default styled(Settings)`
 		margin-top: 0.2rem;
 	}
 
-	.ui.form:not(.unstackable) 
+	.ui.form:not(.unstackable)
 	.fields:not(.unstackable)>.ten.wide.field {
 
 		@media only screen and (max-width: 767px)  {
@@ -63,7 +66,7 @@ export default styled(Settings)`
 		}
 	}
 
-	.ui.form:not(.unstackable) 
+	.ui.form:not(.unstackable)
 	.fields:not(.unstackable)>.six.wide.field {
 
 		@media only screen and (max-width: 767px)  {
