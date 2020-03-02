@@ -10,7 +10,7 @@ import ExtensionNotDetected from '../../ExtensionNotDetected';
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
-import VoteRefrendum from './VoteRefrendum';
+import VoteReferendum from './VoteReferendum';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 
 interface Props {
@@ -153,7 +153,7 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 						/>}
 
 					{isReferendum &&
-						<VoteRefrendum
+						<VoteReferendum
 							referendumId={onchainId}
 							api={api}
 							apiReady={apiReady}

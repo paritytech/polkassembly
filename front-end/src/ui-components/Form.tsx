@@ -42,7 +42,9 @@ const StyledForm = styled(SUIForm)`
 	}
 
 	.text-muted {
+		font-size: sm;
 		color: grey_primary;
+		margin-bottom: 1.2rem;
 
 		a {
 			color: grey_primary;
@@ -56,16 +58,17 @@ const StyledForm = styled(SUIForm)`
 
 		font-size: sm;
 		
-		.field
+		.field {
 			> label {
 				font-size: input_text_size;
 				font-weight: 500;
 				color: black_primary;
 				margin-bottom: 0.6rem;
+			}
 		}
 
 		.fields {
-			margin-bottom: 2rem;
+			margin-bottom: 1.2rem;
 
 			@media only screen and (max-width: 767px) {
 				margin-bottom: 1.25rem;
@@ -84,6 +87,7 @@ const StyledForm = styled(SUIForm)`
 			border-radius: 0rem;
 			text-indent: 0rem;
 			padding: 1rem;
+			margin-bottom: 1.2rem;
 			&:focus {
 				font-family: font_default;
 				font-size: 1.3rem;
@@ -101,8 +105,43 @@ const StyledForm = styled(SUIForm)`
 			background-color: grey_light;
 		}
 
-	@media only screen and (max-width: 576px) {
-		margin-top: 0rem;
-		padding: 2rem;
+		@media only screen and (max-width: 576px) {
+			margin-top: 0rem;
+			padding: 2rem;
+		}
+	}
+
+	.ui.toggle.checkbox {
+		label {
+			font-size: sm;
+			font-weight: 400;
+			color: black_text !important;
+		}
+
+		input:checked~label:before {
+			background-color: pink_primary !important;
+		}
+	}
+
+	.ui.selection.dropdown {
+		margin-bottom: 1.2rem;
+		border-radius: 0rem;
+	}
+
+	.ui.dropdown {
+		.menu .active.item {
+			font-weight: 500;
+		}
+
+		.menu>.item:hover {
+			background-color: grey_light;
+		}
+	}
+
+	.ui.selection.dropdown:focus,
+	.ui.selection.active.dropdown,
+	.ui.selection.active.dropdown:hover,
+	.ui.selection.active.dropdown .menu {
+		border-color: grey_light;
 	}
 	`;

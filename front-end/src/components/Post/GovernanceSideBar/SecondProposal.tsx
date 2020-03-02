@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps, Grid } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -87,9 +87,8 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 	return (
 		<div className={className}>
 			<div className='card'>
-				<h2>Seconding</h2>
-				<Grid>
-					{/* <Grid.Column width={6}>
+				<h4>Seconding</h4>
+				{/* <Grid.Column width={6}>
 						<div><b>Deposit Amount</b></div>
 						<div>100 KSM</div>
 					</Grid.Column>
@@ -101,31 +100,30 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 						<div><b>Locked KSM</b></div>
 						<div>21200 KSM</div>
 					</Grid.Column> */}
-					<Form standalone={false}>
-						<Form.Group>
-							<Form.Field>
-								<label>Vote with account
-									<HelperTooltip
-										content='You can choose an account from the Polkadot-js extension.'
-									/>
-								</label>
-								<Dropdown
-									onChange={onAccountChange}
-									defaultValue={defaultAddress || accounts[0].address}
-									selection
-									options={addressOptions}
+				<Form standalone={false}>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label>Vote with account
+								<HelperTooltip
+									content='You can choose an account from the Polkadot-js extension.'
 								/>
-								<Button
-									primary
-									disabled={!apiReady}
-									onClick={secondProposal}
-								>
-									SECOND
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</Grid>
+							</label>
+							<Dropdown
+								onChange={onAccountChange}
+								defaultValue={defaultAddress || accounts[0].address}
+								selection
+								options={addressOptions}
+							/>
+							<Button
+								primary
+								disabled={!apiReady}
+								onClick={secondProposal}
+							>
+								Second
+							</Button>
+						</Form.Field>
+					</Form.Group>
+				</Form>
 			</div>
 		</div>
 	);
@@ -134,7 +132,7 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 export default styled(SecondProposal)`
 	.card {
 		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
+		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
