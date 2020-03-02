@@ -123,9 +123,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
 				<GovenanceSideBar
+					isMotion={isMotion}
 					isProposal={isProposal}
 					isReferendum={isReferendum}
 					onchainId={onchainId}
+					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
 			</Grid.Column>
