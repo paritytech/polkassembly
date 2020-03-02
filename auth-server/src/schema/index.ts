@@ -31,6 +31,7 @@ import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
 import notificationType from './type/notification';
+import notificationPreferencesType from './type/notificationPreferencesType';
 import publicUser from './type/publicUser';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
@@ -44,6 +45,7 @@ export default gql`
 	${loginResponseType}
 	${messageType}
 	${notificationType}
+	${notificationPreferencesType}
 	${publicUser}
 	${subscriptionType}
 	${tokenType}
