@@ -16,9 +16,9 @@ export default async (parent, args, ctx: Context): Promise<NotificationPreferenc
 		.first();
 
 	return {
-		postParticipated: notification.post_participated,
-		postCreated: notification.post_created,
-		newProposal: notification.new_proposal,
-		ownProposal: notification.own_proposal
+		postParticipated: notification && notification.post_participated,
+		postCreated: notification && notification.post_created,
+		newProposal: notification && notification.new_proposal,
+		ownProposal: notification && notification.own_proposal
 	};
 };
