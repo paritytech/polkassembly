@@ -104,9 +104,4 @@ export default styled(PostCommentForm)`
 		display: flex;
 		justify-content: flex-end;
 	}
-
-	.icon {
-		margin-top: -0.2rem!important;
-		opacity: 1;
-	}
 `;
