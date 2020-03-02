@@ -1,0 +1,3 @@
+- args:
+    name: comment_create
+  type: delete_event_trigger
