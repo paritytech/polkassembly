@@ -12,6 +12,7 @@ import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
 import changePasswordMutation from './mutation/changePassword';
 import changeNameMutation from './mutation/changeName';
+import changeNotificationPreference from './mutation/changeNotificationPreference';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
@@ -28,6 +29,7 @@ import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';
+import notificationPreferencesType from './type/notificationPreferencesType';
 import publicUser from './type/publicUser';
 import subscriptionType from './type/subscription';
 import tokenType from './type/token';
@@ -40,6 +42,7 @@ export default gql`
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
+	${notificationPreferencesType}
 	${publicUser}
 	${subscriptionType}
 	${tokenType}
@@ -60,6 +63,7 @@ export default gql`
 		${changeUsernameMutation}
 		${changeEmailMutation}
 		${changePasswordMutation}
+		${changeNotificationPreference}
 		${changeNameMutation}
 		${loginMutation}
 		${logoutMutation}
