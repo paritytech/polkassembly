@@ -45,6 +45,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	];
 
 	const loggedInItems = [
+		{ content:'Notifications', icon:'bell', key:'notification', to:'/notification-settings' },
 		{ content:'Settings', icon:'cog', key:'settings', to:'/settings' },
 		{ content: 'Logout', icon:'sign-out', key:'signout', onClick: handleLogout, to:'/' }
 	];

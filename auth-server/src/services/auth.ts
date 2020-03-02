@@ -331,7 +331,7 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType) {
+	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType): Promise<string> {
 		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 		let notification = await Notification
@@ -360,6 +360,8 @@ export default class AuthService {
 			.query()
 			.patch(update)
 			.findById(notification.id);
+
+		return this.getSignedToken(user);
 	}
 
 	public async resendVerifyEmailToken(token: string) {
