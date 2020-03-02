@@ -96,7 +96,6 @@ const Notification = (): JSX.Element => {
 			</Form.Group>
 			<Form.Group>
 				<Form.Field width={6}>
-					<label>&nbsp;</label>
 					{error && <FilteredError text={error.message}/>}
 					<Button
 						secondary
