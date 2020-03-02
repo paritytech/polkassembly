@@ -65,6 +65,11 @@ spec:
             configMapKeyRef:
               key: HASURA_POST_SUBSCRIPTION_SECRET
               name: auth-server-config
+        - name: HASURA_EVENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_EVENT_SECRET
+              name: auth-server-config
         - name: DOMAIN_NAME
           valueFrom:
             configMapKeyRef:
