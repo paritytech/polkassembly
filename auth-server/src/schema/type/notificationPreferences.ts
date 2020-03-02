@@ -1,5 +1,5 @@
 export default `
-	input NotificationPreferencesType {
+	type NotificationPreferences {
 		postParticipated: Boolean
         postCreated: Boolean
         newProposal: Boolean

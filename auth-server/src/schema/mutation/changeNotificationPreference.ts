@@ -1,5 +1,5 @@
 export default `
     changeNotificationPreference(
-        notificationPreferences: NotificationPreferencesType
+        notificationPreferences: NotificationPreferencesInput
     ): Message
 `;
