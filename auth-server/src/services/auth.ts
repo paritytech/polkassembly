@@ -11,12 +11,13 @@ import {
 	sendResetPasswordEmail
 } from './email';
 import Address from '../model/Address';
+import Notification from '../model/Notification';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
-import { AuthObjectType, JWTPayploadType, Role, UserObjectType } from '../types';
+import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
@@ -32,6 +33,12 @@ const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
 const KUSAMA = 'kusama';
+const NOTIFICATION_DEFAULTS = {
+	post_participated: true,
+	post_created: true,
+	new_proposal: false,
+	own_proposal: true
+};
 
 export default class AuthService {
 	constructor(){}
@@ -132,6 +139,14 @@ export default class AuthService {
 				username,
 				name,
 				email_verified: false
+			});
+
+		await Notification
+			.query()
+			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+			.insert({
+				user_id: user.id,
+				...NOTIFICATION_DEFAULTS
 			});
 
 		if (email) {
@@ -321,6 +336,37 @@ export default class AuthService {
 		const addresses = await getAddressesFromUserId(user.id);
 
 		return this.getSignedToken(user, addresses);
+	}
+
+	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType) {
+		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+		let notification = await Notification
+			.query()
+			.where('user_id', user.id)
+			.first();
+
+		if (!notification) {
+			notification = await Notification
+				.query()
+				.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+				.insert({
+					user_id: user.id,
+					...NOTIFICATION_DEFAULTS
+				});
+		}
+
+		const update = {
+			post_participated: postParticipated === undefined ? notification.post_participated: postParticipated,
+			post_created: postCreated === undefined ? notification.post_created: postCreated,
+			new_proposal: newProposal === undefined ? notification.new_proposal: newProposal,
+			own_proposal: ownProposal === undefined ? notification.own_proposal: ownProposal
+		};
+
+		await Notification
+			.query()
+			.patch(update)
+			.findById(notification.id);
 	}
 
 	public async resendVerifyEmailToken(token: string) {
