@@ -36,7 +36,7 @@ export default {
 	NAME_CHANGED_SUCCESSFULLY: 'Name changed succefully.',
 	NO_CORRESPONDING_REFRESH_TOKEN: 'No corresponding refresh-token found.',
 	NO_USER_FOUND_WITH_USERNAME: 'No user found with this username',
-	NOTIFICATION_PREFRENCE_CHANGE_SUCCESSFUL: 'Notification preference changed successfully.',
+	NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL: 'Notification preference changed successfully.',
 	OLD_AND_NEW_PASSWORD_MUST_DIFFER: 'Your new password must be different from your old one.',
 	PASSWORD_CHANGE_SUCCESSFUL: 'Password successfully changed.',
 	USERNAME_CHANGE_SUCCESSFUL: 'Username successfully changed.',
