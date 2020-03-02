@@ -5,6 +5,7 @@ import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Select
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
+import Balance from '../../Balance';
 import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import HelperTooltip from '../../../ui-components/HelperTooltip';
@@ -150,6 +151,9 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								selection
 								options={addressOptions}
 							/>
+							{api ? (
+								<Balance api={api} address={address} />
+							) : null}
 							<label>Vote Lock
 								<HelperTooltip
 									content='You can multiply your votes by locking your tokens for longer periods of time.'

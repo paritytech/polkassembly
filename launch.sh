@@ -31,5 +31,8 @@ sleep 5
 printf "\n\n-- hasura migration\n"
 cd hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-secret ip7itpC5L6R3RbNE4vkdZfsN && cd ../../..;
 
+printf "\n\n-- hasura reload metadata\n"
+cd hasura/hasura-migrations && hasura-dev metadata reload --admin-secret ip7itpC5L6R3RbNE4vkdZfsN && cd ../../..;
+
 printf "\n\n-- launching front-end\n"
 cd front-end && yarn && yarn start &> front-end.log &
