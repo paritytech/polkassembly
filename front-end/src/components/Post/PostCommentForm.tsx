@@ -18,7 +18,7 @@ interface Props {
 }
 
 const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
-	const { id } = useContext(UserDetailsContext);
+	const { id, notification } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
 	const { control, errors, handleSubmit } = useForm();
 
@@ -34,7 +34,7 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	};
 
 	const createSubscription = (postId: number) => {
-		if (!data?.notification?.postParticipated) {
+		if (!notification?.postParticipated) {
 			return;
 		}
 

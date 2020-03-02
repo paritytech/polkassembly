@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 import ContentForm from '../../components/ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation, useNotificationQuery, usePostSubscribeMutation } from '../../generated/graphql';
+import { useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import TopicsRadio from './TopicsRadio';
 import { NotificationStatus } from '../../types';
@@ -29,12 +29,11 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
-	const { data } = useNotificationQuery();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
 
 	const createSubscription = (postId: number) => {
-		if (!data?.notification?.postCreated) {
+		if (!currentUser?.notification?.postCreated) {
 			return;
 		}
 
