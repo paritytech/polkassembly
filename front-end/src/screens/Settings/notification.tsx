@@ -71,7 +71,7 @@ const Notification = (): JSX.Element => {
 		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field>
-					<label>Notification Preference</label>
+					<label>Notification Preferences</label>
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>
