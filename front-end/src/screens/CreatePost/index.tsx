@@ -34,7 +34,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { history } = useRouter();
 
 	const createSubscription = (postId: number) => {
-		if (!data?.notification?.post_created) {
+		if (!data?.notification?.postCreated) {
 			return;
 		}
 

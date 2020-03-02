@@ -35,7 +35,7 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	};
 
 	const createSubscription = (postId: number) => {
-		if (!data?.notification?.post_participated) {
+		if (!data?.notification?.postParticipated) {
 			return;
 		}
 
