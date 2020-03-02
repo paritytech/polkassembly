@@ -73,30 +73,31 @@ export const RESEND_VERIFY_EMAIL_TOKEN = gql`
 
 export const CHANGE_NOTIFICATION_PREFERENCE = gql`
 	mutation changeNotificationPreference(
-		$post_participated: Boolean
-		$post_created: Boolean
-		$new_proposal: Boolean
-		$own_proposal: Boolean
+		$postParticipated: Boolean
+		$postCreated: Boolean
+		$newProposal: Boolean
+		$ownProposal: Boolean
 	) {
 		changeNotificationPreference(
-			post_participated: $post_participated
-			post_created: $post_created
-			new_proposal: $new_proposal
-			own_proposal: $own_proposal
+			notificationPreferences: {
+				postParticipated: $postParticipated,
+				postCreated: $postCreated,
+				newProposal: $newProposal,
+				ownProposal: $ownProposal
+			}
 		) {
 			message
 		}
 	}
 `;
 
-export const NOTIFICATION=gql`
+export const NOTIFICATION = gql`
     query Notification {
 		notification {
-			post_created
-			post_participated
-			new_proposal
-			own_proposal
+			postParticipated
+			postCreated
+			newProposal
+			ownProposal
 		}
     }
 `;
-

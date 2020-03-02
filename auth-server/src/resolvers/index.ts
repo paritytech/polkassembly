@@ -16,6 +16,8 @@ import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
+
+import notification from './query/notification';
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';

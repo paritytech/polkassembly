@@ -9,28 +9,29 @@ import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 
 const Notification = (): JSX.Element => {
-	const [post_participated, set_post_participated] = useState<boolean>(false);
-	const [post_created, set_post_created] = useState<boolean>(false);
-	const [new_proposal, set_new_proposal] = useState<boolean>(false);
-	const [own_proposal, set_own_proposal] = useState<boolean>(false);
+	const [changed, setChanged] = useState<boolean>(false);
+	const [postParticipated, setPostParticipated] = useState<boolean>(false);
+	const [postCreated, setPostCreated] = useState<boolean>(false);
+	const [newProposal, setNewProposal] = useState<boolean>(false);
+	const [ownProposal, setOwnProposal] = useState<boolean>(false);
 	const [changeNotificationPreferenceMutation, { error }] = useChangeNotificationPreferenceMutation();
 	const { data } = useNotificationQuery();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
-		set_post_participated(data?.notification?.post_participated || false);
-		set_post_created(data?.notification?.post_created || false);
-		set_new_proposal(data?.notification?.new_proposal || false);
-		set_own_proposal(data?.notification?.own_proposal || false);
+		setPostParticipated(data?.notification?.postParticipated || false);
+		setPostCreated(data?.notification?.postCreated || false);
+		setNewProposal(data?.notification?.newProposal || false);
+		setOwnProposal(data?.notification?.ownProposal || false);
 	}, [data]);
 
 	const updatePreference = () => {
 		changeNotificationPreferenceMutation({
 			variables: {
-				new_proposal,
-				own_proposal,
-				post_created,
-				post_participated
+				newProposal,
+				ownProposal,
+				postCreated,
+				postParticipated
 			}
 		})
 			.then(({ data }) => {
@@ -40,6 +41,7 @@ const Notification = (): JSX.Element => {
 						message: data.changeNotificationPreference.message,
 						status: NotificationStatus.SUCCESS
 					});
+					setChanged(false);
 				}
 			}).catch((e) => {
 				queueNotification({
@@ -52,62 +54,66 @@ const Notification = (): JSX.Element => {
 	};
 
 	const handlePostParticipatedChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-		set_post_participated(data.checked || false);
+		setPostParticipated(data.checked || false);
+		setChanged(true);
 	};
 
 	const handlePostCreatedChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-		set_post_created(data.checked || false);
+		setPostCreated(data.checked || false);
+		setChanged(true);
 	};
 
 	const handleNewProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-		set_new_proposal(data.checked || false);
+		setNewProposal(data.checked || false);
+		setChanged(true);
 	};
 
 	const handleOwnProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-		set_own_proposal(data.checked || false);
+		setOwnProposal(data.checked || false);
+		setChanged(true);
 	};
 
 	return (
 		<Form standalone={false}>
 			<Form.Group>
 				<Form.Field>
-					<label>Notification Preference</label>
+					<label>Notification Preferences</label>
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>
 				<Form.Field>
-					<Checkbox label='Subscribe to post you participate in' checked={post_participated} toggle onChange={handlePostParticipatedChange} />
+					<Checkbox label='Subscribe to post you participate in' checked={postParticipated} toggle onChange={handlePostParticipatedChange} />
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>
 				<Form.Field>
-					<Checkbox label='Subscribe to post you created' checked={post_created} toggle onChange={handlePostCreatedChange} />
+					<Checkbox label='Subscribe to post you created' checked={postCreated} toggle onChange={handlePostCreatedChange} />
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>
 				<Form.Field>
-					<Checkbox label='Notified for new proposal in council/motion/referendum' checked={new_proposal} toggle onChange={handleNewProposalChange} />
+					<Checkbox label='Notified for new proposal in council/motion/referendum' checked={newProposal} toggle onChange={handleNewProposalChange} />
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>
 				<Form.Field>
-					<Checkbox label='Notified for your own proposals' checked={own_proposal} toggle onChange={handleOwnProposalChange} />
+					<Checkbox label='Notified for your own proposals' checked={ownProposal} toggle onChange={handleOwnProposalChange} />
 				</Form.Field>
 			</Form.Group>
-			<Form.Group>
-				<Form.Field width={6}>
-					<label>&nbsp;</label>
-					{error && <FilteredError text={error.message}/>}
-					<Button
-						secondary
-						onClick={updatePreference}
-						type="submit"
-					>
-					Change Preference
-					</Button>
-				</Form.Field>
-			</Form.Group>
-
+			{changed ? (
+				<Form.Group>
+					<Form.Field width={6}>
+						{error && <FilteredError text={error.message}/>}
+						<Button
+							secondary
+							onClick={updatePreference}
+							type="submit"
+						>
+						Save
+						</Button>
+					</Form.Field>
+				</Form.Group>
+			): null}
 		</Form>
 	);
 };
