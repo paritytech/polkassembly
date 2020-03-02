@@ -2,28 +2,29 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Checkbox, CheckboxProps } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
-import { useChangeNotificationPreferenceMutation, useNotificationQuery } from '../../generated/graphql';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useChangeNotificationPreferenceMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import FilteredError from '../../ui-components/FilteredError';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 
 const Notification = (): JSX.Element => {
+	const { notification } = useContext(UserDetailsContext);
 	const [changed, setChanged] = useState<boolean>(false);
 	const [postParticipated, setPostParticipated] = useState<boolean>(false);
 	const [postCreated, setPostCreated] = useState<boolean>(false);
 	const [newProposal, setNewProposal] = useState<boolean>(false);
 	const [ownProposal, setOwnProposal] = useState<boolean>(false);
 	const [changeNotificationPreferenceMutation, { error }] = useChangeNotificationPreferenceMutation();
-	const { data } = useNotificationQuery();
 	const { queueNotification } = useContext(NotificationContext);
 
 	useEffect(() => {
-		setPostParticipated(data?.notification?.postParticipated || false);
-		setPostCreated(data?.notification?.postCreated || false);
-		setNewProposal(data?.notification?.newProposal || false);
-		setOwnProposal(data?.notification?.ownProposal || false);
-	}, [data]);
+		setPostParticipated(notification?.postParticipated || false);
+		setPostCreated(notification?.postCreated || false);
+		setNewProposal(notification?.newProposal || false);
+		setOwnProposal(notification?.ownProposal || false);
+	}, [notification]);
 
 	const updatePreference = () => {
 		changeNotificationPreferenceMutation({
