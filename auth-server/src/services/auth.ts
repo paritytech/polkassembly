@@ -17,7 +17,7 @@ import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
-import { AuthObjectType, JWTPayploadType, Role, UserObjectType } from '../types';
+import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
@@ -338,7 +338,7 @@ export default class AuthService {
 		return this.getSignedToken(user, addresses);
 	}
 
-	public async ChangeNotificationPrefrence(token: string, post_participated: boolean, post_created: boolean, new_proposal: boolean, own_proposal: boolean) {
+	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType) {
 		const userId = await getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 		let notification = await Notification
@@ -357,10 +357,10 @@ export default class AuthService {
 		}
 
 		const update = {
-			post_participated: post_participated === undefined ? notification.post_participated: post_participated,
-			post_created: post_created === undefined ? notification.post_created: post_created,
-			new_proposal: new_proposal === undefined ? notification.new_proposal: new_proposal,
-			own_proposal: own_proposal === undefined ? notification.own_proposal: own_proposal
+			post_participated: postParticipated === undefined ? notification.post_participated: postParticipated,
+			post_created: postCreated === undefined ? notification.post_created: postCreated,
+			new_proposal: newProposal === undefined ? notification.new_proposal: newProposal,
+			own_proposal: ownProposal === undefined ? notification.own_proposal: ownProposal
 		};
 
 		await Notification

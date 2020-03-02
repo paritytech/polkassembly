@@ -9,7 +9,7 @@ import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 import { MessageType } from '../types';
 
-const sendSubscriptionMail = async (comment): Promise<MessageType> => {
+const sendPostCommentSubscriptionMail = async (comment): Promise<MessageType> => {
 	const { post_id, author_id } = comment;
 
 	if (!post_id) {
@@ -34,6 +34,7 @@ const sendSubscriptionMail = async (comment): Promise<MessageType> => {
 
 	if (Array.isArray(subscriptions)) {
 		subscriptions.forEach(async subscription => {
+			// users shouldn't be notified for their own comments
 			if (subscription.user_id === author_id) {
 				return;
 			}
@@ -134,7 +135,7 @@ export const commentCreateHook = async (req: Request, res: Response) => {
 
 	const comment = req.body?.event?.data?.new || {};
 
-	const result = await sendSubscriptionMail(comment);
+	const result = await sendPostCommentSubscriptionMail(comment);
 
 	res.json(result);
 };
