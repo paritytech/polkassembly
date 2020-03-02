@@ -50,7 +50,7 @@ PORT=8010
 PROPOSAL_BOT_USER_ID=1234
 NODE_ENV=development
 DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
-HASURA_POST_SUBSCRIPTION_SECRET="<shared secret key with hasura>"
+HASURA_EVENT_SECRET="<shared secret key with hasura>"
 DOMAIN_NAME="polkassembly.io"
 DOMAIN_PROTOCOL="http://"
 ```

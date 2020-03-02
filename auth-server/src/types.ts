@@ -90,3 +90,10 @@ export interface AddressLinkStartType extends MessageType {
 export interface UndoEmailChangeResponseType extends ChangeResponseType {
     email: string
 }
+
+export interface NotificationPreferencesType {
+    postParticipated: boolean,
+    postCreated: boolean,
+    newProposal: boolean,
+    ownProposal: boolean
+}
