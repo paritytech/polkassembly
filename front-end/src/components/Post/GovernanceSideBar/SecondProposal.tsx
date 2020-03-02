@@ -32,7 +32,7 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 			return;
 		}
 
-		if (!proposalId) {
+		if (!proposalId && proposalId !== 0) {
 			console.error('proposalId not set');
 			return;
 		}

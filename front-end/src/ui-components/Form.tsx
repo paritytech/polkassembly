@@ -144,4 +144,4 @@ const StyledForm = styled(SUIForm)`
 	.ui.selection.active.dropdown .menu {
 		border-color: grey_light;
 	}
-	`;
+`;
