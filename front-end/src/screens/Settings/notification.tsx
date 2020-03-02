@@ -9,6 +9,7 @@ import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 
 const Notification = (): JSX.Element => {
+	const [changed, setChanged] = useState<boolean>(false);
 	const [post_participated, set_post_participated] = useState<boolean>(false);
 	const [post_created, set_post_created] = useState<boolean>(false);
 	const [new_proposal, set_new_proposal] = useState<boolean>(false);
@@ -40,6 +41,7 @@ const Notification = (): JSX.Element => {
 						message: data.changeNotificationPreference.message,
 						status: NotificationStatus.SUCCESS
 					});
+					setChanged(false);
 				}
 			}).catch((e) => {
 				queueNotification({
@@ -53,18 +55,22 @@ const Notification = (): JSX.Element => {
 
 	const handlePostParticipatedChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_post_participated(data.checked || false);
+		setChanged(true);
 	};
 
 	const handlePostCreatedChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_post_created(data.checked || false);
+		setChanged(true);
 	};
 
 	const handleNewProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_new_proposal(data.checked || false);
+		setChanged(true);
 	};
 
 	const handleOwnProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		set_own_proposal(data.checked || false);
+		setChanged(true);
 	};
 
 	return (
@@ -94,19 +100,20 @@ const Notification = (): JSX.Element => {
 					<Checkbox label='Notified for your own proposals' checked={own_proposal} toggle onChange={handleOwnProposalChange} />
 				</Form.Field>
 			</Form.Group>
-			<Form.Group>
-				<Form.Field width={6}>
-					{error && <FilteredError text={error.message}/>}
-					<Button
-						secondary
-						onClick={updatePreference}
-						type="submit"
-					>
-					Change Preference
-					</Button>
-				</Form.Field>
-			</Form.Group>
-
+			{changed ? (
+				<Form.Group>
+					<Form.Field width={6}>
+						{error && <FilteredError text={error.message}/>}
+						<Button
+							secondary
+							onClick={updatePreference}
+							type="submit"
+						>
+						Save
+						</Button>
+					</Form.Field>
+				</Form.Group>
+			): null}
 		</Form>
 	);
 };
