@@ -1,7 +1,7 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
