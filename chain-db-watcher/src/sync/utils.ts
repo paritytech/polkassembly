@@ -1,4 +1,4 @@
-import { OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
+import { OnchainMotionSyncType, OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
 
 export const getMaps = (syncData: SyncData): SyncMap => {
 	const discussionMotionMap = syncData?.discussion.motions?.reduce(
@@ -17,9 +17,23 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 	const onchainMotionMap = syncData?.onchain.motions?.reduce(
 		(prev, curr) => {
 			if ((curr?.motionProposalId || curr?.motionProposalId === 0) && (curr?.id || curr?.id === 0)) {
+				let treasuryProposalId: number | undefined;
+
+				if (curr.section === 'treasury' && curr.motionProposalArguments) {
+					curr.motionProposalArguments.forEach(({ name, value }) => {
+						if (name === 'proposal_id') {
+							treasuryProposalId = Number(value);
+						}
+					});
+				}
+
 				return {
 					...prev,
-					[curr.motionProposalId]: curr.author
+					[curr.motionProposalId]: {
+						author: curr.author,
+						section: curr.section,
+						treasuryProposalId: treasuryProposalId
+					} as OnchainMotionSyncType
 				};
 			} else {
 				return prev || {};
@@ -79,16 +93,43 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 					}
 				}, {});
 
+	const discussionTreasuryProposalMap = syncData?.discussion.treasuryProposals?.reduce(
+					(prev, curr) => {
+						// edgecase those id can be 0
+						if ((curr?.onchain_treasury_proposal_id || curr?.onchain_treasury_proposal_id === 0) && (curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.onchain_treasury_proposal_id]: curr.proposer_address
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
+	const onchainTreasuryProposalMap = syncData?.onchain.treasuryProposals?.reduce(
+					(prev, curr) => {
+						if ((curr?.treasuryProposalId || curr?.treasuryProposalId === 0) && (curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.treasuryProposalId]: curr.proposer
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
 	return {
 		onchain: {
 			motions: onchainMotionMap,
 			proposals: onchainProposalMap,
-			referenda: onchainReferendaMap
+			referenda: onchainReferendaMap,
+			treasuryProposals: onchainTreasuryProposalMap
 		},
 		discussion: {
 			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
-			referenda: discussionReferendaMap
+			referenda: discussionReferendaMap,
+			treasuryProposals: discussionTreasuryProposalMap
 		}
 	};
 };

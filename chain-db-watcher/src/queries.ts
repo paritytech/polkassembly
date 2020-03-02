@@ -163,9 +163,6 @@ export const treasurySpendProposalSubscription = gql`
             node {
                 id
                 proposer
-				beneficiary
-				value
-				bond
 				treasuryProposalId
                 treasuryStatus(orderBy: id_DESC) {
                     blockNumber {
@@ -173,10 +170,28 @@ export const treasurySpendProposalSubscription = gql`
                     }
                     status
                 }
-                preimage {
-                    hash
-                }
             }
         }
     }
 `;
+
+// {
+// "data": {
+// 	"treasurySpendProposal": {
+// 		"mutation": "CREATED",
+// 		"node": {
+// 			"id": 3,
+// 			"proposer": "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
+// 			"treasuryProposalId": 0,
+// 			"treasuryStatus": [
+// 			{
+// 				"blockNumber": {
+// 					"hash": "0x8a0367f7891bbc2a17d0566224ca929de3b0b0dbc4bb852316293f777d1d53db"
+// 				},
+// 				"status": "Proposed"
+// 				}
+// 			]
+// 		}
+// 	}
+// }
+//   }

@@ -124,6 +124,21 @@ export const addReferendumIdToProposalMutation = gql`
     }
 `;
 
+export const addMotionIdToTreasuryProposalMutation = gql`
+    mutation addMotionIdToTreasuryProposalMutation($treasuryProposalId: Int!, $motionId: Int!) {
+        update_onchain_links(
+            where: {
+                onchain_treasury_proposal_id: {_eq: $treasuryProposalId}
+            },
+            _set: {
+                onchain_motion_id: $motionId
+            }
+        ) {
+            affected_rows
+        }
+    }
+`;
+
 export const addReferendumIdToMotionMutation = gql`
         mutation addReferendumIdToMotionMutation($motionId: Int!, $referendumId: Int!) {
             update_onchain_links(

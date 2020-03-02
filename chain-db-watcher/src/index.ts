@@ -8,7 +8,7 @@ import ws from 'ws';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
-	addDiscussionPostAndTreasurySpendProposal,
+	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
 	motionDiscussionExists,
 	proposalDiscussionExists,
@@ -81,98 +81,100 @@ async function main (): Promise<void> {
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
-	motionSubscriptionClient.subscribe(
-		({ data }): void => {
-			if (data?.motion.mutation === subscriptionMutation.Created) {
-				const { motionProposalId, author } = data.motion.node;
-				motionDiscussionExists(motionProposalId).then(alreadyExist => {
-					if (!alreadyExist) {
-						addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
-					} else {
-						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
-					}
-				}).catch(error => console.error(chalk.red(error)));
-			}
-		},
-		err => {
-			console.error(chalk.red(err));
-		}
-	);
+	// treasurySpendProposalSubscriptionClient.subscribe(
+	// 	({ data }): void => {
+	// 		console.log('treasury data', JSON.stringify(data, null, 4));
+	// 		if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
+	// 			const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
+	// 			treasurySpendProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
+	// 				console.log('alreadyExist', alreadyExist);
+	// 				if (!alreadyExist) {
+	// 					addDiscussionPostAndTreasurySpendProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
+	// 				} else {
+	// 					console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+	// 				}
+	// 			}).catch(error => console.error(chalk.red(error)));
+	// 		}
+	// 	},
+	// 	err => {
+	// 		console.error(chalk.red(err));
+	// 	}
+	// );
 
-	proposalSubscriptionClient.subscribe(
-		({ data }): void => {
-			if (data?.proposal.mutation === subscriptionMutation.Created) {
-				const { proposalId, author } = data.proposal.node;
-				proposalDiscussionExists(proposalId).then(alreadyExist => {
-					if (!alreadyExist) {
-						addDiscussionPostAndProposal({ onchainProposalId: Number(proposalId), proposer: author });
-					} else {
-						console.error(chalk.red(`✖︎ Proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
-					}
-				}).catch(error => console.error(chalk.red(error)));
-			}
-		},
-		err => {
-			console.error(chalk.red(err));
-		}
-	);
+	// motionSubscriptionClient.subscribe(
+	// 	({ data }): void => {
+	// 		if (data?.motion.mutation === subscriptionMutation.Created) {
+	// 			const { motionProposalId, author } = data.motion.node;
+	// 			motionDiscussionExists(motionProposalId).then(alreadyExist => {
+	// 				if (!alreadyExist) {
+	// 					addDiscussionPostAndMotion({ onchainMotionProposalId: Number(motionProposalId), proposer: author });
+	// 				} else {
+	// 					console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+	// 				}
+	// 			}).catch(error => console.error(chalk.red(error)));
+	// 		}
+	// 	},
+	// 	err => {
+	// 		console.error(chalk.red(err));
+	// 	}
+	// );
 
-	referendumSubscriptionClient.subscribe(({ data }): void => {
-		if (data?.referendum.mutation === subscriptionMutation.Created) {
-			const {
-				preimageHash,
-				referendumId,
-				referendumStatus
-			} = data?.referendum?.node;
+	// proposalSubscriptionClient.subscribe(
+	// 	({ data }): void => {
+	// 		if (data?.proposal.mutation === subscriptionMutation.Created) {
+	// 			const { proposalId, author } = data.proposal.node;
+	// 			proposalDiscussionExists(proposalId).then(alreadyExist => {
+	// 				if (!alreadyExist) {
+	// 					addDiscussionPostAndProposal({ onchainProposalId: Number(proposalId), proposer: author });
+	// 				} else {
+	// 					console.error(chalk.red(`✖︎ Proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
+	// 				}
+	// 			}).catch(error => console.error(chalk.red(error)));
+	// 		}
+	// 	},
+	// 	err => {
+	// 		console.error(chalk.red(err));
+	// 	}
+	// );
 
-			// At referendum creation, there should be only
-			// a "Started" status event.
-			if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
-				console.error(
-					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
-					)
-				);
-				return;
-			}
+	// referendumSubscriptionClient.subscribe(({ data }): void => {
+	// 	if (data?.referendum.mutation === subscriptionMutation.Created) {
+	// 		const {
+	// 			preimageHash,
+	// 			referendumId,
+	// 			referendumStatus
+	// 		} = data?.referendum?.node;
 
-			if (!preimageHash) {
-				throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
-			}
+	// 		// At referendum creation, there should be only
+	// 		// a "Started" status event.
+	// 		if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
+	// 			console.error(
+	// 				chalk.red(
+	// 					`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
+	// 				)
+	// 			);
+	// 			return;
+	// 		}
 
-			if (!referendumId && referendumId !== 0) {
-				throw new Error(`Unexpect referendumId, got ${referendumId}`);
-			}
+	// 		if (!preimageHash) {
+	// 			throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
+	// 		}
 
-			// FIXME This only takes care of motion and democracy proposals
-			// it does not cater for tech committee proposals
-			addDiscussionReferendum({
-				preimageHash,
-				referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
-				referendumId
-			}).catch(e => {
-				console.error(chalk.red(e));
-			});
-		}
-	});
+	// 		if (!referendumId && referendumId !== 0) {
+	// 			throw new Error(`Unexpect referendumId, got ${referendumId}`);
+	// 		}
 
-	treasurySpendProposalSubscriptionClient.subscribe(
-		({ data }): void => {
-			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
-				const { treasuryProposalId, proposer } = data.proposal.node;
-				treasurySpendProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
-					if (!alreadyExist) {
-						addDiscussionPostAndTreasurySpendProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
-					} else {
-						console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
-					}
-				}).catch(error => console.error(chalk.red(error)));
-			}
-		},
-		err => {
-			console.error(chalk.red(err));
-		}
-	);
+	// 		// FIXME This only takes care of motion and democracy proposals
+	// 		// it does not cater for tech committee proposals
+	// 		addDiscussionReferendum({
+	// 			preimageHash,
+	// 			referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
+	// 			referendumId
+	// 		}).catch(e => {
+	// 			console.error(chalk.red(e));
+	// 		});
+	// 	}
+	// });
 }
 
 main().catch(error => console.error(chalk.red(error)));
