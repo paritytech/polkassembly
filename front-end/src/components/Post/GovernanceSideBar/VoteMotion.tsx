@@ -1,7 +1,7 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup, Select } from 'semantic-ui-react';
+import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
@@ -170,7 +170,7 @@ const VoteMotion = ({
 		<>
 			<div>No account found from the council :(</div>
 			<a href='#' onClick={() => setForceVote(true)}>Let me try still.</a>
-		</>
+		</>;
 
 	return (
 		<div className={className}>
