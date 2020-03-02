@@ -19,6 +19,7 @@ import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
 import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
+import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
@@ -64,8 +65,6 @@ export default class AuthService {
 			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
 		}
 
-		const addresses = await getAddressesFromUserId(user.id);
-
 		return {
 			user: {
 				id: user.id,
@@ -74,7 +73,7 @@ export default class AuthService {
 				name: user.name,
 				email_verified: user.email_verified
 			},
-			token: this.getSignedToken(user, addresses),
+			token: await this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
 		};
 	}
@@ -171,7 +170,7 @@ export default class AuthService {
 				name: user.name,
 				email_verified: user.email_verified
 			},
-			token: this.getSignedToken(user, []),
+			token: await this.getSignedToken(user),
 			refreshToken: await this.getRefreshToken(user)
 		};
 	}
@@ -199,9 +198,7 @@ export default class AuthService {
 			.where('id', refreshToken.user_id)
 			.first();
 
-		const addresses = await getAddressesFromUserId(user.id);
-
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
@@ -253,8 +250,7 @@ export default class AuthService {
 			})
 			.del();
 
-		const addresses = await getAddressesFromUserId(user.id);
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async AddressLinkConfirm(token: string, address_id: number, signature: string): Promise<string> {
@@ -290,8 +286,7 @@ export default class AuthService {
 			})
 			.findById(address_id);
 
-		const addresses = await getAddressesFromUserId(user.id);
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeName(token: string, newName: string): Promise<string> {
@@ -303,9 +298,8 @@ export default class AuthService {
 			.findById(userId);
 
 		const user = await getUserFromUserId(userId);
-		const addresses = await getAddressesFromUserId(user.id);
 
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async VerifyEmail(token: string): Promise<string> {
@@ -333,9 +327,8 @@ export default class AuthService {
 			.findById(verifyToken.id);
 
 		const user = await getUserFromUserId(verifyToken.user_id);
-		const addresses = await getAddressesFromUserId(user.id);
 
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType) {
@@ -414,9 +407,8 @@ export default class AuthService {
 			.findById(userId);
 
 		const user = await getUserFromUserId(userId);
-		const addresses = await getAddressesFromUserId(user.id);
 
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeEmail(token: string, email: string): Promise<string> {
@@ -492,9 +484,8 @@ export default class AuthService {
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
-		const addresses = await getAddressesFromUserId(user.id);
 
-		return this.getSignedToken(user, addresses);
+		return this.getSignedToken(user);
 	}
 
 	public async RequestResetPassword(email: string) {
@@ -585,14 +576,16 @@ export default class AuthService {
 			.findById(undoToken.id);
 
 		const user = await getUserFromUserId(undoToken.user_id);
-		const addresses = await getAddressesFromUserId(user.id);
 
-		return { updatedToken: this.getSignedToken(user, addresses), email: user.email };
+		return { updatedToken: await this.getSignedToken(user), email: user.email };
 	}
 
-	private getSignedToken({ id, name, username, email, email_verified }, addresses: Address[]): string {
+	private async getSignedToken({ id, name, username, email, email_verified }): Promise<string> {
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
+
+		const addresses = await getAddressesFromUserId(id);
+		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
 		if (id == process.env.PROPOSAL_BOT_USER_ID) { // eslint-disable-line
@@ -611,6 +604,7 @@ export default class AuthService {
 			username,
 			email,
 			email_verified,
+			notification,
 			iat: Math.floor(Date.now() / 1000),
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
