@@ -11,20 +11,24 @@ import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteRefrendum from './VoteRefrendum';
+import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment } from 'src/generated/graphql';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
+import VoteMotion from './VoteMotion';
 
 interface Props {
 	className?: string
+	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
-	onchainId?: number | null | undefined
+	onchainId?: number | null
+	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment
 	status?: string
 }
 
 const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, status }: Props) => {
+const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
 	const currentUser = useContext(UserDetailsContext);
 	const defaultAddress = currentUser?.addresses?.[0] || '';
 	const [address, setAddress] = useState<string>('');
@@ -136,37 +140,48 @@ const GovenanceSideBar = ({ className, isProposal, isReferendum, onchainId, stat
 	}
 
 	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
-		{
-			return (
-				<>
-					{isProposal &&
-						<SecondProposal
-							proposalId={onchainId}
-							api={api}
-							apiReady={apiReady}
-							getAccounts={getAccounts}
-							onAccountChange={onAccountChange}
+		return (
+			<>
+				{isMotion &&
+						<VoteMotion
 							accounts={accounts}
 							address={address}
-							defaultAddress={defaultAddress}
 							addressOptions={addressOptions}
+							api={api}
+							apiReady={apiReady}
+							defaultAddress={defaultAddress}
+							getAccounts={getAccounts}
+							motionId={onchainId}
+							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+							onAccountChange={onAccountChange}
 						/>}
+				{isProposal &&
+					<SecondProposal
+						accounts={accounts}
+						address={address}
+						addressOptions={addressOptions}
+						api={api}
+						apiReady={apiReady}
+						defaultAddress={defaultAddress}
+						getAccounts={getAccounts}
+						onAccountChange={onAccountChange}
+						proposalId={onchainId}
+					/>}
 
-					{isReferendum &&
+				{isReferendum &&
 						<VoteRefrendum
-							referendumId={onchainId}
-							api={api}
-							apiReady={apiReady}
-							getAccounts={getAccounts}
-							onAccountChange={onAccountChange}
 							accounts={accounts}
 							address={address}
-							defaultAddress={defaultAddress}
 							addressOptions={addressOptions}
+							api={api}
+							apiReady={apiReady}
+							defaultAddress={defaultAddress}
+							getAccounts={getAccounts}
+							onAccountChange={onAccountChange}
+							referendumId={onchainId}
 						/>}
-				</>
-			);
-		}
+			</>
+		);
 	}
 
 	return null;
