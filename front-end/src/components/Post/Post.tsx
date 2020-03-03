@@ -142,6 +142,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					isMotion={isMotion}
 					isProposal={isProposal}
 					isReferendum={isReferendum}
+					isTreasuryProposal={isTreasuryProposal}
 					onchainId={onchainId}
 					onchainLink={definedOnchainLink}
 					status={postStatus}

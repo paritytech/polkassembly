@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from '@xstyled/styled-components';
 
 import GovernanceCard from '../GovernanceCard';
-import { LatestDemocracyProposalPostsQuery } from '../../generated/graphql';
+import { LatestDemocracyTreasuryProposalPostsQuery } from '../../generated/graphql';
 
 interface Props {
   className?: string
-  data: LatestDemocracyProposalPostsQuery
+  data: LatestDemocracyTreasuryProposalPostsQuery
 }
 
 const TreasuryProposals = ({ className, data }: Props) => {
@@ -18,7 +18,7 @@ const TreasuryProposals = ({ className, data }: Props) => {
 		<ul className={`${className} proposals__list`}>
 			{data.posts.map(
 				(post) => {
-					const onchainId = post.onchain_link?.onchain_proposal_id;
+					const onchainId = post.onchain_link?.onchain_treasury_proposal_id;
 
 					return (!!post?.author?.username && (
 						<li key={post.id} className='proposals__item'>
@@ -30,7 +30,7 @@ const TreasuryProposals = ({ className, data }: Props) => {
 										: 'no'}
 									created_at={post.created_at}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status}
+									status={post.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 									username={post.author.username}
