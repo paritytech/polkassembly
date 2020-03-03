@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -70,7 +70,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		<>
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={className} inverted widths={2} id='menubar'>
-					<Menu.Item as={Link} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
+					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					<Menu.Item onClick={handleToggle} id='rightmenu'>
 						{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
 					</Menu.Item>
@@ -186,6 +186,7 @@ export default styled(MenuBar)`
 				left: 2rem;
 				top: 0.3rem;
 				padding-top: 1rem;
+				padding-bottom: 0;
 				border-radius: 0.8rem!important;
 			}
 
@@ -216,7 +217,7 @@ export default styled(MenuBar)`
 			.item {
 				float: left;
 				clear: both;
-				text-aling: left;
+				text-align: left;
 				border-radius: 0.8rem!important;
 			}
 		}
