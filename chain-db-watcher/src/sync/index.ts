@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 import { addDiscussionPostAndMotion, addDiscussionPostAndProposal, addDiscussionPostAndTreasuryProposal, addDiscussionReferendum, updateTreasuryProposalWithMotion } from '../graphql_helpers';
-import { motionObjectMap, objectMap, OnchainMotionSyncType, referendumObjectMap, SyncData } from '../types';
+import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData } from '../types';
 import {
 	getDiscussionMotions,
 	getDiscussionProposals,
@@ -45,7 +45,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 	}
 };
 
-const syncTreasuryProposals = async (onchainTreasuryProposals: objectMap, discussionTreasuryProposals: objectMap): Promise<void[]> => {
+const syncTreasuryProposals = async (onchainTreasuryProposals: ObjectMap, discussionTreasuryProposals: ObjectMap): Promise<void[]> => {
 	return Promise.all(Object.entries(onchainTreasuryProposals).map(async ([key, author]) => {
 		// if this treasuryproposal doesn't exist in the discussion DB
 		if (!discussionTreasuryProposals[key]) {
@@ -54,7 +54,7 @@ const syncTreasuryProposals = async (onchainTreasuryProposals: objectMap, discus
 	}));
 };
 
-const syncMotions = async (onchainMotions: motionObjectMap, discussionMotions: objectMap): Promise<void[]> => {
+const syncMotions = async (onchainMotions: MotionObjectMap, discussionMotions: ObjectMap): Promise<void[]> => {
 	return Promise.all(Object.entries(onchainMotions).map(async ([key, val]: [string, OnchainMotionSyncType]) => {
 		// if this motion doesn't exist in the discussion DB
 		if (!discussionMotions[key]) {
@@ -73,7 +73,7 @@ const syncMotions = async (onchainMotions: motionObjectMap, discussionMotions: o
 	}));
 };
 
-const syncProposals = async (onchainProposals: objectMap, discussionProposals: objectMap): Promise<void[]> => {
+const syncProposals = async (onchainProposals: ObjectMap, discussionProposals: ObjectMap): Promise<void[]> => {
 	return Promise.all(Object.entries(onchainProposals).map(async ([key, author]) => {
 		// if this proposal doesn't exist in the discussion DB
 		if (!discussionProposals[key]) {
@@ -82,7 +82,7 @@ const syncProposals = async (onchainProposals: objectMap, discussionProposals: o
 	}));
 };
 
-const syncReferenda = async (onchainReferenda: referendumObjectMap, discussionReferenda: objectMap): Promise<void[]> => {
+const syncReferenda = async (onchainReferenda: ReferendumObjectMap, discussionReferenda: ObjectMap): Promise<void[]> => {
 	return Promise.all(
 		Object.keys(onchainReferenda).map(async (key) => {
 			// If this referendum doesn't exist in the discussion DB

@@ -1,6 +1,5 @@
 import { OnchainMotionFragment } from 'src/generated/chain-db-graphql';
-
-import { OnchainMotionSyncType, OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
+import { OnchainMotionSyncType, OnchainReferendaValueSyncType, SyncData, SyncMap } from 'src/types';
 
 export const getMotionTreasuryProposalId = (section: string, motionProposalArguments: OnchainMotionFragment['motionProposalArguments']): number | undefined => {
 	let treasuryProposalId: number | undefined;

@@ -119,11 +119,11 @@ export const motionSubscription = gql`
                 preimage {
                     hash
                 }
-				section
-				motionProposalArguments{
-					name
-					value
-				}
+                section
+                motionProposalArguments{
+                    name
+                    value
+                }
             }
         }
     }
