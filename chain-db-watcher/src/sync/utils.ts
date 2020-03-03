@@ -1,4 +1,19 @@
+import { OnchainMotionFragment } from 'src/generated/chain-db-graphql';
+
 import { OnchainMotionSyncType, OnchainReferendaValueSyncType, SyncData, SyncMap } from '../types';
+
+export const getMotionTreasuryProposalId = (section: string, motionProposalArguments: OnchainMotionFragment['motionProposalArguments']): number | undefined => {
+	let treasuryProposalId: number | undefined;
+
+	if (section === 'treasury' && motionProposalArguments?.length) {
+		motionProposalArguments.forEach(({ name, value }) => {
+			if (name === 'proposal_id') {
+				treasuryProposalId = Number(value);
+			}
+		});
+	}
+	return treasuryProposalId;
+};
 
 export const getMaps = (syncData: SyncData): SyncMap => {
 	const discussionMotionMap = syncData?.discussion.motions?.reduce(
@@ -17,15 +32,7 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 	const onchainMotionMap = syncData?.onchain.motions?.reduce(
 		(prev, curr) => {
 			if ((curr?.motionProposalId || curr?.motionProposalId === 0) && (curr?.id || curr?.id === 0)) {
-				let treasuryProposalId: number | undefined;
-
-				if (curr.section === 'treasury' && curr.motionProposalArguments) {
-					curr.motionProposalArguments.forEach(({ name, value }) => {
-						if (name === 'proposal_id') {
-							treasuryProposalId = Number(value);
-						}
-					});
-				}
+				const treasuryProposalId = getMotionTreasuryProposalId(curr.section, curr.motionProposalArguments);
 
 				return {
 					...prev,

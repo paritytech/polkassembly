@@ -96,7 +96,7 @@ export const proposalDiscussionExists = async (
  *
  * @param treasuryProposalId the proposal id that is on chain (not the Prisma db id)
  */
-export const treasurySpendProposalDiscussionExists = async (
+export const treasuryProposalDiscussionExists = async (
 	onchainTreasuryProposalId: number
 ): Promise<boolean | void> => {
 	if (!discussionGraphqlUrl) {
@@ -115,7 +115,7 @@ export const treasurySpendProposalDiscussionExists = async (
 
 		return !!data.onchain_links?.length;
 	} catch (err) {
-		console.error(chalk.red(`treasurySpendProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
+		console.error(chalk.red(`treasuryProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
