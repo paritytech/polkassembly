@@ -366,34 +366,6 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 	}
 };
 
-// export const bla = () => {
-
-// 	let associatedMotionId: number | undefined;
-
-// 	if (associatedProposalId || associatedProposalId === 0) {
-// 		// at this stage the referendum is linked onchain to a proposal
-// 		// we must verify that this proposal/motion is present in the discussion db.
-// 		const proposalAssociatedRefendumId = await getProposalDiscussionAssociatedReferendumId(associatedProposalId);
-
-// 		const shouldUpdateProposal = !!proposalAssociatedRefendumId || proposalAssociatedRefendumId === 0;
-// 		if (shouldUpdateProposal) {
-// 			const affectedRows = await addReferendumIdToProposal({
-// 				onchainProposalId: associatedProposalId,
-// 				onchainReferendumId: Number(referendumId)
-// 			});
-
-// 			if (!affectedRows) {
-// 				throw new Error(`addDiscussionReferendum execution error with discussion proposal id ${associatedProposalId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
-// 			}
-
-// 			console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
-// 		} else {
-// 			console.error(chalk.red(
-// 				`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-// 			));
-// 		}
-
-// }
 interface TreasuryProposalUpdate {
 	onchainMotionProposalId: number;
 	onchainTreasuryProposalId: number;
@@ -729,7 +701,7 @@ interface AddDiscussionReferendum {
 }
 
 /**
- * Find the proposal/motion/treasury matchin a referendum
+ * Find the proposal/motion matching a referendum
  * and update the discussion db to add the referendum id
  *
  * @param preimageHash - The preimage hash of the referendum, if any.
