@@ -8,6 +8,7 @@ import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
 dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
+const treasuryTopicId = process.env.TREASURY_TOPIC_ID;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 const proposalBotUserId = process.env.PROPOSAL_BOT_USER_ID;
@@ -82,6 +83,39 @@ export const proposalDiscussionExists = async (
 		return !!data.onchain_links?.length;
 	} catch (err) {
 		console.error(chalk.red(`proposalDiscussionExists execution error with proposalId: ${onchainProposalId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Tells if there is already a treasurySpendProposal in the discussion DB matching the
+ * onchain treasury proposal id passed as argument
+ *
+ * @param treasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+export const treasuryProposalDiscussionExists = async (
+	onchainTreasuryProposalId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionTreasurySpendProposalById({ onchainTreasuryProposalId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`treasuryProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -257,6 +291,134 @@ export const addDiscussionPostAndProposal = async ({
 };
 
 /**
+ * Creates a generic post and the linked treasury spend proposal in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal
+ * @param onchainTreasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndTreasuryProposal = async ({
+	proposer,
+	onchainTreasuryProposalId
+}: {
+	proposer: string;
+	onchainTreasuryProposalId: number;
+}): Promise<void> => {
+	if (!treasuryTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the TREASURY_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
+		);
+	}
+
+	const proposalAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		onchainTreasuryProposalId,
+		content: DEFAULT_DESCRIPTION,
+		proposerAddress: proposer,
+		title: DEFAULT_TITLE,
+		topicId: Number(treasuryTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndTreasurySpendProposalMutation(proposalAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Treasury proposal ${addedId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addPostAndTreasuryProposal execution error, treasury proposal id ${onchainTreasuryProposalId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+interface TreasuryProposalUpdate {
+	onchainMotionProposalId: number;
+	onchainTreasuryProposalId: number;
+}
+
+/**
+ * Update a Treasury post with a motion id in hasura discussion DB
+ *
+ * @param onchainMotionProposalId the motion containing the treasury id to be voted on
+ * @param onchainTreasuryProposalId the treasury proposal id that is on chain (not the Prisma db id)
+ */
+
+export const updateTreasuryProposalWithMotion = async ({
+	onchainMotionProposalId,
+	onchainTreasuryProposalId
+}: TreasuryProposalUpdate): Promise<boolean|void> => {
+	try {
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+			);
+		}
+
+		const token = await getToken();
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addMotionIdToTreasuryProposalMutation({
+			treasuryProposalId: onchainTreasuryProposalId,
+			motionId: onchainMotionProposalId
+		});
+
+		const affectedRows = data?.update_onchain_links?.affected_rows;
+		if (!affectedRows) {
+			throw new Error(`updateTreasuryProposalWithMotion execution error with discussion motion id ${onchainMotionProposalId} and treasury id:${onchainTreasuryProposalId}, affected row: ${affectedRows}`);
+		}
+
+		console.log(`${chalk.green('✔︎')} Motion id ${onchainMotionProposalId} linked to treasury proposal id ${onchainTreasuryProposalId}.`);
+	} catch (err) {
+		console.error(chalk.red(`updateTreasuryProposalWithMotion execution error with motion id:${onchainMotionProposalId}, treasury proposal id:${onchainTreasuryProposalId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+/**
  * Creates a generic post and the linked motion in hasura discussion DB
  *
  * @param proposer address of the proposer of the motion
@@ -282,7 +444,7 @@ export const addDiscussionPostAndMotion = async ({
 	}
 	if (!proposalBotUserId) {
 		throw new Error(
-			'Please specify an environment variable for the BOT_PROPOSAL_USER_ID.'
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
 		);
 	}
 
@@ -537,6 +699,15 @@ interface AddDiscussionReferendum {
 	referendumCreationBlockHash: string;
 	referendumId: number;
 }
+
+/**
+ * Find the proposal/motion matching a referendum
+ * and update the discussion db to add the referendum id
+ *
+ * @param preimageHash - The preimage hash of the referendum, if any.
+ * @param referendumCreationBlockHash - the block hash at which the referendum was created
+ * @param onchainReferendumId - The block hash at which the referendum was created.
+ */
 
 export const addDiscussionReferendum = async ({ preimageHash, referendumCreationBlockHash, referendumId }: AddDiscussionReferendum): Promise<void> => {
 	try {
