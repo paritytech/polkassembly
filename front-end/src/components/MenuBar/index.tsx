@@ -126,21 +126,21 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 export default styled(MenuBar)`
 	&.ui.menu, .ui.inverted.menu {
-		font-family: font_secondary;
+		font-family: font_default;
 		background-color: black_full;
 		border-radius: 0rem;
 		letter-spacing: 0.2px;
 
 		.item {
 			color: grey_secondary;
-			font-weight: 400;
+			font-weight: 500;
 			&:hover {
 				color: white;
 			}
 		}
 
 		.desktop_items, #title {
-			text-transform: uppercase;
+			text-transform: capitalize;
 		}
 
 		i.icon {
@@ -230,13 +230,17 @@ export default styled(MenuBar)`
 	@media only screen and (min-width: 992px) {
 		&.ui.menu {
 			padding: 0.5rem 2rem;
-			font-size: 1.75rem;
+			font-size: md;
 			.item {
 				padding: 0.5rem 0.5rem;
-				margin: 0 1.5rem;
+				margin: 0 1.2rem;
 				:hover {
 					background-color: black_full !important;
 				}
+			}
+
+			.ui.dropdown .menu>.item {
+				font-size: md!important;
 			}
 		}
 

@@ -179,7 +179,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								onClick={() => voteRefrendum(false)}
 							>
 								<Icon name='thumbs down' />
-								NAY
+								Nay
 							</Button>
 						</Form.Field>
 						<Form.Field className='button-container' width={8}>
@@ -190,7 +190,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 								onClick={() => voteRefrendum(true)}
 							>
 								<Icon name='thumbs up' />
-								AYE
+								Aye
 							</Button>
 						</Form.Field>
 					</Form.Group>
@@ -216,7 +216,7 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 export default styled(VoteRefrendum)`
 	.card {
 		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
+		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
@@ -224,26 +224,6 @@ export default styled(VoteRefrendum)`
 		@media only screen and (max-width: 768px) {
 			padding: 2rem;
 		}
-	}
-
-	.ui.selection.dropdown {
-		border-radius: 0rem;
-	}
-
-	.ui.dropdown .menu .active.item {
-		font-weight: 500;
-	}
-
-	.ui.dropdown .menu>.item:hover {
-		background-color: grey_light;
-	}
-
-	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
-		border-color: grey_light;
-	}
-
-	i.icon.question.circle:before {
-		color: grey_secondary;
 	}
 
 	@media only screen and (max-width: 768px) {
@@ -255,5 +235,4 @@ export default styled(VoteRefrendum)`
 			margin-bottom: 1rem!important;
 		}
 	}
-
 `;

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Form, Icon, Grid } from 'semantic-ui-react';
+import { Icon, Grid } from 'semantic-ui-react';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
@@ -7,6 +7,7 @@ import styled from '@xstyled/styled-components';
 
 import AddressComponent from '../../ui-components/Address';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { Form } from '../../ui-components/Form';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
@@ -148,7 +149,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 	if (extensionNotAvailable) {
 		return (
-			<Form className={className} standalone='false'>
+			<Form className={className} standalone={false}>
 				<Form.Group>
 					<Form.Field width={16}>
 						<ExtensionNotDetected />
@@ -160,7 +161,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 	if (accounts.length === 0) {
 		return (
-			<Form className={className} standalone='false'>
+			<Form className={className} standalone={false}>
 				<Form.Group>
 					<Form.Field width={16}>
 						<label>Linked address</label>
@@ -177,7 +178,7 @@ const Address = ({ className }: Props): JSX.Element => {
 	}
 
 	return (
-		<Form className={className} standalone='false'>
+		<Form className={className} standalone={false}>
 			<Form.Group>
 				<Form.Field width={16}>
 					<label className="header">Available Addresses</label>
@@ -217,13 +218,6 @@ const Address = ({ className }: Props): JSX.Element => {
 export default styled(Address)`
 	font-family: font_default;
 
-	&.ui.form .field>label {
-		font-size: input_text_size;
-		font-weight: 500;
-		color: black_primary !important;
-		margin-bottom: 2rem;
-	}
-
 	.image {
 		margin-right: 2rem;
 	}
@@ -242,18 +236,6 @@ export default styled(Address)`
 	.description {
 		color: grey_primary;
 		font-size: xs;
-	}
-
-	.text-muted {
-		display: inline-block;
-		font-size: sm;
-		color: grey_primary;
-		a {
-			color: pink_primary;
-			&:hover{
-				color: pink_secondary;
-			}
-		}
 	}
 
 	.button-container {
