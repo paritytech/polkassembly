@@ -245,8 +245,10 @@ export default styled(MenuBar)`
 				}
 			}
 
-			.ui.dropdown .menu>.item {
+			.ui.dropdown .menu>.item,
+			.ui.dropdown .menu>.active.item {
 				font-size: md!important;
+				font-weight: 400 !important;
 			}
 		}
 
