@@ -2,15 +2,14 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import AddressComponent from '../../../ui-components/Address';
-import OnchainInfoStyle from '../../../ui-components/OnchainInfoStyle';
+import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import { OnchainLinkMotionFragment } from '../../../generated/graphql';
 
 interface Props{
-	className?: string
 	onchainLink: OnchainLinkMotionFragment
 }
 
-const PostMotionInfo = ({ className, onchainLink }: Props) => {
+const PostMotionInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -26,7 +25,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 	const { metaDescription, method: preimageMethod, preimageArguments } = preimage || {};
 
 	return (
-		<OnchainInfoStyle className={className}>
+		<OnchainInfoWrapper>
 			<h4>On-Chain Info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -90,7 +89,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 					</Grid.Column>
 				</Grid.Row>}
 			</Grid>
-		</OnchainInfoStyle>
+		</OnchainInfoWrapper>
 	);
 };
 

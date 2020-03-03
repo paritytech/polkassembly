@@ -2,19 +2,18 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import AddressComponent from '../../../ui-components/Address';
-import OnchainInfoStyle from '../../../ui-components/OnchainInfoStyle';
+import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import { OnchainLinkProposalFragment } from '../../../generated/graphql';
 import { chainProperties } from '../../../global/networkConstants';
 import getNetwork from '../../../util/getNetwork';
 
 interface Props{
-	className?: string
 	onchainLink: OnchainLinkProposalFragment
 }
 
 const currentNetwork = getNetwork();
 
-const PostProposalInfo = ({ className, onchainLink }: Props) => {
+const PostProposalInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -27,7 +26,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
-		<OnchainInfoStyle className={className}>
+		<OnchainInfoWrapper>
 			<h4>On-Chain Info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -66,7 +65,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 					</>}
 				</Grid.Column>
 			</Grid>
-		</OnchainInfoStyle>
+		</OnchainInfoWrapper>
 	);
 };
 

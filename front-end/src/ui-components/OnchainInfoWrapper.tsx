@@ -6,14 +6,14 @@ interface Props {
 	className?: string
 }
 
-const OnchainInfoStyling = ({ children, className }: Props) => {
+const OnchainInfoWrapper = ({ children, className }: Props) => {
 
 	return (
 		<div className={className}>{children}</div>
 	);
 };
 
-export default styled(OnchainInfoStyling)`
+export default styled(OnchainInfoWrapper)`
 	background-color: white;
 	padding: 2rem 3rem 2rem 3rem;
 	border-style: solid;
