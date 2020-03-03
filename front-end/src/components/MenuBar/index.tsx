@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -85,15 +85,15 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						vertical
 						visible={menuVisible}
 					>
-						{contentItems.map(item => <Menu.Item as={Link} key={item.key} onClick={handleClose} {...item} />)}
+						{contentItems.map(item => <Menu.Item as={NavLink} key={item.key} onClick={handleClose} {...item} />)}
 						{username
 							?
 							<>
-								{loggedInItems.map(item => <Menu.Item as={Link} key={item.key} {...item}/>)}
+								{loggedInItems.map(item => <Menu.Item as={NavLink} key={item.key} {...item}/>)}
 							</>
 							:
 							<>
-								{loggedOutItems.map(item => <Menu.Item as={Link} key={item.key} onClick={handleClose} {...item} />)}
+								{loggedOutItems.map(item => <Menu.Item as={NavLink} key={item.key} onClick={handleClose} {...item} />)}
 							</>
 						}
 					</Sidebar>
@@ -102,19 +102,19 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
-					<Menu.Item as={Link} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
-					{contentItems.map(item => <Menu.Item as={Link} className='desktop_items' key={item.key} {...item} />)}
+					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
+					{contentItems.map(item => <Menu.Item as={NavLink} className='desktop_items' key={item.key} {...item} />)}
 					<Menu.Menu position="right">
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
 									<Dropdown.Menu>
-										{loggedInItems.map(item => <Menu.Item as={Link} key={item.key} {...item}/>)}
+										{loggedInItems.map(item => <Menu.Item as={NavLink} key={item.key} {...item}/>)}
 									</Dropdown.Menu>
 								</Dropdown>
 							</>
 							: <>
-								{loggedOutItems.map(item => <Menu.Item as={Link} className='user_items' key={item.key} {...item} />)}
+								{loggedOutItems.map(item => <Menu.Item as={NavLink} className='user_items' key={item.key} {...item} />)}
 							</>
 						}
 					</Menu.Menu>
@@ -131,6 +131,10 @@ export default styled(MenuBar)`
 		border-radius: 0rem;
 		letter-spacing: 0.2px;
 
+		& a.active {
+			outline: none;
+			background-color: black_full !important;
+		}
 		.item {
 			color: grey_secondary;
 			font-weight: 500;
@@ -155,6 +159,7 @@ export default styled(MenuBar)`
 					width: 10rem;
 				}
 			}
+			background-color: black_full !important;
 		}
 	}
 
