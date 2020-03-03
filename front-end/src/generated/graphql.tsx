@@ -9287,6 +9287,10 @@ export type LogoutMutation = (
 
 export type GetCouncilMembersQueryVariables = {};
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 export type GetCouncilMembersQuery = (
   { __typename?: 'query_root' }
   & { councils: Array<Maybe<(
@@ -10258,7 +10262,11 @@ export const GetCouncilMembersDocument = gql`
  * __useGetCouncilMembersQuery__
  *
  * To run a query within a React component, call `useGetCouncilMembersQuery` and pass it any options that fit your needs.
+<<<<<<< HEAD
  * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+=======
+ * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+>>>>>>> master
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10270,11 +10278,19 @@ export const GetCouncilMembersDocument = gql`
  * });
  */
 export function useGetCouncilMembersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
+<<<<<<< HEAD
 	return ApolloReactHooks.useQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
 }
 export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
 	return ApolloReactHooks.useLazyQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
 }
+=======
+        return ApolloReactHooks.useQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
+      }
+export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
+        }
+>>>>>>> master
 export type GetCouncilMembersQueryHookResult = ReturnType<typeof useGetCouncilMembersQuery>;
 export type GetCouncilMembersLazyQueryHookResult = ReturnType<typeof useGetCouncilMembersLazyQuery>;
 export type GetCouncilMembersQueryResult = ApolloReactCommon.QueryResult<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>;

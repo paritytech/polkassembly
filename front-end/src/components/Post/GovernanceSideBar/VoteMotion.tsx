@@ -1,16 +1,16 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
+import { DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { Form } from '../../../ui-components/Form';
-import Button from '../../../ui-components/Button';
-import { NotificationContext } from '../../../context/NotificationContext';
-import { NotificationStatus } from '../../../types';
-import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import AddressDropdown from '../AddressDropdown';
+import { NotificationContext } from '../../../context/NotificationContext';
+import { useGetCouncilMembersQuery } from 'src/generated/graphql';
+import { NotificationStatus } from '../../../types';
+import Button from '../../../ui-components/Button';
+import { Form } from '../../../ui-components/Form';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]

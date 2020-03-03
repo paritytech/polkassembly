@@ -10,7 +10,7 @@ import ExtensionNotDetected from '../../ExtensionNotDetected';
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
-import VoteRefrendum from './VoteRefrendum';
+import VoteReferendum from './VoteReferendum';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment } from 'src/generated/graphql';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 import VoteMotion from './VoteMotion';
@@ -169,7 +169,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 					/>}
 
 				{isReferendum &&
-						<VoteRefrendum
+						<VoteReferendum
 							accounts={accounts}
 							address={address}
 							addressOptions={addressOptions}
