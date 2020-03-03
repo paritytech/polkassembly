@@ -12,10 +12,12 @@ import {
 	addDiscussionReferendum,
 	motionDiscussionExists,
 	proposalDiscussionExists,
-	treasurySpendProposalDiscussionExists
+	treasuryProposalDiscussionExists,
+	updateTreasuryProposalWithMotion
 } from './graphql_helpers';
 import { motionSubscription, proposalSubscription, referendumSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
+import { getMotionTreasuryProposalId } from './sync/utils';
 
 dotenv.config();
 
@@ -77,6 +79,53 @@ async function main (): Promise<void> {
 		graphQLEndpoint,
 		treasurySpendProposalSubscription,
 		{ startBlock }
+	);
+
+	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
+
+	treasurySpendProposalSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
+				const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
+				treasuryProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndTreasuryProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
+					} else {
+						console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
+	);
+
+	motionSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.motion.mutation === subscriptionMutation.Created) {
+				const { author, motionProposalId, motionProposalArguments, section } = data.motion.node;
+				motionDiscussionExists(motionProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						const treasuryProposalId = getMotionTreasuryProposalId(section, motionProposalArguments);
+						const onchainMotionProposalId = Number(motionProposalId);
+
+						if (treasuryProposalId || treasuryProposalId === 0) {
+							// the motion comes from a treasury proposal
+							updateTreasuryProposalWithMotion({ onchainMotionProposalId, onchainTreasuryProposalId: treasuryProposalId });
+						} else {
+							// the motion was created by a council member
+							addDiscussionPostAndMotion({ onchainMotionProposalId, proposer: author });
+						}
+					} else {
+						console.error(chalk.red(`✖︎ Motion id ${motionProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		err => {
+			console.error(chalk.red(err));
+		}
 	);
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);

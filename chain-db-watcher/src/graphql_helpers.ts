@@ -96,7 +96,7 @@ export const proposalDiscussionExists = async (
  *
  * @param treasuryProposalId the proposal id that is on chain (not the Prisma db id)
  */
-export const treasurySpendProposalDiscussionExists = async (
+export const treasuryProposalDiscussionExists = async (
 	onchainTreasuryProposalId: number
 ): Promise<boolean | void> => {
 	if (!discussionGraphqlUrl) {
@@ -115,7 +115,7 @@ export const treasurySpendProposalDiscussionExists = async (
 
 		return !!data.onchain_links?.length;
 	} catch (err) {
-		console.error(chalk.red(`treasurySpendProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
+		console.error(chalk.red(`treasuryProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -366,34 +366,6 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 	}
 };
 
-// export const bla = () => {
-
-// 	let associatedMotionId: number | undefined;
-
-// 	if (associatedProposalId || associatedProposalId === 0) {
-// 		// at this stage the referendum is linked onchain to a proposal
-// 		// we must verify that this proposal/motion is present in the discussion db.
-// 		const proposalAssociatedRefendumId = await getProposalDiscussionAssociatedReferendumId(associatedProposalId);
-
-// 		const shouldUpdateProposal = !!proposalAssociatedRefendumId || proposalAssociatedRefendumId === 0;
-// 		if (shouldUpdateProposal) {
-// 			const affectedRows = await addReferendumIdToProposal({
-// 				onchainProposalId: associatedProposalId,
-// 				onchainReferendumId: Number(referendumId)
-// 			});
-
-// 			if (!affectedRows) {
-// 				throw new Error(`addDiscussionReferendum execution error with discussion proposal id ${associatedProposalId} and referendum id:${referendumId}, affected row: ${affectedRows}`);
-// 			}
-
-// 			console.log(`${chalk.green('✔︎')} Referendum id ${referendumId} added to the onchain_links with proposal id ${associatedProposalId}.`);
-// 		} else {
-// 			console.error(chalk.red(
-// 				`✖︎ Proposal id ${associatedProposalId.toString()} related to referendum id ${referendumId} does not exist in the discussion db, or onchain_referendum_id is not null.`
-// 			));
-// 		}
-
-// }
 interface TreasuryProposalUpdate {
 	onchainMotionProposalId: number;
 	onchainTreasuryProposalId: number;

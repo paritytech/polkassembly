@@ -110,7 +110,6 @@ export const motionSubscription = gql`
                 author
                 id
                 motionProposalId
-                motionProposalHash
                 motionStatus(orderBy: id_DESC) {
                     blockNumber {
                         hash
@@ -119,6 +118,11 @@ export const motionSubscription = gql`
                 }
                 preimage {
                     hash
+                }
+                section
+                motionProposalArguments{
+                    name
+                    value
                 }
             }
         }
@@ -141,7 +145,6 @@ export const motionSubscription = gql`
 //                 "status": "Proposed"
 //             }
 //         ],
-//         "motionProposalHash": "0x4d4dd65ab6f3495525bda9574c58796c3fbda87848074dee6fcc858dad755a2a"
 //     }
 // }
 
@@ -177,21 +180,21 @@ export const treasurySpendProposalSubscription = gql`
 
 // {
 // "data": {
-// 	"treasurySpendProposal": {
-// 		"mutation": "CREATED",
-// 		"node": {
-// 			"id": 3,
-// 			"proposer": "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
-// 			"treasuryProposalId": 0,
-// 			"treasuryStatus": [
-// 			{
-// 				"blockNumber": {
-// 					"hash": "0x8a0367f7891bbc2a17d0566224ca929de3b0b0dbc4bb852316293f777d1d53db"
-// 				},
-// 				"status": "Proposed"
-// 				}
-// 			]
-// 		}
-// 	}
+//   "treasurySpendProposal": {
+//     "mutation": "CREATED",
+//     "node": {
+//       "id": 3,
+//       "proposer": "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
+//       "treasuryProposalId": 0,
+//       "treasuryStatus": [
+//       {
+//         "blockNumber": {
+//           "hash": "0x8a0367f7891bbc2a17d0566224ca929de3b0b0dbc4bb852316293f777d1d53db"
+//         },
+//         "status": "Proposed"
+//         }
+//       ]
+//     }
+//   }
 // }
 //   }

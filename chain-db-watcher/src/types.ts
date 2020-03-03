@@ -26,10 +26,10 @@ export interface SyncMap {
 }
 
 export interface OnchainSyncMap {
-    motions?: motionObjectMap;
-    proposals?: objectMap;
-    referenda?: referendumObjectMap;
-    treasuryProposals?: objectMap;
+    motions?: MotionObjectMap;
+    proposals?: ObjectMap;
+    referenda?: ReferendumObjectMap;
+    treasuryProposals?: ObjectMap;
 }
 
 export interface OnchainReferendaValueSyncType {
@@ -44,12 +44,12 @@ export interface OnchainMotionSyncType {
 }
 
 export interface DiscussionSyncMap {
-    motions?: objectMap;
-    proposals?: objectMap;
-    referenda?: objectMap;
-    treasuryProposals?: objectMap;
+    motions?: ObjectMap;
+    proposals?: ObjectMap;
+    referenda?: ObjectMap;
+    treasuryProposals?: ObjectMap;
 }
 
-export type objectMap = {[index: string]: string};
-export type motionObjectMap = {[index: string]: OnchainMotionSyncType};
-export type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
+export type ObjectMap = {[index: string]: string};
+export type MotionObjectMap = {[index: string]: OnchainMotionSyncType};
+export type ReferendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
