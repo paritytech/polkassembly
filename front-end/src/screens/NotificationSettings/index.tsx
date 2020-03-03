@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Settings = ({ className }:Props): JSX.Element => {
-	const { notification } = useContext(UserDetailsContext);
+	const currentUser = useContext(UserDetailsContext);
 	const [changed, setChanged] = useState<boolean>(false);
 	const [postParticipated, setPostParticipated] = useState<boolean>(false);
 	const [postCreated, setPostCreated] = useState<boolean>(false);
@@ -24,6 +24,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 	const [ownProposal, setOwnProposal] = useState<boolean>(false);
 	const [changeNotificationPreferenceMutation, { error }] = useChangeNotificationPreferenceMutation();
 	const { queueNotification } = useContext(NotificationContext);
+	const { notification } = currentUser;
 
 	useEffect(() => {
 		setPostParticipated(notification?.postParticipated || false);
@@ -53,6 +54,17 @@ const Settings = ({ className }:Props): JSX.Element => {
 				if (data && data.changeNotificationPreference && data.changeNotificationPreference.token) {
 					handleTokenChange(data.changeNotificationPreference.token);
 				}
+				currentUser.setUserDetailsContextState((prevState) => {
+					return {
+						...prevState,
+						notification: {
+							newProposal,
+							ownProposal,
+							postCreated,
+							postParticipated
+						}
+					};
+				});
 			}).catch((e) => {
 				queueNotification({
 					header: 'Failed!',
