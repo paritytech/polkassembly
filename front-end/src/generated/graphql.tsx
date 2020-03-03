@@ -10483,7 +10483,7 @@ export type SignupMutation = (
 
 export type OnchainLinkTreasuryProposalFragment = (
   { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id'>
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id' | 'onchain_referendum_id'>
   & { onchain_treasury_spend_proposal: Array<Maybe<(
     { __typename?: 'TreasurySpendProposal' }
     & Pick<TreasurySpendProposal, 'id' | 'beneficiary' | 'value' | 'bond'>
@@ -10778,6 +10778,7 @@ export const OnchainLinkTreasuryProposalFragmentDoc = gql`
   id
   proposer_address
   onchain_treasury_proposal_id
+  onchain_referendum_id
   onchain_treasury_spend_proposal(where: {}) {
     id
     beneficiary

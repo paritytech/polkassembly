@@ -8,12 +8,13 @@ import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import CreatePostComment from './PostCommentForm';
 import EditablePostContent from '../EditablePostContent';
-import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, MotionPostAndCommentsQueryHookResult, MotionPostAndCommentsQueryVariables, MotionPostAndCommentsQuery, OnchainLinkMotionFragment, MotionPostFragment } from '../../generated/graphql';
+import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, MotionPostAndCommentsQueryHookResult, MotionPostAndCommentsQueryVariables, MotionPostAndCommentsQuery, OnchainLinkMotionFragment, MotionPostFragment, TreasuryProposalPostFragment } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
+import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
 import GovenanceSideBar from './GovernanceSideBar';
 
 interface Props {
@@ -22,10 +23,11 @@ interface Props {
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
+	isTreasuryProposal?: boolean
 	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, refetch }: Props ) => {
+const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
@@ -41,7 +43,8 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
 	let motionPost: MotionPostFragment | undefined;
-	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | undefined;
+	let treasuryPost: TreasuryProposalPostFragment | undefined;
+	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
 
 	if (isReferendum){
@@ -65,11 +68,19 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
 	}
 
+	if (isTreasuryProposal) {
+		treasuryPost = post as TreasuryProposalPostFragment;
+		definedOnchainLink = treasuryPost.onchain_link as OnchainLinkTreasuryProposalFragment;
+		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
+		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
+	}
+
 	const canEdit = !isEditing && (
 		(post?.author?.id === id) ||
 		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
 		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address)) ||
-		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address))
+		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address)) ||
+		(isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address))
 	);
 
 	if (!post) return <NoPostFound/>;
@@ -100,9 +111,9 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					}
 				</div>
 				{ isMotion &&
-						<PostMotionInfo
-							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
-						/>
+					<PostMotionInfo
+						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+					/>
 				}
 				{ isProposal &&
 					<PostProposalInfo
@@ -112,6 +123,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				{ isReferendum &&
 					<PostReferendumInfo
 						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+					/>
+				}
+				{ isTreasuryProposal &&
+					<PostTreasuryInfo
+						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
 					/>
 				}
 				{ !!post.comments?.length &&
@@ -151,7 +167,7 @@ export default styled(Post)`
 			padding: 2rem
 		}
 	}
-	
+
 	@media only screen and (max-width: 992px) {
 		.democracy_card {
 			visibility: hidden;
