@@ -60,6 +60,11 @@ spec:
             configMapKeyRef:
               key: COUNCIL_TOPIC_ID
               name: chain-db-watcher-config
+        - name: TREASURY_TOPIC_ID
+          valueFrom:
+            configMapKeyRef:
+              key: TREASURY_TOPIC_ID
+              name: chain-db-watcher-config
         - name: PROPOSAL_BOT_USER_ID
           valueFrom:
             configMapKeyRef:
