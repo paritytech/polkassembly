@@ -71,6 +71,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: HASURA_EVENT_SECRET
+              name: hasura-config
         - name: HASURA_AUTH_SERVER_REMOTE_SCHEMA
           valueFrom:
             configMapKeyRef:

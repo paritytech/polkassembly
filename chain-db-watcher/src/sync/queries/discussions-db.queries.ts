@@ -38,3 +38,16 @@ query getDiscussionReferenda {
   }
 `;
 
+export const getDiscussionTreasuryProposals = gql`
+    query getDiscussionTreasuryProposals {
+        onchain_links(where: {onchain_treasury_proposal_id: {_is_null: false}}){
+            ...discussionTreasuryProposal
+        }
+    }
+    fragment discussionTreasuryProposal on onchain_links {
+        id
+        onchain_treasury_proposal_id
+        proposer_address
+    }
+`;
+

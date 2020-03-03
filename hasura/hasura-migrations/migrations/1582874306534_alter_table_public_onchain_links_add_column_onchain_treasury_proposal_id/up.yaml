@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."onchain_links" ADD COLUMN "onchain_treasury_proposal_id"
+      integer NULL UNIQUE;
+  type: run_sql

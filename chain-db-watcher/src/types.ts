@@ -1,16 +1,18 @@
-import { OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment } from './generated/chain-db-graphql';
-import { DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment } from './generated/discussion-db-graphql';
+import { OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment, OnchainTreasuryProposalFragment } from './generated/chain-db-graphql';
+import { DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment, DiscussionTreasuryProposalFragment } from './generated/discussion-db-graphql';
 
 export interface OnchainSyncData {
     motions?: Array<OnchainMotionFragment | null> | null;
     proposals?: Array<OnchainProposalFragment | null> | null;
     referenda?: Array<OnchainReferendumFragment | null> | null;
+    treasuryProposals?: Array<OnchainTreasuryProposalFragment | null> | null;
 }
 
 export interface DiscussionSyncData {
     motions?: Array<DiscussionMotionFragment | null> | null;
     proposals?: Array<DiscussionProposalFragment | null> | null;
     referenda?: Array<DiscussionReferendumFragment | null> | null;
+    treasuryProposals?: Array<DiscussionTreasuryProposalFragment | null> | null;
 }
 
 export interface SyncData {
@@ -24,9 +26,10 @@ export interface SyncMap {
 }
 
 export interface OnchainSyncMap {
-    motions?: objectMap;
-    proposals?: objectMap;
-    referenda?: referendumObjectMap;
+    motions?: MotionObjectMap;
+    proposals?: ObjectMap;
+    referenda?: ReferendumObjectMap;
+    treasuryProposals?: ObjectMap;
 }
 
 export interface OnchainReferendaValueSyncType {
@@ -34,11 +37,19 @@ export interface OnchainReferendaValueSyncType {
     blockCreationHash: string;
 }
 
-export interface DiscussionSyncMap {
-    motions?: objectMap;
-    proposals?: objectMap;
-    referenda?: objectMap;
+export interface OnchainMotionSyncType {
+    author: string;
+    treasuryProposalId?: number;
+    section: string;
 }
 
-export type objectMap = {[index: string]: string};
-export type referendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};
+export interface DiscussionSyncMap {
+    motions?: ObjectMap;
+    proposals?: ObjectMap;
+    referenda?: ObjectMap;
+    treasuryProposals?: ObjectMap;
+}
+
+export type ObjectMap = {[index: string]: string};
+export type MotionObjectMap = {[index: string]: OnchainMotionSyncType};
+export type ReferendumObjectMap = {[index: string]: OnchainReferendaValueSyncType};

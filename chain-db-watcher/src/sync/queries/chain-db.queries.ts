@@ -74,5 +74,32 @@ export const getOnchainMotions = gql`
         author
         id
         motionProposalId
+        section
+        motionProposalArguments{
+            name
+            value
+        }
+    }
+`;
+
+export const getOnchainTreasuryProposals = gql`
+    query getOnchainTreasuryProposals($startBlock: Int!) {
+        treasurySpendProposals (
+			where: {
+                treasuryStatus_some: {
+                    AND: [
+                        { status: "Proposed" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
+            ...onchainTreasuryProposal
+        }
+    }
+    fragment onchainTreasuryProposal on TreasurySpendProposal {
+        proposer
+        id
+        treasuryProposalId
     }
 `;

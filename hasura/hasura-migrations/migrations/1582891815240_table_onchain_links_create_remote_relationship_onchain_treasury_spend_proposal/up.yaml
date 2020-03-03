@@ -1,0 +1,14 @@
+- args:
+    hasura_fields:
+    - onchain_treasury_proposal_id
+    name: onchain_treasury_spend_proposal
+    remote_field:
+      treasurySpendProposals:
+        arguments:
+          where:
+            treasuryProposalId: $onchain_treasury_proposal_id
+    remote_schema: chain-db
+    table:
+      name: onchain_links
+      schema: public
+  type: create_remote_relationship

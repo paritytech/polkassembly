@@ -29,6 +29,35 @@ export const addPostAndProposalMutation = gql`
     }
 `;
 
+export const addPostAndTreasurySpendProposalMutation = gql`
+    mutation addPostAndTreasurySpendProposalMutation (
+        $onchainTreasuryProposalId:Int!,
+        $authorId: Int!,
+        $proposerAddress: String!,
+        $content: String!,
+        $title: String!,
+        $topicId: Int!,
+        $typeId: Int!
+        ){
+        __typename
+        insert_onchain_links(objects: {
+            onchain_treasury_proposal_id: $onchainTreasuryProposalId,
+            proposer_address: $proposerAddress,
+            post: {data: {
+                author_id: $authorId,
+                content: $content,
+                title: $title,
+                topic_id: $topicId,
+                type_id: $typeId
+            }
+        }}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
 export const addPostAndMotionMutation = gql`
     mutation addPostAndMotionMutation (
         $onchainMotionProposalId:Int!,
@@ -81,15 +110,30 @@ export const getMotionWithNoAssociatedReferendumQuery = gql`
 `;
 
 export const addReferendumIdToProposalMutation = gql`
-        mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
-            update_onchain_links(
-                where: {
-                    onchain_proposal_id: {_eq: $proposalId}
-                },
-                _set: {
-                    onchain_referendum_id: $referendumId
-                }
-            ) {
+    mutation addReferendumIdToProposalMutation($proposalId: Int!, $referendumId: Int!) {
+        update_onchain_links(
+            where: {
+                onchain_proposal_id: {_eq: $proposalId}
+            },
+            _set: {
+                onchain_referendum_id: $referendumId
+            }
+        ) {
+            affected_rows
+        }
+    }
+`;
+
+export const addMotionIdToTreasuryProposalMutation = gql`
+    mutation addMotionIdToTreasuryProposalMutation($treasuryProposalId: Int!, $motionId: Int!) {
+        update_onchain_links(
+            where: {
+                onchain_treasury_proposal_id: {_eq: $treasuryProposalId}
+            },
+            _set: {
+                onchain_motion_id: $motionId
+            }
+        ) {
             affected_rows
         }
     }
@@ -129,6 +173,14 @@ export const getDiscussionProposalById = gql`
 export const getDiscussionMotionProposalById = gql`
     query getDiscussionMotionProposalById($onchainMotionProposalId: Int!) {
         onchain_links(where: {onchain_motion_id: {_eq: $onchainMotionProposalId}}) {
+            id
+        }
+    }
+`;
+
+export const getDiscussionTreasurySpendProposalById = gql`
+    query getDiscussionTreasurySpendProposalById($onchainTreasuryProposalId: Int!) {
+        onchain_links(where: {onchain_treasury_proposal_id: {_eq: $onchainTreasuryProposalId}}) {
             id
         }
     }
