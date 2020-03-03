@@ -1,15 +1,16 @@
 
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { /* Divider, */ Dropdown, DropdownProps, DropdownItemProps, Icon, Select } from 'semantic-ui-react';
+import { DropdownProps, Icon, Select } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
+import AddressDropdown from '../AddressDropdown';
 import Balance from '../../Balance';
-import { Form } from '../../../ui-components/Form';
-import Button from '../../../ui-components/Button';
-import HelperTooltip from '../../../ui-components/HelperTooltip';
 import { NotificationContext } from '../../../context/NotificationContext';
+import Button from '../../../ui-components/Button';
+import { Form } from '../../../ui-components/Form';
+import HelperTooltip from '../../../ui-components/HelperTooltip';
 import { NotificationStatus } from '../../../types';
 
 type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
@@ -20,23 +21,21 @@ interface Props {
 	api?: ApiPromise
 	apiReady?: boolean
 	address: string
-	defaultAddress: string
-	addressOptions: DropdownItemProps[]
 	accounts: InjectedAccountWithMeta[]
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 	getAccounts: () => Promise<undefined>
 }
 
-const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
+const VoteRefrendum = ({ className, referendumId, api, apiReady, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
-	const [conviction, setConviction] = useState<ConvictionType>('Locked1x');
-	const options = [
+	const options: {text: string, value: ConvictionType}[] = [
 		{ text: '1x time lock', value: 'Locked1x' },
 		{ text: '2x time lock', value: 'Locked2x' },
 		{ text: '3x time lock', value: 'Locked3x' },
 		{ text: '4x time lock', value: 'Locked4x' },
 		{ text: '5x time lock', value: 'Locked5x' }
 	];
+	const [conviction, setConviction] = useState<ConvictionType>(options[0].value);
 
 	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const convictionValue = data.value as ConvictionType;
@@ -102,39 +101,6 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 
 	return (
 		<div className={className}>
-			{/* <div className='card'>
-				<h2>Votes</h2>
-				<Divider/>
-				<Grid>
-					<Grid.Column width={6}>
-						<div><b>Total KSM Locked</b></div>
-						<div>241,547 KSM</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>Turnout</b></div>
-						<div>12,415%</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>Threshold</b></div>
-						<div>91.2%</div>
-					</Grid.Column>
-				</Grid>
-				<Divider/>
-				<Grid>
-					<Grid.Column width={6}>
-						<div><b>Total Votes</b></div>
-						<div>2,311,547</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>Yes</b></div>
-						<div>1,588,731</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>No</b></div>
-						<div>725,826</div>
-					</Grid.Column>
-				</Grid>
-			</div> */}
 			<div className='card'>
 				<Form standalone={false}>
 					<h4>Vote</h4>
@@ -145,11 +111,10 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 									content='You can choose an account from the Polkadot-js extension.'
 								/>
 							</label>
-							<Dropdown
-								onChange={onAccountChange}
-								defaultValue={defaultAddress || accounts[0].address}
-								selection
-								options={addressOptions}
+							<AddressDropdown
+								accounts={accounts}
+								defaultAddress={address || accounts[0]?.address}
+								onAccountChange={onAccountChange}
 							/>
 							{api ? (
 								<Balance api={api} address={address} />
@@ -162,11 +127,8 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 							<Select
 								onChange={onConvictionChange}
 								options={options}
-								defaultValue={'Locked1x'}
+								defaultValue={options[0].value}
 							/>
-							{/* <div>
-								120 KSM * 2 Lock periods = <b>240 votes</b>
-							</div> */}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
@@ -196,19 +158,6 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, defaul
 					</Form.Group>
 				</Form>
 			</div>
-			{/* <div className='card'>
-				<h2>Timeline</h2>
-				<Grid>
-					<Grid.Column width={8}>
-						<div><b>Blocks Remaining</b></div>
-						<div>69,420</div>
-					</Grid.Column>
-					<Grid.Column width={8}>
-						<div><b>Enact at</b></div>
-						<div>Block 240,000</div>
-					</Grid.Column>
-				</Grid>
-			</div> */}
 		</div>
 	);
 };
@@ -224,6 +173,10 @@ export default styled(VoteRefrendum)`
 		@media only screen and (max-width: 768px) {
 			padding: 2rem;
 		}
+	}
+
+	.ui.selection.dropdown {
+		border-color: grey_light;
 	}
 
 	@media only screen and (max-width: 768px) {
