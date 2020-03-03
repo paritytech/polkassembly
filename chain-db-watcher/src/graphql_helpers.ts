@@ -701,7 +701,7 @@ interface AddDiscussionReferendum {
 }
 
 /**
- * Find the proposal/motion/treasury matchin a referendum
+ * Find the proposal/motion matching a referendum
  * and update the discussion db to add the referendum id
  *
  * @param preimageHash - The preimage hash of the referendum, if any.
