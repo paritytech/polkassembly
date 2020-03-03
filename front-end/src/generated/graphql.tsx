@@ -2379,7 +2379,7 @@ export type Mutation = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
@@ -2489,7 +2489,7 @@ export type Mutation_Root = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockIndex: BlockIndex,
@@ -4123,6 +4123,8 @@ export type Onchain_Links = {
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_spend_proposal: Array<Maybe<TreasurySpendProposal>>,
   post: Posts,
   post_id: Scalars['Int'],
   proposer_address: Scalars['String'],
@@ -4159,6 +4161,17 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
   orderBy?: Maybe<ReferendumOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
+};
+
+
+export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasurySpendProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -4213,6 +4226,7 @@ export type Onchain_Links_Avg_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4221,6 +4235,7 @@ export type Onchain_Links_Avg_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4233,6 +4248,7 @@ export type Onchain_Links_Bool_Exp = {
   onchain_motion_id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
+  onchain_treasury_proposal_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   proposer_address?: Maybe<String_Comparison_Exp>,
@@ -4241,6 +4257,7 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
+  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -4251,6 +4268,7 @@ export type Onchain_Links_Inc_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4260,6 +4278,7 @@ export type Onchain_Links_Insert_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
@@ -4272,6 +4291,7 @@ export type Onchain_Links_Max_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4282,6 +4302,7 @@ export type Onchain_Links_Max_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4293,6 +4314,7 @@ export type Onchain_Links_Min_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4303,6 +4325,7 @@ export type Onchain_Links_Min_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4330,6 +4353,7 @@ export type Onchain_Links_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
@@ -4341,6 +4365,7 @@ export enum Onchain_Links_Select_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4351,6 +4376,7 @@ export type Onchain_Links_Set_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4361,6 +4387,7 @@ export type Onchain_Links_Stddev_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4369,6 +4396,7 @@ export type Onchain_Links_Stddev_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4378,6 +4406,7 @@ export type Onchain_Links_Stddev_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4386,6 +4415,7 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4395,6 +4425,7 @@ export type Onchain_Links_Stddev_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4403,6 +4434,7 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4412,6 +4444,7 @@ export type Onchain_Links_Sum_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4420,6 +4453,7 @@ export type Onchain_Links_Sum_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4429,6 +4463,7 @@ export enum Onchain_Links_Update_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4439,6 +4474,7 @@ export type Onchain_Links_Var_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4447,6 +4483,7 @@ export type Onchain_Links_Var_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4456,6 +4493,7 @@ export type Onchain_Links_Var_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4464,6 +4502,7 @@ export type Onchain_Links_Var_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4473,6 +4512,7 @@ export type Onchain_Links_Variance_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4481,6 +4521,7 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -9234,6 +9275,87 @@ export type TreasurySpendProposalWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal = {
+  AND?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  NOT?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  OR?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  beneficiary?: Maybe<Scalars['String']>,
+  beneficiary_contains?: Maybe<Scalars['String']>,
+  beneficiary_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_gt?: Maybe<Scalars['String']>,
+  beneficiary_gte?: Maybe<Scalars['String']>,
+  beneficiary_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_lt?: Maybe<Scalars['String']>,
+  beneficiary_lte?: Maybe<Scalars['String']>,
+  beneficiary_not?: Maybe<Scalars['String']>,
+  beneficiary_not_contains?: Maybe<Scalars['String']>,
+  beneficiary_not_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_not_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_not_starts_with?: Maybe<Scalars['String']>,
+  beneficiary_starts_with?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  bond_contains?: Maybe<Scalars['String']>,
+  bond_ends_with?: Maybe<Scalars['String']>,
+  bond_gt?: Maybe<Scalars['String']>,
+  bond_gte?: Maybe<Scalars['String']>,
+  bond_in?: Maybe<Array<Scalars['String']>>,
+  bond_lt?: Maybe<Scalars['String']>,
+  bond_lte?: Maybe<Scalars['String']>,
+  bond_not?: Maybe<Scalars['String']>,
+  bond_not_contains?: Maybe<Scalars['String']>,
+  bond_not_ends_with?: Maybe<Scalars['String']>,
+  bond_not_in?: Maybe<Array<Scalars['String']>>,
+  bond_not_starts_with?: Maybe<Scalars['String']>,
+  bond_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  motion?: Maybe<MotionWhereInput>,
+  proposer?: Maybe<Scalars['String']>,
+  proposer_contains?: Maybe<Scalars['String']>,
+  proposer_ends_with?: Maybe<Scalars['String']>,
+  proposer_gt?: Maybe<Scalars['String']>,
+  proposer_gte?: Maybe<Scalars['String']>,
+  proposer_in?: Maybe<Array<Scalars['String']>>,
+  proposer_lt?: Maybe<Scalars['String']>,
+  proposer_lte?: Maybe<Scalars['String']>,
+  proposer_not?: Maybe<Scalars['String']>,
+  proposer_not_contains?: Maybe<Scalars['String']>,
+  proposer_not_ends_with?: Maybe<Scalars['String']>,
+  proposer_not_in?: Maybe<Array<Scalars['String']>>,
+  proposer_not_starts_with?: Maybe<Scalars['String']>,
+  proposer_starts_with?: Maybe<Scalars['String']>,
+  treasuryProposalId_gt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryProposalId_lt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_lte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryStatus_every?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_none?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_some?: Maybe<TreasuryStatusWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type TreasurySpendProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   treasuryProposalId?: Maybe<Scalars['Int']>,
@@ -10281,8 +10403,8 @@ export type ChangeNotificationPreferenceMutationVariables = {
 export type ChangeNotificationPreferenceMutation = (
   { __typename?: 'mutation_root' }
   & { changeNotificationPreference: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 

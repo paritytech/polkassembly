@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { /* Divider, */ Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
+import { DropdownProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -9,21 +9,20 @@ import Button from '../../../ui-components/Button';
 import HelperTooltip from '../../../ui-components/HelperTooltip';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
+import AddressDropdown from '../AddressDropdown';
 
 interface Props {
-	className?: string
-	proposalId?: number | null | undefined
+	accounts: InjectedAccountWithMeta[]
+	address: string
 	api?: ApiPromise,
 	apiReady?: boolean,
-	address: string
-	defaultAddress: string
-	addressOptions: DropdownItemProps[]
-	accounts: InjectedAccountWithMeta[]
-	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	className?: string
+	proposalId?: number | null | undefined
 	getAccounts: () => Promise<undefined>
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const SecondProposal = ({ className, api, apiReady, proposalId, address, defaultAddress, accounts, addressOptions, onAccountChange, getAccounts }: Props) => {
+const SecondProposal = ({ className, api, apiReady, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 
 	const secondProposal = async () => {
@@ -88,18 +87,6 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 		<div className={className}>
 			<div className='card'>
 				<h4>Seconding</h4>
-				{/* <Grid.Column width={6}>
-						<div><b>Deposit Amount</b></div>
-						<div>100 KSM</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>Seconded By</b></div>
-						<div>212 Addresses</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<div><b>Locked KSM</b></div>
-						<div>21200 KSM</div>
-					</Grid.Column> */}
 				<Form standalone={false}>
 					<Form.Group>
 						<Form.Field width={16}>
@@ -108,11 +95,10 @@ const SecondProposal = ({ className, api, apiReady, proposalId, address, default
 									content='You can choose an account from the Polkadot-js extension.'
 								/>
 							</label>
-							<Dropdown
-								onChange={onAccountChange}
-								defaultValue={defaultAddress || accounts[0].address}
-								selection
-								options={addressOptions}
+							<AddressDropdown
+								accounts={accounts}
+								defaultAddress={address || accounts[0]?.address}
+								onAccountChange={onAccountChange}
 							/>
 							<Button
 								primary
