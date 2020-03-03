@@ -1,36 +1,26 @@
 import gql from 'graphql-tag';
 import { commentFields } from '../../fragments/comments';
 
-const onchainLinkProposal = gql`
-    fragment onchainLinkProposal on onchain_links {
+const onchainLinkTreasuryProposal = gql`
+    fragment onchainLinkTreasuryProposal on onchain_links {
         id,
         proposer_address,
-        onchain_proposal_id,
-        onchain_referendum_id,
-        onchain_proposal(where: {}) {
+        onchain_treasury_proposal_id,
+        onchain_treasury_spend_proposal(where: {}) {
             id
-            depositAmount
-            proposalStatus(last: 1) {
+            beneficiary
+            value
+            bond
+            treasuryStatus(last: 1) {
                 id
                 status
-            }
-            preimage {
-                hash
-                id
-                metaDescription
-                method
-                preimageArguments {
-                    id
-                    name
-                    value
-                }
             }
         }
     }
 `;
 
-const proposalPost = gql`
-    fragment proposalPost on posts {
+const treasuryProposalPost = gql`
+    fragment treasuryProposalPost on posts {
         author {
             id
             name
@@ -44,7 +34,7 @@ const proposalPost = gql`
             ...commentFields
         }
         onchain_link{
-            ...onchainLinkProposal
+            ...onchainLinkTreasuryProposal
         }
         title
         topic {
@@ -57,15 +47,15 @@ const proposalPost = gql`
         }
     }
     ${commentFields}
-    ${onchainLinkProposal}
+    ${onchainLinkTreasuryProposal}
 `;
 
-export const QUERY_PROPOSAL_POST_AND_COMMENTS = gql`
-    query ProposalPostAndComments ($id:Int!) {
-        posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
-            ...proposalPost
+export const QUERY_TREASURY_PROPOSAL_POST_AND_COMMENTS = gql`
+    query TreasuryProposalPostAndComments ($id:Int!) {
+        posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {
+            ...treasuryProposalPost
         }
     }
-    ${proposalPost}
+    ${treasuryProposalPost}
 `;
 

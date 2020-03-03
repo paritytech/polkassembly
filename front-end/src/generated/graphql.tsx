@@ -2379,7 +2379,7 @@ export type Mutation = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
@@ -2489,7 +2489,7 @@ export type Mutation_Root = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockIndex: BlockIndex,
@@ -4123,6 +4123,8 @@ export type Onchain_Links = {
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_spend_proposal: Array<Maybe<TreasurySpendProposal>>,
   post: Posts,
   post_id: Scalars['Int'],
   proposer_address: Scalars['String'],
@@ -4159,6 +4161,17 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
   orderBy?: Maybe<ReferendumOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
+};
+
+
+export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasurySpendProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -4213,6 +4226,7 @@ export type Onchain_Links_Avg_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4221,6 +4235,7 @@ export type Onchain_Links_Avg_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4233,6 +4248,7 @@ export type Onchain_Links_Bool_Exp = {
   onchain_motion_id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
+  onchain_treasury_proposal_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   proposer_address?: Maybe<String_Comparison_Exp>,
@@ -4241,6 +4257,7 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
+  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -4251,6 +4268,7 @@ export type Onchain_Links_Inc_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4260,6 +4278,7 @@ export type Onchain_Links_Insert_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
@@ -4272,6 +4291,7 @@ export type Onchain_Links_Max_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4282,6 +4302,7 @@ export type Onchain_Links_Max_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4293,6 +4314,7 @@ export type Onchain_Links_Min_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4303,6 +4325,7 @@ export type Onchain_Links_Min_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4330,6 +4353,7 @@ export type Onchain_Links_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
@@ -4341,6 +4365,7 @@ export enum Onchain_Links_Select_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4351,6 +4376,7 @@ export type Onchain_Links_Set_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4361,6 +4387,7 @@ export type Onchain_Links_Stddev_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4369,6 +4396,7 @@ export type Onchain_Links_Stddev_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4378,6 +4406,7 @@ export type Onchain_Links_Stddev_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4386,6 +4415,7 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4395,6 +4425,7 @@ export type Onchain_Links_Stddev_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4403,6 +4434,7 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4412,6 +4444,7 @@ export type Onchain_Links_Sum_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4420,6 +4453,7 @@ export type Onchain_Links_Sum_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4429,6 +4463,7 @@ export enum Onchain_Links_Update_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4439,6 +4474,7 @@ export type Onchain_Links_Var_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4447,6 +4483,7 @@ export type Onchain_Links_Var_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4456,6 +4493,7 @@ export type Onchain_Links_Var_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4464,6 +4502,7 @@ export type Onchain_Links_Var_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4473,6 +4512,7 @@ export type Onchain_Links_Variance_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4481,6 +4521,7 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -9234,6 +9275,87 @@ export type TreasurySpendProposalWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal = {
+  AND?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  NOT?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  OR?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  beneficiary?: Maybe<Scalars['String']>,
+  beneficiary_contains?: Maybe<Scalars['String']>,
+  beneficiary_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_gt?: Maybe<Scalars['String']>,
+  beneficiary_gte?: Maybe<Scalars['String']>,
+  beneficiary_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_lt?: Maybe<Scalars['String']>,
+  beneficiary_lte?: Maybe<Scalars['String']>,
+  beneficiary_not?: Maybe<Scalars['String']>,
+  beneficiary_not_contains?: Maybe<Scalars['String']>,
+  beneficiary_not_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_not_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_not_starts_with?: Maybe<Scalars['String']>,
+  beneficiary_starts_with?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  bond_contains?: Maybe<Scalars['String']>,
+  bond_ends_with?: Maybe<Scalars['String']>,
+  bond_gt?: Maybe<Scalars['String']>,
+  bond_gte?: Maybe<Scalars['String']>,
+  bond_in?: Maybe<Array<Scalars['String']>>,
+  bond_lt?: Maybe<Scalars['String']>,
+  bond_lte?: Maybe<Scalars['String']>,
+  bond_not?: Maybe<Scalars['String']>,
+  bond_not_contains?: Maybe<Scalars['String']>,
+  bond_not_ends_with?: Maybe<Scalars['String']>,
+  bond_not_in?: Maybe<Array<Scalars['String']>>,
+  bond_not_starts_with?: Maybe<Scalars['String']>,
+  bond_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  motion?: Maybe<MotionWhereInput>,
+  proposer?: Maybe<Scalars['String']>,
+  proposer_contains?: Maybe<Scalars['String']>,
+  proposer_ends_with?: Maybe<Scalars['String']>,
+  proposer_gt?: Maybe<Scalars['String']>,
+  proposer_gte?: Maybe<Scalars['String']>,
+  proposer_in?: Maybe<Array<Scalars['String']>>,
+  proposer_lt?: Maybe<Scalars['String']>,
+  proposer_lte?: Maybe<Scalars['String']>,
+  proposer_not?: Maybe<Scalars['String']>,
+  proposer_not_contains?: Maybe<Scalars['String']>,
+  proposer_not_ends_with?: Maybe<Scalars['String']>,
+  proposer_not_in?: Maybe<Array<Scalars['String']>>,
+  proposer_not_starts_with?: Maybe<Scalars['String']>,
+  proposer_starts_with?: Maybe<Scalars['String']>,
+  treasuryProposalId_gt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryProposalId_lt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_lte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryStatus_every?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_none?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_some?: Maybe<TreasuryStatusWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type TreasurySpendProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   treasuryProposalId?: Maybe<Scalars['Int']>,
@@ -10030,6 +10152,48 @@ export type LatestReferendaPostsQuery = (
   )> }
 );
 
+export type LatestDemocracyProposalPostsQueryVariables = {
+  postType: Scalars['Int'],
+  postTopic: Scalars['Int'],
+  limit?: Scalars['Int']
+};
+
+
+export type LatestDemocracyProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & { onchain_proposal: Array<Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type OnchainLinkProposalFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_proposal_id' | 'onchain_referendum_id'>
@@ -10281,8 +10445,8 @@ export type ChangeNotificationPreferenceMutationVariables = {
 export type ChangeNotificationPreferenceMutation = (
   { __typename?: 'mutation_root' }
   & { changeNotificationPreference: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
@@ -10314,6 +10478,53 @@ export type SignupMutation = (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
     )> }
+  )> }
+);
+
+export type OnchainLinkTreasuryProposalFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id'>
+  & { onchain_treasury_spend_proposal: Array<Maybe<(
+    { __typename?: 'TreasurySpendProposal' }
+    & Pick<TreasurySpendProposal, 'id' | 'beneficiary' | 'value' | 'bond'>
+    & { treasuryStatus: Maybe<Array<(
+      { __typename?: 'TreasuryStatus' }
+      & Pick<TreasuryStatus, 'id' | 'status'>
+    )>> }
+  )>> }
+);
+
+export type TreasuryProposalPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentFieldsFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkTreasuryProposalFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type TreasuryProposalPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type TreasuryProposalPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & TreasuryProposalPostFragment
   )> }
 );
 
@@ -10562,6 +10773,52 @@ export const ReferendumPostFragmentDoc = gql`
 }
     ${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}`;
+export const OnchainLinkTreasuryProposalFragmentDoc = gql`
+    fragment onchainLinkTreasuryProposal on onchain_links {
+  id
+  proposer_address
+  onchain_treasury_proposal_id
+  onchain_treasury_spend_proposal(where: {}) {
+    id
+    beneficiary
+    value
+    bond
+    treasuryStatus(last: 1) {
+      id
+      status
+    }
+  }
+}
+    `;
+export const TreasuryProposalPostFragmentDoc = gql`
+    fragment treasuryProposalPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
+  }
+  onchain_link {
+    ...onchainLinkTreasuryProposal
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentFieldsFragmentDoc}
+${OnchainLinkTreasuryProposalFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -11285,6 +11542,73 @@ export function useLatestReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.
 export type LatestReferendaPostsQueryHookResult = ReturnType<typeof useLatestReferendaPostsQuery>;
 export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestReferendaPostsLazyQuery>;
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
+export const LatestDemocracyProposalPostsDocument = gql`
+    query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus(last: 1) {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useLatestDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+        }
+export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsQuery>;
+export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
+export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
 export const ProposalPostAndCommentsDocument = gql`
     query ProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
@@ -11793,6 +12117,39 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const TreasuryProposalPostAndCommentsDocument = gql`
+    query TreasuryProposalPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {
+    ...treasuryProposalPost
+  }
+}
+    ${TreasuryProposalPostFragmentDoc}`;
+
+/**
+ * __useTreasuryProposalPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useTreasuryProposalPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTreasuryProposalPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTreasuryProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>(TreasuryProposalPostAndCommentsDocument, baseOptions);
+      }
+export function useTreasuryProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>(TreasuryProposalPostAndCommentsDocument, baseOptions);
+        }
+export type TreasuryProposalPostAndCommentsQueryHookResult = ReturnType<typeof useTreasuryProposalPostAndCommentsQuery>;
+export type TreasuryProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useTreasuryProposalPostAndCommentsLazyQuery>;
+export type TreasuryProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>;
 export const UndoEmailChangeDocument = gql`
     mutation undoEmailChange($token: String!) {
   undoEmailChange(token: $token) {
