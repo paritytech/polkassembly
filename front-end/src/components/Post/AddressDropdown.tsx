@@ -8,7 +8,7 @@ import styled from '@xstyled/styled-components';
 interface Props{
 	accounts: InjectedAccountWithMeta[]
 	className?: string
-    defaultAddress: string
+	defaultAddress: string
 	filterAccounts?: string[]
     onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
