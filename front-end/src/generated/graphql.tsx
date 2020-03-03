@@ -4257,7 +4257,6 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
-  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -10027,6 +10026,22 @@ export type MotionPostAndCommentsQuery = (
   )> }
 );
 
+export type ChangeNotificationPreferenceMutationVariables = {
+  postParticipated?: Maybe<Scalars['Boolean']>,
+  postCreated?: Maybe<Scalars['Boolean']>,
+  newProposal?: Maybe<Scalars['Boolean']>,
+  ownProposal?: Maybe<Scalars['Boolean']>
+};
+
+
+export type ChangeNotificationPreferenceMutation = (
+  { __typename?: 'mutation_root' }
+  & { changeNotificationPreference: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
 export type LatestMotionPostsQueryVariables = {
   postType: Scalars['Int'],
   postTopic: Scalars['Int'],
@@ -10389,33 +10404,6 @@ export type ResendVerifyEmailTokenMutation = (
   & { resendVerifyEmailToken: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
-  )> }
-);
-
-export type ChangeNotificationPreferenceMutationVariables = {
-  postParticipated?: Maybe<Scalars['Boolean']>,
-  postCreated?: Maybe<Scalars['Boolean']>,
-  newProposal?: Maybe<Scalars['Boolean']>,
-  ownProposal?: Maybe<Scalars['Boolean']>
-};
-
-
-export type ChangeNotificationPreferenceMutation = (
-  { __typename?: 'mutation_root' }
-  & { changeNotificationPreference: Maybe<(
-    { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
-  )> }
-);
-
-export type NotificationQueryVariables = {};
-
-
-export type NotificationQuery = (
-  { __typename?: 'query_root' }
-  & { notification: Maybe<(
-    { __typename?: 'NotificationPreferences' }
-    & Pick<NotificationPreferences, 'postParticipated' | 'postCreated' | 'newProposal' | 'ownProposal'>
   )> }
 );
 
@@ -11207,6 +11195,42 @@ export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks
 export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
+export const ChangeNotificationPreferenceDocument = gql`
+    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
+  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
+    message
+    token
+  }
+}
+    `;
+export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
+
+/**
+ * __useChangeNotificationPreferenceMutation__
+ *
+ * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
+ *   variables: {
+ *      postParticipated: // value for 'postParticipated'
+ *      postCreated: // value for 'postCreated'
+ *      newProposal: // value for 'newProposal'
+ *      ownProposal: // value for 'ownProposal'
+ *   },
+ * });
+ */
+export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
+      }
+export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestMotionPostsDocument = gql`
     query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
@@ -11803,76 +11827,6 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
-export const ChangeNotificationPreferenceDocument = gql`
-    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
-  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
-    message
-  }
-}
-    `;
-export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-
-/**
- * __useChangeNotificationPreferenceMutation__
- *
- * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
- *   variables: {
- *      postParticipated: // value for 'postParticipated'
- *      postCreated: // value for 'postCreated'
- *      newProposal: // value for 'newProposal'
- *      ownProposal: // value for 'ownProposal'
- *   },
- * });
- */
-export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
-        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
-      }
-export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-export const NotificationDocument = gql`
-    query Notification {
-  notification {
-    postParticipated
-    postCreated
-    newProposal
-    ownProposal
-  }
-}
-    `;
-
-/**
- * __useNotificationQuery__
- *
- * To run a query within a React component, call `useNotificationQuery` and pass it any options that fit your needs.
- * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useNotificationQuery({
- *   variables: {
- *   },
- * });
- */
-export function useNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-        return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-      }
-export function useNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-        }
-export type NotificationQueryHookResult = ReturnType<typeof useNotificationQuery>;
-export type NotificationLazyQueryHookResult = ReturnType<typeof useNotificationLazyQuery>;
-export type NotificationQueryResult = ApolloReactCommon.QueryResult<NotificationQuery, NotificationQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
