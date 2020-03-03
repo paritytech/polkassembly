@@ -9634,6 +9634,20 @@ export type LogoutMutation = (
   )> }
 );
 
+export type GetCouncilMembersQueryVariables = {};
+
+
+export type GetCouncilMembersQuery = (
+  { __typename?: 'query_root' }
+  & { councils: Array<Maybe<(
+    { __typename?: 'Council' }
+    & { members: Maybe<Array<(
+      { __typename?: 'CouncilMember' }
+      & Pick<CouncilMember, 'address'>
+    )>> }
+  )>> }
+);
+
 export type EditPostMutationVariables = {
   id: Scalars['Int'],
   content: Scalars['String'],
@@ -10601,6 +10615,40 @@ export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const GetCouncilMembersDocument = gql`
+    query getCouncilMembers {
+  councils(last: 1) {
+    members {
+      address
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCouncilMembersQuery__
+ *
+ * To run a query within a React component, call `useGetCouncilMembersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCouncilMembersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCouncilMembersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
+      }
+export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
+        }
+export type GetCouncilMembersQueryHookResult = ReturnType<typeof useGetCouncilMembersQuery>;
+export type GetCouncilMembersLazyQueryHookResult = ReturnType<typeof useGetCouncilMembersLazyQuery>;
+export type GetCouncilMembersQueryResult = ApolloReactCommon.QueryResult<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
