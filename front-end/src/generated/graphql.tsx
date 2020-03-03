@@ -523,6 +523,7 @@ export type Comments_Aggregate_Fields = {
   variance?: Maybe<Comments_Variance_Fields>,
 };
 
+
 export type Comments_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Comments_Select_Column>>,
   distinct?: Maybe<Scalars['Boolean']>
@@ -762,6 +763,7 @@ export type Council = Node & {
   members?: Maybe<Array<CouncilMember>>,
 };
 
+
 export type CouncilMembersArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -807,6 +809,7 @@ export type CouncilMember = Node & {
   councils?: Maybe<Array<Council>>,
   id: Scalars['ID'],
 };
+
 
 export type CouncilMemberCouncilsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -1108,6 +1111,7 @@ export type CouncilWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
 };
 
+
 export type Era = Node & {
    __typename?: 'Era',
   eraStartSessionIndex: Session,
@@ -1361,11 +1365,13 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>,
 };
 
+
 export type LoginResponse = {
    __typename?: 'LoginResponse',
   token?: Maybe<Scalars['String']>,
   user?: Maybe<User>,
 };
+
 
 export type Message = {
    __typename?: 'Message',
@@ -1389,6 +1395,7 @@ export type Motion = {
   treasurySpendProposal?: Maybe<TreasurySpendProposal>,
 };
 
+
 export type MotionMotionProposalArgumentsArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -1398,6 +1405,7 @@ export type MotionMotionProposalArgumentsArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<MotionProposalArgumentWhereInput>
 };
+
 
 export type MotionMotionStatusArgs = {
   after?: Maybe<Scalars['String']>,
@@ -2371,7 +2379,7 @@ export type Mutation = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
@@ -2386,62 +2394,76 @@ export type Mutation = {
   verifyEmail?: Maybe<ChangeResponse>,
 };
 
+
 export type MutationAddressLinkConfirmArgs = {
   address_id: Scalars['Int'],
   signature: Scalars['String']
 };
+
 
 export type MutationAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
 };
 
+
 export type MutationAddressUnlinkArgs = {
   address: Scalars['String']
 };
+
 
 export type MutationChangeEmailArgs = {
   email: Scalars['String']
 };
 
+
 export type MutationChangeNameArgs = {
   newName: Scalars['String']
 };
 
+
 export type MutationChangeNotificationPreferenceArgs = {
   notificationPreferences?: Maybe<NotificationPreferencesInput>
 };
+
 
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'],
   oldPassword: Scalars['String']
 };
 
+
 export type MutationChangeUsernameArgs = {
   username: Scalars['String']
 };
+
 
 export type MutationLoginArgs = {
   password: Scalars['String'],
   username: Scalars['String']
 };
 
+
 export type MutationPostSubscribeArgs = {
   post_id: Scalars['Int']
 };
+
 
 export type MutationPostUnsubscribeArgs = {
   post_id: Scalars['Int']
 };
 
+
 export type MutationRequestResetPasswordArgs = {
   email: Scalars['String']
 };
+
 
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String']
 };
+
 
 export type MutationSignupArgs = {
   email?: Maybe<Scalars['String']>,
@@ -2450,9 +2472,11 @@ export type MutationSignupArgs = {
   username: Scalars['String']
 };
 
+
 export type MutationUndoEmailChangeArgs = {
   token: Scalars['String']
 };
+
 
 export type MutationVerifyEmailArgs = {
   token: Scalars['String']
@@ -2465,7 +2489,7 @@ export type Mutation_Root = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockIndex: BlockIndex,
@@ -2651,424 +2675,527 @@ export type Mutation_Root = {
   verifyEmail?: Maybe<ChangeResponse>,
 };
 
+
 export type Mutation_RootAddressLinkConfirmArgs = {
   address_id: Scalars['Int'],
   signature: Scalars['String']
 };
+
 
 export type Mutation_RootAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
 };
 
+
 export type Mutation_RootAddressUnlinkArgs = {
   address: Scalars['String']
 };
+
 
 export type Mutation_RootChangeEmailArgs = {
   email: Scalars['String']
 };
 
+
 export type Mutation_RootChangeNameArgs = {
   newName: Scalars['String']
 };
 
+
 export type Mutation_RootChangeNotificationPreferenceArgs = {
   notificationPreferences?: Maybe<NotificationPreferencesInput>
 };
+
 
 export type Mutation_RootChangePasswordArgs = {
   newPassword: Scalars['String'],
   oldPassword: Scalars['String']
 };
 
+
 export type Mutation_RootChangeUsernameArgs = {
   username: Scalars['String']
 };
+
 
 export type Mutation_RootCreateBlockIndexArgs = {
   data: BlockIndexCreateInput
 };
 
+
 export type Mutation_RootCreateBlockNumberArgs = {
   data: BlockNumberCreateInput
 };
+
 
 export type Mutation_RootCreateCouncilArgs = {
   data: CouncilCreateInput
 };
 
+
 export type Mutation_RootCreateCouncilMemberArgs = {
   data: CouncilMemberCreateInput
 };
+
 
 export type Mutation_RootCreateEraArgs = {
   data: EraCreateInput
 };
 
+
 export type Mutation_RootCreateHeartBeatArgs = {
   data: HeartBeatCreateInput
 };
+
 
 export type Mutation_RootCreateMotionArgs = {
   data: MotionCreateInput
 };
 
+
 export type Mutation_RootCreateMotionProposalArgumentArgs = {
   data: MotionProposalArgumentCreateInput
 };
+
 
 export type Mutation_RootCreateMotionStatusArgs = {
   data: MotionStatusCreateInput
 };
 
+
 export type Mutation_RootCreateNominationArgs = {
   data: NominationCreateInput
 };
+
 
 export type Mutation_RootCreateOfflineValidatorArgs = {
   data: OfflineValidatorCreateInput
 };
 
+
 export type Mutation_RootCreatePreimageArgs = {
   data: PreimageCreateInput
 };
+
 
 export type Mutation_RootCreatePreimageArgumentArgs = {
   data: PreimageArgumentCreateInput
 };
 
+
 export type Mutation_RootCreatePreimageStatusArgs = {
   data: PreimageStatusCreateInput
 };
+
 
 export type Mutation_RootCreateProposalArgs = {
   data: ProposalCreateInput
 };
 
+
 export type Mutation_RootCreateProposalStatusArgs = {
   data: ProposalStatusCreateInput
 };
+
 
 export type Mutation_RootCreateReferendumArgs = {
   data: ReferendumCreateInput
 };
 
+
 export type Mutation_RootCreateReferendumStatusArgs = {
   data: ReferendumStatusCreateInput
 };
+
 
 export type Mutation_RootCreateRewardArgs = {
   data: RewardCreateInput
 };
 
+
 export type Mutation_RootCreateSessionArgs = {
   data: SessionCreateInput
 };
+
 
 export type Mutation_RootCreateSlashingArgs = {
   data: SlashingCreateInput
 };
 
+
 export type Mutation_RootCreateStakeArgs = {
   data: StakeCreateInput
 };
+
 
 export type Mutation_RootCreateTotalIssuanceArgs = {
   data: TotalIssuanceCreateInput
 };
 
+
 export type Mutation_RootCreateTreasurySpendProposalArgs = {
   data: TreasurySpendProposalCreateInput
 };
+
 
 export type Mutation_RootCreateTreasuryStatusArgs = {
   data: TreasuryStatusCreateInput
 };
 
+
 export type Mutation_RootCreateValidatorArgs = {
   data: ValidatorCreateInput
 };
+
 
 export type Mutation_RootDeleteBlockIndexArgs = {
   where: BlockIndexWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteCouncilArgs = {
   where: CouncilWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteEraArgs = {
   where: EraWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteManyBlockIndexesArgs = {
   where?: Maybe<BlockIndexWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyCouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyErasArgs = {
   where?: Maybe<EraWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyHeartBeatsArgs = {
   where?: Maybe<HeartBeatWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyMotionStatusesArgs = {
   where?: Maybe<MotionStatusWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyMotionsArgs = {
   where?: Maybe<MotionWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyNominationsArgs = {
   where?: Maybe<NominationWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyOfflineValidatorsArgs = {
   where?: Maybe<OfflineValidatorWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyPreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyPreimagesArgs = {
   where?: Maybe<PreimageWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyProposalStatusesArgs = {
   where?: Maybe<ProposalStatusWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyProposalsArgs = {
   where?: Maybe<ProposalWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyReferendumStatusesArgs = {
   where?: Maybe<ReferendumStatusWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyReferendumsArgs = {
   where?: Maybe<ReferendumWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyRewardsArgs = {
   where?: Maybe<RewardWhereInput>
 };
 
+
 export type Mutation_RootDeleteManySessionsArgs = {
   where?: Maybe<SessionWhereInput>
 };
+
 
 export type Mutation_RootDeleteManySlashingsArgs = {
   where?: Maybe<SlashingWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyStakesArgs = {
   where?: Maybe<StakeWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyTotalIssuancesArgs = {
   where?: Maybe<TotalIssuanceWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyTreasurySpendProposalsArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>
 };
+
 
 export type Mutation_RootDeleteManyTreasuryStatusesArgs = {
   where?: Maybe<TreasuryStatusWhereInput>
 };
 
+
 export type Mutation_RootDeleteManyValidatorsArgs = {
   where?: Maybe<ValidatorWhereInput>
 };
+
 
 export type Mutation_RootDeleteMotionArgs = {
   where: MotionWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteMotionStatusArgs = {
   where: MotionStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteNominationArgs = {
   where: NominationWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteOfflineValidatorArgs = {
   where: OfflineValidatorWhereUniqueInput
 };
 
+
 export type Mutation_RootDeletePreimageArgs = {
   where: PreimageWhereUniqueInput
 };
+
 
 export type Mutation_RootDeletePreimageArgumentArgs = {
   where: PreimageArgumentWhereUniqueInput
 };
 
+
 export type Mutation_RootDeletePreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteProposalArgs = {
   where: ProposalWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteReferendumArgs = {
   where: ReferendumWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteRewardArgs = {
   where: RewardWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteSessionArgs = {
   where: SessionWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteSlashingArgs = {
   where: SlashingWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteStakeArgs = {
   where: StakeWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteTotalIssuanceArgs = {
   where: TotalIssuanceWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput
 };
+
 
 export type Mutation_RootDeleteTreasuryStatusArgs = {
   where: TreasuryStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootDeleteValidatorArgs = {
   where: ValidatorWhereUniqueInput
 };
+
 
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp
 };
 
+
 export type Mutation_RootDelete_Onchain_LinksArgs = {
   where: Onchain_Links_Bool_Exp
 };
+
 
 export type Mutation_RootDelete_Post_TopicsArgs = {
   where: Post_Topics_Bool_Exp
 };
 
+
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp
 };
 
+
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp
 };
+
 
 export type Mutation_RootExecuteRawArgs = {
   database?: Maybe<PrismaDatabase>,
   query: Scalars['String']
 };
 
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>,
   on_conflict?: Maybe<Comments_On_Conflict>
 };
+
 
 export type Mutation_RootInsert_Onchain_LinksArgs = {
   objects: Array<Onchain_Links_Insert_Input>,
   on_conflict?: Maybe<Onchain_Links_On_Conflict>
 };
 
+
 export type Mutation_RootInsert_Post_TopicsArgs = {
   objects: Array<Post_Topics_Insert_Input>,
   on_conflict?: Maybe<Post_Topics_On_Conflict>
 };
+
 
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>,
   on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
+
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>,
   on_conflict?: Maybe<Posts_On_Conflict>
 };
+
 
 export type Mutation_RootLoginArgs = {
   password: Scalars['String'],
   username: Scalars['String']
 };
 
+
 export type Mutation_RootPostSubscribeArgs = {
   post_id: Scalars['Int']
 };
+
 
 export type Mutation_RootPostUnsubscribeArgs = {
   post_id: Scalars['Int']
 };
 
+
 export type Mutation_RootRequestResetPasswordArgs = {
   email: Scalars['String']
 };
+
 
 export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String']
 };
+
 
 export type Mutation_RootSignupArgs = {
   email?: Maybe<Scalars['String']>,
@@ -3077,264 +3204,317 @@ export type Mutation_RootSignupArgs = {
   username: Scalars['String']
 };
 
+
 export type Mutation_RootUndoEmailChangeArgs = {
   token: Scalars['String']
 };
+
 
 export type Mutation_RootUpdateBlockIndexArgs = {
   data: BlockIndexUpdateInput,
   where: BlockIndexWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateBlockNumberArgs = {
   data: BlockNumberUpdateInput,
   where: BlockNumberWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateCouncilArgs = {
   data: CouncilUpdateInput,
   where: CouncilWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateCouncilMemberArgs = {
   data: CouncilMemberUpdateInput,
   where: CouncilMemberWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateEraArgs = {
   data: EraUpdateInput,
   where: EraWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateHeartBeatArgs = {
   data: HeartBeatUpdateInput,
   where: HeartBeatWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateManyBlockIndexesArgs = {
   data: BlockIndexUpdateManyMutationInput,
   where?: Maybe<BlockIndexWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyBlockNumbersArgs = {
   data: BlockNumberUpdateManyMutationInput,
   where?: Maybe<BlockNumberWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyCouncilMembersArgs = {
   data: CouncilMemberUpdateManyMutationInput,
   where?: Maybe<CouncilMemberWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyErasArgs = {
   data: EraUpdateManyMutationInput,
   where?: Maybe<EraWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyHeartBeatsArgs = {
   data: HeartBeatUpdateManyMutationInput,
   where?: Maybe<HeartBeatWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyMotionProposalArgumentsArgs = {
   data: MotionProposalArgumentUpdateManyMutationInput,
   where?: Maybe<MotionProposalArgumentWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyMotionStatusesArgs = {
   data: MotionStatusUpdateManyMutationInput,
   where?: Maybe<MotionStatusWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyMotionsArgs = {
   data: MotionUpdateManyMutationInput,
   where?: Maybe<MotionWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyNominationsArgs = {
   data: NominationUpdateManyMutationInput,
   where?: Maybe<NominationWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyOfflineValidatorsArgs = {
   data: OfflineValidatorUpdateManyMutationInput,
   where?: Maybe<OfflineValidatorWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyPreimageArgumentsArgs = {
   data: PreimageArgumentUpdateManyMutationInput,
   where?: Maybe<PreimageArgumentWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyPreimageStatusesArgs = {
   data: PreimageStatusUpdateManyMutationInput,
   where?: Maybe<PreimageStatusWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyPreimagesArgs = {
   data: PreimageUpdateManyMutationInput,
   where?: Maybe<PreimageWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyProposalStatusesArgs = {
   data: ProposalStatusUpdateManyMutationInput,
   where?: Maybe<ProposalStatusWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyProposalsArgs = {
   data: ProposalUpdateManyMutationInput,
   where?: Maybe<ProposalWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyReferendumStatusesArgs = {
   data: ReferendumStatusUpdateManyMutationInput,
   where?: Maybe<ReferendumStatusWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyReferendumsArgs = {
   data: ReferendumUpdateManyMutationInput,
   where?: Maybe<ReferendumWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyRewardsArgs = {
   data: RewardUpdateManyMutationInput,
   where?: Maybe<RewardWhereInput>
 };
+
 
 export type Mutation_RootUpdateManySessionsArgs = {
   data: SessionUpdateManyMutationInput,
   where?: Maybe<SessionWhereInput>
 };
 
+
 export type Mutation_RootUpdateManySlashingsArgs = {
   data: SlashingUpdateManyMutationInput,
   where?: Maybe<SlashingWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyStakesArgs = {
   data: StakeUpdateManyMutationInput,
   where?: Maybe<StakeWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyTotalIssuancesArgs = {
   data: TotalIssuanceUpdateManyMutationInput,
   where?: Maybe<TotalIssuanceWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyTreasurySpendProposalsArgs = {
   data: TreasurySpendProposalUpdateManyMutationInput,
   where?: Maybe<TreasurySpendProposalWhereInput>
 };
 
+
 export type Mutation_RootUpdateManyTreasuryStatusesArgs = {
   data: TreasuryStatusUpdateManyMutationInput,
   where?: Maybe<TreasuryStatusWhereInput>
 };
+
 
 export type Mutation_RootUpdateManyValidatorsArgs = {
   data: ValidatorUpdateManyMutationInput,
   where?: Maybe<ValidatorWhereInput>
 };
 
+
 export type Mutation_RootUpdateMotionArgs = {
   data: MotionUpdateInput,
   where: MotionWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateMotionProposalArgumentArgs = {
   data: MotionProposalArgumentUpdateInput,
   where: MotionProposalArgumentWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateMotionStatusArgs = {
   data: MotionStatusUpdateInput,
   where: MotionStatusWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateNominationArgs = {
   data: NominationUpdateInput,
   where: NominationWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateOfflineValidatorArgs = {
   data: OfflineValidatorUpdateInput,
   where: OfflineValidatorWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdatePreimageArgs = {
   data: PreimageUpdateInput,
   where: PreimageWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdatePreimageArgumentArgs = {
   data: PreimageArgumentUpdateInput,
   where: PreimageArgumentWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdatePreimageStatusArgs = {
   data: PreimageStatusUpdateInput,
   where: PreimageStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateProposalArgs = {
   data: ProposalUpdateInput,
   where: ProposalWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateProposalStatusArgs = {
   data: ProposalStatusUpdateInput,
   where: ProposalStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateReferendumArgs = {
   data: ReferendumUpdateInput,
   where: ReferendumWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateReferendumStatusArgs = {
   data: ReferendumStatusUpdateInput,
   where: ReferendumStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateRewardArgs = {
   data: RewardUpdateInput,
   where: RewardWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateSessionArgs = {
   data: SessionUpdateInput,
   where: SessionWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateSlashingArgs = {
   data: SlashingUpdateInput,
   where: SlashingWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateStakeArgs = {
   data: StakeUpdateInput,
   where: StakeWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateTotalIssuanceArgs = {
   data: TotalIssuanceUpdateInput,
   where: TotalIssuanceWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdateTreasurySpendProposalArgs = {
   data: TreasurySpendProposalUpdateInput,
   where: TreasurySpendProposalWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateTreasuryStatusArgs = {
   data: TreasuryStatusUpdateInput,
   where: TreasuryStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpdateValidatorArgs = {
   data: ValidatorUpdateInput,
   where: ValidatorWhereUniqueInput
 };
+
 
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>,
@@ -3342,11 +3522,13 @@ export type Mutation_RootUpdate_CommentsArgs = {
   where: Comments_Bool_Exp
 };
 
+
 export type Mutation_RootUpdate_Onchain_LinksArgs = {
   _inc?: Maybe<Onchain_Links_Inc_Input>,
   _set?: Maybe<Onchain_Links_Set_Input>,
   where: Onchain_Links_Bool_Exp
 };
+
 
 export type Mutation_RootUpdate_Post_TopicsArgs = {
   _inc?: Maybe<Post_Topics_Inc_Input>,
@@ -3354,11 +3536,13 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
   where: Post_Topics_Bool_Exp
 };
 
+
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
   where: Post_Types_Bool_Exp
 };
+
 
 export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
@@ -3366,11 +3550,13 @@ export type Mutation_RootUpdate_PostsArgs = {
   where: Posts_Bool_Exp
 };
 
+
 export type Mutation_RootUpsertBlockIndexArgs = {
   create: BlockIndexCreateInput,
   update: BlockIndexUpdateInput,
   where: BlockIndexWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertBlockNumberArgs = {
   create: BlockNumberCreateInput,
@@ -3378,11 +3564,13 @@ export type Mutation_RootUpsertBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertCouncilArgs = {
   create: CouncilCreateInput,
   update: CouncilUpdateInput,
   where: CouncilWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertCouncilMemberArgs = {
   create: CouncilMemberCreateInput,
@@ -3390,11 +3578,13 @@ export type Mutation_RootUpsertCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertEraArgs = {
   create: EraCreateInput,
   update: EraUpdateInput,
   where: EraWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertHeartBeatArgs = {
   create: HeartBeatCreateInput,
@@ -3402,11 +3592,13 @@ export type Mutation_RootUpsertHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertMotionArgs = {
   create: MotionCreateInput,
   update: MotionUpdateInput,
   where: MotionWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertMotionProposalArgumentArgs = {
   create: MotionProposalArgumentCreateInput,
@@ -3414,11 +3606,13 @@ export type Mutation_RootUpsertMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertMotionStatusArgs = {
   create: MotionStatusCreateInput,
   update: MotionStatusUpdateInput,
   where: MotionStatusWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertNominationArgs = {
   create: NominationCreateInput,
@@ -3426,11 +3620,13 @@ export type Mutation_RootUpsertNominationArgs = {
   where: NominationWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertOfflineValidatorArgs = {
   create: OfflineValidatorCreateInput,
   update: OfflineValidatorUpdateInput,
   where: OfflineValidatorWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertPreimageArgs = {
   create: PreimageCreateInput,
@@ -3438,11 +3634,13 @@ export type Mutation_RootUpsertPreimageArgs = {
   where: PreimageWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertPreimageArgumentArgs = {
   create: PreimageArgumentCreateInput,
   update: PreimageArgumentUpdateInput,
   where: PreimageArgumentWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertPreimageStatusArgs = {
   create: PreimageStatusCreateInput,
@@ -3450,11 +3648,13 @@ export type Mutation_RootUpsertPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertProposalArgs = {
   create: ProposalCreateInput,
   update: ProposalUpdateInput,
   where: ProposalWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertProposalStatusArgs = {
   create: ProposalStatusCreateInput,
@@ -3462,11 +3662,13 @@ export type Mutation_RootUpsertProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertReferendumArgs = {
   create: ReferendumCreateInput,
   update: ReferendumUpdateInput,
   where: ReferendumWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertReferendumStatusArgs = {
   create: ReferendumStatusCreateInput,
@@ -3474,11 +3676,13 @@ export type Mutation_RootUpsertReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertRewardArgs = {
   create: RewardCreateInput,
   update: RewardUpdateInput,
   where: RewardWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertSessionArgs = {
   create: SessionCreateInput,
@@ -3486,11 +3690,13 @@ export type Mutation_RootUpsertSessionArgs = {
   where: SessionWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertSlashingArgs = {
   create: SlashingCreateInput,
   update: SlashingUpdateInput,
   where: SlashingWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertStakeArgs = {
   create: StakeCreateInput,
@@ -3498,11 +3704,13 @@ export type Mutation_RootUpsertStakeArgs = {
   where: StakeWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertTotalIssuanceArgs = {
   create: TotalIssuanceCreateInput,
   update: TotalIssuanceUpdateInput,
   where: TotalIssuanceWhereUniqueInput
 };
+
 
 export type Mutation_RootUpsertTreasurySpendProposalArgs = {
   create: TreasurySpendProposalCreateInput,
@@ -3510,17 +3718,20 @@ export type Mutation_RootUpsertTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertTreasuryStatusArgs = {
   create: TreasuryStatusCreateInput,
   update: TreasuryStatusUpdateInput,
   where: TreasuryStatusWhereUniqueInput
 };
 
+
 export type Mutation_RootUpsertValidatorArgs = {
   create: ValidatorCreateInput,
   update: ValidatorUpdateInput,
   where: ValidatorWhereUniqueInput
 };
+
 
 export type Mutation_RootVerifyEmailArgs = {
   token: Scalars['String']
@@ -3912,10 +4123,13 @@ export type Onchain_Links = {
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_spend_proposal: Array<Maybe<TreasurySpendProposal>>,
   post: Posts,
   post_id: Scalars['Int'],
   proposer_address: Scalars['String'],
 };
+
 
 export type Onchain_LinksOnchain_MotionArgs = {
   after?: Maybe<Scalars['String']>,
@@ -3927,6 +4141,7 @@ export type Onchain_LinksOnchain_MotionArgs = {
   where?: Maybe<MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion>
 };
 
+
 export type Onchain_LinksOnchain_ProposalArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -3937,6 +4152,7 @@ export type Onchain_LinksOnchain_ProposalArgs = {
   where?: Maybe<ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal>
 };
 
+
 export type Onchain_LinksOnchain_ReferendumArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -3945,6 +4161,17 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
   orderBy?: Maybe<ReferendumOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
+};
+
+
+export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasurySpendProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -3967,6 +4194,7 @@ export type Onchain_Links_Aggregate_Fields = {
   var_samp?: Maybe<Onchain_Links_Var_Samp_Fields>,
   variance?: Maybe<Onchain_Links_Variance_Fields>,
 };
+
 
 export type Onchain_Links_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Onchain_Links_Select_Column>>,
@@ -3998,6 +4226,7 @@ export type Onchain_Links_Avg_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4006,6 +4235,7 @@ export type Onchain_Links_Avg_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4018,6 +4248,7 @@ export type Onchain_Links_Bool_Exp = {
   onchain_motion_id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
+  onchain_treasury_proposal_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   proposer_address?: Maybe<String_Comparison_Exp>,
@@ -4026,6 +4257,7 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
+  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -4036,6 +4268,7 @@ export type Onchain_Links_Inc_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4045,6 +4278,7 @@ export type Onchain_Links_Insert_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
@@ -4057,6 +4291,7 @@ export type Onchain_Links_Max_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4067,6 +4302,7 @@ export type Onchain_Links_Max_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4078,6 +4314,7 @@ export type Onchain_Links_Min_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4088,6 +4325,7 @@ export type Onchain_Links_Min_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4115,6 +4353,7 @@ export type Onchain_Links_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
@@ -4126,6 +4365,7 @@ export enum Onchain_Links_Select_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4136,6 +4376,7 @@ export type Onchain_Links_Set_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4146,6 +4387,7 @@ export type Onchain_Links_Stddev_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4154,6 +4396,7 @@ export type Onchain_Links_Stddev_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4163,6 +4406,7 @@ export type Onchain_Links_Stddev_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4171,6 +4415,7 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4180,6 +4425,7 @@ export type Onchain_Links_Stddev_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4188,6 +4434,7 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4197,6 +4444,7 @@ export type Onchain_Links_Sum_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4205,6 +4453,7 @@ export type Onchain_Links_Sum_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4214,6 +4463,7 @@ export enum Onchain_Links_Update_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4224,6 +4474,7 @@ export type Onchain_Links_Var_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4232,6 +4483,7 @@ export type Onchain_Links_Var_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4241,6 +4493,7 @@ export type Onchain_Links_Var_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4249,6 +4502,7 @@ export type Onchain_Links_Var_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4258,6 +4512,7 @@ export type Onchain_Links_Variance_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4266,6 +4521,7 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4294,6 +4550,7 @@ export type Post_Topics = {
   posts_aggregate: Posts_Aggregate,
 };
 
+
 export type Post_TopicsPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -4301,6 +4558,7 @@ export type Post_TopicsPostsArgs = {
   order_by?: Maybe<Array<Posts_Order_By>>,
   where?: Maybe<Posts_Bool_Exp>
 };
+
 
 export type Post_TopicsPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
@@ -4330,6 +4588,7 @@ export type Post_Topics_Aggregate_Fields = {
   var_samp?: Maybe<Post_Topics_Var_Samp_Fields>,
   variance?: Maybe<Post_Topics_Variance_Fields>,
 };
+
 
 export type Post_Topics_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Post_Topics_Select_Column>>,
@@ -4519,6 +4778,7 @@ export type Post_Types = {
   posts_aggregate: Posts_Aggregate,
 };
 
+
 export type Post_TypesPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -4526,6 +4786,7 @@ export type Post_TypesPostsArgs = {
   order_by?: Maybe<Array<Posts_Order_By>>,
   where?: Maybe<Posts_Bool_Exp>
 };
+
 
 export type Post_TypesPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
@@ -4555,6 +4816,7 @@ export type Post_Types_Aggregate_Fields = {
   var_samp?: Maybe<Post_Types_Var_Samp_Fields>,
   variance?: Maybe<Post_Types_Variance_Fields>,
 };
+
 
 export type Post_Types_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Post_Types_Select_Column>>,
@@ -4754,6 +5016,7 @@ export type Posts = {
   updated_at: Scalars['timestamptz'],
 };
 
+
 export type PostsCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -4761,6 +5024,7 @@ export type PostsCommentsArgs = {
   order_by?: Maybe<Array<Comments_Order_By>>,
   where?: Maybe<Comments_Bool_Exp>
 };
+
 
 export type PostsComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
@@ -4790,6 +5054,7 @@ export type Posts_Aggregate_Fields = {
   var_samp?: Maybe<Posts_Var_Samp_Fields>,
   variance?: Maybe<Posts_Variance_Fields>,
 };
+
 
 export type Posts_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Posts_Select_Column>>,
@@ -5106,6 +5371,7 @@ export type Preimage = Node & {
   section: Scalars['String'],
 };
 
+
 export type PreimagePreimageArgumentsArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -5115,6 +5381,7 @@ export type PreimagePreimageArgumentsArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<PreimageArgumentWhereInput>
 };
+
 
 export type PreimagePreimageStatusArgs = {
   after?: Maybe<Scalars['String']>,
@@ -5998,6 +6265,7 @@ export type Proposal = {
   proposalStatus?: Maybe<Array<ProposalStatus>>,
 };
 
+
 export type ProposalProposalStatusArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6503,13 +6771,16 @@ export type Query = {
   users?: Maybe<Array<Maybe<PublicUser>>>,
 };
 
+
 export type QuerySubscriptionArgs = {
   post_id: Scalars['Int']
 };
 
+
 export type QueryUserArgs = {
   id: Scalars['Int']
 };
+
 
 export type QueryUsersArgs = {
   limit?: Maybe<Scalars['Int']>,
@@ -6619,9 +6890,11 @@ export type Query_Root = {
   validatorsConnection: ValidatorConnection,
 };
 
+
 export type Query_RootBlockIndexArgs = {
   where: BlockIndexWhereUniqueInput
 };
+
 
 export type Query_RootBlockIndexesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6633,6 +6906,7 @@ export type Query_RootBlockIndexesArgs = {
   where?: Maybe<BlockIndexWhereInput>
 };
 
+
 export type Query_RootBlockIndexesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6643,9 +6917,11 @@ export type Query_RootBlockIndexesConnectionArgs = {
   where?: Maybe<BlockIndexWhereInput>
 };
 
+
 export type Query_RootBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput
 };
+
 
 export type Query_RootBlockNumbersArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6657,6 +6933,7 @@ export type Query_RootBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>
 };
 
+
 export type Query_RootBlockNumbersConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6667,6 +6944,7 @@ export type Query_RootBlockNumbersConnectionArgs = {
   where?: Maybe<BlockNumberWhereInput>
 };
 
+
 export type Query_RootCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -6674,6 +6952,7 @@ export type Query_RootCommentsArgs = {
   order_by?: Maybe<Array<Comments_Order_By>>,
   where?: Maybe<Comments_Bool_Exp>
 };
+
 
 export type Query_RootComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
@@ -6683,17 +6962,21 @@ export type Query_RootComments_AggregateArgs = {
   where?: Maybe<Comments_Bool_Exp>
 };
 
+
 export type Query_RootComments_By_PkArgs = {
   id: Scalars['uuid']
 };
+
 
 export type Query_RootCouncilArgs = {
   where: CouncilWhereUniqueInput
 };
 
+
 export type Query_RootCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput
 };
+
 
 export type Query_RootCouncilMembersArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6705,6 +6988,7 @@ export type Query_RootCouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>
 };
 
+
 export type Query_RootCouncilMembersConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6714,6 +6998,7 @@ export type Query_RootCouncilMembersConnectionArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<CouncilMemberWhereInput>
 };
+
 
 export type Query_RootCouncilsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6725,6 +7010,7 @@ export type Query_RootCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>
 };
 
+
 export type Query_RootCouncilsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6735,9 +7021,11 @@ export type Query_RootCouncilsConnectionArgs = {
   where?: Maybe<CouncilWhereInput>
 };
 
+
 export type Query_RootEraArgs = {
   where: EraWhereUniqueInput
 };
+
 
 export type Query_RootErasArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6749,6 +7037,7 @@ export type Query_RootErasArgs = {
   where?: Maybe<EraWhereInput>
 };
 
+
 export type Query_RootErasConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6759,9 +7048,11 @@ export type Query_RootErasConnectionArgs = {
   where?: Maybe<EraWhereInput>
 };
 
+
 export type Query_RootHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput
 };
+
 
 export type Query_RootHeartBeatsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6773,6 +7064,7 @@ export type Query_RootHeartBeatsArgs = {
   where?: Maybe<HeartBeatWhereInput>
 };
 
+
 export type Query_RootHeartBeatsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6783,13 +7075,16 @@ export type Query_RootHeartBeatsConnectionArgs = {
   where?: Maybe<HeartBeatWhereInput>
 };
 
+
 export type Query_RootMotionArgs = {
   where: MotionWhereUniqueInput
 };
 
+
 export type Query_RootMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput
 };
+
 
 export type Query_RootMotionProposalArgumentsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6801,6 +7096,7 @@ export type Query_RootMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>
 };
 
+
 export type Query_RootMotionProposalArgumentsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6811,9 +7107,11 @@ export type Query_RootMotionProposalArgumentsConnectionArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>
 };
 
+
 export type Query_RootMotionStatusArgs = {
   where: MotionStatusWhereUniqueInput
 };
+
 
 export type Query_RootMotionStatusesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6825,6 +7123,7 @@ export type Query_RootMotionStatusesArgs = {
   where?: Maybe<MotionStatusWhereInput>
 };
 
+
 export type Query_RootMotionStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6834,6 +7133,7 @@ export type Query_RootMotionStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<MotionStatusWhereInput>
 };
+
 
 export type Query_RootMotionsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6845,6 +7145,7 @@ export type Query_RootMotionsArgs = {
   where?: Maybe<MotionWhereInput>
 };
 
+
 export type Query_RootMotionsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6855,13 +7156,16 @@ export type Query_RootMotionsConnectionArgs = {
   where?: Maybe<MotionWhereInput>
 };
 
+
 export type Query_RootNodeArgs = {
   id: Scalars['ID']
 };
 
+
 export type Query_RootNominationArgs = {
   where: NominationWhereUniqueInput
 };
+
 
 export type Query_RootNominationsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6873,6 +7177,7 @@ export type Query_RootNominationsArgs = {
   where?: Maybe<NominationWhereInput>
 };
 
+
 export type Query_RootNominationsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6883,9 +7188,11 @@ export type Query_RootNominationsConnectionArgs = {
   where?: Maybe<NominationWhereInput>
 };
 
+
 export type Query_RootOfflineValidatorArgs = {
   where: OfflineValidatorWhereUniqueInput
 };
+
 
 export type Query_RootOfflineValidatorsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -6897,6 +7204,7 @@ export type Query_RootOfflineValidatorsArgs = {
   where?: Maybe<OfflineValidatorWhereInput>
 };
 
+
 export type Query_RootOfflineValidatorsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -6907,6 +7215,7 @@ export type Query_RootOfflineValidatorsConnectionArgs = {
   where?: Maybe<OfflineValidatorWhereInput>
 };
 
+
 export type Query_RootOnchain_LinksArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -6914,6 +7223,7 @@ export type Query_RootOnchain_LinksArgs = {
   order_by?: Maybe<Array<Onchain_Links_Order_By>>,
   where?: Maybe<Onchain_Links_Bool_Exp>
 };
+
 
 export type Query_RootOnchain_Links_AggregateArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
@@ -6923,9 +7233,11 @@ export type Query_RootOnchain_Links_AggregateArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
+
 export type Query_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Query_RootPost_TopicsArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>,
@@ -6935,6 +7247,7 @@ export type Query_RootPost_TopicsArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>
 };
 
+
 export type Query_RootPost_Topics_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -6943,9 +7256,11 @@ export type Query_RootPost_Topics_AggregateArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>
 };
 
+
 export type Query_RootPost_Topics_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Query_RootPost_TypesArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
@@ -6955,6 +7270,7 @@ export type Query_RootPost_TypesArgs = {
   where?: Maybe<Post_Types_Bool_Exp>
 };
 
+
 export type Query_RootPost_Types_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -6963,9 +7279,11 @@ export type Query_RootPost_Types_AggregateArgs = {
   where?: Maybe<Post_Types_Bool_Exp>
 };
 
+
 export type Query_RootPost_Types_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Query_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
@@ -6975,6 +7293,7 @@ export type Query_RootPostsArgs = {
   where?: Maybe<Posts_Bool_Exp>
 };
 
+
 export type Query_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -6983,17 +7302,21 @@ export type Query_RootPosts_AggregateArgs = {
   where?: Maybe<Posts_Bool_Exp>
 };
 
+
 export type Query_RootPosts_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Query_RootPreimageArgs = {
   where: PreimageWhereUniqueInput
 };
 
+
 export type Query_RootPreimageArgumentArgs = {
   where: PreimageArgumentWhereUniqueInput
 };
+
 
 export type Query_RootPreimageArgumentsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7005,6 +7328,7 @@ export type Query_RootPreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>
 };
 
+
 export type Query_RootPreimageArgumentsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7015,9 +7339,11 @@ export type Query_RootPreimageArgumentsConnectionArgs = {
   where?: Maybe<PreimageArgumentWhereInput>
 };
 
+
 export type Query_RootPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput
 };
+
 
 export type Query_RootPreimageStatusesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7029,6 +7355,7 @@ export type Query_RootPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>
 };
 
+
 export type Query_RootPreimageStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7038,6 +7365,7 @@ export type Query_RootPreimageStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<PreimageStatusWhereInput>
 };
+
 
 export type Query_RootPreimagesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7049,6 +7377,7 @@ export type Query_RootPreimagesArgs = {
   where?: Maybe<PreimageWhereInput>
 };
 
+
 export type Query_RootPreimagesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7059,13 +7388,16 @@ export type Query_RootPreimagesConnectionArgs = {
   where?: Maybe<PreimageWhereInput>
 };
 
+
 export type Query_RootProposalArgs = {
   where: ProposalWhereUniqueInput
 };
 
+
 export type Query_RootProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput
 };
+
 
 export type Query_RootProposalStatusesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7077,6 +7409,7 @@ export type Query_RootProposalStatusesArgs = {
   where?: Maybe<ProposalStatusWhereInput>
 };
 
+
 export type Query_RootProposalStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7086,6 +7419,7 @@ export type Query_RootProposalStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ProposalStatusWhereInput>
 };
+
 
 export type Query_RootProposalsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7097,6 +7431,7 @@ export type Query_RootProposalsArgs = {
   where?: Maybe<ProposalWhereInput>
 };
 
+
 export type Query_RootProposalsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7107,13 +7442,16 @@ export type Query_RootProposalsConnectionArgs = {
   where?: Maybe<ProposalWhereInput>
 };
 
+
 export type Query_RootReferendumArgs = {
   where: ReferendumWhereUniqueInput
 };
 
+
 export type Query_RootReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput
 };
+
 
 export type Query_RootReferendumStatusesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7125,6 +7463,7 @@ export type Query_RootReferendumStatusesArgs = {
   where?: Maybe<ReferendumStatusWhereInput>
 };
 
+
 export type Query_RootReferendumStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7134,6 +7473,7 @@ export type Query_RootReferendumStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumStatusWhereInput>
 };
+
 
 export type Query_RootReferendumsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7145,6 +7485,7 @@ export type Query_RootReferendumsArgs = {
   where?: Maybe<ReferendumWhereInput>
 };
 
+
 export type Query_RootReferendumsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7155,9 +7496,11 @@ export type Query_RootReferendumsConnectionArgs = {
   where?: Maybe<ReferendumWhereInput>
 };
 
+
 export type Query_RootRewardArgs = {
   where: RewardWhereUniqueInput
 };
+
 
 export type Query_RootRewardsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7169,6 +7512,7 @@ export type Query_RootRewardsArgs = {
   where?: Maybe<RewardWhereInput>
 };
 
+
 export type Query_RootRewardsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7179,9 +7523,11 @@ export type Query_RootRewardsConnectionArgs = {
   where?: Maybe<RewardWhereInput>
 };
 
+
 export type Query_RootSessionArgs = {
   where: SessionWhereUniqueInput
 };
+
 
 export type Query_RootSessionsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7193,6 +7539,7 @@ export type Query_RootSessionsArgs = {
   where?: Maybe<SessionWhereInput>
 };
 
+
 export type Query_RootSessionsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7203,9 +7550,11 @@ export type Query_RootSessionsConnectionArgs = {
   where?: Maybe<SessionWhereInput>
 };
 
+
 export type Query_RootSlashingArgs = {
   where: SlashingWhereUniqueInput
 };
+
 
 export type Query_RootSlashingsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7217,6 +7566,7 @@ export type Query_RootSlashingsArgs = {
   where?: Maybe<SlashingWhereInput>
 };
 
+
 export type Query_RootSlashingsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7227,9 +7577,11 @@ export type Query_RootSlashingsConnectionArgs = {
   where?: Maybe<SlashingWhereInput>
 };
 
+
 export type Query_RootStakeArgs = {
   where: StakeWhereUniqueInput
 };
+
 
 export type Query_RootStakesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7241,6 +7593,7 @@ export type Query_RootStakesArgs = {
   where?: Maybe<StakeWhereInput>
 };
 
+
 export type Query_RootStakesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7251,13 +7604,16 @@ export type Query_RootStakesConnectionArgs = {
   where?: Maybe<StakeWhereInput>
 };
 
+
 export type Query_RootSubscriptionArgs = {
   post_id: Scalars['Int']
 };
 
+
 export type Query_RootTotalIssuanceArgs = {
   where: TotalIssuanceWhereUniqueInput
 };
+
 
 export type Query_RootTotalIssuancesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7269,6 +7625,7 @@ export type Query_RootTotalIssuancesArgs = {
   where?: Maybe<TotalIssuanceWhereInput>
 };
 
+
 export type Query_RootTotalIssuancesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7279,9 +7636,11 @@ export type Query_RootTotalIssuancesConnectionArgs = {
   where?: Maybe<TotalIssuanceWhereInput>
 };
 
+
 export type Query_RootTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput
 };
+
 
 export type Query_RootTreasurySpendProposalsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7293,6 +7652,7 @@ export type Query_RootTreasurySpendProposalsArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>
 };
 
+
 export type Query_RootTreasurySpendProposalsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7303,9 +7663,11 @@ export type Query_RootTreasurySpendProposalsConnectionArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>
 };
 
+
 export type Query_RootTreasuryStatusArgs = {
   where: TreasuryStatusWhereUniqueInput
 };
+
 
 export type Query_RootTreasuryStatusesArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7317,6 +7679,7 @@ export type Query_RootTreasuryStatusesArgs = {
   where?: Maybe<TreasuryStatusWhereInput>
 };
 
+
 export type Query_RootTreasuryStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
@@ -7327,18 +7690,22 @@ export type Query_RootTreasuryStatusesConnectionArgs = {
   where?: Maybe<TreasuryStatusWhereInput>
 };
 
+
 export type Query_RootUserArgs = {
   id: Scalars['Int']
 };
+
 
 export type Query_RootUsersArgs = {
   limit?: Maybe<Scalars['Int']>,
   page?: Maybe<Scalars['Int']>
 };
 
+
 export type Query_RootValidatorArgs = {
   where: ValidatorWhereUniqueInput
 };
+
 
 export type Query_RootValidatorsArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7349,6 +7716,7 @@ export type Query_RootValidatorsArgs = {
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ValidatorWhereInput>
 };
+
 
 export type Query_RootValidatorsConnectionArgs = {
   after?: Maybe<Scalars['String']>,
@@ -7371,6 +7739,7 @@ export type Referendum = {
   referendumStatus?: Maybe<Array<ReferendumStatus>>,
   voteThreshold: Scalars['String'],
 };
+
 
 export type ReferendumReferendumStatusArgs = {
   after?: Maybe<Scalars['String']>,
@@ -8405,6 +8774,7 @@ export type Subscription_Root = {
   posts_by_pk?: Maybe<Posts>,
 };
 
+
 export type Subscription_RootCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -8412,6 +8782,7 @@ export type Subscription_RootCommentsArgs = {
   order_by?: Maybe<Array<Comments_Order_By>>,
   where?: Maybe<Comments_Bool_Exp>
 };
+
 
 export type Subscription_RootComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>,
@@ -8421,9 +8792,11 @@ export type Subscription_RootComments_AggregateArgs = {
   where?: Maybe<Comments_Bool_Exp>
 };
 
+
 export type Subscription_RootComments_By_PkArgs = {
   id: Scalars['uuid']
 };
+
 
 export type Subscription_RootOnchain_LinksArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
@@ -8433,6 +8806,7 @@ export type Subscription_RootOnchain_LinksArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
+
 export type Subscription_RootOnchain_Links_AggregateArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -8441,9 +8815,11 @@ export type Subscription_RootOnchain_Links_AggregateArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>
 };
 
+
 export type Subscription_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Subscription_RootPost_TopicsArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>,
@@ -8453,6 +8829,7 @@ export type Subscription_RootPost_TopicsArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>
 };
 
+
 export type Subscription_RootPost_Topics_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -8461,9 +8838,11 @@ export type Subscription_RootPost_Topics_AggregateArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>
 };
 
+
 export type Subscription_RootPost_Topics_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Subscription_RootPost_TypesArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
@@ -8473,6 +8852,7 @@ export type Subscription_RootPost_TypesArgs = {
   where?: Maybe<Post_Types_Bool_Exp>
 };
 
+
 export type Subscription_RootPost_Types_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -8481,9 +8861,11 @@ export type Subscription_RootPost_Types_AggregateArgs = {
   where?: Maybe<Post_Types_Bool_Exp>
 };
 
+
 export type Subscription_RootPost_Types_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Subscription_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
@@ -8493,6 +8875,7 @@ export type Subscription_RootPostsArgs = {
   where?: Maybe<Posts_Bool_Exp>
 };
 
+
 export type Subscription_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>,
   limit?: Maybe<Scalars['Int']>,
@@ -8501,9 +8884,11 @@ export type Subscription_RootPosts_AggregateArgs = {
   where?: Maybe<Posts_Bool_Exp>
 };
 
+
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int']
 };
+
 
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>,
@@ -8639,6 +9024,7 @@ export type TreasurySpendProposal = {
   treasuryStatus?: Maybe<Array<TreasuryStatus>>,
   value: Scalars['String'],
 };
+
 
 export type TreasurySpendProposalTreasuryStatusArgs = {
   after?: Maybe<Scalars['String']>,
@@ -8889,6 +9275,87 @@ export type TreasurySpendProposalWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal = {
+  AND?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  NOT?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  OR?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  beneficiary?: Maybe<Scalars['String']>,
+  beneficiary_contains?: Maybe<Scalars['String']>,
+  beneficiary_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_gt?: Maybe<Scalars['String']>,
+  beneficiary_gte?: Maybe<Scalars['String']>,
+  beneficiary_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_lt?: Maybe<Scalars['String']>,
+  beneficiary_lte?: Maybe<Scalars['String']>,
+  beneficiary_not?: Maybe<Scalars['String']>,
+  beneficiary_not_contains?: Maybe<Scalars['String']>,
+  beneficiary_not_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_not_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_not_starts_with?: Maybe<Scalars['String']>,
+  beneficiary_starts_with?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  bond_contains?: Maybe<Scalars['String']>,
+  bond_ends_with?: Maybe<Scalars['String']>,
+  bond_gt?: Maybe<Scalars['String']>,
+  bond_gte?: Maybe<Scalars['String']>,
+  bond_in?: Maybe<Array<Scalars['String']>>,
+  bond_lt?: Maybe<Scalars['String']>,
+  bond_lte?: Maybe<Scalars['String']>,
+  bond_not?: Maybe<Scalars['String']>,
+  bond_not_contains?: Maybe<Scalars['String']>,
+  bond_not_ends_with?: Maybe<Scalars['String']>,
+  bond_not_in?: Maybe<Array<Scalars['String']>>,
+  bond_not_starts_with?: Maybe<Scalars['String']>,
+  bond_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  motion?: Maybe<MotionWhereInput>,
+  proposer?: Maybe<Scalars['String']>,
+  proposer_contains?: Maybe<Scalars['String']>,
+  proposer_ends_with?: Maybe<Scalars['String']>,
+  proposer_gt?: Maybe<Scalars['String']>,
+  proposer_gte?: Maybe<Scalars['String']>,
+  proposer_in?: Maybe<Array<Scalars['String']>>,
+  proposer_lt?: Maybe<Scalars['String']>,
+  proposer_lte?: Maybe<Scalars['String']>,
+  proposer_not?: Maybe<Scalars['String']>,
+  proposer_not_contains?: Maybe<Scalars['String']>,
+  proposer_not_ends_with?: Maybe<Scalars['String']>,
+  proposer_not_in?: Maybe<Array<Scalars['String']>>,
+  proposer_not_starts_with?: Maybe<Scalars['String']>,
+  proposer_starts_with?: Maybe<Scalars['String']>,
+  treasuryProposalId_gt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryProposalId_lt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_lte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryStatus_every?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_none?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_some?: Maybe<TreasuryStatusWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type TreasurySpendProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   treasuryProposalId?: Maybe<Scalars['Int']>,
@@ -9093,6 +9560,7 @@ export type UndoEmailChangeResponse = {
   token?: Maybe<Scalars['String']>,
 };
 
+
 export type User = {
    __typename?: 'User',
   email?: Maybe<Scalars['String']>,
@@ -9101,6 +9569,7 @@ export type User = {
   name?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
 };
+
 
 export type Uuid_Comparison_Exp = {
   _eq?: Maybe<Scalars['uuid']>,
@@ -9267,6 +9736,7 @@ export type EditCommentMutationVariables = {
   content: Scalars['String']
 };
 
+
 export type EditCommentMutation = (
   { __typename?: 'mutation_root' }
   & { update_comments: Maybe<(
@@ -9276,6 +9746,7 @@ export type EditCommentMutation = (
 );
 
 export type LogoutMutationVariables = {};
+
 
 export type LogoutMutation = (
   { __typename?: 'mutation_root' }
@@ -9287,10 +9758,7 @@ export type LogoutMutation = (
 
 export type GetCouncilMembersQueryVariables = {};
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 export type GetCouncilMembersQuery = (
   { __typename?: 'query_root' }
   & { councils: Array<Maybe<(
@@ -9308,6 +9776,7 @@ export type EditPostMutationVariables = {
   title: Scalars['String']
 };
 
+
 export type EditPostMutation = (
   { __typename?: 'mutation_root' }
   & { update_posts: Maybe<(
@@ -9322,6 +9791,7 @@ export type AddPostCommentMutationVariables = {
   postId: Scalars['Int']
 };
 
+
 export type AddPostCommentMutation = (
   { __typename: 'mutation_root' }
   & { insert_comments: Maybe<(
@@ -9333,6 +9803,7 @@ export type AddPostCommentMutation = (
 export type PostSubscribeMutationVariables = {
   postId: Scalars['Int']
 };
+
 
 export type PostSubscribeMutation = (
   { __typename?: 'mutation_root' }
@@ -9346,6 +9817,7 @@ export type PostUnsubscribeMutationVariables = {
   postId: Scalars['Int']
 };
 
+
 export type PostUnsubscribeMutation = (
   { __typename?: 'mutation_root' }
   & { postUnsubscribe: Maybe<(
@@ -9358,6 +9830,7 @@ export type SubscriptionQueryVariables = {
   postId: Scalars['Int']
 };
 
+
 export type SubscriptionQuery = (
   { __typename?: 'query_root' }
   & { subscription: Maybe<(
@@ -9367,6 +9840,7 @@ export type SubscriptionQuery = (
 );
 
 export type Get_Refresh_TokenQueryVariables = {};
+
 
 export type Get_Refresh_TokenQuery = (
   { __typename?: 'query_root' }
@@ -9392,6 +9866,7 @@ export type CreatePostMutationVariables = {
   title: Scalars['String']
 };
 
+
 export type CreatePostMutation = (
   { __typename: 'mutation_root' }
   & { insert_posts: Maybe<(
@@ -9410,6 +9885,7 @@ export type TopicFragment = (
 );
 
 export type Post_TopicsQueryVariables = {};
+
 
 export type Post_TopicsQuery = (
   { __typename?: 'query_root' }
@@ -9441,6 +9917,7 @@ export type DiscussionPostAndCommentsQueryVariables = {
   id: Scalars['Int']
 };
 
+
 export type DiscussionPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
@@ -9452,6 +9929,7 @@ export type DiscussionPostAndCommentsQuery = (
 export type LatestDiscussionPostsQueryVariables = {
   limit?: Scalars['Int']
 };
+
 
 export type LatestDiscussionPostsQuery = (
   { __typename?: 'query_root' }
@@ -9478,6 +9956,7 @@ export type LoginMutationVariables = {
   password: Scalars['String'],
   username: Scalars['String']
 };
+
 
 export type LoginMutation = (
   { __typename?: 'mutation_root' }
@@ -9539,6 +10018,7 @@ export type MotionPostAndCommentsQueryVariables = {
   id: Scalars['Int']
 };
 
+
 export type MotionPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
@@ -9552,6 +10032,7 @@ export type LatestMotionPostsQueryVariables = {
   postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
+
 
 export type LatestMotionPostsQuery = (
   { __typename?: 'query_root' }
@@ -9594,6 +10075,7 @@ export type LatestDemocracyProposalPostsQueryVariables = {
   limit?: Scalars['Int']
 };
 
+
 export type LatestDemocracyProposalPostsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
@@ -9633,6 +10115,7 @@ export type LatestReferendaPostsQueryVariables = {
   postType: Scalars['Int'],
   limit?: Scalars['Int']
 };
+
 
 export type LatestReferendaPostsQuery = (
   { __typename?: 'query_root' }
@@ -9714,6 +10197,7 @@ export type ProposalPostAndCommentsQueryVariables = {
   id: Scalars['Int']
 };
 
+
 export type ProposalPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
@@ -9767,6 +10251,7 @@ export type ReferendumPostAndCommentsQueryVariables = {
   id: Scalars['Int']
 };
 
+
 export type ReferendumPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
@@ -9780,6 +10265,7 @@ export type ResetPasswordMutationVariables = {
   token: Scalars['String']
 };
 
+
 export type ResetPasswordMutation = (
   { __typename?: 'mutation_root' }
   & { resetPassword: Maybe<(
@@ -9791,6 +10277,7 @@ export type ResetPasswordMutation = (
 export type RequestResetPasswordMutationVariables = {
   email: Scalars['String']
 };
+
 
 export type RequestResetPasswordMutation = (
   { __typename?: 'mutation_root' }
@@ -9804,6 +10291,7 @@ export type ChangeNameMutationVariables = {
   newName: Scalars['String']
 };
 
+
 export type ChangeNameMutation = (
   { __typename?: 'mutation_root' }
   & { changeName: Maybe<(
@@ -9816,6 +10304,7 @@ export type ChangeUsernameMutationVariables = {
   username: Scalars['String']
 };
 
+
 export type ChangeUsernameMutation = (
   { __typename?: 'mutation_root' }
   & { changeUsername: Maybe<(
@@ -9827,6 +10316,7 @@ export type ChangeUsernameMutation = (
 export type ChangeEmailMutationVariables = {
   email: Scalars['String']
 };
+
 
 export type ChangeEmailMutation = (
   { __typename?: 'mutation_root' }
@@ -9841,6 +10331,7 @@ export type ChangePasswordMutationVariables = {
   newPassword: Scalars['String']
 };
 
+
 export type ChangePasswordMutation = (
   { __typename?: 'mutation_root' }
   & { changePassword: Maybe<(
@@ -9853,6 +10344,7 @@ export type AddressLinkStartMutationVariables = {
   network: Scalars['String'],
   address: Scalars['String']
 };
+
 
 export type AddressLinkStartMutation = (
   { __typename?: 'mutation_root' }
@@ -9867,6 +10359,7 @@ export type AddressLinkConfirmMutationVariables = {
   signature: Scalars['String']
 };
 
+
 export type AddressLinkConfirmMutation = (
   { __typename?: 'mutation_root' }
   & { addressLinkConfirm: Maybe<(
@@ -9879,6 +10372,7 @@ export type AddressUnlinkMutationVariables = {
   address: Scalars['String']
 };
 
+
 export type AddressUnlinkMutation = (
   { __typename?: 'mutation_root' }
   & { addressUnlink: Maybe<(
@@ -9888,6 +10382,7 @@ export type AddressUnlinkMutation = (
 );
 
 export type ResendVerifyEmailTokenMutationVariables = {};
+
 
 export type ResendVerifyEmailTokenMutation = (
   { __typename?: 'mutation_root' }
@@ -9904,15 +10399,17 @@ export type ChangeNotificationPreferenceMutationVariables = {
   ownProposal?: Maybe<Scalars['Boolean']>
 };
 
+
 export type ChangeNotificationPreferenceMutation = (
   { __typename?: 'mutation_root' }
   & { changeNotificationPreference: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
 export type NotificationQueryVariables = {};
+
 
 export type NotificationQuery = (
   { __typename?: 'query_root' }
@@ -9928,6 +10425,7 @@ export type SignupMutationVariables = {
   username: Scalars['String'],
   name?: Maybe<Scalars['String']>
 };
+
 
 export type SignupMutation = (
   { __typename?: 'mutation_root' }
@@ -9945,6 +10443,7 @@ export type UndoEmailChangeMutationVariables = {
   token: Scalars['String']
 };
 
+
 export type UndoEmailChangeMutation = (
   { __typename?: 'mutation_root' }
   & { undoEmailChange: Maybe<(
@@ -9956,6 +10455,7 @@ export type UndoEmailChangeMutation = (
 export type VerifyEmailMutationVariables = {
   token: Scalars['String']
 };
+
 
 export type VerifyEmailMutation = (
   { __typename?: 'mutation_root' }
@@ -10212,8 +10712,8 @@ export type EditCommentMutationFn = ApolloReactCommon.MutationFunction<EditComme
  * });
  */
 export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditCommentMutation, EditCommentMutationVariables>) {
-	return ApolloReactHooks.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, baseOptions);
+      }
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
@@ -10243,8 +10743,8 @@ export type LogoutMutationFn = ApolloReactCommon.MutationFunction<LogoutMutation
  * });
  */
 export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
-	return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
+      }
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
@@ -10262,11 +10762,7 @@ export const GetCouncilMembersDocument = gql`
  * __useGetCouncilMembersQuery__
  *
  * To run a query within a React component, call `useGetCouncilMembersQuery` and pass it any options that fit your needs.
-<<<<<<< HEAD
- * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
-=======
  * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
->>>>>>> master
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10278,19 +10774,11 @@ export const GetCouncilMembersDocument = gql`
  * });
  */
 export function useGetCouncilMembersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
-<<<<<<< HEAD
-	return ApolloReactHooks.useQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
-}
-export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
-}
-=======
         return ApolloReactHooks.useQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
       }
 export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>(GetCouncilMembersDocument, baseOptions);
         }
->>>>>>> master
 export type GetCouncilMembersQueryHookResult = ReturnType<typeof useGetCouncilMembersQuery>;
 export type GetCouncilMembersLazyQueryHookResult = ReturnType<typeof useGetCouncilMembersLazyQuery>;
 export type GetCouncilMembersQueryResult = ApolloReactCommon.QueryResult<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>;
@@ -10323,8 +10811,8 @@ export type EditPostMutationFn = ApolloReactCommon.MutationFunction<EditPostMuta
  * });
  */
 export function useEditPostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostMutation, EditPostMutationVariables>) {
-	return ApolloReactHooks.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, baseOptions);
+      }
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = ApolloReactCommon.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
@@ -10358,8 +10846,8 @@ export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPos
  * });
  */
 export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
-	return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, baseOptions);
+      }
 export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
@@ -10390,8 +10878,8 @@ export type PostSubscribeMutationFn = ApolloReactCommon.MutationFunction<PostSub
  * });
  */
 export function usePostSubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostSubscribeMutation, PostSubscribeMutationVariables>) {
-	return ApolloReactHooks.useMutation<PostSubscribeMutation, PostSubscribeMutationVariables>(PostSubscribeDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<PostSubscribeMutation, PostSubscribeMutationVariables>(PostSubscribeDocument, baseOptions);
+      }
 export type PostSubscribeMutationHookResult = ReturnType<typeof usePostSubscribeMutation>;
 export type PostSubscribeMutationResult = ApolloReactCommon.MutationResult<PostSubscribeMutation>;
 export type PostSubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostSubscribeMutation, PostSubscribeMutationVariables>;
@@ -10422,8 +10910,8 @@ export type PostUnsubscribeMutationFn = ApolloReactCommon.MutationFunction<PostU
  * });
  */
 export function usePostUnsubscribeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>) {
-	return ApolloReactHooks.useMutation<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>(PostUnsubscribeDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>(PostUnsubscribeDocument, baseOptions);
+      }
 export type PostUnsubscribeMutationHookResult = ReturnType<typeof usePostUnsubscribeMutation>;
 export type PostUnsubscribeMutationResult = ApolloReactCommon.MutationResult<PostUnsubscribeMutation>;
 export type PostUnsubscribeMutationOptions = ApolloReactCommon.BaseMutationOptions<PostUnsubscribeMutation, PostUnsubscribeMutationVariables>;
@@ -10439,7 +10927,7 @@ export const SubscriptionDocument = gql`
  * __useSubscriptionQuery__
  *
  * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10452,11 +10940,11 @@ export const SubscriptionDocument = gql`
  * });
  */
 export function useSubscriptionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
-	return ApolloReactHooks.useQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+      }
 export function useSubscriptionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SubscriptionQuery, SubscriptionQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<SubscriptionQuery, SubscriptionQueryVariables>(SubscriptionDocument, baseOptions);
+        }
 export type SubscriptionQueryHookResult = ReturnType<typeof useSubscriptionQuery>;
 export type SubscriptionLazyQueryHookResult = ReturnType<typeof useSubscriptionLazyQuery>;
 export type SubscriptionQueryResult = ApolloReactCommon.QueryResult<SubscriptionQuery, SubscriptionQueryVariables>;
@@ -10472,7 +10960,7 @@ export const Get_Refresh_TokenDocument = gql`
  * __useGet_Refresh_TokenQuery__
  *
  * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10484,11 +10972,11 @@ export const Get_Refresh_TokenDocument = gql`
  * });
  */
 export function useGet_Refresh_TokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
-	return ApolloReactHooks.useQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+      }
 export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>(Get_Refresh_TokenDocument, baseOptions);
+        }
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
@@ -10526,8 +11014,8 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePost
  * });
  */
 export function useCreatePostMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
-	return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
+      }
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
@@ -10543,7 +11031,7 @@ export const Post_TopicsDocument = gql`
  * __usePost_TopicsQuery__
  *
  * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10555,11 +11043,11 @@ export const Post_TopicsDocument = gql`
  * });
  */
 export function usePost_TopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-	return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+      }
 export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Post_TopicsQuery, Post_TopicsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<Post_TopicsQuery, Post_TopicsQueryVariables>(Post_TopicsDocument, baseOptions);
+        }
 export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
 export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
 export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
@@ -10575,7 +11063,7 @@ export const DiscussionPostAndCommentsDocument = gql`
  * __useDiscussionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10588,11 +11076,11 @@ export const DiscussionPostAndCommentsDocument = gql`
  * });
  */
 export function useDiscussionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+      }
 export function useDiscussionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>(DiscussionPostAndCommentsDocument, baseOptions);
+        }
 export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsQuery>;
 export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
 export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
@@ -10625,7 +11113,7 @@ export const LatestDiscussionPostsDocument = gql`
  * __useLatestDiscussionPostsQuery__
  *
  * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10638,11 +11126,11 @@ export const LatestDiscussionPostsDocument = gql`
  * });
  */
 export function useLatestDiscussionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-	return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+      }
 export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>(LatestDiscussionPostsDocument, baseOptions);
+        }
 export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
 export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
@@ -10681,8 +11169,8 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, 
  * });
  */
 export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-	return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
@@ -10698,7 +11186,7 @@ export const MotionPostAndCommentsDocument = gql`
  * __useMotionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useMotionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10711,11 +11199,11 @@ export const MotionPostAndCommentsDocument = gql`
  * });
  */
 export function useMotionPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
+      }
 export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>(MotionPostAndCommentsDocument, baseOptions);
+        }
 export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
@@ -10763,7 +11251,7 @@ export const LatestMotionPostsDocument = gql`
  * __useLatestMotionPostsQuery__
  *
  * To run a query within a React component, call `useLatestMotionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10778,11 +11266,11 @@ export const LatestMotionPostsDocument = gql`
  * });
  */
 export function useLatestMotionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>) {
-	return ApolloReactHooks.useQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
+      }
 export function useLatestMotionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>(LatestMotionPostsDocument, baseOptions);
+        }
 export type LatestMotionPostsQueryHookResult = ReturnType<typeof useLatestMotionPostsQuery>;
 export type LatestMotionPostsLazyQueryHookResult = ReturnType<typeof useLatestMotionPostsLazyQuery>;
 export type LatestMotionPostsQueryResult = ApolloReactCommon.QueryResult<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>;
@@ -10830,7 +11318,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
  * __useLatestDemocracyProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10845,11 +11333,11 @@ export const LatestDemocracyProposalPostsDocument = gql`
  * });
  */
 export function useLatestDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
-	return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+      }
 export function useLatestDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+        }
 export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsQuery>;
 export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
 export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
@@ -10897,7 +11385,7 @@ export const LatestReferendaPostsDocument = gql`
  * __useLatestReferendaPostsQuery__
  *
  * To run a query within a React component, call `useLatestReferendaPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10911,11 +11399,11 @@ export const LatestReferendaPostsDocument = gql`
  * });
  */
 export function useLatestReferendaPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>) {
-	return ApolloReactHooks.useQuery<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>(LatestReferendaPostsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>(LatestReferendaPostsDocument, baseOptions);
+      }
 export function useLatestReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>(LatestReferendaPostsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>(LatestReferendaPostsDocument, baseOptions);
+        }
 export type LatestReferendaPostsQueryHookResult = ReturnType<typeof useLatestReferendaPostsQuery>;
 export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestReferendaPostsLazyQuery>;
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
@@ -10931,7 +11419,7 @@ export const ProposalPostAndCommentsDocument = gql`
  * __useProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10944,11 +11432,11 @@ export const ProposalPostAndCommentsDocument = gql`
  * });
  */
 export function useProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+      }
 export function useProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>(ProposalPostAndCommentsDocument, baseOptions);
+        }
 export type ProposalPostAndCommentsQueryHookResult = ReturnType<typeof useProposalPostAndCommentsQuery>;
 export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useProposalPostAndCommentsLazyQuery>;
 export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
@@ -10964,7 +11452,7 @@ export const ReferendumPostAndCommentsDocument = gql`
  * __useReferendumPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -10977,11 +11465,11 @@ export const ReferendumPostAndCommentsDocument = gql`
  * });
  */
 export function useReferendumPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+      }
 export function useReferendumPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>(ReferendumPostAndCommentsDocument, baseOptions);
+        }
 export type ReferendumPostAndCommentsQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsQuery>;
 export type ReferendumPostAndCommentsLazyQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsLazyQuery>;
 export type ReferendumPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>;
@@ -11013,8 +11501,8 @@ export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPa
  * });
  */
 export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
-	return ApolloReactHooks.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
+      }
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
@@ -11045,8 +11533,8 @@ export type RequestResetPasswordMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useRequestResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>) {
-	return ApolloReactHooks.useMutation<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>(RequestResetPasswordDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>(RequestResetPasswordDocument, baseOptions);
+      }
 export type RequestResetPasswordMutationHookResult = ReturnType<typeof useRequestResetPasswordMutation>;
 export type RequestResetPasswordMutationResult = ApolloReactCommon.MutationResult<RequestResetPasswordMutation>;
 export type RequestResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
@@ -11078,8 +11566,8 @@ export type ChangeNameMutationFn = ApolloReactCommon.MutationFunction<ChangeName
  * });
  */
 export function useChangeNameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNameMutation, ChangeNameMutationVariables>) {
-	return ApolloReactHooks.useMutation<ChangeNameMutation, ChangeNameMutationVariables>(ChangeNameDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ChangeNameMutation, ChangeNameMutationVariables>(ChangeNameDocument, baseOptions);
+      }
 export type ChangeNameMutationHookResult = ReturnType<typeof useChangeNameMutation>;
 export type ChangeNameMutationResult = ApolloReactCommon.MutationResult<ChangeNameMutation>;
 export type ChangeNameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNameMutation, ChangeNameMutationVariables>;
@@ -11111,8 +11599,8 @@ export type ChangeUsernameMutationFn = ApolloReactCommon.MutationFunction<Change
  * });
  */
 export function useChangeUsernameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeUsernameMutation, ChangeUsernameMutationVariables>) {
-	return ApolloReactHooks.useMutation<ChangeUsernameMutation, ChangeUsernameMutationVariables>(ChangeUsernameDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ChangeUsernameMutation, ChangeUsernameMutationVariables>(ChangeUsernameDocument, baseOptions);
+      }
 export type ChangeUsernameMutationHookResult = ReturnType<typeof useChangeUsernameMutation>;
 export type ChangeUsernameMutationResult = ApolloReactCommon.MutationResult<ChangeUsernameMutation>;
 export type ChangeUsernameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeUsernameMutation, ChangeUsernameMutationVariables>;
@@ -11144,8 +11632,8 @@ export type ChangeEmailMutationFn = ApolloReactCommon.MutationFunction<ChangeEma
  * });
  */
 export function useChangeEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeEmailMutation, ChangeEmailMutationVariables>) {
-	return ApolloReactHooks.useMutation<ChangeEmailMutation, ChangeEmailMutationVariables>(ChangeEmailDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ChangeEmailMutation, ChangeEmailMutationVariables>(ChangeEmailDocument, baseOptions);
+      }
 export type ChangeEmailMutationHookResult = ReturnType<typeof useChangeEmailMutation>;
 export type ChangeEmailMutationResult = ApolloReactCommon.MutationResult<ChangeEmailMutation>;
 export type ChangeEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeEmailMutation, ChangeEmailMutationVariables>;
@@ -11177,8 +11665,8 @@ export type ChangePasswordMutationFn = ApolloReactCommon.MutationFunction<Change
  * });
  */
 export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
-	return ApolloReactHooks.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
+      }
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
@@ -11212,8 +11700,8 @@ export type AddressLinkStartMutationFn = ApolloReactCommon.MutationFunction<Addr
  * });
  */
 export function useAddressLinkStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLinkStartMutation, AddressLinkStartMutationVariables>) {
-	return ApolloReactHooks.useMutation<AddressLinkStartMutation, AddressLinkStartMutationVariables>(AddressLinkStartDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<AddressLinkStartMutation, AddressLinkStartMutationVariables>(AddressLinkStartDocument, baseOptions);
+      }
 export type AddressLinkStartMutationHookResult = ReturnType<typeof useAddressLinkStartMutation>;
 export type AddressLinkStartMutationResult = ApolloReactCommon.MutationResult<AddressLinkStartMutation>;
 export type AddressLinkStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLinkStartMutation, AddressLinkStartMutationVariables>;
@@ -11246,8 +11734,8 @@ export type AddressLinkConfirmMutationFn = ApolloReactCommon.MutationFunction<Ad
  * });
  */
 export function useAddressLinkConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>) {
-	return ApolloReactHooks.useMutation<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>(AddressLinkConfirmDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>(AddressLinkConfirmDocument, baseOptions);
+      }
 export type AddressLinkConfirmMutationHookResult = ReturnType<typeof useAddressLinkConfirmMutation>;
 export type AddressLinkConfirmMutationResult = ApolloReactCommon.MutationResult<AddressLinkConfirmMutation>;
 export type AddressLinkConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLinkConfirmMutation, AddressLinkConfirmMutationVariables>;
@@ -11279,8 +11767,8 @@ export type AddressUnlinkMutationFn = ApolloReactCommon.MutationFunction<Address
  * });
  */
 export function useAddressUnlinkMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>) {
-	return ApolloReactHooks.useMutation<AddressUnlinkMutation, AddressUnlinkMutationVariables>(AddressUnlinkDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<AddressUnlinkMutation, AddressUnlinkMutationVariables>(AddressUnlinkDocument, baseOptions);
+      }
 export type AddressUnlinkMutationHookResult = ReturnType<typeof useAddressUnlinkMutation>;
 export type AddressUnlinkMutationResult = ApolloReactCommon.MutationResult<AddressUnlinkMutation>;
 export type AddressUnlinkMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressUnlinkMutation, AddressUnlinkMutationVariables>;
@@ -11310,8 +11798,8 @@ export type ResendVerifyEmailTokenMutationFn = ApolloReactCommon.MutationFunctio
  * });
  */
 export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>) {
-	return ApolloReactHooks.useMutation<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>(ResendVerifyEmailTokenDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>(ResendVerifyEmailTokenDocument, baseOptions);
+      }
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
@@ -11345,8 +11833,8 @@ export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationF
  * });
  */
 export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
-	return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
+      }
 export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
 export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
 export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
@@ -11365,7 +11853,7 @@ export const NotificationDocument = gql`
  * __useNotificationQuery__
  *
  * To run a query within a React component, call `useNotificationQuery` and pass it any options that fit your needs.
- * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11377,11 +11865,11 @@ export const NotificationDocument = gql`
  * });
  */
 export function useNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-	return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-}
+        return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
+      }
 export function useNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-	return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-}
+          return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
+        }
 export type NotificationQueryHookResult = ReturnType<typeof useNotificationQuery>;
 export type NotificationLazyQueryHookResult = ReturnType<typeof useNotificationLazyQuery>;
 export type NotificationQueryResult = ApolloReactCommon.QueryResult<NotificationQuery, NotificationQueryVariables>;
@@ -11422,8 +11910,8 @@ export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation
  * });
  */
 export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
-	return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, baseOptions);
+      }
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
@@ -11456,8 +11944,8 @@ export type UndoEmailChangeMutationFn = ApolloReactCommon.MutationFunction<UndoE
  * });
  */
 export function useUndoEmailChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>) {
-	return ApolloReactHooks.useMutation<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>(UndoEmailChangeDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>(UndoEmailChangeDocument, baseOptions);
+      }
 export type UndoEmailChangeMutationHookResult = ReturnType<typeof useUndoEmailChangeMutation>;
 export type UndoEmailChangeMutationResult = ApolloReactCommon.MutationResult<UndoEmailChangeMutation>;
 export type UndoEmailChangeMutationOptions = ApolloReactCommon.BaseMutationOptions<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>;
@@ -11489,8 +11977,8 @@ export type VerifyEmailMutationFn = ApolloReactCommon.MutationFunction<VerifyEma
  * });
  */
 export function useVerifyEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<VerifyEmailMutation, VerifyEmailMutationVariables>) {
-	return ApolloReactHooks.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, baseOptions);
-}
+        return ApolloReactHooks.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, baseOptions);
+      }
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = ApolloReactCommon.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
