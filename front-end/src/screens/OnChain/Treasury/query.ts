@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const QUERY_LATEST_PROPOSALS = gql`
-  query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
+  query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
@@ -14,7 +14,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
             }
         },
         onchain_link: {
-            onchain_proposal_id: {
+            onchain_treasury_proposal_id: {
                 _is_null: false
             },
             onchain_referendum_id: {
@@ -23,7 +23,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
         }
     }, order_by: {
         onchain_link: {
-            onchain_proposal_id: desc
+            onchain_treasury_proposal_id: desc
         }
     }) {
         id
@@ -50,10 +50,10 @@ export const QUERY_LATEST_PROPOSALS = gql`
         }
         onchain_link {
             id
-            onchain_proposal_id
-            onchain_proposal(where: {}) {
+            onchain_treasury_proposal_id
+            onchain_treasury_spend_proposal(where: {}) {
                 id
-                proposalStatus(last: 1) {
+                treasuryStatus(last: 1) {
                     id
                     status
                 }

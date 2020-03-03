@@ -10152,14 +10152,14 @@ export type LatestReferendaPostsQuery = (
   )> }
 );
 
-export type LatestDemocracyProposalPostsQueryVariables = {
+export type LatestDemocracyTreasuryProposalPostsQueryVariables = {
   postType: Scalars['Int'],
   postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
 
-export type LatestDemocracyProposalPostsQuery = (
+export type LatestDemocracyTreasuryProposalPostsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
@@ -10181,13 +10181,13 @@ export type LatestDemocracyProposalPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
-      & { onchain_proposal: Array<Maybe<(
-        { __typename?: 'Proposal' }
-        & Pick<Proposal, 'id'>
-        & { proposalStatus: Maybe<Array<(
-          { __typename?: 'ProposalStatus' }
-          & Pick<ProposalStatus, 'id' | 'status'>
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id'>
+      & { onchain_treasury_spend_proposal: Array<Maybe<(
+        { __typename?: 'TreasurySpendProposal' }
+        & Pick<TreasurySpendProposal, 'id'>
+        & { treasuryStatus: Maybe<Array<(
+          { __typename?: 'TreasuryStatus' }
+          & Pick<TreasuryStatus, 'id' | 'status'>
         )>> }
       )>> }
     )> }
@@ -11543,9 +11543,9 @@ export function useLatestReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.
 export type LatestReferendaPostsQueryHookResult = ReturnType<typeof useLatestReferendaPostsQuery>;
 export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestReferendaPostsLazyQuery>;
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
-export const LatestDemocracyProposalPostsDocument = gql`
-    query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+export const LatestDemocracyTreasuryProposalPostsDocument = gql`
+    query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
     id
     title
     author {
@@ -11570,10 +11570,10 @@ export const LatestDemocracyProposalPostsDocument = gql`
     }
     onchain_link {
       id
-      onchain_proposal_id
-      onchain_proposal(where: {}) {
+      onchain_treasury_proposal_id
+      onchain_treasury_spend_proposal(where: {}) {
         id
-        proposalStatus(last: 1) {
+        treasuryStatus(last: 1) {
           id
           status
         }
@@ -11584,16 +11584,16 @@ export const LatestDemocracyProposalPostsDocument = gql`
     `;
 
 /**
- * __useLatestDemocracyProposalPostsQuery__
+ * __useLatestDemocracyTreasuryProposalPostsQuery__
  *
- * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useLatestDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useLatestDemocracyProposalPostsQuery({
+ * const { data, loading, error } = useLatestDemocracyTreasuryProposalPostsQuery({
  *   variables: {
  *      postType: // value for 'postType'
  *      postTopic: // value for 'postTopic'
@@ -11601,15 +11601,15 @@ export const LatestDemocracyProposalPostsDocument = gql`
  *   },
  * });
  */
-export function useLatestDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
-        return ApolloReactHooks.useQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+export function useLatestDemocracyTreasuryProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>(LatestDemocracyTreasuryProposalPostsDocument, baseOptions);
       }
-export function useLatestDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>(LatestDemocracyProposalPostsDocument, baseOptions);
+export function useLatestDemocracyTreasuryProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>(LatestDemocracyTreasuryProposalPostsDocument, baseOptions);
         }
-export type LatestDemocracyProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsQuery>;
-export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyProposalPostsLazyQuery>;
-export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
+export type LatestDemocracyTreasuryProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyTreasuryProposalPostsQuery>;
+export type LatestDemocracyTreasuryProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyTreasuryProposalPostsLazyQuery>;
+export type LatestDemocracyTreasuryProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>;
 export const ProposalPostAndCommentsDocument = gql`
     query ProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
