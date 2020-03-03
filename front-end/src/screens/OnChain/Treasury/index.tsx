@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useLatestDemocracyProposalPostsQuery } from '../../../generated/graphql';
+import { useLatestDemocracyTreasuryProposalPostsQuery } from '../../../generated/graphql';
 import TreasuryListing from '../../../components/Listings/TreasuryListing';
 import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
@@ -13,7 +13,7 @@ interface Props {
 
 const TreasuryProposalsContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestDemocracyProposalPostsQuery({ variables: {
+	const { data, error } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
 		limit: 10,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN

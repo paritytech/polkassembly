@@ -8,7 +8,35 @@ import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import CreatePostComment from './PostCommentForm';
 import EditablePostContent from '../EditablePostContent';
-import { ProposalPostAndCommentsQueryHookResult, OnchainLinkProposalFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment, ReferendumPostFragment, ProposalPostFragment, ReferendumPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryHookResult, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, MotionPostAndCommentsQueryHookResult, MotionPostAndCommentsQueryVariables, MotionPostAndCommentsQuery, OnchainLinkMotionFragment, MotionPostFragment, TreasuryProposalPostFragment } from '../../generated/graphql';
+import {
+	DiscussionPostAndCommentsQueryHookResult,
+	ProposalPostAndCommentsQueryHookResult,
+	ReferendumPostAndCommentsQueryHookResult,
+	MotionPostAndCommentsQueryHookResult,
+	TreasuryProposalPostAndCommentsQueryHookResult,
+
+	DiscussionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables,
+
+	OnchainLinkProposalFragment,
+	OnchainLinkReferendumFragment,
+	OnchainLinkMotionFragment,
+	OnchainLinkTreasuryProposalFragment,
+
+	ProposalPostFragment,
+	ReferendumPostFragment,
+	MotionPostFragment,
+	TreasuryProposalPostFragment,
+
+	DiscussionPostAndCommentsQuery,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery
+} from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Button from '../../ui-components/Button';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
@@ -19,12 +47,12 @@ import GovenanceSideBar from './GovernanceSideBar';
 
 interface Props {
 	className?: string
-	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data'] | MotionPostAndCommentsQueryHookResult['data']
+	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data'] | MotionPostAndCommentsQueryHookResult['data'] | TreasuryProposalPostAndCommentsQueryHookResult['data']
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | TreasuryProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
