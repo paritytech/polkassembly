@@ -85,10 +85,10 @@ const Settings = ({ className }:Props): JSX.Element => {
 		setChanged(true);
 	};
 
-	// const handleNewProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-	// 	setNewProposal(data.checked || false);
-	// 	setChanged(true);
-	// };
+	const handleNewProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
+		setNewProposal(data.checked || false);
+		setChanged(true);
+	};
 
 	const handleOwnProposalChange = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
 		setOwnProposal(data.checked || false);
@@ -110,11 +110,11 @@ const Settings = ({ className }:Props): JSX.Element => {
 							<Checkbox label='Subscribe to post you created' checked={postCreated} toggle onChange={handlePostCreatedChange} />
 						</Form.Field>
 					</Form.Group>
-					{/* <Form.Group>
+					<Form.Group>
 						<Form.Field>
 							<Checkbox label='Notified for new proposal in council/motion/referendum' checked={newProposal} toggle onChange={handleNewProposalChange} />
 						</Form.Field>
-					</Form.Group> */}
+					</Form.Group>
 					<Form.Group>
 						<Form.Field>
 							<Checkbox label='Notified for your own proposals' checked={ownProposal} toggle onChange={handleOwnProposalChange} />
