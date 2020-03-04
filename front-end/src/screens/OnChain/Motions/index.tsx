@@ -15,7 +15,6 @@ const MotionsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestMotionPostsQuery({ variables: {
 		limit: 10,
-		postTopic: post_topic.COUNCIL,
 		postType: post_type.ON_CHAIN
 	} });
 

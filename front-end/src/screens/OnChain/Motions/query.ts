@@ -2,16 +2,11 @@ import gql from 'graphql-tag';
 
 // for motions postType shoud be 2, postTopic should be 2
 export const QUERY_LATEST_MOTIONS = gql`
-  query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
+  query LatestMotionPosts($postType: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
                 _eq: $postType
-            }
-        },
-        topic: {
-            id: {
-                _eq: $postTopic
             }
         },
         onchain_link: {

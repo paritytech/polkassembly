@@ -4257,7 +4257,6 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
-  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -10045,7 +10044,6 @@ export type ChangeNotificationPreferenceMutation = (
 
 export type LatestMotionPostsQueryVariables = {
   postType: Scalars['Int'],
-  postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
@@ -11369,8 +11367,8 @@ export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof u
 export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
 export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestMotionPostsDocument = gql`
-    query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+    query LatestMotionPosts($postType: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
     id
     title
     author {
@@ -11421,7 +11419,6 @@ export const LatestMotionPostsDocument = gql`
  * const { data, loading, error } = useLatestMotionPostsQuery({
  *   variables: {
  *      postType: // value for 'postType'
- *      postTopic: // value for 'postTopic'
  *      limit: // value for 'limit'
  *   },
  * });

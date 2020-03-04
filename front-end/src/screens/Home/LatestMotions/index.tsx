@@ -13,7 +13,7 @@ interface Props {
 
 const MotionsContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestMotionPostsQuery({ variables: { limit: 2, postTopic: post_topic.COUNCIL, postType: post_type.ON_CHAIN } });
+	const { data, error } = useLatestMotionPostsQuery({ variables: { limit: 2, postType: post_type.ON_CHAIN } });
 
 	if (error) return <FilteredError text={error.message}/>;
 
