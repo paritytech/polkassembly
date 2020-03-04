@@ -47,12 +47,12 @@ to create the *secret* containing the required credentials in k8s.
     mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
     chmod +x /usr/local/bin/hasura-dev
     ```
-- Port forward local 8080 port to hasura service
+- Port forward local 7070 port to hasura service
   - kubectl get service --namespace=polkassembly
-  - kubectl port-forward svc/<hasura-service> 8080:8080 --namespace=polkassembly
+  - kubectl port-forward svc/hasura-service 7070:8080 -n polkassembly
 - Run migrations
-  - run `hasura-dev migrate apply --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
+  - run `hasura-dev migrate apply --endpoint "http://localhost:7070" --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
 - Reload metadata
-  - run `hasura-dev metadata reload --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
+  - run `hasura-dev metadata reload --endpoint "http://localhost:7070" --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
 
 
