@@ -5,7 +5,6 @@ import MotionsListing from '../../../components/Listings/MotionsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 import { post_type } from 'src/global/post_types';
-import { post_topic } from 'src/global/post_topics';
 
 interface Props {
 	className?: string
