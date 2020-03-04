@@ -4,7 +4,6 @@ import { useLatestMotionPostsQuery } from '../../../generated/graphql';
 import MotionsListing from '../../../components/Listings/MotionsListing';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
-import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
 
 interface Props {
@@ -15,7 +14,6 @@ const MotionsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestMotionPostsQuery({ variables: {
 		limit: 10,
-		postTopic: post_topic.COUNCIL,
 		postType: post_type.ON_CHAIN
 	} });
 
