@@ -8,7 +8,7 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import ExtensionNotDetected from '../../ExtensionNotDetected';
 import SecondProposal from './SecondProposal';
 import VoteReferendum from './VoteReferendum';
-import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment } from 'src/generated/graphql';
+import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 import VoteMotion from './VoteMotion';
 
@@ -17,8 +17,9 @@ interface Props {
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
+	isTreasuryProposal?: boolean
 	onchainId?: number | null
-	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment
+	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment
 	status?: string
 }
 

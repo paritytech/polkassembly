@@ -23,6 +23,7 @@ import OnChain from './screens/OnChain';
 import PostMotion from './screens/MotionPost';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
+import PostTreasury from './screens/TreasuryPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
@@ -69,6 +70,9 @@ const App = () => {
 												</Route>
 												<Route exact path="/referendum/:id" >
 													<PostReferendum/>
+												</Route>
+												<Route exact path="/treasury/:id">
+													<PostTreasury/>
 												</Route>
 												<Route exact path="/post/:id" >
 													<PostDiscussion/>
