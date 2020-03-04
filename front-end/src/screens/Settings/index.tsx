@@ -7,7 +7,6 @@ import Fullname from './fullname';
 import Password from  './password';
 import Username from './username';
 import Address from './address';
-import Notification from './notification';
 
 interface Props {
 	className?: string
@@ -27,8 +26,6 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<Password/>
 				<Divider/>
 				<Address/>
-				<Divider/>
-				<Notification />
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
 		</Grid>

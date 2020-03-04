@@ -2379,7 +2379,7 @@ export type Mutation = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   login?: Maybe<LoginResponse>,
@@ -2489,7 +2489,7 @@ export type Mutation_Root = {
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
-  changeNotificationPreference?: Maybe<Message>,
+  changeNotificationPreference?: Maybe<ChangeResponse>,
   changePassword?: Maybe<Message>,
   changeUsername?: Maybe<ChangeResponse>,
   createBlockIndex: BlockIndex,
@@ -4123,6 +4123,8 @@ export type Onchain_Links = {
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum: Array<Maybe<Referendum>>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_spend_proposal: Array<Maybe<TreasurySpendProposal>>,
   post: Posts,
   post_id: Scalars['Int'],
   proposer_address: Scalars['String'],
@@ -4159,6 +4161,17 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
   orderBy?: Maybe<ReferendumOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>
+};
+
+
+export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<TreasurySpendProposalOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  where?: Maybe<TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal>
 };
 
 export type Onchain_Links_Aggregate = {
@@ -4213,6 +4226,7 @@ export type Onchain_Links_Avg_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4221,6 +4235,7 @@ export type Onchain_Links_Avg_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4233,6 +4248,7 @@ export type Onchain_Links_Bool_Exp = {
   onchain_motion_id?: Maybe<Int_Comparison_Exp>,
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>,
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>,
+  onchain_treasury_proposal_id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
   proposer_address?: Maybe<String_Comparison_Exp>,
@@ -4251,6 +4267,7 @@ export type Onchain_Links_Inc_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4260,6 +4277,7 @@ export type Onchain_Links_Insert_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
@@ -4272,6 +4290,7 @@ export type Onchain_Links_Max_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4282,6 +4301,7 @@ export type Onchain_Links_Max_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4293,6 +4313,7 @@ export type Onchain_Links_Min_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4303,6 +4324,7 @@ export type Onchain_Links_Min_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
 };
@@ -4330,6 +4352,7 @@ export type Onchain_Links_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   proposer_address?: Maybe<Order_By>,
@@ -4341,6 +4364,7 @@ export enum Onchain_Links_Select_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4351,6 +4375,7 @@ export type Onchain_Links_Set_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
   proposer_address?: Maybe<Scalars['String']>,
 };
@@ -4361,6 +4386,7 @@ export type Onchain_Links_Stddev_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4369,6 +4395,7 @@ export type Onchain_Links_Stddev_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4378,6 +4405,7 @@ export type Onchain_Links_Stddev_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4386,6 +4414,7 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4395,6 +4424,7 @@ export type Onchain_Links_Stddev_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4403,6 +4433,7 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4412,6 +4443,7 @@ export type Onchain_Links_Sum_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>,
   onchain_proposal_id?: Maybe<Scalars['Int']>,
   onchain_referendum_id?: Maybe<Scalars['Int']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
 };
 
@@ -4420,6 +4452,7 @@ export type Onchain_Links_Sum_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4429,6 +4462,7 @@ export enum Onchain_Links_Update_Column {
   OnchainMotionId = 'onchain_motion_id',
   OnchainProposalId = 'onchain_proposal_id',
   OnchainReferendumId = 'onchain_referendum_id',
+  OnchainTreasuryProposalId = 'onchain_treasury_proposal_id',
   PostId = 'post_id',
   ProposerAddress = 'proposer_address'
 }
@@ -4439,6 +4473,7 @@ export type Onchain_Links_Var_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4447,6 +4482,7 @@ export type Onchain_Links_Var_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4456,6 +4492,7 @@ export type Onchain_Links_Var_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4464,6 +4501,7 @@ export type Onchain_Links_Var_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -4473,6 +4511,7 @@ export type Onchain_Links_Variance_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>,
   onchain_proposal_id?: Maybe<Scalars['Float']>,
   onchain_referendum_id?: Maybe<Scalars['Float']>,
+  onchain_treasury_proposal_id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
 };
 
@@ -4481,6 +4520,7 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_motion_id?: Maybe<Order_By>,
   onchain_proposal_id?: Maybe<Order_By>,
   onchain_referendum_id?: Maybe<Order_By>,
+  onchain_treasury_proposal_id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
 };
 
@@ -9234,6 +9274,87 @@ export type TreasurySpendProposalWhereInput = {
   value_starts_with?: Maybe<Scalars['String']>,
 };
 
+export type TreasurySpendProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Treasury_Spend_Proposal = {
+  AND?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  NOT?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  OR?: Maybe<Array<TreasurySpendProposalWhereInput>>,
+  beneficiary?: Maybe<Scalars['String']>,
+  beneficiary_contains?: Maybe<Scalars['String']>,
+  beneficiary_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_gt?: Maybe<Scalars['String']>,
+  beneficiary_gte?: Maybe<Scalars['String']>,
+  beneficiary_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_lt?: Maybe<Scalars['String']>,
+  beneficiary_lte?: Maybe<Scalars['String']>,
+  beneficiary_not?: Maybe<Scalars['String']>,
+  beneficiary_not_contains?: Maybe<Scalars['String']>,
+  beneficiary_not_ends_with?: Maybe<Scalars['String']>,
+  beneficiary_not_in?: Maybe<Array<Scalars['String']>>,
+  beneficiary_not_starts_with?: Maybe<Scalars['String']>,
+  beneficiary_starts_with?: Maybe<Scalars['String']>,
+  bond?: Maybe<Scalars['String']>,
+  bond_contains?: Maybe<Scalars['String']>,
+  bond_ends_with?: Maybe<Scalars['String']>,
+  bond_gt?: Maybe<Scalars['String']>,
+  bond_gte?: Maybe<Scalars['String']>,
+  bond_in?: Maybe<Array<Scalars['String']>>,
+  bond_lt?: Maybe<Scalars['String']>,
+  bond_lte?: Maybe<Scalars['String']>,
+  bond_not?: Maybe<Scalars['String']>,
+  bond_not_contains?: Maybe<Scalars['String']>,
+  bond_not_ends_with?: Maybe<Scalars['String']>,
+  bond_not_in?: Maybe<Array<Scalars['String']>>,
+  bond_not_starts_with?: Maybe<Scalars['String']>,
+  bond_starts_with?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Int']>,
+  id_gt?: Maybe<Scalars['Int']>,
+  id_gte?: Maybe<Scalars['Int']>,
+  id_in?: Maybe<Array<Scalars['Int']>>,
+  id_lt?: Maybe<Scalars['Int']>,
+  id_lte?: Maybe<Scalars['Int']>,
+  id_not?: Maybe<Scalars['Int']>,
+  id_not_in?: Maybe<Array<Scalars['Int']>>,
+  motion?: Maybe<MotionWhereInput>,
+  proposer?: Maybe<Scalars['String']>,
+  proposer_contains?: Maybe<Scalars['String']>,
+  proposer_ends_with?: Maybe<Scalars['String']>,
+  proposer_gt?: Maybe<Scalars['String']>,
+  proposer_gte?: Maybe<Scalars['String']>,
+  proposer_in?: Maybe<Array<Scalars['String']>>,
+  proposer_lt?: Maybe<Scalars['String']>,
+  proposer_lte?: Maybe<Scalars['String']>,
+  proposer_not?: Maybe<Scalars['String']>,
+  proposer_not_contains?: Maybe<Scalars['String']>,
+  proposer_not_ends_with?: Maybe<Scalars['String']>,
+  proposer_not_in?: Maybe<Array<Scalars['String']>>,
+  proposer_not_starts_with?: Maybe<Scalars['String']>,
+  proposer_starts_with?: Maybe<Scalars['String']>,
+  treasuryProposalId_gt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_gte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryProposalId_lt?: Maybe<Scalars['Int']>,
+  treasuryProposalId_lte?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not?: Maybe<Scalars['Int']>,
+  treasuryProposalId_not_in?: Maybe<Array<Scalars['Int']>>,
+  treasuryStatus_every?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_none?: Maybe<TreasuryStatusWhereInput>,
+  treasuryStatus_some?: Maybe<TreasuryStatusWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+};
+
 export type TreasurySpendProposalWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>,
   treasuryProposalId?: Maybe<Scalars['Int']>,
@@ -9905,6 +10026,22 @@ export type MotionPostAndCommentsQuery = (
   )> }
 );
 
+export type ChangeNotificationPreferenceMutationVariables = {
+  postParticipated?: Maybe<Scalars['Boolean']>,
+  postCreated?: Maybe<Scalars['Boolean']>,
+  newProposal?: Maybe<Scalars['Boolean']>,
+  ownProposal?: Maybe<Scalars['Boolean']>
+};
+
+
+export type ChangeNotificationPreferenceMutation = (
+  { __typename?: 'mutation_root' }
+  & { changeNotificationPreference: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
 export type LatestMotionPostsQueryVariables = {
   postType: Scalars['Int'],
   postTopic: Scalars['Int'],
@@ -10267,33 +10404,6 @@ export type ResendVerifyEmailTokenMutation = (
   & { resendVerifyEmailToken: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
-  )> }
-);
-
-export type ChangeNotificationPreferenceMutationVariables = {
-  postParticipated?: Maybe<Scalars['Boolean']>,
-  postCreated?: Maybe<Scalars['Boolean']>,
-  newProposal?: Maybe<Scalars['Boolean']>,
-  ownProposal?: Maybe<Scalars['Boolean']>
-};
-
-
-export type ChangeNotificationPreferenceMutation = (
-  { __typename?: 'mutation_root' }
-  & { changeNotificationPreference: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
-  )> }
-);
-
-export type NotificationQueryVariables = {};
-
-
-export type NotificationQuery = (
-  { __typename?: 'query_root' }
-  & { notification: Maybe<(
-    { __typename?: 'NotificationPreferences' }
-    & Pick<NotificationPreferences, 'postParticipated' | 'postCreated' | 'newProposal' | 'ownProposal'>
   )> }
 );
 
@@ -11085,6 +11195,42 @@ export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks
 export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
+export const ChangeNotificationPreferenceDocument = gql`
+    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
+  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
+    message
+    token
+  }
+}
+    `;
+export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
+
+/**
+ * __useChangeNotificationPreferenceMutation__
+ *
+ * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
+ *   variables: {
+ *      postParticipated: // value for 'postParticipated'
+ *      postCreated: // value for 'postCreated'
+ *      newProposal: // value for 'newProposal'
+ *      ownProposal: // value for 'ownProposal'
+ *   },
+ * });
+ */
+export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
+      }
+export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestMotionPostsDocument = gql`
     query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
@@ -11681,76 +11827,6 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
-export const ChangeNotificationPreferenceDocument = gql`
-    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
-  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
-    message
-  }
-}
-    `;
-export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-
-/**
- * __useChangeNotificationPreferenceMutation__
- *
- * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
- *   variables: {
- *      postParticipated: // value for 'postParticipated'
- *      postCreated: // value for 'postCreated'
- *      newProposal: // value for 'newProposal'
- *      ownProposal: // value for 'ownProposal'
- *   },
- * });
- */
-export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
-        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
-      }
-export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-export const NotificationDocument = gql`
-    query Notification {
-  notification {
-    postParticipated
-    postCreated
-    newProposal
-    ownProposal
-  }
-}
-    `;
-
-/**
- * __useNotificationQuery__
- *
- * To run a query within a React component, call `useNotificationQuery` and pass it any options that fit your needs.
- * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useNotificationQuery({
- *   variables: {
- *   },
- * });
- */
-export function useNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-        return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-      }
-export function useNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-        }
-export type NotificationQueryHookResult = ReturnType<typeof useNotificationQuery>;
-export type NotificationLazyQueryHookResult = ReturnType<typeof useNotificationLazyQuery>;
-export type NotificationQueryResult = ApolloReactCommon.QueryResult<NotificationQuery, NotificationQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
