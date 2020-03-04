@@ -123,12 +123,11 @@ const StyledForm = styled(SUIForm)`
 		}
 	}
 
+	.ui.dropdown,
 	.ui.selection.dropdown {
 		margin-bottom: 1.2rem;
 		border-radius: 0rem;
-	}
 
-	.ui.dropdown {
 		.menu .active.item {
 			font-weight: 500;
 		}

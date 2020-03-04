@@ -27,8 +27,24 @@ const Address = ({ address, accountName, className }: Props): JSX.Element => (
 );
 
 export default styled(Address)`
+	position: relative;
+	display: flex;
+	align-items: center;
+
 	.content {
+		padding-left: 1rem;
 		display: inline-block;
-		padding-left: 10px;
+		line-height: 1.6rem;
+	}
+
+	.header {
+		color: black_text;
+		font-weight: 500;
+		font-size: sm;
+	}
+
+	.description {
+		color: grey_primary;
+		font-size: xs;
 	}
 `;
