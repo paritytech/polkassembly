@@ -1,24 +1,23 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { Dropdown, DropdownProps, DropdownItemProps, Icon, Popup } from 'semantic-ui-react';
+import { DropdownProps, Icon, Popup } from 'semantic-ui-react';
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { Form } from '../../../ui-components/Form';
-import Button from '../../../ui-components/Button';
+import AddressDropdown from '../AddressDropdown';
 import { NotificationContext } from '../../../context/NotificationContext';
-import { NotificationStatus } from '../../../types';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
+import { NotificationStatus } from '../../../types';
+import Button from '../../../ui-components/Button';
+import { Form } from '../../../ui-components/Form';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
 	address: string
-	addressOptions: DropdownItemProps[]
 	api?: ApiPromise
 	apiReady?: boolean
 	className?: string
-	defaultAddress: string
 	getAccounts: () => Promise<undefined>
 	motionId?: number | null
 	motionProposalHash?: string
@@ -28,11 +27,9 @@ interface Props {
 const VoteMotion = ({
 	accounts,
 	address,
-	addressOptions,
 	api,
 	apiReady,
 	className,
-	defaultAddress,
 	getAccounts,
 	motionId,
 	motionProposalHash,
@@ -46,12 +43,14 @@ const VoteMotion = ({
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
 	useEffect( () => {
+		// it will iterate through all accounts
 		accounts.some(account => {
 			if (currentCouncil.includes(account.address)){
 				setIsCouncil(true);
 				// this breaks the loop as soon as we find a matching address
 				return true;
 			}
+			return false;
 		});
 	}, [accounts, currentCouncil]);
 
@@ -131,11 +130,10 @@ const VoteMotion = ({
 							hoverable={true}
 						/>
 					</label>
-					<Dropdown
-						defaultValue={defaultAddress || accounts[0]?.address}
-						onChange={onAccountChange}
-						options={addressOptions}
-						selection
+					<AddressDropdown
+						accounts={accounts}
+						defaultAddress={address || accounts[0]?.address}
+						onAccountChange={onAccountChange}
 					/>
 				</Form.Field>
 			</Form.Group>
@@ -149,18 +147,18 @@ const VoteMotion = ({
 						onClick={() => voteMotion(false)}
 					>
 						<Icon name='thumbs down' />
-						NAY
+						Nay
 					</Button>
 				</Form.Field>
 				<Form.Field className='button-container' width={8}>
 					<Button
 						fluid
-						primary
+						className='primary positive'
 						disabled={!apiReady}
 						onClick={() => voteMotion(true)}
 					>
 						<Icon name='thumbs up' />
-						AYE
+								Aye
 					</Button>
 				</Form.Field>
 			</Form.Group>

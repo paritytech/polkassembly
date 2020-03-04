@@ -58,6 +58,7 @@ export interface JWTPayploadType {
     email: string
     email_verified: boolean
     iat: number
+    notification: NotificationPreferencesType
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
 

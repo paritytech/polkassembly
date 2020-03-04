@@ -17,6 +17,7 @@ import Home from './screens/Home';
 import { PrivacyPolicy, TermsAndConditions, TermsOfWebsite } from './screens/LegalDocuments';
 import LoginForm from './screens/LoginForm';
 import NotFound from './screens/NotFound';
+import NotificationSettings from './screens/NotificationSettings';
 import PostDiscussion from './screens/DiscussionPost';
 import OnChain from './screens/OnChain';
 import PostMotion from './screens/MotionPost';
@@ -96,6 +97,9 @@ const App = () => {
 												</Route>
 												<Route path="/settings">
 													<Settings/>
+												</Route>
+												<Route path="/notification-settings">
+													<NotificationSettings/>
 												</Route>
 												<Route path="/terms-and-conditions">
 													<TermsAndConditions/>

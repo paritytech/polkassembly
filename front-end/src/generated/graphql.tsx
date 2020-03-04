@@ -10027,6 +10027,22 @@ export type MotionPostAndCommentsQuery = (
   )> }
 );
 
+export type ChangeNotificationPreferenceMutationVariables = {
+  postParticipated?: Maybe<Scalars['Boolean']>,
+  postCreated?: Maybe<Scalars['Boolean']>,
+  newProposal?: Maybe<Scalars['Boolean']>,
+  ownProposal?: Maybe<Scalars['Boolean']>
+};
+
+
+export type ChangeNotificationPreferenceMutation = (
+  { __typename?: 'mutation_root' }
+  & { changeNotificationPreference: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
 export type LatestMotionPostsQueryVariables = {
   postType: Scalars['Int'],
   postTopic: Scalars['Int'],
@@ -10431,22 +10447,6 @@ export type ResendVerifyEmailTokenMutation = (
   & { resendVerifyEmailToken: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
-  )> }
-);
-
-export type ChangeNotificationPreferenceMutationVariables = {
-  postParticipated?: Maybe<Scalars['Boolean']>,
-  postCreated?: Maybe<Scalars['Boolean']>,
-  newProposal?: Maybe<Scalars['Boolean']>,
-  ownProposal?: Maybe<Scalars['Boolean']>
-};
-
-
-export type ChangeNotificationPreferenceMutation = (
-  { __typename?: 'mutation_root' }
-  & { changeNotificationPreference: Maybe<(
-    { __typename?: 'ChangeResponse' }
-    & Pick<ChangeResponse, 'message'>
   )> }
 );
 
@@ -10898,7 +10898,7 @@ export const GetCouncilMembersDocument = gql`
  * __useGetCouncilMembersQuery__
  *
  * To run a query within a React component, call `useGetCouncilMembersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11063,7 +11063,7 @@ export const SubscriptionDocument = gql`
  * __useSubscriptionQuery__
  *
  * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11096,7 +11096,7 @@ export const Get_Refresh_TokenDocument = gql`
  * __useGet_Refresh_TokenQuery__
  *
  * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11167,7 +11167,7 @@ export const Post_TopicsDocument = gql`
  * __usePost_TopicsQuery__
  *
  * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11199,7 +11199,7 @@ export const DiscussionPostAndCommentsDocument = gql`
  * __useDiscussionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11249,7 +11249,7 @@ export const LatestDiscussionPostsDocument = gql`
  * __useLatestDiscussionPostsQuery__
  *
  * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11322,7 +11322,7 @@ export const MotionPostAndCommentsDocument = gql`
  * __useMotionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useMotionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11343,6 +11343,42 @@ export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks
 export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
+export const ChangeNotificationPreferenceDocument = gql`
+    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
+  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
+    message
+    token
+  }
+}
+    `;
+export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
+
+/**
+ * __useChangeNotificationPreferenceMutation__
+ *
+ * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
+ *   variables: {
+ *      postParticipated: // value for 'postParticipated'
+ *      postCreated: // value for 'postCreated'
+ *      newProposal: // value for 'newProposal'
+ *      ownProposal: // value for 'ownProposal'
+ *   },
+ * });
+ */
+export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
+      }
+export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
+export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestMotionPostsDocument = gql`
     query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
@@ -11387,7 +11423,7 @@ export const LatestMotionPostsDocument = gql`
  * __useLatestMotionPostsQuery__
  *
  * To run a query within a React component, call `useLatestMotionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11454,7 +11490,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
  * __useLatestDemocracyProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11521,7 +11557,7 @@ export const LatestReferendaPostsDocument = gql`
  * __useLatestReferendaPostsQuery__
  *
  * To run a query within a React component, call `useLatestReferendaPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11587,7 +11623,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
  * __useLatestDemocracyTreasuryProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11622,7 +11658,7 @@ export const ProposalPostAndCommentsDocument = gql`
  * __useProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11655,7 +11691,7 @@ export const ReferendumPostAndCommentsDocument = gql`
  * __useReferendumPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -12006,76 +12042,6 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
-export const ChangeNotificationPreferenceDocument = gql`
-    mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
-  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
-    message
-  }
-}
-    `;
-export type ChangeNotificationPreferenceMutationFn = ApolloReactCommon.MutationFunction<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-
-/**
- * __useChangeNotificationPreferenceMutation__
- *
- * To run a mutation, you first call `useChangeNotificationPreferenceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeNotificationPreferenceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeNotificationPreferenceMutation, { data, loading, error }] = useChangeNotificationPreferenceMutation({
- *   variables: {
- *      postParticipated: // value for 'postParticipated'
- *      postCreated: // value for 'postCreated'
- *      newProposal: // value for 'newProposal'
- *      ownProposal: // value for 'ownProposal'
- *   },
- * });
- */
-export function useChangeNotificationPreferenceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>) {
-        return ApolloReactHooks.useMutation<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>(ChangeNotificationPreferenceDocument, baseOptions);
-      }
-export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof useChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
-export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
-export const NotificationDocument = gql`
-    query Notification {
-  notification {
-    postParticipated
-    postCreated
-    newProposal
-    ownProposal
-  }
-}
-    `;
-
-/**
- * __useNotificationQuery__
- *
- * To run a query within a React component, call `useNotificationQuery` and pass it any options that fit your needs.
- * When your component renders, `useNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useNotificationQuery({
- *   variables: {
- *   },
- * });
- */
-export function useNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-        return ApolloReactHooks.useQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-      }
-export function useNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NotificationQuery, NotificationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<NotificationQuery, NotificationQueryVariables>(NotificationDocument, baseOptions);
-        }
-export type NotificationQueryHookResult = ReturnType<typeof useNotificationQuery>;
-export type NotificationLazyQueryHookResult = ReturnType<typeof useNotificationLazyQuery>;
-export type NotificationQueryResult = ApolloReactCommon.QueryResult<NotificationQuery, NotificationQueryVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
@@ -12130,7 +12096,7 @@ export const TreasuryProposalPostAndCommentsDocument = gql`
  * __useTreasuryProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useTreasuryProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;

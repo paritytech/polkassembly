@@ -9,6 +9,12 @@ export interface UserDetailsContextType {
     email?: string | null,
     email_verified?: boolean | null,
     addresses?: string[] | null,
+    notification: {
+		postParticipated: boolean,
+		postCreated: boolean,
+		newProposal: boolean,
+		ownProposal: boolean
+	} | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
 }
 
@@ -36,6 +42,12 @@ export interface JWTPayploadType {
     email: string
     email_verified: boolean
     iat: string
+    notification: {
+        postParticipated: boolean,
+		postCreated: boolean,
+		newProposal: boolean,
+		ownProposal: boolean
+    }
     'https://hasura.io/jwt/claims': HasuraClaimPayload
 }
 

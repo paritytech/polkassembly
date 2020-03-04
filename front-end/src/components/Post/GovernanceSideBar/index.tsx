@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DropdownProps, DropdownItemProps } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { DropdownProps } from 'semantic-ui-react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import styled from '@xstyled/styled-components';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import Identicon from '@polkadot/react-identicon';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import shortenAddress from '../../../util/shortenAddress';
 import SecondProposal from './SecondProposal';
 import VoteReferendum from './VoteReferendum';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
@@ -30,8 +27,6 @@ const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polka
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
-	const currentUser = useContext(UserDetailsContext);
-	const defaultAddress = currentUser?.addresses?.[0] || '';
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
@@ -98,27 +93,6 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		return;
 	};
 
-	const addressOptions: DropdownItemProps[] = accounts.map(
-		account => ({
-			children: (
-				<>
-					<Identicon
-						className="image"
-						value={account.address}
-						size={32}
-						theme={'polkadot'}
-					/>
-					<div className="content" style={{ display: 'inline-block' }}>
-						<div className="header">{account.meta.name}</div>
-						<div className="description">{shortenAddress(account.address)}</div>
-					</div>
-				</>
-			),
-			text: `${account.meta.name} - ${shortenAddress(account.address)}`,
-			value: account.address
-		})
-	);
-
 	if (extensionNotFound) {
 		return (
 			<div className={className}>
@@ -147,10 +121,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						<VoteMotion
 							accounts={accounts}
 							address={address}
-							addressOptions={addressOptions}
 							api={api}
 							apiReady={apiReady}
-							defaultAddress={defaultAddress}
 							getAccounts={getAccounts}
 							motionId={onchainId}
 							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
@@ -160,10 +132,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 					<SecondProposal
 						accounts={accounts}
 						address={address}
-						addressOptions={addressOptions}
 						api={api}
 						apiReady={apiReady}
-						defaultAddress={defaultAddress}
 						getAccounts={getAccounts}
 						onAccountChange={onAccountChange}
 						proposalId={onchainId}
@@ -173,10 +143,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						<VoteReferendum
 							accounts={accounts}
 							address={address}
-							addressOptions={addressOptions}
 							api={api}
 							apiReady={apiReady}
-							defaultAddress={defaultAddress}
 							getAccounts={getAccounts}
 							onAccountChange={onAccountChange}
 							referendumId={onchainId}
