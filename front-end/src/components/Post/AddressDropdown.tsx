@@ -49,10 +49,12 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 		className={className}
 		onChange={_onAccountChange}
 		options={addressOptions}
-		trigger={<div className='address-wrapper'><Address
-			accountName={dropdownList[selectedAddress]}
-			address={defaultAddress}
-		/></div>}
+		trigger={<div className='address-wrapper'>
+			<Address
+				accountName={dropdownList[selectedAddress]}
+				address={defaultAddress}
+			/>
+		</div>}
 		value={selectedAddress}
 	/>;
 };

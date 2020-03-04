@@ -25,7 +25,7 @@ const Balance = ({ api, address }: Props) => {
 
 	return (
 		<div className='text-muted'>
-			{formatBalance(balance)} KSM available
+			{formatBalance(balance)} available
 		</div>
 	);
 };
