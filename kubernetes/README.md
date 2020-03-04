@@ -40,7 +40,6 @@ to create the *secret* containing the required credentials in k8s.
 - Run migrations in hasura
   We are using remote join branch of hasura where automatic migrations are not running. We need to run them maually.
   The steps are:
-  - Whitelist your IP address in google cloud sql connection tab.
   - Clone the hasura cli and copy it in a directory in your PATH.
 
     ```bash
@@ -48,9 +47,9 @@ to create the *secret* containing the required credentials in k8s.
     mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
     chmod +x /usr/local/bin/hasura-dev
     ```
-  - run hasura locally with docker-compose. Take example from docker-compose.yaml.example from hasura folder. Values should be production.
-  - set HASURA_GRAPHQL_DATABASE_URL in docker compose to production psql connection string
-  - run hasura with docker-compose up
+  - Port forward local 8080 port to hasura service
+    - kubectl get service --namespace=polkassembly
+    - kubectl port-forward svc/<hasura-service> 8080:8080 --namespace=polkassembly
   - run `hasura-dev migrate apply --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
 - Reload metadata
  - This is needed after each deployment of auth server/hasura/node watcher
