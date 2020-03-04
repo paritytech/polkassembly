@@ -33,7 +33,7 @@ to create the *secret* containing the required credentials in k8s.
 4. Manual Steps needed after deployment to run polkassembly in production:
 
 - Create a bot user and set its id/credentials in auth server and chain db watcher
-  - create a user named Bot User through signup
+  - create a user with username "proposal_bot" and name "Governance bot" through signup (no email).
   - set botuser username in gitlab ci variable PROPOSAL_BOT_USERNAME. Needed as env var in chain db watcher.
   - set botuser password in gitlab ci variable PROPOSAL_BOT_PASSWORD. Needed as env var in chain db watcher.
   - set botuser user id in gitlab ci variable PROPOSAL_BOT_USER_ID. Needed as env var in auth server and chain db watcher.
@@ -58,4 +58,3 @@ to create the *secret* containing the required credentials in k8s.
  - enter admin secret from HASURA_GRAPHQL_ADMIN_SECRET
  - go to settings -> metadata
  - reload metadata
-
