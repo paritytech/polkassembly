@@ -47,14 +47,12 @@ to create the *secret* containing the required credentials in k8s.
     mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
     chmod +x /usr/local/bin/hasura-dev
     ```
-  - Port forward local 8080 port to hasura service
-    - kubectl get service --namespace=polkassembly
-    - kubectl port-forward svc/<hasura-service> 8080:8080 --namespace=polkassembly
+- Port forward local 8080 port to hasura service
+  - kubectl get service --namespace=polkassembly
+  - kubectl port-forward svc/<hasura-service> 8080:8080 --namespace=polkassembly
+- Run migrations
   - run `hasura-dev migrate apply --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
 - Reload metadata
- - This is needed after each deployment of auth server/hasura/node watcher
- - Expose hasura with a load balancer in k8s
- - goto ip:8080/console
- - enter admin secret from HASURA_GRAPHQL_ADMIN_SECRET
- - go to settings -> metadata
- - reload metadata
+  - run `hasura-dev metadata reload --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
+
+
