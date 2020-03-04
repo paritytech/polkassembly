@@ -46,7 +46,7 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
 				<Form>
-					<h3>Request password reset</h3>
+					<h3>Request Password Reset</h3>
 					<Form.Group>
 						<Form.Field width={16}>
 							<label>Email</label>
