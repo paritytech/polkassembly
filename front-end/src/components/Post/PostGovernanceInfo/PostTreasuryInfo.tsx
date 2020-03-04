@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 import AddressComponent from '../../../ui-components/Address';
+import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import { OnchainLinkTreasuryProposalFragment } from '../../../generated/graphql';
 import { chainProperties } from '../../../global/networkConstants';
 import getNetwork from '../../../util/getNetwork';
 
 interface Props{
-	className?: string
 	onchainLink: OnchainLinkTreasuryProposalFragment
 }
 
 const currentNetwork = getNetwork();
 
-const PostTreasuryInfo = ({ className, onchainLink }: Props) => {
+const PostTreasuryInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -26,7 +25,7 @@ const PostTreasuryInfo = ({ className, onchainLink }: Props) => {
 	const bond = onchainTreasuryProposal?.[0]?.bond;
 
 	return (
-		<div className={className}>
+		<OnchainInfoWrapper>
 			<h4>On-Chain Info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -57,33 +56,8 @@ const PostTreasuryInfo = ({ className, onchainLink }: Props) => {
 					</div>
 				</Grid.Column>}
 			</Grid>
-		</div>
+		</OnchainInfoWrapper>
 	);
 };
 
-export default styled(PostTreasuryInfo)`
-	background-color: white;
-	padding: 2rem 3rem 2rem 3rem;
-	border-style: solid;
-	border-width: 5px;
-	border-color: grey_light;
-	font-size: sm;
-	overflow-wrap: break-word;
-	margin-bottom: 1rem;
-	font-family: font_mono;
-
-	h6 {
-		font-family: font_mono;
-		font-size: sm;
-	}
-
-	h4 {
-		font-size: lg;
-		font-family: font_mono;
-		margin-bottom: 2rem;
-	}
-
-	@media only screen and (max-width: 576px) {
-		padding: 2rem;
-	}
-`;
+export default PostTreasuryInfo;
