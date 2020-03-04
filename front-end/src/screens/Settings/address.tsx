@@ -216,27 +216,6 @@ const Address = ({ className }: Props): JSX.Element => {
 };
 
 export default styled(Address)`
-	font-family: font_default;
-
-	.image {
-		margin-right: 2rem;
-	}
-
-	.content {
-		position: absolute;
-		top: 20%;
-		line-height: 1.6rem;
-	}
-
-	.header {
-		color: black_text;
-		font-size: sm;
-	}
-
-	.description {
-		color: grey_primary;
-		font-size: xs;
-	}
 
 	.button-container {
 		position: absolute;
