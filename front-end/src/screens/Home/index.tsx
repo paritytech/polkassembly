@@ -9,6 +9,7 @@ import DiscussionContainer from './LatestDiscussions';
 import MotionsContainer from '../OnChain/Motions';
 import ProposalContainer from './LatestProposals';
 import ReferendaContainer from './LatestReferenda';
+import TreasuryContainer from './LatestTreasury';
 
 interface Props {
   className?: string
@@ -32,6 +33,8 @@ const Home = ({ className }: Props) => {
 					<ProposalContainer className='proposalContainer'/>
 					<h3>Latest Motions</h3>
 					<MotionsContainer className='motionContainer'/>
+					<h3>Latest Treasury Proposals</h3>
+					<TreasuryContainer className='treasuryContainer' />
 					<h3>Latest Discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
@@ -47,7 +50,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer .treasuryContainer {
 		margin-bottom: 3rem;
 	}
 
@@ -64,7 +67,7 @@ export default styled(Home)`
 			margin-left: 1rem;
 		}
 	}
-	
+
 
 	@media only screen and (max-width: 768px) {
 

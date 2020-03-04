@@ -19,6 +19,7 @@ const councilTopicId = process.env.COUNCIL_TOPIC_ID;
 
 const DEFAULT_TITLE = 'On chain democracy proposal';
 const DEFAULT_MOTION_TITLE = 'On chain council motion';
+const DEFAULT_TREASURY_TITLE = 'On chain treasury proposal';
 const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the proposal author to explain the rationale behind the proposal.';
 
 /**
@@ -325,7 +326,7 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 		onchainTreasuryProposalId,
 		content: DEFAULT_DESCRIPTION,
 		proposerAddress: proposer,
-		title: DEFAULT_TITLE,
+		title: DEFAULT_TREASURY_TITLE,
 		topicId: Number(treasuryTopicId),
 		typeId: Number(proposalPostTypeId)
 	};
