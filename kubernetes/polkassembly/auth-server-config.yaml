@@ -5,7 +5,7 @@ metadata:
     app: auth-server
   name: auth-server-config
 data:
-  PROPOSAL_BOT_USER_ID: "11"
+  PROPOSAL_BOT_USER_ID: $PROPOSAL_BOT_USER_ID
   DATABASE_URL: $DATABASE_URL
   DOMAIN_NAME: test.polkassembly.io
   DOMAIN_PROTOCOL: https://
