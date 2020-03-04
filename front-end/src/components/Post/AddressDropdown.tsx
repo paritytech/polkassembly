@@ -49,10 +49,12 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 		className={className}
 		onChange={_onAccountChange}
 		options={addressOptions}
-		trigger={<Address
-			accountName={dropdownList[selectedAddress]}
-			address={defaultAddress}
-		/>}
+		trigger={<div className='address-wrapper'>
+			<Address
+				accountName={dropdownList[selectedAddress]}
+				address={defaultAddress}
+			/>
+		</div>}
 		value={selectedAddress}
 	/>;
 };
@@ -62,11 +64,22 @@ export default styled(AddressDropdown)`
 	border-color: grey_light;
 	border-style: solid;
 	border-width: 1px;
-	padding: .2rem;
-	padding-left: 1rem;
+	padding: 1rem .4rem .4rem 1.2rem;
 
-	> div {
-		width: 90%;
+	.address-wrapper {
 		display: inline-block;
+	}
+
+	.visible.menu.transition {
+		width: 100%;
+		border-radius: 0;
+	}
+
+	.dropdown.icon {
+		position: absolute;
+		right: 0rem;
+		top: -0.5rem;
+		padding: 1.6rem 0.8rem;
+		float: right;
 	}
 `;
