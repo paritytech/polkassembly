@@ -35,7 +35,7 @@ to create the *secret* containing the required credentials in k8s.
 - Create a bot user and set its id/credentials in auth server and chain db watcher
   - create a user with username "proposal_bot" and name "Governance bot" through signup (no email).
   - verify the username in gitlab ci variable PROPOSAL_BOT_USERNAME. This is used as env var in chain db watcher.
-  - set botuser password in gitlab ci variable PROPOSAL_BOT_PASSWORD. Needed as env var in chain db watcher.
+  - use the password in gitlab ci variable PROPOSAL_BOT_PASSWORD. This is used as env var in chain db watcher.
   - set botuser user id in gitlab ci variable PROPOSAL_BOT_USER_ID. Needed as env var in auth server and chain db watcher.
 - Run migrations in hasura
   We are using remote join branch of hasura where automatic migrations are not running. We need to run them maually.
