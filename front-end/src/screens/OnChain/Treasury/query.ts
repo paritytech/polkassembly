@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const QUERY_LATEST_PROPOSALS = gql`
+export const QUERY_LATEST_TREASURY_PROPOSALS = gql`
   query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
