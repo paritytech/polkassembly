@@ -17,7 +17,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
             onchain_treasury_proposal_id: {
                 _is_null: false
             },
-            onchain_referendum_id: {
+            onchain_motion_id: {
                 _is_null: true
             }
         }

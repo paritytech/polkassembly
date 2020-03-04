@@ -6,7 +6,7 @@ const onchainLinkTreasuryProposal = gql`
         id,
         proposer_address,
         onchain_treasury_proposal_id,
-        onchain_referendum_id,
+        onchain_motion_id,
         onchain_treasury_spend_proposal(where: {}) {
             id
             beneficiary

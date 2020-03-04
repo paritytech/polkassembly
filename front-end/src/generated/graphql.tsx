@@ -10450,17 +10450,6 @@ export type ResendVerifyEmailTokenMutation = (
   )> }
 );
 
-export type NotificationQueryVariables = {};
-
-
-export type NotificationQuery = (
-  { __typename?: 'query_root' }
-  & { notification: Maybe<(
-    { __typename?: 'NotificationPreferences' }
-    & Pick<NotificationPreferences, 'postParticipated' | 'postCreated' | 'newProposal' | 'ownProposal'>
-  )> }
-);
-
 export type SignupMutationVariables = {
   email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
@@ -10483,7 +10472,7 @@ export type SignupMutation = (
 
 export type OnchainLinkTreasuryProposalFragment = (
   { __typename?: 'onchain_links' }
-  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id' | 'onchain_referendum_id'>
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id' | 'onchain_motion_id'>
   & { onchain_treasury_spend_proposal: Array<Maybe<(
     { __typename?: 'TreasurySpendProposal' }
     & Pick<TreasurySpendProposal, 'id' | 'beneficiary' | 'value' | 'bond'>
@@ -10778,7 +10767,7 @@ export const OnchainLinkTreasuryProposalFragmentDoc = gql`
   id
   proposer_address
   onchain_treasury_proposal_id
-  onchain_referendum_id
+  onchain_motion_id
   onchain_treasury_spend_proposal(where: {}) {
     id
     beneficiary
@@ -10898,7 +10887,7 @@ export const GetCouncilMembersDocument = gql`
  * __useGetCouncilMembersQuery__
  *
  * To run a query within a React component, call `useGetCouncilMembersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGetCouncilMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11063,7 +11052,7 @@ export const SubscriptionDocument = gql`
  * __useSubscriptionQuery__
  *
  * To run a query within a React component, call `useSubscriptionQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useSubscriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11096,7 +11085,7 @@ export const Get_Refresh_TokenDocument = gql`
  * __useGet_Refresh_TokenQuery__
  *
  * To run a query within a React component, call `useGet_Refresh_TokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useGet_Refresh_TokenQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11167,7 +11156,7 @@ export const Post_TopicsDocument = gql`
  * __usePost_TopicsQuery__
  *
  * To run a query within a React component, call `usePost_TopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `usePost_TopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11199,7 +11188,7 @@ export const DiscussionPostAndCommentsDocument = gql`
  * __useDiscussionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useDiscussionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useDiscussionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11249,7 +11238,7 @@ export const LatestDiscussionPostsDocument = gql`
  * __useLatestDiscussionPostsQuery__
  *
  * To run a query within a React component, call `useLatestDiscussionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDiscussionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11322,7 +11311,7 @@ export const MotionPostAndCommentsDocument = gql`
  * __useMotionPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useMotionPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useMotionPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11423,7 +11412,7 @@ export const LatestMotionPostsDocument = gql`
  * __useLatestMotionPostsQuery__
  *
  * To run a query within a React component, call `useLatestMotionPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11490,7 +11479,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
  * __useLatestDemocracyProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11557,7 +11546,7 @@ export const LatestReferendaPostsDocument = gql`
  * __useLatestReferendaPostsQuery__
  *
  * To run a query within a React component, call `useLatestReferendaPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11581,7 +11570,7 @@ export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLates
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
 export const LatestDemocracyTreasuryProposalPostsDocument = gql`
     query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_motion_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
     id
     title
     author {
@@ -11623,7 +11612,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
  * __useLatestDemocracyTreasuryProposalPostsQuery__
  *
  * To run a query within a React component, call `useLatestDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11658,7 +11647,7 @@ export const ProposalPostAndCommentsDocument = gql`
  * __useProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -11691,7 +11680,7 @@ export const ReferendumPostAndCommentsDocument = gql`
  * __useReferendumPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useReferendumPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useReferendumPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -12096,7 +12085,7 @@ export const TreasuryProposalPostAndCommentsDocument = gql`
  * __useTreasuryProposalPostAndCommentsQuery__
  *
  * To run a query within a React component, call `useTreasuryProposalPostAndCommentsQuery` and pass it any options that fit your needs.
- * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
