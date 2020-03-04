@@ -1,25 +1,29 @@
 import gql from 'graphql-tag';
 
-// for motions postType shoud be 2, postTopic should be 2
-export const QUERY_LATEST_MOTIONS = gql`
-  query LatestMotionPosts($postType: Int!, $limit: Int! = 5 ) {
+export const QUERY_LATEST_TREASURY_PROPOSALS = gql`
+  query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
     posts(limit: $limit, where: {
         type: {
             id: {
                 _eq: $postType
             }
         },
+        topic: {
+            id: {
+                _eq: $postTopic
+            }
+        },
         onchain_link: {
-            onchain_motion_id: {
+            onchain_treasury_proposal_id: {
                 _is_null: false
             },
-            onchain_referendum_id: {
+            onchain_motion_id: {
                 _is_null: true
             }
         }
     }, order_by: {
         onchain_link: {
-            onchain_motion_id: desc
+            onchain_treasury_proposal_id: desc
         }
     }) {
         id
@@ -46,10 +50,10 @@ export const QUERY_LATEST_MOTIONS = gql`
         }
         onchain_link {
             id
-            onchain_motion_id
-            onchain_motion(where: {}) {
+            onchain_treasury_proposal_id
+            onchain_treasury_spend_proposal(where: {}) {
                 id
-                motionStatus(last: 1) {
+                treasuryStatus(last: 1) {
                     id
                     status
                 }

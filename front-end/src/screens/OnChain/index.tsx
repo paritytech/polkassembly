@@ -5,6 +5,7 @@ import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
+import TreasuryContainer from './Treasury';
 import InfoBox from '../../ui-components/InfoBox';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
@@ -20,6 +21,8 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<ProposalContainer className='proposalContainer'/>
 					<h3>Motions</h3>
 					<MotionContainer className='motionContainer'/>
+					<h3>Treasury</h3>
+					<TreasuryContainer className='treasuryContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -39,7 +42,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 
-	.referendaContainer, .proposalContainer {
+	.referendaContainer, .proposalContainer, .motionContainer {
 		margin-bottom: 3rem;
 	}
 

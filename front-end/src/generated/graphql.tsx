@@ -10044,7 +10044,6 @@ export type ChangeNotificationPreferenceMutation = (
 
 export type LatestMotionPostsQueryVariables = {
   postType: Scalars['Int'],
-  postTopic: Scalars['Int'],
   limit?: Scalars['Int']
 };
 
@@ -10161,6 +10160,48 @@ export type LatestReferendaPostsQuery = (
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type LatestDemocracyTreasuryProposalPostsQueryVariables = {
+  postType: Scalars['Int'],
+  postTopic: Scalars['Int'],
+  limit?: Scalars['Int']
+};
+
+
+export type LatestDemocracyTreasuryProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'name'>
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id'>
+      & { onchain_treasury_spend_proposal: Array<Maybe<(
+        { __typename?: 'TreasurySpendProposal' }
+        & Pick<TreasurySpendProposal, 'id'>
+        & { treasuryStatus: Maybe<Array<(
+          { __typename?: 'TreasuryStatus' }
+          & Pick<TreasuryStatus, 'id' | 'status'>
         )>> }
       )>> }
     )> }
@@ -10427,6 +10468,53 @@ export type SignupMutation = (
   )> }
 );
 
+export type OnchainLinkTreasuryProposalFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id' | 'onchain_motion_id'>
+  & { onchain_treasury_spend_proposal: Array<Maybe<(
+    { __typename?: 'TreasurySpendProposal' }
+    & Pick<TreasurySpendProposal, 'id' | 'beneficiary' | 'value' | 'bond'>
+    & { treasuryStatus: Maybe<Array<(
+      { __typename?: 'TreasuryStatus' }
+      & Pick<TreasuryStatus, 'id' | 'status'>
+    )>> }
+  )>> }
+);
+
+export type TreasuryProposalPostFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & { author: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, comments: Array<(
+    { __typename?: 'comments' }
+    & CommentFieldsFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkTreasuryProposalFragment
+  )>, topic: (
+    { __typename?: 'post_topics' }
+    & Pick<Post_Topics, 'id' | 'name'>
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'id' | 'name'>
+  ) }
+);
+
+export type TreasuryProposalPostAndCommentsQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type TreasuryProposalPostAndCommentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & TreasuryProposalPostFragment
+  )> }
+);
+
 export type UndoEmailChangeMutationVariables = {
   token: Scalars['String']
 };
@@ -10672,6 +10760,53 @@ export const ReferendumPostFragmentDoc = gql`
 }
     ${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}`;
+export const OnchainLinkTreasuryProposalFragmentDoc = gql`
+    fragment onchainLinkTreasuryProposal on onchain_links {
+  id
+  proposer_address
+  onchain_treasury_proposal_id
+  onchain_motion_id
+  onchain_treasury_spend_proposal(where: {}) {
+    id
+    beneficiary
+    value
+    bond
+    treasuryStatus(last: 1) {
+      id
+      status
+    }
+  }
+}
+    `;
+export const TreasuryProposalPostFragmentDoc = gql`
+    fragment treasuryProposalPost on posts {
+  author {
+    id
+    name
+    username
+  }
+  content
+  created_at
+  id
+  updated_at
+  comments(order_by: {created_at: asc}) {
+    ...commentFields
+  }
+  onchain_link {
+    ...onchainLinkTreasuryProposal
+  }
+  title
+  topic {
+    id
+    name
+  }
+  type {
+    id
+    name
+  }
+}
+    ${CommentFieldsFragmentDoc}
+${OnchainLinkTreasuryProposalFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -11232,8 +11367,8 @@ export type ChangeNotificationPreferenceMutationHookResult = ReturnType<typeof u
 export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.MutationResult<ChangeNotificationPreferenceMutation>;
 export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestMotionPostsDocument = gql`
-    query LatestMotionPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+    query LatestMotionPosts($postType: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
     id
     title
     author {
@@ -11284,7 +11419,6 @@ export const LatestMotionPostsDocument = gql`
  * const { data, loading, error } = useLatestMotionPostsQuery({
  *   variables: {
  *      postType: // value for 'postType'
- *      postTopic: // value for 'postTopic'
  *      limit: // value for 'limit'
  *   },
  * });
@@ -11431,6 +11565,73 @@ export function useLatestReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.
 export type LatestReferendaPostsQueryHookResult = ReturnType<typeof useLatestReferendaPostsQuery>;
 export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestReferendaPostsLazyQuery>;
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
+export const LatestDemocracyTreasuryProposalPostsDocument = gql`
+    query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_motion_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
+    id
+    title
+    author {
+      id
+      username
+      name
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_treasury_proposal_id
+      onchain_treasury_spend_proposal(where: {}) {
+        id
+        treasuryStatus(last: 1) {
+          id
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLatestDemocracyTreasuryProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestDemocracyTreasuryProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useLatestDemocracyTreasuryProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>(LatestDemocracyTreasuryProposalPostsDocument, baseOptions);
+      }
+export function useLatestDemocracyTreasuryProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>(LatestDemocracyTreasuryProposalPostsDocument, baseOptions);
+        }
+export type LatestDemocracyTreasuryProposalPostsQueryHookResult = ReturnType<typeof useLatestDemocracyTreasuryProposalPostsQuery>;
+export type LatestDemocracyTreasuryProposalPostsLazyQueryHookResult = ReturnType<typeof useLatestDemocracyTreasuryProposalPostsLazyQuery>;
+export type LatestDemocracyTreasuryProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyTreasuryProposalPostsQuery, LatestDemocracyTreasuryProposalPostsQueryVariables>;
 export const ProposalPostAndCommentsDocument = gql`
     query ProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_proposal_id: {_eq: $id}}}) {
@@ -11869,6 +12070,39 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const TreasuryProposalPostAndCommentsDocument = gql`
+    query TreasuryProposalPostAndComments($id: Int!) {
+  posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {
+    ...treasuryProposalPost
+  }
+}
+    ${TreasuryProposalPostFragmentDoc}`;
+
+/**
+ * __useTreasuryProposalPostAndCommentsQuery__
+ *
+ * To run a query within a React component, call `useTreasuryProposalPostAndCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTreasuryProposalPostAndCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTreasuryProposalPostAndCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTreasuryProposalPostAndCommentsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>(TreasuryProposalPostAndCommentsDocument, baseOptions);
+      }
+export function useTreasuryProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>(TreasuryProposalPostAndCommentsDocument, baseOptions);
+        }
+export type TreasuryProposalPostAndCommentsQueryHookResult = ReturnType<typeof useTreasuryProposalPostAndCommentsQuery>;
+export type TreasuryProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useTreasuryProposalPostAndCommentsLazyQuery>;
+export type TreasuryProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<TreasuryProposalPostAndCommentsQuery, TreasuryProposalPostAndCommentsQueryVariables>;
 export const UndoEmailChangeDocument = gql`
     mutation undoEmailChange($token: String!) {
   undoEmailChange(token: $token) {
