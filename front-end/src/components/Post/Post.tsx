@@ -57,14 +57,14 @@ interface Props {
 
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
-		const { id, addresses } = useContext(UserDetailsContext);
+	const { id, addresses } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
-	
+
 	if (!post) return <NoPostFound
 		isMotion={isMotion}
 		isProposal={isProposal}
