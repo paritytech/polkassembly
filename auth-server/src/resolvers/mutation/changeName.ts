@@ -1,5 +1,3 @@
-import { UserInputError } from 'apollo-server';
-
 import AuthService from '../../services/auth';
 import { ChangeResponseType, Context } from '../../types';
 import messages from '../../utils/messages';
@@ -12,7 +10,7 @@ interface argsType {
 
 export default async (parent, { newName }: argsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
-	
+
 	validateName(newName);
 
 	const authServiceInstance = new AuthService();

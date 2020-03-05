@@ -1,5 +1,3 @@
-import { UserInputError } from 'apollo-server';
-
 import AuthService from '../../services/auth';
 import { ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';

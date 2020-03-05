@@ -14,7 +14,7 @@ describe('validateName util', () => {
 
 	it('should invalidate a name containing invalid characters', () => {
 		try{
-			validateName('incorrect@name')
+			validateName('incorrect@name');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -24,7 +24,7 @@ describe('validateName util', () => {
 
 	it('should invalidate a name longer than 30 characters', () => {
 		try{
-			validateName('thisnameislongerthanthirtycharacters')
+			validateName('thisnameislongerthanthirtycharacters');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -34,7 +34,7 @@ describe('validateName util', () => {
 
 	it('should invalidate a name shorter than 3 characters', () => {
 		try{
-			validateName('a')
+			validateName('a');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

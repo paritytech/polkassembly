@@ -11,9 +11,9 @@ describe('validateUsername util', () => {
 		done();
 	});
 
-	it('should invalidate a username containing whitespace', () => {	
+	it('should invalidate a username containing whitespace', () => {
 		try{
-			validateUsername('incorrect username')
+			validateUsername('incorrect username');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -23,7 +23,7 @@ describe('validateUsername util', () => {
 
 	it('should invalidate a username containing invalid characters', () => {
 		try{
-			validateUsername('incorrect@username')
+			validateUsername('incorrect@username');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -33,7 +33,7 @@ describe('validateUsername util', () => {
 
 	it('should invalidate a username longer than 30 characters', () => {
 		try{
-			validateUsername('thisusernameislongerthanthirtycharacters')
+			validateUsername('thisusernameislongerthanthirtycharacters');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -43,7 +43,7 @@ describe('validateUsername util', () => {
 
 	it('should invalidate a username shorter than 3 characters', () => {
 		try{
-			validateUsername('a')
+			validateUsername('a');
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
