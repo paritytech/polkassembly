@@ -2,6 +2,7 @@ import { UserInputError } from 'apollo-server';
 
 import ContentReport from '../../model/ContentReport';
 import AuthService from '../../services/auth';
+import { sendReportContentEmail } from '../../services/email';
 import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
@@ -33,6 +34,8 @@ export default async (parent, { type, content_id, reason, comments }: argsType, 
 			comments,
 			resolved: false
 		});
+
+	sendReportContentEmail(user.name, `${type}/${content_id}`, reason, comments);
 
 	return { message: messages.CONTENT_REPORT_SUCCESSFUL };
 };
