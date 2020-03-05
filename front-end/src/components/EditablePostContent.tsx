@@ -41,7 +41,7 @@ interface Props {
 		| DiscussionPostAndCommentsQueryVariables
 		| ProposalPostAndCommentsQueryVariables
 		| MotionPostAndCommentsQueryVariables
-		| TreasuryProposalPostAndCommentsQueryVariables 
+		| TreasuryProposalPostAndCommentsQueryVariables
 		| undefined
 	) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>
