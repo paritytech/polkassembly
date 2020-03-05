@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { NotificationContext } from '../../context/NotificationContext';
 import { useChangePasswordMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
+import cleanError from '../../util/cleanError';
 import FilteredError from '../../ui-components/FilteredError';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -38,7 +39,7 @@ const Password = (): JSX.Element => {
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
-						message: e.message,
+						message: cleanError(e.message),
 						status: NotificationStatus.ERROR
 					});
 					console.error('change password error', e);

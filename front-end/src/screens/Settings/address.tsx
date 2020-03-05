@@ -14,6 +14,7 @@ import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressU
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
+import cleanError from '../../util/cleanError';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import getExtensionUrl from '../../util/getExtensionUrl';
 
@@ -102,7 +103,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			console.error(error);
 			queueNotification({
 				header: 'Failed!',
-				message: error.message,
+				message: cleanError(error.message),
 				status: NotificationStatus.ERROR
 			});
 		}
@@ -138,7 +139,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			console.error(error);
 			queueNotification({
 				header: 'Failed!',
-				message: error.message,
+				message: cleanError(error.message),
 				status: NotificationStatus.ERROR
 			});
 		}

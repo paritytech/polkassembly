@@ -7,6 +7,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useChangeEmailMutation, useResendVerifyEmailTokenMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import { handleTokenChange } from '../../services/auth.service';
+import cleanError from '../../util/cleanError';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
@@ -61,7 +62,7 @@ const Email = ({ className }: Props): JSX.Element => {
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
-						message: e.message,
+						message: cleanError(e.message),
 						status: NotificationStatus.ERROR
 					});
 					console.error('Change email error:', e);
@@ -83,7 +84,7 @@ const Email = ({ className }: Props): JSX.Element => {
 			}).catch((e) => {
 				queueNotification({
 					header: 'Failed!',
-					message: e.message,
+					message: cleanError(e.message),
 					status: NotificationStatus.ERROR
 				});
 			});
