@@ -89,8 +89,9 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								name='name'
 								placeholder='Firstname Lastname'
 								type='text'
-								ref={register({ required: false })}
+								ref={register({ maxLength: 30, required: false })}
 							/>
+							{(errors.name as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MAXLENGTH_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
