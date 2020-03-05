@@ -3,6 +3,6 @@
       forward_client_headers: true
       headers: []
       url: null
-      url_from_env: HASURA_CHAIN_DB_REMOTE_SHCEMA
+      url_from_env: HASURA_CHAIN_DB_REMOTE_SCHEMA
     name: chain-db
   type: add_remote_schema
