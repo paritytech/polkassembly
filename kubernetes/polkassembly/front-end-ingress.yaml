@@ -9,7 +9,7 @@ metadata:
     traefik.frontend.entryPoints: "https,http"
 spec:
   rules:
-  - host: test.polkassembly.io
+  - host: $DOMAIN_NAME
     http:
       paths:
       - backend:
