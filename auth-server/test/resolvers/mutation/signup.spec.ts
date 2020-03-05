@@ -59,6 +59,21 @@ describe('signup mutation', () => {
 			.del();
 	});
 
+	it('should be able to signup with no display name or email', async () => {
+		const result = await signup(null, { email: '', password, name: '', username}, fakectx);
+		
+		expect(result.user.id).to.exist;
+		expect(result.user.id).to.a('number');
+		expect(result.user.username).to.equal(username);
+		expect(result.token).to.exist;
+		expect(result.token).to.be.a('string');
+
+		await User
+			.query()
+			.where({ id: result.user.id })
+			.del();
+	});
+
 	it('should throw an error if the email is invalid', async () => {
 		const email = 'wrong@email';
 

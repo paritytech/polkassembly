@@ -7,6 +7,7 @@ import changeNotificationPreference from '../../../src/resolvers/mutation/change
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import User from '../../../src/model/User';
 
 describe('changeNotificationPreference mutation', () => {
 	let signupResult;
@@ -30,6 +31,11 @@ describe('changeNotificationPreference mutation', () => {
 
 	after(async () => {
 		await Notification
+			.query()
+			.where({ id: signupResult.user.id })
+			.del();
+
+		await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.del();
