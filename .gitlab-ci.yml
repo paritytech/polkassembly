@@ -103,16 +103,7 @@ dockerize-chain-db-watcher:
 
 #### stage:                        deploy
 
-deploy:
-  stage: deploy
-  variables:
-    http_upgrade: '$http_upgrade' # hack, to make nginx conf work with envsubst
-  environment:
-    name: dashboards-cluster-1
-  tags:
-    - kubernetes-parity-build
-  only:
-    - master
+.deploy-k8s:                   &deploy-k8s
   script:
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
@@ -121,16 +112,31 @@ deploy:
     # deploy yaml to cluster
     - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
 
-#### stage:                        post-deploy
-
-post-deploy:
-  stage: post-deploy
+deploy-staging:
+  stage: deploy
   environment:
     name: dashboards-cluster-1
   tags:
     - kubernetes-parity-build
   only:
     - master
+  <<: *deploy-k8s
+
+deploy-production:
+  stage: deploy
+  environment:
+    name: parity-prod
+  tags:
+    - kubernetes-parity-build
+  only:
+    - tags
+  <<: *deploy-k8s
+
+
+#### stage:                        post-deploy
+
+post-deploy:
+  stage: post-deploy
   script:
     # redeploy all pod's
     - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
