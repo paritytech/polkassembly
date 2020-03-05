@@ -7,7 +7,23 @@ import styled from '@xstyled/styled-components';
 import ContentForm from './ContentForm';
 import PostContent from './Post/PostContent';
 import { NotificationContext } from '../context/NotificationContext';
-import { DiscussionPostFragment, useEditPostMutation, DiscussionPostAndCommentsQueryVariables, DiscussionPostAndCommentsQuery, ProposalPostFragment, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostFragment, ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables } from '../generated/graphql';
+import { DiscussionPostFragment,
+	DiscussionPostAndCommentsQueryVariables,
+	DiscussionPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryVariables,
+	MotionPostFragment,
+	ProposalPostFragment,
+	ProposalPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	ReferendumPostFragment,
+	TreasuryProposalPostFragment,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	useEditPostMutation
+} from '../generated/graphql';
 import { NotificationStatus } from '../types';
 import Button from '../ui-components/Button';
 import FilteredError from '../ui-components/FilteredError';
@@ -18,9 +34,20 @@ interface Props {
 	className?: string
 	isEditing: boolean
 	onchainId?: number | null
-	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
+	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment| TreasuryProposalPostFragment| MotionPostFragment
 	postStatus?: string
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (
+		variables?: ReferendumPostAndCommentsQueryVariables
+		| DiscussionPostAndCommentsQueryVariables
+		| ProposalPostAndCommentsQueryVariables
+		| MotionPostAndCommentsQueryVariables
+		| TreasuryProposalPostAndCommentsQueryVariables
+		| undefined
+	) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>>
+		| Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>
+		| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>>
+		| Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>>
+		| Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 	toggleEdit: () => void
 }
 
@@ -46,7 +73,7 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.update_posts && data.update_posts.affected_rows>0){
+				if (data && data.update_posts && data.update_posts.affected_rows > 0){
 					queueNotification({
 						header: 'Success!',
 						message: 'Your post was edited',
