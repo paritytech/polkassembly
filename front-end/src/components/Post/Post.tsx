@@ -57,13 +57,20 @@ interface Props {
 
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
-	const { id, addresses } = useContext(UserDetailsContext);
+		const { id, addresses } = useContext(UserDetailsContext);
 	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const togglePostReplyForm = () => {
 		setPostReplyFormVisibile(!isPostReplyFormVisible);
 	};
+	
+	if (!post) return <NoPostFound
+		isMotion={isMotion}
+		isProposal={isProposal}
+		isReferendum={isReferendum}
+		isTreasuryProposal={isTreasuryProposal}
+	/>;
 
 	// if an onchain_link has both the a (proposal_id or motion_id) and a referendum_id, it means it's a referendum now
 	// the referendum id should be shown.
@@ -110,8 +117,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address)) ||
 		(isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address))
 	);
-
-	if (!post) return <NoPostFound/>;
 
 	return (
 		<Grid className={className}>
