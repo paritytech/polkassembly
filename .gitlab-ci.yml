@@ -66,7 +66,7 @@ lint-back-end:
   services:
     - docker:dind
   script:
-    - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+-//')
+    - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     - echo "$BUILD_ARGS"
@@ -74,15 +74,26 @@ lint-back-end:
     - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
     - docker push "$DOCKER_IMAGE_FULL_NAME"
 
-dockerize-front-end:
+dockerize:staging-front-end:
   stage: dockerize
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$REACT_APP_HASURA_GRAPHQL_URL\")"
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$REACT_APP_JWT_PUBLIC_KEY"\')"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$STAGING_REACT_APP_HASURA_GRAPHQL_URL\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
     - master
+  <<: *build_and_push
+
+dockerize:production-front-end:
+  stage: dockerize
+  environment:
+    name: parity-build
+  before_script:
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
+  only:
+    - tags
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -91,6 +102,7 @@ dockerize-auth-server:
     name: parity-build
   only:
     - master
+    - tags
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -99,12 +111,14 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
     - master
+    - tags
   <<: *build_and_push
 
 #### stage:                        deploy
 
 .deploy-k8s:                   &deploy-k8s
   script:
+    - export DOCKER_TAG=${CI_COMMIT_REF_SLUG}
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
     # print rendered yaml
@@ -131,17 +145,3 @@ deploy-production:
   only:
     - tags
   <<: *deploy-k8s
-
-
-#### stage:                        post-deploy
-
-post-deploy:
-  stage: post-deploy
-  script:
-    # redeploy all pod's
-    - for d in $(kubectl -n $KUBE_NAMESPACE get deployments | awk '{print $1}' | grep -v NAME);
-      do
-        r=$(kubectl -n $KUBE_NAMESPACE get -o template deployments "$d" --template={{.spec.replicas}});
-        kubectl scale deployment $d --replicas=0 -n $KUBE_NAMESPACE &&
-        kubectl scale deployment $d --replicas=$r -n $KUBE_NAMESPACE;
-      done
