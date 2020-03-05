@@ -18,6 +18,7 @@ import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
 import postUnsubscribe from './mutation/postUnsubscribe';
+import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
@@ -73,6 +74,7 @@ export default gql`
 		${logoutMutation}
 		${postSubscribe}
 		${postUnsubscribe}
+		${reportContent}
 		${requestResetPassword}
 		${resendVerifyEmailToken}
 		${resetPassword}
