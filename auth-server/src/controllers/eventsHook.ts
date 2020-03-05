@@ -110,10 +110,6 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 
 	let link = '';
 
-	if (onchain_motion_id === 0 || onchain_motion_id) {
-		link = 'motion';
-	}
-
 	if (onchain_proposal_id === 0 || onchain_proposal_id) {
 		link = 'proposal';
 	}
@@ -124,6 +120,10 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 
 	if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
 		link = 'treasury';
+	}
+
+	if (onchain_motion_id === 0 || onchain_motion_id) {
+		link = 'motion';
 	}
 
 	link += `/${post_id}`;
@@ -171,10 +171,6 @@ const sendNewProposalCreated = async (onchainLink) => {
 
 		let type = '';
 
-		if (onchain_motion_id === 0 || onchain_motion_id) {
-			type = 'motion';
-		}
-
 		if (onchain_proposal_id === 0 || onchain_proposal_id) {
 			type = 'proposal';
 		}
@@ -185,6 +181,10 @@ const sendNewProposalCreated = async (onchainLink) => {
 
 		if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
 			type = 'treasury';
+		}
+
+		if (onchain_motion_id === 0 || onchain_motion_id) {
+			type = 'motion';
 		}
 
 		sendNewProposalCreatedEmail(user, type, post_id);
