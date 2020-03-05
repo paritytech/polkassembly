@@ -72,8 +72,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isTreasuryProposal={isTreasuryProposal}
 	/>;
 
-	// if an onchain_link has both the a (proposal_id or motion_id) and a referendum_id, it means it's a referendum now
-	// the referendum id should be shown.
 	let onchainId: number | null | undefined;
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
@@ -111,7 +109,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	}
 
 	const canEdit = !isEditing && (
-		(post?.author?.id === id) ||
+		(post.author?.id === id) ||
 		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
 		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address)) ||
 		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address)) ||
