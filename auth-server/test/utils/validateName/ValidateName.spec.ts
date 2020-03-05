@@ -2,18 +2,14 @@ import { UserInputError } from 'apollo-server';
 import 'mocha';
 import { expect } from 'chai';
 
-import validateName from '../../../src/utils/validateName';
 import messages from '../../../src/utils/messages';
+import validateName from '../../../src/utils/validateName';
 
 describe('validateName util', () => {
-	it('should validate a correct name', () => {
-		let valid;
 
-		try{
-			valid = validateName('C0rR3ct na_-m3')
-		} catch {
-			expect(valid).to.be.true;
-		}
+	it('should validate a correct name', function(done){
+		validateName('C0rR3ct na_-m3');
+		done();
 	});
 
 	it('should invalidate a name containing invalid characters', () => {
