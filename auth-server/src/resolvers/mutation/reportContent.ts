@@ -10,9 +10,10 @@ interface argsType {
 	type: string
 	content_id: number
 	reason: string
+	comments: string
 }
 
-export default async (parent, { type, content_id, reason }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (parent, { type, content_id, reason, comments }: argsType, ctx: Context): Promise<MessageType>  => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -23,12 +24,13 @@ export default async (parent, { type, content_id, reason }: argsType, ctx: Conte
 
 	await ContentReport
 		.query()
-		.allowInsert('[type, content_id, user_id, reason, resolved]')
+		.allowInsert('[type, content_id, user_id, reason, comments, resolved]')
 		.insert({
 			type,
 			content_id,
 			user_id: user.id,
 			reason,
+			comments,
 			resolved: false
 		});
 

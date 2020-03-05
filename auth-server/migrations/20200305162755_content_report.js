@@ -6,6 +6,7 @@ exports.up = (knex) => {
 		table.integer('content_id').notNullable();
 		table.integer('user_id').notNullable();
 		table.string('reason').notNullable();
+		table.string('comments').notNullable();
 		table.boolean('resolved').defaultTo(false);
 		table.string('action');
 		table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));

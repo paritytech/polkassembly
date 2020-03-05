@@ -9,6 +9,7 @@ export default class ContentReport extends Model {
 	user_id: number
 	content_id: number
 	reason: string
+	comments: string
 	resolved: boolean
 	action: string
 
@@ -26,6 +27,7 @@ export default class ContentReport extends Model {
 			user_id: this.user_id,
 			content_id: this.content_id,
 			reason: this.reason,
+			comments: this.comments,
 			resolved: this.resolved,
 			action: this.action
 		};
@@ -41,6 +43,7 @@ export default class ContentReport extends Model {
 				user_id: { type: 'integer' },
 				content_id: { type: 'integer' },
 				reason: { type: 'string' },
+				comments: { type: 'comments' },
 				resolved: { type: 'boolean' },
 				action: { type: 'string' }
 			}
