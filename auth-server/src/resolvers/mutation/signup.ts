@@ -32,7 +32,7 @@ export default async (parent, { email, password, username, name }: argsType, ctx
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 
-	if (name && name.length > 255) {
+	if (name && name.length > 30) {
 		throw new UserInputError(messages.NAME_LENGTH_ERROR);
 	}
 
