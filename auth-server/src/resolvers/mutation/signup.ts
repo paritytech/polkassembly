@@ -1,6 +1,7 @@
 import { UserInputError } from 'apollo-server';
 
 import validateEmail from '../../utils/validateEmail';
+import validateName from '../../utils/validateName';
 import validateUsername from '../../utils/validateUsername';
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
 import AuthService from '../../services/auth';
@@ -20,20 +21,11 @@ export default async (parent, { email, password, username, name }: argsType, ctx
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
-	if (username.length < 3) {
-		throw new UserInputError(messages.USERNAME_LENGTH_ERROR);
-	}
-
-	if (!validateUsername(username)) {
-		throw new UserInputError(messages.USERNAME_INVALID_ERROR);
-	}
+	validateUsername(username);
+	validateName(name);
 
 	if (password.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
-	}
-
-	if (name && name.length > 30) {
-		throw new UserInputError(messages.NAME_LENGTH_ERROR);
 	}
 
 	const authServiceInstance = new AuthService();

@@ -81,4 +81,28 @@ describe('changeUsername mutation', () => {
 			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
 		}
 	});
+
+	it('should not be able to change username if username is too long', async () => {
+		const username = 'newnamethatiswaaaaayyyyyyyytoolong';
+
+		try {
+			await changeUsername(null, { username }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
+		}
+	});
+
+	it('should not be able to change username if username is too short', async () => {
+		const username = 'a';
+
+		try {
+			await changeUsername(null, { username }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
+		}
+	});
 });
