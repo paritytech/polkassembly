@@ -1,7 +1,7 @@
 export default {
 	VALIDATION_CONTENT_ERROR: 'Did you forget to add content?',
 	VALIDATION_EMAIL_ERROR: 'You need to provide a valid email!',
-	VALIDATION_NAME_MAXLENGTH_ERROR: 'Username cannot be larger than 30 characters.',
+	VALIDATION_NAME_MAXLENGTH_ERROR: 'Display name cannot be larger than 30 characters.',
 	VALIDATION_PASSWORD_ERROR: 'You need to specify a password with at least 6 characters!',
 	VALIDATION_TITLE_ERROR: 'Did you forget to add a title?',
 	VALIDATION_USERNAME_MAXLENGTH_ERROR: 'Username cannot be larger than 20 characters.',
