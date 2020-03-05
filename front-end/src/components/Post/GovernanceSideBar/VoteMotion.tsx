@@ -167,7 +167,7 @@ const VoteMotion = ({
 	const NotCouncil = () =>
 		<>
 			<div>No account found from the council :(</div>
-			<a href='#' onClick={() => setForceVote(true)}>Let me try still.</a>
+			<a href='/#' onClick={() => setForceVote(true)}>Let me try still.</a>
 		</>;
 
 	return (

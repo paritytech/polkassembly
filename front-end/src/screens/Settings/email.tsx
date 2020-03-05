@@ -103,7 +103,7 @@ const Email = ({ className }: Props): JSX.Element => {
 					{error && <FilteredError text={error.message}/>}
 					{email && !currentUser.email_verified &&
 						<div className={'warning-text'}>
-							<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+							<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='/#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
 						</div>
 					}
 				</Form.Field>
