@@ -12,6 +12,11 @@ describe('validateName util', () => {
 		done();
 	});
 
+	it('should validate an empty name', function(done){
+		validateName('');
+		done();
+	});
+
 	it('should invalidate a name containing invalid characters', () => {
 		try{
 			validateName('incorrect@name');
