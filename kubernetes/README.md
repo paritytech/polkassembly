@@ -47,6 +47,7 @@ to create the *secret* containing the required credentials in k8s.
     mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
     chmod +x /usr/local/bin/hasura-dev
     ```
+- When working on production, any `kubectl` command should use `-kubeconfig=/home/thib/.kube/config-file`
 - Port forward local 7070 port to hasura service
   - kubectl get service --namespace=polkassembly
   - kubectl port-forward svc/hasura-service 7070:8080 -n polkassembly
