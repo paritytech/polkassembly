@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Icon, TextArea, TextAreaProps, Dropdown, DropdownProps } from 'semantic-ui-react';
 
 import { useReportContentMutation } from '../../generated/graphql';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -7,12 +7,20 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import Modal from '../../ui-components/Modal';
 import { Form } from '../../ui-components/Form';
-import { TextArea } from '../../ui-components/TextArea';
 
 interface DiscussionProps {
 	type: string
 	contentId: number
 }
+
+const reasons = [
+	'It\'s suspicious or spam',
+	'It\'s abusive or harmful',
+	'It expresses intentions of self-harm or suicide',
+	'other (please let us know in the field below)'
+];
+
+const reasonOptions = reasons.map(reason => ({ key: reason, text: reason, value: reason }));
 
 const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const [showModal, setShowModal] = useState(false);
@@ -48,8 +56,8 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const dismissModal = () => {
 		setShowModal(false);
 	};
-	const onReasonChange = (event: React.ChangeEvent<HTMLInputElement>) => setReason(event.currentTarget.value);
-	const onCommentsChange = (value: string) => setComments(value);
+	const onReasonChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => setReason(data.value?.toString() || '');
+	const onCommentsChange = (event: React.FormEvent<HTMLTextAreaElement>, data: TextAreaProps) => setComments(data.value?.toString() || '');
 
 	return (
 		<>
@@ -70,18 +78,19 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 				>
 					<Form standalone={false}>
 						<Form.Group>
-							<Form.Field width={10}>
+							<Form.Field width={16}>
 								<label>Reason</label>
-								<input
-									value={reason || ''}
+								<Dropdown
+									placeholder={'I\'m reporting because'}
+									fluid
+									selection
+									options={reasonOptions}
 									onChange={onReasonChange}
-									placeholder='reason'
-									type='text'
 								/>
 							</Form.Field>
 						</Form.Group>
 						<Form.Group>
-							<Form.Field width={10}>
+							<Form.Field width={16}>
 								<label>Comments</label>
 								<TextArea
 									name={'comments'}
