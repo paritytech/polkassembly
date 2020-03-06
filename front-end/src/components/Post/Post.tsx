@@ -38,6 +38,7 @@ import {
 	TreasuryProposalPostAndCommentsQuery
 } from '../../generated/graphql';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
+import ReportButton from '../ReportButton';
 import Button from '../../ui-components/Button';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
@@ -129,6 +130,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 					{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
 					{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+					{id && !isEditing && <ReportButton type='post' contentId={post.id} />}
 
 					{ id && isPostReplyFormVisible &&
 						<CreatePostComment
