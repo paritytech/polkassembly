@@ -12,6 +12,7 @@ When contributing to this repository, please first check whether the issue has a
 ##### For bugs:
 
 - current system OS
+- current browser user-agent and version
 - repository branch
 - steps to reproduce
 - stack trace
@@ -157,4 +158,3 @@ import { b } from '../my/moduleB';
   - Closures such as `handleButtonClick = () => { /* code goes here */}` are often used instead of methods in React to avoid binding with `this`. These properties are considered as methods.
   - If a function is used for rendering, then we prefix the function name with `render`, and add it *after* the `render` function. Render functions often contain JSX.
   - All methods should be public, for consistency.
-
