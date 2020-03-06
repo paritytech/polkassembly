@@ -214,6 +214,9 @@ export const onchainLinksCreateHook = async (req: Request, res: Response) => {
 
 	const result = await sendOwnProposalCreated(onchainLink);
 
+	if (result.message === messages.EVENT_PROPOSAL_CREATED_MAIL_SENT) {
+		return res.json(result);
+	}
 	// Doing this in background as several emails needs to be sent
 	sendNewProposalCreated(onchainLink);
 
