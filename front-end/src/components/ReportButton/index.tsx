@@ -73,8 +73,8 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 								onClick={handleReport}
 							/>
 							<Button
-								content='close'
-								icon='cross'
+								content='Close'
+								icon='close'
 								secondary
 								onClick={dismissModal}
 							/>
