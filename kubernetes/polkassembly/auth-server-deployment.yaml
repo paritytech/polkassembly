@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: auth-server
-        image: gcr.io/test-installations-222013/polkassembly-auth-server:master
+        image: gcr.io/test-installations-222013/polkassembly-auth-server:${DOCKER_TAG}
         imagePullPolicy: Always
         env:
         - name: JWT_KEY_PASSPHRASE
@@ -83,7 +83,7 @@ spec:
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.14
         command: ["/cloud_sql_proxy",
-                  "-instances=test-installations-222013:us-central1:governance-auth=tcp:5432",
+                  "-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432",
                   "-credential_file=/secrets/cloudsql/test-installations-222013-bb0efcdf24f9.json"]
         securityContext:
           runAsUser: 2  # non-root user

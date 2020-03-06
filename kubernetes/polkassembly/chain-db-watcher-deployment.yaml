@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chain-db-watcher
-        image: gcr.io/test-installations-222013/polkassembly-chain-db-watcher:master
+        image: gcr.io/test-installations-222013/polkassembly-chain-db-watcher:${DOCKER_TAG}
         imagePullPolicy: Always
         env:
         - name: PROPOSAL_BOT_USERNAME
@@ -75,3 +75,5 @@ spec:
             configMapKeyRef:
               key: START_FROM
               name: chain-db-watcher-config
+      imagePullSecrets:
+      - name: regcred
