@@ -64,12 +64,22 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 		<>
 			{showModal ?
 				<Modal
-					buttons={<Button
-						content='Report'
-						icon='check'
-						primary
-						onClick={handleReport}
-					/>}
+					buttons={
+						<Form.Group>
+							<Button
+								content='Report'
+								icon='check'
+								primary
+								onClick={handleReport}
+							/>
+							<Button
+								content='close'
+								icon='cross'
+								secondary
+								onClick={dismissModal}
+							/>
+						</Form.Group>
+					}
 					centered
 					dimmer='inverted'
 					open
