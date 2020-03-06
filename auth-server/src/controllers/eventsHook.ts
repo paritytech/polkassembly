@@ -114,16 +114,16 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 		link = 'proposal';
 	}
 
-	if (onchain_referendum_id === 0 || onchain_referendum_id) {
-		link = 'referendum';
-	}
-
 	if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
 		link = 'treasury';
 	}
 
 	if (onchain_motion_id === 0 || onchain_motion_id) {
 		link = 'motion';
+	}
+
+	if (onchain_referendum_id === 0 || onchain_referendum_id) {
+		link = 'referendum';
 	}
 
 	link += `/${post_id}`;
@@ -175,16 +175,16 @@ const sendNewProposalCreated = async (onchainLink) => {
 			type = 'proposal';
 		}
 
-		if (onchain_referendum_id === 0 || onchain_referendum_id) {
-			type = 'referendum';
-		}
-
 		if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
 			type = 'treasury';
 		}
 
 		if (onchain_motion_id === 0 || onchain_motion_id) {
 			type = 'motion';
+		}
+
+		if (onchain_referendum_id === 0 || onchain_referendum_id) {
+			type = 'referendum';
 		}
 
 		sendNewProposalCreatedEmail(user, type, post_id);
