@@ -46,6 +46,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 						status: NotificationStatus.SUCCESS
 					});
 				}
+				setShowModal(false);
 			})
 			.catch((e) => console.error('Error reporting content',e));
 	};
@@ -64,17 +65,17 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 			{showModal ?
 				<Modal
 					buttons={<Button
-						content='Got it'
+						content='Report'
 						icon='check'
 						primary
-						onClick={dismissModal}
+						onClick={handleReport}
 					/>}
 					centered
 					dimmer='inverted'
 					open
 					onClose={dismissModal}
 					size='tiny'
-					title={'Nikhil'}
+					title={`Report ${type}`}
 				>
 					<Form standalone={false}>
 						<Form.Group>
