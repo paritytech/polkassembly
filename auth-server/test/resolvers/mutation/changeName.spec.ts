@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, UserInputError } from 'apollo-server';
 import 'mocha';
 
 import User from '../../../src/model/User';
@@ -46,6 +46,30 @@ describe('changeName mutation', () => {
 
 		expect(dbUser.name).to.be.equal(newName);
 		expect(res.message).to.eq(messages.NAME_CHANGED_SUCCESSFULLY);
+	});
+
+	it('should not be able to use a too long name', async () => {
+		const newName = 'new name that is waaaaayyyyyyyy too long';
+
+		try {
+			await changeName(null, { newName }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.NAME_INVALID_ERROR);
+		}
+	});
+
+	it('should not be able to use a too short name', async () => {
+		const newName = 'a';
+
+		try {
+			await changeName(null, { newName }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.NAME_INVALID_ERROR);
+		}
 	});
 
 	it('should not be able to change name with wrong jwt', async () => {

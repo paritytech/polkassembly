@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useChangeUsernameMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
-import { NotificationContext } from '../../context/NotificationContext';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
-
+import cleanError from '../../util/cleanError';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
@@ -57,7 +57,7 @@ const Username = ({ className }:Props): JSX.Element => {
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
-						message: e.message,
+						message: cleanError(e.message),
 						status: NotificationStatus.ERROR
 					});
 					console.error('change username error', e);

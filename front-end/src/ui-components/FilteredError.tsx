@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from '@xstyled/styled-components';
 
+import cleanError from 'src/util/cleanError';
+
 interface ErrorProps{
 	className?: string,
 	text: string
 }
-
-const cleanError = function (text:string): string {
-	return text.replace(/Network error: |GraphQL error: /g,'');
-};
 
 const FilteredError = ({ className, text } : ErrorProps) => {
 	return <div className={className}>
