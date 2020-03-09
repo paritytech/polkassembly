@@ -6,7 +6,7 @@ import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import AddressDropdown from '../AddressDropdown';
-import Balance from '../../Balance';
+// import Balance from '../../Balance';
 import { NotificationContext } from '../../../context/NotificationContext';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
@@ -116,9 +116,9 @@ const VoteRefrendum = ({ className, referendumId, api, apiReady, address, accoun
 								defaultAddress={address || accounts[0]?.address}
 								onAccountChange={onAccountChange}
 							/>
-							{api ? (
+							{/* api ? (
 								<Balance api={api} address={address} />
-							) : null}
+							) : null */}
 							<label>Vote Lock
 								<HelperTooltip
 									content='You can multiply your votes by locking your tokens for longer periods of time.'
