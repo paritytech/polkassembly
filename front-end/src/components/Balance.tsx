@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { formatBalance } from '@polkadot/util';
+import { DerivedBalancesAccount } from '@polkadot/api-derive/types';
 import { ApiPromise } from '@polkadot/api';
 
 interface Props {
@@ -10,17 +11,12 @@ interface Props {
 const Balance = ({ api, address }: Props) => {
 	const [balance, setBalance] = useState<string>('0');
 
-	useEffect(() => {
-		let unsubscribe: () => void;
-		api.query.system.account(
-			address, (info) => {
-				setBalance(info.data.free.toString());
-			})
-			.then(unsub => unsubscribe = unsub)
-			.catch(console.error);
+	useEffect((): void => {
+		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
+			setBalance(info.freeBalance?.toString() || '0')
+		));
 
-		return () => unsubscribe && unsubscribe();
-	}, [address, api.query.balances, api.query.system]);
+	}, [address, api]);
 
 	return (
 		<div className='text-muted'>
