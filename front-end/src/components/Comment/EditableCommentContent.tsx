@@ -9,6 +9,7 @@ import ContentForm from '../ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useEditCommentMutation, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import ReportButton from '../ReportButton';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -92,6 +93,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 						<>
 							<Markdown md={content} />
 							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+							{id && !isEditing && <ReportButton type='comment' contentId={parseInt(commentId)} />}
 						</>
 				}
 			</div>
@@ -103,6 +105,6 @@ export default styled(EditableCommentContent)`
 	.button-container {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;	
+		justify-content: flex-end;
 	}
 `;
