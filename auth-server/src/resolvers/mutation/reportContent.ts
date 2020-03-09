@@ -35,7 +35,7 @@ export default async (parent, { type, content_id, reason, comments }: argsType, 
 			resolved: false
 		});
 
-	sendReportContentEmail(user.name, `${type}/${content_id}`, reason, comments);
+	sendReportContentEmail(user.name, type, content_id, reason, comments);
 
 	return { message: messages.CONTENT_REPORT_SUCCESSFUL };
 };

@@ -179,7 +179,7 @@ export const sendProposalCreatedEmail = (user: User, link: string) => {
 		console.error('Proposal Created Email not sent', e));
 };
 
-export const sendReportContentEmail = (username: string, link, reason: string, comments: string) => {
+export const sendReportContentEmail = (username: string, type: string, contentId: number, reason: string, comments: string) => {
 	if (!apiKey) {
 		console.warn('Report Content Email not sent due to missing API key');
 		return;
@@ -193,7 +193,8 @@ export const sendReportContentEmail = (username: string, link, reason: string, c
 			${reason} <br />
 			Comments:<br />
 			${comments} <br />
-			link: <a href="${DOMAIN}/${link}">${DOMAIN}/${link}</a>.<br /><br />
+			type: ${type} <br />
+			id: ${contentId} <br />
 		</p>
 	`;
 
