@@ -3,6 +3,6 @@
       forward_client_headers: false
       headers: []
       timeout_seconds: 60
-      url: http://nodewatcher.nodewatcher:4466
+      url: http://35.189.196.74:4000
     name: chain-db
   type: add_remote_schema
