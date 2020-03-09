@@ -27,10 +27,8 @@ When contributing to this repository, please first check whether the issue has a
 1. Pick an issue off the Issue tracker for the repository, and assign yourself before working on it so we don't have duplicated effort.
 2. If unsure about the specifics of implementing a particular issue, please make a Draft PR sooner rather than later, and start a discussion from there.
 3. When designing a new UI component, please make sure your changes are also reflected in the appropriate Storybook story.
-4. Increase the version numbers in any examples files and the README.md to the new version that this
-   Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
-5. You may merge the Pull Request in once you have the sign-off of two other developers, or if you
-   do not have permission to do that, you may request the second reviewer to merge it for you.
+4. You may merge the Pull Request in once you have the sign-off of one maintainer, or if you
+   do not have permission to do that, you may request the reviewer to merge it for you.
 
 ## Commit Messages
 
@@ -117,13 +115,6 @@ available at [http://contributor-covenant.org/version/1/4][version]
 All TypeScript code must adhere to the [semistandard style](https://github.com/Flet/semistandard). These rules are programmatically enforced by `eslint`.
 
 Moreover, we follow the following rules:
-
-- Put brackets around arguments in closures, even if there's only one argument.
-
-```diff
-- const f = x => x + 1;
-+ const f = (x) => x + 1;
-```
 
 - Add a blank line before a function's `return` statement.
 
