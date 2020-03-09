@@ -2,7 +2,7 @@ version: "3.6"
 services:
   postgres-test:
     image: postgres
-    restart: always
+    restart: "no"
     ports:
       - "5433:5433"
     environment:
@@ -12,7 +12,7 @@ services:
       PGPORT: 5433
   auth-test:
     image: paritytech/polkassembly-auth-test
-    restart: always
+    restart: "no"
     depends_on:
       - "postgres-test"
     environment:
