@@ -12,16 +12,15 @@ const Balance = ({ api, address }: Props) => {
 
 	useEffect(() => {
 		let unsubscribe: () => void;
-
-		api.query.balances
-			.freeBalance(address, (currentBalance) => {
-				setBalance(currentBalance.toString());
+		api.query.system.account(
+			address, (info) => {
+				setBalance(info.data.free.toString());
 			})
-			.then(unsub => { unsubscribe = unsub; })
+			.then(unsub => unsubscribe = unsub)
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api.query.balances, api.query.balances.freeBalance]);
+	}, [address, api.query.balances, api.query.system]);
 
 	return (
 		<div className='text-muted'>
