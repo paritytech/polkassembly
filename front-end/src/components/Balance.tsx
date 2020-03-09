@@ -12,7 +12,6 @@ const Balance = ({ api, address }: Props) => {
 	const [balance, setBalance] = useState<string>('0');
 
 	useEffect(() => {
-		console.log('address',address);
 		let unsubscribe: () => void;
 
 		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
