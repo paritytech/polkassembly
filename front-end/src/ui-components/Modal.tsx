@@ -19,7 +19,7 @@ const Modal = (props : Props) => {
 			<SUIModal.Header>{title}</SUIModal.Header>
 			<SUIModal.Content>
 				<SUIModal.Description>
-					<p>{children}</p>
+					<div>{children}</div>
 				</SUIModal.Description>
 			</SUIModal.Content>
 			<SUIModal.Actions>
