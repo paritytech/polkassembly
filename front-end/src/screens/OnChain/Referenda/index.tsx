@@ -17,7 +17,7 @@ interface Props {
 const ReferendaContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestReferendaPostsQuery({ variables: {
-		limit: 2,
+		limit: 5,
 		postType: post_type.ON_CHAIN
 	} });
 
