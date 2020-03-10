@@ -18,7 +18,7 @@ interface Props {
 const TreasuryProposalsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
-		limit: 10,
+		limit: 5,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN
 	} });
