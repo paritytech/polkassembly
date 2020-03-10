@@ -119,7 +119,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 								onAccountChange={onAccountChange}
 							/>
 							{api ? (
-								<Balance api={api} address={address} />
+								<Balance address={address} />
 							) : null}
 							<label>Vote Lock
 								<HelperTooltip
