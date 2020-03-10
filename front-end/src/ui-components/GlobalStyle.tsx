@@ -1,3 +1,7 @@
+// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
 import 'semantic-ui-css/semantic.min.css';
 import '../fonts.css'; /* as createGlobalStyle is not importing fonts*/
 import { createGlobalStyle } from '@xstyled/styled-components';
