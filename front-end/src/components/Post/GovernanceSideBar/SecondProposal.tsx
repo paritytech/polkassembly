@@ -5,12 +5,12 @@
 import React, { useContext } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import HelperTooltip from '../../../ui-components/HelperTooltip';
+import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
 import AddressDropdown from '../AddressDropdown';
@@ -18,16 +18,15 @@ import AddressDropdown from '../AddressDropdown';
 interface Props {
 	accounts: InjectedAccountWithMeta[]
 	address: string
-	api?: ApiPromise,
-	apiReady?: boolean,
 	className?: string
 	proposalId?: number | null | undefined
 	getAccounts: () => Promise<undefined>
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const SecondProposal = ({ className, api, apiReady, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
+const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const { api, apiReady } = useContext(ApiContext);
 
 	const secondProposal = async () => {
 		if (!api) {

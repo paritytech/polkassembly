@@ -5,11 +5,11 @@
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
 import { DropdownProps, Icon, Select } from 'semantic-ui-react';
-import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import AddressDropdown from '../AddressDropdown';
 import Balance from '../../Balance';
+import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
@@ -21,16 +21,15 @@ type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locke
 interface Props {
 	className?: string
 	referendumId?: number | null | undefined
-	api?: ApiPromise
-	apiReady?: boolean
 	address: string
 	accounts: InjectedAccountWithMeta[]
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 	getAccounts: () => Promise<undefined>
 }
 
-const VoteRefrendum = ({ className, referendumId, api, apiReady, address, accounts, onAccountChange, getAccounts }: Props) => {
+const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const options: {text: string, value: ConvictionType}[] = [
 		{ text: '1x time lock', value: 'Locked1x' },
 		{ text: '2x time lock', value: 'Locked2x' },
