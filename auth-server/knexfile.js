@@ -25,7 +25,7 @@ const config = {
 };
 
 const env = process.env.NODE_ENV || 'development';
-const connection = config[env];
+const connection = config[String(env)];
 
 if (!connection || !connection.connection) {
 	throw new Error(`DB Connection not provided for env ${env}`);
