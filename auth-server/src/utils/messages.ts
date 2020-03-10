@@ -38,7 +38,7 @@ export default {
 	JWT_REFRESH_TOKEN_USER_MISMATCH: 'User don\'t match between the JWT and the refresh-token.',
 	LOGOUT_SUCCESSFUL: 'Successfully logged out.',
 	NAME_CHANGED_SUCCESSFULLY: 'Name changed succefully.',
-	NAME_INVALID_ERROR: 'Display name must be between 3 and 30 characters long, using letters, numbers, spaces, and the following characters ._-',
+	NAME_INVALID_ERROR: 'Display name must be between 3 and 30 characters long.',
 	NO_CORRESPONDING_REFRESH_TOKEN: 'No corresponding refresh-token found.',
 	NO_USER_FOUND_WITH_USERNAME: 'No user found with this username',
 	NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL: 'Notification preference changed successfully.',
