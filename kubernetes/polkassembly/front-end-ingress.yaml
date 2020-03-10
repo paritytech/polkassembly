@@ -16,3 +16,10 @@ spec:
           serviceName: front-end-service
           servicePort: http
         path: /
+  - host: $ALIAS_DOMAIN_NAME
+    http:
+      paths:
+      - backend:
+          serviceName: front-end-service
+          servicePort: http
+        path: /
