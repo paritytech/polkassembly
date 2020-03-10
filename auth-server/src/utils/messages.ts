@@ -51,6 +51,8 @@ export default {
 	RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL: 'A new verification mail has been sent to your email.',
 	RESET_PASSWORD_RETURN_MESSAGE: 'The reset password link was sent to this email, if it exists in our database.',
 	REPORT_TYPE_INVALID: 'Report type can only be post or comment',
+	REPORT_COMMENTS_LENGTH_EXCEDEED: 'Report comments can be max 300 character long.',
+	REPORT_REASON_REQUIRED: 'Please provide a reason for reporting content',
 	SUCCESS: 'Success.',
 	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',

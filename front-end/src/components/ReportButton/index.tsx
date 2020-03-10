@@ -111,8 +111,8 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 									value={comments || ''}
 								/>
 							</Form.Field>
-							{error && <FilteredError text={error.message}/>}
 						</Form.Group>
+						{error && <FilteredError text={error.message}/>}
 					</Form>
 				</Modal>
 				: null

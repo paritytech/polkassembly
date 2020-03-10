@@ -23,6 +23,14 @@ export default async (parent, { type, content_id, reason, comments }: argsType, 
 		throw new UserInputError(messages.REPORT_TYPE_INVALID);
 	}
 
+	if (!reason) {
+		throw new UserInputError(messages.REPORT_REASON_REQUIRED);
+	}
+
+	if (comments.length > 300) {
+		throw new UserInputError(messages.REPORT_COMMENTS_LENGTH_EXCEDEED);
+	}
+
 	await ContentReport
 		.query()
 		.allowInsert('[type, content_id, user_id, reason, comments, resolved]')
