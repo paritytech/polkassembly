@@ -151,7 +151,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		console.error('Email undo email not sent', e));
 };
 
-export const sendOwnProposalCreatedEmail = (user: User, link: string) => {
+export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: number) => {
 	if (!apiKey) {
 		console.warn('Own Proposal Created Email not sent due to missing API key');
 		return;
@@ -162,7 +162,7 @@ export const sendOwnProposalCreatedEmail = (user: User, link: string) => {
 			Hi ${user.name || ''}!<br/><br/>
 
 			You have submitted a motion/proposal on chain.<br />
-			Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/${link}">${DOMAIN}/${link}</a>.<br /><br />
+			Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/${type}/${postId}">${DOMAIN}/${type}/${postId}</a>.<br /><br />
 
 			You can deactivate this notification in your notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
 

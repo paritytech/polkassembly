@@ -70,6 +70,8 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 		return { message: messages.EVENT_POST_ID_NOT_FOUND } ;
 	}
 
+	let id = post_id;
+
 	const address = await Address
 		.query()
 		.where({
@@ -112,27 +114,29 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE };
 	}
 
-	let link = '';
+	let type = '';
 
 	if (onchain_proposal_id === 0 || onchain_proposal_id) {
-		link = 'proposal';
+		type = 'proposal';
+		id = onchain_proposal_id;
 	}
 
 	if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
-		link = 'treasury';
+		type = 'treasury';
+		id = onchain_treasury_proposal_id;
 	}
 
 	if (onchain_motion_id === 0 || onchain_motion_id) {
-		link = 'motion';
+		type = 'motion';
+		id = onchain_motion_id;
 	}
 
 	if (onchain_referendum_id === 0 || onchain_referendum_id) {
-		link = 'referendum';
+		type = 'referendum';
+		id = onchain_referendum_id;
 	}
 
-	link += `/${post_id}`;
-
-	sendOwnProposalCreatedEmail(user, link);
+	sendOwnProposalCreatedEmail(user, type, id);
 
 	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
@@ -149,6 +153,8 @@ const sendNewProposalCreated = async (onchainLink) => {
 	if (!post_id) {
 		return { message: messages.EVENT_POST_ID_NOT_FOUND } ;
 	}
+
+	let id = post_id;
 
 	const notifications = await Notification
 		.query()
@@ -177,21 +183,25 @@ const sendNewProposalCreated = async (onchainLink) => {
 
 		if (onchain_proposal_id === 0 || onchain_proposal_id) {
 			type = 'proposal';
+			id = onchain_proposal_id;
 		}
 
 		if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
 			type = 'treasury';
+			id = onchain_treasury_proposal_id;
 		}
 
 		if (onchain_motion_id === 0 || onchain_motion_id) {
 			type = 'motion';
+			id = onchain_motion_id;
 		}
 
 		if (onchain_referendum_id === 0 || onchain_referendum_id) {
 			type = 'referendum';
+			id = onchain_referendum_id;
 		}
 
-		sendNewProposalCreatedEmail(user, type, post_id);
+		sendNewProposalCreatedEmail(user, type, id);
 	});
 
 	Promise.all(promises).catch(error => console.error(error));
