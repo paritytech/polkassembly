@@ -17,7 +17,7 @@ interface Props {
 const MotionsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestMotionPostsQuery({ variables: {
-		limit: 10,
+		limit: 5,
 		postType: post_type.ON_CHAIN
 	} });
 
