@@ -104,7 +104,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 						</Form.Group>
 						<Form.Group>
 							<Form.Field width={16}>
-								<label>Comments</label>
+								<label>Comments (300 char max)</label>
 								<TextArea
 									name={'comments'}
 									onChange={onCommentsChange}
