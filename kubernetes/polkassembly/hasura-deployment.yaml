@@ -82,7 +82,7 @@ spec:
             configMapKeyRef:
               key: HASURA_CHAIN_DB_REMOTE_SCHEMA
               name: hasura-config
-        image: hasura/graphql-engine:pull2395-7ea7f82c
+        image: hasura/graphql-engine:pull2392-b7c91978
         imagePullPolicy: IfNotPresent
         name: graphql-engine
       - name: cloudsql-proxy
