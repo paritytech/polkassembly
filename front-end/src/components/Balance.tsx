@@ -1,6 +1,11 @@
+// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
 import React, { useEffect, useState } from 'react';
-import { formatBalance } from '@polkadot/util';
 import { ApiPromise } from '@polkadot/api';
+import { DerivedBalancesAccount } from '@polkadot/api-derive/types';
+import { formatBalance } from '@polkadot/util';
 
 interface Props {
 	api: ApiPromise
@@ -13,15 +18,14 @@ const Balance = ({ api, address }: Props) => {
 	useEffect(() => {
 		let unsubscribe: () => void;
 
-		api.query.balances
-			.freeBalance(address, (currentBalance) => {
-				setBalance(currentBalance.toString());
-			})
+		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
+			setBalance(info.freeBalance?.toString() || '0')
+		))
 			.then(unsub => { unsubscribe = unsub; })
-			.catch(console.error);
+			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api.query.balances, api.query.balances.freeBalance]);
+	}, [address, api]);
 
 	return (
 		<div className='text-muted'>

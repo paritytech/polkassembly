@@ -1,3 +1,7 @@
+// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
 export default {
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
 	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
