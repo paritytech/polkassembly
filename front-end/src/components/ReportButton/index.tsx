@@ -6,6 +6,7 @@ import { NotificationContext } from '../../context/NotificationContext';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import Modal from '../../ui-components/Modal';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
 interface DiscussionProps {
@@ -26,7 +27,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const [showModal, setShowModal] = useState(false);
 	const [reason, setReason] = useState('');
 	const [comments, setComments] = useState('');
-	const [reportContentMutation] = useReportContentMutation();
+	const [reportContentMutation, { loading, error }] = useReportContentMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	const handleReport = () => {
@@ -68,6 +69,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 						<Form.Group>
 							<Button
 								content='Report'
+								disabled={loading}
 								icon='check'
 								primary
 								onClick={handleReport}
@@ -109,6 +111,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 									value={comments || ''}
 								/>
 							</Form.Field>
+							{error && <FilteredError text={error.message}/>}
 						</Form.Group>
 					</Form>
 				</Modal>
