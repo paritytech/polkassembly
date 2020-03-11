@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import { ApiPromise, WsProvider } from '@polkadot/api';
 import styled from '@xstyled/styled-components';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
+import { ApiContext } from '../../../context/ApiContext';
 import ExtensionNotDetected from '../../ExtensionNotDetected';
 import SecondProposal from './SecondProposal';
 import VoteReferendum from './VoteReferendum';
@@ -27,7 +27,6 @@ interface Props {
 	status?: string
 }
 
-const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
@@ -35,26 +34,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
-	const [api, setApi] = useState<ApiPromise>();
-	const [apiReady, setApiReady] = useState(false);
-
-	useEffect(() => {
-		async function connect() {
-			const provider = new WsProvider(WS_PROVIDER);
-			const apiResult = await ApiPromise.create({ provider });
-
-			setApi(apiResult);
-			apiResult.isReady.then(() => {
-				setApiReady(true);
-				console.log('API ready');
-			});
-		}
-
-		connect().catch((error) => {
-			// TODO: Show user that he is not connected to a node
-			console.error(error);
-		});
-	}, []);
+	const { api } = useContext(ApiContext);
 
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
@@ -122,37 +102,31 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		return (
 			<>
 				{isMotion &&
-						<VoteMotion
-							accounts={accounts}
-							address={address}
-							api={api}
-							apiReady={apiReady}
-							getAccounts={getAccounts}
-							motionId={onchainId}
-							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-							onAccountChange={onAccountChange}
-						/>}
+					<VoteMotion
+						accounts={accounts}
+						address={address}
+						getAccounts={getAccounts}
+						motionId={onchainId}
+						motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+						onAccountChange={onAccountChange}
+					/>}
 				{isProposal &&
 					<SecondProposal
 						accounts={accounts}
 						address={address}
-						api={api}
-						apiReady={apiReady}
 						getAccounts={getAccounts}
 						onAccountChange={onAccountChange}
 						proposalId={onchainId}
 					/>}
 
 				{isReferendum &&
-						<VoteReferendum
-							accounts={accounts}
-							address={address}
-							api={api}
-							apiReady={apiReady}
-							getAccounts={getAccounts}
-							onAccountChange={onAccountChange}
-							referendumId={onchainId}
-						/>}
+					<VoteReferendum
+						accounts={accounts}
+						address={address}
+						getAccounts={getAccounts}
+						onAccountChange={onAccountChange}
+						referendumId={onchainId}
+					/>}
 			</>
 		);
 	}
