@@ -21,6 +21,7 @@ const Balance = ({ address }: Props) => {
 
 		if (!api) {
 			return;
+			console.error('polkadot/api not set');	
 		}
 
 		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
