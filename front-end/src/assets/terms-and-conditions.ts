@@ -2,19 +2,21 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+
 export default `Polkassembly end user agreement
 ====================
 
-Parity Technologies Limited is a company registered in England and Wales under company number 09760015 with its registered office at Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://www.polkassembly.io (the "**Website**").  
+Parity Technologies Limited is a company registered in England and Wales under company number 09760015 with its registered office at Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://${NETWORK}.polkassembly.io (the "**Website**").  
 
 ## 1. Understanding these terms
   1.  This end user agreement (the "**Terms**") describes how you may access and use the Forum and any services made available through the Forum via the Website, any mobile applications made available by the Company and any other distribution channels made available by the Company (the "**Services**"). By accessing the Forum, these Terms will apply to you and you agree to the Terms. You should therefore read the terms carefully before using the forum.
   2.  When certain words and phrases are used in these Terms, they have specific meanings (these are known as "**defined terms**"). You can identify these defined terms because they start with capital letters (even if they are not at the start of a sentence). Where a defined term is used, it has the meaning given to it in the section of these Terms where it was defined (you can find these meanings by looking at the sentence where the defined term is included in brackets and speech marks).
   3.  In this document, when we refer to "we", "us" or "our", we mean the Company; and when we refer to "you" or "your" we mean the person accessing or using the person accessing or using the Forum.
   4.  Please note that:
-    1.  your use of the Website is governed by our website terms of use (available https://www.polkassembly.io/terms-and-conditions), in the case of any inconsistency between any provisions of those website terms of use and any of the clauses of this end user agreement, the clauses of this end user agreement shall prevail;
+    1.  your use of the Website is governed by our website terms of use (available https://${NETWORK}.polkassembly.io/terms-and-conditions), in the case of any inconsistency between any provisions of those website terms of use and any of the clauses of this end user agreement, the clauses of this end user agreement shall prevail;
     2.  the Website uses cookies, the use of which are governed by our cookies policy (available https://www.parity.io/privacy);
-    3.  we only use your personal information in accordance with our privacy notice (available https://www.polkassembly.io/privacy).
+    3.  we only use your personal information in accordance with our privacy notice (available https://${NETWORK}.polkassembly.io/privacy).
 
 ## 2.  The Forum
 
@@ -23,7 +25,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
   3.  The Forum and the content on it are provided for general information purposes only. They are not intended to amount to advice on which you should rely.
 
 ## 3.  Your account and password
-  1.  You will need to register an account with us on the Website in order to use the Services and gain access to the Forum ("**Account**"). You can register via our official website (at https://www.polkassembly.io/signup). In order to register for an Account, you must be aged 18 or over. If you register an Account, you will be asked to provide certain information (such as your user name) and to create a password, as part of our security procedures. You must treat such password as confidential and you must not disclose it to any third party.
+  1.  You will need to register an account with us on the Website in order to use the Services and gain access to the Forum ("**Account**"). You can register via our official website (at https://${NETWORK}.polkassembly.io/signup). In order to register for an Account, you must be aged 18 or over. If you register an Account, you will be asked to provide certain information (such as your user name) and to create a password, as part of our security procedures. You must treat such password as confidential and you must not disclose it to any third party.
   2.  We have the right to disable any Accounts and/or passwords, at any time, if in our reasonable opinion you have failed to comply with any of the provisions of these Terms.
   3.  If you know or suspect that anyone other than you knows your Account login details, you must immediately notify us at polkassembly@parity.io.
   4.  You are responsible for any unauthorised use of your Account login details.
