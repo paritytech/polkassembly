@@ -2390,6 +2390,7 @@ export type Mutation = {
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
+  reportContent?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
@@ -2455,6 +2456,14 @@ export type MutationPostSubscribeArgs = {
 
 export type MutationPostUnsubscribeArgs = {
   post_id: Scalars['Int']
+};
+
+
+export type MutationReportContentArgs = {
+  comments?: Maybe<Scalars['String']>,
+  content_id: Scalars['Int'],
+  reason: Scalars['String'],
+  type: Scalars['String']
 };
 
 
@@ -2589,6 +2598,7 @@ export type Mutation_Root = {
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
   postUnsubscribe?: Maybe<Message>,
+  reportContent?: Maybe<Message>,
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
@@ -3187,6 +3197,14 @@ export type Mutation_RootPostSubscribeArgs = {
 
 export type Mutation_RootPostUnsubscribeArgs = {
   post_id: Scalars['Int']
+};
+
+
+export type Mutation_RootReportContentArgs = {
+  comments?: Maybe<Scalars['String']>,
+  content_id: Scalars['Int'],
+  reason: Scalars['String'],
+  type: Scalars['String']
 };
 
 
@@ -9803,6 +9821,22 @@ export type AddPostCommentMutation = (
   )> }
 );
 
+export type ReportContentMutationVariables = {
+  type: Scalars['String'],
+  content_id: Scalars['Int'],
+  reason: Scalars['String'],
+  comments: Scalars['String']
+};
+
+
+export type ReportContentMutation = (
+  { __typename?: 'mutation_root' }
+  & { reportContent: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type PostSubscribeMutationVariables = {
   postId: Scalars['Int']
 };
@@ -10978,6 +11012,41 @@ export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const ReportContentDocument = gql`
+    mutation ReportContent($type: String!, $content_id: Int!, $reason: String!, $comments: String!) {
+  reportContent(type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
+    message
+  }
+}
+    `;
+export type ReportContentMutationFn = ApolloReactCommon.MutationFunction<ReportContentMutation, ReportContentMutationVariables>;
+
+/**
+ * __useReportContentMutation__
+ *
+ * To run a mutation, you first call `useReportContentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReportContentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reportContentMutation, { data, loading, error }] = useReportContentMutation({
+ *   variables: {
+ *      type: // value for 'type'
+ *      content_id: // value for 'content_id'
+ *      reason: // value for 'reason'
+ *      comments: // value for 'comments'
+ *   },
+ * });
+ */
+export function useReportContentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ReportContentMutation, ReportContentMutationVariables>) {
+        return ApolloReactHooks.useMutation<ReportContentMutation, ReportContentMutationVariables>(ReportContentDocument, baseOptions);
+      }
+export type ReportContentMutationHookResult = ReturnType<typeof useReportContentMutation>;
+export type ReportContentMutationResult = ApolloReactCommon.MutationResult<ReportContentMutation>;
+export type ReportContentMutationOptions = ApolloReactCommon.BaseMutationOptions<ReportContentMutation, ReportContentMutationVariables>;
 export const PostSubscribeDocument = gql`
     mutation PostSubscribe($postId: Int!) {
   postSubscribe(post_id: $postId) {

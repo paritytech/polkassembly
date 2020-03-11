@@ -93,11 +93,10 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								name='name'
 								placeholder='Firstname Lastname'
 								type='text'
-								ref={register({ maxLength: 30, minLength: 3, pattern: /^[A-Za-z0-9 ._-]*$/, required: false })}
+								ref={register({ maxLength: 30, minLength: 3, required: false })}
 							/>
 							{(errors.name as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MAXLENGTH_ERROR}</span>}
 							{(errors.name as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MINLENGTH_ERROR}</span>}
-							{(errors.name as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_NAME_PATTERN_ERROR}</span>}
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
