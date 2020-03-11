@@ -40,7 +40,6 @@ export function ApiContextProvider(
 		}
 
 		connect().catch((error) => {
-			// TODO: Show user that he is not connected to a node
 			console.error(error);
 		});
 	}, []);
