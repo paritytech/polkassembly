@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
 import messages from '../util/messages';
-import { TextArea } from '../ui-components/TextArea';
+import { MarkdownEditor } from '../ui-components/MarkdownEditor';
 
 interface Props {
 	className?: string
@@ -22,7 +22,7 @@ const ContentForm = ({ className, value, errorContent, onChange }:Props): JSX.El
 	return (
 		<div className={className}>
 			<Form.Group className={errorContent? 'error':''}>
-				<TextArea
+				<MarkdownEditor
 					className={ errorContent? 'error':''}
 					name={'content'}
 					onChange={onChange}
