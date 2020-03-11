@@ -2,7 +2,7 @@ image: parity/kubetools:latest
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "gcr.io/test-installations-222013"
-  DOCKER_TAG:                      $CI_COMMIT_REF_SLUG
+  DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
 
@@ -118,7 +118,7 @@ dockerize-chain-db-watcher:
 
 .deploy-k8s:                   &deploy-k8s
   script:
-    - export DOCKER_TAG=${CI_COMMIT_REF_SLUG}
+    - export DOCKER_TAG
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
     # print rendered yaml

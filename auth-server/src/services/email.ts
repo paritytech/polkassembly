@@ -12,6 +12,7 @@ import PasswordResetToken from '../model/PasswordResetToken';
 
 const apiKey = process.env.SENDGRID_API_KEY;
 const FROM = 'noreply@polkassembly.io';
+const REPORT = 'polkassembly@parity.io';
 const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
 
 if (apiKey) {
@@ -151,9 +152,9 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		console.error('Email undo email not sent', e));
 };
 
-export const sendProposalCreatedEmail = (user: User, link: string) => {
+export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: number) => {
 	if (!apiKey) {
-		console.warn('Proposal Created Email not sent due to missing API key');
+		console.warn('Own Proposal Created Email not sent due to missing API key');
 		return;
 	}
 
@@ -162,7 +163,7 @@ export const sendProposalCreatedEmail = (user: User, link: string) => {
 			Hi ${user.name || ''}!<br/><br/>
 
 			You have submitted a motion/proposal on chain.<br />
-			Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/${link}">${DOMAIN}/${link}</a>.<br /><br />
+			Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="${DOMAIN}/${type}/${postId}">${DOMAIN}/${type}/${postId}</a>.<br /><br />
 
 			You can deactivate this notification in your notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
 
@@ -180,4 +181,66 @@ export const sendProposalCreatedEmail = (user: User, link: string) => {
 
 	sgMail.send(msg).catch(e =>
 		console.error('Proposal Created Email not sent', e));
+};
+
+export const sendNewProposalCreatedEmail = (user: User, type: string, postId: number) => {
+	if (!apiKey) {
+		console.warn('New Proposal Created Email not sent due to missing API key');
+		return;
+	}
+
+	const text = `
+		<p>
+			Hi ${user.name || ''}!<br/><br/>
+
+			There is a new ${type} on chain.<br />
+			Click on the following link to check it out: <a href="${DOMAIN}/${type}/${postId}">${DOMAIN}/${type}/${postId}</a>.<br /><br />
+
+			You can deactivate this notification in your notification control center: <a href="${DOMAIN}/notifications">${DOMAIN}/notifications</a>
+
+			Polkassembly Team
+		</p>
+	`;
+
+	const msg = {
+		to: user.email,
+		from: FROM,
+		subject: `New ${type} created on chain`,
+		text,
+		html: text
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Proposal Created Email not sent', e));
+};
+
+export const sendReportContentEmail = (username: string, type: string, contentId: number, reason: string, comments: string) => {
+	if (!apiKey) {
+		console.warn('Report Content Email not sent due to missing API key');
+		return;
+	}
+
+	const text = `
+		<p>
+			Content Reported.<br />
+			Reporter: ${username}<br />
+			Reason:<br />
+			${reason} <br />
+			Comments:<br />
+			${comments} <br />
+			type: ${type} <br />
+			id: ${contentId} <br />
+		</p>
+	`;
+
+	const msg = {
+		to: REPORT,
+		from: FROM,
+		subject: 'Content reported',
+		text,
+		html: text
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Report Content Email not sent', e));
 };
