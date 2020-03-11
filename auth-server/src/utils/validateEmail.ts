@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-export default (email: string): boolean => {
-	const regexp = /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i;
+import isEmail from 'validator/lib/isEmail';
 
-	return regexp.test(email);
+export default (email: string): boolean => {
+	return isEmail(email);
 };
