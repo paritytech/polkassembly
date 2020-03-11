@@ -13,8 +13,6 @@ export default (name: string): void => {
 		return;
 	}
 
-	const regexp = /^[A-Za-z0-9 ._-]{3,30}$/;
-
 	if (name.length < 3 || name.length > 30){
 		throw new UserInputError(messages.NAME_INVALID_ERROR);
 	}
