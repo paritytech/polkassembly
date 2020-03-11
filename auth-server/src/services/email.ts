@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import * as sgMail from '@sendgrid/mail';
+import * as ejs from 'ejs';
 
 import User from '../model/User';
 import EmailVerificationToken from '../model/EmailVerificationToken';
@@ -26,16 +27,18 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 	}
 
 	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
-	const text = `
+	const template = `
 		<p>
-			Welcome aboard ${user.name || ''}!<br/><br/>
+			Welcome aboard <%= username %>!<br/><br/>
 
-			For security purposes, please confirm your email address here - <a target="_blank" href=${verifyUrl}>verify your account</a><br/><br/>
+			For security purposes, please confirm your email address here - <a target="_blank" href=<%= verifyUrl %>>verify your account</a><br/><br/>
 
 			See you soon,<br/><br/>
 			Polkassembly Team
 		</p>
 	`;
+
+	const text = ejs.render(template, { username: user.name || '', verifyUrl });
 
 	const msg = {
 		to: user.email,
