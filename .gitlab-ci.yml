@@ -2,7 +2,7 @@ image: parity/kubetools:latest
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "gcr.io/test-installations-222013"
-  DOCKER_TAG:                      $CI_COMMIT_REF_SLUG
+  DOCKER_TAG:                      '${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
 
