@@ -5,10 +5,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
 import { DropdownProps, Icon, Popup } from 'semantic-ui-react';
-import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import AddressDropdown from '../AddressDropdown';
+import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import { NotificationStatus } from '../../../types';
@@ -18,8 +18,6 @@ import { Form } from '../../../ui-components/Form';
 interface Props {
 	accounts: InjectedAccountWithMeta[]
 	address: string
-	api?: ApiPromise
-	apiReady?: boolean
 	className?: string
 	getAccounts: () => Promise<undefined>
 	motionId?: number | null
@@ -30,8 +28,6 @@ interface Props {
 const VoteMotion = ({
 	accounts,
 	address,
-	api,
-	apiReady,
 	className,
 	getAccounts,
 	motionId,
@@ -43,6 +39,8 @@ const VoteMotion = ({
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
+	const { api, apiReady } = useContext(ApiContext);
+
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
 	useEffect( () => {
