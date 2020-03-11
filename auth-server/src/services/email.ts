@@ -214,7 +214,6 @@ export const sendNewProposalCreatedEmail = (user: User, type: string, postId: nu
 		console.error('Proposal Created Email not sent', e));
 };
 
-
 export const sendReportContentEmail = (username: string, type: string, contentId: number, reason: string, comments: string) => {
 	if (!apiKey) {
 		console.warn('Report Content Email not sent due to missing API key');
@@ -245,6 +244,3 @@ export const sendReportContentEmail = (username: string, type: string, contentId
 	sgMail.send(msg).catch(e =>
 		console.error('Report Content Email not sent', e));
 };
-
-
-
