@@ -159,7 +159,7 @@ interface Props {
     value: string
 }
 
-export function TextArea(props: Props): React.ReactElement {
+export function MarkdownEditor(props: Props): React.ReactElement {
 	const listCommands = [
 		{
 			commands: [
