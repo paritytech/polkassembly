@@ -57,7 +57,8 @@
     "pg": "^7.5.0",
     "tmp": "^0.1.0",
     "typescript": "^3.7.2",
-    "uuidv4": "^6.0.0"
+    "uuidv4": "^6.0.0",
+    "validator": "^12.2.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.6",
