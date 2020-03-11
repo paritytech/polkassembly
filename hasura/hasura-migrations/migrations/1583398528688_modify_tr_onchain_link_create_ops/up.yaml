@@ -1,0 +1,28 @@
+- args:
+    enable_manual: false
+    headers:
+    - name: HASURA_EVENT_SECRET
+      value_from_env: HASURA_EVENT_SECRET
+    insert:
+      columns: '*'
+    name: onchain_link_create
+    replace: true
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    table:
+      name: onchain_links
+      schema: public
+    update:
+      columns:
+      - id
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+      - created_at
+    webhook_from_env: HASURA_ONCHAIN_LINK_CREATE_HOOK
+  type: create_event_trigger
