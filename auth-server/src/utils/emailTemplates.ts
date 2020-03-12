@@ -2,7 +2,7 @@ export const verificationEmailTemplate = `
     <p>
         Welcome aboard <%= username %>!<br/><br/>
 
-        For security purposes, please confirm your email address here - <a target="_blank" href=<%= verifyUrl %>>verify your account</a><br/><br/>
+        For security purposes, please confirm your email address here - <a target="_blank" href="<%= verifyUrl %>">verify your account</a><br/><br/>
 
         See you soon,<br/><br/>
         Polkassembly Team
