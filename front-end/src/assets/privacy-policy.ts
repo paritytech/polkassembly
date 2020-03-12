@@ -2,6 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+
 export default `Polkassembly privacy notice
 ====================
 
@@ -9,7 +11,7 @@ Parity Technologies Limited (&quot; **Parity**&quot;, &quot; **we**&quot;, &quot
 
 ## What does this notice cover?
 
-This notice applies to Parity&#39;s online forum, Polkassembly at http://www.polkassembly.io (the &quot;**Forum**&quot;). This notice describes how Parity will use data collected as part of the Forum.
+This notice applies to Parity&#39;s online forum, Polkassembly at https://${NETWORK}.polkassembly.io (the &quot;**Forum**&quot;). This notice describes how Parity will use data collected as part of the Forum.
 
 It also describes your data protection rights, including a right to object to some of the processing which Parity carries out. More information about your rights, and how to exercise them, is set out in the &quot;What rights do I have?&quot; section.
 
