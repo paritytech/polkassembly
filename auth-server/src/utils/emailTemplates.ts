@@ -32,9 +32,9 @@ export const postSubscriptionMailTemplate = `
         Hi <%= username %>!<br/><br/>
 
         <br />
-        <%= authorUsername %> has commented on a <a href="<%= domain >/post/<%= postId %>">post you subscribed to</a>.<br /><br />
+        <%= authorUsername %> has commented on a <a href="<%= domain %>/post/<%= postId %>">post you subscribed to</a>.<br /><br />
 
-        comment: <% content %><br />
+        comment: <%= content %><br />
 
         Polkassembly Team
     </p>
