@@ -46,6 +46,10 @@ export default styled(OnchainInfoWrapper)`
 		word-wrap: normal;
 	}
 
+	.motion-sub-info{
+		background-color: grey_light;
+	}
+
 	@media only screen and (max-width: 576px) {
 		padding: 2rem;
 	}

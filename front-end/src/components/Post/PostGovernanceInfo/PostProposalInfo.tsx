@@ -35,7 +35,7 @@ const PostProposalInfo = ({ onchainLink }: Props) => {
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Proposer</h6>
-					<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'} />
+					<AddressComponent address={proposerAddress} accountName={'Proposer Address'} />
 				</Grid.Column>
 				{depositAmount && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>

@@ -5,6 +5,28 @@
 import gql from 'graphql-tag';
 import { commentFields } from '../../fragments/comments';
 
+const onchainLinkMotionPreimage = gql`
+    fragment onchainLinkMotionPreimage on Preimage {
+        hash
+        id
+        metaDescription
+        method
+        preimageArguments {
+            id
+            name
+            value
+        }
+    }
+`;
+
+const onchainLinkMotionTreasury = gql`
+    fragment onchainLinkMotionTreasury on TreasurySpendProposal {
+        beneficiary
+        bond
+        value
+    }
+`;
+
 const onchainLinkMotion = gql`
     fragment onchainLinkMotion on onchain_links {
         id,
@@ -25,18 +47,15 @@ const onchainLinkMotion = gql`
                 value
             }
             preimage {
-                hash
-                id
-                metaDescription
-                method
-                preimageArguments {
-                    id
-                    name
-                    value
-                }
+                ...onchainLinkMotionPreimage
+            }
+            treasurySpendProposal{
+                ...onchainLinkMotionTreasury
             }
         }
     }
+    ${onchainLinkMotionPreimage}
+    ${onchainLinkMotionTreasury}
 `;
 
 const motionPost = gql`
