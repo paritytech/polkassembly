@@ -97,7 +97,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 						<>
 							<Markdown md={content} />
 							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-							{id && !isEditing && <ReportButton type='comment' contentId={parseInt(commentId)} />}
+							{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 						</>
 				}
 			</div>

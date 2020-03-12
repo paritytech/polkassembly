@@ -138,7 +138,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 					{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
 					{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-					{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={post.id} />}
+					{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 
 					{ id && isPostReplyFormVisible &&
 						<CreatePostComment
