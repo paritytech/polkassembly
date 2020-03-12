@@ -29,7 +29,7 @@ const Address = ({ address, accountName, className }: Props): JSX.Element => {
 		}
 
 		api.derive.accounts.info(address, ((info: DeriveAccountInfo) =>
-			setDisplay(info.identity.display || '')
+			setDisplay(info.nickname || '')
 		))
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
