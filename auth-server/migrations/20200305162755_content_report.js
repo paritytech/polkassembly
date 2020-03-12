@@ -3,7 +3,7 @@ exports.up = (knex) => {
 	return knex.schema.createTable('content_report', (table) => {
 		table.increments('id').primary();
 		table.enu('type', ['post', 'comment']).notNullable();
-		table.integer('content_id').notNullable();
+		table.string('content_id').notNullable();
 		table.integer('user_id').notNullable();
 		table.string('reason').notNullable();
 		table.string('comments').notNullable();
