@@ -33,31 +33,23 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 			<h4>On-Chain Info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<div className='info_group'>
-						<h6>Proposer</h6>
-						<AddressComponent className='' address={proposerAddress} accountName={'Proposer Address'} />
-					</div>
+					<h6>Proposer</h6>
+					<AddressComponent address={proposerAddress} accountName={'Proposer Address'} />
 				</Grid.Column>
 				{bond && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<div className='info_group'>
-						<h6>Bond</h6>
-						{parseInt(bond) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
-					</div>
+					<h6>Bond</h6>
+					{parseInt(bond) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
 				{beneficiary &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<div className='info_group'>
-						<h6>Beneficiary</h6>
-						<AddressComponent className='' address={beneficiary} accountName={'Beneficiary Address'} />
-					</div>
+					<h6>Beneficiary</h6>
+					<AddressComponent address={beneficiary} accountName={'Beneficiary Address'} />
 				</Grid.Column>}
 				{value && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<div className='info_group'>
-						<h6>Value</h6>
-						{parseInt(value) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
-					</div>
+					<h6>Value</h6>
+					{parseInt(value) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
 			</Grid>
 		</OnchainInfoWrapper>
