@@ -20,8 +20,8 @@ const Balance = ({ address }: Props) => {
 		let unsubscribe: () => void;
 
 		if (!api) {
+			console.error('polkadot/api not set');
 			return;
-			console.error('polkadot/api not set');	
 		}
 
 		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
