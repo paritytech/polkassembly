@@ -13,7 +13,7 @@ import messages from '../../utils/messages';
 
 interface argsType {
 	type: string
-	content_id: number
+	content_id: string
 	reason: string
 	comments: string
 }

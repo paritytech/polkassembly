@@ -15,7 +15,7 @@ import { Form } from '../../ui-components/Form';
 
 interface DiscussionProps {
 	type: string
-	contentId: number
+	contentId: string
 }
 
 const reasons = [

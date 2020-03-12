@@ -11,7 +11,7 @@ export default class ContentReport extends Model {
 	readonly id!: number
 	type: string
 	user_id: number
-	content_id: number
+	content_id: string
 	reason: string
 	comments: string
 	resolved: boolean
@@ -45,7 +45,7 @@ export default class ContentReport extends Model {
 				id: { type: 'integer' },
 				type: { type: 'string' },
 				user_id: { type: 'integer' },
-				content_id: { type: 'integer' },
+				content_id: { type: 'string' },
 				reason: { type: 'string' },
 				comments: { type: 'comments' },
 				resolved: { type: 'boolean' },
