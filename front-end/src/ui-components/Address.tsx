@@ -68,6 +68,7 @@ export default styled(Address)`
 		color: black_text;
 		font-weight: 500;
 		font-size: sm;
+		filter: grayscale(100%);
 	}
 
 	.description {
