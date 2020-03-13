@@ -2458,6 +2458,7 @@ export type MutationPostUnsubscribeArgs = {
 export type MutationReportContentArgs = {
   comments?: Maybe<Scalars['String']>,
   content_id: Scalars['String'],
+  network: Scalars['String'],
   reason: Scalars['String'],
   type: Scalars['String']
 };
@@ -3199,6 +3200,7 @@ export type Mutation_RootPostUnsubscribeArgs = {
 export type Mutation_RootReportContentArgs = {
   comments?: Maybe<Scalars['String']>,
   content_id: Scalars['String'],
+  network: Scalars['String'],
   reason: Scalars['String'],
   type: Scalars['String']
 };
@@ -9818,6 +9820,7 @@ export type AddPostCommentMutation = (
 );
 
 export type ReportContentMutationVariables = {
+  network: Scalars['String'],
   type: Scalars['String'],
   content_id: Scalars['String'],
   reason: Scalars['String'],
@@ -11038,8 +11041,8 @@ export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostComme
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
 export const ReportContentDocument = gql`
-    mutation ReportContent($type: String!, $content_id: String!, $reason: String!, $comments: String!) {
-  reportContent(type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
+    mutation ReportContent($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
+  reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
     message
   }
 }
@@ -11059,6 +11062,7 @@ export type ReportContentMutationFn = ApolloReactCommon.MutationFunction<ReportC
  * @example
  * const [reportContentMutation, { data, loading, error }] = useReportContentMutation({
  *   variables: {
+ *      network: // value for 'network'
  *      type: // value for 'type'
  *      content_id: // value for 'content_id'
  *      reason: // value for 'reason'

@@ -12,13 +12,14 @@ import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
 interface argsType {
+	network: string
 	type: string
 	content_id: string
 	reason: string
 	comments: string
 }
 
-export default async (parent, { type, content_id, reason, comments }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (parent, { network, type, content_id, reason, comments }: argsType, ctx: Context): Promise<MessageType>  => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -37,8 +38,9 @@ export default async (parent, { type, content_id, reason, comments }: argsType, 
 
 	await ContentReport
 		.query()
-		.allowInsert('[type, content_id, user_id, reason, comments, resolved]')
+		.allowInsert('[network, type, content_id, user_id, reason, comments, resolved]')
 		.insert({
+			network,
 			type,
 			content_id,
 			user_id: user.id,
@@ -47,7 +49,7 @@ export default async (parent, { type, content_id, reason, comments }: argsType, 
 			resolved: false
 		});
 
-	sendReportContentEmail(user.name, type, content_id, reason, comments);
+	sendReportContentEmail(user.name, network, type, content_id, reason, comments);
 
 	return { message: messages.CONTENT_REPORT_SUCCESSFUL };
 };
