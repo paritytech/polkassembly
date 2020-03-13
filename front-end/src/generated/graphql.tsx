@@ -596,7 +596,6 @@ export type Comments_Max_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
-  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -605,7 +604,6 @@ export type Comments_Max_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -615,7 +613,6 @@ export type Comments_Min_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
-  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -624,7 +621,6 @@ export type Comments_Min_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
-  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -654,10 +650,6 @@ export type Comments_Order_By = {
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
-};
-
-export type Comments_Pk_Columns_Input = {
-  id: Scalars['uuid'],
 };
 
 export enum Comments_Select_Column {
@@ -2465,7 +2457,7 @@ export type MutationPostUnsubscribeArgs = {
 
 export type MutationReportContentArgs = {
   comments?: Maybe<Scalars['String']>,
-  content_id: Scalars['Int'],
+  content_id: Scalars['String'],
   reason: Scalars['String'],
   type: Scalars['String']
 };
@@ -2588,26 +2580,16 @@ export type Mutation_Root = {
   deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
-  delete_comments_by_pk?: Maybe<Comments>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
-  delete_onchain_links_by_pk?: Maybe<Onchain_Links>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
-  delete_post_topics_by_pk?: Maybe<Post_Topics>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
-  delete_post_types_by_pk?: Maybe<Post_Types>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
-  delete_posts_by_pk?: Maybe<Posts>,
   executeRaw: Scalars['Json'],
   insert_comments?: Maybe<Comments_Mutation_Response>,
-  insert_comments_one?: Maybe<Comments>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
-  insert_onchain_links_one?: Maybe<Onchain_Links>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
-  insert_post_topics_one?: Maybe<Post_Topics>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
-  insert_post_types_one?: Maybe<Post_Types>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
-  insert_posts_one?: Maybe<Posts>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
@@ -2670,15 +2652,10 @@ export type Mutation_Root = {
   updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
   update_comments?: Maybe<Comments_Mutation_Response>,
-  update_comments_by_pk?: Maybe<Comments>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
-  update_onchain_links_by_pk?: Maybe<Onchain_Links>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
-  update_post_topics_by_pk?: Maybe<Post_Topics>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
-  update_post_types_by_pk?: Maybe<Post_Types>,
   update_posts?: Maybe<Posts_Mutation_Response>,
-  update_posts_by_pk?: Maybe<Posts>,
   upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertCouncil: Council,
@@ -3147,18 +3124,8 @@ export type Mutation_RootDelete_CommentsArgs = {
 };
 
 
-export type Mutation_RootDelete_Comments_By_PkArgs = {
-  id: Scalars['uuid']
-};
-
-
 export type Mutation_RootDelete_Onchain_LinksArgs = {
   where: Onchain_Links_Bool_Exp
-};
-
-
-export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
-  id: Scalars['Int']
 };
 
 
@@ -3167,28 +3134,13 @@ export type Mutation_RootDelete_Post_TopicsArgs = {
 };
 
 
-export type Mutation_RootDelete_Post_Topics_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp
 };
 
 
-export type Mutation_RootDelete_Post_Types_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp
-};
-
-
-export type Mutation_RootDelete_Posts_By_PkArgs = {
-  id: Scalars['Int']
 };
 
 
@@ -3204,20 +3156,8 @@ export type Mutation_RootInsert_CommentsArgs = {
 };
 
 
-export type Mutation_RootInsert_Comments_OneArgs = {
-  object: Comments_Insert_Input,
-  on_conflict?: Maybe<Comments_On_Conflict>
-};
-
-
 export type Mutation_RootInsert_Onchain_LinksArgs = {
   objects: Array<Onchain_Links_Insert_Input>,
-  on_conflict?: Maybe<Onchain_Links_On_Conflict>
-};
-
-
-export type Mutation_RootInsert_Onchain_Links_OneArgs = {
-  object: Onchain_Links_Insert_Input,
   on_conflict?: Maybe<Onchain_Links_On_Conflict>
 };
 
@@ -3228,32 +3168,14 @@ export type Mutation_RootInsert_Post_TopicsArgs = {
 };
 
 
-export type Mutation_RootInsert_Post_Topics_OneArgs = {
-  object: Post_Topics_Insert_Input,
-  on_conflict?: Maybe<Post_Topics_On_Conflict>
-};
-
-
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>,
   on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
 
-export type Mutation_RootInsert_Post_Types_OneArgs = {
-  object: Post_Types_Insert_Input,
-  on_conflict?: Maybe<Post_Types_On_Conflict>
-};
-
-
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>,
-  on_conflict?: Maybe<Posts_On_Conflict>
-};
-
-
-export type Mutation_RootInsert_Posts_OneArgs = {
-  object: Posts_Insert_Input,
   on_conflict?: Maybe<Posts_On_Conflict>
 };
 
@@ -3276,7 +3198,7 @@ export type Mutation_RootPostUnsubscribeArgs = {
 
 export type Mutation_RootReportContentArgs = {
   comments?: Maybe<Scalars['String']>,
-  content_id: Scalars['Int'],
+  content_id: Scalars['String'],
   reason: Scalars['String'],
   type: Scalars['String']
 };
@@ -3619,24 +3541,10 @@ export type Mutation_RootUpdate_CommentsArgs = {
 };
 
 
-export type Mutation_RootUpdate_Comments_By_PkArgs = {
-  _inc?: Maybe<Comments_Inc_Input>,
-  _set?: Maybe<Comments_Set_Input>,
-  pk_columns: Comments_Pk_Columns_Input
-};
-
-
 export type Mutation_RootUpdate_Onchain_LinksArgs = {
   _inc?: Maybe<Onchain_Links_Inc_Input>,
   _set?: Maybe<Onchain_Links_Set_Input>,
   where: Onchain_Links_Bool_Exp
-};
-
-
-export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
-  _inc?: Maybe<Onchain_Links_Inc_Input>,
-  _set?: Maybe<Onchain_Links_Set_Input>,
-  pk_columns: Onchain_Links_Pk_Columns_Input
 };
 
 
@@ -3647,13 +3555,6 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
 };
 
 
-export type Mutation_RootUpdate_Post_Topics_By_PkArgs = {
-  _inc?: Maybe<Post_Topics_Inc_Input>,
-  _set?: Maybe<Post_Topics_Set_Input>,
-  pk_columns: Post_Topics_Pk_Columns_Input
-};
-
-
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
@@ -3661,24 +3562,10 @@ export type Mutation_RootUpdate_Post_TypesArgs = {
 };
 
 
-export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
-  _inc?: Maybe<Post_Types_Inc_Input>,
-  _set?: Maybe<Post_Types_Set_Input>,
-  pk_columns: Post_Types_Pk_Columns_Input
-};
-
-
 export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
   _set?: Maybe<Posts_Set_Input>,
   where: Posts_Bool_Exp
-};
-
-
-export type Mutation_RootUpdate_Posts_By_PkArgs = {
-  _inc?: Maybe<Posts_Inc_Input>,
-  _set?: Maybe<Posts_Set_Input>,
-  pk_columns: Posts_Pk_Columns_Input
 };
 
 
@@ -4489,10 +4376,6 @@ export type Onchain_Links_Order_By = {
   proposer_address?: Maybe<Order_By>,
 };
 
-export type Onchain_Links_Pk_Columns_Input = {
-  id: Scalars['Int'],
-};
-
 export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -4826,10 +4709,6 @@ export type Post_Topics_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
 };
 
-export type Post_Topics_Pk_Columns_Input = {
-  id: Scalars['Int'],
-};
-
 export enum Post_Topics_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -5056,10 +4935,6 @@ export type Post_Types_Order_By = {
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
-};
-
-export type Post_Types_Pk_Columns_Input = {
-  id: Scalars['Int'],
 };
 
 export enum Post_Types_Select_Column {
@@ -5357,10 +5232,6 @@ export type Posts_Order_By = {
   type?: Maybe<Post_Types_Order_By>,
   type_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
-};
-
-export type Posts_Pk_Columns_Input = {
-  id: Scalars['Int'],
 };
 
 export enum Posts_Select_Column {
@@ -9948,7 +9819,7 @@ export type AddPostCommentMutation = (
 
 export type ReportContentMutationVariables = {
   type: Scalars['String'],
-  content_id: Scalars['Int'],
+  content_id: Scalars['String'],
   reason: Scalars['String'],
   comments: Scalars['String']
 };
@@ -11167,7 +11038,7 @@ export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostComme
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
 export const ReportContentDocument = gql`
-    mutation ReportContent($type: String!, $content_id: Int!, $reason: String!, $comments: String!) {
+    mutation ReportContent($type: String!, $content_id: String!, $reason: String!, $comments: String!) {
   reportContent(type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
     message
   }
