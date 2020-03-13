@@ -6,6 +6,12 @@ variables:
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
 
+include:
+  - template: SAST.gitlab-ci.yml
+variables:
+  SAST_DISABLE_DIND: "true"
+  SCAN_KUBERNETES_MANIFESTS: "true"
+
 stages:
   - test
   - dockerize
