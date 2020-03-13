@@ -16,6 +16,7 @@ export default class ContentReport extends Model {
 	comments: string
 	resolved: boolean
 	action: string
+	network: string
 
 	static get tableName () {
 		return 'content_report';
@@ -33,7 +34,8 @@ export default class ContentReport extends Model {
 			reason: this.reason,
 			comments: this.comments,
 			resolved: this.resolved,
-			action: this.action
+			action: this.action,
+			network: this.network
 		};
 	}
 
@@ -49,7 +51,8 @@ export default class ContentReport extends Model {
 				reason: { type: 'string' },
 				comments: { type: 'comments' },
 				resolved: { type: 'boolean' },
-				action: { type: 'string' }
+				action: { type: 'string' },
+				network: { type: 'string' }
 			}
 		};
 	}

@@ -4,5 +4,6 @@ export default `
         content_id: String!
         reason: String!
         comments: String
+        network: String!
     ): Message
 `;

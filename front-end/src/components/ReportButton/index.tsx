@@ -24,8 +24,8 @@ const reasons = [
 	'It expresses intentions of self-harm or suicide',
 	'other (please let us know in the field below)'
 ];
-
 const reasonOptions = reasons.map(reason => ({ key: reason, text: reason, value: reason }));
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
 
 const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const [showModal, setShowModal] = useState(false);
@@ -39,6 +39,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 			variables: {
 				comments,
 				content_id: contentId,
+				network: NETWORK,
 				reason,
 				type
 			}

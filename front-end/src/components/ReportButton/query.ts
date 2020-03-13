@@ -5,8 +5,8 @@
 import gql from 'graphql-tag';
 
 export const REPORT_CONTENT=gql`
-    mutation ReportContent ($type: String!, $content_id: String!, $reason: String!, $comments: String!) {
-        reportContent(type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
+    mutation ReportContent ($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
+        reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
             message
         }
     }
