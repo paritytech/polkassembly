@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -14,6 +14,7 @@ import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
 import AddressDropdown from '../AddressDropdown';
+import Loader from 'src/ui-components/Loader';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -25,6 +26,7 @@ interface Props {
 }
 
 const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
+	const [isLoading, setIsLoading] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, apiReady } = useContext(ApiContext);
 
@@ -40,9 +42,11 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		}
 
 		const second = api.tx.democracy.second(proposalId);
+		setIsLoading(true);
 
 		second.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
+				setIsLoading(false);
 				queueNotification({
 					header: 'Success!',
 					message: `Vote on proposal #${proposalId} successfully finalized`,
@@ -54,6 +58,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
+			setIsLoading(false);
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -86,32 +91,40 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		);
 	}
 
+	const AccounSelection = () =>
+		<Form.Group>
+			<Form.Field width={16}>
+				<label>Vote with account
+					<HelperTooltip
+						content='You can choose an account from the Polkadot-js extension.'
+					/>
+				</label>
+				<AddressDropdown
+					accounts={accounts}
+					defaultAddress={address || accounts[0]?.address}
+					onAccountChange={onAccountChange}
+				/>
+				<Button
+					primary
+					disabled={!apiReady}
+					onClick={secondProposal}
+				>
+			Second
+				</Button>
+			</Form.Field>
+		</Form.Group>;
+
 	return (
 		<div className={className}>
 			<div className='card'>
-				<h4>Seconding</h4>
 				<Form standalone={false}>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Vote with account
-								<HelperTooltip
-									content='You can choose an account from the Polkadot-js extension.'
-								/>
-							</label>
-							<AddressDropdown
-								accounts={accounts}
-								defaultAddress={address || accounts[0]?.address}
-								onAccountChange={onAccountChange}
-							/>
-							<Button
-								primary
-								disabled={!apiReady}
-								onClick={secondProposal}
-							>
-								Second
-							</Button>
-						</Form.Field>
-					</Form.Group>
+					<h4>Second</h4>
+					{isLoading
+						? <div className={'LoaderWrapper'}>
+							<Loader text={'Broadcasting your vote'}/>
+						</div>
+						: <AccounSelection/>
+					}
 				</Form>
 			</div>
 		</div>
