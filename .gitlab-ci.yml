@@ -17,6 +17,10 @@ include:
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: License-Scanning.gitlab-ci.yml
 
+kubesec-sast:
+  variables:
+    ANALYZER_TARGET_DIR: "."
+
 stages:
   - test
   - dockerize
