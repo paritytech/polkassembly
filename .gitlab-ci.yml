@@ -19,7 +19,7 @@ include:
 
 kubesec-sast:
   variables:
-    ANALYZER_TARGET_DIR: "."
+    ANALYZER_TARGET_DIR: "kubernetes/"
 
 stages:
   - test
