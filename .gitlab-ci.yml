@@ -6,11 +6,18 @@ variables:
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
 
+# Enable static security scanning of the codebase
 include:
   - template: SAST.gitlab-ci.yml
 variables:
   SAST_DISABLE_DIND: "true"
   SCAN_KUBERNETES_MANIFESTS: "true"
+
+# Enable dependencies scanning
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+variables:
+  DS_DISABLE_DIND: "true"
 
 stages:
   - test
