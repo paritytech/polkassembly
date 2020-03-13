@@ -5,23 +5,16 @@ variables:
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
+  # Variables required by Gitlab scanning
+  SAST_DISABLE_DIND:               "true"
+  SCAN_KUBERNETES_MANIFESTS:       "true"
+  ANALYZER_TARGET_DIR:             "auth-server/"
+  DS_DISABLE_DIND:                 "true"
 
-# Enable Gitlab's static security scanning of the codebase
+# Enable Gitlab's security scanning
 include:
   - template: SAST.gitlab-ci.yml
-variables:
-  SAST_DISABLE_DIND: "true"
-  SCAN_KUBERNETES_MANIFESTS: "true"
-  ANALYZER_TARGET_DIR: "auth_server/"
-
-# Enable Gitlab's dependencies scanning
-include:
   - template: Dependency-Scanning.gitlab-ci.yml
-variables:
-  DS_DISABLE_DIND: "true"
-
-# Enable Gitlab's license compatibility scanning
-include:
   - template: License-Scanning.gitlab-ci.yml
 
 stages:
