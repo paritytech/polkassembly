@@ -12,6 +12,7 @@ include:
 variables:
   SAST_DISABLE_DIND: "true"
   SCAN_KUBERNETES_MANIFESTS: "true"
+  ANALYZER_TARGET_DIR: "auth_server/"
 
 # Enable Gitlab's dependencies scanning
 include:
