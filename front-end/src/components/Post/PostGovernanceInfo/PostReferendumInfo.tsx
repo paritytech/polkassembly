@@ -36,7 +36,7 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 					<h6>Proposer</h6>
 					<AddressComponent address={proposerAddress} accountName={'Proposer Address'}/>
 				</Grid.Column>
-				{delay &&
+				{(delay || delay === 0) &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<h6>Delay</h6>
 						{delay}
