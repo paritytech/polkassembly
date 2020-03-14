@@ -29,6 +29,36 @@ component: {{ .Values.frontend.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
+{{- define "polkassembly.auth-server.labels" -}}
+{{ include "polkassembly.auth-server.matchLabels" . }}
+{{ include "polkassembly.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.auth-server.matchLabels" -}}
+component: {{ .Values.auth-server.name | quote }}
+{{ include "polkassembly.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.hasura.labels" -}}
+{{ include "polkassembly.hasura.matchLabels" . }}
+{{ include "polkassembly.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.hasura.matchLabels" -}}
+component: {{ .Values.hasura.name | quote }}
+{{ include "polkassembly.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.chain-db-watcher.labels" -}}
+{{ include "polkassembly.chain-db-watcher.matchLabels" . }}
+{{ include "polkassembly.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.chain-db-watcher.matchLabels" -}}
+component: {{ .Values.chain-db-watcher.name | quote }}
+{{ include "polkassembly.common.matchLabels" . }}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -65,6 +95,41 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 
+{{/*
+Create a fully qualified auth-server name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+
+{{- define "polkassembly.auth-server.fullname" -}}
+{{- if .Values.auth-server.fullnameOverride -}}
+{{- .Values.auth-server.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.auth-server.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.auth-server.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create a fully qualified hasura name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+
+{{- define "polkassembly.hasura.fullname" -}}
+{{- if .Values.hasura.fullnameOverride -}}
+{{- .Values.hasura.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.hasura.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.hasura.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
 
 
 
