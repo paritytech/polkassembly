@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "polkassembly.frontend.fullname" . }}
   labels:
-    {{ include "polkassembly.frontend.labels" . | nindent 4 }}
+    {{- include "polkassembly.frontend.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.frontend.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{ include "polkassembly.frontend.matchLabels" . | nindent 4 }}
+    {{- include "polkassembly.frontend.matchLabels" . | nindent 4 }}

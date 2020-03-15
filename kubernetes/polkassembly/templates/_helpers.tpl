@@ -29,13 +29,13 @@ component: {{ .Values.frontend.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
-{{- define "polkassembly.auth-server.labels" -}}
-{{ include "polkassembly.auth-server.matchLabels" . }}
+{{- define "polkassembly.authServer.labels" -}}
+{{ include "polkassembly.authServer.matchLabels" . }}
 {{ include "polkassembly.common.metaLabels" . }}
 {{- end -}}
 
-{{- define "polkassembly.auth-server.matchLabels" -}}
-component: {{ .Values.auth-server.name | quote }}
+{{- define "polkassembly.authServer.matchLabels" -}}
+component: {{ .Values.authServer.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
@@ -49,13 +49,13 @@ component: {{ .Values.hasura.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
-{{- define "polkassembly.chain-db-watcher.labels" -}}
-{{ include "polkassembly.chain-db-watcher.matchLabels" . }}
+{{- define "polkassembly.chainDbWatcher.labels" -}}
+{{ include "polkassembly.chainDbWatcher.matchLabels" . }}
 {{ include "polkassembly.common.metaLabels" . }}
 {{- end -}}
 
-{{- define "polkassembly.chain-db-watcher.matchLabels" -}}
-component: {{ .Values.chain-db-watcher.name | quote }}
+{{- define "polkassembly.chainDbWatcher.matchLabels" -}}
+component: {{ .Values.chainDbWatcher.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
@@ -96,19 +96,19 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 
 {{/*
-Create a fully qualified auth-server name.
+Create a fully qualified authServer name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 
-{{- define "polkassembly.auth-server.fullname" -}}
-{{- if .Values.auth-server.fullnameOverride -}}
-{{- .Values.auth-server.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- define "polkassembly.authServer.fullname" -}}
+{{- if .Values.authServer.fullnameOverride -}}
+{{- .Values.authServer.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.auth-server.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name .Values.authServer.name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.auth-server.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.authServer.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -131,24 +131,20 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create a fully qualified chainDbWatcher name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{{- define "polkassembly.chainDbWatcher.fullname" -}}
+{{- if .Values.chainDbWatcher.fullnameOverride -}}
+{{- .Values.chainDbWatcher.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.chainDbWatcher.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.chainDbWatcher.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "polkassembly.authServer.fullname" . }}-config
+  labels:
+    {{- include "polkassembly.authServer.labels" . | nindent 4 }}
+data:
+  PROPOSAL_BOT_USER_ID: {{ quote .Values.authServer.config.proposalBotUserId }}
+  DATABASE_URL: {{ quote .Values.authServer.config.databaseUrl }}
+  DOMAIN_NAME: {{ quote .Values.authServer.config.domainName }}
+  DOMAIN_PROTOCOL: "https://"
+  HASURA_POST_SUBSCRIPTION_SECRET: {{ quote .Values.authServer.config.hasuraPostSubscriptionSecret }}
+  HASURA_EVENT_SECRET: {{ quote .Values.authServer.config.hasuraEventSecret }}
+  JWT_KEY_PASSPHRASE: {{ quote .Values.authServer.config.jwtKeyPassphrase }}
+  NODE_ENV: {{ quote .Values.authServer.config.nodeEnv }}
+  PORT: {{ .Values.authServer.config.port }}
+  SENDGRID_API_KEY: {{ quote .Values.authServer.config.sendgridApiKey }}
