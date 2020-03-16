@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ADD COLUMN "created_at" time NOT NULL
+      DEFAULT now();
+  type: run_sql

@@ -1,0 +1,11 @@
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ADD COLUMN "created_at" timetz
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ALTER COLUMN "created_at" DROP NOT
+      NULL
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ALTER COLUMN "created_at" SET DEFAULT
+      now()
+  type: run_sql

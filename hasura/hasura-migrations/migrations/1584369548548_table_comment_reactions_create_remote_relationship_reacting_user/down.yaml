@@ -1,0 +1,6 @@
+- args:
+    name: reacting_user
+    table:
+      name: comment_reactions
+      schema: public
+  type: delete_remote_relationship

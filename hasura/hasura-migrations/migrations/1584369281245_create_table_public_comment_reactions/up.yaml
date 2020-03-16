@@ -1,0 +1,11 @@
+- args:
+    sql: CREATE TABLE "public"."comment_reactions"("id" serial NOT NULL, "reaction"
+      char NOT NULL, "comment_id" uuid NOT NULL, "user_id" integer NOT NULL, "created_at"
+      timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(),
+      PRIMARY KEY ("id") , FOREIGN KEY ("comment_id") REFERENCES "public"."comments"("id")
+      ON UPDATE no action ON DELETE no action, UNIQUE ("id"));
+  type: run_sql
+- args:
+    name: comment_reactions
+    schema: public
+  type: add_existing_table_or_view

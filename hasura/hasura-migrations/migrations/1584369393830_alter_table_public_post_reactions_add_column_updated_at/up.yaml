@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ADD COLUMN "updated_at" timestamp NULL
+      DEFAULT now();
+  type: run_sql

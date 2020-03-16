@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ALTER COLUMN "created_at" TYPE timestamptz;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."post_reactions"."created_at" IS E''
+  type: run_sql

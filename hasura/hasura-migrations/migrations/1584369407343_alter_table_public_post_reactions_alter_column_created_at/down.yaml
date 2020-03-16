@@ -1,0 +1,7 @@
+- args:
+    sql: ALTER TABLE "public"."post_reactions" ALTER COLUMN "created_at" TYPE timestamp
+      without time zone;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."post_reactions"."created_at" IS E'null'
+  type: run_sql
