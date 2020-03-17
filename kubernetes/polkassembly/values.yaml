@@ -35,9 +35,7 @@ frontend:
     tls: []
 
   resources: {}
-
   tolerations: []
-
   affinity: {}
 
 hasura:
@@ -87,7 +85,7 @@ authServer:
     hasuraPostSubscriptionSecret: from-gitlab-vars
     hasuraEventSecret: from-gitlab-vars
     jwtKeyPassphrase: from-gitlab-vars
-    nodeEnv:  "development"
+    nodeEnv: "development"
     port: 8010
     sendgridApiKey: from-gitlab-vars
 

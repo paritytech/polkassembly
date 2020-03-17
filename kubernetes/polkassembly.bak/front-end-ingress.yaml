@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-end-ingress
+  labels:
+    app: front-end
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.entryPoints: "https,http"
+spec:
+  rules:
+  - host: $DOMAIN_NAME
+    http:
+      paths:
+      - backend:
+          serviceName: front-end-service
+          servicePort: http
+        path: /
+  - host: $ALIAS_DOMAIN_NAME
+    http:
+      paths:
+      - backend:
+          serviceName: front-end-service
+          servicePort: http
+        path: /

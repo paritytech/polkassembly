@@ -1,0 +1,103 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: hasura
+  name: hasura
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      labels:
+        app: hasura
+    spec:
+      containers:
+      - env:
+        - name: HASURA_GRAPHQL_DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_GRAPHQL_DATABASE_URL
+              name: hasura-config
+        - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_GRAPHQL_ENABLE_CONSOLE
+              name: hasura-config
+        - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+              name: hasura-config
+        - name: HASURA_GRAPHQL_ADMIN_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_GRAPHQL_ADMIN_SECRET
+              name: hasura-config
+        - name: HASURA_GRAPHQL_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: graphql-jwt-secret
+              name: graphql-jwt-secret
+        - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+              name: hasura-config
+        - name: HASURA_POST_SUBSCRIPTION_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_POST_SUBSCRIPTION_HOOK
+              name: hasura-config
+        - name: HASURA_POST_SUBSCRIPTION_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_POST_SUBSCRIPTION_SECRET
+              name: hasura-config
+        - name: HASURA_COMMENT_CREATE_EVENT_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_COMMENT_CREATE_EVENT_HOOK
+              name: hasura-config
+        - name: HASURA_ONCHAIN_LINK_CREATE_HOOK
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_ONCHAIN_LINK_CREATE_HOOK
+              name: hasura-config
+        - name: HASURA_EVENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_EVENT_SECRET
+              name: hasura-config
+        - name: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+              name: hasura-config
+        - name: HASURA_CHAIN_DB_REMOTE_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              key: HASURA_CHAIN_DB_REMOTE_SCHEMA
+              name: hasura-config
+        image: hasura/graphql-engine:pull2392-b7c91978
+        imagePullPolicy: IfNotPresent
+        name: graphql-engine
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.14
+        command: ["/cloud_sql_proxy",
+                  "-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/test-installations-222013-bb0efcdf24f9.json"]
+        securityContext:
+          runAsUser: 2  # non-root user
+          allowPrivilegeEscalation: false
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
