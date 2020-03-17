@@ -53,6 +53,8 @@ const ReactionBar = function ({ className, commentId, postId, postReactions }: P
 		}
 	});
 
+	console.log(reactionMap);
+
 	return (
 		<div className={className}>
 			{Object.keys(reactionMap).map((id) => {

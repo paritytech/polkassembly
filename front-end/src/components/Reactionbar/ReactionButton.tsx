@@ -21,7 +21,15 @@ export interface ReactionButtonProps {
 	commentId?: string
 }
 
-const ReactionButton = function ({ className }: ReactionButtonProps) {
+const ReactionButton = function ({
+	className,
+	reactionId,
+	reaction,
+	count,
+	people,
+	postId,
+	commentId
+ }: ReactionButtonProps) {
 	// const { queueNotification } = useContext(NotificationContext);
 
 	const handleReact = () => {
@@ -53,7 +61,7 @@ const ReactionButton = function ({ className }: ReactionButtonProps) {
 				className={className + ' social'}
 				onClick={() => {}}
 			>
-				👍 4
+				{reaction} {count}
 			</Button>
 		</>
 	);
@@ -61,4 +69,5 @@ const ReactionButton = function ({ className }: ReactionButtonProps) {
 
 export default styled(ReactionButton)`
 	color: #4183c4 !important;
+	font-size: 1em !important;
 `;
