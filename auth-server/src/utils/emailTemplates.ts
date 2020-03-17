@@ -86,6 +86,7 @@ export const reportContentEmailTemplate = `
     <p>
         Content Reported.<br />
         Reporter: <%= username %><br />
+        Network: <%= network %><br />
         Reason:<br />
         <%= reason %> <br />
         Comments:<br />
