@@ -18,23 +18,21 @@ interface Props{
     onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 const AccountSelectionForm = ({ accounts, address, className, onAccountChange }: Props) =>
-	<Form.Group className={className}>
-		<Form.Field width={16}>
-			<label>Vote with account
-				<Popup
-					trigger={<Icon name='question circle'/>}
-					content='You can choose account from polkadot-js extension.'
-					style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-					hoverable={true}
-				/>
-			</label>
-			<AddressDropdown
-				accounts={accounts}
-				defaultAddress={address || accounts[0]?.address}
-				onAccountChange={onAccountChange}
+	<Form.Field className={className} width={16}>
+		<label>Vote with account
+			<Popup
+				trigger={<Icon name='question circle'/>}
+				content='You can choose account from polkadot-js extension.'
+				style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
+				hoverable={true}
 			/>
-		</Form.Field>
-	</Form.Group>;
+		</label>
+		<AddressDropdown
+			accounts={accounts}
+			defaultAddress={address || accounts[0]?.address}
+			onAccountChange={onAccountChange}
+		/>
+	</Form.Field>;
 
 export default styled(AccountSelectionForm)`
 `;

@@ -108,7 +108,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	}
 
 	const VoteLock = () =>
-		<>
+		<Form.Field>
 			<label>Vote Lock
 				<HelperTooltip
 					content='You can multiply your votes by locking your tokens for longer periods of time.'
@@ -119,7 +119,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				options={options}
 				defaultValue={options[0].value}
 			/>
-		</>;
+		</Form.Field>;
 
 	return (
 		<div className={className}>
@@ -130,7 +130,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						? <div className={'LoaderWrapper'}>
 							<Loader text={'Broadcasting your vote'}/>
 						</div>
-						: <Form.Group>
+						: <>
 							<AccountSelectionForm
 								accounts={accounts}
 								address={address}
@@ -143,7 +143,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 								onClickAye={() => voteRefrendum(true)}
 								onClickNay={() => voteRefrendum(false)}
 							/>
-						</Form.Group>
+						</>
 					}
 				</Form>
 			</div>

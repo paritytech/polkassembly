@@ -17,8 +17,8 @@ interface Props{
 }
 
 const AyeNayButton = ({ className, disabled, onClickAye, onClickNay } : Props) =>
-	<div className={className}>
-		<Form.Field className='button-container' width={8}>
+	<Form.Group className={className}>
+		<Form.Field className={'button-container'} width={8}>
 			<Button
 				fluid
 				basic
@@ -41,7 +41,7 @@ const AyeNayButton = ({ className, disabled, onClickAye, onClickNay } : Props) =
                 Aye
 			</Button>
 		</Form.Field>
-	</div>;
+	</Form.Group>;
 
 export default styled(AyeNayButton)`
 	@media only screen and (max-width: 768px) {
