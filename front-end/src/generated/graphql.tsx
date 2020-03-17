@@ -10959,6 +10959,17 @@ export type Get_Refresh_TokenQuery = (
   )> }
 );
 
+export type ReactionsQueryVariables = {};
+
+
+export type ReactionsQuery = (
+  { __typename?: 'query_root' }
+  & { reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
+  )> }
+);
+
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
   & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
@@ -12341,6 +12352,39 @@ export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
+export const ReactionsDocument = gql`
+    query Reactions {
+  reactions {
+    id
+    reaction
+  }
+}
+    `;
+
+/**
+ * __useReactionsQuery__
+ *
+ * To run a query within a React component, call `useReactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReactionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReactionsQuery, ReactionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ReactionsQuery, ReactionsQueryVariables>(ReactionsDocument, baseOptions);
+      }
+export function useReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReactionsQuery, ReactionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ReactionsQuery, ReactionsQueryVariables>(ReactionsDocument, baseOptions);
+        }
+export type ReactionsQueryHookResult = ReturnType<typeof useReactionsQuery>;
+export type ReactionsLazyQueryHookResult = ReturnType<typeof useReactionsLazyQuery>;
+export type ReactionsQueryResult = ApolloReactCommon.QueryResult<ReactionsQuery, ReactionsQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename

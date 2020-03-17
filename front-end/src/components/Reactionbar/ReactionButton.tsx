@@ -11,11 +11,17 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
-interface Props {
+export interface ReactionButtonProps {
 	className?: string
+	reactionId: number
+	reaction: string
+	count: number
+	people: string[]
+	postId?: number
+	commentId?: string
 }
 
-const ReactionButton = function ({ className }: Props) {
+const ReactionButton = function ({ className }: ReactionButtonProps) {
 	// const { queueNotification } = useContext(NotificationContext);
 
 	const handleReact = () => {
