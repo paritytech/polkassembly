@@ -10,7 +10,7 @@ export default function (refId?: number | null) {
 	const { history } = useRouter();
 
 	useEffect(( ) => {
-		if (refId) {
+		if (refId || refId === 0) {
 			history.push(`/referendum/${refId}`);
 		}
 	});
