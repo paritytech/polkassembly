@@ -2,14 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
-import { Icon, TextAreaProps } from 'semantic-ui-react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
 
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Button from '../../ui-components/Button';
-import FilteredError from '../../ui-components/FilteredError';
+import { useAddPostReactionMutation } from '../../generated/graphql';
 
 export interface ReactionButtonProps {
 	className?: string
@@ -29,39 +27,42 @@ const ReactionButton = function ({
 	people,
 	postId,
 	commentId
- }: ReactionButtonProps) {
-	// const { queueNotification } = useContext(NotificationContext);
+}: ReactionButtonProps) {
+	const [reactionCount, setReactionCount] = useState(0);
+	const { id } = useContext(UserDetailsContext);
+	const [addPostReactionMutation] = useAddPostReactionMutation();
+
+	useEffect(() => {
+		setReactionCount(count);
+	}, [count]);
 
 	const handleReact = () => {
-		// reportContentMutation({
-		// 	variables: {
-		// 		comments,
-		// 		content_id: contentId,
-		// 		network: NETWORK,
-		// 		reason,
-		// 		type
-		// 	}
-		// })
-		// 	.then(({ data }) => {
-		// 		if (data && data.reportContent && data.reportContent.message) {
-		// 			queueNotification({
-		// 				header: 'Success!',
-		// 				message: data.reportContent.message,
-		// 				status: NotificationStatus.SUCCESS
-		// 			});
-		// 		}
-		// 		setShowModal(false);
-		// 	})
-		// 	.catch((e) => console.error('Error reporting content',e));
+		if (!postId || !id) {
+			return;
+		}
+
+		addPostReactionMutation({
+			variables: {
+				postId,
+				reactionId,
+				userId: id
+			}
+		})
+			.then(({ data }) => {
+				if (data?.insert_post_reactions && data.insert_post_reactions.affected_rows > 0){
+					setReactionCount(reactionCount + 1);
+				}
+			})
+			.catch((e) => console.error('Error in reacting to content',e));
 	};
 
 	return (
 		<>
 			<Button
 				className={className + ' social'}
-				onClick={() => {}}
+				onClick={handleReact}
 			>
-				{reaction} {count}
+				{reaction} {reactionCount}
 			</Button>
 		</>
 	);

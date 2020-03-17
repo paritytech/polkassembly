@@ -10892,6 +10892,21 @@ export type AddPostCommentMutation = (
   )> }
 );
 
+export type AddPostReactionMutationVariables = {
+  postId: Scalars['Int'],
+  userId: Scalars['Int'],
+  reactionId: Scalars['Int']
+};
+
+
+export type AddPostReactionMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_post_reactions: Maybe<(
+    { __typename?: 'post_reactions_mutation_response' }
+    & Pick<Post_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type ReportContentMutationVariables = {
   network: Scalars['String'],
   type: Scalars['String'],
@@ -12187,6 +12202,41 @@ export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const AddPostReactionDocument = gql`
+    mutation AddPostReaction($postId: Int!, $userId: Int!, $reactionId: Int!) {
+  __typename
+  insert_post_reactions(objects: {post_id: $postId, user_id: $userId, reaction_id: $reactionId}) {
+    affected_rows
+  }
+}
+    `;
+export type AddPostReactionMutationFn = ApolloReactCommon.MutationFunction<AddPostReactionMutation, AddPostReactionMutationVariables>;
+
+/**
+ * __useAddPostReactionMutation__
+ *
+ * To run a mutation, you first call `useAddPostReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostReactionMutation, { data, loading, error }] = useAddPostReactionMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *      reactionId: // value for 'reactionId'
+ *   },
+ * });
+ */
+export function useAddPostReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostReactionMutation, AddPostReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostReactionMutation, AddPostReactionMutationVariables>(AddPostReactionDocument, baseOptions);
+      }
+export type AddPostReactionMutationHookResult = ReturnType<typeof useAddPostReactionMutation>;
+export type AddPostReactionMutationResult = ApolloReactCommon.MutationResult<AddPostReactionMutation>;
+export type AddPostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostReactionMutation, AddPostReactionMutationVariables>;
 export const ReportContentDocument = gql`
     mutation ReportContent($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
   reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
