@@ -4,10 +4,9 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { DropdownProps, Icon, Popup } from 'semantic-ui-react';
+import { DropdownProps } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import AddressDropdown from '../AddressDropdown';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
@@ -15,6 +14,8 @@ import { NotificationStatus } from '../../../types';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
 import Loader from 'src/ui-components/Loader';
+import AyeNayButtons from './AyeNayButtons';
+import AccountSelectionForm from './AccountSelectionForm';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -123,52 +124,6 @@ const VoteMotion = ({
 		);
 	}
 
-	const AccountSelectionForm = () =>
-		<Form.Group>
-			<Form.Field width={16}>
-				<label>Vote with account
-					<Popup
-						trigger={<Icon name='question circle'/>}
-						content='You can choose account from polkadot-js extension.'
-						style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-						hoverable={true}
-					/>
-				</label>
-				<AddressDropdown
-					accounts={accounts}
-					defaultAddress={address || accounts[0]?.address}
-					onAccountChange={onAccountChange}
-				/>
-			</Form.Field>
-		</Form.Group>;
-
-	const VotingButtons = () =>
-		<Form.Group>
-			<Form.Field className='button-container' width={8}>
-				<Button
-					fluid
-					basic
-					className='primary negative'
-					disabled={!apiReady}
-					onClick={() => voteMotion(false)}
-				>
-					<Icon name='thumbs down' />
-					Nay
-				</Button>
-			</Form.Field>
-			<Form.Field className='button-container' width={8}>
-				<Button
-					fluid
-					className='primary positive'
-					disabled={!apiReady}
-					onClick={() => voteMotion(true)}
-				>
-					<Icon name='thumbs up' />
-					Aye
-				</Button>
-			</Form.Field>
-		</Form.Group>;
-
 	const VotingForm = () =>
 		<Form standalone={false}>
 			<h4>Vote</h4>
@@ -177,8 +132,16 @@ const VoteMotion = ({
 					<Loader text={'Broadcasting your vote'}/>
 				</div>
 				: <>
-					<AccountSelectionForm/>
-					<VotingButtons/>
+					<AccountSelectionForm
+						accounts={accounts}
+						address={address}
+						onAccountChange={onAccountChange}
+					/>
+					<AyeNayButtons
+						disabled={!apiReady}
+						onClickAye={() => voteMotion(true)}
+						onClickNay={() => voteMotion(false)}
+					/>
 				</>
 			}
 		</Form>;

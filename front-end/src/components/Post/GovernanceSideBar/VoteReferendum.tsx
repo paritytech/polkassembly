@@ -4,10 +4,11 @@
 
 import React, { useContext, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { DropdownProps, Icon, Select } from 'semantic-ui-react';
+import { DropdownProps, Select } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import AddressDropdown from '../AddressDropdown';
+import AccountSelectionForm from './AccountSelectionForm';
+import AyeNayButtons from './AyeNayButtons';
 import Balance from '../../Balance';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
@@ -15,6 +16,7 @@ import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
 import HelperTooltip from '../../../ui-components/HelperTooltip';
 import { NotificationStatus } from '../../../types';
+import Loader from 'src/ui-components/Loader';
 
 type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
 
@@ -30,6 +32,7 @@ interface Props {
 const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, apiReady } = useContext(ApiContext);
+	const [isLoading, setIsLoading] = useState(false);
 	const options: {text: string, value: ConvictionType}[] = [
 		{ text: '1x time lock', value: 'Locked1x' },
 		{ text: '2x time lock', value: 'Locked2x' },
@@ -55,10 +58,12 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			return;
 		}
 
+		setIsLoading(true);
 		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
 		vote.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
+				setIsLoading(false);
 				queueNotification({
 					header: 'Success!',
 					message: `Vote on referendum #${referendumId} successfully finalized`,
@@ -69,6 +74,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
+			setIsLoading(false);
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -101,63 +107,44 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		);
 	}
 
+	const VoteLock = () =>
+		<>
+			<label>Vote Lock
+				<HelperTooltip
+					content='You can multiply your votes by locking your tokens for longer periods of time.'
+				/>
+			</label>
+			<Select
+				onChange={onConvictionChange}
+				options={options}
+				defaultValue={options[0].value}
+			/>
+		</>;
+
 	return (
 		<div className={className}>
 			<div className='card'>
 				<Form standalone={false}>
 					<h4>Vote</h4>
-					<Form.Group>
-						<Form.Field width={16}>
-							<label>Vote with account
-								<HelperTooltip
-									content='You can choose an account from the Polkadot-js extension.'
-								/>
-							</label>
-							<AddressDropdown
+					{isLoading
+						? <div className={'LoaderWrapper'}>
+							<Loader text={'Broadcasting your vote'}/>
+						</div>
+						: <Form.Group>
+							<AccountSelectionForm
 								accounts={accounts}
-								defaultAddress={address || accounts[0]?.address}
+								address={address}
 								onAccountChange={onAccountChange}
 							/>
-							{api ? (
-								<Balance address={address} />
-							) : null}
-							<label>Vote Lock
-								<HelperTooltip
-									content='You can multiply your votes by locking your tokens for longer periods of time.'
-								/>
-							</label>
-							<Select
-								onChange={onConvictionChange}
-								options={options}
-								defaultValue={options[0].value}
+							{api && <Balance address={address} />}
+							<VoteLock/>
+							<AyeNayButtons
+								disabled={!apiReady}
+								onClickAye={() => voteRefrendum(true)}
+								onClickNay={() => voteRefrendum(false)}
 							/>
-						</Form.Field>
-					</Form.Group>
-					<Form.Group>
-						<Form.Field className='button-container' width={8}>
-							<Button
-								fluid
-								basic
-								className='primary negative'
-								disabled={!apiReady}
-								onClick={() => voteRefrendum(false)}
-							>
-								<Icon name='thumbs down' />
-								Nay
-							</Button>
-						</Form.Field>
-						<Form.Field className='button-container' width={8}>
-							<Button
-								fluid
-								className='primary positive'
-								disabled={!apiReady}
-								onClick={() => voteRefrendum(true)}
-							>
-								<Icon name='thumbs up' />
-								Aye
-							</Button>
-						</Form.Field>
-					</Form.Group>
+						</Form.Group>
+					}
 				</Form>
 			</div>
 		</div>
@@ -177,6 +164,10 @@ export default styled(VoteRefrendum)`
 		}
 	}
 
+	.LoaderWrapper {
+		height: 15rem;
+	}
+
 	.ui.selection.dropdown {
 		border-color: grey_light;
 	}
@@ -184,10 +175,6 @@ export default styled(VoteRefrendum)`
 	@media only screen and (max-width: 768px) {
 		.ui.form {
 			padding: 0rem;
-		}
-
-		.button-container {
-			margin-bottom: 1rem!important;
 		}
 	}
 `;

@@ -9,12 +9,11 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
-import HelperTooltip from '../../../ui-components/HelperTooltip';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { NotificationStatus } from '../../../types';
-import AddressDropdown from '../AddressDropdown';
 import Loader from 'src/ui-components/Loader';
+import AccountSelectionForm from './AccountSelectionForm';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -91,29 +90,6 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		);
 	}
 
-	const AccounSelection = () =>
-		<Form.Group>
-			<Form.Field width={16}>
-				<label>Vote with account
-					<HelperTooltip
-						content='You can choose an account from the Polkadot-js extension.'
-					/>
-				</label>
-				<AddressDropdown
-					accounts={accounts}
-					defaultAddress={address || accounts[0]?.address}
-					onAccountChange={onAccountChange}
-				/>
-				<Button
-					primary
-					disabled={!apiReady}
-					onClick={secondProposal}
-				>
-			Second
-				</Button>
-			</Form.Field>
-		</Form.Group>;
-
 	return (
 		<div className={className}>
 			<div className='card'>
@@ -123,7 +99,20 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 						? <div className={'LoaderWrapper'}>
 							<Loader text={'Broadcasting your vote'}/>
 						</div>
-						: <AccounSelection/>
+						: <>
+							<AccountSelectionForm
+								accounts={accounts}
+								address={address}
+								onAccountChange={onAccountChange}
+							/>
+							<Button
+								primary
+								disabled={!apiReady}
+								onClick={secondProposal}
+							>
+								Second
+							</Button>
+						</>
 					}
 				</Form>
 			</div>
@@ -139,6 +128,10 @@ export default styled(SecondProposal)`
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+	}
+
+	.LoaderWrapper {
+		height: 15rem;
 	}
 
 	@media only screen and (max-width: 768px) {
