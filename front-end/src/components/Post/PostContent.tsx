@@ -5,7 +5,7 @@
 import React from 'react';
 import styled from '@xstyled/styled-components';
 
-import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment } from '../../generated/graphql';
+import { DiscussionPostFragment, ProposalPostFragment, ReferendumPostFragment, TreasuryProposalPostFragment, MotionPostFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
 import StatusTag from '../../ui-components/StatusTag';
 import UpdateLabel from '../../ui-components/UpdateLabel';
@@ -14,7 +14,7 @@ import Markdown from '../../ui-components/Markdown';
 interface Props {
 	className?: string,
 	onchainId?: number | null
-	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment
+	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment| TreasuryProposalPostFragment| MotionPostFragment
 	postStatus?: string
 }
 const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
@@ -69,7 +69,7 @@ export default styled(PostContent)`
 
 		@media only screen and (max-width: 768px) {
 			position: relative;
-			margin-bottom: 2rem;	
+			margin-bottom: 2rem;
 		}
 	}
 `;

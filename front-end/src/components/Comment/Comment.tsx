@@ -9,12 +9,18 @@ import styled from '@xstyled/styled-components';
 import EditableCommentContent from './EditableCommentContent';
 import {
 	CommentFieldsFragment,
-	ProposalPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQueryVariables,
+
 	DiscussionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables,
+
+	DiscussionPostAndCommentsQuery,
+	ProposalPostAndCommentsQuery,
 	ReferendumPostAndCommentsQuery,
-	DiscussionPostAndCommentsQuery
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery
 } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
@@ -27,7 +33,11 @@ interface Props{
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
 		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>

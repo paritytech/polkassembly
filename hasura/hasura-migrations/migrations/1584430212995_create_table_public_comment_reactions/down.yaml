@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."comment_reactions"
+  type: run_sql

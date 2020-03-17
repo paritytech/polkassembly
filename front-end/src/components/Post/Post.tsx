@@ -49,10 +49,17 @@ import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
 import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
 import GovenanceSideBar from './GovernanceSideBar';
+import Reactionbar from '../Reactionbar';
 
 interface Props {
 	className?: string
-	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data'] | MotionPostAndCommentsQueryHookResult['data'] | TreasuryProposalPostAndCommentsQueryHookResult['data']
+	data: (
+		DiscussionPostAndCommentsQueryHookResult['data'] |
+		ProposalPostAndCommentsQueryHookResult['data'] |
+		ReferendumPostAndCommentsQueryHookResult['data'] |
+		MotionPostAndCommentsQueryHookResult['data'] |
+		TreasuryProposalPostAndCommentsQueryHookResult['data']
+	)
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
@@ -148,6 +155,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						/>
 					}
 				</div>
+				<Reactionbar reactions={post.post_reactions} />
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
@@ -198,7 +206,6 @@ export default styled(Post)`
 		border-width: 1px;
 		border-color: grey_light;
 		padding: 3rem;
-		margin-bottom: 1rem;
 	}
 
 	@media only screen and (max-width: 576px) {
