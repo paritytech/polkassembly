@@ -4,16 +4,18 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@xstyled/styled-components';
-import { DropdownProps, Icon, Popup } from 'semantic-ui-react';
+import { DropdownProps } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import AddressDropdown from '../AddressDropdown';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import { NotificationStatus } from '../../../types';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
+import Loader from 'src/ui-components/Loader';
+import AyeNayButtons from './AyeNayButtons';
+import AccountSelectionForm from './AccountSelectionForm';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -35,6 +37,7 @@ const VoteMotion = ({
 	onAccountChange
 }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const [isLoading, setIsLoading] = useState(false);
 	const [isCouncil, setIsCouncil] = useState(false);
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
@@ -72,6 +75,7 @@ const VoteMotion = ({
 		}
 
 		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
+		setIsLoading(true);
 
 		vote.signAndSend(address, ({ status }) => {
 			if (status.isFinalized) {
@@ -80,11 +84,13 @@ const VoteMotion = ({
 					message: `Vote on motion #${motionId} successfully finalized`,
 					status: NotificationStatus.SUCCESS
 				});
+				setIsLoading(false);
 				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
 			} else {
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
+			setIsLoading(false);
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -121,48 +127,23 @@ const VoteMotion = ({
 	const VotingForm = () =>
 		<Form standalone={false}>
 			<h4>Vote</h4>
-			<Form.Group>
-				<Form.Field width={16}>
-					<label>Vote with account
-						<Popup
-							trigger={<Icon name='question circle'/>}
-							content='You can choose account from polkadot-js extension.'
-							style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-							hoverable={true}
-						/>
-					</label>
-					<AddressDropdown
+			{isLoading
+				? <div className={'LoaderWrapper'}>
+					<Loader text={'Broadcasting your vote'}/>
+				</div>
+				: <>
+					<AccountSelectionForm
 						accounts={accounts}
-						defaultAddress={address || accounts[0]?.address}
+						address={address}
 						onAccountChange={onAccountChange}
 					/>
-				</Form.Field>
-			</Form.Group>
-			<Form.Group>
-				<Form.Field className='button-container' width={8}>
-					<Button
-						fluid
-						basic
-						className='primary negative'
+					<AyeNayButtons
 						disabled={!apiReady}
-						onClick={() => voteMotion(false)}
-					>
-						<Icon name='thumbs down' />
-						Nay
-					</Button>
-				</Form.Field>
-				<Form.Field className='button-container' width={8}>
-					<Button
-						fluid
-						className='primary positive'
-						disabled={!apiReady}
-						onClick={() => voteMotion(true)}
-					>
-						<Icon name='thumbs up' />
-								Aye
-					</Button>
-				</Form.Field>
-			</Form.Group>
+						onClickAye={() => voteMotion(true)}
+						onClickNay={() => voteMotion(false)}
+					/>
+				</>
+			}
 		</Form>;
 
 	const NotCouncil = () =>
@@ -195,6 +176,10 @@ export default styled(VoteMotion)`
 		@media only screen and (max-width: 768px) {
 			padding: 2rem;
 		}
+	}
+
+	.LoaderWrapper {
+		height: 15rem;
 	}
 
 	.ui.selection.dropdown {
