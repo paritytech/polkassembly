@@ -6,17 +6,18 @@ import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { ReactionContext } from '../../context/ReactionContext';
-import { PostReactionFieldsFragment } from '../../generated/graphql';
+import { PostReactionFieldsFragment, CommentReactionFieldsFragment } from '../../generated/graphql';
 import ReactionButton, { ReactionButtonProps } from './ReactionButton';
 
 interface Props {
 	className?: string
 	postReactions?: PostReactionFieldsFragment[]
+	commentReactions?: CommentReactionFieldsFragment[]
 	postId?: number
 	commentId?: string
 }
 
-const ReactionBar = function ({ className, commentId, postId, postReactions }: Props) {
+const ReactionBar = function ({ className, commentId, postId, postReactions, commentReactions }: Props) {
 	const { reactions } = useContext(ReactionContext);
 
 	if (!reactions.length) {
@@ -47,6 +48,21 @@ const ReactionBar = function ({ className, commentId, postId, postReactions }: P
 			!reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`]
 		) {
 			reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`] = `${postReaction.reactor?.username}`;
+		}
+	});
+
+	commentReactions?.forEach(commentReaction => {
+		if (!reactionMap[commentReaction.reaction.id]) {
+			return;
+		}
+
+		reactionMap[commentReaction.reaction.id].count++;
+
+		if (
+			commentReaction.reactor?.id &&
+			!reactionMap[commentReaction.reaction.id].people[`${commentReaction.reactor?.id}`]
+		) {
+			reactionMap[commentReaction.reaction.id].people[`${commentReaction.reactor?.id}`] = `${commentReaction.reactor?.username}`;
 		}
 	});
 

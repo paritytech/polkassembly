@@ -25,6 +25,7 @@ import {
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
+import Reactionbar from '../Reactionbar';
 
 interface Props{
 	className?: string,
@@ -74,6 +75,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					refetch={refetch}
 				/>
 			</div>
+			<Reactionbar commentId={id} commentReactions={comment.comment_reactions} />
 		</div>
 	);
 };

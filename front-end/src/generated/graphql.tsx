@@ -11030,12 +11030,27 @@ export type ReactionsQuery = (
   )> }
 );
 
+export type CommentReactionFieldsFragment = (
+  { __typename?: 'comment_reactions' }
+  & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
+  & { reactor: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'username'>
+  )>, reaction: (
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
+  ) }
+);
+
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
-  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+  & Pick<Comments, 'id' | 'content' | 'created_at' | 'updated_at'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
+  )>, comment_reactions: Array<(
+    { __typename?: 'comment_reactions' }
+    & CommentReactionFieldsFragment
   )> }
 );
 
@@ -11768,19 +11783,38 @@ export const TopicFragmentDoc = gql`
   name
 }
     `;
+export const CommentReactionFieldsFragmentDoc = gql`
+    fragment commentReactionFields on comment_reactions {
+  id
+  reactor {
+    id
+    name
+    username
+  }
+  reaction {
+    id
+    reaction
+  }
+  created_at
+  updated_at
+}
+    `;
 export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on comments {
+  id
   author {
     id
     name
     username
   }
   content
+  comment_reactions {
+    ...commentReactionFields
+  }
   created_at
-  id
   updated_at
 }
-    `;
+    ${CommentReactionFieldsFragmentDoc}`;
 export const PostReactionFieldsFragmentDoc = gql`
     fragment postReactionFields on post_reactions {
   id
