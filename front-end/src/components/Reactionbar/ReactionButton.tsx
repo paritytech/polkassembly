@@ -47,7 +47,7 @@ const ReactionButton = function ({
 		if (people[`${id}`]) {
 			setReacted(true);
 		}
-	}, []); // eslint-disable-line
+	}, []);
 
 	const handleReact = () => {
 		if (!id) {
