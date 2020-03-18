@@ -10923,7 +10923,9 @@ export type AddCommentReactionMutation = (
 );
 
 export type DeletePostReactionMutationVariables = {
-  id: Scalars['Int']
+  postId: Scalars['Int'],
+  userId: Scalars['Int'],
+  reactionId: Scalars['Int']
 };
 
 
@@ -10936,7 +10938,9 @@ export type DeletePostReactionMutation = (
 );
 
 export type DeleteCommentReactionMutationVariables = {
-  id: Scalars['Int']
+  commentId: Scalars['uuid'],
+  userId: Scalars['Int'],
+  reactionId: Scalars['Int']
 };
 
 
@@ -12314,8 +12318,8 @@ export type AddCommentReactionMutationHookResult = ReturnType<typeof useAddComme
 export type AddCommentReactionMutationResult = ApolloReactCommon.MutationResult<AddCommentReactionMutation>;
 export type AddCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
 export const DeletePostReactionDocument = gql`
-    mutation DeletePostReaction($id: Int!) {
-  delete_post_reactions(where: {id: {_eq: $id}}) {
+    mutation DeletePostReaction($postId: Int!, $userId: Int!, $reactionId: Int!) {
+  delete_post_reactions(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction_id: {_eq: $reactionId}}]}) {
     affected_rows
   }
 }
@@ -12335,7 +12339,9 @@ export type DeletePostReactionMutationFn = ApolloReactCommon.MutationFunction<De
  * @example
  * const [deletePostReactionMutation, { data, loading, error }] = useDeletePostReactionMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *      reactionId: // value for 'reactionId'
  *   },
  * });
  */
@@ -12346,8 +12352,8 @@ export type DeletePostReactionMutationHookResult = ReturnType<typeof useDeletePo
 export type DeletePostReactionMutationResult = ApolloReactCommon.MutationResult<DeletePostReactionMutation>;
 export type DeletePostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
 export const DeleteCommentReactionDocument = gql`
-    mutation DeleteCommentReaction($id: Int!) {
-  delete_comment_reactions(where: {id: {_eq: $id}}) {
+    mutation DeleteCommentReaction($commentId: uuid!, $userId: Int!, $reactionId: Int!) {
+  delete_comment_reactions(where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction_id: {_eq: $reactionId}}]}) {
     affected_rows
   }
 }
@@ -12367,7 +12373,9 @@ export type DeleteCommentReactionMutationFn = ApolloReactCommon.MutationFunction
  * @example
  * const [deleteCommentReactionMutation, { data, loading, error }] = useDeleteCommentReactionMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      commentId: // value for 'commentId'
+ *      userId: // value for 'userId'
+ *      reactionId: // value for 'reactionId'
  *   },
  * });
  */

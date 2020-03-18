@@ -2,14 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { ReactionContext } from '../../context/ReactionContext';
-import { NotificationContext } from '../../context/NotificationContext';
-import { NotificationStatus } from '../../types';
 import { PostReactionFieldsFragment } from '../../generated/graphql';
-import FilteredError from '../../ui-components/FilteredError';
 import ReactionButton, { ReactionButtonProps } from './ReactionButton';
 
 interface Props {
@@ -52,8 +49,6 @@ const ReactionBar = function ({ className, commentId, postId, postReactions }: P
 			reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`] = `${postReaction.reactor?.username}`;
 		}
 	});
-
-	console.log(reactionMap);
 
 	return (
 		<div className={className}>
