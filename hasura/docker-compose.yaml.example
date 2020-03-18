@@ -16,7 +16,7 @@ services:
   graphql-engine:
     network_mode: "host"
     # image: hasura/graphql-engine:v1.0.0-rc.1.cli-migrations
-    image: hasura/graphql-engine:pull2395-7ea7f82c
+    image: hasura/graphql-engine:pull2392-b7c91978
     volumes:
     # migration data
     - ./hasura-migrations/migrations:/hasura-migrations
