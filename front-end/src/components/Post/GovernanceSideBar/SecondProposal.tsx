@@ -44,11 +44,11 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		const second = api.tx.democracy.second(proposalId);
 
 		second.signAndSend(address, ({ status }) => {
-			if (status.isFinalized || status.isInBlock) {
+			if (status.isInBlock) {
 				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on proposal #${proposalId} successfully finalized`,
+					message: `Vote on proposal #${proposalId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
 

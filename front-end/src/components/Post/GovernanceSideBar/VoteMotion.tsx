@@ -78,10 +78,10 @@ const VoteMotion = ({
 		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized || status.isInBlock) {
+			if (status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on motion #${motionId} successfully finalized`,
+					message: `Vote on motion #${motionId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
 				setLoadingStatus({ isLoading: false, message: '' });

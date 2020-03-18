@@ -62,11 +62,11 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized || status.isInBlock) {
+			if (status.isInBlock) {
 				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on referendum #${referendumId} successfull.`,
+					message: `Vote on referendum #${referendumId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
 				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
