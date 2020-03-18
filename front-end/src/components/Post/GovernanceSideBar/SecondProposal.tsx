@@ -98,9 +98,9 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			<div className='card'>
 				<Form standalone={false}>
 					<h4>Second</h4>
-					{loadingStatus
+					{loadingStatus.isLoading
 						? <div className={'LoaderWrapper'}>
-							<Loader text={'Broadcasting your vote'}/>
+							<Loader text={loadingStatus.message}/>
 						</div>
 						: <>
 							<AccountSelectionForm

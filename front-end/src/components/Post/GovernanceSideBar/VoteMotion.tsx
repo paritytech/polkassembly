@@ -130,9 +130,9 @@ const VoteMotion = ({
 	const VotingForm = () =>
 		<Form standalone={false}>
 			<h4>Vote</h4>
-			{loadingStatus
+			{loadingStatus.isLoading
 				? <div className={'LoaderWrapper'}>
-					<Loader text={'Broadcasting your vote'}/>
+					<Loader text={loadingStatus.message}/>
 				</div>
 				: <>
 					<AccountSelectionForm
