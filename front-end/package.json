@@ -92,8 +92,8 @@
     "@typescript-eslint/parser": "^2.18.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.18.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "react-test-renderer": "^16.12.0",
     "require-context.macro": "^1.2.2"
   },
