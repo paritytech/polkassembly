@@ -26,43 +26,43 @@ const ReactionBar = function ({ className, commentId, postId, postReactions, com
 
 	const reactionMap: { [ key: string ]: ReactionButtonProps; } = {};
 
-	reactions.forEach(reaction => {
+	reactions.forEach(({ reaction, id }) => {
 		const reactionButtonProp: ReactionButtonProps = {
 			count: 0,
 			people: {},
-			reaction: reaction.reaction,
-			reactionId: reaction.id
+			reaction,
+			reactionId: id
 		};
-		reactionMap[`${reaction.id}`] = reactionButtonProp;
+		reactionMap[`${id}`] = reactionButtonProp;
 	});
 
-	postReactions?.forEach(postReaction => {
-		if (!reactionMap[postReaction.reaction.id]) {
+	postReactions?.forEach(({ reaction, reactor }) => {
+		if (!reactionMap[reaction.id]) {
 			return;
 		}
 
-		reactionMap[postReaction.reaction.id].count++;
+		reactionMap[reaction.id].count++;
 
 		if (
-			postReaction.reactor?.id &&
-			!reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`]
+			reactor?.id &&
+			!reactionMap[reaction.id].people[`${reactor?.id}`]
 		) {
-			reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`] = `${postReaction.reactor?.username}`;
+			reactionMap[reaction.id].people[`${reactor?.id}`] = `${reactor?.username}`;
 		}
 	});
 
-	commentReactions?.forEach(commentReaction => {
-		if (!reactionMap[commentReaction.reaction.id]) {
+	commentReactions?.forEach(({ reaction, reactor }) => {
+		if (!reactionMap[reaction.id]) {
 			return;
 		}
 
-		reactionMap[commentReaction.reaction.id].count++;
+		reactionMap[reaction.id].count++;
 
 		if (
-			commentReaction.reactor?.id &&
-			!reactionMap[commentReaction.reaction.id].people[`${commentReaction.reactor?.id}`]
+			reactor?.id &&
+			!reactionMap[reaction.id].people[`${reactor?.id}`]
 		) {
-			reactionMap[commentReaction.reaction.id].people[`${commentReaction.reactor?.id}`] = `${commentReaction.reactor?.username}`;
+			reactionMap[reaction.id].people[`${reactor?.id}`] = `${reactor?.username}`;
 		}
 	});
 
