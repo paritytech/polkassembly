@@ -31,7 +31,7 @@ const ReactionBar = function ({ className, commentId, postId, postReactions }: P
 	reactions.forEach(reaction => {
 		const reactionButtonProp: ReactionButtonProps = {
 			count: 0,
-			people: [],
+			people: {},
 			reaction: reaction.reaction,
 			reactionId: reaction.id
 		};
@@ -46,10 +46,10 @@ const ReactionBar = function ({ className, commentId, postId, postReactions }: P
 		reactionMap[postReaction.reaction.id].count++;
 
 		if (
-			postReaction.reactor?.username &&
-			!reactionMap[postReaction.reaction.id].people.includes(postReaction.reactor?.username)
+			postReaction.reactor?.id &&
+			!reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`]
 		) {
-			reactionMap[postReaction.reaction.id].people.push(postReaction.reactor?.username);
+			reactionMap[postReaction.reaction.id].people[`${postReaction.reactor?.id}`] = `${postReaction.reactor?.username}`;
 		}
 	});
 

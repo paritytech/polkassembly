@@ -14,7 +14,7 @@ export interface ReactionButtonProps {
 	reactionId: number
 	reaction: string
 	count: number
-	people: string[]
+	people: { [ key: string ]: string; }
 	postId?: number
 	commentId?: string
 }

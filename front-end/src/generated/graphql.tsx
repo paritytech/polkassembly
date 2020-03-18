@@ -10907,6 +10907,47 @@ export type AddPostReactionMutation = (
   )> }
 );
 
+export type AddCommentReactionMutationVariables = {
+  commentId: Scalars['uuid'],
+  userId: Scalars['Int'],
+  reactionId: Scalars['Int']
+};
+
+
+export type AddCommentReactionMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_comment_reactions: Maybe<(
+    { __typename?: 'comment_reactions_mutation_response' }
+    & Pick<Comment_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type DeletePostReactionMutationVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DeletePostReactionMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_post_reactions: Maybe<(
+    { __typename?: 'post_reactions_mutation_response' }
+    & Pick<Post_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type DeleteCommentReactionMutationVariables = {
+  id: Scalars['Int']
+};
+
+
+export type DeleteCommentReactionMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_comment_reactions: Maybe<(
+    { __typename?: 'comment_reactions_mutation_response' }
+    & Pick<Comment_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type ReportContentMutationVariables = {
   network: Scalars['String'],
   type: Scalars['String'],
@@ -12237,6 +12278,105 @@ export function useAddPostReactionMutation(baseOptions?: ApolloReactHooks.Mutati
 export type AddPostReactionMutationHookResult = ReturnType<typeof useAddPostReactionMutation>;
 export type AddPostReactionMutationResult = ApolloReactCommon.MutationResult<AddPostReactionMutation>;
 export type AddPostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostReactionMutation, AddPostReactionMutationVariables>;
+export const AddCommentReactionDocument = gql`
+    mutation AddCommentReaction($commentId: uuid!, $userId: Int!, $reactionId: Int!) {
+  __typename
+  insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction_id: $reactionId}) {
+    affected_rows
+  }
+}
+    `;
+export type AddCommentReactionMutationFn = ApolloReactCommon.MutationFunction<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
+
+/**
+ * __useAddCommentReactionMutation__
+ *
+ * To run a mutation, you first call `useAddCommentReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCommentReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCommentReactionMutation, { data, loading, error }] = useAddCommentReactionMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *      userId: // value for 'userId'
+ *      reactionId: // value for 'reactionId'
+ *   },
+ * });
+ */
+export function useAddCommentReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddCommentReactionMutation, AddCommentReactionMutationVariables>(AddCommentReactionDocument, baseOptions);
+      }
+export type AddCommentReactionMutationHookResult = ReturnType<typeof useAddCommentReactionMutation>;
+export type AddCommentReactionMutationResult = ApolloReactCommon.MutationResult<AddCommentReactionMutation>;
+export type AddCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
+export const DeletePostReactionDocument = gql`
+    mutation DeletePostReaction($id: Int!) {
+  delete_post_reactions(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeletePostReactionMutationFn = ApolloReactCommon.MutationFunction<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
+
+/**
+ * __useDeletePostReactionMutation__
+ *
+ * To run a mutation, you first call `useDeletePostReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePostReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePostReactionMutation, { data, loading, error }] = useDeletePostReactionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePostReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeletePostReactionMutation, DeletePostReactionMutationVariables>(DeletePostReactionDocument, baseOptions);
+      }
+export type DeletePostReactionMutationHookResult = ReturnType<typeof useDeletePostReactionMutation>;
+export type DeletePostReactionMutationResult = ApolloReactCommon.MutationResult<DeletePostReactionMutation>;
+export type DeletePostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
+export const DeleteCommentReactionDocument = gql`
+    mutation DeleteCommentReaction($id: Int!) {
+  delete_comment_reactions(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteCommentReactionMutationFn = ApolloReactCommon.MutationFunction<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>;
+
+/**
+ * __useDeleteCommentReactionMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentReactionMutation, { data, loading, error }] = useDeleteCommentReactionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCommentReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>(DeleteCommentReactionDocument, baseOptions);
+      }
+export type DeleteCommentReactionMutationHookResult = ReturnType<typeof useDeleteCommentReactionMutation>;
+export type DeleteCommentReactionMutationResult = ApolloReactCommon.MutationResult<DeleteCommentReactionMutation>;
+export type DeleteCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>;
 export const ReportContentDocument = gql`
     mutation ReportContent($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
   reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {

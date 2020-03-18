@@ -12,3 +12,28 @@ export const ADD_POST_REACTION = gql`
         }
     }
 `;
+
+export const ADD_COMMENT_REACTION = gql`
+    mutation AddCommentReaction ($commentId: uuid!, $userId: Int!, $reactionId: Int!) {
+        __typename
+        insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction_id: $reactionId}) {
+            affected_rows
+        }
+    }
+`;
+
+export const DELETE_POST_REACTION = gql`
+    mutation DeletePostReaction ($id: Int!) {
+        delete_post_reactions(where: {id: {_eq: $id}}) {
+            affected_rows
+        }
+    }
+`;
+
+export const DELETE_COMMENT_REACTION = gql`
+    mutation DeleteCommentReaction ($id: Int!) {
+        delete_comment_reactions(where: {id: {_eq: $id}}) {
+            affected_rows
+        }
+    }
+`;
