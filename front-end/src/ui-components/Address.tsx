@@ -23,14 +23,13 @@ const Address = ({ address, accountName, className }: Props): JSX.Element => {
 	useEffect(() => {
 		let unsubscribe: () => void;
 
-		if (!api) {
-			console.error('polkadot/api not set');
+		if (!api || !api.isReady) {
+			console.error('polkadot/api not set or not ready');
 			return;
 		}
 
-		api.derive.accounts.info(address, ((info: DeriveAccountInfo) =>
-			setDisplay(info.nickname || '')
-		))
+		api.derive.accounts.info(address, (info: DeriveAccountInfo) =>
+			setDisplay(info.identity.display || info.nickname || ''))
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 
