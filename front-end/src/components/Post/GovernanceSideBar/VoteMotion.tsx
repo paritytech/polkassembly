@@ -78,7 +78,7 @@ const VoteMotion = ({
 		setIsLoading(true);
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized) {
+			if (status.isFinalized || status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
 					message: `Vote on motion #${motionId} successfully finalized`,

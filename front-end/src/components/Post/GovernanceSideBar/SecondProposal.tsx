@@ -44,7 +44,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		setIsLoading(true);
 
 		second.signAndSend(address, ({ status }) => {
-			if (status.isFinalized) {
+			if (status.isFinalized || status.isInBlock) {
 				setIsLoading(false);
 				queueNotification({
 					header: 'Success!',

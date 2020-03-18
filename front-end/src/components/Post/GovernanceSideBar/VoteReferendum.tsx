@@ -62,7 +62,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized) {
+			if (status.isFinalized || status.isInBlock) {
 				setIsLoading(false);
 				queueNotification({
 					header: 'Success!',
