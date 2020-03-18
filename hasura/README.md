@@ -28,6 +28,9 @@ insert into post_topics values  (5, 'General');
 
 insert into post_types values (1, 'Discussion');
 insert into post_types values (2, 'On chain');
+
+insert into reactions values (1, '👍');
+insert into reactions values (2, '👎');
 ```
 
 ### Indexes
