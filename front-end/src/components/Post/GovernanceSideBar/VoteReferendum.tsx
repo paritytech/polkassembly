@@ -15,7 +15,7 @@ import { NotificationContext } from '../../../context/NotificationContext';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
 import HelperTooltip from '../../../ui-components/HelperTooltip';
-import { NotificationStatus } from '../../../types';
+import { NotificationStatus, LoadingStatusType } from '../../../types';
 import Loader from 'src/ui-components/Loader';
 
 type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
@@ -32,7 +32,7 @@ interface Props {
 const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, apiReady } = useContext(ApiContext);
-	const [isLoading, setIsLoading] = useState(false);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message: '' });
 	const options: {text: string, value: ConvictionType}[] = [
 		{ text: '1x time lock', value: 'Locked1x' },
 		{ text: '2x time lock', value: 'Locked2x' },
@@ -58,23 +58,26 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			return;
 		}
 
-		setIsLoading(true);
+		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
 
 		vote.signAndSend(address, ({ status }) => {
 			if (status.isFinalized || status.isInBlock) {
-				setIsLoading(false);
+				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on referendum #${referendumId} successfully finalized`,
+					message: `Vote on referendum #${referendumId} successfull.`,
 					status: NotificationStatus.SUCCESS
 				});
-				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
+				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
 			} else {
+				if (status.isBroadcast){
+					setLoadingStatus({ isLoading: true, message: 'Broadcasting the vote' });
+				}
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
-			setIsLoading(false);
+			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -126,9 +129,9 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			<div className='card'>
 				<Form standalone={false}>
 					<h4>Vote</h4>
-					{isLoading
+					{loadingStatus.isLoading
 						? <div className={'LoaderWrapper'}>
-							<Loader text={'Broadcasting your vote'}/>
+							<Loader text={loadingStatus.message}/>
 						</div>
 						: <>
 							<AccountSelectionForm

@@ -107,3 +107,8 @@ export interface ChainProps {
 	'tokenDecimals': number;
 	'tokenSymbol': TokenSymbol;
 }
+
+export interface LoadingStatusType {
+    isLoading: boolean;
+    message: string;
+}

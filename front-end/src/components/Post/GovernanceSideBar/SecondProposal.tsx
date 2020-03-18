@@ -11,7 +11,7 @@ import { Form } from '../../../ui-components/Form';
 import Button from '../../../ui-components/Button';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
-import { NotificationStatus } from '../../../types';
+import { NotificationStatus, LoadingStatusType } from '../../../types';
 import Loader from 'src/ui-components/Loader';
 import AccountSelectionForm from './AccountSelectionForm';
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
-	const [isLoading, setIsLoading] = useState(false);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, apiReady } = useContext(ApiContext);
 
@@ -40,24 +40,27 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			return;
 		}
 
+		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const second = api.tx.democracy.second(proposalId);
-		setIsLoading(true);
 
 		second.signAndSend(address, ({ status }) => {
 			if (status.isFinalized || status.isInBlock) {
-				setIsLoading(false);
+				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
 					header: 'Success!',
 					message: `Vote on proposal #${proposalId} successfully finalized`,
 					status: NotificationStatus.SUCCESS
 				});
 
-				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
+				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
 			} else {
+				if (status.isBroadcast){
+					setLoadingStatus({ isLoading: true, message: 'Broadcasting the vote' });
+				}
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
-			setIsLoading(false);
+			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -95,7 +98,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			<div className='card'>
 				<Form standalone={false}>
 					<h4>Second</h4>
-					{isLoading
+					{loadingStatus
 						? <div className={'LoaderWrapper'}>
 							<Loader text={'Broadcasting your vote'}/>
 						</div>
