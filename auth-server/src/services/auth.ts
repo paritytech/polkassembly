@@ -2,12 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as jwt from 'jsonwebtoken';
+import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import equals from 'validator/es/lib/isEmail';
+import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 import { uuid } from 'uuidv4';
-import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 
 import {
 	sendUndoEmailChangeEmail,
@@ -206,7 +207,7 @@ export default class AuthService {
 	}
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
-		if (oldPassword === newPassword) {
+		if (equals(oldPassword, newPassword)) {
 			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER);
 		}
 
