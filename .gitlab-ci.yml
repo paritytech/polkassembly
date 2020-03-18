@@ -137,7 +137,7 @@ dockerize-chain-db-watcher:
     # check syntax
     - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
     # print rendered yaml
-    - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
+    # - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
     # deploy yaml to cluster
     - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
 

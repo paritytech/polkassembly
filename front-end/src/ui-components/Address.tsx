@@ -2,12 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as React from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
+import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
 
 import shortenAddress from '../util/shortenAddress';
+import { ApiContext } from '../context/ApiContext';
 
 interface Props {
 	className?: string
@@ -15,20 +16,41 @@ interface Props {
 	accountName?: string
 }
 
-const Address = ({ address, accountName, className }: Props): JSX.Element => (
-	<div className={className}>
-		<Identicon
-			className='image'
-			value={address}
-			size={32}
-			theme={'polkadot'}
-		/>
-		<div className='content'>
-			<div className='header'>{accountName || ''}</div>
-			<div className='description'>{shortenAddress(address)}</div>
+const Address = ({ address, accountName, className }: Props): JSX.Element => {
+	const { api } = useContext(ApiContext);
+	const [display, setDisplay] = useState<string>('');
+
+	useEffect(() => {
+		let unsubscribe: () => void;
+
+		if (!api || !api.isReady) {
+			console.error('polkadot/api not set or not ready');
+			return;
+		}
+
+		api.derive.accounts.info(address, (info: DeriveAccountInfo) =>
+			setDisplay(info.identity.display || info.nickname || ''))
+			.then(unsub => { unsubscribe = unsub; })
+			.catch(e => console.error(e));
+
+		return () => unsubscribe && unsubscribe();
+	}, [address, api]);
+
+	return (
+		<div className={className}>
+			<Identicon
+				className='image'
+				value={address}
+				size={32}
+				theme={'polkadot'}
+			/>
+			<div className='content'>
+				<div className='header'>{display || accountName || ''}</div>
+				<div className='description'>{shortenAddress(address)}</div>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default styled(Address)`
 	position: relative;
@@ -45,6 +67,7 @@ export default styled(Address)`
 		color: black_text;
 		font-weight: 500;
 		font-size: sm;
+		filter: grayscale(100%);
 	}
 
 	.description {

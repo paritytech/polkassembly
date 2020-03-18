@@ -10,7 +10,7 @@ export default function (motionId?: number | null) {
 	const { history } = useRouter();
 
 	useEffect(( ) => {
-		if (motionId) {
+		if (motionId || motionId === 0) {
 			history.push(`/motion/${motionId}`);
 		}
 	});

@@ -26,18 +26,23 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 			{postStatus && <StatusTag className='post_tags' status={postStatus}/>}
 			<h2>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h2>
 			<div className='post_info'>
-				<CreationLabel
-					className='md'
-					created_at={created_at}
-					displayname={author.name}
-					username={author.username}
-					topic={post.topic.name}
-				/>
-				<UpdateLabel
-					className='md'
-					created_at={created_at}
-					updated_at={updated_at}
-				/>
+				{(onchainId || onchainId === 0) ?
+					null : (
+						<>
+							<CreationLabel
+								className='md'
+								created_at={created_at}
+								displayname={author.name}
+								username={author.username}
+								topic={post.topic.name}
+							/>
+							<UpdateLabel
+								className='md'
+								created_at={created_at}
+								updated_at={updated_at}
+							/>
+						</>
+					)}
 			</div>
 			<Markdown md={content} />
 		</div>
