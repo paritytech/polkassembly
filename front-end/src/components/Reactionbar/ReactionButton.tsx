@@ -34,7 +34,7 @@ export interface ReactionButtonProps {
 	reactionId: number
 	reaction: string
 	count: number
-	people: { [ key: string ]: string; }
+	userMap: { [ key: string ]: string; }
 	postId?: number
 	commentId?: string
 	refetch?: (variables?:
@@ -56,7 +56,7 @@ const ReactionButton = function ({
 	reactionId,
 	reaction,
 	count,
-	people,
+	userMap,
 	postId,
 	commentId,
 	refetch
@@ -67,7 +67,7 @@ const ReactionButton = function ({
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const { queueNotification } = useContext(NotificationContext);
-	const reacted = !!people[`${id}`];
+	const reacted = !!userMap[`${id}`];
 
 	const handleReact = () => {
 		if (!id) {

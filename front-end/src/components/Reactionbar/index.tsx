@@ -60,7 +60,7 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 	reactions.forEach(({ reaction, id }) => {
 		const reactionButtonProp: ReactionButtonProps = {
 			count: 0,
-			people: {},
+			userMap: {},
 			reaction,
 			reactionId: id
 		};
@@ -76,9 +76,9 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 
 		if (
 			reacting_user?.id &&
-			!reactionMap[reaction.id].people[`${reacting_user?.id}`]
+			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
 		) {
-			reactionMap[reaction.id].people[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
 		}
 	});
 
@@ -91,9 +91,9 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 
 		if (
 			reacting_user?.id &&
-			!reactionMap[reaction.id].people[`${reacting_user?.id}`]
+			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
 		) {
-			reactionMap[reaction.id].people[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
 		}
 	});
 
@@ -102,7 +102,7 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			{Object.keys(reactionMap).map((id) => {
 				const {
 					count,
-					people,
+					userMap,
 					reaction,
 					reactionId
 				} = reactionMap[id];
@@ -111,7 +111,7 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 					<ReactionButton
 						key={id}
 						count={count}
-						people={people}
+						userMap={userMap}
 						reaction={reaction}
 						reactionId={reactionId}
 						commentId={commentId}
