@@ -7,7 +7,9 @@ import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { NotificationContext } from '../../context/NotificationContext';
 import Button from '../../ui-components/Button';
+import { NotificationStatus } from '../../types';
 import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
@@ -64,12 +66,16 @@ const ReactionButton = function ({
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
+	const { queueNotification } = useContext(NotificationContext);
 	const reacted = !!people[`${id}`];
 
 	const handleReact = () => {
-		refetch && refetch();
-
 		if (!id) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please sign in to react',
+				status: NotificationStatus.ERROR
+			});
 			return;
 		}
 
@@ -116,6 +122,8 @@ const ReactionButton = function ({
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
+
+		refetch && refetch();
 	};
 
 	return (
