@@ -60,9 +60,9 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 	reactions.forEach(({ reaction, id }) => {
 		const reactionButtonProp: ReactionButtonProps = {
 			count: 0,
-			userMap: {},
 			reaction,
-			reactionId: id
+			reactionId: id,
+			userMap: {}
 		};
 		reactionMap[`${id}`] = reactionButtonProp;
 	});
