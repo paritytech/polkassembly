@@ -67,7 +67,7 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 		reactionMap[`${id}`] = reactionButtonProp;
 	});
 
-	postReactions?.forEach(({ reaction, reactor }) => {
+	postReactions?.forEach(({ reaction, reacting_user }) => {
 		if (!reactionMap[reaction.id]) {
 			return;
 		}
@@ -75,14 +75,14 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 		reactionMap[reaction.id].count++;
 
 		if (
-			reactor?.id &&
-			!reactionMap[reaction.id].people[`${reactor?.id}`]
+			reacting_user?.id &&
+			!reactionMap[reaction.id].people[`${reacting_user?.id}`]
 		) {
-			reactionMap[reaction.id].people[`${reactor?.id}`] = `${reactor?.username}`;
+			reactionMap[reaction.id].people[`${reacting_user?.id}`] = `${reacting_user?.username}`;
 		}
 	});
 
-	commentReactions?.forEach(({ reaction, reactor }) => {
+	commentReactions?.forEach(({ reaction, reacting_user }) => {
 		if (!reactionMap[reaction.id]) {
 			return;
 		}
@@ -90,10 +90,10 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 		reactionMap[reaction.id].count++;
 
 		if (
-			reactor?.id &&
-			!reactionMap[reaction.id].people[`${reactor?.id}`]
+			reacting_user?.id &&
+			!reactionMap[reaction.id].people[`${reacting_user?.id}`]
 		) {
-			reactionMap[reaction.id].people[`${reactor?.id}`] = `${reactor?.username}`;
+			reactionMap[reaction.id].people[`${reacting_user?.id}`] = `${reacting_user?.username}`;
 		}
 	});
 

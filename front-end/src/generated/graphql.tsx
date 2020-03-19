@@ -511,9 +511,9 @@ export type Comment_Reactions = {
   comment_id: Scalars['uuid'],
   created_at: Scalars['timestamp'],
   id: Scalars['Int'],
+  reacting_user?: Maybe<User>,
   reaction: Reactions,
   reaction_id: Scalars['Int'],
-  reactor?: Maybe<User>,
   updated_at: Scalars['timestamp'],
   user_id: Scalars['Int'],
 };
@@ -4970,9 +4970,9 @@ export type Post_Reactions = {
   id: Scalars['Int'],
   post: Posts,
   post_id: Scalars['Int'],
+  reacting_user?: Maybe<User>,
   reaction: Reactions,
   reaction_id: Scalars['Int'],
-  reactor?: Maybe<User>,
   updated_at: Scalars['timestamp'],
   user_id: Scalars['Int'],
 };
@@ -11114,7 +11114,7 @@ export type Get_Refresh_TokenQuery = (
 export type CommentReactionFieldsFragment = (
   { __typename?: 'comment_reactions' }
   & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
-  & { reactor: Maybe<(
+  & { reacting_user: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
   )>, reaction: (
@@ -11141,7 +11141,7 @@ export type CommentFieldsFragment = (
 export type PostReactionFieldsFragment = (
   { __typename?: 'post_reactions' }
   & Pick<Post_Reactions, 'id' | 'created_at' | 'updated_at'>
-  & { reactor: Maybe<(
+  & { reacting_user: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
   )>, reaction: (
@@ -11885,7 +11885,7 @@ export const TopicFragmentDoc = gql`
 export const CommentReactionFieldsFragmentDoc = gql`
     fragment commentReactionFields on comment_reactions {
   id
-  reactor {
+  reacting_user {
     id
     name
     username
@@ -11921,7 +11921,7 @@ export const CommentFieldsFragmentDoc = gql`
 export const PostReactionFieldsFragmentDoc = gql`
     fragment postReactionFields on post_reactions {
   id
-  reactor {
+  reacting_user {
     id
     name
     username

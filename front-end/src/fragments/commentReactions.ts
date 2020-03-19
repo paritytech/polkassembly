@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 export const commentReactionFields = gql`
     fragment commentReactionFields on comment_reactions {
         id
-        reactor {
+        reacting_user {
             id
             name
             username
