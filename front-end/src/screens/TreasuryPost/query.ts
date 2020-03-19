@@ -54,6 +54,10 @@ const treasuryProposalPost = gql`
         post_reactions {
             ...postReactionFields
         }
+        reactions {
+            id
+            reaction
+        }
     }
     ${commentFields}
     ${postReactionFields}

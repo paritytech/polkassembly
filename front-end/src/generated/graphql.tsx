@@ -795,6 +795,8 @@ export type Comments = {
   id: Scalars['uuid'],
   post: Posts,
   post_id: Scalars['Int'],
+  reactions: Array<Reactions>,
+  reactions_aggregate: Reactions_Aggregate,
   updated_at: Scalars['timestamptz'],
 };
 
@@ -814,6 +816,24 @@ export type CommentsComment_Reactions_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
   where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type CommentsReactionsArgs = {
+  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Reactions_Order_By>>,
+  where?: Maybe<Reactions_Bool_Exp>
+};
+
+
+export type CommentsReactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Reactions_Order_By>>,
+  where?: Maybe<Reactions_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -884,6 +904,7 @@ export type Comments_Bool_Exp = {
   id?: Maybe<Uuid_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
+  reactions?: Maybe<Reactions_Bool_Exp>,
   updated_at?: Maybe<Timestamptz_Comparison_Exp>,
 };
 
@@ -904,6 +925,7 @@ export type Comments_Insert_Input = {
   id?: Maybe<Scalars['uuid']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
+  reactions?: Maybe<Reactions_Arr_Rel_Insert_Input>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
 
@@ -966,6 +988,7 @@ export type Comments_Order_By = {
   id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
+  reactions_aggregate?: Maybe<Reactions_Aggregate_Order_By>,
   updated_at?: Maybe<Order_By>,
 };
 
@@ -5709,6 +5732,8 @@ export type Posts = {
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
+  reactions: Array<Reactions>,
+  reactions_aggregate: Reactions_Aggregate,
   title: Scalars['String'],
   topic: Post_Topics,
   topic_id: Scalars['Int'],
@@ -5751,6 +5776,24 @@ export type PostsPost_Reactions_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Post_Reactions_Order_By>>,
   where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type PostsReactionsArgs = {
+  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Reactions_Order_By>>,
+  where?: Maybe<Reactions_Bool_Exp>
+};
+
+
+export type PostsReactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Reactions_Order_By>>,
+  where?: Maybe<Reactions_Bool_Exp>
 };
 
 export type Posts_Aggregate = {
@@ -5825,6 +5868,7 @@ export type Posts_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
+  reactions?: Maybe<Reactions_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
   topic?: Maybe<Post_Topics_Bool_Exp>,
   topic_id?: Maybe<Int_Comparison_Exp>,
@@ -5852,6 +5896,7 @@ export type Posts_Insert_Input = {
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
+  reactions?: Maybe<Reactions_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -5931,6 +5976,7 @@ export type Posts_Order_By = {
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
+  reactions_aggregate?: Maybe<Reactions_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
   topic?: Maybe<Post_Topics_Order_By>,
   topic_id?: Maybe<Order_By>,
@@ -8530,8 +8576,48 @@ export type Query_RootValidatorsConnectionArgs = {
 
 export type Reactions = {
    __typename?: 'reactions',
+  comment_reactions: Array<Comment_Reactions>,
+  comment_reactions_aggregate: Comment_Reactions_Aggregate,
   id: Scalars['Int'],
+  post_reactions: Array<Post_Reactions>,
+  post_reactions_aggregate: Post_Reactions_Aggregate,
   reaction: Scalars['bpchar'],
+};
+
+
+export type ReactionsComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type ReactionsComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type ReactionsPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type ReactionsPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
 };
 
 export type Reactions_Aggregate = {
@@ -8593,7 +8679,9 @@ export type Reactions_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
   _not?: Maybe<Reactions_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
+  comment_reactions?: Maybe<Comment_Reactions_Bool_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
+  post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
   reaction?: Maybe<Bpchar_Comparison_Exp>,
 };
 
@@ -8607,7 +8695,9 @@ export type Reactions_Inc_Input = {
 };
 
 export type Reactions_Insert_Input = {
+  comment_reactions?: Maybe<Comment_Reactions_Arr_Rel_Insert_Input>,
   id?: Maybe<Scalars['Int']>,
+  post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
   reaction?: Maybe<Scalars['bpchar']>,
 };
 
@@ -8647,7 +8737,9 @@ export type Reactions_On_Conflict = {
 };
 
 export type Reactions_Order_By = {
+  comment_reactions_aggregate?: Maybe<Comment_Reactions_Aggregate_Order_By>,
   id?: Maybe<Order_By>,
+  post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
   reaction?: Maybe<Order_By>,
 };
 
@@ -11019,17 +11111,6 @@ export type Get_Refresh_TokenQuery = (
   )> }
 );
 
-export type ReactionsQueryVariables = {};
-
-
-export type ReactionsQuery = (
-  { __typename?: 'query_root' }
-  & { reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
-);
-
 export type CommentReactionFieldsFragment = (
   { __typename?: 'comment_reactions' }
   & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
@@ -11051,6 +11132,9 @@ export type CommentFieldsFragment = (
   )>, comment_reactions: Array<(
     { __typename?: 'comment_reactions' }
     & CommentReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11120,6 +11204,9 @@ export type DiscussionPostFragment = (
   ), post_reactions: Array<(
     { __typename?: 'post_reactions' }
     & PostReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11237,6 +11324,9 @@ export type MotionPostFragment = (
   ), post_reactions: Array<(
     { __typename?: 'post_reactions' }
     & PostReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11476,6 +11566,9 @@ export type ProposalPostFragment = (
   ), post_reactions: Array<(
     { __typename?: 'post_reactions' }
     & PostReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11533,6 +11626,9 @@ export type ReferendumPostFragment = (
   ), post_reactions: Array<(
     { __typename?: 'post_reactions' }
     & PostReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11735,6 +11831,9 @@ export type TreasuryProposalPostFragment = (
   ), post_reactions: Array<(
     { __typename?: 'post_reactions' }
     & PostReactionFieldsFragment
+  )>, reactions: Array<(
+    { __typename?: 'reactions' }
+    & Pick<Reactions, 'id' | 'reaction'>
   )> }
 );
 
@@ -11811,6 +11910,10 @@ export const CommentFieldsFragmentDoc = gql`
   comment_reactions {
     ...commentReactionFields
   }
+  reactions {
+    id
+    reaction
+  }
   created_at
   updated_at
 }
@@ -11856,6 +11959,10 @@ export const DiscussionPostFragmentDoc = gql`
   }
   post_reactions {
     ...postReactionFields
+  }
+  reactions {
+    id
+    reaction
   }
 }
     ${CommentFieldsFragmentDoc}
@@ -11938,6 +12045,10 @@ export const MotionPostFragmentDoc = gql`
   post_reactions {
     ...postReactionFields
   }
+  reactions {
+    id
+    reaction
+  }
 }
     ${CommentFieldsFragmentDoc}
 ${OnchainLinkMotionFragmentDoc}
@@ -11997,6 +12108,10 @@ export const ProposalPostFragmentDoc = gql`
   }
   post_reactions {
     ...postReactionFields
+  }
+  reactions {
+    id
+    reaction
   }
 }
     ${CommentFieldsFragmentDoc}
@@ -12059,6 +12174,10 @@ export const ReferendumPostFragmentDoc = gql`
   post_reactions {
     ...postReactionFields
   }
+  reactions {
+    id
+    reaction
+  }
 }
     ${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}
@@ -12109,6 +12228,10 @@ export const TreasuryProposalPostFragmentDoc = gql`
   }
   post_reactions {
     ...postReactionFields
+  }
+  reactions {
+    id
+    reaction
   }
 }
     ${CommentFieldsFragmentDoc}
@@ -12584,39 +12707,6 @@ export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
-export const ReactionsDocument = gql`
-    query Reactions {
-  reactions {
-    id
-    reaction
-  }
-}
-    `;
-
-/**
- * __useReactionsQuery__
- *
- * To run a query within a React component, call `useReactionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReactionsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ReactionsQuery, ReactionsQueryVariables>) {
-        return ApolloReactHooks.useQuery<ReactionsQuery, ReactionsQueryVariables>(ReactionsDocument, baseOptions);
-      }
-export function useReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ReactionsQuery, ReactionsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ReactionsQuery, ReactionsQueryVariables>(ReactionsDocument, baseOptions);
-        }
-export type ReactionsQueryHookResult = ReturnType<typeof useReactionsQuery>;
-export type ReactionsLazyQueryHookResult = ReturnType<typeof useReactionsLazyQuery>;
-export type ReactionsQueryResult = ApolloReactCommon.QueryResult<ReactionsQuery, ReactionsQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename

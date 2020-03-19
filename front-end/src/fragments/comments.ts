@@ -18,6 +18,10 @@ export const commentFields = gql`
         comment_reactions {
             ...commentReactionFields
         }
+        reactions {
+            id
+            reaction
+        }
         created_at
         updated_at
     }

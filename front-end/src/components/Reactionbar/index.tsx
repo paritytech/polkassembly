@@ -2,25 +2,56 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext } from 'react';
+import { ApolloQueryResult } from 'apollo-client';
+import React from 'react';
 import styled from '@xstyled/styled-components';
 
-import { ReactionContext } from '../../context/ReactionContext';
-import { PostReactionFieldsFragment, CommentReactionFieldsFragment } from '../../generated/graphql';
+import {
+	PostReactionFieldsFragment,
+	CommentReactionFieldsFragment,
+
+	DiscussionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables,
+
+	DiscussionPostAndCommentsQuery,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery
+} from '../../generated/graphql';
 import ReactionButton, { ReactionButtonProps } from './ReactionButton';
+
+interface Reaction {
+	id: number
+	reaction: string
+}
 
 interface Props {
 	className?: string
+	reactions?: Reaction[]
 	postReactions?: PostReactionFieldsFragment[]
 	commentReactions?: CommentReactionFieldsFragment[]
 	postId?: number
 	commentId?: string
+	refetch?: (variables?:
+		ReferendumPostAndCommentsQueryVariables |
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const ReactionBar = function ({ className, commentId, postId, postReactions, commentReactions }: Props) {
-	const { reactions } = useContext(ReactionContext);
-
-	if (!reactions.length) {
+const ReactionBar = function ({ className, commentId, postId, reactions, postReactions, commentReactions, refetch }: Props) {
+	if (!reactions || !reactions.length) {
 		return null;
 	}
 
@@ -85,6 +116,7 @@ const ReactionBar = function ({ className, commentId, postId, postReactions, com
 						reactionId={reactionId}
 						commentId={commentId}
 						postId={postId}
+						refetch={refetch}
 					/>
 				);
 			})}

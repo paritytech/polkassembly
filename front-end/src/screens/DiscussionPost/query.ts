@@ -32,6 +32,10 @@ const discussionPost = gql`
         post_reactions {
             ...postReactionFields
         }
+        reactions {
+            id
+            reaction
+        }
     }
     ${commentFields}
     ${postReactionFields}

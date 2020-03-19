@@ -2,7 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext, useEffect } from 'react';
+import { ApolloQueryResult } from 'apollo-client';
+import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -11,7 +12,19 @@ import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation
+	useDeleteCommentReactionMutation,
+
+	DiscussionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables,
+
+	DiscussionPostAndCommentsQuery,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery
 } from '../../generated/graphql';
 
 export interface ReactionButtonProps {
@@ -22,6 +35,18 @@ export interface ReactionButtonProps {
 	people: { [ key: string ]: string; }
 	postId?: number
 	commentId?: string
+	refetch?: (variables?:
+		ReferendumPostAndCommentsQueryVariables |
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const ReactionButton = function ({
@@ -31,25 +56,19 @@ const ReactionButton = function ({
 	count,
 	people,
 	postId,
-	commentId
+	commentId,
+	refetch
 }: ReactionButtonProps) {
-	const [reactionCount, setReactionCount] = useState(0);
-	const [reacted, setReacted] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [addPostReactionMutation] = useAddPostReactionMutation();
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
-
-	// Need to be done once
-	useEffect(() => {
-		setReactionCount(count);
-		if (people[`${id}`]) {
-			setReacted(true);
-		}
-	}, []);
+	const reacted = !!people[`${id}`];
 
 	const handleReact = () => {
+		refetch && refetch();
+
 		if (!id) {
 			return;
 		}
@@ -63,12 +82,6 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(({ data }) => {
-						if (data?.delete_post_reactions?.affected_rows){
-							setReactionCount(reactionCount - 1);
-							setReacted(false);
-						}
-					})
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addPostReactionMutation({
@@ -78,13 +91,6 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(({ data }) => {
-						console.log(data);
-						if (data?.insert_post_reactions?.affected_rows){
-							setReactionCount(reactionCount + 1);
-							setReacted(true);
-						}
-					})
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -98,12 +104,6 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(({ data }) => {
-						if (data?.delete_comment_reactions && data.delete_comment_reactions.affected_rows > 0){
-							setReactionCount(reactionCount - 1);
-							setReacted(false);
-						}
-					})
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addCommentReactionMutation({
@@ -113,12 +113,6 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(({ data }) => {
-						if (data?.insert_comment_reactions && data.insert_comment_reactions.affected_rows > 0){
-							setReactionCount(reactionCount + 1);
-							setReacted(true);
-						}
-					})
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -130,7 +124,7 @@ const ReactionButton = function ({
 				className={className + ' social'}
 				onClick={handleReact}
 			>
-				{reaction} {reactionCount}
+				{reaction} {count}
 			</Button>
 		</>
 	);
