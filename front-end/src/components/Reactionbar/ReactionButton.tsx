@@ -131,6 +131,6 @@ const ReactionButton = function ({
 };
 
 export default styled(ReactionButton)`
-	color: #4183c4 !important;
+	color: blue_primary !important;
 	font-size: 1em !important;
 `;
