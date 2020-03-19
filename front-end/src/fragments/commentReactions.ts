@@ -9,7 +9,6 @@ export const commentReactionFields = gql`
         id
         reacting_user {
             id
-            name
             username
         }
         reaction {

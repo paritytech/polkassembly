@@ -11116,7 +11116,7 @@ export type CommentReactionFieldsFragment = (
   & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & Pick<User, 'id' | 'username'>
   )>, reaction: (
     { __typename?: 'reactions' }
     & Pick<Reactions, 'id' | 'reaction'>
@@ -11143,7 +11143,7 @@ export type PostReactionFieldsFragment = (
   & Pick<Post_Reactions, 'id' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & Pick<User, 'id' | 'username'>
   )>, reaction: (
     { __typename?: 'reactions' }
     & Pick<Reactions, 'id' | 'reaction'>
@@ -11887,7 +11887,6 @@ export const CommentReactionFieldsFragmentDoc = gql`
   id
   reacting_user {
     id
-    name
     username
   }
   reaction {
@@ -11923,7 +11922,6 @@ export const PostReactionFieldsFragmentDoc = gql`
   id
   reacting_user {
     id
-    name
     username
   }
   reaction {
