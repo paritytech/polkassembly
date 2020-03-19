@@ -10,7 +10,7 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { ApiContext } from '../../../context/ApiContext';
 import { NotificationContext } from '../../../context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { NotificationStatus } from '../../../types';
+import { NotificationStatus, LoadingStatusType } from '../../../types';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
 import Loader from 'src/ui-components/Loader';
@@ -37,7 +37,7 @@ const VoteMotion = ({
 	onAccountChange
 }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
-	const [isLoading, setIsLoading] = useState(false);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const [isCouncil, setIsCouncil] = useState(false);
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
@@ -74,23 +74,26 @@ const VoteMotion = ({
 			return;
 		}
 
+		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
-		setIsLoading(true);
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized || status.isInBlock) {
+			if (status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on motion #${motionId} successfully finalized`,
+					message: `Vote on motion #${motionId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
-				setIsLoading(false);
-				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
+				setLoadingStatus({ isLoading: false, message: '' });
+				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
 			} else {
+				if (status.isBroadcast){
+					setLoadingStatus({ isLoading: true, message: 'Broadcasting the vote' });
+				}
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
-			setIsLoading(false);
+			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -127,9 +130,9 @@ const VoteMotion = ({
 	const VotingForm = () =>
 		<Form standalone={false}>
 			<h4>Vote</h4>
-			{isLoading
+			{loadingStatus.isLoading
 				? <div className={'LoaderWrapper'}>
-					<Loader text={'Broadcasting your vote'}/>
+					<Loader text={loadingStatus.message}/>
 				</div>
 				: <>
 					<AccountSelectionForm
