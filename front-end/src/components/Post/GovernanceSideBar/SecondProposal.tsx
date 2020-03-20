@@ -104,7 +104,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				<div className='card'>
 					<Form standalone={false}>
 						<h4>Second</h4>
-						<Grid className={'info'} columns={2} divided>
+						<Grid className={'info'} columns={3} divided>
 							<Grid.Row>
 								<Grid.Column>
 									<div><b>Deposit Amount</b></div>
@@ -113,6 +113,10 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 								<Grid.Column>
 									<div><b>Seconded By</b></div>
 									{seconds ? <div>{seconds} Addresses</div> : null}
+								</Grid.Column>
+								<Grid.Column>
+									<div><b>Locked KSM</b></div>
+									<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
 								</Grid.Column>
 							</Grid.Row>
 						</Grid>
