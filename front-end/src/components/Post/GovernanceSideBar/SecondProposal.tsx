@@ -53,7 +53,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		}
 
 		getSeconds().catch(console.error);
-	}, [api, apiReady]);
+	}, [api, apiReady, proposalId]);
 
 	const secondProposal = async () => {
 		if (!api) {
