@@ -103,7 +103,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			<div className={className}>
 				<div className='card'>
 					<Form standalone={false}>
-						<h4>Vote</h4>
+						<h4>Second</h4>
 						<Grid className={'info'} columns={2} divided>
 							<Grid.Row>
 								<Grid.Column>
