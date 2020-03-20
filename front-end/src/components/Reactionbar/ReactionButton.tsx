@@ -7,9 +7,7 @@ import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { NotificationContext } from '../../context/NotificationContext';
 import Button from '../../ui-components/Button';
-import { NotificationStatus } from '../../types';
 import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
@@ -66,16 +64,11 @@ const ReactionButton = function ({
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
-	const { queueNotification } = useContext(NotificationContext);
 	const reacted = !!userMap[`${id}`];
 
 	const handleReact = () => {
 		if (!id) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Please sign in to react',
-				status: NotificationStatus.ERROR
-			});
+			console.log('Login to react');
 			return;
 		}
 
@@ -131,6 +124,7 @@ const ReactionButton = function ({
 			<Button
 				className={className + ' social'}
 				onClick={handleReact}
+				disabled={!id}
 			>
 				{reaction} {count}
 			</Button>
