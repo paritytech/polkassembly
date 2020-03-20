@@ -120,15 +120,13 @@ const ReactionButton = function ({
 	};
 
 	return (
-		<>
-			<Button
-				className={className + ' social'}
-				onClick={handleReact}
-				disabled={!id}
-			>
-				{reaction} {count}
-			</Button>
-		</>
+		<Button
+			className={className + ' social'}
+			onClick={handleReact}
+			disabled={!id}
+		>
+			{reaction} {count}
+		</Button>
 	);
 };
 
