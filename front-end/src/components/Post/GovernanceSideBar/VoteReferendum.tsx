@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { DropdownProps, Select } from 'semantic-ui-react';
+import { Grid, DropdownProps, Select } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import AccountSelectionForm from './AccountSelectionForm';
@@ -41,6 +41,40 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		{ text: '5x time lock', value: 'Locked5x' }
 	];
 	const [conviction, setConviction] = useState<ConvictionType>(options[0].value);
+	const [totalVotes, setTotalVotes] = useState(0);
+	const [yesVotes, setYesVotes] = useState(0);
+	const [noVotes, setNoVotes] = useState(0);
+
+	useEffect(() => {
+		async function getVotes() {
+			if (!api) {
+				console.error('polkadot/api not set');
+				return;
+			}
+
+			if (!apiReady) {
+				console.error('api not ready');
+				return;
+			}
+
+			if (referendumId !== 0 && !referendumId) {
+				console.error('referendumId not set');
+				return;
+			}
+
+			const votes = await api.derive.democracy.referendumVotesFor(referendumId);
+
+			setTotalVotes(votes.length);
+
+			const ayes = votes.filter(({ vote }) => vote.isAye);
+			const nays = votes.filter(({ vote }) => vote.isNay);
+
+			setYesVotes(ayes.length);
+			setNoVotes(nays.length);
+		}
+
+		getVotes().catch(console.error);
+	}, [api, apiReady, referendumId]);
 
 	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const convictionValue = data.value as ConvictionType;
@@ -94,6 +128,22 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				<div className='card'>
 					<Form standalone={false}>
 						<h4>Vote</h4>
+						<Grid className={'info'} columns={3} divided>
+							<Grid.Row>
+								<Grid.Column>
+									<div><b>Total Votes</b></div>
+									<div>{totalVotes}</div>
+								</Grid.Column>
+								<Grid.Column width={5}>
+									<div><b>Yes</b></div>
+									<div>{yesVotes}</div>
+								</Grid.Column>
+								<Grid.Column width={5}>
+									<div><b>No</b></div>
+									<div>{noVotes}</div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
 						<Form.Group>
 							<Form.Field className='button-container'>
 								<Button
@@ -165,6 +215,10 @@ export default styled(VoteRefrendum)`
 		@media only screen and (max-width: 768px) {
 			padding: 2rem;
 		}
+	}
+
+	.info {
+		margin-bottom: 1rem;
 	}
 
 	.LoaderWrapper {

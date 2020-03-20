@@ -41,6 +41,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 
 			if (!apiReady) {
 				console.error('api not ready');
+				return;
 			}
 
 			const proposals = await api.derive.democracy.proposals();
