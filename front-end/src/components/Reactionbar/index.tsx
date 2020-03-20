@@ -72,14 +72,13 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			return;
 		}
 
-		reactionMap[reaction.id].count++;
-
-		if (
-			reacting_user?.id &&
-			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
-		) {
-			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		if (reacting_user?.id && reactionMap[reaction.id].userMap[`${reacting_user?.id}`]){
+			console.error('This user has already reacted.');
+			return;
 		}
+
+		reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		reactionMap[reaction.id].count++;
 	});
 
 	commentReactions?.forEach(({ reaction, reacting_user }) => {
@@ -87,14 +86,13 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			return;
 		}
 
-		reactionMap[reaction.id].count++;
-
-		if (
-			reacting_user?.id &&
-			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
-		) {
-			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		if (reacting_user?.id && reactionMap[reaction.id].userMap[`${reacting_user?.id}`]){
+			console.error('This user has already reacted.');
+			return;
 		}
+
+		reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		reactionMap[reaction.id].count++;
 	});
 
 	return (
