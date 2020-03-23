@@ -62,7 +62,7 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			count: 0,
 			reaction,
 			reactionId: id,
-			userMap: {}
+			userIds: []
 		};
 		reactionMap[`${id}`] = reactionButtonProp;
 	});
@@ -72,14 +72,16 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			return;
 		}
 
-		reactionMap[reaction.id].count++;
-
-		if (
-			reacting_user?.id &&
-			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
-		) {
-			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		if (reacting_user?.id && reactionMap[reaction.id].userIds.includes(reacting_user?.id)){
+			console.error('This user has already reacted.');
+			return;
 		}
+
+		if (reacting_user?.id) {
+			reactionMap[reaction.id].userIds.push(reacting_user?.id);
+		}
+
+		reactionMap[reaction.id].count++;
 	});
 
 	commentReactions?.forEach(({ reaction, reacting_user }) => {
@@ -87,14 +89,16 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			return;
 		}
 
-		reactionMap[reaction.id].count++;
-
-		if (
-			reacting_user?.id &&
-			!reactionMap[reaction.id].userMap[`${reacting_user?.id}`]
-		) {
-			reactionMap[reaction.id].userMap[`${reacting_user?.id}`] = `${reacting_user?.username}`;
+		if (reacting_user?.id && reactionMap[reaction.id].userIds.includes(reacting_user?.id)){
+			console.error('This user has already reacted.');
+			return;
 		}
+
+		if (reacting_user?.id) {
+			reactionMap[reaction.id].userIds.push(reacting_user?.id);
+		}
+
+		reactionMap[reaction.id].count++;
 	});
 
 	return (
@@ -102,16 +106,16 @@ const ReactionBar = function ({ className, commentId, postId, reactions, postRea
 			{Object.keys(reactionMap).map((id) => {
 				const {
 					count,
-					userMap,
 					reaction,
-					reactionId
+					reactionId,
+					userIds
 				} = reactionMap[id];
 
 				return (
 					<ReactionButton
 						key={id}
 						count={count}
-						userMap={userMap}
+						userIds={userIds}
 						reaction={reaction}
 						reactionId={reactionId}
 						commentId={commentId}
