@@ -20,7 +20,7 @@ interface Props{
 
 const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
 	return <span className={className}>
-		{text} by {
+		{
 			displayname
 				?
 				<Popup
@@ -32,6 +32,7 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 				:
 				<span>{username}</span>
 		}
+		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>
 		}

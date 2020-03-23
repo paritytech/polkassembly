@@ -5,30 +5,26 @@
 import * as React from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import CreationLabel from '../ui-components/CreationLabel';
 import StatusTag from '../ui-components/StatusTag';
 
 interface DiscussionProps {
     className?: string
     comments?: string
-    created_at: Date
+    created_at?: Date
     displayname?: string | null
     onchainId?: number | null
     status?: string | null
 	title: string
 	topic: string
-    username: string
+    username?: string
 }
 
-const Discussion = function ({
+const GovernanceAction = function ({
 	className,
 	comments,
-	created_at,
-	displayname,
 	onchainId,
 	status,
-	title,
-	username
+	title
 }:DiscussionProps) {
 
 	return (
@@ -39,11 +35,6 @@ const Discussion = function ({
 				</Segment>
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
-					<CreationLabel
-						created_at={created_at}
-						displayname={displayname}
-						username={username}
-					/>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
@@ -58,12 +49,13 @@ const Discussion = function ({
 	);
 };
 
-export default styled(Discussion)`
+export default styled(GovernanceAction)`
 	padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
 	border-style: solid;
     border-width: 1px;
-	border-color: grey_light;
+	border-color: grey_border;
+	border-radius: 3px;
 	
 	&:hover {
 		background-color: white_transparent;
