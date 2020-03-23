@@ -22,6 +22,7 @@ import {
 	MotionPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQuery
 } from '../../generated/graphql';
+import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
 
@@ -49,9 +50,14 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 
 	return (
 		<div className={className}>
+			<Avatar
+				className='avatar'
+				displayname={author.name}
+				username={author.username}
+				size={'lg'}
+			/>
 			<div className='comment-box'>
 				<CreationLabel
-					avatar={true}
 					className='creation-label'
 					created_at={created_at}
 					displayname={author.name}
@@ -78,6 +84,15 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 
 export default styled(Comment)`
 	display: flex;
+
+	.avatar {
+		display: inline-block;
+		flex: 0 0 4rem;
+		margin-right: 2rem;
+		@media only screen and (max-width: 576px) {
+			display: none;
+		}
+	}
 
 	.comment-box {
 		background-color: white;
@@ -107,8 +122,5 @@ export default styled(Comment)`
 	.comment-content {
 		padding: 0.8rem 2rem;
 		width: 100%;
-		border-top-style: solid;
-		border-top-width: 1px;
-		border-top-color: grey_border;
 	}
 `;
