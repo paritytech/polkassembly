@@ -81,22 +81,22 @@ export default styled(Comment)`
 
 	.comment-box {
 		background-color: white;
-		/* padding: 2rem 3rem 2rem 3rem; */
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
+		border-color: grey_border;
 		border-radius: 3px;
 		margin-bottom: 1rem;
 		width: 100%;
 
 		@media only screen and (max-width: 576px) {
 			width: 100%;
+			border-radius: 0px;
 		}
 	}
 
 	.creation-label {
 		display: inline-block;
-		padding: 0.8rem 0 0.8rem 2rem;
+		padding: 1rem 0 0.8rem 2rem;
 		margin-bottom: 0;
 	}
 

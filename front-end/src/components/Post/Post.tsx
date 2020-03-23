@@ -141,11 +141,14 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						refetch={refetch}
 						toggleEdit={toggleEdit}
 					/>
-
-					{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-					{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
-					{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-					{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+					<div className='actions-bar'>
+						<Reactionbar className='reactions' postId={post.id} reactions={post.reactions} postReactions={post.post_reactions} refetch={refetch} />
+						{id && <div className='vl'/>}
+						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
+						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+					</div>
 
 					{ id && isPostReplyFormVisible &&
 						<CreatePostComment
@@ -155,7 +158,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						/>
 					}
 				</div>
-				<Reactionbar postId={post.id} reactions={post.reactions} postReactions={post.post_reactions} refetch={refetch} />
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
@@ -204,13 +206,37 @@ export default styled(Post)`
 		background-color: white;
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
-		padding: 3rem;
+		border-color: grey_border;
+		border-radius: 3px;
+		padding: 3rem 3rem 0.8rem 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.actions-bar {
+		display: flex;
+		align-items: center;
+	}
+
+	.reactions {
+		display: inline-flex;
+		border: none;
+		padding: 0.4rem 0;
+		margin: 0rem;
+	}
+
+	.vl {
+		display: inline-flex;
+		border-left-style: solid;
+		border-left-width: 1px;
+		border-left-color: grey_border;
+		height: 2rem;
+		margin: 0 1.2rem 0 0.8rem;
 	}
 
 	@media only screen and (max-width: 576px) {
 		.post_content {
-			padding: 2rem
+			padding: 2rem;
+			border-radius: 0px;
 		}
 	}
 

@@ -171,6 +171,6 @@ export default styled(EditableCommentContent)`
 		border-left-width: 1px;
 		border-left-color: grey_border;
 		height: 2rem;
-		margin: 0 1rem;
+		margin: 0 1.2rem 0 0.8rem;
 	}
 `;
