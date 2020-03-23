@@ -7,9 +7,7 @@ import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { NotificationContext } from '../../context/NotificationContext';
 import Button from '../../ui-components/Button';
-import { NotificationStatus } from '../../types';
 import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
@@ -34,7 +32,7 @@ export interface ReactionButtonProps {
 	reactionId: number
 	reaction: string
 	count: number
-	userMap: { [ key: string ]: string; }
+	userIds: number[]
 	postId?: number
 	commentId?: string
 	refetch?: (variables?:
@@ -56,7 +54,7 @@ const ReactionButton = function ({
 	reactionId,
 	reaction,
 	count,
-	userMap,
+	userIds,
 	postId,
 	commentId,
 	refetch
@@ -66,16 +64,11 @@ const ReactionButton = function ({
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
-	const { queueNotification } = useContext(NotificationContext);
-	const reacted = !!userMap[`${id}`];
+	const reacted = id && userIds.includes(id);
 
 	const handleReact = () => {
 		if (!id) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Please sign in to react',
-				status: NotificationStatus.ERROR
-			});
+			console.error('No user id found. Not logged in?');
 			return;
 		}
 
@@ -127,22 +120,26 @@ const ReactionButton = function ({
 	};
 
 	return (
-		<>
+		<span className={className}>
 			<Button
-				className= {reacted ? `${className} reacted social`  : `${className} social`}
+				className={'social' + (reacted ? ' reacted' : '')}
 				onClick={handleReact}
+				disabled={!id}
 			>
 				{reaction} {count}
 			</Button>
-		</>
+		</span>
 	);
 };
 
 export default styled(ReactionButton)`
-	color: blue_primary !important;
-	font-size: 1em !important;
+	.social {
+		color: blue_primary !important;
+		font-size: 1em !important;
+	}
 
-	&.reacted {
-		background-color: grey_light !important;
+	.reacted {
+		background-color: blue_secondary !important;
+		border: none !important;
 	}
 `;

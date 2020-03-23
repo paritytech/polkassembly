@@ -24,6 +24,7 @@ import {
 } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
+/* import Reactionbar from '../Reactionbar'; */
 
 interface Props{
 	className?: string,
@@ -71,6 +72,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					content={content}
 					refetch={refetch}
 				/>
+				{/* <Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} /> */}
 			</div>
 		</div>
 	);

@@ -8576,48 +8576,8 @@ export type Query_RootValidatorsConnectionArgs = {
 
 export type Reactions = {
    __typename?: 'reactions',
-  comment_reactions: Array<Comment_Reactions>,
-  comment_reactions_aggregate: Comment_Reactions_Aggregate,
   id: Scalars['Int'],
-  post_reactions: Array<Post_Reactions>,
-  post_reactions_aggregate: Post_Reactions_Aggregate,
   reaction: Scalars['bpchar'],
-};
-
-
-export type ReactionsComment_ReactionsArgs = {
-  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
-  where?: Maybe<Comment_Reactions_Bool_Exp>
-};
-
-
-export type ReactionsComment_Reactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
-  where?: Maybe<Comment_Reactions_Bool_Exp>
-};
-
-
-export type ReactionsPost_ReactionsArgs = {
-  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
-  where?: Maybe<Post_Reactions_Bool_Exp>
-};
-
-
-export type ReactionsPost_Reactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
-  where?: Maybe<Post_Reactions_Bool_Exp>
 };
 
 export type Reactions_Aggregate = {
@@ -8679,9 +8639,7 @@ export type Reactions_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
   _not?: Maybe<Reactions_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
-  comment_reactions?: Maybe<Comment_Reactions_Bool_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
-  post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
   reaction?: Maybe<Bpchar_Comparison_Exp>,
 };
 
@@ -8695,9 +8653,7 @@ export type Reactions_Inc_Input = {
 };
 
 export type Reactions_Insert_Input = {
-  comment_reactions?: Maybe<Comment_Reactions_Arr_Rel_Insert_Input>,
   id?: Maybe<Scalars['Int']>,
-  post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
   reaction?: Maybe<Scalars['bpchar']>,
 };
 
@@ -8737,9 +8693,7 @@ export type Reactions_On_Conflict = {
 };
 
 export type Reactions_Order_By = {
-  comment_reactions_aggregate?: Maybe<Comment_Reactions_Aggregate_Order_By>,
   id?: Maybe<Order_By>,
-  post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
   reaction?: Maybe<Order_By>,
 };
 
@@ -11116,7 +11070,7 @@ export type CommentReactionFieldsFragment = (
   & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
+    & Pick<User, 'id'>
   )>, reaction: (
     { __typename?: 'reactions' }
     & Pick<Reactions, 'id' | 'reaction'>
@@ -11143,7 +11097,7 @@ export type PostReactionFieldsFragment = (
   & Pick<Post_Reactions, 'id' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username'>
+    & Pick<User, 'id'>
   )>, reaction: (
     { __typename?: 'reactions' }
     & Pick<Reactions, 'id' | 'reaction'>
@@ -11887,7 +11841,6 @@ export const CommentReactionFieldsFragmentDoc = gql`
   id
   reacting_user {
     id
-    username
   }
   reaction {
     id
@@ -11922,7 +11875,6 @@ export const PostReactionFieldsFragmentDoc = gql`
   id
   reacting_user {
     id
-    username
   }
   reaction {
     id
