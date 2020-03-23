@@ -14,6 +14,7 @@ export const theme = {
 		green_primary_transparent: 'rgba(4, 221, 24, 0.05)',
 		green_secondary: '#399969',
 		grey_app_background: '#F5F7F8',
+		grey_border: '#DDE4ED',
 		grey_light: '#EBF0F5',
 		grey_primary: '#777B80',
 		grey_secondary: '#A6ACB3',

@@ -25,7 +25,6 @@ import {
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
-import Reactionbar from '../Reactionbar';
 
 interface Props{
 	className?: string,
@@ -55,28 +54,29 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 				className='avatar'
 				displayname={author.name}
 				username={author.username}
+				size={'lg'}
 			/>
-			<div className='comment-wrapper'>
-				<div className='comment-box'>
-					<CreationLabel
-						created_at={created_at}
-						displayname={author.name}
-						text={'commented'}
-						username={author.username}
-					/>
-					<UpdateLabel
-						created_at={created_at}
-						updated_at={updated_at}
-					/>
-					<EditableCommentContent
-						authorId={author.id}
-						className='comment-content'
-						commentId={id}
-						content={content}
-						refetch={refetch}
-					/>
-				</div>
-				<Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} />
+			<div className='comment-box'>
+				<CreationLabel
+					className='creation-label'
+					created_at={created_at}
+					displayname={author.name}
+					text={'commented'}
+					username={author.username}
+				/>
+				<UpdateLabel
+					className='update-label'
+					created_at={created_at}
+					updated_at={updated_at}
+				/>
+				<EditableCommentContent
+					authorId={author.id}
+					className='comment-content'
+					comment={comment}
+					commentId={id}
+					content={content}
+					refetch={refetch}
+				/>
 			</div>
 		</div>
 	);
@@ -89,30 +89,38 @@ export default styled(Comment)`
 		display: inline-block;
 		flex: 0 0 4rem;
 		margin-right: 2rem;
-
 		@media only screen and (max-width: 576px) {
 			display: none;
 		}
 	}
 
-	.comment-wrapper {
+	.comment-box {
+		background-color: white;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_border;
+		border-radius: 3px;
 		margin-bottom: 1rem;
-		width: calc(100% - 6rem);
+		width: 100%;
 
 		@media only screen and (max-width: 576px) {
 			width: 100%;
+			border-radius: 0px;
 		}
 	}
 
-	.comment-box {
-		background-color: white;
-		padding: 2rem 3rem 2rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
+	.creation-label {
+		display: inline-block;
+		padding: 1rem 0 0.8rem 2rem;
+		margin-bottom: 0;
+	}
+
+	.update-label {
+		display: inline-block;
 	}
 
 	.comment-content {
-		margin-top: 1.2rem;
+		padding: 0.8rem 2rem;
+		width: 100%;
 	}
 `;
