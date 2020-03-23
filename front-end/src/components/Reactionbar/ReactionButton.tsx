@@ -68,7 +68,7 @@ const ReactionButton = function ({
 
 	const handleReact = () => {
 		if (!id) {
-			console.log('Login to react');
+			console.error('No user id found. Not logged in?');
 			return;
 		}
 
