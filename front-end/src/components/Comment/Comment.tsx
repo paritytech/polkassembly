@@ -78,7 +78,6 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 				</div>
 				<Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} />
 			</div>
-			<Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} />
 		</div>
 	);
 };
