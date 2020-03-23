@@ -1,0 +1,7 @@
+- args:
+    name: comment_reactions
+    new_name: reactions
+    table:
+      name: comments
+      schema: public
+  type: rename_relationship

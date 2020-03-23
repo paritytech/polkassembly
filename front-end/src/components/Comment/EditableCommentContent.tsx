@@ -12,7 +12,21 @@ import styled from '@xstyled/styled-components';
 import ContentForm from '../ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useEditCommentMutation, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
+import {
+	useEditCommentMutation,
+
+	DiscussionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables,
+
+	DiscussionPostAndCommentsQuery,
+	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery
+} from '../../generated/graphql';
 import ReportButton from '../ReportButton';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -24,7 +38,19 @@ interface Props {
 	className?: string,
 	commentId: string,
 	content: string,
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (variables?:
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		ReferendumPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		undefined
+	) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {

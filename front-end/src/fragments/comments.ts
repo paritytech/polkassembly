@@ -4,16 +4,26 @@
 
 import gql from 'graphql-tag';
 
+import { commentReactionFields } from './commentReactions';
+
 export const commentFields = gql`
     fragment commentFields on comments {
+        id
         author {
             id
             name
             username
         }
         content
+        comment_reactions {
+            ...commentReactionFields
+        }
+        reactions {
+            id
+            reaction
+        }
         created_at
-        id
         updated_at
     }
+    ${commentReactionFields}
 `;

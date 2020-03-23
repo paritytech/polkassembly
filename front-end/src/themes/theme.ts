@@ -9,6 +9,7 @@ export const theme = {
 		black_text: '#53595C',
 		blue_primary: '#4D9999',
 		blue_primary_transparent: 'rgba(77, 153, 153, 0.05)',
+		blue_secondary: '#EBF0F5',
 		green_primary: '#4DD18F',
 		green_primary_transparent: 'rgba(4, 221, 24, 0.05)',
 		green_secondary: '#399969',

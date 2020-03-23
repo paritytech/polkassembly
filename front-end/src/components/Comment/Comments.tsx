@@ -9,12 +9,18 @@ import styled from 'styled-components';
 import Comment from './Comment';
 import {
 	CommentFieldsFragment,
+
+	DiscussionPostAndCommentsQuery,
 	ProposalPostAndCommentsQuery,
+	ReferendumPostAndCommentsQuery,
+	MotionPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQuery,
+
 	ProposalPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQueryVariables,
 	DiscussionPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQuery,
-	DiscussionPostAndCommentsQuery
+	MotionPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQueryVariables
 } from '../../generated/graphql';
 
 interface Props{
@@ -24,7 +30,11 @@ interface Props{
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
 		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>

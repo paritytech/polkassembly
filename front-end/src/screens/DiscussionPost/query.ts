@@ -4,6 +4,7 @@
 
 import gql from 'graphql-tag';
 import { commentFields } from '../../fragments/comments';
+import { postReactionFields } from '../../fragments/postReactions';
 
 const discussionPost = gql`
     fragment discussionPost on posts {
@@ -28,8 +29,16 @@ const discussionPost = gql`
             id
             name
         }
+        post_reactions {
+            ...postReactionFields
+        }
+        reactions {
+            id
+            reaction
+        }
     }
     ${commentFields}
+    ${postReactionFields}
 `;
 
 export const QUERY_DISCUSSION_POST_AND_COMMENTS = gql`
