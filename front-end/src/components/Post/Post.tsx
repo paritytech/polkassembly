@@ -158,7 +158,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						/>
 					}
 				</div>
-				<Reactionbar postId={post.id} reactions={post.reactions} postReactions={post.post_reactions} refetch={refetch} />
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
