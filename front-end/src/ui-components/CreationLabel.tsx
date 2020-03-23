@@ -12,12 +12,12 @@ import InlineTag from './InlineTag';
 
 interface Props{
 	avatar?: boolean
-    className?: string
-    created_at: Date
-    displayname?: string | null
+	className?: string
+	created_at: Date
+	displayname?: string | null
 	text?: string
 	topic?: string
-    username: string
+	username: string
 }
 
 const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
@@ -46,13 +46,13 @@ const CreationLabel = ({ avatar, className, created_at, displayname, text='poste
 };
 
 export default styled(CreationLabel)`
-    color: grey_primary;
-    font-weight: 400;
-    font-size: sm;
-    margin-bottom: 0.6rem;
-        
-    span {
-        color: black_text;
+	color: grey_primary;
+	font-weight: 400;
+	font-size: sm;
+	margin-bottom: 0.6rem;
+		
+	span {
+		color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
 	}
