@@ -120,17 +120,26 @@ const ReactionButton = function ({
 	};
 
 	return (
-		<Button
-			className={className + ' social'}
-			onClick={handleReact}
-			disabled={!id}
-		>
-			{reaction} {count}
-		</Button>
+		<span className={className}>
+			<Button
+				className={'social' + (reacted ? ' reacted' : '')}
+				onClick={handleReact}
+				disabled={!id}
+			>
+				{reaction} {count}
+			</Button>
+		</span>
 	);
 };
 
 export default styled(ReactionButton)`
-	color: blue_primary !important;
-	font-size: 1em !important;
+	.social {
+		color: blue_primary !important;
+		font-size: 1em !important;
+	}
+
+	.reacted {
+		background-color: blue_secondary !important;
+		border: none !important;
+	}
 `;
