@@ -56,26 +56,28 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 				displayname={author.name}
 				username={author.username}
 			/>
-			<div className='comment-box'>
-				<CreationLabel
-					created_at={created_at}
-					displayname={author.name}
-					text={'commented'}
-					username={author.username}
-				/>
-				<UpdateLabel
-					created_at={created_at}
-					updated_at={updated_at}
-				/>
-				<EditableCommentContent
-					authorId={author.id}
-					className='comment-content'
-					commentId={id}
-					content={content}
-					refetch={refetch}
-				/>
+			<div className='comment-wrapper'>
+				<div className='comment-box'>
+					<CreationLabel
+						created_at={created_at}
+						displayname={author.name}
+						text={'commented'}
+						username={author.username}
+					/>
+					<UpdateLabel
+						created_at={created_at}
+						updated_at={updated_at}
+					/>
+					<EditableCommentContent
+						authorId={author.id}
+						className='comment-content'
+						commentId={id}
+						content={content}
+						refetch={refetch}
+					/>
+				</div>
+				<Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} />
 			</div>
-			<Reactionbar commentId={id} reactions={comment.reactions} commentReactions={comment.comment_reactions} refetch={refetch} />
 		</div>
 	);
 };
@@ -93,18 +95,21 @@ export default styled(Comment)`
 		}
 	}
 
-	.comment-box {
-		background-color: white;
-		padding: 2rem 3rem 2rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
+	.comment-wrapper {
 		margin-bottom: 1rem;
 		width: calc(100% - 6rem);
 
 		@media only screen and (max-width: 576px) {
 			width: 100%;
 		}
+	}
+
+	.comment-box {
+		background-color: white;
+		padding: 2rem 3rem 2rem 3rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
 	}
 
 	.comment-content {
