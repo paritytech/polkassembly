@@ -139,7 +139,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 									<div>{yesVotes}</div>
 								</Grid.Column>
 								<Grid.Column width={5}>
-									<div><b>No</b></div>
+									<div><b>Nay</b></div>
 									<div>{noVotes}</div>
 								</Grid.Column>
 							</Grid.Row>
