@@ -129,7 +129,7 @@ const ReactionButton = function ({
 	return (
 		<>
 			<Button
-				className={className + ' social'}
+				className= {reacted ? `${className} reacted social`  : `${className} social`}
 				onClick={handleReact}
 			>
 				{reaction} {count}
@@ -141,4 +141,8 @@ const ReactionButton = function ({
 export default styled(ReactionButton)`
 	color: blue_primary !important;
 	font-size: 1em !important;
+
+	&.reacted {
+		background-color: grey_light !important;
+	}
 `;

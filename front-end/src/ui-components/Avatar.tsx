@@ -9,12 +9,13 @@ interface Props {
     className?: string
 	displayname?: string | null
 	username: string | null
+	size?: 'sm' | 'md' | 'lg'
 }
 
-const Avatar = ({ className, displayname, username }: Props) => {
+const Avatar = ({ className, displayname, username, size }: Props) => {
 
 	return (
-		<div className={className}>
+		<div className={size? `${className} ${size}` : className}>
 			{displayname ? displayname.substring(0, 1) : username?.substring(0, 1)}
 		</div>
 	);
@@ -29,8 +30,20 @@ export default styled(Avatar)`
 	text-align: center;
 	background-color: grey_primary;
 	color: white;
-	width: 4rem;
-	height: 4rem;
-	font-size: lg;
-	line-height: 4rem;
+	&.sm {
+		width: 2rem;
+		height: 2rem;
+		font-size: xs;
+	}
+	&.md {
+		width: 3rem;
+		height: 3rem;
+		font-size: md;
+	}
+	&.lg {
+		width: 4rem;
+		height: 4rem;
+		font-size: lg;
+		line-height: 4rem;
+	}
 `;
