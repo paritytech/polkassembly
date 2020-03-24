@@ -44,13 +44,25 @@ const Address = ({ address, accountName, className, displayIdenticon = true, dis
 				<Identicon
 					className='image identicon'
 					value={address}
-					size={32}
+					size={displayInline ? 16 : 32}
 					theme={'polkadot'}
 				/>}
-			<div className='content'>
-				<div className={displayInline ? 'header inline' : 'header'}>{display || accountName || ''}</div>
-				<div className={displayInline ? 'description inline' : 'description'}>{shortenAddress(address)}</div>
-			</div>
+			{displayInline
+				?
+				(
+					display || accountName
+						?
+						<div className={'header inline'}>{display || accountName}</div>
+						:
+						<div className={'description inline'}>{shortenAddress(address)}</div>
+				)
+				:
+				<div className='content'>
+					<div className={'header'}>{display || accountName || ''}</div>
+					<div className={'description'}>{shortenAddress(address)}</div>
+				</div>
+
+			}
 		</div>
 	);
 };
@@ -84,7 +96,7 @@ export default styled(Address)`
 	}
 
 	&.inline, .inline {
-		display: inline !important;
+		display: inline-flex !important;
 		font-size: sm !important;
 	}
 `;

@@ -43,7 +43,6 @@ const CreationLabel = ({ address, avatar, className, created_at, displayname, te
 		{address &&
 			<Address
 				address={address}
-				displayIdenticon={false}
 				displayInline={true}
 			/>
 		}
@@ -62,6 +61,7 @@ export default styled(CreationLabel)`
 	font-weight: 400;
 	font-size: sm;
 	margin-bottom: 0.6rem;
+	display: inline-flex;
 		
 	span {
 		color: black_text;

@@ -104,7 +104,7 @@ export default styled(GovernanceAction)`
     h4, h5 {
         font-family: font_default;
         display: block;
-		margin-bottom: 0.3rem; 
+		margin-bottom: 0.6rem; 
 	}
 
 	h4 {
