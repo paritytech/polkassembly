@@ -5,24 +5,21 @@
 import * as React from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import CreationLabel from '../ui-components/CreationLabel';
 import StatusTag from '../ui-components/StatusTag';
 
 interface DiscussionProps {
-	address?: string
-	className?: string
-	comments?: string
-	created_at?: Date
-	displayname?: string | null
-	onchainId?: number | null
-	status?: string | null
+    className?: string
+    comments?: string
+    created_at?: Date
+    displayname?: string | null
+    onchainId?: number | null
+    status?: string | null
 	title: string
 	topic: string
-	username?: string
+    username?: string
 }
 
 const GovernanceAction = function ({
-	address,
 	className,
 	comments,
 	onchainId,
@@ -38,10 +35,6 @@ const GovernanceAction = function ({
 				</Segment>
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
-					<CreationLabel
-						address={address}
-						text={'proposed'}
-					/>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>

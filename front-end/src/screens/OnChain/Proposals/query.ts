@@ -62,7 +62,6 @@ export const QUERY_LATEST_PROPOSALS = gql`
                     status
                 }
             }
-            proposer_address
         }
     }
 }`;

@@ -7,24 +7,22 @@ import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import Address from './Address';
 import Avatar from './Avatar';
 import InlineTag from './InlineTag';
 
 interface Props{
-	address?: string
 	avatar?: boolean
 	className?: string
-	created_at?: Date
+	created_at: Date
 	displayname?: string | null
 	text?: string
 	topic?: string
-	username?: string
+	username: string
 }
 
-const CreationLabel = ({ address, avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
-	return <div className={className}>
-		{avatar && username &&
+const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
+	return <span className={className}>
+		{avatar &&
 			<Avatar className='avatar' username={username} size={'sm'}/>
 		}
 		{
@@ -36,25 +34,15 @@ const CreationLabel = ({ address, avatar, className, created_at, displayname, te
 					hoverable={true}
 					position='top center'
 				/>
-				: (username &&
-					<span>{username}</span>
-				)
-		}
-		{address &&
-			<Address
-				address={address}
-				displayIdenticon={false}
-				displayInline={true}
-			/>
+				:
+				<span>{username}</span>
 		}
 		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>
 		}
-		{created_at &&
-			moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()
-		}
-	</div>;
+		{moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
+	</span>;
 };
 
 export default styled(CreationLabel)`

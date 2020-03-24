@@ -54,7 +54,6 @@ export const QUERY_LATEST_REFERENDA = gql`
                     status
                 }
             }
-            proposer_address
         }
     }
 }`;

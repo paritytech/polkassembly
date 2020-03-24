@@ -28,7 +28,6 @@ const Proposals = ({ className, data }: Props) => {
 						<li key={post.id} className='proposals__item'>
 							{<Link to={`/proposal/${onchainId}`}>
 								<GovernanceCard
-									address={post.onchain_link?.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}

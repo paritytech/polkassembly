@@ -14,11 +14,9 @@ interface Props {
 	className?: string
 	address: string
 	accountName?: string
-	displayIdenticon?: boolean
-	displayInline?: boolean
 }
 
-const Address = ({ address, accountName, className, displayIdenticon = true, displayInline }: Props): JSX.Element => {
+const Address = ({ address, accountName, className }: Props): JSX.Element => {
 	const { api } = useContext(ApiContext);
 	const [display, setDisplay] = useState<string>('');
 
@@ -39,17 +37,16 @@ const Address = ({ address, accountName, className, displayIdenticon = true, dis
 	}, [address, api]);
 
 	return (
-		<div className={displayInline ? `${className} inline`: className}>
-			{displayIdenticon &&
-				<Identicon
-					className='image identicon'
-					value={address}
-					size={32}
-					theme={'polkadot'}
-				/>}
+		<div className={className}>
+			<Identicon
+				className='image'
+				value={address}
+				size={32}
+				theme={'polkadot'}
+			/>
 			<div className='content'>
-				<div className={displayInline ? 'header inline' : 'header'}>{display || accountName || ''}</div>
-				<div className={displayInline ? 'description inline' : 'description'}>{shortenAddress(address)}</div>
+				<div className='header'>{display || accountName || ''}</div>
+				<div className='description'>{shortenAddress(address)}</div>
 			</div>
 		</div>
 	);
@@ -61,12 +58,9 @@ export default styled(Address)`
 	align-items: center;
 
 	.content {
+		padding-left: 1rem;
 		display: inline-block;
 		line-height: 1.6rem;
-	}
-
-	.identicon {
-		margin-right: 1rem;
 	}
 
 	.header {
@@ -74,17 +68,10 @@ export default styled(Address)`
 		font-weight: 500;
 		font-size: sm;
 		filter: grayscale(100%);
-		margin-right: 0.4rem;
 	}
 
 	.description {
 		color: grey_primary;
 		font-size: xs;
-		margin-right: 0.4rem;
-	}
-
-	&.inline, .inline {
-		display: inline !important;
-		font-size: sm !important;
 	}
 `;

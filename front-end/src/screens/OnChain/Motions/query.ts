@@ -58,7 +58,6 @@ export const QUERY_LATEST_MOTIONS = gql`
                     status
                 }
             }
-            proposer_address
         }
     }
 }`;
