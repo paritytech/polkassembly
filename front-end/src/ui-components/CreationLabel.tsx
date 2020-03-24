@@ -22,7 +22,6 @@ interface Props{
 
 const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
 	return <span className={className}>
-		{text} by&nbsp;
 		{avatar &&
 			<Avatar className='avatar' username={username} size={'sm'}/>
 		}
@@ -38,6 +37,7 @@ const CreationLabel = ({ avatar, className, created_at, displayname, text='poste
 				:
 				<span>{username}</span>
 		}
+		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>
 		}
