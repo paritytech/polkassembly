@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
@@ -12,46 +11,21 @@ import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation,
-
-	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
-	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
-	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
+	useDeleteCommentReactionMutation
 } from '../../generated/graphql';
 
 export interface ReactionButtonProps {
 	className?: string
-	reactionId: number
 	reaction: string
 	count: number
 	userIds: number[]
 	postId?: number
 	commentId?: string
-	refetch?: (variables?:
-		ReferendumPostAndCommentsQueryVariables |
-		DiscussionPostAndCommentsQueryVariables |
-		ProposalPostAndCommentsQueryVariables |
-		MotionPostAndCommentsQueryVariables |
-		TreasuryProposalPostAndCommentsQueryVariables |
-		undefined) =>
-		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch?: any
 }
 
 const ReactionButton = function ({
 	className,
-	reactionId,
 	reaction,
 	count,
 	userIds,
@@ -77,7 +51,7 @@ const ReactionButton = function ({
 				deletePostReactionMutation({
 					variables: {
 						postId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
@@ -86,7 +60,7 @@ const ReactionButton = function ({
 				addPostReactionMutation({
 					variables: {
 						postId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
@@ -99,7 +73,7 @@ const ReactionButton = function ({
 				deleteCommentReactionMutation({
 					variables: {
 						commentId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
@@ -108,7 +82,7 @@ const ReactionButton = function ({
 				addCommentReactionMutation({
 					variables: {
 						commentId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
