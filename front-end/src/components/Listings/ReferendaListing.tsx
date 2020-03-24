@@ -27,6 +27,7 @@ const Referenda = ({ className, data }: Props) => {
 						<li key={post.id} className='referenda__item'>
 							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
+									address={post.onchain_link?.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
