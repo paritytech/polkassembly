@@ -61,7 +61,6 @@ const Address = ({ address, accountName, className, displayIdenticon = true, dis
 					<div className={'header'}>{display || accountName || ''}</div>
 					<div className={'description'}>{shortenAddress(address)}</div>
 				</div>
-
 			}
 		</div>
 	);
