@@ -9,7 +9,7 @@ import Address from '../ui-components/Address';
 import StatusTag from '../ui-components/StatusTag';
 
 interface DiscussionProps {
-	address?: string
+	address: string
 	className?: string
 	comments?: string
 	created_at?: Date
@@ -39,7 +39,7 @@ const GovernanceAction = function ({
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
 					<Address
-						address={address!}
+						address={address}
 						displayInline={true}
 					/>
 					<ul>
