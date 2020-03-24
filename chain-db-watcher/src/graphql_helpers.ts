@@ -284,7 +284,7 @@ export const addDiscussionPostAndProposal = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Proposal ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Proposal ${onchainProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}\n`), err);
@@ -360,7 +360,7 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Treasury proposal ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Treasury proposal ${onchainTreasuryProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndTreasuryProposal execution error, treasury proposal id ${onchainTreasuryProposalId}\n`), err);
@@ -488,7 +488,7 @@ export const addDiscussionPostAndMotion = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Motion ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Motion ${onchainMotionProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndMotion execution error, motion id ${onchainMotionProposalId}\n`), err);
