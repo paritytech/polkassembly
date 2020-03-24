@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import CreationLabel from '../ui-components/CreationLabel';
+import Address from '../ui-components/Address';
 import StatusTag from '../ui-components/StatusTag';
 
 interface DiscussionProps {
@@ -38,9 +38,9 @@ const GovernanceAction = function ({
 				</Segment>
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
-					<CreationLabel
-						address={address}
-						text={'proposed'}
+					<Address
+						address={address!}
+						displayInline={true}
 					/>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
