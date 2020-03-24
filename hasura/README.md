@@ -55,6 +55,8 @@ So add these entries in /etc/hosts
 127.0.0.1       nodewatcher.nodewatcher
 ```
 
+As Docker only supports host networking on Linux, Mac users need to replace the host names in the hasura migrations yaml files with `http://host.docker.internal`.
+
 ### Migration
 
 We are using a [preview of hasura](https://github.com/hasura/graphql-engine/pull/2395#issuecomment-547378585), migration must therefore be applied manually with the `hasura-dev` cli.

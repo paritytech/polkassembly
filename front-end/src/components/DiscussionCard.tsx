@@ -12,7 +12,8 @@ const DiscussionCard = styled.div`
     background-color: white;
     border-style: solid;
     border-width: 1px;
-    border-color: grey_light;
+    border-color: grey_border;
+    border-radius: 3px;
     &:hover {
         background-color: white_transparent;
         border-style: solid;

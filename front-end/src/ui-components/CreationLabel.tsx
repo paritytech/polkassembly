@@ -7,20 +7,25 @@ import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
+import Avatar from './Avatar';
 import InlineTag from './InlineTag';
 
 interface Props{
-    className?: string
-    created_at: Date
-    displayname?: string | null
+	avatar?: boolean
+	className?: string
+	created_at: Date
+	displayname?: string | null
 	text?: string
 	topic?: string
-    username: string
+	username: string
 }
 
-const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
+const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
 	return <span className={className}>
-		{text} by {
+		{avatar &&
+			<Avatar className='avatar' username={username} size={'sm'}/>
+		}
+		{
 			displayname
 				?
 				<Popup
@@ -32,6 +37,7 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 				:
 				<span>{username}</span>
 		}
+		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>
 		}
@@ -40,14 +46,18 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 };
 
 export default styled(CreationLabel)`
-    color: grey_primary;
-    font-weight: 400;
-    font-size: sm;
-    margin-bottom: 0.6rem;
-        
-    span {
-        color: black_text;
+	color: grey_primary;
+	font-weight: 400;
+	font-size: sm;
+	margin-bottom: 0.6rem;
+		
+	span {
+		color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
+	}
+
+	.avatar {
+		margin-right: 0.2rem;
 	}
 `;
