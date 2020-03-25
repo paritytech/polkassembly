@@ -5,14 +5,10 @@
 import React from 'react';
 import styled from '@xstyled/styled-components';
 
-import { reactions } from './reactions';
 import { usePostReactionsQuery } from '../../generated/graphql';
-import ReactionButton, { ReactionButtonProps } from './ReactionButton';
-
-interface Reaction {
-	id: number
-	reaction: string
-}
+import { reactions } from './reactions';
+import ReactionButton from './ReactionButton';
+import { ReactionMapFields } from '../../types';
 
 interface Props {
 	className?: string
@@ -22,15 +18,13 @@ interface Props {
 const PostReactionBar = function ({ className, postId }: Props) {
 	const { data, refetch } = usePostReactionsQuery({ variables: { postId } });
 
-	const reactionMap: { [ key: string ]: ReactionButtonProps; } = {};
+	const reactionMap: { [ key: string ]: ReactionMapFields; } = {};
 
 	reactions.forEach((reaction) => {
-		const reactionButtonProp: ReactionButtonProps = {
+		reactionMap[reaction] = {
 			count: 0,
-			reaction,
 			userIds: []
 		};
-		reactionMap[reaction] = reactionButtonProp;
 	});
 
 	data?.post_reactions?.forEach(({ reaction, reacting_user }) => {

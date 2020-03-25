@@ -7,12 +7,8 @@ import styled from '@xstyled/styled-components';
 
 import { reactions } from './reactions';
 import { useCommentReactionsQuery } from '../../generated/graphql';
-import ReactionButton, { ReactionButtonProps } from './ReactionButton';
-
-interface Reaction {
-	id: number
-	reaction: string
-}
+import ReactionButton from './ReactionButton';
+import { ReactionMapFields } from '../../types';
 
 interface Props {
 	className?: string
@@ -22,15 +18,13 @@ interface Props {
 const CommentReactionBar = function ({ className, commentId }: Props) {
 	const { data, refetch } = useCommentReactionsQuery({ variables: { commentId } });
 
-	const reactionMap: { [ key: string ]: ReactionButtonProps; } = {};
+	const reactionMap: { [ key: string ]: ReactionMapFields; } = {};
 
 	reactions.forEach((reaction) => {
-		const reactionButtonProp: ReactionButtonProps = {
+		reactionMap[reaction] = {
 			count: 0,
-			reaction,
 			userIds: []
 		};
-		reactionMap[reaction] = reactionButtonProp;
 	});
 
 	data?.comment_reactions?.forEach(({ reaction, reacting_user }) => {
