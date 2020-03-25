@@ -139,10 +139,6 @@ export default styled(SecondProposal)`
 		height: 15rem;
 	}
 
-	.info {
-		margin-bottom: 1rem;
-	}
-
 	@media only screen and (max-width: 768px) {
 		.ui.form {
 			padding: 0rem;
