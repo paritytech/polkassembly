@@ -47,7 +47,7 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 		<Grid className={className} columns={3} divided>
 			<Grid.Row>
 				<Grid.Column>
-					<div><b>Deposit Amount</b></div>
+					<div>Deposit amount</div>
 					<div>{deposit}</div>
 				</Grid.Column>
 				<Grid.Column>
