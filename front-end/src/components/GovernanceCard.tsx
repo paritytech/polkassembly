@@ -13,12 +13,10 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
-	displayname?: string | null
 	onchainId?: number | null
 	status?: string | null
 	title: string
 	topic: string
-	username?: string
 }
 
 const GovernanceAction = function ({

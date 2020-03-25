@@ -14,11 +14,10 @@ interface Props {
 	className?: string
 	address: string
 	accountName?: string
-	displayIdenticon?: boolean
 	displayInline?: boolean
 }
 
-const Address = ({ address, accountName, className, displayIdenticon = true, displayInline }: Props): JSX.Element => {
+const Address = ({ address, accountName, className, displayInline }: Props): JSX.Element => {
 	const { api } = useContext(ApiContext);
 	const [display, setDisplay] = useState<string>('');
 
@@ -40,28 +39,18 @@ const Address = ({ address, accountName, className, displayIdenticon = true, dis
 
 	return (
 		<div className={displayInline ? `${className} inline`: className}>
-			{displayIdenticon &&
-				<Identicon
-					className='image identicon'
-					value={address}
-					size={displayInline ? 16 : 32}
-					theme={'polkadot'}
-				/>}
-			{displayInline
-				?
-				(
-					display || accountName
-						?
-						<div className={'header inline'}>{display || accountName}</div>
-						:
-						<div className={'description inline'}>{shortenAddress(address)}</div>
-				)
-				:
-				<div className='content'>
-					<div className={'header'}>{display || accountName || ''}</div>
-					<div className={'description'}>{shortenAddress(address)}</div>
-				</div>
-			}
+			<Identicon
+				className='image identicon'
+				value={address}
+				size={displayInline ? 16 : 32}
+				theme={'polkadot'}
+			/>
+			<div className='content'>
+				{display || accountName
+					? <div className={displayInline ? 'header inline' : 'header'}>{display || accountName}</div>
+					: <div className={displayInline ? 'description inline' :'description'}>{shortenAddress(address)}</div>
+				}
+			</div>
 		</div>
 	);
 };
@@ -72,7 +61,7 @@ export default styled(Address)`
 	align-items: center;
 
 	.content {
-		display: inline-block;
+		display: inline-flex;
 		line-height: 1.6rem;
 	}
 
@@ -94,7 +83,7 @@ export default styled(Address)`
 		margin-right: 0.4rem;
 	}
 
-	&.inline, .inline {
+	.inline {
 		display: inline-flex !important;
 		font-size: sm !important;
 	}

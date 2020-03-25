@@ -7,12 +7,9 @@ import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import Avatar from './Avatar';
 import InlineTag from './InlineTag';
 
 interface Props{
-	address?: string
-	avatar?: boolean
 	className?: string
 	created_at?: Date
 	displayname?: string | null
@@ -21,11 +18,8 @@ interface Props{
 	username?: string
 }
 
-const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
+const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
 	return <div className={className}>
-		{avatar && username &&
-			<Avatar className='avatar' username={username} size={'sm'}/>
-		}
 		{
 			displayname
 				?
@@ -60,9 +54,5 @@ export default styled(CreationLabel)`
 		color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
-	}
-
-	.avatar {
-		margin-right: 0.2rem;
 	}
 `;
