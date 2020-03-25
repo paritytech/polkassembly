@@ -102,6 +102,10 @@ async function main (): Promise<void> {
 		},
 		err => {
 			console.error(chalk.red(err));
+		},
+		() => {
+			console.log('Treasury subscription completed');
+			process.exit(1);
 		}
 	);
 
@@ -129,6 +133,10 @@ async function main (): Promise<void> {
 		},
 		err => {
 			console.error(chalk.red(err));
+		},
+		() => {
+			console.log('Motion subscription completed');
+			process.exit(1);
 		}
 	);
 
@@ -147,47 +155,60 @@ async function main (): Promise<void> {
 		},
 		err => {
 			console.error(chalk.red(err));
+		},
+		() => {
+			console.log('Proposal subscription completed');
+			process.exit(1);
 		}
 	);
 
-	referendumSubscriptionClient.subscribe(({ data }): void => {
-		if (data?.referendum.mutation === subscriptionMutation.Created) {
-			const {
-				preimageHash,
-				referendumId,
-				referendumStatus
-			} = data?.referendum?.node;
+	referendumSubscriptionClient.subscribe(
+		({ data }): void => {
+			if (data?.referendum.mutation === subscriptionMutation.Created) {
+				const {
+					preimageHash,
+					referendumId,
+					referendumStatus
+				} = data?.referendum?.node;
 
-			// At referendum creation, there should be only
-			// a "Started" status event.
-			if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
-				console.error(
-					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
-					)
-				);
-				return;
+				// At referendum creation, there should be only
+				// a "Started" status event.
+				if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
+					console.error(
+						chalk.red(
+							`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
+						)
+					);
+					return;
+				}
+
+				if (!preimageHash) {
+					throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
+				}
+
+				if (!referendumId && referendumId !== 0) {
+					throw new Error(`Unexpect referendumId, got ${referendumId}`);
+				}
+
+				// FIXME This only takes care of motion and democracy proposals
+				// it does not cater for tech committee proposals
+				addDiscussionReferendum({
+					preimageHash,
+					referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
+					referendumId
+				}).catch(e => {
+					console.error(chalk.red(e));
+				});
 			}
-
-			if (!preimageHash) {
-				throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
-			}
-
-			if (!referendumId && referendumId !== 0) {
-				throw new Error(`Unexpect referendumId, got ${referendumId}`);
-			}
-
-			// FIXME This only takes care of motion and democracy proposals
-			// it does not cater for tech committee proposals
-			addDiscussionReferendum({
-				preimageHash,
-				referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
-				referendumId
-			}).catch(e => {
-				console.error(chalk.red(e));
-			});
+		},
+		err => {
+			console.error(chalk.red(err));
+		},
+		() => {
+			console.log('Referenda subscription completed');
+			process.exit(1);
 		}
-	});
+	);
 }
 
 main().catch(error => console.error(chalk.red(error)));
