@@ -40,6 +40,8 @@ const ReactionButton = function ({
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const reacted = id && userIds.includes(id);
 
+	const _refetch = () => refetch && refetch();
+
 	const handleReact = () => {
 		if (!id) {
 			console.error('No user id found. Not logged in?');
@@ -55,6 +57,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addPostReactionMutation({
@@ -64,6 +67,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -77,6 +81,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addCommentReactionMutation({
@@ -86,11 +91,10 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
-
-		refetch && refetch();
 	};
 
 	return (
