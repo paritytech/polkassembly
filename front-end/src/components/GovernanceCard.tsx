@@ -8,8 +8,8 @@ import styled from '@xstyled/styled-components';
 import Address from '../ui-components/Address';
 import StatusTag from '../ui-components/StatusTag';
 
-interface DiscussionProps {
-	address: string
+interface GovernanceProps {
+	address?: string
 	className?: string
 	comments?: string
 	created_at?: Date
@@ -28,7 +28,7 @@ const GovernanceAction = function ({
 	onchainId,
 	status,
 	title
-}:DiscussionProps) {
+}:GovernanceProps) {
 
 	return (
 		<div className={className}>
@@ -39,7 +39,7 @@ const GovernanceAction = function ({
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
 					<Address
-						address={address}
+						address={address || ''}
 						displayInline={true}
 					/>
 					<ul>
