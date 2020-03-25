@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
@@ -11,7 +12,12 @@ import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation
+	useDeleteCommentReactionMutation,
+
+	PostReactionsQueryVariables,
+	CommentReactionsQueryVariables,
+	PostReactionsQuery,
+	CommentReactionsQuery
 } from '../../generated/graphql';
 
 export interface ReactionButtonProps {
@@ -21,7 +27,8 @@ export interface ReactionButtonProps {
 	userIds: number[]
 	postId?: number
 	commentId?: string
-	refetch?: any
+	refetchCommentReactions?: (variables?: CommentReactionsQueryVariables | undefined) => Promise<ApolloQueryResult<CommentReactionsQuery>>
+	refetchPostReactions?: (variables?: PostReactionsQueryVariables | undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
 }
 
 const ReactionButton = function ({
@@ -31,7 +38,8 @@ const ReactionButton = function ({
 	userIds,
 	postId,
 	commentId,
-	refetch
+	refetchCommentReactions,
+	refetchPostReactions
 }: ReactionButtonProps) {
 	const { id } = useContext(UserDetailsContext);
 	const [addPostReactionMutation] = useAddPostReactionMutation();
@@ -40,7 +48,10 @@ const ReactionButton = function ({
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const reacted = id && userIds.includes(id);
 
-	const _refetch = () => refetch && refetch();
+	const _refetch = () => {
+		refetchCommentReactions && refetchCommentReactions();
+		refetchPostReactions && refetchPostReactions();
+	};
 
 	const handleReact = () => {
 		if (!id) {

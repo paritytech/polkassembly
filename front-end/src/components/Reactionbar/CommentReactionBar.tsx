@@ -59,7 +59,7 @@ const CommentReactionBar = function ({ className, commentId }: Props) {
 						userIds={userIds}
 						reaction={reaction}
 						commentId={commentId}
-						refetch={refetch}
+						refetchCommentReactions={refetch}
 					/>
 				);
 			})}
