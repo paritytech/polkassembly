@@ -11,8 +11,11 @@ import {
 	useAddPostReactionMutation,
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation
+	useDeleteCommentReactionMutation,
+	PostReactionsQuery,
+	CommentReactionsQuery
 } from '../../generated/graphql';
+import { ApolloQueryResult } from 'apollo-client';
 
 export interface ReactionButtonProps {
 	className?: string
@@ -21,7 +24,8 @@ export interface ReactionButtonProps {
 	userIds: number[]
 	postId?: number
 	commentId?: string
-	refetch?: any
+	refetch?: (variables?: undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
+		| Promise<ApolloQueryResult<CommentReactionsQuery>>
 }
 
 const ReactionButton = function ({
@@ -57,7 +61,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(_refetch)
+					.then(() => {_refetch();})
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addPostReactionMutation({
@@ -67,7 +71,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(_refetch)
+					.then(() => {_refetch();})
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -81,7 +85,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(_refetch)
+					.then(() => {_refetch();})
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addCommentReactionMutation({
@@ -91,7 +95,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(_refetch)
+					.then(() => {_refetch();})
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
