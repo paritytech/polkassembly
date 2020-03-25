@@ -46,9 +46,16 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 				theme={'polkadot'}
 			/>
 			<div className='content'>
-				{display || accountName
-					? <div className={displayInline ? 'header inline' : 'header'}>{display || accountName}</div>
-					: <div className={displayInline ? 'description inline' :'description'}>{shortenAddress(address)}</div>
+				{displayInline
+					? (display || accountName
+						? <div className={'header inline'}>{display || accountName}</div>
+						: <div className={'description inline'}>{shortenAddress(address)}</div>
+					)
+					:
+					<>
+						<div className={'header'}>{display || accountName}</div>
+						<div className={'description'}>{shortenAddress(address)}</div>
+					</>
 				}
 			</div>
 		</div>
@@ -61,7 +68,7 @@ export default styled(Address)`
 	align-items: center;
 
 	.content {
-		display: inline-flex;
+		display: inline-block;
 		line-height: 1.6rem;
 	}
 
