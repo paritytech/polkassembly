@@ -92,6 +92,7 @@ export default styled(Button)`
 			font-size: sm;
 			border: none;
 			padding: 0.7rem 0.7rem;
+			margin: 0 0.4rem 0 0;
 			text-transform: none;
 			letter-spacing: 0rem;
 			border-radius: 0.2rem;
