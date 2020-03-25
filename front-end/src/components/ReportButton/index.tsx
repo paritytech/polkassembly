@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useState, useContext } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Icon, TextArea, TextAreaProps, Dropdown, DropdownProps } from 'semantic-ui-react';
 
 import { useReportContentMutation } from '../../generated/graphql';
@@ -12,6 +13,7 @@ import Button from '../../ui-components/Button';
 import Modal from '../../ui-components/Modal';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import messages from '../../util/messages';
 
 interface DiscussionProps {
 	type: string
@@ -33,6 +35,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const [comments, setComments] = useState('');
 	const [reportContentMutation, { loading, error }] = useReportContentMutation();
 	const { queueNotification } = useContext(NotificationContext);
+	const { control, errors, handleSubmit } = useForm();
 
 	const handleReport = () => {
 		reportContentMutation({
@@ -77,7 +80,7 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 								disabled={loading}
 								icon='check'
 								primary
-								onClick={handleReport}
+								onClick={handleSubmit(handleReport)}
 							/>
 							<Button
 								content='Close'
@@ -98,25 +101,36 @@ const ReportButton = function ({ type, contentId }:DiscussionProps) {
 						<Form.Group>
 							<Form.Field width={16}>
 								<label>Reason</label>
-								<Dropdown
-									placeholder={'I\'m reporting because'}
-									fluid
-									selection
-									options={reasonOptions}
-									onChange={onReasonChange}
+								<Controller
+									as={<Dropdown
+										placeholder={'I\'m reporting because'}
+										fluid
+										selection
+										options={reasonOptions}
+										onChange={onReasonChange}
+									/>}
+									control={control}
+									name='reason'
+									rules={{ required: true }}
 								/>
 							</Form.Field>
 						</Form.Group>
 						<Form.Group>
 							<Form.Field width={16}>
 								<label>Comments (300 char max)</label>
-								<TextArea
-									name={'comments'}
-									onChange={onCommentsChange}
-									value={comments || ''}
+								<Controller
+									as={<TextArea
+										onChange={onCommentsChange}
+										value={comments || ''}
+									/>}
+									control={control}
+									name='comments'
+									rules={{ maxLength:300 }}
 								/>
 							</Form.Field>
 						</Form.Group>
+						{errors.name && <FilteredError text={messages.REPORT_REASON_REQUIRED}/>}
+						{errors.comments && <FilteredError text={messages.REPORT_COMMENTS_MAXLENGTH}/>}
 						{error && <FilteredError text={error.message}/>}
 					</Form>
 				</Modal>
