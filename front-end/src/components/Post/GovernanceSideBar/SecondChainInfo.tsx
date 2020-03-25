@@ -51,7 +51,7 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 					<div>{deposit}</div>
 				</Grid.Column>
 				<Grid.Column>
-					<div><b>Seconded By</b></div>
+					<div>Seconded by</div>
 					{seconds ? <div>{seconds} Addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
@@ -66,4 +66,3 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 export default styled(SecondChainInfo)`
 	margin-bottom: 1rem;
 `;
-
