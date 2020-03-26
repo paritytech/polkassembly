@@ -59,7 +59,7 @@ const PostReactionBar = function ({ className, postId }: Props) {
 						userIds={userIds}
 						reaction={reaction}
 						postId={postId}
-						refetchPostReactions={refetch}
+						refetch={refetch}
 					/>
 				);
 			})}

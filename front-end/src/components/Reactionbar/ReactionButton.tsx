@@ -13,9 +13,6 @@ import {
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
 	useDeleteCommentReactionMutation,
-
-	PostReactionsQueryVariables,
-	CommentReactionsQueryVariables,
 	PostReactionsQuery,
 	CommentReactionsQuery
 } from '../../generated/graphql';
@@ -27,8 +24,8 @@ export interface ReactionButtonProps {
 	userIds: number[]
 	postId?: number
 	commentId?: string
-	refetchCommentReactions?: (variables?: CommentReactionsQueryVariables | undefined) => Promise<ApolloQueryResult<CommentReactionsQuery>>
-	refetchPostReactions?: (variables?: PostReactionsQueryVariables | undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
+	refetch?: (variables?: undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
+		| Promise<ApolloQueryResult<CommentReactionsQuery>>
 }
 
 const ReactionButton = function ({
@@ -38,8 +35,7 @@ const ReactionButton = function ({
 	userIds,
 	postId,
 	commentId,
-	refetchCommentReactions,
-	refetchPostReactions
+	refetch
 }: ReactionButtonProps) {
 	const { id } = useContext(UserDetailsContext);
 	const [addPostReactionMutation] = useAddPostReactionMutation();
@@ -48,10 +44,7 @@ const ReactionButton = function ({
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const reacted = id && userIds.includes(id);
 
-	const _refetch = () => {
-		refetchCommentReactions && refetchCommentReactions();
-		refetchPostReactions && refetchPostReactions();
-	};
+	const _refetch = () => { refetch && refetch(); };
 
 	const handleReact = () => {
 		if (!id) {
