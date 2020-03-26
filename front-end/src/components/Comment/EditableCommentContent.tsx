@@ -29,7 +29,7 @@ import {
 	MotionPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQuery
 } from '../../generated/graphql';
-import Reactionbar from '../Reactionbar';
+import CommentReactionBar from '../Reactionbar/CommentReactionBar';
 import ReportButton from '../ReportButton';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -57,7 +57,7 @@ interface Props {
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const EditableCommentContent = ({ authorId, className, content, comment, commentId, refetch }: Props) => {
+const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
@@ -127,13 +127,7 @@ const EditableCommentContent = ({ authorId, className, content, comment, comment
 						<>
 							<Markdown md={content} />
 							<div className='actions-bar'>
-								<Reactionbar
-									className='reactions'
-									commentId={commentId}
-									reactions={comment.reactions}
-									commentReactions={comment.comment_reactions}
-									refetch={refetch}
-								/>
+								<CommentReactionBar className='reactions' commentId={commentId} />
 								{id && <div className='vl'/>}
 								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}

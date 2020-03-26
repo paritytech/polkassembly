@@ -5,27 +5,28 @@
 import * as React from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import Address from '../ui-components/Address';
 import StatusTag from '../ui-components/StatusTag';
 
-interface DiscussionProps {
-    className?: string
-    comments?: string
-    created_at?: Date
-    displayname?: string | null
-    onchainId?: number | null
-    status?: string | null
+interface GovernanceProps {
+	address?: string
+	className?: string
+	comments?: string
+	created_at?: Date
+	onchainId?: number | null
+	status?: string | null
 	title: string
 	topic: string
-    username?: string
 }
 
 const GovernanceAction = function ({
+	address,
 	className,
 	comments,
 	onchainId,
 	status,
 	title
-}:DiscussionProps) {
+}:GovernanceProps) {
 
 	return (
 		<div className={className}>
@@ -35,6 +36,10 @@ const GovernanceAction = function ({
 				</Segment>
 				<Segment>
 					<h4 className={'proposalTitle'}>{title}</h4>
+					<Address
+						address={address || ''}
+						displayInline={true}
+					/>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
@@ -97,7 +102,7 @@ export default styled(GovernanceAction)`
     h4, h5 {
         font-family: font_default;
         display: block;
-		margin-bottom: 0.3rem; 
+		margin-bottom: 0.6rem; 
 	}
 
 	h4 {

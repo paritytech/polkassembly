@@ -4,7 +4,6 @@
 
 import gql from 'graphql-tag';
 import { commentFields } from '../../fragments/comments';
-import { postReactionFields } from '../../fragments/postReactions';
 
 const onchainLinkMotionPreimage = gql`
     fragment onchainLinkMotionPreimage on Preimage {
@@ -85,16 +84,8 @@ const motionPost = gql`
             id
             name
         }
-        post_reactions {
-            ...postReactionFields
-        }
-        reactions {
-            id
-            reaction
-        }
     }
     ${commentFields}
-    ${postReactionFields}
     ${onchainLinkMotion}
 `;
 
