@@ -7,24 +7,19 @@ import React from 'react';
 import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
-import Avatar from './Avatar';
 import InlineTag from './InlineTag';
 
 interface Props{
-	avatar?: boolean
 	className?: string
-	created_at: Date
+	created_at?: Date
 	displayname?: string | null
 	text?: string
 	topic?: string
-	username: string
+	username?: string
 }
 
-const CreationLabel = ({ avatar, className, created_at, displayname, text='posted', username, topic } : Props) => {
-	return <span className={className}>
-		{avatar &&
-			<Avatar className='avatar' username={username} size={'sm'}/>
-		}
+const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
+	return <div className={className}>
 		{
 			displayname
 				?
@@ -34,15 +29,18 @@ const CreationLabel = ({ avatar, className, created_at, displayname, text='poste
 					hoverable={true}
 					position='top center'
 				/>
-				:
-				<span>{username}</span>
+				: (username &&
+					<span>{username}</span>
+				)
 		}
 		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>
 		}
-		{moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}
-	</span>;
+		{created_at &&
+			moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()
+		}
+	</div>;
 };
 
 export default styled(CreationLabel)`
@@ -50,14 +48,11 @@ export default styled(CreationLabel)`
 	font-weight: 400;
 	font-size: sm;
 	margin-bottom: 0.6rem;
+	display: inline-flex;
 		
 	span {
 		color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
-	}
-
-	.avatar {
-		margin-right: 0.2rem;
 	}
 `;
