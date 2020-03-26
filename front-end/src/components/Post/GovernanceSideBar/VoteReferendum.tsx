@@ -46,9 +46,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	const [conviction, setConviction] = useState<number>(convictionOpts[1].value);
 
 	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		const convictionValue = Number(data.value);
-		console.log('convictionValue',convictionValue);
-		setConviction(convictionValue);
+		setConviction(Number(data.value));
 	};
 
 	const onBalanceChange = (balance: BN) => setLockedBalance(balance);
@@ -62,8 +60,6 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			console.error('referendumId not set');
 			return;
 		}
-
-		console.log('lockedB',lockedBalance?.toString());
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const params = { Standard: { balance: lockedBalance, vote: { aye, conviction } } } as any;
@@ -120,7 +116,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	const VoteLock = () =>
 		<Form.Field>
-			<label>Vote Lock
+			<label>Vote lock
 				<HelperTooltip
 					content='You can multiply your votes by locking your tokens for longer periods of time.'
 				/>

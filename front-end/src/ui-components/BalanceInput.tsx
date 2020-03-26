@@ -2,16 +2,14 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import BN from 'bn.js';
 import React, { useState } from 'react';
 import styled from '@xstyled/styled-components';
-import { Form } from 'semantic-ui-react';
 
-import Input from './Input';
+import { Form } from './Form';
 import HelperTooltip from './HelperTooltip';
-import BN from 'bn.js';
-// import { chainProperties } from 'src/global/networkConstants';
-// import getNetwork from 'src/util/getNetwork';
-import { inputToBn } from 'src/util/inputToBn';
+import Input from './Input';
+import { inputToBn } from '../util/inputToBn';
 
 interface Props{
 	className?: string
@@ -23,7 +21,6 @@ interface Props{
 
 const BalanceInput = ({ className, label = '', helpText = '', onChange, placeholder = '' }: Props) => {
 	const [isValidInput, setIsValidInput] = useState(true);
-	// const currentNetwork = getNetwork();
 	const onBalanceChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const [balance, isValid] = inputToBn(event.currentTarget.value, false);
 		setIsValidInput(isValid);
@@ -33,7 +30,7 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 		}
 	};
 
-	return 	<div className={className}>
+	return 	<Form.Field className={className} width={16}>
 		<label>
 			{label}
 			{helpText && <HelperTooltip	content={helpText}/>}
@@ -44,7 +41,7 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 			placeholder={placeholder}
 			type='string'
 		/>
-	</div>;
+	</Form.Field>;
 };
 
 export default styled(BalanceInput)`
@@ -54,7 +51,7 @@ export default styled(BalanceInput)`
 	}
 
 	.invalid {
-		color: red_primary;
+		color:  red_primary;
 		border-color: red_primary;
 	}
 `;
