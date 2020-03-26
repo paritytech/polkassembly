@@ -7,7 +7,9 @@ import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { formatBalance } from '@polkadot/util';
 
+import { chainProperties } from '../../../global/networkConstants';
 import { ApiContext } from '../../../context/ApiContext';
+import getNetwork from '../../../util/getNetwork';
 
 interface Props {
 	className?: string
@@ -18,6 +20,7 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 	const [seconds, setSeconds] = useState(0);
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
+	const currentNetwork = getNetwork();
 
 	useEffect(() => {
 		async function getSeconds() {
@@ -55,7 +58,7 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 					{seconds ? <div>{seconds} Addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
-					<h6>Locked</h6>
+					<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
 					<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
 				</Grid.Column>
 			</Grid.Row>
