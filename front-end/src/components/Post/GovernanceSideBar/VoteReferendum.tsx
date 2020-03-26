@@ -52,7 +52,6 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	};
 
 	const onBalanceChange = (balance: BN) => setLockedBalance(balance);
-
 	const voteRefrendum = async (aye: boolean) => {
 		if (!api) {
 			console.error('polkadot/api not set');
