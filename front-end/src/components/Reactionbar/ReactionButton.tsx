@@ -13,45 +13,23 @@ import {
 	useAddCommentReactionMutation,
 	useDeletePostReactionMutation,
 	useDeleteCommentReactionMutation,
-
-	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
-	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
-	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
+	PostReactionsQuery,
+	CommentReactionsQuery
 } from '../../generated/graphql';
 
 export interface ReactionButtonProps {
 	className?: string
-	reactionId: number
 	reaction: string
 	count: number
 	userIds: number[]
 	postId?: number
 	commentId?: string
-	refetch?: (variables?:
-		ReferendumPostAndCommentsQueryVariables |
-		DiscussionPostAndCommentsQueryVariables |
-		ProposalPostAndCommentsQueryVariables |
-		MotionPostAndCommentsQueryVariables |
-		TreasuryProposalPostAndCommentsQueryVariables |
-		undefined) =>
-		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
-		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch?: (variables?: undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
+		| Promise<ApolloQueryResult<CommentReactionsQuery>>
 }
 
 const ReactionButton = function ({
 	className,
-	reactionId,
 	reaction,
 	count,
 	userIds,
@@ -66,6 +44,8 @@ const ReactionButton = function ({
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const reacted = id && userIds.includes(id);
 
+	const _refetch = () => { refetch && refetch(); };
+
 	const handleReact = () => {
 		if (!id) {
 			console.error('No user id found. Not logged in?');
@@ -77,19 +57,21 @@ const ReactionButton = function ({
 				deletePostReactionMutation({
 					variables: {
 						postId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addPostReactionMutation({
 					variables: {
 						postId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -99,24 +81,24 @@ const ReactionButton = function ({
 				deleteCommentReactionMutation({
 					variables: {
 						commentId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addCommentReactionMutation({
 					variables: {
 						commentId,
-						reactionId,
+						reaction,
 						userId: id
 					}
 				})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
-
-		refetch && refetch();
 	};
 
 	return (

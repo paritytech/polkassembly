@@ -49,7 +49,7 @@ import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
 import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
 import GovenanceSideBar from './GovernanceSideBar';
-import Reactionbar from '../Reactionbar';
+import PostReactionBar from '../Reactionbar/PostReactionBar';
 
 interface Props {
 	className?: string
@@ -142,7 +142,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						toggleEdit={toggleEdit}
 					/>
 					<div className='actions-bar'>
-						<Reactionbar className='reactions' postId={post.id} reactions={post.reactions} postReactions={post.post_reactions} refetch={refetch} />
+						<PostReactionBar className='reactions' postId={post.id} />
 						{id && <div className='vl'/>}
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
