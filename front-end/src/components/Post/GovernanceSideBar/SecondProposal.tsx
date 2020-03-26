@@ -78,7 +78,10 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				<div className='card'>
 					<Form standalone={false}>
 						<h4>Second</h4>
-						<SecondChainInfo proposalId={proposalId} />
+						{proposalId || proposalId === 0 ?
+							<SecondChainInfo proposalId={proposalId} />
+							: null
+						}
 						<Form.Group>
 							<Form.Field className='button-container'>
 								<Button

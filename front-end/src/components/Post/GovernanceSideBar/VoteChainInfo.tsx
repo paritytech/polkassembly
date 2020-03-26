@@ -10,7 +10,7 @@ import { ApiContext } from '../../../context/ApiContext';
 
 interface Props {
 	className?: string
-	referendumId?: number | null | undefined
+	referendumId?: number
 }
 
 const VoteChainInfo = ({ className, referendumId }: Props) => {

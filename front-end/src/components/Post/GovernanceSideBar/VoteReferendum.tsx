@@ -95,7 +95,10 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				<div className='card'>
 					<Form standalone={false}>
 						<h4>Vote</h4>
-						<VoteChainInfo referendumId={referendumId} />
+						{referendumId || referendumId === 0 ?
+							<VoteChainInfo referendumId={referendumId} />
+							: null
+						}
 						<Form.Group>
 							<Form.Field className='button-container'>
 								<Button
