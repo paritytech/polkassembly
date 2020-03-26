@@ -512,8 +512,7 @@ export type Comment_Reactions = {
   created_at: Scalars['timestamp'],
   id: Scalars['Int'],
   reacting_user?: Maybe<User>,
-  reaction: Reactions,
-  reaction_id: Scalars['Int'],
+  reaction: Scalars['bpchar'],
   updated_at: Scalars['timestamp'],
   user_id: Scalars['Int'],
 };
@@ -567,13 +566,11 @@ export type Comment_Reactions_Arr_Rel_Insert_Input = {
 export type Comment_Reactions_Avg_Fields = {
    __typename?: 'comment_reactions_avg_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Avg_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -585,8 +582,7 @@ export type Comment_Reactions_Bool_Exp = {
   comment_id?: Maybe<Uuid_Comparison_Exp>,
   created_at?: Maybe<Timestamp_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
-  reaction?: Maybe<Reactions_Bool_Exp>,
-  reaction_id?: Maybe<Int_Comparison_Exp>,
+  reaction?: Maybe<Bpchar_Comparison_Exp>,
   updated_at?: Maybe<Timestamp_Comparison_Exp>,
   user_id?: Maybe<Int_Comparison_Exp>,
 };
@@ -597,7 +593,6 @@ export enum Comment_Reactions_Constraint {
 
 export type Comment_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
@@ -606,35 +601,34 @@ export type Comment_Reactions_Insert_Input = {
   comment_id?: Maybe<Scalars['uuid']>,
   created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
-  reaction?: Maybe<Reactions_Obj_Rel_Insert_Input>,
-  reaction_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
   updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Max_Fields = {
    __typename?: 'comment_reactions_max_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Max_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Min_Fields = {
    __typename?: 'comment_reactions_min_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Min_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -660,17 +654,20 @@ export type Comment_Reactions_Order_By = {
   comment_id?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  reaction?: Maybe<Reactions_Order_By>,
-  reaction_id?: Maybe<Order_By>,
+  reaction?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Comment_Reactions_Select_Column {
   CommentId = 'comment_id',
   CreatedAt = 'created_at',
   Id = 'id',
-  ReactionId = 'reaction_id',
+  Reaction = 'reaction',
   UpdatedAt = 'updated_at',
   UserId = 'user_id'
 }
@@ -679,7 +676,7 @@ export type Comment_Reactions_Set_Input = {
   comment_id?: Maybe<Scalars['uuid']>,
   created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
   updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
@@ -687,52 +684,44 @@ export type Comment_Reactions_Set_Input = {
 export type Comment_Reactions_Stddev_Fields = {
    __typename?: 'comment_reactions_stddev_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Stddev_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Stddev_Pop_Fields = {
    __typename?: 'comment_reactions_stddev_pop_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Stddev_Pop_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Stddev_Samp_Fields = {
    __typename?: 'comment_reactions_stddev_samp_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Stddev_Samp_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Sum_Fields = {
    __typename?: 'comment_reactions_sum_fields',
   id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Sum_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -740,7 +729,7 @@ export enum Comment_Reactions_Update_Column {
   CommentId = 'comment_id',
   CreatedAt = 'created_at',
   Id = 'id',
-  ReactionId = 'reaction_id',
+  Reaction = 'reaction',
   UpdatedAt = 'updated_at',
   UserId = 'user_id'
 }
@@ -748,39 +737,33 @@ export enum Comment_Reactions_Update_Column {
 export type Comment_Reactions_Var_Pop_Fields = {
    __typename?: 'comment_reactions_var_pop_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Var_Pop_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Var_Samp_Fields = {
    __typename?: 'comment_reactions_var_samp_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Var_Samp_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Variance_Fields = {
    __typename?: 'comment_reactions_variance_fields',
   id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Comment_Reactions_Variance_Order_By = {
   id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -795,8 +778,6 @@ export type Comments = {
   id: Scalars['uuid'],
   post: Posts,
   post_id: Scalars['Int'],
-  reactions: Array<Reactions>,
-  reactions_aggregate: Reactions_Aggregate,
   updated_at: Scalars['timestamptz'],
 };
 
@@ -816,24 +797,6 @@ export type CommentsComment_Reactions_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
   where?: Maybe<Comment_Reactions_Bool_Exp>
-};
-
-
-export type CommentsReactionsArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type CommentsReactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -904,7 +867,6 @@ export type Comments_Bool_Exp = {
   id?: Maybe<Uuid_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
-  reactions?: Maybe<Reactions_Bool_Exp>,
   updated_at?: Maybe<Timestamptz_Comparison_Exp>,
 };
 
@@ -925,7 +887,6 @@ export type Comments_Insert_Input = {
   id?: Maybe<Scalars['uuid']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
-  reactions?: Maybe<Reactions_Arr_Rel_Insert_Input>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
 
@@ -934,6 +895,7 @@ export type Comments_Max_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -942,6 +904,7 @@ export type Comments_Max_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -951,6 +914,7 @@ export type Comments_Min_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -959,6 +923,7 @@ export type Comments_Min_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -988,8 +953,11 @@ export type Comments_Order_By = {
   id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
-  reactions_aggregate?: Maybe<Reactions_Aggregate_Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'],
 };
 
 export enum Comments_Select_Column {
@@ -2921,22 +2889,34 @@ export type Mutation_Root = {
   deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
   delete_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  delete_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
+  delete_comments_by_pk?: Maybe<Comments>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  delete_onchain_links_by_pk?: Maybe<Onchain_Links>,
   delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  delete_post_reactions_by_pk?: Maybe<Post_Reactions>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  delete_post_topics_by_pk?: Maybe<Post_Topics>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
+  delete_post_types_by_pk?: Maybe<Post_Types>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
-  delete_reactions?: Maybe<Reactions_Mutation_Response>,
+  delete_posts_by_pk?: Maybe<Posts>,
   executeRaw: Scalars['Json'],
   insert_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  insert_comment_reactions_one?: Maybe<Comment_Reactions>,
   insert_comments?: Maybe<Comments_Mutation_Response>,
+  insert_comments_one?: Maybe<Comments>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  insert_onchain_links_one?: Maybe<Onchain_Links>,
   insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  insert_post_reactions_one?: Maybe<Post_Reactions>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  insert_post_topics_one?: Maybe<Post_Topics>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
+  insert_post_types_one?: Maybe<Post_Types>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
-  insert_reactions?: Maybe<Reactions_Mutation_Response>,
+  insert_posts_one?: Maybe<Posts>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
@@ -2999,13 +2979,19 @@ export type Mutation_Root = {
   updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
   update_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  update_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   update_comments?: Maybe<Comments_Mutation_Response>,
+  update_comments_by_pk?: Maybe<Comments>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  update_onchain_links_by_pk?: Maybe<Onchain_Links>,
   update_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  update_post_reactions_by_pk?: Maybe<Post_Reactions>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  update_post_topics_by_pk?: Maybe<Post_Topics>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
+  update_post_types_by_pk?: Maybe<Post_Types>,
   update_posts?: Maybe<Posts_Mutation_Response>,
-  update_reactions?: Maybe<Reactions_Mutation_Response>,
+  update_posts_by_pk?: Maybe<Posts>,
   upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertCouncil: Council,
@@ -3474,8 +3460,18 @@ export type Mutation_RootDelete_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootDelete_Comment_Reactions_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid']
 };
 
 
@@ -3484,8 +3480,18 @@ export type Mutation_RootDelete_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_ReactionsArgs = {
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_Reactions_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3494,8 +3500,18 @@ export type Mutation_RootDelete_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootDelete_Post_Topics_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_Types_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3504,8 +3520,8 @@ export type Mutation_RootDelete_PostsArgs = {
 };
 
 
-export type Mutation_RootDelete_ReactionsArgs = {
-  where: Reactions_Bool_Exp
+export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3521,8 +3537,20 @@ export type Mutation_RootInsert_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootInsert_Comment_Reactions_OneArgs = {
+  object: Comment_Reactions_Insert_Input,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>,
+  on_conflict?: Maybe<Comments_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input,
   on_conflict?: Maybe<Comments_On_Conflict>
 };
 
@@ -3533,8 +3561,20 @@ export type Mutation_RootInsert_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootInsert_Onchain_Links_OneArgs = {
+  object: Onchain_Links_Insert_Input,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_ReactionsArgs = {
   objects: Array<Post_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_Reactions_OneArgs = {
+  object: Post_Reactions_Insert_Input,
   on_conflict?: Maybe<Post_Reactions_On_Conflict>
 };
 
@@ -3545,8 +3585,20 @@ export type Mutation_RootInsert_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootInsert_Post_Topics_OneArgs = {
+  object: Post_Topics_Insert_Input,
+  on_conflict?: Maybe<Post_Topics_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>,
+  on_conflict?: Maybe<Post_Types_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_Types_OneArgs = {
+  object: Post_Types_Insert_Input,
   on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
@@ -3557,9 +3609,9 @@ export type Mutation_RootInsert_PostsArgs = {
 };
 
 
-export type Mutation_RootInsert_ReactionsArgs = {
-  objects: Array<Reactions_Insert_Input>,
-  on_conflict?: Maybe<Reactions_On_Conflict>
+export type Mutation_RootInsert_Posts_OneArgs = {
+  object: Posts_Insert_Input,
+  on_conflict?: Maybe<Posts_On_Conflict>
 };
 
 
@@ -3925,10 +3977,24 @@ export type Mutation_RootUpdate_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Comment_Reactions_By_PkArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>,
+  _set?: Maybe<Comment_Reactions_Set_Input>,
+  pk_columns: Comment_Reactions_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>,
   _set?: Maybe<Comments_Set_Input>,
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _inc?: Maybe<Comments_Inc_Input>,
+  _set?: Maybe<Comments_Set_Input>,
+  pk_columns: Comments_Pk_Columns_Input
 };
 
 
@@ -3939,10 +4005,24 @@ export type Mutation_RootUpdate_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
+  _inc?: Maybe<Onchain_Links_Inc_Input>,
+  _set?: Maybe<Onchain_Links_Set_Input>,
+  pk_columns: Onchain_Links_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_ReactionsArgs = {
   _inc?: Maybe<Post_Reactions_Inc_Input>,
   _set?: Maybe<Post_Reactions_Set_Input>,
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_Reactions_By_PkArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>,
+  _set?: Maybe<Post_Reactions_Set_Input>,
+  pk_columns: Post_Reactions_Pk_Columns_Input
 };
 
 
@@ -3953,10 +4033,24 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Post_Topics_By_PkArgs = {
+  _inc?: Maybe<Post_Topics_Inc_Input>,
+  _set?: Maybe<Post_Topics_Set_Input>,
+  pk_columns: Post_Topics_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
   where: Post_Types_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
+  _inc?: Maybe<Post_Types_Inc_Input>,
+  _set?: Maybe<Post_Types_Set_Input>,
+  pk_columns: Post_Types_Pk_Columns_Input
 };
 
 
@@ -3967,10 +4061,10 @@ export type Mutation_RootUpdate_PostsArgs = {
 };
 
 
-export type Mutation_RootUpdate_ReactionsArgs = {
-  _inc?: Maybe<Reactions_Inc_Input>,
-  _set?: Maybe<Reactions_Set_Input>,
-  where: Reactions_Bool_Exp
+export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _inc?: Maybe<Posts_Inc_Input>,
+  _set?: Maybe<Posts_Set_Input>,
+  pk_columns: Posts_Pk_Columns_Input
 };
 
 
@@ -4781,6 +4875,10 @@ export type Onchain_Links_Order_By = {
   proposer_address?: Maybe<Order_By>,
 };
 
+export type Onchain_Links_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -4971,8 +5069,7 @@ export type Post_Reactions = {
   post: Posts,
   post_id: Scalars['Int'],
   reacting_user?: Maybe<User>,
-  reaction: Reactions,
-  reaction_id: Scalars['Int'],
+  reaction: Scalars['bpchar'],
   updated_at: Scalars['timestamp'],
   user_id: Scalars['Int'],
 };
@@ -5027,14 +5124,12 @@ export type Post_Reactions_Avg_Fields = {
    __typename?: 'post_reactions_avg_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Avg_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5046,8 +5141,7 @@ export type Post_Reactions_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
-  reaction?: Maybe<Reactions_Bool_Exp>,
-  reaction_id?: Maybe<Int_Comparison_Exp>,
+  reaction?: Maybe<Bpchar_Comparison_Exp>,
   updated_at?: Maybe<Timestamp_Comparison_Exp>,
   user_id?: Maybe<Int_Comparison_Exp>,
 };
@@ -5059,7 +5153,6 @@ export enum Post_Reactions_Constraint {
 export type Post_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
@@ -5068,8 +5161,7 @@ export type Post_Reactions_Insert_Input = {
   id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction?: Maybe<Reactions_Obj_Rel_Insert_Input>,
-  reaction_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
   updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
@@ -5078,14 +5170,12 @@ export type Post_Reactions_Max_Fields = {
    __typename?: 'post_reactions_max_fields',
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Reactions_Max_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5093,14 +5183,12 @@ export type Post_Reactions_Min_Fields = {
    __typename?: 'post_reactions_min_fields',
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Reactions_Min_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5126,17 +5214,20 @@ export type Post_Reactions_Order_By = {
   id?: Maybe<Order_By>,
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction?: Maybe<Reactions_Order_By>,
-  reaction_id?: Maybe<Order_By>,
+  reaction?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Post_Reactions_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
   PostId = 'post_id',
-  ReactionId = 'reaction_id',
+  Reaction = 'reaction',
   UpdatedAt = 'updated_at',
   UserId = 'user_id'
 }
@@ -5145,7 +5236,7 @@ export type Post_Reactions_Set_Input = {
   created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
   updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
@@ -5154,14 +5245,12 @@ export type Post_Reactions_Stddev_Fields = {
    __typename?: 'post_reactions_stddev_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Stddev_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5169,14 +5258,12 @@ export type Post_Reactions_Stddev_Pop_Fields = {
    __typename?: 'post_reactions_stddev_pop_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Stddev_Pop_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5184,14 +5271,12 @@ export type Post_Reactions_Stddev_Samp_Fields = {
    __typename?: 'post_reactions_stddev_samp_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Stddev_Samp_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5199,14 +5284,12 @@ export type Post_Reactions_Sum_Fields = {
    __typename?: 'post_reactions_sum_fields',
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  reaction_id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Reactions_Sum_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5214,7 +5297,7 @@ export enum Post_Reactions_Update_Column {
   CreatedAt = 'created_at',
   Id = 'id',
   PostId = 'post_id',
-  ReactionId = 'reaction_id',
+  Reaction = 'reaction',
   UpdatedAt = 'updated_at',
   UserId = 'user_id'
 }
@@ -5223,14 +5306,12 @@ export type Post_Reactions_Var_Pop_Fields = {
    __typename?: 'post_reactions_var_pop_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Var_Pop_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5238,14 +5319,12 @@ export type Post_Reactions_Var_Samp_Fields = {
    __typename?: 'post_reactions_var_samp_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Var_Samp_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5253,14 +5332,12 @@ export type Post_Reactions_Variance_Fields = {
    __typename?: 'post_reactions_variance_fields',
   id?: Maybe<Scalars['Float']>,
   post_id?: Maybe<Scalars['Float']>,
-  reaction_id?: Maybe<Scalars['Float']>,
   user_id?: Maybe<Scalars['Float']>,
 };
 
 export type Post_Reactions_Variance_Order_By = {
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  reaction_id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5412,6 +5489,10 @@ export type Post_Topics_Order_By = {
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
+};
+
+export type Post_Topics_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Post_Topics_Select_Column {
@@ -5642,6 +5723,10 @@ export type Post_Types_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
 };
 
+export type Post_Types_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Types_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -5732,8 +5817,6 @@ export type Posts = {
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
-  reactions: Array<Reactions>,
-  reactions_aggregate: Reactions_Aggregate,
   title: Scalars['String'],
   topic: Post_Topics,
   topic_id: Scalars['Int'],
@@ -5776,24 +5859,6 @@ export type PostsPost_Reactions_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Post_Reactions_Order_By>>,
   where?: Maybe<Post_Reactions_Bool_Exp>
-};
-
-
-export type PostsReactionsArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type PostsReactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
 };
 
 export type Posts_Aggregate = {
@@ -5868,7 +5933,6 @@ export type Posts_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
-  reactions?: Maybe<Reactions_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
   topic?: Maybe<Post_Topics_Bool_Exp>,
   topic_id?: Maybe<Int_Comparison_Exp>,
@@ -5896,7 +5960,6 @@ export type Posts_Insert_Input = {
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
-  reactions?: Maybe<Reactions_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -5976,13 +6039,16 @@ export type Posts_Order_By = {
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
-  reactions_aggregate?: Maybe<Reactions_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
   topic?: Maybe<Post_Topics_Order_By>,
   topic_id?: Maybe<Order_By>,
   type?: Maybe<Post_Types_Order_By>,
   type_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Posts_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Posts_Select_Column {
@@ -7628,9 +7694,6 @@ export type Query_Root = {
   proposalStatusesConnection: ProposalStatusConnection,
   proposals: Array<Maybe<Proposal>>,
   proposalsConnection: ProposalConnection,
-  reactions: Array<Reactions>,
-  reactions_aggregate: Reactions_Aggregate,
-  reactions_by_pk?: Maybe<Reactions>,
   referendum?: Maybe<Referendum>,
   referendumStatus?: Maybe<ReferendumStatus>,
   referendumStatuses: Array<Maybe<ReferendumStatus>>,
@@ -8266,29 +8329,6 @@ export type Query_RootProposalsConnectionArgs = {
 };
 
 
-export type Query_RootReactionsArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type Query_RootReactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type Query_RootReactions_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
 export type Query_RootReferendumArgs = {
   where: ReferendumWhereUniqueInput
 };
@@ -8572,207 +8612,6 @@ export type Query_RootValidatorsConnectionArgs = {
   orderBy?: Maybe<ValidatorOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<ValidatorWhereInput>
-};
-
-export type Reactions = {
-   __typename?: 'reactions',
-  id: Scalars['Int'],
-  reaction: Scalars['bpchar'],
-};
-
-export type Reactions_Aggregate = {
-   __typename?: 'reactions_aggregate',
-  aggregate?: Maybe<Reactions_Aggregate_Fields>,
-  nodes: Array<Reactions>,
-};
-
-export type Reactions_Aggregate_Fields = {
-   __typename?: 'reactions_aggregate_fields',
-  avg?: Maybe<Reactions_Avg_Fields>,
-  count?: Maybe<Scalars['Int']>,
-  max?: Maybe<Reactions_Max_Fields>,
-  min?: Maybe<Reactions_Min_Fields>,
-  stddev?: Maybe<Reactions_Stddev_Fields>,
-  stddev_pop?: Maybe<Reactions_Stddev_Pop_Fields>,
-  stddev_samp?: Maybe<Reactions_Stddev_Samp_Fields>,
-  sum?: Maybe<Reactions_Sum_Fields>,
-  var_pop?: Maybe<Reactions_Var_Pop_Fields>,
-  var_samp?: Maybe<Reactions_Var_Samp_Fields>,
-  variance?: Maybe<Reactions_Variance_Fields>,
-};
-
-
-export type Reactions_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Reactions_Select_Column>>,
-  distinct?: Maybe<Scalars['Boolean']>
-};
-
-export type Reactions_Aggregate_Order_By = {
-  avg?: Maybe<Reactions_Avg_Order_By>,
-  count?: Maybe<Order_By>,
-  max?: Maybe<Reactions_Max_Order_By>,
-  min?: Maybe<Reactions_Min_Order_By>,
-  stddev?: Maybe<Reactions_Stddev_Order_By>,
-  stddev_pop?: Maybe<Reactions_Stddev_Pop_Order_By>,
-  stddev_samp?: Maybe<Reactions_Stddev_Samp_Order_By>,
-  sum?: Maybe<Reactions_Sum_Order_By>,
-  var_pop?: Maybe<Reactions_Var_Pop_Order_By>,
-  var_samp?: Maybe<Reactions_Var_Samp_Order_By>,
-  variance?: Maybe<Reactions_Variance_Order_By>,
-};
-
-export type Reactions_Arr_Rel_Insert_Input = {
-  data: Array<Reactions_Insert_Input>,
-  on_conflict?: Maybe<Reactions_On_Conflict>,
-};
-
-export type Reactions_Avg_Fields = {
-   __typename?: 'reactions_avg_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Avg_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
-  _not?: Maybe<Reactions_Bool_Exp>,
-  _or?: Maybe<Array<Maybe<Reactions_Bool_Exp>>>,
-  id?: Maybe<Int_Comparison_Exp>,
-  reaction?: Maybe<Bpchar_Comparison_Exp>,
-};
-
-export enum Reactions_Constraint {
-  ReactionsPkey = 'reactions_pkey',
-  ReactionsReactionKey = 'reactions_reaction_key'
-}
-
-export type Reactions_Inc_Input = {
-  id?: Maybe<Scalars['Int']>,
-};
-
-export type Reactions_Insert_Input = {
-  id?: Maybe<Scalars['Int']>,
-  reaction?: Maybe<Scalars['bpchar']>,
-};
-
-export type Reactions_Max_Fields = {
-   __typename?: 'reactions_max_fields',
-  id?: Maybe<Scalars['Int']>,
-};
-
-export type Reactions_Max_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Min_Fields = {
-   __typename?: 'reactions_min_fields',
-  id?: Maybe<Scalars['Int']>,
-};
-
-export type Reactions_Min_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Mutation_Response = {
-   __typename?: 'reactions_mutation_response',
-  affected_rows: Scalars['Int'],
-  returning: Array<Reactions>,
-};
-
-export type Reactions_Obj_Rel_Insert_Input = {
-  data: Reactions_Insert_Input,
-  on_conflict?: Maybe<Reactions_On_Conflict>,
-};
-
-export type Reactions_On_Conflict = {
-  constraint: Reactions_Constraint,
-  update_columns: Array<Reactions_Update_Column>,
-  where?: Maybe<Reactions_Bool_Exp>,
-};
-
-export type Reactions_Order_By = {
-  id?: Maybe<Order_By>,
-  reaction?: Maybe<Order_By>,
-};
-
-export enum Reactions_Select_Column {
-  Id = 'id',
-  Reaction = 'reaction'
-}
-
-export type Reactions_Set_Input = {
-  id?: Maybe<Scalars['Int']>,
-  reaction?: Maybe<Scalars['bpchar']>,
-};
-
-export type Reactions_Stddev_Fields = {
-   __typename?: 'reactions_stddev_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Stddev_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Stddev_Pop_Fields = {
-   __typename?: 'reactions_stddev_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Stddev_Samp_Fields = {
-   __typename?: 'reactions_stddev_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Sum_Fields = {
-   __typename?: 'reactions_sum_fields',
-  id?: Maybe<Scalars['Int']>,
-};
-
-export type Reactions_Sum_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export enum Reactions_Update_Column {
-  Id = 'id',
-  Reaction = 'reaction'
-}
-
-export type Reactions_Var_Pop_Fields = {
-   __typename?: 'reactions_var_pop_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Var_Samp_Fields = {
-   __typename?: 'reactions_var_samp_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>,
-};
-
-export type Reactions_Variance_Fields = {
-   __typename?: 'reactions_variance_fields',
-  id?: Maybe<Scalars['Float']>,
-};
-
-export type Reactions_Variance_Order_By = {
-  id?: Maybe<Order_By>,
 };
 
 export type Referendum = {
@@ -9825,9 +9664,6 @@ export type Subscription_Root = {
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
-  reactions: Array<Reactions>,
-  reactions_aggregate: Reactions_Aggregate,
-  reactions_by_pk?: Maybe<Reactions>,
 };
 
 
@@ -9988,29 +9824,6 @@ export type Subscription_RootPosts_AggregateArgs = {
 
 
 export type Subscription_RootPosts_By_PkArgs = {
-  id: Scalars['Int']
-};
-
-
-export type Subscription_RootReactionsArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type Subscription_RootReactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Reactions_Select_Column>>,
-  limit?: Maybe<Scalars['Int']>,
-  offset?: Maybe<Scalars['Int']>,
-  order_by?: Maybe<Array<Reactions_Order_By>>,
-  where?: Maybe<Reactions_Bool_Exp>
-};
-
-
-export type Subscription_RootReactions_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -10938,10 +10751,54 @@ export type AddPostCommentMutation = (
   )> }
 );
 
+export type PostReactionFieldsFragment = (
+  { __typename?: 'post_reactions' }
+  & Pick<Post_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
+  & { reacting_user: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  )> }
+);
+
+export type PostReactionsQueryVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostReactionsQuery = (
+  { __typename?: 'query_root' }
+  & { post_reactions: Array<(
+    { __typename?: 'post_reactions' }
+    & PostReactionFieldsFragment
+  )> }
+);
+
+export type CommentReactionFieldsFragment = (
+  { __typename?: 'comment_reactions' }
+  & Pick<Comment_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
+  & { reacting_user: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  )> }
+);
+
+export type CommentReactionsQueryVariables = {
+  commentId: Scalars['uuid']
+};
+
+
+export type CommentReactionsQuery = (
+  { __typename?: 'query_root' }
+  & { comment_reactions: Array<(
+    { __typename?: 'comment_reactions' }
+    & CommentReactionFieldsFragment
+  )> }
+);
+
 export type AddPostReactionMutationVariables = {
   postId: Scalars['Int'],
   userId: Scalars['Int'],
-  reactionId: Scalars['Int']
+  reaction: Scalars['bpchar']
 };
 
 
@@ -10956,7 +10813,7 @@ export type AddPostReactionMutation = (
 export type AddCommentReactionMutationVariables = {
   commentId: Scalars['uuid'],
   userId: Scalars['Int'],
-  reactionId: Scalars['Int']
+  reaction: Scalars['bpchar']
 };
 
 
@@ -10971,7 +10828,7 @@ export type AddCommentReactionMutation = (
 export type DeletePostReactionMutationVariables = {
   postId: Scalars['Int'],
   userId: Scalars['Int'],
-  reactionId: Scalars['Int']
+  reaction: Scalars['bpchar']
 };
 
 
@@ -10986,7 +10843,7 @@ export type DeletePostReactionMutation = (
 export type DeleteCommentReactionMutationVariables = {
   commentId: Scalars['uuid'],
   userId: Scalars['Int'],
-  reactionId: Scalars['Int']
+  reaction: Scalars['bpchar']
 };
 
 
@@ -11065,43 +10922,13 @@ export type Get_Refresh_TokenQuery = (
   )> }
 );
 
-export type CommentReactionFieldsFragment = (
-  { __typename?: 'comment_reactions' }
-  & Pick<Comment_Reactions, 'id' | 'created_at' | 'updated_at'>
-  & { reacting_user: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  )>, reaction: (
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  ) }
-);
-
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
   & Pick<Comments, 'id' | 'content' | 'created_at' | 'updated_at'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
-  )>, comment_reactions: Array<(
-    { __typename?: 'comment_reactions' }
-    & CommentReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
   )> }
-);
-
-export type PostReactionFieldsFragment = (
-  { __typename?: 'post_reactions' }
-  & Pick<Post_Reactions, 'id' | 'created_at' | 'updated_at'>
-  & { reacting_user: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  )>, reaction: (
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  ) }
 );
 
 export type CreatePostMutationVariables = {
@@ -11155,13 +10982,7 @@ export type DiscussionPostFragment = (
   ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
-  ), post_reactions: Array<(
-    { __typename?: 'post_reactions' }
-    & PostReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
+  ) }
 );
 
 export type DiscussionPostAndCommentsQueryVariables = {
@@ -11275,13 +11096,7 @@ export type MotionPostFragment = (
   ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
-  ), post_reactions: Array<(
-    { __typename?: 'post_reactions' }
-    & PostReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
+  ) }
 );
 
 export type MotionPostAndCommentsQueryVariables = {
@@ -11341,7 +11156,7 @@ export type LatestMotionPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_motion_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
       & { onchain_motion: Array<Maybe<(
         { __typename?: 'Motion' }
         & Pick<Motion, 'id'>
@@ -11383,7 +11198,7 @@ export type LatestDemocracyProposalPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'proposer_address'>
       & { onchain_proposal: Array<Maybe<(
         { __typename?: 'Proposal' }
         & Pick<Proposal, 'id'>
@@ -11424,7 +11239,7 @@ export type LatestReferendaPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
       & { onchain_referendum: Array<Maybe<(
         { __typename?: 'Referendum' }
         & Pick<Referendum, 'id'>
@@ -11466,7 +11281,7 @@ export type LatestDemocracyTreasuryProposalPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
       & { onchain_treasury_spend_proposal: Array<Maybe<(
         { __typename?: 'TreasurySpendProposal' }
         & Pick<TreasurySpendProposal, 'id'>
@@ -11517,13 +11332,7 @@ export type ProposalPostFragment = (
   ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
-  ), post_reactions: Array<(
-    { __typename?: 'post_reactions' }
-    & PostReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
+  ) }
 );
 
 export type ProposalPostAndCommentsQueryVariables = {
@@ -11577,13 +11386,7 @@ export type ReferendumPostFragment = (
   ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
-  ), post_reactions: Array<(
-    { __typename?: 'post_reactions' }
-    & PostReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
+  ) }
 );
 
 export type ReferendumPostAndCommentsQueryVariables = {
@@ -11782,13 +11585,7 @@ export type TreasuryProposalPostFragment = (
   ), type: (
     { __typename?: 'post_types' }
     & Pick<Post_Types, 'id' | 'name'>
-  ), post_reactions: Array<(
-    { __typename?: 'post_reactions' }
-    & PostReactionFieldsFragment
-  )>, reactions: Array<(
-    { __typename?: 'reactions' }
-    & Pick<Reactions, 'id' | 'reaction'>
-  )> }
+  ) }
 );
 
 export type TreasuryProposalPostAndCommentsQueryVariables = {
@@ -11830,10 +11627,15 @@ export type VerifyEmailMutation = (
   )> }
 );
 
-export const TopicFragmentDoc = gql`
-    fragment topic on post_topics {
+export const PostReactionFieldsFragmentDoc = gql`
+    fragment postReactionFields on post_reactions {
   id
-  name
+  reacting_user {
+    id
+  }
+  reaction
+  created_at
+  updated_at
 }
     `;
 export const CommentReactionFieldsFragmentDoc = gql`
@@ -11842,12 +11644,15 @@ export const CommentReactionFieldsFragmentDoc = gql`
   reacting_user {
     id
   }
-  reaction {
-    id
-    reaction
-  }
+  reaction
   created_at
   updated_at
+}
+    `;
+export const TopicFragmentDoc = gql`
+    fragment topic on post_topics {
+  id
+  name
 }
     `;
 export const CommentFieldsFragmentDoc = gql`
@@ -11859,27 +11664,6 @@ export const CommentFieldsFragmentDoc = gql`
     username
   }
   content
-  comment_reactions {
-    ...commentReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
-  created_at
-  updated_at
-}
-    ${CommentReactionFieldsFragmentDoc}`;
-export const PostReactionFieldsFragmentDoc = gql`
-    fragment postReactionFields on post_reactions {
-  id
-  reacting_user {
-    id
-  }
-  reaction {
-    id
-    reaction
-  }
   created_at
   updated_at
 }
@@ -11907,16 +11691,8 @@ export const DiscussionPostFragmentDoc = gql`
     id
     name
   }
-  post_reactions {
-    ...postReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
 }
-    ${CommentFieldsFragmentDoc}
-${PostReactionFieldsFragmentDoc}`;
+    ${CommentFieldsFragmentDoc}`;
 export const OnchainLinkMotionPreimageFragmentDoc = gql`
     fragment onchainLinkMotionPreimage on Preimage {
   hash
@@ -11992,17 +11768,9 @@ export const MotionPostFragmentDoc = gql`
     id
     name
   }
-  post_reactions {
-    ...postReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
 }
     ${CommentFieldsFragmentDoc}
-${OnchainLinkMotionFragmentDoc}
-${PostReactionFieldsFragmentDoc}`;
+${OnchainLinkMotionFragmentDoc}`;
 export const OnchainLinkProposalFragmentDoc = gql`
     fragment onchainLinkProposal on onchain_links {
   id
@@ -12056,17 +11824,9 @@ export const ProposalPostFragmentDoc = gql`
     id
     name
   }
-  post_reactions {
-    ...postReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
 }
     ${CommentFieldsFragmentDoc}
-${OnchainLinkProposalFragmentDoc}
-${PostReactionFieldsFragmentDoc}`;
+${OnchainLinkProposalFragmentDoc}`;
 export const OnchainLinkReferendumFragmentDoc = gql`
     fragment onchainLinkReferendum on onchain_links {
   id
@@ -12121,17 +11881,9 @@ export const ReferendumPostFragmentDoc = gql`
     id
     name
   }
-  post_reactions {
-    ...postReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
 }
     ${CommentFieldsFragmentDoc}
-${OnchainLinkReferendumFragmentDoc}
-${PostReactionFieldsFragmentDoc}`;
+${OnchainLinkReferendumFragmentDoc}`;
 export const OnchainLinkTreasuryProposalFragmentDoc = gql`
     fragment onchainLinkTreasuryProposal on onchain_links {
   id
@@ -12176,17 +11928,9 @@ export const TreasuryProposalPostFragmentDoc = gql`
     id
     name
   }
-  post_reactions {
-    ...postReactionFields
-  }
-  reactions {
-    id
-    reaction
-  }
 }
     ${CommentFieldsFragmentDoc}
-${OnchainLinkTreasuryProposalFragmentDoc}
-${PostReactionFieldsFragmentDoc}`;
+${OnchainLinkTreasuryProposalFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
   update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
@@ -12354,10 +12098,76 @@ export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const PostReactionsDocument = gql`
+    query PostReactions($postId: Int!) {
+  post_reactions(where: {post_id: {_eq: $postId}}) {
+    ...postReactionFields
+  }
+}
+    ${PostReactionFieldsFragmentDoc}`;
+
+/**
+ * __usePostReactionsQuery__
+ *
+ * To run a query within a React component, call `usePostReactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostReactionsQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostReactionsQuery, PostReactionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<PostReactionsQuery, PostReactionsQueryVariables>(PostReactionsDocument, baseOptions);
+      }
+export function usePostReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostReactionsQuery, PostReactionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PostReactionsQuery, PostReactionsQueryVariables>(PostReactionsDocument, baseOptions);
+        }
+export type PostReactionsQueryHookResult = ReturnType<typeof usePostReactionsQuery>;
+export type PostReactionsLazyQueryHookResult = ReturnType<typeof usePostReactionsLazyQuery>;
+export type PostReactionsQueryResult = ApolloReactCommon.QueryResult<PostReactionsQuery, PostReactionsQueryVariables>;
+export const CommentReactionsDocument = gql`
+    query CommentReactions($commentId: uuid!) {
+  comment_reactions(where: {comment_id: {_eq: $commentId}}) {
+    ...commentReactionFields
+  }
+}
+    ${CommentReactionFieldsFragmentDoc}`;
+
+/**
+ * __useCommentReactionsQuery__
+ *
+ * To run a query within a React component, call `useCommentReactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentReactionsQuery({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useCommentReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CommentReactionsQuery, CommentReactionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<CommentReactionsQuery, CommentReactionsQueryVariables>(CommentReactionsDocument, baseOptions);
+      }
+export function useCommentReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CommentReactionsQuery, CommentReactionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CommentReactionsQuery, CommentReactionsQueryVariables>(CommentReactionsDocument, baseOptions);
+        }
+export type CommentReactionsQueryHookResult = ReturnType<typeof useCommentReactionsQuery>;
+export type CommentReactionsLazyQueryHookResult = ReturnType<typeof useCommentReactionsLazyQuery>;
+export type CommentReactionsQueryResult = ApolloReactCommon.QueryResult<CommentReactionsQuery, CommentReactionsQueryVariables>;
 export const AddPostReactionDocument = gql`
-    mutation AddPostReaction($postId: Int!, $userId: Int!, $reactionId: Int!) {
+    mutation AddPostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
   __typename
-  insert_post_reactions(objects: {post_id: $postId, user_id: $userId, reaction_id: $reactionId}) {
+  insert_post_reactions(objects: {post_id: $postId, user_id: $userId, reaction: $reaction}) {
     affected_rows
   }
 }
@@ -12379,7 +12189,7 @@ export type AddPostReactionMutationFn = ApolloReactCommon.MutationFunction<AddPo
  *   variables: {
  *      postId: // value for 'postId'
  *      userId: // value for 'userId'
- *      reactionId: // value for 'reactionId'
+ *      reaction: // value for 'reaction'
  *   },
  * });
  */
@@ -12390,9 +12200,9 @@ export type AddPostReactionMutationHookResult = ReturnType<typeof useAddPostReac
 export type AddPostReactionMutationResult = ApolloReactCommon.MutationResult<AddPostReactionMutation>;
 export type AddPostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostReactionMutation, AddPostReactionMutationVariables>;
 export const AddCommentReactionDocument = gql`
-    mutation AddCommentReaction($commentId: uuid!, $userId: Int!, $reactionId: Int!) {
+    mutation AddCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
   __typename
-  insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction_id: $reactionId}) {
+  insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction: $reaction}) {
     affected_rows
   }
 }
@@ -12414,7 +12224,7 @@ export type AddCommentReactionMutationFn = ApolloReactCommon.MutationFunction<Ad
  *   variables: {
  *      commentId: // value for 'commentId'
  *      userId: // value for 'userId'
- *      reactionId: // value for 'reactionId'
+ *      reaction: // value for 'reaction'
  *   },
  * });
  */
@@ -12425,8 +12235,8 @@ export type AddCommentReactionMutationHookResult = ReturnType<typeof useAddComme
 export type AddCommentReactionMutationResult = ApolloReactCommon.MutationResult<AddCommentReactionMutation>;
 export type AddCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
 export const DeletePostReactionDocument = gql`
-    mutation DeletePostReaction($postId: Int!, $userId: Int!, $reactionId: Int!) {
-  delete_post_reactions(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction_id: {_eq: $reactionId}}]}) {
+    mutation DeletePostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
+  delete_post_reactions(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
     affected_rows
   }
 }
@@ -12448,7 +12258,7 @@ export type DeletePostReactionMutationFn = ApolloReactCommon.MutationFunction<De
  *   variables: {
  *      postId: // value for 'postId'
  *      userId: // value for 'userId'
- *      reactionId: // value for 'reactionId'
+ *      reaction: // value for 'reaction'
  *   },
  * });
  */
@@ -12459,8 +12269,8 @@ export type DeletePostReactionMutationHookResult = ReturnType<typeof useDeletePo
 export type DeletePostReactionMutationResult = ApolloReactCommon.MutationResult<DeletePostReactionMutation>;
 export type DeletePostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
 export const DeleteCommentReactionDocument = gql`
-    mutation DeleteCommentReaction($commentId: uuid!, $userId: Int!, $reactionId: Int!) {
-  delete_comment_reactions(where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction_id: {_eq: $reactionId}}]}) {
+    mutation DeleteCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
+  delete_comment_reactions(where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
     affected_rows
   }
 }
@@ -12482,7 +12292,7 @@ export type DeleteCommentReactionMutationFn = ApolloReactCommon.MutationFunction
  *   variables: {
  *      commentId: // value for 'commentId'
  *      userId: // value for 'userId'
- *      reactionId: // value for 'reactionId'
+ *      reaction: // value for 'reaction'
  *   },
  * });
  */
@@ -12955,6 +12765,7 @@ export const LatestMotionPostsDocument = gql`
           status
         }
       }
+      proposer_address
     }
   }
 }
@@ -13021,6 +12832,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
           status
         }
       }
+      proposer_address
     }
   }
 }
@@ -13088,6 +12900,7 @@ export const LatestReferendaPostsDocument = gql`
           status
         }
       }
+      proposer_address
     }
   }
 }
@@ -13154,6 +12967,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
           status
         }
       }
+      proposer_address
     }
   }
 }
