@@ -98,10 +98,10 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		);
 	}
 
-	// if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
-	return (
-		<>
-			{isMotion &&
+	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
+		return (
+			<>
+				{isMotion &&
 					<VoteMotion
 						accounts={accounts}
 						address={address}
@@ -110,7 +110,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
 						onAccountChange={onAccountChange}
 					/>}
-			{isProposal &&
+				{isProposal &&
 					<SecondProposal
 						accounts={accounts}
 						address={address}
@@ -119,7 +119,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						proposalId={onchainId}
 					/>}
 
-			{isReferendum &&
+				{isReferendum &&
 					<VoteReferendum
 						accounts={accounts}
 						address={address}
@@ -127,9 +127,9 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						onAccountChange={onAccountChange}
 						referendumId={onchainId}
 					/>}
-		</>
-	);
-	// }
+			</>
+		);
+	}
 
 	return null;
 };
