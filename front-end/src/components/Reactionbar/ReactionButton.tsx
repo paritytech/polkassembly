@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
 import styled from '@xstyled/styled-components';
 
@@ -15,7 +16,6 @@ import {
 	PostReactionsQuery,
 	CommentReactionsQuery
 } from '../../generated/graphql';
-import { ApolloQueryResult } from 'apollo-client';
 
 export interface ReactionButtonProps {
 	className?: string
@@ -44,7 +44,7 @@ const ReactionButton = function ({
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
 	const reacted = id && userIds.includes(id);
 
-	const _refetch = () => refetch && refetch();
+	const _refetch = () => { refetch && refetch(); };
 
 	const handleReact = () => {
 		if (!id) {
@@ -61,7 +61,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(() => {_refetch();})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addPostReactionMutation({
@@ -71,7 +71,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(() => {_refetch();})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
@@ -85,7 +85,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(() => {_refetch();})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			} else {
 				addCommentReactionMutation({
@@ -95,7 +95,7 @@ const ReactionButton = function ({
 						userId: id
 					}
 				})
-					.then(() => {_refetch();})
+					.then(_refetch)
 					.catch((e) => console.error('Error in reacting to content',e));
 			}
 		}
