@@ -55,7 +55,7 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 					{seconds ? <div>{seconds} Addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
-					<div><b>Locked KSM</b></div>
+					<div><b>Locked</b></div>
 					<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
 				</Grid.Column>
 			</Grid.Row>
