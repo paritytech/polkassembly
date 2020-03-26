@@ -11,7 +11,7 @@ import { ApiContext } from '../../../context/ApiContext';
 
 interface Props {
 	className?: string
-	proposalId?: number
+	proposalId: number
 }
 
 const SecondChainInfo = ({ className, proposalId }:  Props) => {

@@ -10,7 +10,7 @@ import { ApiContext } from '../../../context/ApiContext';
 
 interface Props {
 	className?: string
-	referendumId?: number
+	referendumId: number
 }
 
 const VoteChainInfo = ({ className, referendumId }: Props) => {
@@ -28,11 +28,6 @@ const VoteChainInfo = ({ className, referendumId }: Props) => {
 
 			if (!apiReady) {
 				console.error('api not ready');
-				return;
-			}
-
-			if (referendumId !== 0 && !referendumId) {
-				console.error('referendumId not set');
 				return;
 			}
 
