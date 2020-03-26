@@ -36,7 +36,8 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 			{helpText && <HelperTooltip	content={helpText}/>}
 		</label>
 		<Input
-			className={isValidInput ? 'balanceInput' : 'balanceInput invalid'}
+			className={'balanceInput'}
+			invalid={isValidInput}
 			onChange={onBalanceChange}
 			placeholder={placeholder}
 			type='string'
@@ -45,13 +46,4 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 };
 
 export default styled(BalanceInput)`
-
-	.balanceInput {
-		padding: 0;
-	}
-
-	.invalid {
-		color:  red_primary;
-		border-color: red_primary;
-	}
 `;
