@@ -1,3 +1,7 @@
+// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
 import BN from 'bn.js';
 import { chainProperties } from 'src/global/networkConstants';
 import getNetwork from './getNetwork';
@@ -16,7 +20,7 @@ function getGlobalMaxValue (): BN {
 		.subn(1);
 }
 
-function isValidNumber (bn: BN, { isZeroable }: Props): boolean {
+function isValidNumber (bn: BN, isZeroable?: boolean): boolean {
 	if (
 	// cannot be negative
 		bn.lt(ZERO) ||
@@ -33,17 +37,13 @@ function isValidNumber (bn: BN, { isZeroable }: Props): boolean {
 	return true;
 }
 
-interface Props{
-    isZeroable: boolean
-}
-
-export function inputToBn (input: string, { isZeroable } : Props): [BN, boolean] {
+export function inputToBn (input: string, isZeroable?: boolean): [BN, boolean] {
 	const isDecimalValue = input.match(/^(\d+)\.(\d+)$/);
 
 	let result;
 
 	if (isDecimalValue) {
-		// return -1 if the amount of decimal is higher that the one supported
+		// return -1 if the amount of decimal is higher than supported
 		if (isDecimalValue[2].length < tokenDecimal) {
 			result = new BN(-1);
 		}
@@ -52,8 +52,6 @@ export function inputToBn (input: string, { isZeroable } : Props): [BN, boolean]
 		const div = new BN(isDecimalValue[1]);
 		//get what is after the point  and replace what isn't a number
 		const modString = isDecimalValue[2];
-		console.log('div',div.toString());
-		console.log('modString',modString);
 		// make it BN
 		const mod = new BN(modString);
 
@@ -66,9 +64,8 @@ export function inputToBn (input: string, { isZeroable } : Props): [BN, boolean]
 			.mul(TEN.pow(tokenDecimalBN));
 	}
 
-	console.log('Input result',result.toString());
 	return [
 		result,
-		isValidNumber(result, { isZeroable })
+		isValidNumber(result, isZeroable)
 	];
 }

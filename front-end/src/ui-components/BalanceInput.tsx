@@ -25,32 +25,36 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 	const [isValidInput, setIsValidInput] = useState(true);
 	// const currentNetwork = getNetwork();
 	const onBalanceChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const [balance, isValid] = inputToBn(event.currentTarget.value, { isZeroable: false });
-		// const tokenDecimalBN = new BN(chainProperties[currentNetwork].tokenDecimals);
-		// const TEN = new BN(10);
-
-		console.log('isValid', isValid);
+		const [balance, isValid] = inputToBn(event.currentTarget.value, false);
 		setIsValidInput(isValid);
+
 		if(isValid){
 			onChange(balance);
 		}
 	};
 
-	return 	<Form.Field className={isValidInput ? className : `${className} invalid`} width={16}>
+	return 	<div className={className}>
 		<label>
 			{label}
 			{helpText && <HelperTooltip	content={helpText}/>}
 		</label>
 		<Input
+			className={isValidInput ? 'balanceInput' : 'balanceInput invalid'}
 			onChange={onBalanceChange}
 			placeholder={placeholder}
 			type='string'
 		/>
-	</Form.Field>;
+	</div>;
 };
 
 export default styled(BalanceInput)`
+
+	.balanceInput {
+		padding: 0;
+	}
+
 	.invalid {
-		color: red;
+		color: red_primary;
+		border-color: red_primary;
 	}
 `;
