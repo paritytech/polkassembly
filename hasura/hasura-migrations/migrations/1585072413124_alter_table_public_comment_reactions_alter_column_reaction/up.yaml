@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."comment_reactions" ALTER COLUMN "reaction" TYPE char;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."comment_reactions"."reaction" IS E''
+  type: run_sql

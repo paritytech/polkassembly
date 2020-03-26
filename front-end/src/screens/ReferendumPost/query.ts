@@ -4,7 +4,6 @@
 
 import gql from 'graphql-tag';
 import { commentFields } from '../../fragments/comments';
-import { postReactionFields } from '../../fragments/postReactions';
 
 const onchainLinkReferendum = gql`
     fragment onchainLinkReferendum on onchain_links {
@@ -61,16 +60,8 @@ const referendumPost = gql`
             id
             name
         }
-        post_reactions {
-            ...postReactionFields
-        }
-        reactions {
-            id
-            reaction
-        }
     }
     ${commentFields}
-    ${postReactionFields}
     ${onchainLinkReferendum}
 `;
 

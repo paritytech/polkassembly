@@ -112,3 +112,8 @@ export interface LoadingStatusType {
     isLoading: boolean;
     message: string;
 }
+
+export interface ReactionMapFields {
+	count: number
+	userIds: number[]
+}
