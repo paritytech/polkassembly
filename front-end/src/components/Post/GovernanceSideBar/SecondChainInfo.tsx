@@ -47,15 +47,15 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 		<Grid className={className} columns={3} divided>
 			<Grid.Row>
 				<Grid.Column>
-					<div>Deposit amount</div>
+					<h6>Deposit amount</h6>
 					<div>{deposit}</div>
 				</Grid.Column>
 				<Grid.Column>
-					<div>Seconded by</div>
+					<h6>Seconded by</h6>
 					{seconds ? <div>{seconds} Addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
-					<div><b>Locked</b></div>
+					<h6>Locked</h6>
 					<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
 				</Grid.Column>
 			</Grid.Row>

@@ -49,15 +49,15 @@ const VoteChainInfo = ({ className, referendumId }: Props) => {
 		<Grid className={className} columns={3} divided>
 			<Grid.Row>
 				<Grid.Column>
-					<div><b>Total Votes</b></div>
+					<h6>Total Votes</h6>
 					<div>{totalVotes}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
-					<div><b>Aye</b></div>
+					<h6>Aye</h6>
 					<div>{yesVotes}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
-					<div><b>Nay</b></div>
+					<h6>Nay</h6>
 					<div>{noVotes}</div>
 				</Grid.Column>
 			</Grid.Row>
