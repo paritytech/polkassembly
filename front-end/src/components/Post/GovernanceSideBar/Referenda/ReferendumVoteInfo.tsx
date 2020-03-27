@@ -2,11 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useEffect, useState } from 'react';
+import formatBalance from '@polkadot/util/format/formatBalance';
 import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { ApiContext } from '../../../../context/ApiContext';
+import BN from 'bn.js';
 
 interface Props {
 	className?: string
@@ -14,10 +16,11 @@ interface Props {
 }
 
 const ReferendumVoteInfo = ({ className, referendumId }: Props) => {
+	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
-	const [totalVotes, setTotalVotes] = useState(0);
-	const [yesVotes, setYesVotes] = useState(0);
-	const [noVotes, setNoVotes] = useState(0);
+	const [totalVotes, setTotalVotes] = useState<BN>(ZERO);
+	const [yesVotes, setYesVotes] = useState<BN>(ZERO);
+	const [noVotes, setNoVotes] = useState<BN>(ZERO);
 
 	useEffect(() => {
 		async function getVotes() {
@@ -31,15 +34,21 @@ const ReferendumVoteInfo = ({ className, referendumId }: Props) => {
 				return;
 			}
 
-			const votes = await api.derive.democracy.referendumVotesFor(referendumId);
+			let unsubscribe: () => void;
 
-			setTotalVotes(votes.length);
+			api.query.democracy.referendumInfoOf(referendumId, (info) => {
+				const _info = info.unwrapOr(null);
 
-			const ayes = votes.filter(({ vote }) => vote.isAye);
-			const nays = votes.filter(({ vote }) => vote.isNay);
+				if (_info?.isOngoing){
+					setYesVotes(_info?.asOngoing.tally.ayes);
+					setNoVotes(_info?.asOngoing.tally.ayes);
+					setTotalVotes(_info?.asOngoing.tally.turnout);
+				}
+			})
+				.then( unsub => {unsubscribe = unsub;})
+				.catch(console.error);
 
-			setYesVotes(ayes.length);
-			setNoVotes(nays.length);
+			return () => unsubscribe && unsubscribe();
 		}
 
 		getVotes().catch(console.error);
@@ -50,15 +59,15 @@ const ReferendumVoteInfo = ({ className, referendumId }: Props) => {
 			<Grid.Row>
 				<Grid.Column>
 					<h6>Total Votes</h6>
-					<div>{totalVotes}</div>
+					<div>{formatBalance(totalVotes, { withSi: false, withUnit: true })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Aye</h6>
-					<div>{yesVotes}</div>
+					<div>{formatBalance(yesVotes, { withSi: false, withUnit: true })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Nay</h6>
-					<div>{noVotes}</div>
+					<div>{formatBalance(noVotes, { withSi: false, withUnit: true })}</div>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>
