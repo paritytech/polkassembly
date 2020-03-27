@@ -85,7 +85,6 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 
 	return (
 		<div className={className}>
-			<h4>Second</h4>
 			{ noAccount
 				? <GetAccountsButton />
 				:loadingStatus.isLoading
@@ -117,9 +116,7 @@ export default styled(SecondProposal)`
 		height: 15rem;
 	}
 
-	@media only screen and (max-width: 768px) {
-		.button-container {
-			margin-bottom: 1rem!important;
-		}
+	.button-container {
+		margin-top: 2rem !important;
 	}
 `;

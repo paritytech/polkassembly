@@ -154,4 +154,8 @@ export default styled(VoteRefrendum)`
 	.LoaderWrapper {
 		height: 15rem;
 	}
+
+	.button-container {
+		margin-top: 2rem !important;
+	}
 `;

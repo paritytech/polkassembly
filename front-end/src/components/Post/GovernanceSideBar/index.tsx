@@ -156,7 +156,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 export default styled(GovenanceSideBar)`
 	.card {
 		background-color: white;
-		padding: 2rem 3rem 3rem 3rem;
+		padding: 2rem 3rem 2rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;

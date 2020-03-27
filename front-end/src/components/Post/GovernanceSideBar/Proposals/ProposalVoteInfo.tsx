@@ -43,7 +43,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 				}
 			});
 		})
-			. then(unsub => {unsubscribe = unsub;})
+			.then(unsub => {unsubscribe = unsub;})
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
@@ -59,7 +59,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 				</Grid.Column>
 				<Grid.Column>
 					<h6>Seconded by</h6>
-					{seconds ? <div>{seconds} Addresses</div> : null}
+					{seconds ? <div>{seconds} addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
 					<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>

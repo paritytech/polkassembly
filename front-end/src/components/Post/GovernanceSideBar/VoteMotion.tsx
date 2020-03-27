@@ -111,7 +111,7 @@ const VoteMotion = ({
 				primary
 				onClick={getAccounts}
 			>
-							Vote
+				Vote
 			</Button>
 		</Form.Field>;
 
@@ -119,7 +119,6 @@ const VoteMotion = ({
 
 	const VotingForm = () =>
 		<>
-			<h4>Vote</h4>
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
@@ -158,20 +157,11 @@ const VoteMotion = ({
 };
 
 export default styled(VoteMotion)`
-
 	.LoaderWrapper {
 		height: 15rem;
 	}
 
-	i.icon.question.circle:before {
-		color: grey_secondary;
+	.button-container {
+		margin-top: 2rem !important;
 	}
-
-	@media only screen and (max-width: 768px) {
-
-		.button-container {
-			margin-bottom: 1rem!important;
-		}
-	}
-
 `;
