@@ -17,6 +17,7 @@ import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkRefe
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 import VoteMotion from './VoteMotion';
 import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
+import { Form } from 'src/ui-components/Form';
 
 interface Props {
 	className?: string
@@ -105,8 +106,10 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 	console.log('canvote', canVote);
 
 	return (
-		<>
-			{isMotion && canVote &&
+		<div className={className}>
+			<div className='card'>
+				<Form standalone={false}>
+					{isMotion && canVote &&
 				<VoteMotion
 					accounts={accounts}
 					address={address}
@@ -115,33 +118,35 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 					motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
 					onAccountChange={onAccountChange}
 				/>
-			}
-			{isProposal && (
-				<>
-					{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
-					{canVote && <SecondProposal
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						onAccountChange={onAccountChange}
-						proposalId={onchainId}
-					/>}
-				</>
-			)}
-			{isReferendum && (
-				<>
-					{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
-					{canVote && <VoteReferendum
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						onAccountChange={onAccountChange}
-						referendumId={onchainId}
-					/>
 					}
-				</>
-			)}
-		</>
+					{isProposal && (
+						<>
+							{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
+							{canVote && <SecondProposal
+								accounts={accounts}
+								address={address}
+								getAccounts={getAccounts}
+								onAccountChange={onAccountChange}
+								proposalId={onchainId}
+							/>}
+						</>
+					)}
+					{isReferendum && (
+						<>
+							{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
+							{canVote && <VoteReferendum
+								accounts={accounts}
+								address={address}
+								getAccounts={getAccounts}
+								onAccountChange={onAccountChange}
+								referendumId={onchainId}
+							/>
+							}
+						</>
+					)}
+				</Form>
+			</div>
+		</div>
 	);
 
 	return null;
@@ -150,10 +155,19 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 export default styled(GovenanceSideBar)`
 	.card {
 		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
+		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+		@media only screen and (max-width: 768px) {
+			padding: 2rem;
+		}
+	}
+	
+	@media only screen and (max-width: 768px) {
+		.ui.form {
+			padding: 0rem;
+		}
 	}
 `;

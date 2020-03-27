@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useState } from 'react';
 
@@ -44,4 +45,8 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 	</Form.Field>;
 };
 
-export default BalanceInput;
+export default styled(BalanceInput)`
+	.ui.selection.dropdown {
+		border-color: grey_light;
+	}
+`;

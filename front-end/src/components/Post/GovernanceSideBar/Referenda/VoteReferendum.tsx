@@ -95,23 +95,18 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	if (accounts.length === 0) {
 		return (
 			<div className={className}>
-				<div className='card'>
-					<Form standalone={false}>
-						<h4>Vote</h4>
-						<Form.Group>
-							<Form.Field className='button-container'>
-								<Button
-									primary
-									onClick={getAccounts}
-								>
-									Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</div>
-			</div>
-		);
+				<h4>Vote</h4>
+				<Form.Group>
+					<Form.Field className='button-container'>
+						<Button
+							primary
+							onClick={getAccounts}
+						>
+							Vote
+						</Button>
+					</Form.Field>
+				</Form.Group>
+			</div>);
 	}
 
 	const VoteLock = () =>
@@ -130,63 +125,37 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	return (
 		<div className={className}>
-			<div className='card'>
-				<Form standalone={false}>
-					<h4>Vote</h4>
-					{loadingStatus.isLoading
-						? <div className={'LoaderWrapper'}>
-							<Loader text={loadingStatus.message}/>
-						</div>
-						: <>
-							<AccountSelectionForm
-								accounts={accounts}
-								address={address}
-								onAccountChange={onAccountChange}
-							/>
-							{api && <Balance address={address} />}
-							<BalanceInput
-								label={'Lock balance'}
-								helpText={'Amount of you are willing to lock for this vote.'}
-								onChange={onBalanceChange}
-							/>
-							<VoteLock/>
-							<AyeNayButtons
-								disabled={!apiReady}
-								onClickAye={() => voteRefrendum(true)}
-								onClickNay={() => voteRefrendum(false)}
-							/>
-						</>
-					}
-				</Form>
-			</div>
+			<h4>Vote</h4>
+			{loadingStatus.isLoading
+				? <div className={'LoaderWrapper'}>
+					<Loader text={loadingStatus.message}/>
+				</div>
+				: <>
+					<AccountSelectionForm
+						accounts={accounts}
+						address={address}
+						onAccountChange={onAccountChange}
+					/>
+					{api && <Balance address={address} />}
+					<BalanceInput
+						label={'Lock balance'}
+						helpText={'Amount of you are willing to lock for this vote.'}
+						onChange={onBalanceChange}
+					/>
+					<VoteLock/>
+					<AyeNayButtons
+						disabled={!apiReady}
+						onClickAye={() => voteRefrendum(true)}
+						onClickNay={() => voteRefrendum(false)}
+					/>
+				</>
+			}
 		</div>
 	);
 };
 
 export default styled(VoteRefrendum)`
-	.card {
-		background-color: white;
-		padding: 2rem 3rem 3rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-		margin-bottom: 1rem;
-		@media only screen and (max-width: 768px) {
-			padding: 2rem;
-		}
-	}
-
 	.LoaderWrapper {
 		height: 15rem;
-	}
-
-	.ui.selection.dropdown {
-		border-color: grey_light;
-	}
-
-	@media only screen and (max-width: 768px) {
-		.ui.form {
-			padding: 0rem;
-		}
 	}
 `;
