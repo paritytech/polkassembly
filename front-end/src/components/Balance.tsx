@@ -35,7 +35,7 @@ const Balance = ({ address }: Props) => {
 
 	return (
 		<div className='text-muted'>
-			{formatBalance(balance)} available
+			{formatBalance(balance, { withSi: false, withUnit: true })} available.
 		</div>
 	);
 };
