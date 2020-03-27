@@ -32,7 +32,7 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 	return 	<Form.Field className={className} width={16}>
 		<label>
 			{label}
-			{helpText && <HelperTooltip	content={helpText}/>}
+			{helpText && <HelperTooltip content={helpText}/>}
 		</label>
 		<Input
 			className={'balanceInput'}
