@@ -14,7 +14,6 @@ import { NotificationContext } from '../../../../context/NotificationContext';
 import { NotificationStatus, LoadingStatusType } from '../../../../types';
 import Loader from 'src/ui-components/Loader';
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
-import SecondChainInfo from './ProposalVoteInfo';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -72,49 +71,41 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		});
 	};
 
-	if (accounts.length === 0) {
-		return (
-			<div className={className}>
-				<h4>Second</h4>
-				{proposalId || proposalId === 0 ?
-					<SecondChainInfo proposalId={proposalId} />
-					: null
-				}
-				<Form.Group>
-					<Form.Field className='button-container'>
-						<Button
-							primary
-							onClick={getAccounts}
-						>
-									Second
-						</Button>
-					</Form.Field>
-				</Form.Group>
-			</div>
-		);
-	}
+	const GetAccountsButton = () =>
+		<Form.Field className='button-container'>
+			<Button
+				primary
+				onClick={getAccounts}
+			>
+							Second
+			</Button>
+		</Form.Field>;
+
+	const noAccount = accounts.length === 0;
 
 	return (
 		<div className={className}>
 			<h4>Second</h4>
-			{loadingStatus.isLoading
-				? <div className={'LoaderWrapper'}>
-					<Loader text={loadingStatus.message}/>
-				</div>
-				: <>
-					<AccountSelectionForm
-						accounts={accounts}
-						address={address}
-						onAccountChange={onAccountChange}
-					/>
-					<Button
-						primary
-						disabled={!apiReady}
-						onClick={secondProposal}
-					>
+			{ noAccount
+				? <GetAccountsButton />
+				:loadingStatus.isLoading
+					? <div className={'LoaderWrapper'}>
+						<Loader text={loadingStatus.message}/>
+					</div>
+					: <>
+						<AccountSelectionForm
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+						<Button
+							primary
+							disabled={!apiReady}
+							onClick={secondProposal}
+						>
 								Second
-					</Button>
-				</>
+						</Button>
+					</>
 			}
 		</div>
 	);

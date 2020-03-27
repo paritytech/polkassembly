@@ -92,22 +92,17 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		});
 	};
 
-	if (accounts.length === 0) {
-		return (
-			<div className={className}>
-				<h4>Vote</h4>
-				<Form.Group>
-					<Form.Field className='button-container'>
-						<Button
-							primary
-							onClick={getAccounts}
-						>
+	const GetAccountsButton = () =>
+		<Form.Field className='button-container'>
+			<Button
+				primary
+				onClick={getAccounts}
+			>
 							Vote
-						</Button>
-					</Form.Field>
-				</Form.Group>
-			</div>);
-	}
+			</Button>
+		</Form.Field>;
+
+	const noAccount = accounts.length === 0;
 
 	const VoteLock = () =>
 		<Form.Field>
@@ -126,29 +121,31 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	return (
 		<div className={className}>
 			<h4>Vote</h4>
-			{loadingStatus.isLoading
-				? <div className={'LoaderWrapper'}>
-					<Loader text={loadingStatus.message}/>
-				</div>
-				: <>
-					<AccountSelectionForm
-						accounts={accounts}
-						address={address}
-						onAccountChange={onAccountChange}
-					/>
-					{api && <Balance address={address} />}
-					<BalanceInput
-						label={'Lock balance'}
-						helpText={'Amount of you are willing to lock for this vote.'}
-						onChange={onBalanceChange}
-					/>
-					<VoteLock/>
-					<AyeNayButtons
-						disabled={!apiReady}
-						onClickAye={() => voteRefrendum(true)}
-						onClickNay={() => voteRefrendum(false)}
-					/>
-				</>
+			{ noAccount
+				? <GetAccountsButton />
+				: loadingStatus.isLoading
+					? <div className={'LoaderWrapper'}>
+						<Loader text={loadingStatus.message}/>
+					</div>
+					: <>
+						<AccountSelectionForm
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+						{api && <Balance address={address} />}
+						<BalanceInput
+							label={'Lock balance'}
+							helpText={'Amount of you are willing to lock for this vote.'}
+							onChange={onBalanceChange}
+						/>
+						<VoteLock/>
+						<AyeNayButtons
+							disabled={!apiReady}
+							onClickAye={() => voteRefrendum(true)}
+							onClickNay={() => voteRefrendum(false)}
+						/>
+					</>
 			}
 		</div>
 	);

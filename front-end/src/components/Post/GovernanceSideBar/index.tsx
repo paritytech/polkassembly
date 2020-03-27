@@ -103,25 +103,23 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		);
 	}
 
-	console.log('canvote', canVote);
-
 	return (
 		<div className={className}>
 			<div className='card'>
 				<Form standalone={false}>
 					{isMotion && canVote &&
-				<VoteMotion
-					accounts={accounts}
-					address={address}
-					getAccounts={getAccounts}
-					motionId={onchainId}
-					motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-					onAccountChange={onAccountChange}
-				/>
+						<VoteMotion
+							accounts={accounts}
+							address={address}
+							getAccounts={getAccounts}
+							motionId={onchainId}
+							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+							onAccountChange={onAccountChange}
+						/>
 					}
 					{isProposal && (
 						<>
-							{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
+							{(onchainId || onchainId === 0) && canVote &&<ProposalVoteInfo proposalId={onchainId}/>}
 							{canVote && <SecondProposal
 								accounts={accounts}
 								address={address}
@@ -133,7 +131,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 					)}
 					{isReferendum && (
 						<>
-							{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
+							{(onchainId || onchainId === 0) && canVote &&<ReferendumVoteInfo referendumId={onchainId} />}
 							{canVote && <VoteReferendum
 								accounts={accounts}
 								address={address}
@@ -148,8 +146,6 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 			</div>
 		</div>
 	);
-
-	return null;
 };
 
 export default styled(GovenanceSideBar)`
