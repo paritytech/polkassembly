@@ -2,22 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState, useMemo } from 'react';
-import styled from '@xstyled/styled-components';
-import { DropdownProps, Select } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
+import BN from 'bn.js';
+import React, { useContext, useState, useMemo } from 'react';
+import { DropdownProps, Select } from 'semantic-ui-react';
 
 import AccountSelectionForm from './AccountSelectionForm';
 import AyeNayButtons from './AyeNayButtons';
 import Balance from '../../Balance';
-import { ApiContext } from '../../../context/ApiContext';
-import { NotificationContext } from '../../../context/NotificationContext';
-import Button from '../../../ui-components/Button';
-import { Form } from '../../../ui-components/Form';
-import HelperTooltip from '../../../ui-components/HelperTooltip';
-import { NotificationStatus, LoadingStatusType } from '../../../types';
+import { ApiContext } from 'src/context/ApiContext';
+import { NotificationContext } from 'src/context/NotificationContext';
+import Button from 'src/ui-components/Button';
+import { Form } from 'src/ui-components/Form';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
+import { NotificationStatus, LoadingStatusType } from 'src/types';
 import Loader from 'src/ui-components/Loader';
-import BN from 'bn.js';
 import BalanceInput from 'src/ui-components/BalanceInput';
 
 interface Props {

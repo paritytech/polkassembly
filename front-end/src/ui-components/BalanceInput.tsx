@@ -4,7 +4,6 @@
 
 import BN from 'bn.js';
 import React, { useState } from 'react';
-import styled from '@xstyled/styled-components';
 
 import { Form } from './Form';
 import HelperTooltip from './HelperTooltip';
@@ -45,5 +44,4 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 	</Form.Field>;
 };
 
-export default styled(BalanceInput)`
-`;
+export default BalanceInput;

@@ -22,7 +22,7 @@ function getGlobalMaxValue (): BN {
 
 function isValidNumber (bn: BN, isZeroable?: boolean): boolean {
 	if (
-	// cannot be negative
+		// cannot be negative
 		bn.lt(ZERO) ||
         // cannot be > than allowed max
         !bn.lt(getGlobalMaxValue()) ||
