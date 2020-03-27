@@ -59,7 +59,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 				</Grid.Column>
 				<Grid.Column>
 					<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-					<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
+					<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

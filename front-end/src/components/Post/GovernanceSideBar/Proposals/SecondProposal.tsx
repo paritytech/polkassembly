@@ -77,7 +77,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				primary
 				onClick={getAccounts}
 			>
-							Second
+				Second
 			</Button>
 		</Form.Field>;
 
