@@ -8,9 +8,9 @@ import BN from 'bn.js';
 import React, { useContext, useState, useMemo } from 'react';
 import { DropdownProps, Select } from 'semantic-ui-react';
 
-import AccountSelectionForm from './AccountSelectionForm';
-import AyeNayButtons from './AyeNayButtons';
-import Balance from '../../Balance';
+import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
+import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
+import Balance from '../../../Balance';
 import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { NotificationStatus, LoadingStatusType } from 'src/types';
@@ -19,7 +19,6 @@ import { Form } from 'src/ui-components/Form';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import BalanceInput from 'src/ui-components/BalanceInput';
 import Loader from 'src/ui-components/Loader';
-import VoteChainInfo from './VoteChainInfo';
 
 interface Props {
 	className?: string
@@ -93,31 +92,17 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		});
 	};
 
-	if (accounts.length === 0) {
-		return (
-			<div className={className}>
-				<div className='card'>
-					<Form standalone={false}>
-						<h4>Vote</h4>
-						{referendumId || referendumId === 0 ?
-							<VoteChainInfo referendumId={referendumId} />
-							: null
-						}
-						<Form.Group>
-							<Form.Field className='button-container'>
-								<Button
-									primary
-									onClick={getAccounts}
-								>
-									Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</div>
-			</div>
-		);
-	}
+	const GetAccountsButton = () =>
+		<Form.Field className='button-container'>
+			<Button
+				primary
+				onClick={getAccounts}
+			>
+				Vote
+			</Button>
+		</Form.Field>;
+
+	const noAccount = accounts.length === 0;
 
 	const VoteLock = () =>
 		<Form.Field>
@@ -135,63 +120,42 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	return (
 		<div className={className}>
-			<div className='card'>
-				<Form standalone={false}>
-					<h4>Vote</h4>
-					{loadingStatus.isLoading
-						? <div className={'LoaderWrapper'}>
-							<Loader text={loadingStatus.message}/>
-						</div>
-						: <>
-							<AccountSelectionForm
-								accounts={accounts}
-								address={address}
-								onAccountChange={onAccountChange}
-							/>
-							{api && <Balance address={address} />}
-							<BalanceInput
-								label={'Lock balance'}
-								helpText={'Amount of you are willing to lock for this vote.'}
-								onChange={onBalanceChange}
-							/>
-							<VoteLock/>
-							<AyeNayButtons
-								disabled={!apiReady}
-								onClickAye={() => voteRefrendum(true)}
-								onClickNay={() => voteRefrendum(false)}
-							/>
-						</>
-					}
-				</Form>
-			</div>
+			{ noAccount
+				? <GetAccountsButton />
+				: loadingStatus.isLoading
+					? <div className={'LoaderWrapper'}>
+						<Loader text={loadingStatus.message}/>
+					</div>
+					: <>
+						<AccountSelectionForm
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+						{api && <Balance address={address} />}
+						<BalanceInput
+							label={'Lock balance'}
+							helpText={'Amount of you are willing to lock for this vote.'}
+							onChange={onBalanceChange}
+						/>
+						<VoteLock/>
+						<AyeNayButtons
+							disabled={!apiReady}
+							onClickAye={() => voteRefrendum(true)}
+							onClickNay={() => voteRefrendum(false)}
+						/>
+					</>
+			}
 		</div>
 	);
 };
 
 export default styled(VoteRefrendum)`
-	.card {
-		background-color: white;
-		padding: 2rem 3rem 3rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-		margin-bottom: 1rem;
-		@media only screen and (max-width: 768px) {
-			padding: 2rem;
-		}
-	}
-
 	.LoaderWrapper {
 		height: 15rem;
 	}
 
-	.ui.selection.dropdown {
-		border-color: grey_light;
-	}
-
-	@media only screen and (max-width: 768px) {
-		.ui.form {
-			padding: 0rem;
-		}
+	.button-container {
+		margin-top: 2rem !important;
 	}
 `;

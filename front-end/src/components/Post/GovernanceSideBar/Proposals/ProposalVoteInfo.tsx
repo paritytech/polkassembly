@@ -7,65 +7,69 @@ import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { formatBalance } from '@polkadot/util';
 
-import { chainProperties } from '../../../global/networkConstants';
-import { ApiContext } from '../../../context/ApiContext';
-import getNetwork from '../../../util/getNetwork';
+import { chainProperties } from '../../../../global/networkConstants';
+import { ApiContext } from '../../../../context/ApiContext';
+import getNetwork from '../../../../util/getNetwork';
 
 interface Props {
 	className?: string
 	proposalId: number
 }
 
-const SecondChainInfo = ({ className, proposalId }:  Props) => {
+const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [seconds, setSeconds] = useState(0);
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
 	const currentNetwork = getNetwork();
 
 	useEffect(() => {
-		async function getSeconds() {
-			if (!api) {
-				console.error('polkadot/api not set');
-				return;
-			}
+		if (!api) {
+			console.error('polkadot/api not set');
+			return;
+		}
 
-			if (!apiReady) {
-				console.error('api not ready');
-				return;
-			}
+		if (!apiReady) {
+			console.error('api not ready');
+			return;
+		}
 
-			const proposals = await api.derive.democracy.proposals();
+		let unsubscribe: () => void;
+
+		api.derive.democracy.proposals( proposals => {
 			proposals.forEach((proposal) => {
 				if (proposal.index.toNumber() === proposalId) {
 					setSeconds(proposal.seconds.length);
-					setDeposit(formatBalance(proposal.balance));
+					setDeposit(formatBalance(proposal.balance, { withSi: false, withUnit: true }));
 				}
 			});
-		}
+		})
+			.then(unsub => {unsubscribe = unsub;})
+			.catch(e => console.error(e));
 
-		getSeconds().catch(console.error);
+		return () => unsubscribe && unsubscribe();
+
 	}, [api, apiReady, proposalId]);
 
 	return (
 		<Grid className={className} columns={3} divided>
 			<Grid.Row>
 				<Grid.Column>
-					<h6>Deposit amount</h6>
+					<h6>Deposit</h6>
 					<div>{deposit}</div>
 				</Grid.Column>
 				<Grid.Column>
 					<h6>Seconded by</h6>
-					{seconds ? <div>{seconds} Addresses</div> : null}
+					{seconds ? <div>{seconds} addresses</div> : null}
 				</Grid.Column>
 				<Grid.Column>
 					<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-					<div>{seconds * parseInt(deposit.split(' ')[0])}</div>
+					<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>
 	);
 };
 
-export default styled(SecondChainInfo)`
+export default styled(ProposalVoteInfo)`
 	margin-bottom: 1rem;
 `;

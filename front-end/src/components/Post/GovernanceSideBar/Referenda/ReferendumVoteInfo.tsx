@@ -6,14 +6,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from '@xstyled/styled-components';
 import { Grid } from 'semantic-ui-react';
 
-import { ApiContext } from '../../../context/ApiContext';
+import { ApiContext } from '../../../../context/ApiContext';
 
 interface Props {
 	className?: string
 	referendumId: number
 }
 
-const VoteChainInfo = ({ className, referendumId }: Props) => {
+const ReferendumVoteInfo = ({ className, referendumId }: Props) => {
 	const { api, apiReady } = useContext(ApiContext);
 	const [totalVotes, setTotalVotes] = useState(0);
 	const [yesVotes, setYesVotes] = useState(0);
@@ -65,6 +65,6 @@ const VoteChainInfo = ({ className, referendumId }: Props) => {
 	);
 };
 
-export default styled(VoteChainInfo)`
+export default styled(ReferendumVoteInfo)`
 	margin-bottom: 1rem;
 `;
