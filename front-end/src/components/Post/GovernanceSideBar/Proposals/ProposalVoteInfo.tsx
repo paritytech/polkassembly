@@ -23,34 +23,38 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const currentNetwork = getNetwork();
 
 	useEffect(() => {
-		async function getSeconds() {
-			if (!api) {
-				console.error('polkadot/api not set');
-				return;
-			}
+		if (!api) {
+			console.error('polkadot/api not set');
+			return;
+		}
 
-			if (!apiReady) {
-				console.error('api not ready');
-				return;
-			}
+		if (!apiReady) {
+			console.error('api not ready');
+			return;
+		}
 
-			const proposals = await api.derive.democracy.proposals();
+		let unsubscribe: () => void;
+
+		api.derive.democracy.proposals( proposals => {
 			proposals.forEach((proposal) => {
 				if (proposal.index.toNumber() === proposalId) {
 					setSeconds(proposal.seconds.length);
-					setDeposit(formatBalance(proposal.balance));
+					setDeposit(formatBalance(proposal.balance, { withSi: false }));
 				}
 			});
-		}
+		})
+			. then(unsub => {unsubscribe = unsub;})
+			.catch(e => console.error(e));
 
-		getSeconds().catch(console.error);
+		return () => unsubscribe && unsubscribe();
+
 	}, [api, apiReady, proposalId]);
 
 	return (
 		<Grid className={className} columns={3} divided>
 			<Grid.Row>
 				<Grid.Column>
-					<h6>Deposit amount</h6>
+					<h6>Deposit</h6>
 					<div>{deposit}</div>
 				</Grid.Column>
 				<Grid.Column>

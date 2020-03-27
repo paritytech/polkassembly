@@ -98,7 +98,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				primary
 				onClick={getAccounts}
 			>
-							Vote
+				Vote
 			</Button>
 		</Form.Field>;
 
@@ -120,7 +120,6 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	return (
 		<div className={className}>
-			<h4>Vote</h4>
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
