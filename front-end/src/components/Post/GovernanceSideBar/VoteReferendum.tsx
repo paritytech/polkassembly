@@ -2,23 +2,23 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState } from 'react';
-import styled from '@xstyled/styled-components';
-import { DropdownProps, Select } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
+import BN from 'bn.js';
+import React, { useContext, useState, useMemo } from 'react';
+import { DropdownProps, Select } from 'semantic-ui-react';
 
 import AccountSelectionForm from './AccountSelectionForm';
 import AyeNayButtons from './AyeNayButtons';
 import Balance from '../../Balance';
-import { ApiContext } from '../../../context/ApiContext';
-import { NotificationContext } from '../../../context/NotificationContext';
-import Button from '../../../ui-components/Button';
-import { Form } from '../../../ui-components/Form';
-import HelperTooltip from '../../../ui-components/HelperTooltip';
-import { NotificationStatus, LoadingStatusType } from '../../../types';
+import { ApiContext } from 'src/context/ApiContext';
+import { NotificationContext } from 'src/context/NotificationContext';
+import Button from 'src/ui-components/Button';
+import { Form } from 'src/ui-components/Form';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
+import { NotificationStatus, LoadingStatusType } from 'src/types';
 import Loader from 'src/ui-components/Loader';
-
-type ConvictionType = 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
+import BalanceInput from 'src/ui-components/BalanceInput';
 
 interface Props {
 	className?: string
@@ -31,22 +31,25 @@ interface Props {
 
 const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const [lockedBalance, setLockedBalance] = useState<BN | undefined>(undefined);
 	const { api, apiReady } = useContext(ApiContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message: '' });
-	const options: {text: string, value: ConvictionType}[] = [
-		{ text: '1x time lock', value: 'Locked1x' },
-		{ text: '2x time lock', value: 'Locked2x' },
-		{ text: '3x time lock', value: 'Locked3x' },
-		{ text: '4x time lock', value: 'Locked4x' },
-		{ text: '5x time lock', value: 'Locked5x' }
-	];
-	const [conviction, setConviction] = useState<ConvictionType>(options[0].value);
+	const CONVICTIONS: [number, number][] = [1, 2, 4, 8, 16, 32].map((lock, index) => [index + 1, lock]);
+
+	const convictionOpts = useMemo(() => [
+		{ text: '0.1x voting balance, no lockup period', value: 0 },
+		...CONVICTIONS.map(([value, lock]): { text: string; value: number } => ({
+			text: `${value}x voting balance, locked for ${lock} enactment period(s)`,
+			value
+		}))
+	],[CONVICTIONS]);
+	const [conviction, setConviction] = useState<number>(convictionOpts[1].value);
 
 	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		const convictionValue = data.value as ConvictionType;
-		setConviction(convictionValue);
+		setConviction(Number(data.value));
 	};
 
+	const onBalanceChange = (balance: BN) => setLockedBalance(balance);
 	const voteRefrendum = async (aye: boolean) => {
 		if (!api) {
 			console.error('polkadot/api not set');
@@ -59,9 +62,10 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 		}
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
-		const vote = api.tx.democracy.vote(referendumId, { aye, conviction });
+		const params = { Standard: { balance: lockedBalance, vote: { aye, conviction } } } as any;
+		const voteTx = api.tx.democracy.vote(referendumId, params );
 
-		vote.signAndSend(address, ({ status }) => {
+		voteTx.signAndSend(address, ({ status }) => {
 			if (status.isInBlock) {
 				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
@@ -112,15 +116,15 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	const VoteLock = () =>
 		<Form.Field>
-			<label>Vote Lock
+			<label>Vote lock
 				<HelperTooltip
 					content='You can multiply your votes by locking your tokens for longer periods of time.'
 				/>
 			</label>
 			<Select
 				onChange={onConvictionChange}
-				options={options}
-				defaultValue={options[0].value}
+				options={convictionOpts}
+				value={conviction}
 			/>
 		</Form.Field>;
 
@@ -140,6 +144,11 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 								onAccountChange={onAccountChange}
 							/>
 							{api && <Balance address={address} />}
+							<BalanceInput
+								label={'Lock balance'}
+								helpText={'Amount of you are willing to lock for this vote.'}
+								onChange={onBalanceChange}
+							/>
 							<VoteLock/>
 							<AyeNayButtons
 								disabled={!apiReady}
