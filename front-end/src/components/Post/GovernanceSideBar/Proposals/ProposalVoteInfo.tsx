@@ -7,16 +7,16 @@ import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { formatBalance } from '@polkadot/util';
 
-import { chainProperties } from '../../../global/networkConstants';
-import { ApiContext } from '../../../context/ApiContext';
-import getNetwork from '../../../util/getNetwork';
+import { chainProperties } from '../../../../global/networkConstants';
+import { ApiContext } from '../../../../context/ApiContext';
+import getNetwork from '../../../../util/getNetwork';
 
 interface Props {
 	className?: string
 	proposalId: number
 }
 
-const SecondChainInfo = ({ className, proposalId }:  Props) => {
+const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [seconds, setSeconds] = useState(0);
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
@@ -66,6 +66,6 @@ const SecondChainInfo = ({ className, proposalId }:  Props) => {
 	);
 };
 
-export default styled(SecondChainInfo)`
+export default styled(ProposalVoteInfo)`
 	margin-bottom: 1rem;
 `;

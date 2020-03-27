@@ -10,11 +10,13 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { ApiContext } from '../../../context/ApiContext';
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import SecondProposal from './SecondProposal';
-import VoteReferendum from './VoteReferendum';
+import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
+import SecondProposal from './Proposals/SecondProposal';
+import VoteReferendum from './Referenda/VoteReferendum';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
 import VoteMotion from './VoteMotion';
+import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
 
 interface Props {
 	className?: string
@@ -35,6 +37,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { api } = useContext(ApiContext);
+
+	const canVote = !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status);
 
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
@@ -98,38 +102,47 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		);
 	}
 
-	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
-		return (
-			<>
-				{isMotion &&
-					<VoteMotion
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						motionId={onchainId}
-						motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-						onAccountChange={onAccountChange}
-					/>}
-				{isProposal &&
-					<SecondProposal
+	console.log('canvote', canVote);
+
+	return (
+		<>
+			{isMotion && canVote &&
+				<VoteMotion
+					accounts={accounts}
+					address={address}
+					getAccounts={getAccounts}
+					motionId={onchainId}
+					motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+					onAccountChange={onAccountChange}
+				/>
+			}
+			{isProposal && (
+				<>
+					{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
+					{canVote && <SecondProposal
 						accounts={accounts}
 						address={address}
 						getAccounts={getAccounts}
 						onAccountChange={onAccountChange}
 						proposalId={onchainId}
 					/>}
-
-				{isReferendum &&
-					<VoteReferendum
+				</>
+			)}
+			{isReferendum && (
+				<>
+					{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
+					{canVote && <VoteReferendum
 						accounts={accounts}
 						address={address}
 						getAccounts={getAccounts}
 						onAccountChange={onAccountChange}
 						referendumId={onchainId}
-					/>}
-			</>
-		);
-	}
+					/>
+					}
+				</>
+			)}
+		</>
+	);
 
 	return null;
 };

@@ -7,14 +7,14 @@ import { DropdownProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { Form } from '../../../ui-components/Form';
-import Button from '../../../ui-components/Button';
-import { ApiContext } from '../../../context/ApiContext';
-import { NotificationContext } from '../../../context/NotificationContext';
-import { NotificationStatus, LoadingStatusType } from '../../../types';
+import { Form } from '../../../../ui-components/Form';
+import Button from '../../../../ui-components/Button';
+import { ApiContext } from '../../../../context/ApiContext';
+import { NotificationContext } from '../../../../context/NotificationContext';
+import { NotificationStatus, LoadingStatusType } from '../../../../types';
 import Loader from 'src/ui-components/Loader';
-import AccountSelectionForm from './AccountSelectionForm';
-import SecondChainInfo from './SecondChainInfo';
+import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
+import SecondChainInfo from './ProposalVoteInfo';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]

@@ -3,13 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import styled from '@xstyled/styled-components';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import React from 'react';
 
 import { Form } from 'src/ui-components/Form';
-import AddressDropdown from '../../../ui-components/AddressDropdown';
+import AddressDropdown from './AddressDropdown';
 import Popup from 'semantic-ui-react/dist/commonjs/modules/Popup';
 interface Props{
     accounts: InjectedAccountWithMeta[]
@@ -34,5 +33,4 @@ const AccountSelectionForm = ({ accounts, address, className, onAccountChange }:
 		/>
 	</Form.Field>;
 
-export default styled(AccountSelectionForm)`
-`;
+export default AccountSelectionForm;

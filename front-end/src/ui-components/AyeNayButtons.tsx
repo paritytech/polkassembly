@@ -6,8 +6,8 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import React from 'react';
 import styled from '@xstyled/styled-components';
 
-import Button from '../../../ui-components/Button';
-import { Form } from '../../../ui-components/Form';
+import Button from './Button';
+import { Form } from './Form';
 
 interface Props{
     className?: string;

@@ -14,8 +14,8 @@ import { NotificationStatus, LoadingStatusType } from '../../../types';
 import Button from '../../../ui-components/Button';
 import { Form } from '../../../ui-components/Form';
 import Loader from 'src/ui-components/Loader';
-import AyeNayButtons from './AyeNayButtons';
-import AccountSelectionForm from './AccountSelectionForm';
+import AyeNayButtons from '../../../ui-components/AyeNayButtons';
+import AccountSelectionForm from '../../../ui-components/AccountSelectionForm';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]

@@ -8,9 +8,9 @@ import BN from 'bn.js';
 import React, { useContext, useState, useMemo } from 'react';
 import { DropdownProps, Select } from 'semantic-ui-react';
 
-import AccountSelectionForm from './AccountSelectionForm';
-import AyeNayButtons from './AyeNayButtons';
-import Balance from '../../Balance';
+import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
+import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
+import Balance from '../../../Balance';
 import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { NotificationStatus, LoadingStatusType } from 'src/types';
@@ -19,7 +19,6 @@ import { Form } from 'src/ui-components/Form';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import BalanceInput from 'src/ui-components/BalanceInput';
 import Loader from 'src/ui-components/Loader';
-import VoteChainInfo from './VoteChainInfo';
 
 interface Props {
 	className?: string
@@ -99,10 +98,6 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 				<div className='card'>
 					<Form standalone={false}>
 						<h4>Vote</h4>
-						{referendumId || referendumId === 0 ?
-							<VoteChainInfo referendumId={referendumId} />
-							: null
-						}
 						<Form.Group>
 							<Form.Field className='button-container'>
 								<Button
