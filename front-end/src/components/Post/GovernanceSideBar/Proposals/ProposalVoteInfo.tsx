@@ -39,7 +39,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 			proposals.forEach((proposal) => {
 				if (proposal.index.toNumber() === proposalId) {
 					setSeconds(proposal.seconds.length);
-					setDeposit(formatBalance(proposal.balance, { withSi: false }));
+					setDeposit(formatBalance(proposal.balance, { withSi: false, withUnit: true }));
 				}
 			});
 		})
