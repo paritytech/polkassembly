@@ -7,15 +7,15 @@ import styled from '@xstyled/styled-components';
 import { DropdownProps } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { ApiContext } from '../../../context/ApiContext';
-import { NotificationContext } from '../../../context/NotificationContext';
+import { ApiContext } from 'src/context/ApiContext';
+import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { NotificationStatus, LoadingStatusType } from '../../../types';
-import Button from '../../../ui-components/Button';
-import { Form } from '../../../ui-components/Form';
+import { NotificationStatus, LoadingStatusType } from 'src/types';
+import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
+import AyeNayButtons from 'src/ui-components/AyeNayButtons';
+import Button from 'src/ui-components/Button';
+import { Form } from 'src/ui-components/Form';
 import Loader from 'src/ui-components/Loader';
-import AyeNayButtons from './AyeNayButtons';
-import AccountSelectionForm from './AccountSelectionForm';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -104,50 +104,41 @@ const VoteMotion = ({
 		});
 	};
 
-	if (accounts.length === 0) {
-		return (
-			<div className={className}>
-				<div className='card'>
-					<Form standalone={false}>
-						<h4>Vote</h4>
-						<Form.Group>
-							<Form.Field className='button-container'>
-								<div>Only council members can vote on motions.</div><br/>
-								<Button
-									primary
-									onClick={getAccounts}
-								>
-									Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</div>
-			</div>
-		);
-	}
+	const GetAccountsButton = () =>
+		<Form.Field className='button-container'>
+			<div>Only council members can vote on motions.</div><br/>
+			<Button
+				primary
+				onClick={getAccounts}
+			>
+				Vote
+			</Button>
+		</Form.Field>;
+
+	const noAccount = accounts.length === 0;
 
 	const VotingForm = () =>
-		<Form standalone={false}>
-			<h4>Vote</h4>
-			{loadingStatus.isLoading
-				? <div className={'LoaderWrapper'}>
-					<Loader text={loadingStatus.message}/>
-				</div>
-				: <>
-					<AccountSelectionForm
-						accounts={accounts}
-						address={address}
-						onAccountChange={onAccountChange}
-					/>
-					<AyeNayButtons
-						disabled={!apiReady}
-						onClickAye={() => voteMotion(true)}
-						onClickNay={() => voteMotion(false)}
-					/>
-				</>
+		<>
+			{ noAccount
+				? <GetAccountsButton />
+				: loadingStatus.isLoading
+					? <div className={'LoaderWrapper'}>
+						<Loader text={loadingStatus.message}/>
+					</div>
+					: <>
+						<AccountSelectionForm
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+						<AyeNayButtons
+							disabled={!apiReady}
+							onClickAye={() => voteMotion(true)}
+							onClickNay={() => voteMotion(false)}
+						/>
+					</>
 			}
-		</Form>;
+		</>;
 
 	const NotCouncil = () =>
 		<>
@@ -157,62 +148,20 @@ const VoteMotion = ({
 
 	return (
 		<div className={className}>
-			<div className='card'>
-				{isCouncil || forceVote
-					? <VotingForm/>
-					: <NotCouncil/>
-				}
-
-			</div>
+			{isCouncil || forceVote
+				? <VotingForm/>
+				: <NotCouncil/>
+			}
 		</div>
 	);
 };
 
 export default styled(VoteMotion)`
-	.card {
-		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-		margin-bottom: 1rem;
-		@media only screen and (max-width: 768px) {
-			padding: 2rem;
-		}
-	}
-
 	.LoaderWrapper {
 		height: 15rem;
 	}
 
-	.ui.selection.dropdown {
-		border-radius: 0rem;
+	.button-container {
+		margin-top: 2rem !important;
 	}
-
-	.ui.dropdown .menu .active.item {
-		font-weight: 500;
-	}
-
-	.ui.dropdown .menu>.item:hover {
-		background-color: grey_light;
-	}
-
-	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
-		border-color: grey_light;
-	}
-
-	i.icon.question.circle:before {
-		color: grey_secondary;
-	}
-
-	@media only screen and (max-width: 768px) {
-		.ui.form {
-			padding: 0rem;
-		}
-
-		.button-container {
-			margin-bottom: 1rem!important;
-		}
-	}
-
 `;
