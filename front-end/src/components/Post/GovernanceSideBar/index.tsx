@@ -133,7 +133,10 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 							)}
 							{isReferendum && (
 								<>
-									{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
+									{(onchainId || onchainId === 0) && <ReferendumVoteInfo
+										referendumId={onchainId}
+										threshold={(onchainLink as OnchainLinkReferendumFragment)?.onchain_referendum?.[0]?.voteThreshold}
+									/>}
 									{canVote && <VoteReferendum
 										accounts={accounts}
 										address={address}

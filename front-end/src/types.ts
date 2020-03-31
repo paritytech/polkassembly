@@ -117,3 +117,9 @@ export interface ReactionMapFields {
 	count: number
 	userIds: number[]
 }
+
+export enum VoteThreshold {
+    Supermajorityapproval = 'Supermajorityapproval',
+    Supermajorityrejection = 'Supermajorityrejection',
+    Simplemajority = 'Simplemajority'
+}

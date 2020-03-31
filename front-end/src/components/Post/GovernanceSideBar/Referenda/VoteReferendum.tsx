@@ -63,7 +63,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const params = { Standard: { balance: lockedBalance, vote: { aye, conviction } } } as any;
-		const voteTx = api.tx.democracy.vote(referendumId, params );
+		const voteTx = api.tx.democracy.vote(referendumId, params);
 
 		voteTx.signAndSend(address, ({ status }) => {
 			if (status.isInBlock) {

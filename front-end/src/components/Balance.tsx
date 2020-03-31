@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext, useEffect, useState } from 'react';
-import { DerivedBalancesAccount } from '@polkadot/api-derive/types';
+import { DeriveBalancesAccount } from '@polkadot/api-derive/types';
 import { formatBalance } from '@polkadot/util';
 
 import { ApiContext } from '../context/ApiContext';
@@ -24,7 +24,7 @@ const Balance = ({ address }: Props) => {
 			return;
 		}
 
-		api.derive.balances.account(address, ((info : DerivedBalancesAccount) =>
+		api.derive.balances.account(address, ((info : DeriveBalancesAccount) =>
 			setBalance(info.freeBalance?.toString() || '0')
 		))
 			.then(unsub => { unsubscribe = unsub; })
