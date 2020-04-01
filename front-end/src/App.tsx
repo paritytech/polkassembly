@@ -16,6 +16,7 @@ import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import { ApiContextProvider } from './context/ApiContext';
+import AddressLoginForm from './screens/AddressLoginForm';
 import CreatePost from './screens/CreatePost';
 import Discussions from './screens/Discussions';
 import Home from './screens/Home';
@@ -64,6 +65,9 @@ const App = () => {
 													</Route>
 													<Route path="/login">
 														<LoginForm/>
+													</Route>
+													<Route path="/web3login">
+														<AddressLoginForm/>
 													</Route>
 													<Route path="/post/create" >
 														<CreatePost/>

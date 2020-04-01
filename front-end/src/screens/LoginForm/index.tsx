@@ -47,6 +47,10 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		}
 	};
 
+	const navigateAddressLogin = () => {
+		history.push('/web3login');
+	};
+
 	return (
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
@@ -87,7 +91,14 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							</div>
 						</Form.Field>
 					</Form.Group>
+
 					<div className={'mainButtonContainer'}>
+						<Button
+							secondary
+							onClick={navigateAddressLogin}
+						>
+							Login With Web3 Account
+						</Button>
 						<Button
 							primary
 							disabled={loading}
@@ -95,6 +106,8 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						>
 							Login
 						</Button>
+					</div>
+					<div>
 						{error && <FilteredError text={error.message}/>	}
 					</div>
 				</Form>
@@ -108,7 +121,7 @@ export default styled(LoginForm)`
 	.mainButtonContainer {
 		align-items: center;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 	}
 
