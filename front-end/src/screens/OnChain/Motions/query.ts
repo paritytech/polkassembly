@@ -57,6 +57,9 @@ export const QUERY_LATEST_MOTIONS = gql`
                     id
                     status
                 }
+                preimage {
+                    method
+                }
             }
             proposer_address
         }

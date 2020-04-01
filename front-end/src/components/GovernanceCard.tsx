@@ -5,7 +5,8 @@
 import * as React from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import Address from '../ui-components/Address';
+
+import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
 
 interface GovernanceProps {
@@ -13,6 +14,7 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
+	method?: string
 	onchainId?: number | null
 	status?: string | null
 	title: string
@@ -23,9 +25,11 @@ const GovernanceAction = function ({
 	address,
 	className,
 	comments,
+	method,
 	onchainId,
 	status,
-	title
+	title,
+	topic
 }:GovernanceProps) {
 
 	return (
@@ -35,11 +39,12 @@ const GovernanceAction = function ({
 					<h5>#{onchainId}</h5>
 				</Segment>
 				<Segment>
-					<h4 className={'proposalTitle'}>{title}</h4>
-					<Address
-						address={address || ''}
-						displayInline={true}
+					<h4>{method ? method : title}</h4>
+					<OnchainCreationLabel
+						address={address}
+						topic={topic}
 					/>
+					{title && method && <h5>{title}</h5>}
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
@@ -107,6 +112,8 @@ export default styled(GovernanceAction)`
 
 	h4 {
 		font-size: lg;
+		display: inline-flex;
+		margin-right: 0.6rem;
 	}
 
 	h5 {
@@ -114,9 +121,16 @@ export default styled(GovernanceAction)`
 		line-height: 1.4;
 	}
 
-	.creationlabel {
-		display: block;
+	.originLabel {
+		display: inline-flex;
+		font-size: sm;
+		color: black_text;
 	}
+
+	.address, .topic {
+		margin-left: 0.6rem;
+	}
+
     ul {
         color: grey_secondary;
         font-size: xs;
