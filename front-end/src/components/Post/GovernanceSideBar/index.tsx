@@ -105,7 +105,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 
 	return (
 		<>
-			{ canVote
+			{ canVote || true
 				? <div className={className}>
 					<div className='card'>
 						<Form standalone={false}>

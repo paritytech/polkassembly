@@ -4,8 +4,8 @@
 
 import { Keyring } from '@polkadot/api';
 
-import getNetwork from './getNetwork';
-import { chainProperties } from '../global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
+import { chainProperties } from 'src/global/networkConstants';
 
 /**
  * Return an address encoded for the current network

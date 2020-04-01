@@ -7,9 +7,9 @@ import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 import { formatBalance } from '@polkadot/util';
 
-import { chainProperties } from '../../../../global/networkConstants';
-import { ApiContext } from '../../../../context/ApiContext';
-import getNetwork from '../../../../util/getNetwork';
+import { ApiContext } from 'src/context/ApiContext';
+import { chainProperties } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	className?: string
