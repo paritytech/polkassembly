@@ -37,7 +37,7 @@ const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRA
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
-
+const LOGIN_SIGN_MESSAGE = 'polkassembly login';
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
 	post_participated: true,
@@ -68,6 +68,43 @@ export default class AuthService {
 		const correctPassword = await user.verifyPassword(password);
 		if (!correctPassword) {
 			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
+		}
+
+		return {
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username,
+				name: user.name,
+				email_verified: user.email_verified
+			},
+			token: await this.getSignedToken(user),
+			refreshToken: await this.getRefreshToken(user)
+		};
+	}
+
+	public async AddressLogin(address: string, signature: string): Promise<AuthObjectType> {
+		const isValidSr = verifySignature(LOGIN_SIGN_MESSAGE, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
+		}
+
+		const user = await User
+			.query()
+			.findById(addressObj.user_id);
+
+		if (!user) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
 		}
 
 		return {
