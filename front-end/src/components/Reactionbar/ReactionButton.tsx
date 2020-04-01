@@ -4,6 +4,7 @@
 
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
+import { Popup } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -21,7 +22,7 @@ export interface ReactionButtonProps {
 	className?: string
 	reaction: string
 	count: number
-	userIds: number[]
+	userNames: string[]
 	postId?: number
 	commentId?: string
 	refetch?: (variables?: undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
@@ -32,17 +33,17 @@ const ReactionButton = function ({
 	className,
 	reaction,
 	count,
-	userIds,
+	userNames,
 	postId,
 	commentId,
 	refetch
 }: ReactionButtonProps) {
-	const { id } = useContext(UserDetailsContext);
+	const { id, username } = useContext(UserDetailsContext);
 	const [addPostReactionMutation] = useAddPostReactionMutation();
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
-	const reacted = id && userIds.includes(id);
+	const reacted = username && userNames.includes(username);
 
 	const _refetch = () => { refetch && refetch(); };
 
@@ -101,7 +102,7 @@ const ReactionButton = function ({
 		}
 	};
 
-	return (
+	const button = (
 		<span className={className}>
 			<Button
 				className={'social' + (reacted ? ' reacted' : '')}
@@ -111,6 +112,13 @@ const ReactionButton = function ({
 				{reaction} {count}
 			</Button>
 		</span>
+	);
+
+	return (userNames.length > 0 ?
+		<Popup
+			content={userNames.join(', ')}
+			trigger={button}
+		/> : button
 	);
 };
 

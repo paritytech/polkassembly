@@ -23,7 +23,7 @@ const PostReactionBar = function ({ className, postId }: Props) {
 	reactions.forEach((reaction) => {
 		reactionMap[reaction] = {
 			count: 0,
-			userIds: []
+			userNames: []
 		};
 	});
 
@@ -32,13 +32,13 @@ const PostReactionBar = function ({ className, postId }: Props) {
 			return;
 		}
 
-		if (reacting_user?.id && reactionMap[reaction].userIds.includes(reacting_user?.id)){
+		if (reacting_user?.username && reactionMap[reaction].userNames.includes(reacting_user?.username)){
 			console.error('This user has already reacted.');
 			return;
 		}
 
-		if (reacting_user?.id) {
-			reactionMap[reaction].userIds.push(reacting_user?.id);
+		if (reacting_user?.username) {
+			reactionMap[reaction].userNames.push(reacting_user?.username);
 		}
 
 		reactionMap[reaction].count++;
@@ -49,14 +49,14 @@ const PostReactionBar = function ({ className, postId }: Props) {
 			{Object.keys(reactionMap).map((reaction) => {
 				const {
 					count,
-					userIds
+					userNames
 				} = reactionMap[reaction];
 
 				return (
 					<ReactionButton
 						key={reaction}
 						count={count}
-						userIds={userIds}
+						userNames={userNames}
 						reaction={reaction}
 						postId={postId}
 						refetch={refetch}

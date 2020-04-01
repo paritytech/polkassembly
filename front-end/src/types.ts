@@ -115,5 +115,5 @@ export interface LoadingStatusType {
 
 export interface ReactionMapFields {
 	count: number
-	userIds: number[]
+    userNames: string[]
 }
