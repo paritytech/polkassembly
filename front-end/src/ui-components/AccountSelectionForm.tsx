@@ -5,12 +5,11 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import styled from '@xstyled/styled-components';
 import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-import Popup from 'semantic-ui-react/dist/commonjs/modules/Popup';
 import React from 'react';
 
 import { Form } from 'src/ui-components/Form';
 import AddressDropdown from './AddressDropdown';
+import HelperTooltip from './HelperTooltip';
 
 interface Props{
     accounts: InjectedAccountWithMeta[]
@@ -22,11 +21,8 @@ interface Props{
 const AccountSelectionForm = ({ accounts, address, className, onAccountChange }: Props) =>
 	<Form.Field className={className} width={16}>
 		<label>Vote with account
-			<Popup
-				trigger={<Icon name='question circle'/>}
-				content='You can choose account from polkadot-js extension.'
-				style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-				hoverable={true}
+			<HelperTooltip
+				content='You can choose an account from the polkadot-js extension.'
 			/>
 		</label>
 		<AddressDropdown
