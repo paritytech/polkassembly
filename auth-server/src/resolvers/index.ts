@@ -4,6 +4,7 @@
 
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
+import addressLogin from './mutation/addressLogin';
 import addressUnlink from './mutation/addressUnlink';
 import changeUsername from './mutation/changeUsername';
 import changeEmail from './mutation/changeEmail';
@@ -37,6 +38,7 @@ export default {
 	Mutation: {
 		addressLinkConfirm,
 		addressLinkStart,
+		addressLogin,
 		addressUnlink,
 		login,
 		logout,
