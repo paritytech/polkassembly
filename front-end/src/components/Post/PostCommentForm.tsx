@@ -31,12 +31,11 @@ import FilteredError from '../../ui-components/FilteredError';
 
 interface Props {
 	className?: string
-	onHide: () => void
 	postId: number
 	refetch: (variables?: DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | ReferendumPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | TreasuryProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
+const PostCommentForm = ({ className, postId, refetch }: Props) => {
 	const { id, notification } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
 	const { control, errors, handleSubmit } = useForm();
@@ -49,7 +48,6 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 
 	const handleCancel = () => {
 		setContent('');
-		onHide();
 	};
 
 	const createSubscription = (postId: number) => {
@@ -79,9 +77,8 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.insert_comments && data.insert_comments.affected_rows>0){
+				if (data && data.insert_comments && data.insert_comments.affected_rows > 0) {
 					setContent('');
-					onHide();
 					refetch();
 					createSubscription(postId);
 				} else {
