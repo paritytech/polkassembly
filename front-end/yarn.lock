@@ -1227,13 +1227,6 @@
     ts-node "^8"
     tslib "^1"
 
-"@fvictorio/newton-raphson-method@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@fvictorio/newton-raphson-method/-/newton-raphson-method-1.0.5.tgz#e2dd2f3b00277c575a4430c7bbbd5d160a87af7c"
-  integrity sha512-01tOywjS038lwx/kPL91uflpU/tfRhR2hkf8zHNiqfxy7tUX6oKVXjo2lvEwelrtzvCYaSy4Yl5qkKpwjmfzSw==
-  dependencies:
-    big.js "^5.2.2"
-
 "@graphql-codegen/cli@1.12.1":
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.12.1.tgz#7d7535f0dc6f12285ec987dd7b734de5e5395f67"
@@ -2727,11 +2720,6 @@
   integrity sha512-yGeB2dHEdvxjP0y4UbRtQaSkXJ9649fYCmIdRoul5kfAoGCwxuCbMhag0k3RPfnuh9kPGm8x89btcfDEXdVWGw==
   dependencies:
     "@babel/types" "^7.3.0"
-
-"@types/big.js@^4.0.5":
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/@types/big.js/-/big.js-4.0.5.tgz#62c61697646269e39191f24e55e8272f05f21fc0"
-  integrity sha512-D9KFrAt05FDSqLo7PU9TDHfDgkarlwdkuwFsg7Zm4xl62tTNaz+zN+Tkcdx2wGLBbSMf8BnoMhOVeUGUaJfLKg==
 
 "@types/bn.js@^4.11.6":
   version "4.11.6"
@@ -10644,11 +10632,6 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
-
-newton-raphson-method@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/newton-raphson-method/-/newton-raphson-method-1.0.2.tgz#0a95c6ad86edc696aca7e1787cd8da034a4262b0"
-  integrity sha512-UoBJJxNVVQhviRvled1bL76IjmPls4dNLPeF661FW2eNrv/pKKfRDpOdlN+vo9XamZvj8OMt/KtjOBTFN6I0gw==
 
 next-tick@1:
   version "1.1.0"
