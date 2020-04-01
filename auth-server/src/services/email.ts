@@ -75,6 +75,10 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 		return;
 	}
 
+	if (!user.email_verified) {
+		return;
+	}
+
 	const text = ejs.render(postSubscriptionMailTemplate, {
 		username: user.name || '',
 		authorUsername: author.username,
@@ -126,6 +130,10 @@ export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: nu
 		return;
 	}
 
+	if (!user.email_verified) {
+		return;
+	}
+
 	const postUrl = `${DOMAIN}/${type}/${postId}`;
 	const text = ejs.render(ownProposalCreatedEmailTemplate, {
 		domain: DOMAIN,
@@ -147,6 +155,10 @@ export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: nu
 export const sendNewProposalCreatedEmail = (user: User, type: string, postId: number) => {
 	if (!apiKey) {
 		console.warn('New Proposal Created Email not sent due to missing API key');
+		return;
+	}
+
+	if (!user.email_verified) {
 		return;
 	}
 
