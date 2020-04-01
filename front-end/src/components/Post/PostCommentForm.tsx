@@ -5,7 +5,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { GoReply, GoX } from 'react-icons/go';
+import { GoReply } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from '../ContentForm';
@@ -46,10 +46,6 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 
 	if (!id) return <div>You must loggin to comment.</div>;
-
-	const handleCancel = () => {
-		setContent('');
-	};
 
 	const createSubscription = (postId: number) => {
 		if (!notification?.postParticipated) {
@@ -110,7 +106,6 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button secondary size='small' onClick={handleCancel}><GoX className='icon'/>Cancel</Button>
 					<Button primary size='small' onClick={handleSubmit(handleSave)}><GoReply className='icon'/>Reply</Button>
 				</div>
 			</div>
