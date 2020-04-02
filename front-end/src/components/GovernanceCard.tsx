@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import * as React from 'react';
-import { Icon, Segment } from 'semantic-ui-react';
+import { Icon, Responsive, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
@@ -39,21 +39,32 @@ const GovernanceAction = function ({
 					<h5>#{onchainId}</h5>
 				</Segment>
 				<Segment>
-					<h4>{method ? method : title}</h4>
-					<OnchainCreationLabel
-						address={address}
-						topic={topic}
-					/>
-					{title && method && <h5>{title}</h5>}
+					<Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+						<div className='title-wrapper'>
+							<h4>{method ? method : title}</h4>
+							{title && method && <h5>{title}</h5>}
+						</div>
+						<OnchainCreationLabel
+							address={address}
+							topic={topic}
+						/>
+						{status && <StatusTag className='statusTag' status={status}/>}
+					</Responsive>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						<div className='title-wrapper'>
+							<h4>{method ? method : title}</h4>
+							<OnchainCreationLabel
+								address={address}
+								topic={topic}
+							/>
+						</div>
+						{status && <StatusTag className='statusTag' status={status}/>}
+						{title && method && <h5>{title}</h5>}
+					</Responsive>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
 				</Segment>
-				{status &&
-					<Segment className='statusSegment'>
-						<StatusTag className='statusTag' status={status}/>
-					</Segment>
-				}
 			</Segment.Group>
 		</div>
 	);
@@ -93,17 +104,20 @@ export default styled(GovernanceAction)`
 		max-width: 6rem;
 	}
 
-	.statusSegment {
-		min-width: 10rem!important;
-		max-width: 11rem;
-	}
-
     .statusTag{
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
 	
+	.title-wrapper {
+		max-width: calc(100% - 10rem);
+
+		@media only screen and (max-width: 576px) {
+			max-width: calc(100% - 9rem);
+		}
+	}
+
     h4, h5 {
         font-family: font_default;
         display: block;

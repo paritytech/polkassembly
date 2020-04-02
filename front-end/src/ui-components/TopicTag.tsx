@@ -41,6 +41,10 @@ export default styled(TopicTag).attrs(( { topic }: Props) => ({
 		letter-spacing: 0.05rem;
 		text-transform: capitalize;
 		padding: 0.4rem 0.6rem;
+
+        @media only screen and (max-width: 576px) {
+            padding: 0.2rem 0.4rem;
+        }
     }
     &.Democracy {
         background-color: blue_primary !important;
