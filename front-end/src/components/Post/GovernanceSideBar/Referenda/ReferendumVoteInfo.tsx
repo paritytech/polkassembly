@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { ApiContext } from 'src/context/ApiContext';
-import { VoteThreshold, VoteThresholdEnum } from 'src/types';
+import { VoteThreshold } from 'src/types';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 import { getPassingThreshold } from 'src/util/getPassingThreshold';
@@ -22,13 +22,11 @@ interface Props {
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
-	// #goodToTest: Make sure that your numbers match (e.g aye + nay = totalVotes)
-	const [totalVotes, setTotalVotes] = useState(new BN('6000000000000000010'));
-	// #goodToTest: Make sure that Electorate is higher or equal to totalVotes
-	const [electorate, setElectorate] = useState(new BN('15000000000000000000'));
+	const [totalVotes, setTotalVotes] = useState(ZERO);
+	const [electorate, setElectorate] = useState(ZERO);
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
-	const [ayeVotes, setAyeVotes] = useState(new BN('10'));
-	const [nayVotes, setNayVotes] = useState(new BN('6000000000000000000'));
+	const [ayeVotes, setAyeVotes] = useState(ZERO);
+	const [nayVotes, setNayVotes] = useState(ZERO);
 
 	useEffect(() => {
 		if (!api) {
@@ -86,8 +84,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			return;
 		}
 
-		// #goodToTest play with the theshold param Simplemajority, Supermajorityapproval or Supermajorityrejection
-		const x = getPassingThreshold(nayVotes, electorate, totalVotes, VoteThresholdEnum.Supermajorityrejection);
+		const x = getPassingThreshold(nayVotes, electorate, totalVotes, threshold);
 		setPassingThreshold(x);
 	}, [electorate, nayVotes, threshold, totalVotes]);
 
