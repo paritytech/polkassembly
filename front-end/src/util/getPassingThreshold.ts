@@ -11,7 +11,6 @@ export function getPassingThreshold(nays: BN, electorate: BN){
 	const THREE = new BN(3);
 	const TEN = new BN(10);
 
-	console.log(nays.toString(), electorate.toString());
 	if (nays.isZero()){
 		// there is no vote against, any number of aye>0 would work
 		return ONE;
