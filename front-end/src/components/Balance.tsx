@@ -4,7 +4,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { DeriveBalancesAccount } from '@polkadot/api-derive/types';
-import { formatBalance } from '@polkadot/util';
+import formatBnBalance from 'src/util/formatBnBalance';
 
 import { ApiContext } from '../context/ApiContext';
 
@@ -35,7 +35,7 @@ const Balance = ({ address }: Props) => {
 
 	return (
 		<div className='text-muted'>
-			{formatBalance(balance, { withSi: false, withUnit: true })} available.
+			{formatBnBalance(balance, { numberAfterComma: 2, withUnit: true })} available.
 		</div>
 	);
 };

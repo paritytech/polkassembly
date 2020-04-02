@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { ApiContext } from 'src/context/ApiContext';
-import { VoteThreshold } from 'src/types';
+import { VoteThreshold, VoteThresholdEnum } from 'src/types';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 import { getPassingThreshold } from 'src/util/getPassingThreshold';
@@ -16,19 +16,17 @@ import { getPassingThreshold } from 'src/util/getPassingThreshold';
 interface Props {
 	className?: string
 	referendumId: number
-	threshold?: string
+	threshold?: VoteThreshold
 }
 
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
-	const [totalVotes, setTotalVotes] = useState(new BN(2100000000000));
-	const [electorate, setElectorate] = useState(new BN(200000000000000));
+	const [totalVotes, setTotalVotes] = useState(new BN('6000000000000000010'));
+	const [electorate, setElectorate] = useState(new BN('15000000000000000000'));
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
-	const [ayeVotes, setAyeVotes] = useState(new BN(2000000000000));
-	const [nayVotes, setNayVotes] = useState(new BN(100000000000));
-
-	console.log('formating:',formatBnBalance(nayVotes, 3));
+	const [ayeVotes, setAyeVotes] = useState(new BN('10'));
+	const [nayVotes, setNayVotes] = useState(new BN('6000000000000000000'));
 
 	useEffect(() => {
 		if (!api) {
@@ -81,11 +79,14 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	},[api, apiReady]);
 
 	useEffect(() => {
-		const x = getPassingThreshold(nayVotes, electorate);
-		// const x = getPassingThreshold(new BN(450), new BN(1500));
-		console.log('x',x.toString());
+		if (!threshold){
+			console.error('No threshold set');
+			return;
+		}
+
+		const x = getPassingThreshold(nayVotes, electorate, totalVotes, VoteThresholdEnum.Simplemajority);
 		setPassingThreshold(x);
-	}, [electorate, nayVotes]);
+	}, [electorate, nayVotes, threshold, totalVotes]);
 
 	return (
 		<Grid className={className} columns={3} divided>
@@ -98,15 +99,15 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			<Grid.Row>
 				<Grid.Column>
 					<h6>Total Votes</h6>
-					<div>{formatBnBalance(totalVotes, 2)}</div>
+					<div>{formatBnBalance(totalVotes, { numberAfterComma: 2 })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Aye</h6>
-					<div>{formatBnBalance(ayeVotes, 2)}</div>
+					<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Nay</h6>
-					<div>{formatBnBalance(nayVotes, 2)}</div>
+					<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

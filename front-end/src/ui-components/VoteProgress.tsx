@@ -20,7 +20,11 @@ interface Props {
 }
 
 const bnToIntBalance = function (bn: BN): number{
-	return  Number(formatBnBalance(bn, 2));
+	return  Number(formatBnBalance(bn, { numberAfterComma: 2, withThousandDelimitor: false }));
+};
+
+const bnToStringBalanceDelimitor = function (bn: BN): string{
+	return  formatBnBalance(bn, { numberAfterComma: 2, withThousandDelimitor: true });
 };
 
 const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVotes }: Props) => {
@@ -36,16 +40,15 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 		? (passingThresholdNumber/totalVotesNumber)*100
 		: ((passingThresholdNumber)/(passingThresholdNumber+nayVotesNumber))*100;
 	const ayePercent = (ayeVotesNumber/totalVotesNumber)*100;
-	console.log('passingThreshold',passingThreshold.toString(),'nayVotes',formatBnBalance(nayVotes, 2), 'nayVotesNumber',nayVotesNumber, 'totalVotes', totalVotes.toString(), 'passingThresholdNumber', passingThresholdNumber, 'isPassing',isPassing, 'ayeNumber',ayeVotesNumber , 'totalVotesNumber',totalVotesNumber, 'ayePercent',ayePercent);
 
 	return (
 		<div className={className}>
-			<div className='voteNumbers'>Aye: {ayeVotesNumber} {tokenSymbol}</div>
+			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
 			<div
 				className='voteNumbers'
 				style={{ position: 'absolute', right: 0 }}
 			>
-				Nay: {nayVotesNumber} {tokenSymbol}
+				Nay: {bnToStringBalanceDelimitor(nayVotes)} {tokenSymbol}
 			</div>
 			<Progress
 				className={isPassing? 'passing': '' }
@@ -56,7 +59,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 				style={{ left: passingThresholdPercent + '%', position: 'absolute' }}
 			>
 				<hr/>
-				Threshold: {passingThresholdNumber} {tokenSymbol}
+				Threshold: {bnToStringBalanceDelimitor(passingThreshold)} {tokenSymbol}
 			</div>
 		</div>
 	);

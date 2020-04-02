@@ -4,10 +4,16 @@
 
 import BN from 'bn.js';
 
-import { chainProperties } from 'src/global/networkConstants';
 import getNetwork from './getNetwork';
+import { chainProperties } from 'src/global/networkConstants';
 
-export  default function (value: BN | string, numberAfterComma?: number): string {
+interface Options {
+	numberAfterComma?: number
+	withUnit?: boolean
+	withThousandDelimitor?: boolean
+}
+
+export  default function (value: BN | string, options: Options): string {
 	const network = getNetwork();
 	const tokenDecimals = chainProperties[network].tokenDecimals;
 	const valueString = value.toString();
@@ -18,23 +24,28 @@ export  default function (value: BN | string, numberAfterComma?: number): string
 	if (valueString.length>tokenDecimals){
 		suffix = valueString.slice(-tokenDecimals);
 		prefix = valueString.slice(0, valueString.length-tokenDecimals);
-		console.log('prefix', prefix, 'suffix', suffix);
 	}
 	else {
 		prefix = '0';
-		suffix = valueString.padStart(11, '0');
+		suffix = valueString.padStart(tokenDecimals-1, '0');
 	}
 
 	let comma = '.';
+	const { numberAfterComma, withThousandDelimitor = true, withUnit } = options;
 
 	if ((numberAfterComma && numberAfterComma < 0) || numberAfterComma === 0){
 		comma = '';
 		suffix = '';
-
 	} else if (numberAfterComma && numberAfterComma > 0){
 		suffix = suffix.slice(0,numberAfterComma);
 	}
 
-	return `${prefix}${comma}${suffix}`;
+	if (withThousandDelimitor){
+		prefix = prefix.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+	}
+
+	const unit = withUnit ? chainProperties[network].tokenSymbol : '';
+
+	return `${prefix}${comma}${suffix} ${unit}`;
 }
 

@@ -5,7 +5,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import { formatBalance } from '@polkadot/util';
+import formatBnBalance from 'src/util/formatBnBalance';
 
 import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
@@ -37,9 +37,9 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 		api.derive.democracy.proposals( proposals => {
 			proposals.forEach((proposal) => {
-				if (proposal.index.toNumber() === proposalId) {
+				if (proposal.index.toNumber() === proposalId && proposal.balance) {
 					setSeconds(proposal.seconds.length);
-					setDeposit(formatBalance(proposal.balance, { withSi: false, withUnit: true }));
+					setDeposit(formatBnBalance(proposal.balance, { numberAfterComma: 2, withUnit: true }));
 				}
 			});
 		})
