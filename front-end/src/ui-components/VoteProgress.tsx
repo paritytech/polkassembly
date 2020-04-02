@@ -50,14 +50,13 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 			<Progress
 				className={isPassing? 'passing': '' }
 				percent={ayePercent}
-			>
-			</Progress>
+			/>
 			<div
 				id='passingThreshold'
 				style={{ left: passingThresholdPercent + '%', position: 'absolute' }}
 			>
 				<hr/>
-				Threashold: {passingThresholdNumber} {tokenSymbol}
+				Threshold: {passingThresholdNumber} {tokenSymbol}
 			</div>
 		</div>
 	);
