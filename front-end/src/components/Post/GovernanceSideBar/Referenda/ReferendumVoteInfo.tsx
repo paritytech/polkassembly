@@ -22,7 +22,9 @@ interface Props {
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
+	// #goodToTest: Make sure that your numbers match (e.g aye + nay = totalVotes)
 	const [totalVotes, setTotalVotes] = useState(new BN('6000000000000000010'));
+	// #goodToTest: Make sure that Electorate is higher or equal to totalVotes
 	const [electorate, setElectorate] = useState(new BN('15000000000000000000'));
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(new BN('10'));
@@ -84,7 +86,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			return;
 		}
 
-		const x = getPassingThreshold(nayVotes, electorate, totalVotes, VoteThresholdEnum.Simplemajority);
+		// #goodToTest play with the theshold param Simplemajority, Supermajorityapproval or Supermajorityrejection
+		const x = getPassingThreshold(nayVotes, electorate, totalVotes, VoteThresholdEnum.Supermajorityrejection);
 		setPassingThreshold(x);
 	}, [electorate, nayVotes, threshold, totalVotes]);
 
