@@ -70,12 +70,8 @@ interface Props {
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
-	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
-	const togglePostReplyForm = () => {
-		setPostReplyFormVisibile(!isPostReplyFormVisible);
-	};
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
 
 	if (!post) return <NoPostFound
@@ -145,18 +141,9 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						<PostReactionBar className='reactions' postId={post.id} />
 						{id && <div className='vl'/>}
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-						{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 					</div>
-
-					{ id && isPostReplyFormVisible &&
-						<CreatePostComment
-							onHide={togglePostReplyForm}
-							postId={post.id}
-							refetch={refetch}
-						/>
-					}
 				</div>
 				{ isMotion &&
 					<PostMotionInfo
@@ -184,6 +171,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						refetch={refetch}
 					/>
 				}
+				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
 				<GovenanceSideBar
