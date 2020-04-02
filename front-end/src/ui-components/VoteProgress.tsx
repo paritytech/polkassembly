@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { formatBalance } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import { Progress } from 'semantic-ui-react';
@@ -10,6 +9,7 @@ import React from 'react';
 
 import { chainProperties } from 'src/global/networkConstants';
 import getNetwork from 'src/util/getNetwork';
+import formatBnBalance from 'src/util/formatBnBalance';
 
 interface Props {
 	ayeVotes: BN,
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const bnToIntBalance = function (bn: BN): number{
-	return  Number(formatBalance(bn, { withSi:false, withUnit:false }));
+	return  Number(formatBnBalance(bn, 2));
 };
 
 const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVotes }: Props) => {
@@ -36,14 +36,14 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 		? (passingThresholdNumber/totalVotesNumber)*100
 		: ((passingThresholdNumber)/(passingThresholdNumber+nayVotesNumber))*100;
 	const ayePercent = (ayeVotesNumber/totalVotesNumber)*100;
-	console.log('nayVotes',formatBalance(nayVotes, { withSi:false, withUnit:false }), 'nayVotesNumber',nayVotesNumber, 'totalVotes', totalVotes.toString(), 'passingThresholdNumber', passingThresholdNumber, 'isPassing',isPassing, 'ayeNumber',ayeVotesNumber , 'totalVotesNumber',totalVotesNumber, 'ayePercent',ayePercent);
+	console.log('passingThreshold',passingThreshold.toString(),'nayVotes',formatBnBalance(nayVotes, 2), 'nayVotesNumber',nayVotesNumber, 'totalVotes', totalVotes.toString(), 'passingThresholdNumber', passingThresholdNumber, 'isPassing',isPassing, 'ayeNumber',ayeVotesNumber , 'totalVotesNumber',totalVotesNumber, 'ayePercent',ayePercent);
 
 	return (
 		<div className={className}>
 			<div className='voteNumbers'>Aye: {ayeVotesNumber} {tokenSymbol}</div>
 			<div
 				className='voteNumbers'
-				style={{ left: ayePercent + '%', position: 'absolute' }}
+				style={{ position: 'absolute', right: 0 }}
 			>
 				Nay: {nayVotesNumber} {tokenSymbol}
 			</div>

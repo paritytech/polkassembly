@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import formatBalance from '@polkadot/util/format/formatBalance';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
@@ -11,6 +10,7 @@ import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { VoteThreshold } from 'src/types';
 import VoteProgress from 'src/ui-components/VoteProgress';
+import formatBnBalance from 'src/util/formatBnBalance';
 import { getPassingThreshold } from 'src/util/getPassingThreshold';
 
 interface Props {
@@ -22,11 +22,13 @@ interface Props {
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
-	const [totalVotes, setTotalVotes] = useState(new BN(3000000000000));
+	const [totalVotes, setTotalVotes] = useState(new BN(2100000000000));
 	const [electorate, setElectorate] = useState(new BN(200000000000000));
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(new BN(2000000000000));
 	const [nayVotes, setNayVotes] = useState(new BN(100000000000));
+
+	console.log('formating:',formatBnBalance(nayVotes, 3));
 
 	useEffect(() => {
 		if (!api) {
@@ -96,15 +98,15 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			<Grid.Row>
 				<Grid.Column>
 					<h6>Total Votes</h6>
-					<div>{formatBalance(totalVotes, { withSi: false, withUnit: true })}</div>
+					<div>{formatBnBalance(totalVotes, 2)}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Aye</h6>
-					<div>{formatBalance(ayeVotes, { withSi: false, withUnit: true })}</div>
+					<div>{formatBnBalance(ayeVotes, 2)}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Nay</h6>
-					<div>{formatBalance(nayVotes, { withSi: false, withUnit: true })}</div>
+					<div>{formatBnBalance(nayVotes, 2)}</div>
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>
