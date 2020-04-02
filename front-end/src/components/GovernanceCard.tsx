@@ -72,17 +72,17 @@ const GovernanceAction = function ({
 
 export default styled(GovernanceAction)`
 	padding: 2rem 3rem 1.5rem 3rem;
-    background-color: white;
+	background-color: white;
 	border-style: solid;
-    border-width: 1px;
+	border-width: 1px;
 	border-color: grey_border;
 	border-radius: 3px;
 	
 	&:hover {
 		background-color: white_transparent;
-        border-style: solid;
-        border-width: 1px;
-        text-decoration: none;
+		border-style: solid;
+		border-width: 1px;
+		text-decoration: none;
 	}
 	overflow-wrap: break-word;
 
@@ -104,7 +104,7 @@ export default styled(GovernanceAction)`
 		max-width: 6rem;
 	}
 
-    .statusTag{
+	.statusTag{
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -118,9 +118,9 @@ export default styled(GovernanceAction)`
 		}
 	}
 
-    h4, h5 {
-        font-family: font_default;
-        display: block;
+	h4, h5 {
+		font-family: font_default;
+		display: block;
 		margin-bottom: 0.6rem; 
 	}
 
@@ -145,20 +145,20 @@ export default styled(GovernanceAction)`
 		margin-left: 0.6rem;
 	}
 
-    ul {
-        color: grey_secondary;
-        font-size: xs;
-        font-weight: 500;
-        margin-top: 0.8rem;
-        li {
-            display: inline;
-            margin-right: 1.5rem;
-        }
+	ul {
+		color: grey_secondary;
+		font-size: xs;
+		font-weight: 500;
+		margin-top: 0.8rem;
+		li {
+			display: inline;
+			margin-right: 1.5rem;
+		}
 	}
 	
-    @media only screen and (max-width: 576px) {
-        & {
-            padding: 1.2rem 1.5rem;       
+	@media only screen and (max-width: 576px) {
+		& {
+			padding: 1.2rem 1.5rem;       
 		}
 		
 		h4 {
@@ -174,5 +174,5 @@ export default styled(GovernanceAction)`
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
 		}
-    }
+	}
 `;
