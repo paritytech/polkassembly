@@ -9,7 +9,7 @@ export default {
 	ADDRESS_LOGIN_INVALID_SIGNATURE: 'Login with web3 account failed. Signature did not matched.',
 	ADDRESS_LOGIN_NOT_FOUND: 'Login with web3 account failed. Address not linked to any account.',
 	ADDRESS_LOGIN_STARTED: 'Please sign and send following message to login.',
-	ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED: 'Challenge message not found please start address login again.',
+	ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED: 'Session expired, please login again.',
 	ADDRESS_NOT_FOUND: 'Address not found',
 	ADDRESS_UNLINKING_SUCCESS: 'Address is successfully removed from your account.',
 	ADDRESS_USER_NOT_MATCHING: 'You are not allowed to link this address',
