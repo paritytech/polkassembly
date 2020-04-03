@@ -5,7 +5,7 @@
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { GoReply, GoX } from 'react-icons/go';
+import { GoReply } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
 
 import ContentForm from '../ContentForm';
@@ -26,18 +26,18 @@ import {
 	MotionPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQueryVariables
 } from '../../generated/graphql';
+import Avatar from '../../ui-components/Avatar';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 
 interface Props {
 	className?: string
-	onHide: () => void
 	postId: number
 	refetch: (variables?: DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | ReferendumPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | TreasuryProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
-	const { id, notification } = useContext(UserDetailsContext);
+const PostCommentForm = ({ className, postId, refetch }: Props) => {
+	const { id, notification, username } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
 	const { control, errors, handleSubmit } = useForm();
 
@@ -46,11 +46,6 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 
 	if (!id) return <div>You must loggin to comment.</div>;
-
-	const handleCancel = () => {
-		setContent('');
-		onHide();
-	};
 
 	const createSubscription = (postId: number) => {
 		if (!notification?.postParticipated) {
@@ -79,9 +74,8 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 			} }
 		)
 			.then(({ data }) => {
-				if (data && data.insert_comments && data.insert_comments.affected_rows>0){
+				if (data && data.insert_comments && data.insert_comments.affected_rows > 0) {
 					setContent('');
-					onHide();
 					refetch();
 					createSubscription(postId);
 				} else {
@@ -94,8 +88,14 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 	return (
 		<div className={className}>
 			{error && <FilteredError text={error.message}/>}
+			<Avatar
+				className='avatar'
+				/* displayname={author.name} */
+				username={username || ''}
+				size={'lg'}
+			/>
 
-			<>
+			<div className='comment-box'>
 				<Controller
 					as={<ContentForm
 						errorContent={errors.content}
@@ -106,16 +106,35 @@ const PostCommentForm = ({ className, onHide, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button secondary size='small' onClick={handleCancel}><GoX className='icon'/>Cancel</Button>
 					<Button primary size='small' onClick={handleSubmit(handleSave)}><GoReply className='icon'/>Reply</Button>
 				</div>
-			</>
+			</div>
 		</div>
 	);
 };
 
 export default styled(PostCommentForm)`
+	display: flex;
 	margin: 2rem 0;
+
+	.avatar {
+		display: inline-block;
+		flex: 0 0 4rem;
+		margin-right: 2rem;
+		@media only screen and (max-width: 576px) {
+			display: none;
+		}
+	}
+
+	.comment-box {
+		background-color: white;
+		padding: 1rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_border;
+		border-radius: 3px;
+		width: 100%;
+	}
 
 	.button-container {
 		width: 100%;
