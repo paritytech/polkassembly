@@ -4,10 +4,7 @@
 
 import * as redis from 'redis';
 
-export const client = redis.createClient({
-	host: process.env.REDIS_HOST,
-	port: Number(process.env.REDIS_PORT)
-});
+export const client = redis.createClient(process.env.REDIS_URL);
 
 /**
  * get from redis

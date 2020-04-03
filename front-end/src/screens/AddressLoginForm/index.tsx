@@ -118,11 +118,12 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 				}
 			});
 
-			if (loginResult && loginResult.addressLogin && loginResult.addressLogin.token && loginResult.addressLogin.user) {
+			if (loginResult?.addressLogin?.token && loginResult?.addressLogin?.user) {
 				handleLoginUser({ token: loginResult.addressLogin.token, user: loginResult.addressLogin.user }, currentUser);
 				history.push('/');
+			} else {
+				throw new Error('Web3 Login failed');
 			}
-
 		} catch (error) {
 			console.error(error);
 			queueNotification({
