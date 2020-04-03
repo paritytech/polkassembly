@@ -6,7 +6,7 @@ export default {
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
 	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
 	ADDRESS_LINKING_SUCCESSFUL: 'Address is successfully linked to your account.',
-	ADDRESS_LOGIN_INVALID_SIGNATURE: 'Login with web3 account failed. Signature did not matched.',
+	ADDRESS_LOGIN_INVALID_SIGNATURE: 'Login with web3 account failed. Invalid signature.',
 	ADDRESS_LOGIN_NOT_FOUND: 'Login with web3 account failed. Address not linked to any account.',
 	ADDRESS_LOGIN_STARTED: 'Please sign and send following message to login.',
 	ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED: 'Session expired, please login again.',
