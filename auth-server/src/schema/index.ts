@@ -13,6 +13,7 @@ import tokenQuery from './query/token';
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
+import addressLoginStart from './mutation/addressLoginStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
@@ -32,6 +33,7 @@ import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
 
 import addressLinkType from './type/addressLinkType';
+import addressLoginType from './type/addressLoginType';
 import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
@@ -45,8 +47,9 @@ import undoEmailChangeResponse from './type/undoEmailChangeResponse';
 import userType from './type/user';
 
 export default gql`
-	${addressLinkType}
 	${address}
+	${addressLinkType}
+	${addressLoginType}
 	${changeResponseType}
 	${loginResponseType}
 	${messageType}
@@ -70,6 +73,7 @@ export default gql`
 		${addressLinkConfirm}
 		${addressLinkStart}
 		${addressLogin}
+		${addressLoginStart}
 		${addressUnlink}
 		${changeUsernameMutation}
 		${changeEmailMutation}

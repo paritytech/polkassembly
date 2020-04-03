@@ -30,6 +30,7 @@ import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
 import { Keyring } from '@polkadot/api';
 import verifySignature from '../utils/verifySignature';
+import { redisGet, redisSetex } from '../redis';
 
 const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
 const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
@@ -37,7 +38,7 @@ const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRA
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
-const LOGIN_SIGN_MESSAGE = 'polkassembly login';
+const ADDRESS_LOGIN_TTL = 60; // seconds
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
 	post_participated: true,
@@ -83,8 +84,22 @@ export default class AuthService {
 		};
 	}
 
+	public async AddressLoginStart(address: string): Promise<string> {
+		const signMessage = uuid();
+
+		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
 	public async AddressLogin(address: string, signature: string): Promise<AuthObjectType> {
-		const isValidSr = verifySignature(LOGIN_SIGN_MESSAGE, address, signature);
+		const signMessage = await redisGet(address);
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
 
 		if (!isValidSr) {
 			throw new ForbiddenError(messages.ADDRESS_LOGIN_INVALID_SIGNATURE);
