@@ -23,7 +23,7 @@ const OnchainCreationLabel = ({ address, className, topic }:Props ) => {
 				className='address'
 				displayInline={true}
 			/>
-				from <TopicTag className='topic' topic={topic} />
+				from <TopicTag topic={topic} />
 		</div>
 	);
 };

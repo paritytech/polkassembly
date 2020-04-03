@@ -2,33 +2,27 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Label } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 interface Props{
-	children?: ReactNode,
 	className?: string,
-	content?: string,
 	topic: string
 }
 
-const TopicTag = ({ children, className, content, topic }: Props) => {
+const TopicTag = ({ className, topic }: Props) => {
 
 	return (
 		<Label
 			className={className}
-			content={content}
-			topic={topic}
-		>
-			{children}
-		</Label>
+			content={topic}
+		/>
 	);
 };
 
 export default styled(TopicTag).attrs(( { topic }: Props) => ({
-	className: topic,
-	content: topic
+	className: topic
 }))`
 	&.ui.label {
 		font-size: xs;
