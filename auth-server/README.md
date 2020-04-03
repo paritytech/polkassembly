@@ -53,6 +53,7 @@ DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
 HASURA_EVENT_SECRET="<shared secret key with hasura>"
 DOMAIN_NAME="polkassembly.io"
 DOMAIN_PROTOCOL="http://"
+REDIS_URL="redis://:redis@127.0.0.1:6379"
 ```
 
 `proposal_bot` is a special user identified by its id. We should grant it with the `proposal_bot` role when it signs-in.
