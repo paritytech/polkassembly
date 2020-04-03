@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, DropdownProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -39,6 +39,12 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const [addressLoginStartMutation] = useAddressLoginStartMutation();
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
+
+	useEffect(() => {
+		if (!accounts.length) {
+			getAccounts();
+		}
+	}, [accounts.length]);
 
 	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
@@ -164,7 +170,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 								/>
 							</Form.Field>
 						</Form.Group>
-						: null
+						: <div>Loading Accounts ...</div>
 					}
 					<div className='info'>
 						Alternatively, you can login with your username
