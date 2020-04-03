@@ -34,6 +34,12 @@ export type AddressLinkType = {
   sign_message?: Maybe<Scalars['String']>,
 };
 
+export type AddressLoginType = {
+   __typename?: 'AddressLoginType',
+  message?: Maybe<Scalars['String']>,
+  signMessage?: Maybe<Scalars['String']>,
+};
+
 export type AggregateBlockIndex = {
    __typename?: 'AggregateBlockIndex',
   count: Scalars['Int'],
@@ -2669,6 +2675,7 @@ export type Mutation = {
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2704,6 +2711,11 @@ export type MutationAddressLinkStartArgs = {
 export type MutationAddressLoginArgs = {
   address: Scalars['String'],
   signature: Scalars['String']
+};
+
+
+export type MutationAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -2796,6 +2808,7 @@ export type Mutation_Root = {
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -3008,6 +3021,11 @@ export type Mutation_RootAddressLinkStartArgs = {
 export type Mutation_RootAddressLoginArgs = {
   address: Scalars['String'],
   signature: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -10762,6 +10780,19 @@ export type CommentFieldsFragment = (
   )> }
 );
 
+export type AddressLoginStartMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type AddressLoginStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLoginStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
 export type AddressLoginMutationVariables = {
   address: Scalars['String'],
   signature: Scalars['String']
@@ -12316,6 +12347,39 @@ export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
+export const AddressLoginStartDocument = gql`
+    mutation AddressLoginStart($address: String!) {
+  addressLoginStart(address: $address) {
+    message
+    signMessage
+  }
+}
+    `;
+export type AddressLoginStartMutationFn = ApolloReactCommon.MutationFunction<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
+
+/**
+ * __useAddressLoginStartMutation__
+ *
+ * To run a mutation, you first call `useAddressLoginStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLoginStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLoginStartMutation, { data, loading, error }] = useAddressLoginStartMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressLoginStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLoginStartMutation, AddressLoginStartMutationVariables>(AddressLoginStartDocument, baseOptions);
+      }
+export type AddressLoginStartMutationHookResult = ReturnType<typeof useAddressLoginStartMutation>;
+export type AddressLoginStartMutationResult = ApolloReactCommon.MutationResult<AddressLoginStartMutation>;
+export type AddressLoginStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
 export const AddressLoginDocument = gql`
     mutation AddressLogin($address: String!, $signature: String!) {
   addressLogin(address: $address, signature: $signature) {

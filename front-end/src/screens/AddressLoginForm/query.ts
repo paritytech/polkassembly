@@ -4,6 +4,15 @@
 
 import gql from 'graphql-tag';
 
+export const ADDRESS_LOGIN_START = gql`
+    mutation AddressLoginStart($address: String!) {
+        addressLoginStart(address: $address){
+            message
+            signMessage
+        }
+    }
+`;
+
 export const ADDRESS_LOGIN = gql`
     mutation AddressLogin($address: String!, $signature: String!) {
         addressLogin(address: $address, signature:$signature){

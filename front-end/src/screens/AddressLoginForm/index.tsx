@@ -10,7 +10,7 @@ import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-da
 import { stringToHex } from '@polkadot/util';
 
 import { NotificationContext } from '../../context/NotificationContext';
-import { useAddressLoginMutation } from '../../generated/graphql';
+import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
@@ -28,7 +28,6 @@ interface Props {
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
-const LOGIN_SIGN_MESSAGE = 'polkassembly login';
 
 const LoginForm = ({ className }:Props): JSX.Element => {
 	const [address, setAddress] = useState<string>('');
@@ -37,6 +36,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
 	const { queueNotification } = useContext(NotificationContext);
+	const [addressLoginStartMutation] = useAddressLoginStartMutation();
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
 
@@ -93,25 +93,35 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 				return console.error('Signer not available');
 			}
 
+			const { data: startResult } = await addressLoginStartMutation({
+				variables: {
+					address
+				}
+			});
+
+			const signMessage = startResult?.addressLoginStart?.signMessage;
+
+			if (!signMessage) {
+				throw new Error('Challenge message not found');
+			}
+
 			const { signature } = await signRaw({
 				address,
-				data: stringToHex(LOGIN_SIGN_MESSAGE),
+				data: stringToHex(signMessage),
 				type: 'bytes'
 			});
 
-			addressLoginMutation({
+			const { data: loginResult } = await addressLoginMutation({
 				variables: {
 					address,
 					signature
 				}
-			}).then(({ data }) => {
-				if (data && data.addressLogin && data.addressLogin.token && data.addressLogin.user) {
-					handleLoginUser({ token: data.addressLogin.token, user: data.addressLogin.user }, currentUser);
-					history.push('/');
-				}
-			}).catch((e) => {
-				console.error('Login error', e);
 			});
+
+			if (loginResult && loginResult.addressLogin && loginResult.addressLogin.token && loginResult.addressLogin.user) {
+				handleLoginUser({ token: loginResult.addressLogin.token, user: loginResult.addressLogin.user }, currentUser);
+				history.push('/');
+			}
 
 		} catch (error) {
 			console.error(error);
