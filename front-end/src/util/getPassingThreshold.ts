@@ -3,9 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import BN from 'bn.js';
+import { VoteThreshold,VoteThresholdEnum } from 'src/types';
 
 import { newtonRaphson } from './newton-raphson';
-import { VoteThresholdEnum, VoteThreshold } from 'src/types';
 import solveQuadraticEquation from './solveQuadraticEquation';
 
 export function getPassingThreshold(nays: BN, electorate: BN, totalVotes: BN, threshold: VoteThreshold){
@@ -27,11 +27,11 @@ export function getPassingThreshold(nays: BN, electorate: BN, totalVotes: BN, th
 
 	if (threshold === VoteThresholdEnum.Supermajorityapproval){
 		const f = (x: BN) => {
-			return (x.pow(THREE)).add(nays.mul(x.pow(TWO))).sub(nays.pow(TWO).mul(electorate));
+			return x.pow(THREE).add(nays.mul(x.pow(TWO))).sub(nays.pow(TWO).mul(electorate));
 		};
 
 		const fp = (x: BN) => {
-			return (THREE.mul(x.pow(TWO))).add(TWO.mul(nays).mul(x));
+			return THREE.mul(x.pow(TWO)).add(TWO.mul(nays).mul(x));
 		};
 		const initialGuess = ONE;
 

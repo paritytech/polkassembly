@@ -2,12 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import 'react-mde/lib/styles/css/react-mde-all.css';
+
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import ReactMde, { commands }  from 'react-mde';
-import styled from '@xstyled/styled-components';
-import Markdown from './Markdown';
 
-import 'react-mde/lib/styles/css/react-mde-all.css';
+import Markdown from './Markdown';
 
 const StyledTextArea = styled.div`
 

@@ -3,8 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext } from 'react';
+import { FieldError,useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useForm, FieldError } from 'react-hook-form';
 import { Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -95,7 +95,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						>
 							Login
 						</Button>
-						{error && <FilteredError text={error.message}/>	}
+						{error && <FilteredError text={error.message}/>}
 					</div>
 				</Form>
 			</Grid.Column>

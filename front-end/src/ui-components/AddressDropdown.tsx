@@ -2,12 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
 import React, { useState } from 'react';
 import { Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-
 import Address from 'src/ui-components/Address';
-import styled from '@xstyled/styled-components';
 
 interface Props{
 	accounts: InjectedAccountWithMeta[]

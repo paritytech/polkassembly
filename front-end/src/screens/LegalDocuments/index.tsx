@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
 import styled from '@xstyled/styled-components';
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import TAC from '../../assets/terms-and-conditions';
 import PP from '../../assets/privacy-policy';
+import TAC from '../../assets/terms-and-conditions';
 import TOW from '../../assets/terms-of-website';
 import Markdown from '../../ui-components/Markdown';
 interface Props{

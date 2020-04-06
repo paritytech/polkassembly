@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useEffect, useContext } from 'react';
-import { Segment, Header, Icon, Grid } from 'semantic-ui-react';
+import React, { useContext,useEffect } from 'react';
+import { Grid,Header, Icon, Segment } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';

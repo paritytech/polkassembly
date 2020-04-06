@@ -80,5 +80,9 @@
     "rewiremock": "^3.13.9",
     "supertest": "^4.0.2",
     "ts-node": "^8.5.4"
+  },
+  "resolutions": {
+    "kind-of": ">=6.0.3",
+    "minimist": ">1.2.3"
   }
 }
