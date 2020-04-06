@@ -5,7 +5,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, FieldError } from 'react-hook-form';
-import { Divider } from 'semantic-ui-react';
+import { Divider, Responsive } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -51,7 +51,8 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const handleToggle = () => toggleWeb2Login();
 
 	return (
-		<Form className={className} onSubmit={handleSubmit(handleSubmitForm)} standalone={false}>
+		<Form className={className} onSubmit={handleSubmit(handleSubmitForm)}>
+			<h3>Login</h3>
 			<Form.Group>
 				<Form.Field width={16}>
 					<label>Username</label>
@@ -99,16 +100,18 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			<div>
 				{error && <FilteredError text={error.message}/>	}
 			</div>
-			<Divider horizontal>Or</Divider>
-			<div className={'mainButtonContainer'}>
-				<Button
-					secondary
-					disabled={loading}
-					onClick={handleToggle}
-				>
-					Login With Web3 Address
-				</Button>
-			</div>
+			<Responsive minWidth='992'>
+				<Divider horizontal>Or</Divider>
+				<div className={'mainButtonContainer'}>
+					<Button
+						secondary
+						disabled={loading}
+						onClick={handleToggle}
+					>
+						Login With Web3 Address
+					</Button>
+				</div>
+			</Responsive>
 		</Form>
 	);
 };

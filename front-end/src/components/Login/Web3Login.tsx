@@ -140,7 +140,8 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const handleToggle = () => toggleWeb2Login();
 
 	return (
-		<Form className={className} onSubmit={handleLogin} standalone={false}>
+		<Form className={className} onSubmit={handleLogin}>
+			<h3>Login</h3>
 			{extensionNotFound?
 				<div className='card'>
 					<ExtensionNotDetected />
