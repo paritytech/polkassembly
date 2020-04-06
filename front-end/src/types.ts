@@ -116,7 +116,7 @@ export interface LoadingStatusType {
 
 export interface ReactionMapFields {
 	count: number
-	userNames: number[]
+	userNames: string[]
 }
 
 export enum VoteThresholdEnum {
