@@ -109,24 +109,21 @@ const ReactionButton = function ({
 		popupContent = userNames.join(', ');
 	}
 
-	const button = (
-		<span className={className}>
-			<Button
-				className={'social' + (reacted ? ' reacted' : '')}
-				onClick={handleReact}
-				disabled={!id}
-			>
-				{reaction} {count}
-			</Button>
-		</span>
-	);
+	const button =  <span className={className}>
+		<Button
+			className={'social' + (reacted ? ' reacted' : '')}
+			onClick={handleReact}
+			disabled={!id}
+		>
+			{reaction} {count}
+		</Button>
+	</span>;
 
-	return (userNames.length > 0 ?
+	return userNames.length > 0 ?
 		<Popup
 			content={popupContent}
 			trigger={button}
-		/> : button
-	);
+		/> : button;
 };
 
 export default styled(ReactionButton)`
