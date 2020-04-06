@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { useMemo } from 'react';
-import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import queryString from 'query-string';
+import { useMemo } from 'react';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
 export default function () {
 

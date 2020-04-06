@@ -2,10 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React, { ReactNode } from 'react';
 import { Label, SemanticICONS } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-
 import { motionStatus, proposalStatus, referendumStatus } from 'src/global/statuses';
 
 interface Props{

@@ -6,7 +6,6 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
-
 import { ApiContext } from 'src/context/ApiContext';
 import { VoteThreshold } from 'src/types';
 import VoteProgress from 'src/ui-components/VoteProgress';

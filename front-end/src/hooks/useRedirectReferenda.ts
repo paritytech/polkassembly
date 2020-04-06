@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { useEffect } from 'react';
+
 import useRouter from './useRouter';
 
 export default function (refId?: number | null) {

@@ -2,22 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ApiContext } from 'src/context/ApiContext';
+import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
+import { VoteThreshold } from 'src/types';
+import { Form } from 'src/ui-components/Form';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
 import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
 import SecondProposal from './Proposals/SecondProposal';
 import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
-import { ApiContext } from 'src/context/ApiContext';
-import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
-import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
-import { Form } from 'src/ui-components/Form';
-import { VoteThreshold } from 'src/types';
 import VoteMotion from './VoteMotion';
 
 interface Props {
@@ -120,7 +120,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 								onAccountChange={onAccountChange}
 							/>
 							}
-							{isProposal && (
+							{isProposal &&
 								<>
 									{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
 									{canVote && <SecondProposal
@@ -131,12 +131,13 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 										proposalId={onchainId}
 									/>}
 								</>
-							)}
-							{isReferendum && (
+							}
+							{isReferendum &&
 								<>
 									{(onchainId || onchainId === 0) && <ReferendumVoteInfo
 										referendumId={onchainId}
-										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum?.[0]?.voteThreshold) as VoteThreshold}
+										// eslint-disable-next-line no-extra-parens
+										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
 									/>}
 									{canVote && <VoteReferendum
 										accounts={accounts}
@@ -147,7 +148,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 									/>
 									}
 								</>
-							)}
+							}
 						</Form>
 					</div>
 				</div>

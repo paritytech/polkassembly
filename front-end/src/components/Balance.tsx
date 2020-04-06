@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useEffect, useState } from 'react';
 import { DeriveBalancesAccount } from '@polkadot/api-derive/types';
+import React, { useContext, useEffect, useState } from 'react';
 import formatBnBalance from 'src/util/formatBnBalance';
 
 import { ApiContext } from '../context/ApiContext';
@@ -24,9 +24,9 @@ const Balance = ({ address }: Props) => {
 			return;
 		}
 
-		api.derive.balances.account(address, ((info : DeriveBalancesAccount) =>
+		api.derive.balances.account(address, (info : DeriveBalancesAccount) =>
 			setBalance(info.freeBalance?.toString() || '0')
-		))
+		)
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 

@@ -5,10 +5,10 @@
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 
+import { OnchainLinkMotionFragment, OnchainLinkMotionPreimageFragment, OnchainLinkMotionTreasuryFragment } from '../../../generated/graphql';
 import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
-import { OnchainLinkMotionFragment, OnchainLinkMotionPreimageFragment, OnchainLinkMotionTreasuryFragment } from '../../../generated/graphql';
 import getNetwork from '../../../util/getNetwork';
 
 interface Props{

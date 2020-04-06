@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
 import styled from '@xstyled/styled-components';
+import React from 'react';
 
-import { reactions } from './reactions';
 import { useCommentReactionsQuery } from '../../generated/graphql';
-import ReactionButton from './ReactionButton';
 import { ReactionMapFields } from '../../types';
+import ReactionButton from './ReactionButton';
+import { reactions } from './reactions';
 
 interface Props {
 	className?: string

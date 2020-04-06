@@ -2,39 +2,39 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Container } from 'semantic-ui-react';
 import { ThemeProvider } from '@xstyled/styled-components';
+import React from 'react';
+import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 
 import Apollo from './components/Apollo';
 import Footer from './components/Footer';
 import MenuBar from './components/MenuBar';
 import Modal from './components/Modal';
 import Notifications from './components/Notifications';
+import { ApiContextProvider } from './context/ApiContext';
 import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
-import { ApiContextProvider } from './context/ApiContext';
 import CreatePost from './screens/CreatePost';
+import PostDiscussion from './screens/DiscussionPost';
 import Discussions from './screens/Discussions';
 import Home from './screens/Home';
 import { PrivacyPolicy, TermsAndConditions, TermsOfWebsite } from './screens/LegalDocuments';
 import LoginForm from './screens/LoginForm';
+import PostMotion from './screens/MotionPost';
 import NotFound from './screens/NotFound';
 import NotificationSettings from './screens/NotificationSettings';
-import PostDiscussion from './screens/DiscussionPost';
 import OnChain from './screens/OnChain';
-import PostMotion from './screens/MotionPost';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
-import PostTreasury from './screens/TreasuryPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/RequestResetPassword/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
-import VerifyEmail from './screens/VerifyEmail';
+import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
+import VerifyEmail from './screens/VerifyEmail';
 import { theme } from './themes/theme';
 import { GlobalStyle } from './ui-components/GlobalStyle';
 

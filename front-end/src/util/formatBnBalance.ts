@@ -3,9 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import BN from 'bn.js';
+import { chainProperties } from 'src/global/networkConstants';
 
 import getNetwork from './getNetwork';
-import { chainProperties } from 'src/global/networkConstants';
 
 interface Options {
 	numberAfterComma?: number
@@ -33,7 +33,7 @@ export  default function (value: BN | string, options: Options): string {
 	let comma = '.';
 	const { numberAfterComma, withThousandDelimitor = true, withUnit } = options;
 
-	if ((numberAfterComma && numberAfterComma < 0) || numberAfterComma === 0){
+	if (numberAfterComma && numberAfterComma < 0 || numberAfterComma === 0){
 		comma = '';
 		suffix = '';
 	} else if (numberAfterComma && numberAfterComma > 0){

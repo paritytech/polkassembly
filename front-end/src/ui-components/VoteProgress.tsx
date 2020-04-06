@@ -4,12 +4,11 @@
 
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
-import { Progress } from 'semantic-ui-react';
 import React from 'react';
-
+import { Progress } from 'semantic-ui-react';
 import { chainProperties } from 'src/global/networkConstants';
-import getNetwork from 'src/util/getNetwork';
 import formatBnBalance from 'src/util/formatBnBalance';
+import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	ayeVotes: BN,
@@ -37,9 +36,9 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 	const ayeVotesNumber = bnToIntBalance(ayeVotes);
 	const totalVotesNumber = bnToIntBalance(totalVotes);
 	const passingThresholdPercent = isPassing
-		? (passingThresholdNumber/totalVotesNumber)*100
-		: ((passingThresholdNumber)/(passingThresholdNumber+nayVotesNumber))*100;
-	const ayePercent = (ayeVotesNumber/totalVotesNumber)*100;
+		? passingThresholdNumber/totalVotesNumber*100
+		: passingThresholdNumber/(passingThresholdNumber+nayVotesNumber)*100;
+	const ayePercent = ayeVotesNumber/totalVotesNumber*100;
 
 	return (
 		<div className={className}>

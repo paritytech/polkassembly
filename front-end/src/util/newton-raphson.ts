@@ -39,7 +39,7 @@ export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, opti
 		x1 = x0.sub(y.div(yp));
 
 		// Check for convergence:
-		if ((x1.sub(x0)).abs().lte(tol.mul(x1.abs()))) {
+		if (x1.sub(x0).abs().lte(tol.mul(x1.abs()))) {
 			if (verbose) {
 				console.log('Newton-Raphson: converged to x = ' + x1.toString() + ' after ' + iter + ' iterations');
 			}

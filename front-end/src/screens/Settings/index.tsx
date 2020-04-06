@@ -2,15 +2,15 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
-import { Grid, Divider } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import React from 'react';
+import { Divider,Grid } from 'semantic-ui-react';
 
+import Address from './address';
 import Email from './email';
 import Fullname from './fullname';
 import Password from  './password';
 import Username from './username';
-import Address from './address';
 
 interface Props {
 	className?: string
