@@ -74,7 +74,11 @@ export const GlobalStyle = createGlobalStyle`
         font-size: xl;
     }
 
-    h3, h4, h5, h6 {
+    h3 {
+        font-weight: 400;
+    }
+
+    h4, h5, h6 {
         font-weight: 500; 
     }
 

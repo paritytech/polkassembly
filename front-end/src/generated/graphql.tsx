@@ -614,22 +614,26 @@ export type Comment_Reactions_Insert_Input = {
 
 export type Comment_Reactions_Max_Fields = {
    __typename?: 'comment_reactions_max_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Max_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Min_Fields = {
    __typename?: 'comment_reactions_min_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Min_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
@@ -659,6 +663,10 @@ export type Comment_Reactions_Order_By = {
   reaction?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Comment_Reactions_Select_Column {
@@ -893,6 +901,7 @@ export type Comments_Max_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -901,6 +910,7 @@ export type Comments_Max_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -910,6 +920,7 @@ export type Comments_Min_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -918,6 +929,7 @@ export type Comments_Min_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -948,6 +960,10 @@ export type Comments_Order_By = {
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'],
 };
 
 export enum Comments_Select_Column {
@@ -2894,20 +2910,34 @@ export type Mutation_Root = {
   deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
   delete_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  delete_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
+  delete_comments_by_pk?: Maybe<Comments>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  delete_onchain_links_by_pk?: Maybe<Onchain_Links>,
   delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  delete_post_reactions_by_pk?: Maybe<Post_Reactions>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  delete_post_topics_by_pk?: Maybe<Post_Topics>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
+  delete_post_types_by_pk?: Maybe<Post_Types>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
+  delete_posts_by_pk?: Maybe<Posts>,
   executeRaw: Scalars['Json'],
   insert_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  insert_comment_reactions_one?: Maybe<Comment_Reactions>,
   insert_comments?: Maybe<Comments_Mutation_Response>,
+  insert_comments_one?: Maybe<Comments>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  insert_onchain_links_one?: Maybe<Onchain_Links>,
   insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  insert_post_reactions_one?: Maybe<Post_Reactions>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  insert_post_topics_one?: Maybe<Post_Topics>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
+  insert_post_types_one?: Maybe<Post_Types>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
+  insert_posts_one?: Maybe<Posts>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
@@ -2970,12 +3000,19 @@ export type Mutation_Root = {
   updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
   update_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  update_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   update_comments?: Maybe<Comments_Mutation_Response>,
+  update_comments_by_pk?: Maybe<Comments>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  update_onchain_links_by_pk?: Maybe<Onchain_Links>,
   update_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  update_post_reactions_by_pk?: Maybe<Post_Reactions>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  update_post_topics_by_pk?: Maybe<Post_Topics>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
+  update_post_types_by_pk?: Maybe<Post_Types>,
   update_posts?: Maybe<Posts_Mutation_Response>,
+  update_posts_by_pk?: Maybe<Posts>,
   upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertCouncil: Council,
@@ -3455,8 +3492,18 @@ export type Mutation_RootDelete_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootDelete_Comment_Reactions_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid']
 };
 
 
@@ -3465,8 +3512,18 @@ export type Mutation_RootDelete_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_ReactionsArgs = {
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_Reactions_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3475,13 +3532,28 @@ export type Mutation_RootDelete_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootDelete_Post_Topics_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp
 };
 
 
+export type Mutation_RootDelete_Post_Types_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3497,8 +3569,20 @@ export type Mutation_RootInsert_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootInsert_Comment_Reactions_OneArgs = {
+  object: Comment_Reactions_Insert_Input,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>,
+  on_conflict?: Maybe<Comments_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input,
   on_conflict?: Maybe<Comments_On_Conflict>
 };
 
@@ -3509,8 +3593,20 @@ export type Mutation_RootInsert_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootInsert_Onchain_Links_OneArgs = {
+  object: Onchain_Links_Insert_Input,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_ReactionsArgs = {
   objects: Array<Post_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_Reactions_OneArgs = {
+  object: Post_Reactions_Insert_Input,
   on_conflict?: Maybe<Post_Reactions_On_Conflict>
 };
 
@@ -3521,14 +3617,32 @@ export type Mutation_RootInsert_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootInsert_Post_Topics_OneArgs = {
+  object: Post_Topics_Insert_Input,
+  on_conflict?: Maybe<Post_Topics_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>,
   on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
 
+export type Mutation_RootInsert_Post_Types_OneArgs = {
+  object: Post_Types_Insert_Input,
+  on_conflict?: Maybe<Post_Types_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>,
+  on_conflict?: Maybe<Posts_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Posts_OneArgs = {
+  object: Posts_Insert_Input,
   on_conflict?: Maybe<Posts_On_Conflict>
 };
 
@@ -3895,10 +4009,24 @@ export type Mutation_RootUpdate_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Comment_Reactions_By_PkArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>,
+  _set?: Maybe<Comment_Reactions_Set_Input>,
+  pk_columns: Comment_Reactions_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>,
   _set?: Maybe<Comments_Set_Input>,
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _inc?: Maybe<Comments_Inc_Input>,
+  _set?: Maybe<Comments_Set_Input>,
+  pk_columns: Comments_Pk_Columns_Input
 };
 
 
@@ -3909,10 +4037,24 @@ export type Mutation_RootUpdate_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
+  _inc?: Maybe<Onchain_Links_Inc_Input>,
+  _set?: Maybe<Onchain_Links_Set_Input>,
+  pk_columns: Onchain_Links_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_ReactionsArgs = {
   _inc?: Maybe<Post_Reactions_Inc_Input>,
   _set?: Maybe<Post_Reactions_Set_Input>,
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_Reactions_By_PkArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>,
+  _set?: Maybe<Post_Reactions_Set_Input>,
+  pk_columns: Post_Reactions_Pk_Columns_Input
 };
 
 
@@ -3923,6 +4065,13 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Post_Topics_By_PkArgs = {
+  _inc?: Maybe<Post_Topics_Inc_Input>,
+  _set?: Maybe<Post_Topics_Set_Input>,
+  pk_columns: Post_Topics_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
@@ -3930,10 +4079,24 @@ export type Mutation_RootUpdate_Post_TypesArgs = {
 };
 
 
+export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
+  _inc?: Maybe<Post_Types_Inc_Input>,
+  _set?: Maybe<Post_Types_Set_Input>,
+  pk_columns: Post_Types_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
   _set?: Maybe<Posts_Set_Input>,
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _inc?: Maybe<Posts_Inc_Input>,
+  _set?: Maybe<Posts_Set_Input>,
+  pk_columns: Posts_Pk_Columns_Input
 };
 
 
@@ -4744,6 +4907,10 @@ export type Onchain_Links_Order_By = {
   proposer_address?: Maybe<Order_By>,
 };
 
+export type Onchain_Links_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -5084,6 +5251,10 @@ export type Post_Reactions_Order_By = {
   user_id?: Maybe<Order_By>,
 };
 
+export type Post_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Reactions_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -5352,6 +5523,10 @@ export type Post_Topics_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
 };
 
+export type Post_Topics_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Topics_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -5578,6 +5753,10 @@ export type Post_Types_Order_By = {
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
+};
+
+export type Post_Types_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Post_Types_Select_Column {
@@ -5898,6 +6077,10 @@ export type Posts_Order_By = {
   type?: Maybe<Post_Types_Order_By>,
   type_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Posts_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Posts_Select_Column {
@@ -10545,6 +10728,55 @@ export type EditCommentMutation = (
   )> }
 );
 
+export type LoginMutationVariables = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type LoginMutation = (
+  { __typename?: 'mutation_root' }
+  & { login: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
+);
+
+export type AddressLoginStartMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type AddressLoginStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLoginStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
+export type AddressLoginMutationVariables = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type AddressLoginMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLogin: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
+);
+
 export type LogoutMutationVariables = {};
 
 
@@ -10780,37 +11012,6 @@ export type CommentFieldsFragment = (
   )> }
 );
 
-export type AddressLoginStartMutationVariables = {
-  address: Scalars['String']
-};
-
-
-export type AddressLoginStartMutation = (
-  { __typename?: 'mutation_root' }
-  & { addressLoginStart: Maybe<(
-    { __typename?: 'AddressLoginType' }
-    & Pick<AddressLoginType, 'message' | 'signMessage'>
-  )> }
-);
-
-export type AddressLoginMutationVariables = {
-  address: Scalars['String'],
-  signature: Scalars['String']
-};
-
-
-export type AddressLoginMutation = (
-  { __typename?: 'mutation_root' }
-  & { addressLogin: Maybe<(
-    { __typename?: 'LoginResponse' }
-    & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
-    )> }
-  )> }
-);
-
 export type CreatePostMutationVariables = {
   userId: Scalars['Int'],
   content: Scalars['String'],
@@ -10901,24 +11102,6 @@ export type LatestDiscussionPostsQuery = (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
     ) }
-  )> }
-);
-
-export type LoginMutationVariables = {
-  password: Scalars['String'],
-  username: Scalars['String']
-};
-
-
-export type LoginMutation = (
-  { __typename?: 'mutation_root' }
-  & { login: Maybe<(
-    { __typename?: 'LoginResponse' }
-    & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
-    )> }
   )> }
 );
 
@@ -11853,6 +12036,119 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
+export const LoginDocument = gql`
+    mutation LOGIN($password: String!, $username: String!) {
+  login(password: $password, username: $username) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
+  }
+}
+    `;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const AddressLoginStartDocument = gql`
+    mutation AddressLoginStart($address: String!) {
+  addressLoginStart(address: $address) {
+    message
+    signMessage
+  }
+}
+    `;
+export type AddressLoginStartMutationFn = ApolloReactCommon.MutationFunction<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
+
+/**
+ * __useAddressLoginStartMutation__
+ *
+ * To run a mutation, you first call `useAddressLoginStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLoginStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLoginStartMutation, { data, loading, error }] = useAddressLoginStartMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressLoginStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLoginStartMutation, AddressLoginStartMutationVariables>(AddressLoginStartDocument, baseOptions);
+      }
+export type AddressLoginStartMutationHookResult = ReturnType<typeof useAddressLoginStartMutation>;
+export type AddressLoginStartMutationResult = ApolloReactCommon.MutationResult<AddressLoginStartMutation>;
+export type AddressLoginStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
+export const AddressLoginDocument = gql`
+    mutation AddressLogin($address: String!, $signature: String!) {
+  addressLogin(address: $address, signature: $signature) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
+  }
+}
+    `;
+export type AddressLoginMutationFn = ApolloReactCommon.MutationFunction<AddressLoginMutation, AddressLoginMutationVariables>;
+
+/**
+ * __useAddressLoginMutation__
+ *
+ * To run a mutation, you first call `useAddressLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLoginMutation, { data, loading, error }] = useAddressLoginMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *      signature: // value for 'signature'
+ *   },
+ * });
+ */
+export function useAddressLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginMutation, AddressLoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLoginMutation, AddressLoginMutationVariables>(AddressLoginDocument, baseOptions);
+      }
+export type AddressLoginMutationHookResult = ReturnType<typeof useAddressLoginMutation>;
+export type AddressLoginMutationResult = ApolloReactCommon.MutationResult<AddressLoginMutation>;
+export type AddressLoginMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginMutation, AddressLoginMutationVariables>;
 export const LogoutDocument = gql`
     mutation LOGOUT {
   logout {
@@ -12356,79 +12652,6 @@ export function useGet_Refresh_TokenLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_TokenQuery>;
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
-export const AddressLoginStartDocument = gql`
-    mutation AddressLoginStart($address: String!) {
-  addressLoginStart(address: $address) {
-    message
-    signMessage
-  }
-}
-    `;
-export type AddressLoginStartMutationFn = ApolloReactCommon.MutationFunction<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
-
-/**
- * __useAddressLoginStartMutation__
- *
- * To run a mutation, you first call `useAddressLoginStartMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddressLoginStartMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addressLoginStartMutation, { data, loading, error }] = useAddressLoginStartMutation({
- *   variables: {
- *      address: // value for 'address'
- *   },
- * });
- */
-export function useAddressLoginStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddressLoginStartMutation, AddressLoginStartMutationVariables>(AddressLoginStartDocument, baseOptions);
-      }
-export type AddressLoginStartMutationHookResult = ReturnType<typeof useAddressLoginStartMutation>;
-export type AddressLoginStartMutationResult = ApolloReactCommon.MutationResult<AddressLoginStartMutation>;
-export type AddressLoginStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
-export const AddressLoginDocument = gql`
-    mutation AddressLogin($address: String!, $signature: String!) {
-  addressLogin(address: $address, signature: $signature) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-    }
-    token
-  }
-}
-    `;
-export type AddressLoginMutationFn = ApolloReactCommon.MutationFunction<AddressLoginMutation, AddressLoginMutationVariables>;
-
-/**
- * __useAddressLoginMutation__
- *
- * To run a mutation, you first call `useAddressLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddressLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addressLoginMutation, { data, loading, error }] = useAddressLoginMutation({
- *   variables: {
- *      address: // value for 'address'
- *      signature: // value for 'signature'
- *   },
- * });
- */
-export function useAddressLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginMutation, AddressLoginMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddressLoginMutation, AddressLoginMutationVariables>(AddressLoginDocument, baseOptions);
-      }
-export type AddressLoginMutationHookResult = ReturnType<typeof useAddressLoginMutation>;
-export type AddressLoginMutationResult = ApolloReactCommon.MutationResult<AddressLoginMutation>;
-export type AddressLoginMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginMutation, AddressLoginMutationVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename
@@ -12583,46 +12806,6 @@ export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks
 export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
 export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
-export const LoginDocument = gql`
-    mutation LOGIN($password: String!, $username: String!) {
-  login(password: $password, username: $username) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-    }
-    token
-  }
-}
-    `;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
-
-/**
- * __useLoginMutation__
- *
- * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [loginMutation, { data, loading, error }] = useLoginMutation({
- *   variables: {
- *      password: // value for 'password'
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
-      }
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const MotionPostAndCommentsDocument = gql`
     query MotionPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {

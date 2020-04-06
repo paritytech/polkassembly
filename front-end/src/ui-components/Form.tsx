@@ -30,11 +30,10 @@ const StyledForm = styled(SUIForm)`
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
+		border-color: grey_border;
 	}
 
 	h3 {
-		font-family: font_mono;
 		font-size: 2.4rem;
 		margin-bottom: 3rem;
 	}

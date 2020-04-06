@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, DropdownProps } from 'semantic-ui-react';
+import { DropdownProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
@@ -82,10 +82,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		setAddress(addressValue);
 	};
 
-	const navigateLogin = () => {
-		history.push('/login');
-	};
-
 	const handleLogin = async () => {
 		if (!accounts.length) {
 			return getAccounts();
@@ -141,62 +137,46 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	};
 
 	return (
-		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
-				<Form onSubmit={handleLogin}>
-					<h3>Login With Web3 Account</h3>
-					{extensionNotFound?
-						<div className='card'>
-							<ExtensionNotDetected />
-						</div>
-						: null
-					}
-					{accountsNotFound?
-						<div className='card'>
-							<div className='text-muted'>You need at least one account in Polkadot-js extenstion to login.</div>
-							<div className='text-muted'>Please reload this page after adding accounts.</div>
-						</div>
-						: null
-					}
-					{accounts.length > 0 ?
-						<Form.Group>
-							<Form.Field width={16}>
-								<AccountSelectionForm
-									title='Choose linked account'
-									accounts={accounts}
-									address={address}
-									onAccountChange={onAccountChange}
-								/>
-							</Form.Field>
-						</Form.Group>
-						: <div>Loading Accounts ...</div>
-					}
-					<div className='info'>
-						Alternatively, you can login with your username
-					</div>
-					<div className={'mainButtonContainer'}>
-						<Button
-							secondary
-							onClick={navigateLogin}
-						>
-							Login with username
-						</Button>
-						<Button
-							primary
-							disabled={loading}
-							type='submit'
-						>
-							Login
-						</Button>
-					</div>
-					<div>
-						{error && <FilteredError text={error.message}/>	}
-					</div>
-				</Form>
-			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-		</Grid>
+		<Form className={className} onSubmit={handleLogin} standalone={false}>
+			{extensionNotFound?
+				<div className='card'>
+					<ExtensionNotDetected />
+				</div>
+				: null
+			}
+			{accountsNotFound?
+				<div className='card'>
+					<div className='text-muted'>You need at least one account in Polkadot-js extenstion to login.</div>
+					<div className='text-muted'>Please reload this page after adding accounts.</div>
+				</div>
+				: null
+			}
+			{accounts.length > 0 ?
+				<Form.Group>
+					<Form.Field width={16}>
+						<AccountSelectionForm
+							title='Choose linked account'
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+					</Form.Field>
+				</Form.Group>
+				: <div>Loading Accounts ...</div>
+			}
+			<div className={'mainButtonContainer'}>
+				<Button
+					primary
+					disabled={loading}
+					type='submit'
+				>
+					Login
+				</Button>
+			</div>
+			<div>
+				{error && <FilteredError text={error.message}/>	}
+			</div>
+		</Form>
 	);
 };
 
