@@ -5,11 +5,11 @@
   },
   "extends": [
       "eslint:recommended",
-      "semistandard",
-      "plugin:import/typescript",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "plugin:import/typescript",
+      "semistandard"
   ],
   "globals": {
       "Atomics": "readonly",
@@ -21,23 +21,25 @@
   },
   "plugins": [
       "@typescript-eslint",
+      "promise",
       "simple-import-sort"
   ],
   "rules": {
-    "simple-import-sort/sort": "error",
+    "@typescript-eslint/camelcase": ["error", {"properties": "never"}],
     "@typescript-eslint/no-unused-vars": "error",
     "arrow-spacing":["warn",{ "before": true, "after": true }],
-    "@typescript-eslint/camelcase": ["error", {"properties": "never"}],
     "comma-dangle": ["error", "never"],
     "indent": ["error", "tab"],
+    "no-extra-parens": ["error", "all", { "returnAssign": false }],
     "no-multiple-empty-lines": ["error", {"max": 1}],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "no-trailing-spaces": ["warn"],
     "no-unused-vars": "off",
     "object-curly-spacing": ["error", "always"],
-    "no-extra-parens": ["error", "all", { "returnAssign": false }],
     "quotes": ["error", "single",  { "avoidEscape": true }],
     "semi": [2, "always"],
+    "simple-import-sort/sort": "error",
+    "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
     "switch-colon-spacing": ["error", {"after": true, "before": false}]
   }
 }

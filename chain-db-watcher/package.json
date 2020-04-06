@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn tsc && ts-node ./src/index.ts",
-    "lint": "eslint \"./src/**/*.js|ts\"",
+    "lint": "eslint \"./src/**/*.{js,ts}\"",
+    "lint:fix": "eslint \"./src/**/*.{js,ts}\" --fix",
     "tsc": "tsc",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
