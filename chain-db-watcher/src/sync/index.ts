@@ -4,7 +4,13 @@
 
 import chalk from 'chalk';
 
-import { addDiscussionPostAndMotion, addDiscussionPostAndProposal, addDiscussionPostAndTreasuryProposal, addDiscussionReferendum, updateTreasuryProposalWithMotion } from '../graphql_helpers';
+import {
+	addDiscussionPostAndMotion,
+	addDiscussionPostAndProposal,
+	addDiscussionPostAndTreasuryProposal,
+	addDiscussionReferendum,
+	updateTreasuryProposalWithMotion
+} from '../graphql_helpers';
 import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData } from '../types';
 import {
 	getDiscussionMotions,
