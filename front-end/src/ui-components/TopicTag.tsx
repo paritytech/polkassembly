@@ -15,15 +15,13 @@ const TopicTag = ({ className, topic }: Props) => {
 
 	return (
 		<Label
-			className={className}
+			className={`${className} ${topic}`}
 			content={topic}
 		/>
 	);
 };
 
-export default styled(TopicTag).attrs(( { topic }: Props) => ({
-	className: topic
-}))`
+export default styled(TopicTag)`
 	&.ui.label {
 		font-size: xs;
 		font-weight: 500;
