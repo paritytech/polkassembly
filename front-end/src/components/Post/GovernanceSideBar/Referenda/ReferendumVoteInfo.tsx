@@ -98,7 +98,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			/>
 			<Grid.Row>
 				<Grid.Column>
-					<h6>Total Votes</h6>
+					<h6>Turnout</h6>
 					<div>{formatBnBalance(totalVotes, { numberAfterComma: 2 })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
