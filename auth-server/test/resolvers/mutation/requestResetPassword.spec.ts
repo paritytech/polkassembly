@@ -78,7 +78,7 @@ describe('requestResetPassword mutation', () => {
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
-			expect(error.message).to.eq(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
+			expect(error.message).to.eq(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 	});
 
