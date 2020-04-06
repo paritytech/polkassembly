@@ -187,7 +187,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							disabled={loading}
 							type='submit'
 						>
-							{accounts.length > 0 ? 'Login' : 'Show Linked Addresses'}
+							Login
 						</Button>
 					</div>
 					<div>
