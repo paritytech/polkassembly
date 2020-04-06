@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 import 'mocha';
 
-import PasswordResetToken from '../../../src/model/PasswordResetToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
 import resetPassword from '../../../src/resolvers/mutation/resetPassword';
