@@ -52,7 +52,7 @@ export default {
 	USERNAME_CHANGE_SUCCESSFUL: 'Username successfully changed.',
 	PASSWORD_LENGTH_ERROR: 'Your password must be at least 6 characters long.',
 	PASSWORD_RESET_TOKEN_NOT_FOUND: 'Password reset token not found.',
-	PASSWORD_RESET_TOKEN_INVALID: 'Password reset token expired.',
+	PASSWORD_RESET_TOKEN_INVALID: 'Password reset token has expired. Please request again.',
 	PASSWORD_RESET_SUCCESSFUL: 'Password successfully reset.',
 	REFRESH_TOKEN_EXPIRED: 'Refresh token expired',
 	REFRESH_TOKEN_NOT_PROVIDED: 'Refresh-token not provided.',

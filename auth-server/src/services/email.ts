@@ -8,7 +8,6 @@ import * as ejs from 'ejs';
 import User from '../model/User';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
-import PasswordResetToken from '../model/PasswordResetToken';
 import {
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
@@ -48,13 +47,13 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 		console.error('Verification Email not sent', e));
 };
 
-export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) => {
+export const sendResetPasswordEmail = (user: User, token: string) => {
 	if (!apiKey) {
 		console.warn('Password reset Email not sent due to missing API key');
 		return;
 	}
 
-	const resetUrl = `${DOMAIN}/reset-password/${token.token}`;
+	const resetUrl = `${DOMAIN}/reset-password/${token}`;
 	const text = ejs.render(resetPasswordEmailTemplate, { username: user.name || '', resetUrl });
 
 	const msg = {

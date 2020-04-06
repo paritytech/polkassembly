@@ -19,7 +19,6 @@ import Address from '../model/Address';
 import Notification from '../model/Notification';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
-import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import User from '../model/User';
 import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
@@ -37,7 +36,7 @@ const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY
 const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
-const ONE_DAY = 24 * 60 * 60 * 1000;
+const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
@@ -557,36 +556,17 @@ export default class AuthService {
 			return;
 		}
 
-		const expires = new Date(Date.now() + ONE_DAY).toISOString(); // 24 hours
+		const resetToken = uuid();
 
-		const resetToken = await PasswordResetToken
-			.query()
-			.allowInsert('[token, user_id, valid, expires]')
-			.insert({
-				token: uuid(),
-				user_id: user.id,
-				valid: true,
-				expires
-			});
+		await redisSetex(`PRT-${resetToken}`, ONE_DAY, `${user.id}`);
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
 	public async ResetPassword(token: string, newPassword: string) {
-		const resetToken = await PasswordResetToken
-			.query()
-			.where('token', token)
-			.first();
+		const userId = redisGet(token);
 
-		if (!resetToken) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
-		}
-
-		if (!resetToken.valid) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
-		}
-
-		if (new Date(resetToken.expires).getTime() < Date.now()) {
+		if (!userId) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
@@ -599,12 +579,7 @@ export default class AuthService {
 				salt: salt.toString('hex'),
 				password
 			})
-			.findById(resetToken.user_id);
-
-		await PasswordResetToken
-			.query()
-			.patch({ valid: false })
-			.findById(resetToken.id);
+			.findById(Number(userId));
 	}
 
 	public async UndoEmailChange(token: string) {
