@@ -21,14 +21,10 @@ const Login = ({ className }: Props) => {
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
-				<>
-					{ displayWeb2 &&
-						<Web2Login toggleWeb2Login={toggleWeb2Login}/>
-					}
-					{ !displayWeb2 &&
-						<Web3Login toggleWeb2Login={toggleWeb2Login}/>
-					}
-				</>
+				{ displayWeb2
+					? <Web2Login toggleWeb2Login={toggleWeb2Login}/>
+					: <Web3Login toggleWeb2Login={toggleWeb2Login}/>
+				}
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>

@@ -18,6 +18,7 @@ import Button from '../../ui-components/Button';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Loader from '../../ui-components/Loader';
 import { NotificationStatus } from '../../types';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import cleanError from '../../util/cleanError';
@@ -33,6 +34,7 @@ const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
+	const [isAccountLoading, setIsAccountLoading] = useState(true);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
@@ -52,6 +54,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 
 		if (extensions.length === 0) {
 			setExtensionNotFound(true);
+			setIsAccountLoading(false);
 			return;
 		} else {
 			setExtensionNotFound(false);
@@ -61,6 +64,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 
 		if (accounts.length === 0) {
 			setAccountsNotFound(true);
+			setIsAccountLoading(false);
 			return;
 		} else {
 			setAccountsNotFound(false);
@@ -75,6 +79,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			setAddress(accounts[0].address);
 		}
 
+		setIsAccountLoading(false);
 		return;
 	};
 
@@ -155,26 +160,30 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				</div>
 				: null
 			}
-			{accounts.length > 0 &&
-				<Form.Group>
-					<AccountSelectionForm
-						title='Choose linked account'
-						accounts={accounts}
-						address={address}
-						onAccountChange={onAccountChange}
-					/>
-				</Form.Group>
-			}
-			{!extensionNotFound &&
-				<div className={'mainButtonContainer'}>
-					<Button
-						primary
-						disabled={loading}
-						type='submit'
-					>
-						Login
-					</Button>
-				</div>
+			{isAccountLoading
+				?
+				<Loader text={'Requesting Web3 accounts'}/>
+				:
+				accounts.length > 0 &&
+				<>
+					<Form.Group>
+						<AccountSelectionForm
+							title='Choose linked account'
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+					</Form.Group>
+					<div className={'mainButtonContainer'}>
+						<Button
+							primary
+							disabled={loading}
+							type='submit'
+						>
+							Login
+						</Button>
+					</div>
+				</>
 			}
 			<div>
 				{error && <FilteredError text={error.message}/>	}
