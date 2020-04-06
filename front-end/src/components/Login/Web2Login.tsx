@@ -5,7 +5,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, FieldError } from 'react-hook-form';
-import styled from 'styled-components';
+import { Divider } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/graphql';
@@ -18,9 +19,10 @@ import messages from '../../util/messages';
 
 interface Props {
 	className?: string
+	toggleWeb2Login: () => void
 }
 
-const LoginForm = ({ className }:Props): JSX.Element => {
+const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const { history } = useRouter();
 	const [loginMutation, { loading, error }] = useLoginMutation();
@@ -45,6 +47,8 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			});
 		}
 	};
+
+	const handleToggle = () => toggleWeb2Login();
 
 	return (
 		<Form className={className} onSubmit={handleSubmit(handleSubmitForm)} standalone={false}>
@@ -94,6 +98,16 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			</div>
 			<div>
 				{error && <FilteredError text={error.message}/>	}
+			</div>
+			<Divider horizontal>Or</Divider>
+			<div className={'mainButtonContainer'}>
+				<Button
+					secondary
+					disabled={loading}
+					onClick={handleToggle}
+				>
+					Login With Web3 Address
+				</Button>
 			</div>
 		</Form>
 	);

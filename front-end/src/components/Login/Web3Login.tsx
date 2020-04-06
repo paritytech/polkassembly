@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState } from 'react';
-import { DropdownProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useState } from 'react';
+import { Divider, DropdownProps } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
@@ -40,6 +40,12 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [addressLoginStartMutation] = useAddressLoginStartMutation();
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
+
+	useEffect(() => {
+		if (!accounts.length) {
+			getAccounts();
+		}
+	}, [accounts.length]);
 
 	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
@@ -160,18 +166,29 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					</Form.Field>
 				</Form.Group>
 			}
-			<div className={'mainButtonContainer'}>
-				<Button
-					className={accounts.length > 0 ? 'primary' : 'secondary'}
-					disabled={loading}
-					type='submit'
-					onClick={handleToggle}
-				>
-					{accounts.length > 0 ? 'Login' : 'Login With Web3 Address'}
-				</Button>
-			</div>
+			{!extensionNotFound &&
+				<div className={'mainButtonContainer'}>
+					<Button
+						primary
+						disabled={loading}
+						type='submit'
+					>
+						Login
+					</Button>
+				</div>
+			}
 			<div>
 				{error && <FilteredError text={error.message}/>	}
+			</div>
+			<Divider horizontal>Or</Divider>
+			<div className={'mainButtonContainer'}>
+				<Button
+					secondary
+					disabled={loading}
+					onClick={handleToggle}
+				>
+					Login With Username
+				</Button>
 			</div>
 		</Form>
 	);
