@@ -26,11 +26,12 @@ export function Form({ className, standalone=true, ...props } : FormProps): Reac
 const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
-		margin-top: 4rem;
+		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_border;
+		border-radius: 3px;
 	}
 
 	h3 {
@@ -145,5 +146,11 @@ const StyledForm = styled(SUIForm)`
 	.ui.selection.active.dropdown:hover,
 	.ui.selection.active.dropdown .menu {
 		border-color: grey_light;
+	}
+
+	.ui.horizontal.divider  {
+		color: black_text !important;
+		margin: 3rem 0;
+		font-weight: 400;
 	}
 `;

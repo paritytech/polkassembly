@@ -8,6 +8,7 @@ import styled from '@xstyled/styled-components';
 
 import Web2Login from '../../components/Login/Web2Login';
 import Web3Login from '../../components/Login/Web3Login';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -22,7 +23,7 @@ const Login = ({ className }: Props) => {
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
-				<div className='login-box'>
+				<Form>
 					<h3>Login</h3>
 					{ displayWeb2 &&
 					<>
@@ -31,7 +32,7 @@ const Login = ({ className }: Props) => {
 					</>
 					}
 					<Web3Login toggleWeb2Login={toggleWeb2Login}/>
-				</div>
+				</Form>
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>
@@ -39,22 +40,5 @@ const Login = ({ className }: Props) => {
 };
 
 export default styled(Login)`
-	.login-box {
-		background-color: white;
-		padding: 2rem 3rem 3rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
-		border-radius: 3px;
-	}
 
-	.ui.horizontal.divider  {
-		color: black_text !important;
-		margin: 3rem 0;
-		font-weight: 400;
-	}
-
-	h3 {
-		font-size: 2.4rem;
-	}
 `;

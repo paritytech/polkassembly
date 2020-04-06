@@ -41,8 +41,6 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
 
-	const handleToggle = () => toggleWeb2Login();
-
 	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
 
@@ -132,6 +130,8 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			});
 		}
 	};
+
+	const handleToggle = () => toggleWeb2Login();
 
 	return (
 		<Form className={className} onSubmit={handleLogin} standalone={false}>
