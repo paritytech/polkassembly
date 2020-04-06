@@ -2,21 +2,20 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
 import { Popup } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import Button from '../../ui-components/Button';
 import {
-	useAddPostReactionMutation,
-	useAddCommentReactionMutation,
-	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation,
+	CommentReactionsQuery,
 	PostReactionsQuery,
-	CommentReactionsQuery
-} from '../../generated/graphql';
+	useAddCommentReactionMutation,
+	useAddPostReactionMutation,
+	useDeleteCommentReactionMutation,
+	useDeletePostReactionMutation } from '../../generated/graphql';
+import Button from '../../ui-components/Button';
 
 export interface ReactionButtonProps {
 	className?: string

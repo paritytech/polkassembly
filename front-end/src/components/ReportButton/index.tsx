@@ -2,16 +2,16 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
-import { Icon, TextArea, TextAreaProps, Dropdown, DropdownProps } from 'semantic-ui-react';
+import React, { useContext,useState } from 'react';
+import { Dropdown, DropdownProps,Icon, TextArea, TextAreaProps } from 'semantic-ui-react';
 
-import { useReportContentMutation } from '../../generated/graphql';
 import { NotificationContext } from '../../context/NotificationContext';
+import { useReportContentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
-import Modal from '../../ui-components/Modal';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Modal from '../../ui-components/Modal';
 
 interface DiscussionProps {
 	type: string

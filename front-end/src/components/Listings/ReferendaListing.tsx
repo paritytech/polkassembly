@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../GovernanceCard';
 import { LatestReferendaPostsQuery } from '../../generated/graphql';
+import GovernanceCard from '../GovernanceCard';
 
 interface Props {
   className?: string
@@ -23,7 +23,7 @@ const Referenda = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_referendum_id;
 
-					return (!!post?.author?.username && (
+					return !!post?.author?.username &&
 						<li key={post.id} className='referenda__item'>
 							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
@@ -31,6 +31,7 @@ const Referenda = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
+									method={post.onchain_link?.onchain_referendum?.[0]?.preimage?.method}
 									onchainId={onchainId}
 									status={post.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}
 									title={post.title}
@@ -38,7 +39,7 @@ const Referenda = ({ className, data }: Props) => {
 								/>
 							</Link>}
 						</li>
-					));
+					;
 				}
 			)}
 		</ul>

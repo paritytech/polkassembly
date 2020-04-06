@@ -6,10 +6,10 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useState } from 'react';
 
+import { inputToBn } from '../util/inputToBn';
 import { Form } from './Form';
 import HelperTooltip from './HelperTooltip';
 import Input from './Input';
-import { inputToBn } from '../util/inputToBn';
 
 interface Props{
 	className?: string
@@ -30,7 +30,7 @@ const BalanceInput = ({ className, label = '', helpText = '', onChange, placehol
 		}
 	};
 
-	return 	<Form.Field className={className} width={16}>
+	return <Form.Field className={className} width={16}>
 		<label>
 			{label}
 			{helpText && <HelperTooltip content={helpText}/>}

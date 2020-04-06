@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../GovernanceCard';
 import { LatestMotionPostsQuery } from '../../generated/graphql';
+import GovernanceCard from '../GovernanceCard';
 
 interface Props {
   className?: string
@@ -24,7 +24,7 @@ const Motions = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_motion_id;
 
-					return (!!post?.author?.username && (
+					return !!post?.author?.username &&
 						<li key={post.id} className='motions__item'>
 							{<Link to={`/motion/${onchainId}`}>
 								<GovernanceCard
@@ -32,6 +32,7 @@ const Motions = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
+									method={post.onchain_link?.onchain_motion?.[0]?.preimage?.method}
 									onchainId={onchainId}
 									status={post.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status}
 									title={post.title}
@@ -39,7 +40,7 @@ const Motions = ({ className, data }: Props) => {
 								/>
 							</Link>}
 						</li>
-					));
+					;
 				}
 			)}
 		</ul>

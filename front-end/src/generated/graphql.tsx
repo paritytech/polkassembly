@@ -34,6 +34,12 @@ export type AddressLinkType = {
   sign_message?: Maybe<Scalars['String']>,
 };
 
+export type AddressLoginType = {
+   __typename?: 'AddressLoginType',
+  message?: Maybe<Scalars['String']>,
+  signMessage?: Maybe<Scalars['String']>,
+};
+
 export type AggregateBlockIndex = {
    __typename?: 'AggregateBlockIndex',
   count: Scalars['Int'],
@@ -2668,6 +2674,8 @@ export type Mutation = {
    __typename?: 'Mutation',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
+  addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2697,6 +2705,17 @@ export type MutationAddressLinkConfirmArgs = {
 export type MutationAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
+};
+
+
+export type MutationAddressLoginArgs = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type MutationAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -2788,6 +2807,8 @@ export type Mutation_Root = {
    __typename?: 'mutation_root',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
+  addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2994,6 +3015,17 @@ export type Mutation_RootAddressLinkConfirmArgs = {
 export type Mutation_RootAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLoginArgs = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -10573,7 +10605,7 @@ export type PostReactionFieldsFragment = (
   & Pick<Post_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'username'>
+    & Pick<User, 'id' | 'username'>
   )> }
 );
 
@@ -10595,7 +10627,7 @@ export type CommentReactionFieldsFragment = (
   & Pick<Comment_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
   & { reacting_user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'username'>
+    & Pick<User, 'id' | 'username'>
   )> }
 );
 
@@ -10980,7 +11012,10 @@ export type LatestMotionPostsQuery = (
         & { motionStatus: Maybe<Array<(
           { __typename?: 'MotionStatus' }
           & Pick<MotionStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -11022,7 +11057,10 @@ export type LatestDemocracyProposalPostsQuery = (
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -11063,7 +11101,10 @@ export type LatestReferendaPostsQuery = (
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -11448,6 +11489,7 @@ export const PostReactionFieldsFragmentDoc = gql`
     fragment postReactionFields on post_reactions {
   id
   reacting_user {
+    id
     username
   }
   reaction
@@ -11459,6 +11501,7 @@ export const CommentReactionFieldsFragmentDoc = gql`
     fragment commentReactionFields on comment_reactions {
   id
   reacting_user {
+    id
     username
   }
   reaction
@@ -12581,6 +12624,9 @@ export const LatestMotionPostsDocument = gql`
           id
           status
         }
+        preimage {
+          method
+        }
       }
       proposer_address
     }
@@ -12647,6 +12693,9 @@ export const LatestDemocracyProposalPostsDocument = gql`
         proposalStatus(last: 1) {
           id
           status
+        }
+        preimage {
+          method
         }
       }
       proposer_address
@@ -12715,6 +12764,9 @@ export const LatestReferendaPostsDocument = gql`
         referendumStatus(last: 1) {
           id
           status
+        }
+        preimage {
+          method
         }
       }
       proposer_address

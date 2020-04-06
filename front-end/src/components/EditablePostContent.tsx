@@ -2,36 +2,36 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { GoCheck, GoX } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
+import { ApolloQueryResult } from 'apollo-client';
+import React, { useContext, useEffect,useState } from 'react';
+import { Controller,useForm } from 'react-hook-form';
+import { GoCheck, GoX } from 'react-icons/go';
 
-import ContentForm from './ContentForm';
-import PostContent from './Post/PostContent';
 import { NotificationContext } from '../context/NotificationContext';
-import { DiscussionPostFragment,
+import { DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryVariables,
-	DiscussionPostAndCommentsQuery,
+	DiscussionPostFragment,
 	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryVariables,
 	MotionPostFragment,
-	ProposalPostFragment,
-	ProposalPostAndCommentsQueryVariables,
 	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ProposalPostFragment,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryVariables,
 	ReferendumPostFragment,
-	TreasuryProposalPostFragment,
-	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	TreasuryProposalPostFragment,
 	useEditPostMutation
 } from '../generated/graphql';
 import { NotificationStatus } from '../types';
 import Button from '../ui-components/Button';
 import FilteredError from '../ui-components/FilteredError';
 import { Form } from '../ui-components/Form';
+import ContentForm from './ContentForm';
+import PostContent from './Post/PostContent';
 import TitleForm from './TitleForm';
 
 interface Props {
@@ -90,7 +90,7 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus
 	};
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setNewTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
-	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
+	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
 	const [editPostMutation, { error }] = useEditPostMutation({
 		variables: {
 			content: newContent,

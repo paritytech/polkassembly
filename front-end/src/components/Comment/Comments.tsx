@@ -6,22 +6,20 @@ import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Comment from './Comment';
 import {
 	CommentFieldsFragment,
-
 	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery,
-
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
 	DiscussionPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables
 } from '../../generated/graphql';
+import Comment from './Comment';
 
 interface Props{
 	className?: string

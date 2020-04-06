@@ -8,6 +8,7 @@ export const postReactionFields = gql`
     fragment postReactionFields on post_reactions {
         id
         reacting_user {
+            id
             username
         }
         reaction
@@ -29,6 +30,7 @@ export const commentReactionFields = gql`
     fragment commentReactionFields on comment_reactions {
         id
         reacting_user {
+            id
             username
         }
         reaction

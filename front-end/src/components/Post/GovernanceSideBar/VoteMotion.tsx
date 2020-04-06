@@ -2,15 +2,14 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState, useEffect } from 'react';
-import styled from '@xstyled/styled-components';
-import { DropdownProps } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-
+import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect,useState } from 'react';
+import { DropdownProps } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { NotificationStatus, LoadingStatusType } from 'src/types';
+import { LoadingStatusType,NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
 import AyeNayButtons from 'src/ui-components/AyeNayButtons';
 import Button from 'src/ui-components/Button';

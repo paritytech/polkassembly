@@ -2,54 +2,49 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import Comments from '../Comment/Comments';
-import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import CreatePostComment from './PostCommentForm';
-import EditablePostContent from '../EditablePostContent';
 import {
+	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
-	ProposalPostAndCommentsQueryHookResult,
-	ReferendumPostAndCommentsQueryHookResult,
-	MotionPostAndCommentsQueryHookResult,
-	TreasuryProposalPostAndCommentsQueryHookResult,
-
 	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryHookResult,
 	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
+	MotionPostFragment,
+	OnchainLinkMotionFragment,
 	OnchainLinkProposalFragment,
 	OnchainLinkReferendumFragment,
-	OnchainLinkMotionFragment,
 	OnchainLinkTreasuryProposalFragment,
-
-	ProposalPostFragment,
-	ReferendumPostFragment,
-	MotionPostFragment,
-	TreasuryProposalPostFragment,
-
-	DiscussionPostAndCommentsQuery,
 	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryHookResult,
+	ProposalPostAndCommentsQueryVariables,
+	ProposalPostFragment,
 	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
-} from '../../generated/graphql';
-import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
-import ReportButton from '../ReportButton';
+	ReferendumPostAndCommentsQueryHookResult,
+	ReferendumPostAndCommentsQueryVariables,
+	ReferendumPostFragment,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryHookResult,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import Comments from '../Comment/Comments';
+import EditablePostContent from '../EditablePostContent';
+import NoPostFound from '../NoPostFound';
+import PostReactionBar from '../Reactionbar/PostReactionBar';
+import ReportButton from '../ReportButton';
+import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
+import GovenanceSideBar from './GovernanceSideBar';
+import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
 import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
-import GovenanceSideBar from './GovernanceSideBar';
-import PostReactionBar from '../Reactionbar/PostReactionBar';
 
 interface Props {
 	className?: string
@@ -118,11 +113,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	}
 
 	const canEdit = !isEditing && (
-		(post.author?.id === id) ||
-		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
-		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address)) ||
-		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address)) ||
-		(isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address))
+		post.author?.id === id ||
+		isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address) ||
+		isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address) ||
+		isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address) ||
+		isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address)
 	);
 
 	return (

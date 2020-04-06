@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from '@xstyled/styled-components';
 
-import GovernanceCard from '../GovernanceCard';
 import { LatestDemocracyTreasuryProposalPostsQuery } from '../../generated/graphql';
+import GovernanceCard from '../GovernanceCard';
 
 interface Props {
   className?: string
@@ -24,7 +24,7 @@ const TreasuryProposals = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_treasury_proposal_id;
 
-					return (!!post?.author?.username && (
+					return !!post?.author?.username &&
 						<li key={post.id} className='proposals__item'>
 							{<Link to={`/treasury/${onchainId}`}>
 								<GovernanceCard
@@ -39,7 +39,7 @@ const TreasuryProposals = ({ className, data }: Props) => {
 								/>
 							</Link>}
 						</li>
-					));
+					;
 				}
 			)}
 		</ul>

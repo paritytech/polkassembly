@@ -31,17 +31,17 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 		const onChainTreasuryProposals = await getOnChainTreasuryProposals();
 
 		return {
-			onchain: {
-				motions: onChainMotions,
-				proposals: onChainProposals,
-				referenda: onchainReferenda,
-				treasuryProposals: onChainTreasuryProposals
-			},
 			discussion: {
 				motions: discussionMotions,
 				proposals: discussionProposals,
 				referenda: discussionReferenda,
 				treasuryProposals: discussionTreasuryProposals
+			},
+			onchain: {
+				motions: onChainMotions,
+				proposals: onChainProposals,
+				referenda: onchainReferenda,
+				treasuryProposals: onChainTreasuryProposals
 			}
 		};
 	} catch (err) {

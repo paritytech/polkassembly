@@ -2,39 +2,35 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useContext, useEffect,useState } from 'react';
+import { Controller,useForm } from 'react-hook-form';
 import { GoCheck, GoX } from 'react-icons/go';
 import { Icon } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import ContentForm from '../ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
-	useEditCommentMutation,
-
 	CommentFieldsFragment,
-
-	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
-	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
 	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
+	DiscussionPostAndCommentsQueryVariables,
 	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
-} from '../../generated/graphql';
-import CommentReactionBar from '../Reactionbar/CommentReactionBar';
-import ReportButton from '../ReportButton';
+	MotionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	useEditCommentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import Markdown from '../../ui-components/Markdown';
+import ContentForm from '../ContentForm';
+import CommentReactionBar from '../Reactionbar/CommentReactionBar';
+import ReportButton from '../ReportButton';
 
 interface Props {
 	authorId: number,
@@ -93,7 +89,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			})
 			.catch((e) => console.error('Error saving comment: ',e));
 	};
-	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
+	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
 	const [editCommentMutation, { error }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
