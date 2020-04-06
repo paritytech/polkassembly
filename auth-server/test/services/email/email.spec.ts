@@ -1,9 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
+import uuid from 'uuid';
 
 import rewiremock from 'rewiremock';
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
-import PasswordResetToken from '../../../src/model/PasswordResetToken';
 import User from '../../../src/model/User';
 
 const noop = () => {};
@@ -80,16 +80,7 @@ xdescribe('Email Service', () => {
 				name
 			})
 			.returning('*');
-		const token = await PasswordResetToken
-			.query()
-			.allowInsert('[token, user_id, valid, expires]')
-			.insert({
-				token: 'test-token',
-				user_id: user.id,
-				valid: true,
-				expires: new Date().toISOString()
-			});
-
+		const token = uuid();
 		let message: any;
 
 		rewiremock('@sendgrid/mail').with({
@@ -115,9 +106,5 @@ xdescribe('Email Service', () => {
 			.where({ id: user.id })
 			.del();
 
-		await PasswordResetToken
-			.query()
-			.where({ id: token.id })
-			.del();
 	});
 });

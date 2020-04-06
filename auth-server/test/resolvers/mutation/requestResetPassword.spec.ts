@@ -36,26 +36,12 @@ describe('requestResetPassword mutation', () => {
 			.query()
 			.where({ id: signupResult.user.id })
 			.del();
-
-		await PasswordResetToken
-			.query()
-			.where({ user_id: signupResult.user.id })
-			.del();
 	});
 
 	it('should be able to request a password reset', async () => {
 
 		const res = await requestResetPassword(null, { email });
 
-		const passwordResetToken = await PasswordResetToken
-			.query()
-			.where({ user_id: signupResult.user.id, valid: true });
-
-		token = passwordResetToken[0].token;
-
-		expect(passwordResetToken.length).to.eq(1);
-		expect(passwordResetToken[0].token).to.not.be.empty;
-		expect(passwordResetToken[0].valid).to.be.true;
 		expect(res.message).to.eq(messages.RESET_PASSWORD_RETURN_MESSAGE);
 	});
 
