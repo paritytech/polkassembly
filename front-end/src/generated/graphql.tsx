@@ -11043,7 +11043,10 @@ export type LatestMotionPostsQuery = (
         & { motionStatus: Maybe<Array<(
           { __typename?: 'MotionStatus' }
           & Pick<MotionStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -11085,7 +11088,10 @@ export type LatestDemocracyProposalPostsQuery = (
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -11126,7 +11132,10 @@ export type LatestReferendaPostsQuery = (
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -12717,6 +12726,9 @@ export const LatestMotionPostsDocument = gql`
           id
           status
         }
+        preimage {
+          method
+        }
       }
       proposer_address
     }
@@ -12783,6 +12795,9 @@ export const LatestDemocracyProposalPostsDocument = gql`
         proposalStatus(last: 1) {
           id
           status
+        }
+        preimage {
+          method
         }
       }
       proposer_address
@@ -12851,6 +12866,9 @@ export const LatestReferendaPostsDocument = gql`
         referendumStatus(last: 1) {
           id
           status
+        }
+        preimage {
+          method
         }
       }
       proposer_address
