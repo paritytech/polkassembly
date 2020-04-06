@@ -48,7 +48,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 	return (
 		<Form className={className} onSubmit={handleSubmit(handleSubmitForm)} standalone={false}>
-			<h3>Login</h3>
 			<Form.Group>
 				<Form.Field width={16}>
 					<label>Username</label>

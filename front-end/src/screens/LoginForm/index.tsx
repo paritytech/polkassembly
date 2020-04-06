@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Divider, Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
 
@@ -15,14 +15,22 @@ interface Props {
 
 const Login = ({ className }: Props) => {
 
+	const [displayWeb2, setDisplayWeb2] = useState(true);
+	const toggleWeb2Login = () => setDisplayWeb2(false);
+
 	return (
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
 				<div className='login-box'>
-					<Web2Login />
-					<Divider horizontal>Or</Divider>
-					<Web3Login />
+					<h3>Login</h3>
+					{ displayWeb2 &&
+					<>
+						<Web2Login />
+						<Divider horizontal>Or</Divider>
+					</>
+					}
+					<Web3Login toggleWeb2Login={toggleWeb2Login}/>
 				</div>
 			</Grid.Column>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
@@ -33,7 +41,6 @@ const Login = ({ className }: Props) => {
 export default styled(Login)`
 	.login-box {
 		background-color: white;
-		margin-top: 4rem;
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
@@ -45,5 +52,9 @@ export default styled(Login)`
 		color: black_text !important;
 		margin: 3rem 0;
 		font-weight: 400;
+	}
+
+	h3 {
+		font-size: 2.4rem;
 	}
 `;

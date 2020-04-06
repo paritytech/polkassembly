@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
@@ -25,11 +25,12 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 interface Props {
 	className?: string
+	toggleWeb2Login: () => void
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const LoginForm = ({ className }:Props): JSX.Element => {
+const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
@@ -40,11 +41,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
 
-	useEffect(() => {
-		if (!accounts.length) {
-			getAccounts();
-		}
-	}, [accounts.length]);
+	const handleToggle = () => toggleWeb2Login();
 
 	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
@@ -151,7 +148,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 				</div>
 				: null
 			}
-			{accounts.length > 0 ?
+			{accounts.length > 0 &&
 				<Form.Group>
 					<Form.Field width={16}>
 						<AccountSelectionForm
@@ -162,15 +159,15 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						/>
 					</Form.Field>
 				</Form.Group>
-				: <div>Loading Accounts ...</div>
 			}
 			<div className={'mainButtonContainer'}>
 				<Button
-					primary
+					className={accounts.length > 0 ? 'primary' : 'secondary'}
 					disabled={loading}
 					type='submit'
+					onClick={handleToggle}
 				>
-					Login
+					{accounts.length > 0 ? 'Login' : 'Login With Web3 Address'}
 				</Button>
 			</div>
 			<div>

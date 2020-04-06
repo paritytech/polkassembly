@@ -69,7 +69,7 @@ export const GlobalStyle = createGlobalStyle`
         margin-top: 0;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
         font-weight: 400;
         font-size: xl;
     }
