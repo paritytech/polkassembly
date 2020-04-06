@@ -4,7 +4,6 @@
 
 import React, { useState } from 'react';
 import { Divider, Grid } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 import Web2Login from '../../components/Login/Web2Login';
 import Web3Login from '../../components/Login/Web3Login';
@@ -39,6 +38,4 @@ const Login = ({ className }: Props) => {
 	);
 };
 
-export default styled(Login)`
-
-`;
+export default Login;
