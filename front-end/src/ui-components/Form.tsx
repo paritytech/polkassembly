@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Form as SUIForm, FormProps as SUIFormProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import Input from './Input';
 import Field from './Field';
 import Group from './Group';
+import Input from './Input';
 
 type FormProps = SUIFormProps & {
     className? : string,

@@ -12,20 +12,20 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import jwt from 'jsonwebtoken';
 import React, { useContext } from 'react';
 
+import { UserDetailsContext } from '../context/UserDetailsContext';
+import { Get_Refresh_TokenQueryResult } from '../generated/graphql';
 import {
-	logout,
 	getLocalStorageToken,
+	logout,
 	storeLocalStorageToken
 } from '../services/auth.service';
-import { Get_Refresh_TokenQueryResult } from '../generated/graphql';
-import { UserDetailsContext } from '../context/UserDetailsContext';
 import { JWTPayploadType } from '../types';
 
 /**
  * Performs a call to the auth server
  * to get a new jwt token.
  */
-const fetchAccessToken = () => (
+const fetchAccessToken = () =>
 	fetch(`${process.env.REACT_APP_HASURA_GRAPHQL_URL}`, {
 		body: JSON.stringify({ 'operationName':null,'query':'query get_new_token { token { token }}' }),
 		credentials: 'same-origin',
@@ -34,7 +34,7 @@ const fetchAccessToken = () => (
 		},
 		method: 'POST'
 	})
-);
+;
 
 /**
  * Read the data from the answer

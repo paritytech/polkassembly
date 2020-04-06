@@ -2,29 +2,26 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
-import styled from '@xstyled/styled-components';
 
-import EditableCommentContent from './EditableCommentContent';
 import {
 	CommentFieldsFragment,
-
-	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
-	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
 	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
+	DiscussionPostAndCommentsQueryVariables,
 	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
-} from '../../generated/graphql';
+	MotionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
+import EditableCommentContent from './EditableCommentContent';
 
 interface Props{
 	className?: string,

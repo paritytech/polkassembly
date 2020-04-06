@@ -4,10 +4,10 @@
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import styled from '@xstyled/styled-components';
-import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import React from 'react';
-
+import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import { Form } from 'src/ui-components/Form';
+
 import AddressDropdown from './AddressDropdown';
 import HelperTooltip from './HelperTooltip';
 

@@ -5,20 +5,20 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useMemo,useState } from 'react';
 import { DropdownProps, Select } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
+import { NotificationContext } from 'src/context/NotificationContext';
+import { LoadingStatusType,NotificationStatus } from 'src/types';
+import BalanceInput from 'src/ui-components/BalanceInput';
+import Button from 'src/ui-components/Button';
+import { Form } from 'src/ui-components/Form';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
+import Loader from 'src/ui-components/Loader';
 
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
 import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
 import Balance from '../../../Balance';
-import { ApiContext } from 'src/context/ApiContext';
-import { NotificationContext } from 'src/context/NotificationContext';
-import { NotificationStatus, LoadingStatusType } from 'src/types';
-import Button from 'src/ui-components/Button';
-import { Form } from 'src/ui-components/Form';
-import HelperTooltip from 'src/ui-components/HelperTooltip';
-import BalanceInput from 'src/ui-components/BalanceInput';
-import Loader from 'src/ui-components/Loader';
 
 interface Props {
 	className?: string

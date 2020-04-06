@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import * as moment from 'moment';
 import React from 'react';
 import { Popup } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 import InlineTag from './InlineTag';
 
@@ -29,9 +29,9 @@ const CreationLabel = ({ className, created_at, displayname, text='posted', user
 					hoverable={true}
 					position='top center'
 				/>
-				: (username &&
+				: username &&
 					<span>{username}</span>
-				)
+
 		}
 		{text}&nbsp;
 		{topic &&

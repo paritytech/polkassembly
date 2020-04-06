@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState, useEffect } from 'react';
-import { Grid } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 import { formatBalance } from '@polkadot/util';
+import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect,useState } from 'react';
+import { Grid } from 'semantic-ui-react';
 
-import { chainProperties } from '../../../../global/networkConstants';
 import { ApiContext } from '../../../../context/ApiContext';
+import { chainProperties } from '../../../../global/networkConstants';
 import getNetwork from '../../../../util/getNetwork';
 
 interface Props {

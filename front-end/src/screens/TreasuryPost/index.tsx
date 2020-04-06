@@ -5,8 +5,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useTreasuryProposalPostAndCommentsQuery } from '../../generated/graphql';
 import Post from '../../components/Post/Post';
+import { useTreasuryProposalPostAndCommentsQuery } from '../../generated/graphql';
 import { useRedirectMotion } from '../../hooks';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';

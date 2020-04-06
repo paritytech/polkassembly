@@ -5,9 +5,9 @@
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 
+import { OnchainLinkReferendumFragment } from '../../../generated/graphql';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
-import { OnchainLinkReferendumFragment } from '../../../generated/graphql';
 
 interface Props{
 	onchainLink: OnchainLinkReferendumFragment

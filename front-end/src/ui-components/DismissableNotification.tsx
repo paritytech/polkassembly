@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
 import styled from '@xstyled/styled-components';
-
+import React from 'react';
 import { Message, SemanticCOLORS, SemanticICONS } from 'semantic-ui-react';
+
 import { NotificationStatus, NotificationType } from '../types';
 
 interface Props{
@@ -65,7 +65,7 @@ export default styled(DismissableNotification)`
 			font-weight: 500;
 			font-size: md;
 			color: black_text;
-		}		
+		}
 		p {
 			opacity: 1;
 			font-size: sm;
@@ -74,7 +74,7 @@ export default styled(DismissableNotification)`
 		.close {
 			text-shadow: none;
 			font-size: 1.8rem;
-			margin-right 1rem!important;
+			margin-right: 1rem!important;
 			color: grey_secondary;
 		}
 	}

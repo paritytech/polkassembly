@@ -2,22 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
-import { Icon, Grid } from 'semantic-ui-react';
-import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
+import React, { useContext,useState } from 'react';
+import { Grid,Icon } from 'semantic-ui-react';
 
-import AddressComponent from '../../ui-components/Address';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
-import { Form } from '../../ui-components/Form';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
+import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
+import { Form } from '../../ui-components/Form';
 import cleanError from '../../util/cleanError';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import getExtensionUrl from '../../util/getExtensionUrl';
@@ -100,7 +100,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			queueNotification({
 				header: 'Success!',
-				message: (addressLinkConfirmResult && addressLinkConfirmResult.data && addressLinkConfirmResult.data.addressLinkConfirm && addressLinkConfirmResult.data.addressLinkConfirm.message) || '',
+				message: addressLinkConfirmResult && addressLinkConfirmResult.data && addressLinkConfirmResult.data.addressLinkConfirm && addressLinkConfirmResult.data.addressLinkConfirm.message || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
@@ -136,7 +136,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			queueNotification({
 				header: 'Success!',
-				message: (addressUnlinkConfirmResult && addressUnlinkConfirmResult.data && addressUnlinkConfirmResult.data.addressUnlink && addressUnlinkConfirmResult.data.addressUnlink.message) || '',
+				message: addressUnlinkConfirmResult && addressUnlinkConfirmResult.data && addressUnlinkConfirmResult.data.addressUnlink && addressUnlinkConfirmResult.data.addressUnlink.message || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
@@ -191,7 +191,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						{accounts.map(account => {
 							const address = getEncodedAddress(account.address);
 
-							return (address &&
+							return address &&
 								<Grid key={address}>
 									<Grid.Column width={10}>
 										<div className="item">
@@ -210,7 +210,7 @@ const Address = ({ className }: Props): JSX.Element => {
 										</div>
 									</Grid.Column>
 								</Grid>
-							);}
+							;}
 						)}
 
 					</div>

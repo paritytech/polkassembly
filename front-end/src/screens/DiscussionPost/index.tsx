@@ -5,8 +5,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useDiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import Post from '../../components/Post/Post';
+import { useDiscussionPostAndCommentsQuery } from '../../generated/graphql';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 

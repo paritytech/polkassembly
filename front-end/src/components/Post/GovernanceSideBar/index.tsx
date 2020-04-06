@@ -2,22 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
+import { Form } from 'src/ui-components/Form';
 
 import { ApiContext } from '../../../context/ApiContext';
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
-import SecondProposal from './Proposals/SecondProposal';
-import VoteReferendum from './Referenda/VoteReferendum';
-import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
-import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
-import VoteMotion from './VoteMotion';
 import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
-import { Form } from 'src/ui-components/Form';
+import SecondProposal from './Proposals/SecondProposal';
+import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
+import VoteReferendum from './Referenda/VoteReferendum';
+import VoteMotion from './VoteMotion';
 
 interface Props {
 	className?: string
@@ -119,7 +119,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 								onAccountChange={onAccountChange}
 							/>
 							}
-							{isProposal && (
+							{isProposal &&
 								<>
 									{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
 									{canVote && <SecondProposal
@@ -130,8 +130,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 										proposalId={onchainId}
 									/>}
 								</>
-							)}
-							{isReferendum && (
+							}
+							{isReferendum &&
 								<>
 									{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
 									{canVote && <VoteReferendum
@@ -143,7 +143,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 									/>
 									}
 								</>
-							)}
+							}
 						</Form>
 					</div>
 				</div>

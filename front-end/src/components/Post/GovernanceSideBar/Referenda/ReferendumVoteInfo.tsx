@@ -4,11 +4,11 @@
 
 import formatBalance from '@polkadot/util/format/formatBalance';
 import styled from '@xstyled/styled-components';
+import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { ApiContext } from '../../../../context/ApiContext';
-import BN from 'bn.js';
 
 interface Props {
 	className?: string
