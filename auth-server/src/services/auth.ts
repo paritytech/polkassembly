@@ -46,6 +46,8 @@ const NOTIFICATION_DEFAULTS = {
 	own_proposal: true
 };
 
+const getPwdResetTokenKey = (token) => `PRT-${token}`;
+
 export default class AuthService {
 	constructor(){}
 
@@ -558,13 +560,13 @@ export default class AuthService {
 
 		const resetToken = uuid();
 
-		await redisSetex(`PRT-${resetToken}`, ONE_DAY, `${user.id}`);
+		await redisSetex(getPwdResetTokenKey(resetToken), ONE_DAY, `${user.id}`);
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
 	public async ResetPassword(token: string, newPassword: string) {
-		const userId = redisGet(token);
+		const userId = await redisGet(getPwdResetTokenKey(token));
 
 		if (!userId) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
