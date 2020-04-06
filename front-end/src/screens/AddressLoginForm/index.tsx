@@ -82,10 +82,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		setAddress(addressValue);
 	};
 
-	const navigateLogin = () => {
-		history.push('/login');
-	};
-
 	const handleLogin = async () => {
 		if (!accounts.length) {
 			return getAccounts();
@@ -176,12 +172,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 						Alternatively, you can login with your username
 					</div>
 					<div className={'mainButtonContainer'}>
-						<Button
-							secondary
-							onClick={navigateLogin}
-						>
-							Login with username
-						</Button>
 						<Button
 							primary
 							disabled={loading}

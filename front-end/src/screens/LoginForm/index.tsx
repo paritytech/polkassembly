@@ -5,7 +5,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, FieldError } from 'react-hook-form';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Divider } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -94,12 +94,6 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 					<div className={'mainButtonContainer'}>
 						<Button
-							secondary
-							onClick={navigateAddressLogin}
-						>
-							Login With Web3 Account
-						</Button>
-						<Button
 							primary
 							disabled={loading}
 							type='submit'
@@ -109,6 +103,16 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 					</div>
 					<div>
 						{error && <FilteredError text={error.message}/>	}
+					</div>
+					<Divider />
+					<div className={'mainButtonContainer'}>
+						<h5>Or</h5>
+						<Button
+							secondary
+							onClick={navigateAddressLogin}
+						>
+							Login With Web3 Account
+						</Button>
 					</div>
 				</Form>
 			</Grid.Column>
@@ -121,8 +125,9 @@ export default styled(LoginForm)`
 	.mainButtonContainer {
 		align-items: center;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: center;
+		margin: 20px 0;
 	}
 
 	input.error {
