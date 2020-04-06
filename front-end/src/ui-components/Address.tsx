@@ -73,7 +73,7 @@ export default styled(Address)`
 	}
 
 	.identicon {
-		margin-right: 1rem;
+		margin-right: 0.8rem;
 	}
 
 	.header {
