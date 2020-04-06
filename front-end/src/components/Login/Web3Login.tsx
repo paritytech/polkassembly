@@ -156,14 +156,12 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			}
 			{accounts.length > 0 &&
 				<Form.Group>
-					<Form.Field width={16}>
-						<AccountSelectionForm
-							title='Choose linked account'
-							accounts={accounts}
-							address={address}
-							onAccountChange={onAccountChange}
-						/>
-					</Form.Field>
+					<AccountSelectionForm
+						title='Choose linked account'
+						accounts={accounts}
+						address={address}
+						onAccountChange={onAccountChange}
+					/>
 				</Form.Group>
 			}
 			{!extensionNotFound &&
