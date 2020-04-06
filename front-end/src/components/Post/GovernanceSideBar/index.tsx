@@ -8,16 +8,17 @@ import styled from '@xstyled/styled-components';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { ApiContext } from '../../../context/ApiContext';
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
+import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
 import SecondProposal from './Proposals/SecondProposal';
+import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
+import { ApiContext } from 'src/context/ApiContext';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
 import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
-import VoteMotion from './VoteMotion';
-import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
 import { Form } from 'src/ui-components/Form';
+import { VoteThreshold } from 'src/types';
+import VoteMotion from './VoteMotion';
 
 interface Props {
 	className?: string
@@ -133,7 +134,10 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 							)}
 							{isReferendum && (
 								<>
-									{(onchainId || onchainId === 0) && <ReferendumVoteInfo referendumId={onchainId} />}
+									{(onchainId || onchainId === 0) && <ReferendumVoteInfo
+										referendumId={onchainId}
+										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum?.[0]?.voteThreshold) as VoteThreshold}
+									/>}
 									{canVote && <VoteReferendum
 										accounts={accounts}
 										address={address}
