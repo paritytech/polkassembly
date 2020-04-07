@@ -8,12 +8,12 @@ import AuthService from '../../services/auth';
 import { MessageType } from '../../types';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	newPassword: string;
 	token: string;
 }
 
-export default async (partent: any, { token, newPassword }: ArgsType): Promise<MessageType> => {
+export default async (parent: any, { token, newPassword }: ArgumentsType): Promise<MessageType> => {
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}

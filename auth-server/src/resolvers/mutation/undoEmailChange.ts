@@ -6,11 +6,11 @@ import AuthService from '../../services/auth';
 import { UndoEmailChangeResponseType } from '../../types';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	token: string;
 }
 
-export default async (partent: any, { token }: ArgsType): Promise<UndoEmailChangeResponseType> => {
+export default async (parent: any, { token }: ArgumentsType): Promise<UndoEmailChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 	const { updatedToken, email } = await authServiceInstance.UndoEmailChange(token);
 

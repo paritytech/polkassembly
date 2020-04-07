@@ -6,12 +6,12 @@ import AuthService from '../../services/auth';
 import { Context, SignUpResultType } from '../../types';
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
 
-interface ArgsType {
+interface ArgumentsType {
 	address: string;
 	signature: string;
 }
 
-export default async (partent: any, { address, signature }: ArgsType, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: any, { address, signature }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
 	const authServiceInstance = new AuthService();
 
 	const { user, token, refreshToken } = await authServiceInstance.AddressLogin(address, signature);

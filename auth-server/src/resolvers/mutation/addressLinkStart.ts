@@ -10,12 +10,12 @@ import { AddressLinkStartType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	network: string;
 	address: string;
 }
 
-export default async (partent: any, { network, address }: ArgsType, ctx: Context): Promise<AddressLinkStartType> => {
+export default async (parent: any, { network, address }: ArgumentsType, ctx: Context): Promise<AddressLinkStartType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -24,12 +24,12 @@ export default async (partent: any, { network, address }: ArgsType, ctx: Context
 		.query()
 		.allowInsert('[network, address, user_id, sign_message, verified]')
 		.insert({
-			network,
 			address,
-			user_id: user.id,
+			network,
 			sign_message: uuid(),
+			user_id: user.id,
 			verified: false
 		});
 
-	return { message: messages.ADDRESS_LINKING_STARTED, sign_message: dbAddress.sign_message, address_id: dbAddress.id };
+	return { address_id: dbAddress.id, message: messages.ADDRESS_LINKING_STARTED, sign_message: dbAddress.sign_message };
 };

@@ -10,7 +10,7 @@ import messages from './messages';
 /**
  * Get User from userId
  */
-export default async (userId: number) => {
+export default async (userId: number): Promise<User> => {
 	const user = await User
 		.query()
 		.where('id', userId)

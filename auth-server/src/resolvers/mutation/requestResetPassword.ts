@@ -9,11 +9,11 @@ import { MessageType } from '../../types';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
 
-interface ArgsType {
+interface ArgumentsType {
 	email: string;
 }
 
-export default async (partent: any, { email }: ArgsType): Promise<MessageType> => {
+export default async (parent: any, { email }: ArgumentsType): Promise<MessageType> => {
 	const authServiceInstance = new AuthService();
 
 	if (!validateEmail(email)) {

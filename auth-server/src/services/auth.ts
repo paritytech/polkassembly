@@ -48,7 +48,7 @@ const NOTIFICATION_DEFAULTS = {
 };
 
 export default class AuthService {
-	public async GetUser (token: string): Promise<UserObjectType|null> {
+	public async GetUser (token: string): Promise<UserObjectType> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		return getUserFromUserId(userId);
@@ -254,7 +254,7 @@ export default class AuthService {
 			.first();
 
 		if (!user) {
-			throw new ForbiddenError(messages.EVENT_USER_NOT_FOUND);
+			throw new ForbiddenError(messages.USER_NOT_FOUND);
 		}
 
 		return this.getSignedToken(user);

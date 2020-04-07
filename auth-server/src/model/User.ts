@@ -11,12 +11,12 @@ Model.knex(connection);
 
 export default class User extends Model {
 	readonly id!: number
-	username!: string
 	email!: string
+	email_verified: boolean | undefined
 	password!: string
 	salt!: string
 	name!: string
-	email_verified: boolean
+	username!: string
 
 	static get tableName () {
 		return 'users';
@@ -29,28 +29,29 @@ export default class User extends Model {
 	getUser () {
 		return {
 			email: this.email,
+			email_verified: this.email_verified,
 			id: this.id,
 			name: this.name,
-			username: this.username,
-			email_verified: this.email_verified
+			username: this.username
 		};
 	}
 
-	verifyPassword (password) {
+	verifyPassword (password: string) {
 		return argon2.verify(this.password, password);
 	}
 
 	static get jsonSchema () {
 		return {
-			type: 'object',
-			required: ['username'],
+
 			properties: {
+				email: { maxLength: 255, type: 'string' },
+				email_verified: { type: 'boolean' },
 				id: { type: 'integer' },
-				username: { type: 'string', minLength: 1, maxLength: 255 },
-				email: { type: 'string', maxLength: 255 },
-				name: { type: 'string', maxLength: 512 },
-				email_verified: { type: 'boolean' }
-			}
+				name: { maxLength: 512, type: 'string' },
+				username: { maxLength: 255, minLength: 1, type: 'string' }
+			},
+			required: ['username'],
+			type: 'object'
 		};
 	}
 }

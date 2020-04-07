@@ -10,11 +10,11 @@ import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
 
-interface ArgsType {
+interface ArgumentsType {
 	email: string;
 }
 
-export default async (partent: any, { email }: ArgsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: any, { email }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (!validateEmail(email)) {

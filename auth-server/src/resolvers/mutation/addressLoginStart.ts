@@ -6,11 +6,11 @@ import AuthService from '../../services/auth';
 import { AddressLoginStartType } from '../../types';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	address: string;
 }
 
-export default async (partent: any, { address }: ArgsType): Promise<AddressLoginStartType> => {
+export default async (parent: any, { address }: ArgumentsType): Promise<AddressLoginStartType> => {
 	const authServiceInstance = new AuthService();
 
 	return {

@@ -8,11 +8,11 @@ import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 import validateName from '../../utils/validateName';
 
-interface ArgsType {
+interface ArgumentsType {
 	newName: string;
 }
 
-export default async (partent: any, { newName }: ArgsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: any, { newName }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	validateName(newName);

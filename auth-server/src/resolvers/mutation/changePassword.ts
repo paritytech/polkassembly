@@ -9,12 +9,12 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	newPassword: string;
 	oldPassword: string;
 }
 
-export default async (partent: any, { oldPassword, newPassword }: ArgsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: any, { oldPassword, newPassword }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (newPassword.length < 6) {

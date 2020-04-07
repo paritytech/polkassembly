@@ -7,12 +7,12 @@ import { ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	address_id: number;
 	signature: string;
 }
 
-export default async (partent: any, { address_id, signature }: ArgsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: any, { address_id, signature }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 

@@ -12,14 +12,14 @@ import validateEmail from '../../utils/validateEmail';
 import validateName from '../../utils/validateName';
 import validateUsername from '../../utils/validateUsername';
 
-interface ArgsType {
+interface ArgumentsType {
 	email: string;
 	name: string;
 	password: string;
 	username: string;
 }
 
-export default async (partent: any, { email, password, username, name }: ArgsType, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: any, { email, password, username, name }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
 	if (email && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}

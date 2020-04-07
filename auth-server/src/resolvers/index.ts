@@ -28,6 +28,7 @@ import token from './query/token';
 import user from './query/user';
 import users from './query/users';
 
+/* eslint-disable sort-keys */
 export default {
 	Query: {
 		subscription,

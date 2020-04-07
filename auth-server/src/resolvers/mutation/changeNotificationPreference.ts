@@ -7,11 +7,11 @@ import { ChangeResponseType, Context, NotificationPreferencesType } from '../../
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	notificationPreferences: NotificationPreferencesType;
 }
 
-export default async (partent: any, { notificationPreferences }: ArgsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: any, { notificationPreferences }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const { postParticipated, postCreated, newProposal, ownProposal } = notificationPreferences;
 
@@ -19,10 +19,10 @@ export default async (partent: any, { notificationPreferences }: ArgsType, ctx: 
 	const updatedJWT = await authServiceInstance.ChangeNotificationPreference(
 		token,
 		{
-			postParticipated,
-			postCreated,
 			newProposal,
-			ownProposal
+			ownProposal,
+			postCreated,
+			postParticipated
 		}
 	);
 

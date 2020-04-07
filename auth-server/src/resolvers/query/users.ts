@@ -5,12 +5,12 @@
 import User from '../../model/User';
 import { PublicUser } from '../../types';
 
-interface ArgsType {
+interface ArgumentsType {
 	limit: number;
 	page: number;
 }
 
-export default async (partent: any, { limit, page }: ArgsType): Promise<PublicUser[]> => {
+export default async (parent: any, { limit, page }: ArgumentsType): Promise<PublicUser[]> => {
 	limit = limit || 25;
 	page = page || 1;
 	if (page < 1) {
@@ -24,7 +24,7 @@ export default async (partent: any, { limit, page }: ArgsType): Promise<PublicUs
 
 	return Array.isArray(users) ? users.map(user => ({
 		id: user.id,
-		username: user.username,
-		name: user.name
+		name: user.name,
+		username: user.username
 	})) : [];
 };

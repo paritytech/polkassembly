@@ -8,11 +8,11 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	post_id: number;
 }
 
-export default async (partent: any, { post_id }: ArgsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: any, { post_id }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -20,8 +20,8 @@ export default async (partent: any, { post_id }: ArgsType, ctx: Context): Promis
 	const dbSubscription = await PostSubscription
 		.query()
 		.where({
-			user_id: user.id,
-			post_id: post_id
+			post_id: post_id,
+			user_id: user.id
 		})
 		.first();
 
@@ -32,8 +32,8 @@ export default async (partent: any, { post_id }: ArgsType, ctx: Context): Promis
 	await PostSubscription
 		.query()
 		.where({
-			user_id: user.id,
-			post_id
+			post_id,
+			user_id: user.id
 		})
 		.del();
 

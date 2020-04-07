@@ -2,21 +2,23 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { AuthenticationError } from 'apollo-server';
+import messages from 'src/utils/messages';
+
 import User from '../../model/User';
 import { PublicUser } from '../../types';
 
-interface ArgsType {
+interface ArgumentsType {
 	id: number;
 }
-export default async (partent: any, { id }: ArgsType): Promise<PublicUser | null> => {
+export default async (parent: any, { id }: ArgumentsType): Promise<PublicUser | null> => {
 	const user = await User
 		.query()
 		.where('id', id)
 		.first();
 
 	if (!user) {
-		console.error('no user found');
-		return null;
+		throw new AuthenticationError(messages.USER_NOT_FOUND);
 	}
 
 	return {

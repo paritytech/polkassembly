@@ -11,7 +11,7 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgsType {
+interface ArgumentsType {
 	network: string;
 	type: string;
 	content_id: string;
@@ -19,7 +19,7 @@ interface ArgsType {
 	comments: string;
 }
 
-export default async (partent: any, { network, type, content_id, reason, comments }: ArgsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: any, { network, type, content_id, reason, comments }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -40,13 +40,13 @@ export default async (partent: any, { network, type, content_id, reason, comment
 		.query()
 		.allowInsert('[network, type, content_id, user_id, reason, comments, resolved]')
 		.insert({
-			network,
-			type,
-			content_id,
-			user_id: user.id,
-			reason,
 			comments,
-			resolved: false
+			content_id,
+			network,
+			reason,
+			resolved: false,
+			type,
+			user_id: user.id
 		});
 
 	sendReportContentEmail(user.name, network, type, content_id, reason, comments);
