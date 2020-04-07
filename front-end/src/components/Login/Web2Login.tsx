@@ -2,11 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useForm, FieldError } from 'react-hook-form';
-import { Divider, Responsive } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import React, { useContext } from 'react';
+import { FieldError,useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { Divider, Responsive } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/graphql';
@@ -98,7 +98,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				</Button>
 			</div>
 			<div>
-				{error && <FilteredError text={error.message}/>	}
+				{error && <FilteredError text={error.message}/>}
 			</div>
 			<Responsive minWidth='992'>
 				<Divider horizontal>Or</Divider>
