@@ -6,10 +6,10 @@ import Notification from '../model/Notification';
 import { NotificationPreferencesType } from '../types';
 
 const DEFAULT_NOTIFICATION_PREFERENCES = {
-	postParticipated: true,
-	postCreated: true,
 	newProposal: false,
-	ownProposal: true
+	ownProposal: true,
+	postCreated: true,
+	postParticipated: true
 };
 
 /**
@@ -26,9 +26,9 @@ export default async (userId: number): Promise<NotificationPreferencesType> => {
 	}
 
 	return {
-		postParticipated: notification.post_participated,
-		postCreated: notification.post_created,
 		newProposal: notification.new_proposal,
-		ownProposal: notification.own_proposal
+		ownProposal: notification.own_proposal,
+		postCreated: notification.post_created,
+		postParticipated: notification.post_participated
 	};
 };
