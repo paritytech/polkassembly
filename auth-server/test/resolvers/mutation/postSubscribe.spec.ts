@@ -23,6 +23,7 @@ describe('post subscribe mutation', () => {
 		res: {
 			header: { 'refresh_token' : '' },
 			cookie: function(name, value){
+				// eslint-disable-next-line security/detect-object-injection
 				this.header[name] = value;
 			}
 		}

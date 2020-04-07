@@ -45,6 +45,7 @@ describe('user query', () => {
 	it('should return users with limit', async () => {
 		const result = await users(null, { limit: 5, page: 1 });
 		result.forEach((user, i) => {
+			// eslint-disable-next-line security/detect-object-injection
 			expect(user.id).to.equals(dbUsers[i].id);
 		});
 	});
