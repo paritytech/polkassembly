@@ -5,10 +5,10 @@
 import * as sgMail from '@sendgrid/mail';
 import * as ejs from 'ejs';
 
-import User from '../model/User';
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import PasswordResetToken from '../model/PasswordResetToken';
+import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
+import User from '../model/User';
 import {
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
@@ -25,10 +25,10 @@ const REPORT = 'polkassembly@parity.io';
 const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
 
 if (apiKey) {
-	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	sgMail.setApiKey(apiKey);
 }
 
-export const sendVerificationEmail = (user: User, token: EmailVerificationToken) => {
+export const sendVerificationEmail = (user: User, token: EmailVerificationToken): void => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key');
 		return;
@@ -37,39 +37,42 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
 	const text = ejs.render(verificationEmailTemplate, { username: user.name || '', verifyUrl });
 	const msg = {
-		to: user.email,
 		from: FROM,
+		html: text,
 		subject: 'Verify your email address',
 		text,
-		html: text
+		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Verification Email not sent', e));
 };
 
-export const sendResetPasswordEmail = (user: User, token: PasswordResetToken) => {
+export const sendResetPasswordEmail = (user: User, token: PasswordResetToken): void => {
 	if (!apiKey) {
 		console.warn('Password reset Email not sent due to missing API key');
 		return;
 	}
 
 	const resetUrl = `${DOMAIN}/reset-password/${token.token}`;
-	const text = ejs.render(resetPasswordEmailTemplate, { username: user.name || '', resetUrl });
+	const text = ejs.render(
+		resetPasswordEmailTemplate,
+		{ resetUrl, username: user.name || '' }
+	);
 
 	const msg = {
-		to: user.email,
 		from: FROM,
+		html: text,
 		subject: 'Reset Your Password',
 		text,
-		html: text
+		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Password reset email not sent', e));
 };
 
-export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
+export const sendPostSubscriptionMail = (user: User, author: User, comment: any): void => {
 	if (!apiKey) {
 		console.warn('There is a new comment on the post you are subscribed to');
 		return;
@@ -80,26 +83,26 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment) => {
 	}
 
 	const text = ejs.render(postSubscriptionMailTemplate, {
-		username: user.name || '',
 		authorUsername: author.username,
+		content: comment.content,
 		domain: DOMAIN,
 		postId: comment.post_id,
-		content: comment.content
+		username: user.name || ''
 	});
 
 	const msg = {
-		to: user.email,
 		from: FROM,
+		html: text,
 		subject: 'Update on post you are subscribed to',
 		text,
-		html: text
+		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Post subscription email not sent', e));
 };
 
-export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeToken) => {
+export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeToken): void => {
 	if (!apiKey) {
 		console.warn('Email undo token email not sent due to missing API key');
 		return;
@@ -107,24 +110,24 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 
 	const undoUrl = `${DOMAIN}/undo-email-change/${undoToken.token}`;
 	const text = ejs.render(undoEmailChangeEmailTemplate, {
-		username: user.name || '',
-		userEmail: user.email,
 		undoEmail: undoToken.email,
-		undoUrl
+		undoUrl,
+		userEmail: user.email,
+		username: user.name || ''
 	});
 	const msg = {
-		to: undoToken.email,
 		from: FROM,
+		html: text,
 		subject: 'Your Polkassembly email was changed',
 		text,
-		html: text
+		to: undoToken.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Email undo email not sent', e));
 };
 
-export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: number) => {
+export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: number): void => {
 	if (!apiKey) {
 		console.warn('Own Proposal Created Email not sent due to missing API key');
 		return;
@@ -141,18 +144,18 @@ export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: nu
 		username: user.name || ''
 	});
 	const msg = {
-		to: user.email,
 		from: FROM,
+		html: text,
 		subject: 'You have submitted a motion/proposal on chain',
 		text,
-		html: text
+		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Proposal Created Email not sent', e));
 };
 
-export const sendNewProposalCreatedEmail = (user: User, type: string, postId: number) => {
+export const sendNewProposalCreatedEmail = (user: User, type: string, postId: number): void => {
 	if (!apiKey) {
 		console.warn('New Proposal Created Email not sent due to missing API key');
 		return;
@@ -171,18 +174,18 @@ export const sendNewProposalCreatedEmail = (user: User, type: string, postId: nu
 	});
 
 	const msg = {
-		to: user.email,
 		from: FROM,
+		html: text,
 		subject: `New ${type} created on chain`,
 		text,
-		html: text
+		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
 		console.error('Proposal Created Email not sent', e));
 };
 
-export const sendReportContentEmail = (username: string, network: string, type: string, contentId: string, reason: string, comments: string) => {
+export const sendReportContentEmail = (username: string, network: string, type: string, contentId: string, reason: string, comments: string): void => {
 	if (!apiKey) {
 		console.warn('Report Content Email not sent due to missing API key');
 		return;
@@ -197,11 +200,11 @@ export const sendReportContentEmail = (username: string, network: string, type: 
 		username
 	});
 	const msg = {
-		to: REPORT,
 		from: FROM,
+		html: text,
 		subject: 'Content reported',
 		text,
-		html: text
+		to: REPORT
 	};
 
 	sgMail.send(msg).catch(e =>

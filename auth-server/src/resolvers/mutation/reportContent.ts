@@ -11,15 +11,15 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	network: string
-	type: string
-	content_id: string
-	reason: string
-	comments: string
+interface ArgsType {
+	network: string;
+	type: string;
+	content_id: string;
+	reason: string;
+	comments: string;
 }
 
-export default async (parent, { network, type, content_id, reason, comments }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (partent: any, { network, type, content_id, reason, comments }: ArgsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

@@ -5,20 +5,20 @@
 /**
  * Module dependencies.
  */
-require('dotenv').config();
-
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as chalk from 'chalk';
-import * as dotenv from 'dotenv';
-import * as expressValidator from 'express-validator';
-import * as cors from 'cors';
-import * as cookieParser from 'cookie-parser';
 import { ApolloServer } from 'apollo-server-express';
-import schema from './schema';
-import resolvers from './resolvers';
+import bodyParser from 'body-parser';
+import chalk from 'chalk';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import expressValidator from 'express-validator';
 
+import resolvers from './resolvers';
 import routes from './routes';
+import schema from './schema';
+
+dotenv.config();
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -60,9 +60,9 @@ if (process.env.NODE_ENV === 'test') {
  */
 const app = express();
 const server = new ApolloServer({
-	typeDefs: schema,
+	context: ({ req, res }) => ({ req, res }),
 	resolvers,
-	context: ({ req, res }) => ({ req, res })
+	typeDefs: schema
 });
 
 /**

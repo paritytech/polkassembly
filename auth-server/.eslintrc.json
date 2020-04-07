@@ -17,9 +17,8 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
+        "project": ["./tsconfig.json"]
+      },
     "plugins": [
         "@typescript-eslint",
         "header",
@@ -28,9 +27,10 @@
         "simple-import-sort"
     ],
     "rules": {
-        "@typescript-eslint/camelcase": ["error", {"properties": "never"}],
+        "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "arrow-spacing":["warn",{ "before": true, "after": true }],
+        "camelcase": "off",
         "comma-dangle": ["error", "never"],
         "header/header": [2, "../header.js"],
         "indent": ["error", "tab"],

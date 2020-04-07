@@ -5,22 +5,23 @@
 import User from '../../model/User';
 import { PublicUser } from '../../types';
 
-interface argsType {
-	id: number
+interface ArgsType {
+	id: number;
 }
-export default async (parent, { id }: argsType): Promise<PublicUser> => {
+export default async (partent: any, { id }: ArgsType): Promise<PublicUser | null> => {
 	const user = await User
 		.query()
 		.where('id', id)
 		.first();
 
 	if (!user) {
+		console.error('no user found');
 		return null;
 	}
 
 	return {
 		id: user.id,
-		username: user.username,
-		name: user.name
+		name: user.name,
+		username: user.username
 	};
 };

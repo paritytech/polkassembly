@@ -4,8 +4,8 @@
 
 import { AuthenticationError } from 'apollo-server';
 
-import messages from './messages';
 import User from '../model/User';
+import messages from './messages';
 
 /**
  * Get User from userId

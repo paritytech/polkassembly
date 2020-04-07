@@ -3,11 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { MessageType, Context } from '../../types';
+import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-export default async (parent, args, ctx: Context): Promise<MessageType> => {
+export default async (partent: any, args, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	const authServiceInstance = new AuthService();

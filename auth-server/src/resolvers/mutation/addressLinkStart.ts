@@ -6,16 +6,16 @@ import { uuid } from 'uuidv4';
 
 import Address from '../../model/Address';
 import AuthService from '../../services/auth';
-import { Context, AddressLinkStartType } from '../../types';
+import { AddressLinkStartType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	network: string
-	address: string
+interface ArgsType {
+	network: string;
+	address: string;
 }
 
-export default async (parent, { network, address }: argsType, ctx: Context): Promise<AddressLinkStartType>  => {
+export default async (partent: any, { network, address }: ArgsType, ctx: Context): Promise<AddressLinkStartType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

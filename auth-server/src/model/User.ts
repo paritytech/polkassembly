@@ -4,6 +4,7 @@
 
 import * as argon2 from 'argon2';
 import { Model } from 'objection';
+
 import connection from './connection';
 
 Model.knex(connection);

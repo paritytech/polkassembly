@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import * as Knex from 'knex';
+
 import * as connection from '../../knexfile';
 
 export default Knex(connection);

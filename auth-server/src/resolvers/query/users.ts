@@ -5,12 +5,12 @@
 import User from '../../model/User';
 import { PublicUser } from '../../types';
 
-interface argsType {
-	limit: number
-	page: number
+interface ArgsType {
+	limit: number;
+	page: number;
 }
 
-export default async (parent, { limit, page }: argsType): Promise<PublicUser[]> => {
+export default async (partent: any, { limit, page }: ArgsType): Promise<PublicUser[]> => {
 	limit = limit || 25;
 	page = page || 1;
 	if (page < 1) {

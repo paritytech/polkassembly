@@ -6,11 +6,11 @@ import AuthService from '../../services/auth';
 import { ChangeResponseType } from '../../types';
 import messages from '../../utils/messages';
 
-interface argsType {
-	token: string
+interface ArgsType {
+	token: string;
 }
 
-export default async (parent, { token }: argsType): Promise<ChangeResponseType> => {
+export default async (partent: any, { token }: ArgsType): Promise<ChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 	const updatedJWT = await authServiceInstance.VerifyEmail(token);
 

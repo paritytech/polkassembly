@@ -3,9 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import * as cloudinary from 'cloudinary';
+import { Response } from 'express';
 import * as multer from 'multer';
 import * as tmp from 'tmp';
-import { Response } from 'express';
+
 import errorHandler from '../model/errors';
 import { FileRequestType } from '../types';
 

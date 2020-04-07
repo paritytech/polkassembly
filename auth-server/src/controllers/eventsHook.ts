@@ -8,10 +8,10 @@ import Address from '../model/Address';
 import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
-import { sendPostSubscriptionMail, sendOwnProposalCreatedEmail, sendNewProposalCreatedEmail } from '../services/email';
+import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
+import { MessageType } from '../types';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
-import { MessageType } from '../types';
 
 const sendPostCommentSubscription = async (comment): Promise<MessageType> => {
 	const { post_id, author_id } = comment;
@@ -63,11 +63,11 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 	} = onchainLink;
 
 	if (!proposer_address) {
-		return { message: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND } ;
+		return { message: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
 	}
 
 	if (!post_id) {
-		return { message: messages.EVENT_POST_ID_NOT_FOUND } ;
+		return { message: messages.EVENT_POST_ID_NOT_FOUND };
 	}
 
 	let id = post_id;
@@ -80,7 +80,7 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 		.first();
 
 	if (!address) {
-		return { message: messages.EVENT_ADDRESS_NOT_FOUND } ;
+		return { message: messages.EVENT_ADDRESS_NOT_FOUND };
 	}
 
 	if (!address.verified) {
@@ -151,7 +151,7 @@ const sendNewProposalCreated = async (onchainLink) => {
 	} = onchainLink;
 
 	if (!post_id) {
-		return { message: messages.EVENT_POST_ID_NOT_FOUND } ;
+		return { message: messages.EVENT_POST_ID_NOT_FOUND };
 	}
 
 	let id = post_id;

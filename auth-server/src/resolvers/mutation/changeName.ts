@@ -4,15 +4,15 @@
 
 import AuthService from '../../services/auth';
 import { ChangeResponseType, Context } from '../../types';
-import messages from '../../utils/messages';
 import getTokenFromReq from '../../utils/getTokenFromReq';
+import messages from '../../utils/messages';
 import validateName from '../../utils/validateName';
 
-interface argsType {
-	newName: string
+interface ArgsType {
+	newName: string;
 }
 
-export default async (parent, { newName }: argsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (partent: any, { newName }: ArgsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	validateName(newName);

@@ -8,11 +8,11 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	post_id: number
+interface ArgsType {
+	post_id: number;
 }
 
-export default async (parent, { post_id }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (partent: any, { post_id }: ArgsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

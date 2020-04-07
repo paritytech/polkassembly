@@ -4,17 +4,17 @@
 
 import { UserInputError } from 'apollo-server';
 
-import getTokenFromReq from '../../utils/getTokenFromReq';
 import AuthService from '../../services/auth';
 import { Context, MessageType } from '../../types';
+import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	newPassword: string,
-	oldPassword: string
+interface ArgsType {
+	newPassword: string;
+	oldPassword: string;
 }
 
-export default async (parent, { oldPassword, newPassword }: argsType, ctx: Context): Promise<MessageType> => {
+export default async (partent: any, { oldPassword, newPassword }: ArgsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (newPassword.length < 6) {

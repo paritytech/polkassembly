@@ -2,18 +2,18 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ValidationError, NotFoundError } from 'objection';
+import { NotFoundError, ValidationError } from 'objection';
 import {
-	DBError,
-	UniqueViolationError,
-	NotNullViolationError,
-	ForeignKeyViolationError,
 	CheckViolationError,
-	DataError
+	DataError,
+	DBError,
+	ForeignKeyViolationError,
+	NotNullViolationError,
+	UniqueViolationError
 } from 'objection-db-errors';
 
 // In this example `res` is an express response object.
-export default function errorHandler (err, res) {
+export default function errorHandler (err: any, res: any): void {
 	console.log(err && err.stack);
 	if (err instanceof ValidationError) {
 		switch (err.type) {
@@ -26,93 +26,93 @@ export default function errorHandler (err, res) {
 			break;
 		case 'RelationExpression':
 			res.status(400).send({
+				data: {},
 				message: err.message,
-				type: 'InvalidRelationExpression',
-				data: {}
+				type: 'InvalidRelationExpression'
 			});
 			break;
 		case 'UnallowedRelation':
 			res.status(400).send({
+				data: {},
 				message: err.message,
-				type: 'UnallowedRelation',
-				data: {}
+				type: 'UnallowedRelation'
 			});
 			break;
 		case 'InvalidGraph':
 			res.status(400).send({
+				data: {},
 				message: err.message,
-				type: 'InvalidGraph',
-				data: {}
+				type: 'InvalidGraph'
 			});
 			break;
 		default:
 			res.status(400).send({
+				data: {},
 				message: err.message,
-				type: 'UnknownValidationError',
-				data: {}
+				type: 'UnknownValidationError'
 			});
 			break;
 		}
 	} else if (err instanceof NotFoundError) {
 		res.status(404).send({
-			message: err.message,
 			data: {},
+			message: err.message,
 			type: 'NotFound'
 		});
 	} else if (err instanceof UniqueViolationError) {
 		res.status(409).send({
-			message: err.message,
-			type: 'UniqueViolation',
 			data: {
 				columns: err.columns,
 				constraint: err.constraint,
 				table: err.table
-			}
+			},
+			message: err.message,
+			type: 'UniqueViolation'
 		});
 	} else if (err instanceof NotNullViolationError) {
 		res.status(400).send({
-			message: err.message,
-			type: 'NotNullViolation',
 			data: {
 				column: err.column,
 				table: err.table
-			}
+			},
+			message: err.message,
+			type: 'NotNullViolation'
 		});
 	} else if (err instanceof ForeignKeyViolationError) {
 		res.status(409).send({
-			message: err.message,
-			type: 'ForeignKeyViolation',
 			data: {
-				table: err.table,
-				constraint: err.constraint
-			}
+				constraint: err.constraint,
+				table: err.table
+			},
+			message: err.message,
+			type: 'ForeignKeyViolation'
 		});
 	} else if (err instanceof CheckViolationError) {
 		res.status(400).send({
-			message: err.message,
-			type: 'CheckViolation',
 			data: {
-				table: err.table,
-				constraint: err.constraint
-			}
+				constraint: err.constraint,
+				table: err.table
+			},
+			message: err.message,
+			type: 'CheckViolation'
 		});
 	} else if (err instanceof DataError) {
 		res.status(400).send({
+			data: {},
 			message: err.message,
-			type: 'InvalidData',
-			data: {}
+			type: 'InvalidData'
 		});
 	} else if (err instanceof DBError) {
 		res.status(500).send({
+			data: {},
 			message: err.message,
-			type: 'UnknownDatabaseError',
-			data: {}
+			type: 'UnknownDatabaseError'
 		});
 	} else {
 		res.status(500).send({
+			data: {},
 			message: err.message,
-			type: 'UnknownError',
-			data: {}
+			type: 'UnknownError'
 		});
 	}
 }
