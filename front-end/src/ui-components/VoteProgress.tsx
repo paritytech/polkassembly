@@ -15,7 +15,6 @@ interface Props {
 	className?: string,
 	nayVotes: BN,
 	passingThreshold: BN,
-	totalVotes: BN,
 }
 
 const bnToIntBalance = function (bn: BN): number{
@@ -26,7 +25,7 @@ const bnToStringBalanceDelimitor = function (bn: BN): string{
 	return  formatBnBalance(bn, { numberAfterComma: 2, withThousandDelimitor: true });
 };
 
-const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVotes }: Props) => {
+const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props) => {
 	const network = getNetwork();
 	const tokenSymbol = chainProperties[network].tokenSymbol;
 
@@ -34,7 +33,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold, totalVo
 	const passingThresholdNumber = bnToIntBalance(passingThreshold);
 	const isPassing = passingThreshold.lt(ayeVotes);
 	const ayeVotesNumber = bnToIntBalance(ayeVotes);
-	const totalVotesNumber = bnToIntBalance(totalVotes);
+	const totalVotesNumber = bnToIntBalance(ayeVotes.add(nayVotes));
 	const passingThresholdPercent = isPassing
 		? passingThresholdNumber/totalVotesNumber*100
 		: passingThresholdNumber/(passingThresholdNumber+nayVotesNumber)*100;
