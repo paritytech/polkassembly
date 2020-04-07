@@ -37,7 +37,7 @@ export function getPassingThreshold(nays: BN, electorate: BN, totalVotes: BN, th
 
 		let i = 1;
 
-		while (!result || i > 1000){
+		while (!result || i > 20){
 			result = newtonRaphson(f, fp, initialGuess.mul(TEN).pow(new BN(i)));
 			i++;
 		}
