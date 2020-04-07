@@ -23,6 +23,7 @@
       "@typescript-eslint",
       "header",
       "promise",
+      "security",
       "simple-import-sort"
   ],
   "rules": {
