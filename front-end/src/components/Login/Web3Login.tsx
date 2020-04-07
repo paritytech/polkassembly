@@ -3,8 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, DropdownProps } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Divider, DropdownProps } from 'semantic-ui-react';
+import styled from '@xstyled/styled-components';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
@@ -18,6 +18,7 @@ import Button from '../../ui-components/Button';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Loader from '../../ui-components/Loader';
 import { NotificationStatus } from '../../types';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import cleanError from '../../util/cleanError';
@@ -25,13 +26,15 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 interface Props {
 	className?: string
+	toggleWeb2Login: () => void
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const LoginForm = ({ className }:Props): JSX.Element => {
+const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
+	const [isAccountLoading, setIsAccountLoading] = useState(true);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
@@ -51,6 +54,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 		if (extensions.length === 0) {
 			setExtensionNotFound(true);
+			setIsAccountLoading(false);
 			return;
 		} else {
 			setExtensionNotFound(false);
@@ -60,6 +64,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 
 		if (accounts.length === 0) {
 			setAccountsNotFound(true);
+			setIsAccountLoading(false);
 			return;
 		} else {
 			setAccountsNotFound(false);
@@ -74,6 +79,7 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 			setAddress(accounts[0].address);
 		}
 
+		setIsAccountLoading(false);
 		return;
 	};
 
@@ -136,41 +142,38 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 		}
 	};
 
+	const handleToggle = () => toggleWeb2Login();
+
 	return (
-		<Grid className={className}>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>
-				<Form onSubmit={handleLogin}>
-					<h3>Login With Web3 Account</h3>
-					{extensionNotFound?
-						<div className='card'>
-							<ExtensionNotDetected />
-						</div>
-						: null
-					}
-					{accountsNotFound?
-						<div className='card'>
-							<div className='text-muted'>You need at least one account in Polkadot-js extenstion to login.</div>
-							<div className='text-muted'>Please reload this page after adding accounts.</div>
-						</div>
-						: null
-					}
-					{accounts.length > 0 ?
-						<Form.Group>
-							<Form.Field width={16}>
-								<AccountSelectionForm
-									title='Choose linked account'
-									accounts={accounts}
-									address={address}
-									onAccountChange={onAccountChange}
-								/>
-							</Form.Field>
-						</Form.Group>
-						: <div>Loading Accounts ...</div>
-					}
-					<div className='info'>
-						Alternatively, you can login with your username
-					</div>
+		<Form className={className} onSubmit={handleLogin}>
+			<h3>Login</h3>
+			{extensionNotFound?
+				<div className='card'>
+					<ExtensionNotDetected />
+				</div>
+				: null
+			}
+			{accountsNotFound?
+				<div className='card'>
+					<div className='text-muted'>You need at least one account in Polkadot-js extenstion to login.</div>
+					<div className='text-muted'>Please reload this page after adding accounts.</div>
+				</div>
+				: null
+			}
+			{isAccountLoading
+				?
+				<Loader text={'Requesting Web3 accounts'}/>
+				:
+				accounts.length > 0 &&
+				<>
+					<Form.Group>
+						<AccountSelectionForm
+							title='Choose linked account'
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
+					</Form.Group>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -180,13 +183,22 @@ const LoginForm = ({ className }:Props): JSX.Element => {
 							Login
 						</Button>
 					</div>
-					<div>
-						{error && <FilteredError text={error.message}/>	}
-					</div>
-				</Form>
-			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
-		</Grid>
+				</>
+			}
+			<div>
+				{error && <FilteredError text={error.message}/>	}
+			</div>
+			<Divider horizontal>Or</Divider>
+			<div className={'mainButtonContainer'}>
+				<Button
+					secondary
+					disabled={loading}
+					onClick={handleToggle}
+				>
+					Login With Username
+				</Button>
+			</div>
+		</Form>
 	);
 };
 
@@ -210,5 +222,9 @@ export default styled(LoginForm)`
 
 	.errorText {
 		color: red_secondary;
+	}
+
+	.ui.dimmer {
+		height: calc(100% - 6.5rem);
 	}
 `;

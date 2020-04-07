@@ -51,7 +51,7 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 
 	return <Dropdown
 		className={className}
-		pointing='bottom'
+		pointing='top'
 		onChange={_onAccountChange}
 		options={addressOptions}
 		trigger={<div className='address-wrapper'>
