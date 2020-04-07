@@ -9,7 +9,6 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
 
-import { NotificationContext } from '../../context/NotificationContext';
 import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { useRouter } from '../../hooks';
@@ -19,9 +18,7 @@ import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import Loader from '../../ui-components/Loader';
-import { NotificationStatus } from '../../types';
 import getEncodedAddress from '../../util/getEncodedAddress';
-import cleanError from '../../util/cleanError';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 interface Props {
@@ -32,13 +29,13 @@ interface Props {
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
+	const [err, setErr] = useState<Error | null>(null);
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [isAccountLoading, setIsAccountLoading] = useState(true);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
-	const { queueNotification } = useContext(NotificationContext);
 	const [addressLoginStartMutation] = useAddressLoginStartMutation();
 	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
@@ -133,12 +130,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				throw new Error('Web3 Login failed');
 			}
 		} catch (error) {
-			console.error(error);
-			queueNotification({
-				header: 'Failed!',
-				message: cleanError(error.message),
-				status: NotificationStatus.ERROR
-			});
+			setErr(error);
 		}
 	};
 
@@ -187,6 +179,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			}
 			<div>
 				{error && <FilteredError text={error.message}/>	}
+				{err && <FilteredError text={err.message}/>}
 			</div>
 			<Divider horizontal>Or</Divider>
 			<div className={'mainButtonContainer'}>
