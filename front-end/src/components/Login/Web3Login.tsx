@@ -2,24 +2,24 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { stringToHex } from '@polkadot/util';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import { Divider, DropdownProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
-import { stringToHex } from '@polkadot/util';
 
-import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { handleLoginUser } from '../../services/auth.service';
-import Button from '../../ui-components/Button';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
+import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import Loader from '../../ui-components/Loader';
 import getEncodedAddress from '../../util/getEncodedAddress';
-import { UserDetailsContext } from '../../context/UserDetailsContext';
 
 interface Props {
 	className?: string
