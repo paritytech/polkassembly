@@ -223,4 +223,8 @@ export default styled(LoginForm)`
 	.errorText {
 		color: red_secondary;
 	}
+
+	.ui.dimmer {
+		height: calc(100% - 6.5rem);
+	}
 `;
