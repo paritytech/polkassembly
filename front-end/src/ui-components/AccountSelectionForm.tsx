@@ -12,15 +12,16 @@ import AddressDropdown from './AddressDropdown';
 import HelperTooltip from './HelperTooltip';
 
 interface Props{
+	title: string
     accounts: InjectedAccountWithMeta[]
     address: string
     className?: string;
     onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const AccountSelectionForm = ({ accounts, address, className, onAccountChange }: Props) =>
+const AccountSelectionForm = ({ title, accounts, address, className, onAccountChange }: Props) =>
 	<Form.Field className={className} width={16}>
-		<label>Vote with account
+		<label>{title}
 			<HelperTooltip
 				content='You can choose an account from the polkadot-js extension.'
 			/>

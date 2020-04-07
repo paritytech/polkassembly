@@ -128,6 +128,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 					</div>
 					: <>
 						<AccountSelectionForm
+							title='Vote with account'
 							accounts={accounts}
 							address={address}
 							onAccountChange={onAccountChange}

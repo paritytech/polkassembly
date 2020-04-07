@@ -18,3 +18,27 @@ export const LOGIN = gql`
         }
     }
 `;
+
+export const ADDRESS_LOGIN_START = gql`
+    mutation AddressLoginStart($address: String!) {
+        addressLoginStart(address: $address){
+            message
+            signMessage
+        }
+    }
+`;
+
+export const ADDRESS_LOGIN = gql`
+    mutation AddressLogin($address: String!, $signature: String!) {
+        addressLogin(address: $address, signature:$signature){
+            user {
+                id
+                name
+                username
+                email
+                email_verified
+            }
+            token
+        }
+    }
+`;

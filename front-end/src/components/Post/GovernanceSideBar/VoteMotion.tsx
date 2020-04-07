@@ -126,6 +126,7 @@ const VoteMotion = ({
 					</div>
 					: <>
 						<AccountSelectionForm
+							title='Second with account'
 							accounts={accounts}
 							address={address}
 							onAccountChange={onAccountChange}
