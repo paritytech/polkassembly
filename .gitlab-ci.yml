@@ -169,7 +169,6 @@ deploy-staging:
     - kubernetes-parity-build
   only:
     - master
-    - /^fv-.*/
   <<: *deploy-k8s
 
 deploy-production:
