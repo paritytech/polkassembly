@@ -4,7 +4,13 @@
 
 import chalk from 'chalk';
 
-import { addDiscussionPostAndMotion, addDiscussionPostAndProposal, addDiscussionPostAndTreasuryProposal, addDiscussionReferendum, updateTreasuryProposalWithMotion } from '../graphql_helpers';
+import {
+	addDiscussionPostAndMotion,
+	addDiscussionPostAndProposal,
+	addDiscussionPostAndTreasuryProposal,
+	addDiscussionReferendum,
+	updateTreasuryProposalWithMotion
+} from '../graphql_helpers';
 import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData } from '../types';
 import {
 	getDiscussionMotions,
@@ -124,6 +130,8 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.onchain?.referenda &&
 		syncMaps?.discussion?.referenda &&
 		await syncReferenda(syncMaps.onchain.referenda, syncMaps.discussion.referenda);
+
+		console.log('✅ Syncing finished.');
 	} catch (err) {
 		console.error(chalk.red('syncDBs execution error'), err);
 	}
