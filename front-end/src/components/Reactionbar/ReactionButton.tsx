@@ -2,26 +2,26 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
-import styled from '@xstyled/styled-components';
+import { Popup } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import Button from '../../ui-components/Button';
 import {
-	useAddPostReactionMutation,
-	useAddCommentReactionMutation,
-	useDeletePostReactionMutation,
-	useDeleteCommentReactionMutation,
+	CommentReactionsQuery,
 	PostReactionsQuery,
-	CommentReactionsQuery
-} from '../../generated/graphql';
+	useAddCommentReactionMutation,
+	useAddPostReactionMutation,
+	useDeleteCommentReactionMutation,
+	useDeletePostReactionMutation } from '../../generated/graphql';
+import Button from '../../ui-components/Button';
 
 export interface ReactionButtonProps {
 	className?: string
 	reaction: string
 	count: number
-	userIds: number[]
+	userNames: string[]
 	postId?: number
 	commentId?: string
 	refetch?: (variables?: undefined) => Promise<ApolloQueryResult<PostReactionsQuery>>
@@ -32,17 +32,17 @@ const ReactionButton = function ({
 	className,
 	reaction,
 	count,
-	userIds,
+	userNames,
 	postId,
 	commentId,
 	refetch
 }: ReactionButtonProps) {
-	const { id } = useContext(UserDetailsContext);
+	const { id, username } = useContext(UserDetailsContext);
 	const [addPostReactionMutation] = useAddPostReactionMutation();
 	const [addCommentReactionMutation] = useAddCommentReactionMutation();
 	const [deletePostReactionMutation] = useDeletePostReactionMutation();
 	const [deleteCommentReactionMutation] = useDeleteCommentReactionMutation();
-	const reacted = id && userIds.includes(id);
+	const reacted = username && userNames.includes(username);
 
 	const _refetch = () => { refetch && refetch(); };
 
@@ -101,17 +101,29 @@ const ReactionButton = function ({
 		}
 	};
 
-	return (
-		<span className={className}>
-			<Button
-				className={'social' + (reacted ? ' reacted' : '')}
-				onClick={handleReact}
-				disabled={!id}
-			>
-				{reaction} {count}
-			</Button>
-		</span>
-	);
+	let popupContent = '';
+
+	if (userNames.length > 5) {
+		popupContent = `${userNames.slice(0, 5).join(', ')} and ${userNames.length - 5} others`;
+	} else {
+		popupContent = userNames.join(', ');
+	}
+
+	const button =  <span className={className}>
+		<Button
+			className={'social' + (reacted ? ' reacted' : '')}
+			onClick={handleReact}
+			disabled={!id}
+		>
+			{reaction} {count}
+		</Button>
+	</span>;
+
+	return userNames.length > 0 ?
+		<Popup
+			content={popupContent}
+			trigger={button}
+		/> : button;
 };
 
 export default styled(ReactionButton)`

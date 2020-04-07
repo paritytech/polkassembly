@@ -21,9 +21,11 @@
         "sourceType": "module"
     },
     "plugins": [
+        "@typescript-eslint",
+        "promise",
         "react",
         "react-hooks",
-        "@typescript-eslint"
+        "simple-import-sort"
     ],
     "settings": {
         "react": {
@@ -36,7 +38,9 @@
         "arrow-spacing":["warn",{ "before": true, "after": true }],
         "comma-dangle": ["error", "never"],
         "indent": ["error", "tab"],
+        "no-extra-parens": ["error", "all", { "returnAssign": false }],
         "no-multiple-empty-lines": ["error", {"max": 1}],
+        "no-tabs": ["error", { "allowIndentationTabs": true }],
         "no-trailing-spaces": ["warn"],
         "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
@@ -44,7 +48,8 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "semi": [2, "always"],
+        "simple-import-sort/sort": "error",
         "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
-        "switch-colon-spacing": ["error", {"after": true, "before": false}]       
+        "switch-colon-spacing": ["error", {"after": true, "before": false}]
     }
 }

@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Form as SUIForm, FormInputProps as SUIFormInputProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 type Props = SUIFormInputProps & {
     invalid?: boolean
@@ -31,5 +31,5 @@ export default styled(Input)`
     &:focus {
         outline: 0;
         border-color: grey_light;
-    }	 */
+    }*/
 `;

@@ -8,9 +8,9 @@ import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import DiscussionsContainer from './Discussions';
 import Button from '../../ui-components/Button';
 import InfoBox from '../../ui-components/InfoBox';
+import DiscussionsContainer from './Discussions';
 
 const Discussions = ({ className } : {className?: string}) => {
 	const history = useHistory();

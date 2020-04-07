@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React, { ChangeEvent } from 'react';
 import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
-import styled from '@xstyled/styled-components';
 
 import { Form } from '../ui-components/Form';
 import messages from '../util/messages';

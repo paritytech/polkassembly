@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn tsc && ts-node ./src/index.ts",
-    "lint": "eslint \"./src/**/*.js|ts\"",
+    "lint": "npx eslint ./src/ --ext .js,.ts",
+    "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "tsc": "tsc",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
@@ -27,8 +28,6 @@
     "eslint": "^6.8.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "eslint-plugin-standard": "^4.0.1"
@@ -41,6 +40,8 @@
     "apollo-link": "^1.2.13",
     "apollo-link-ws": "^1.0.19",
     "chalk": "^3.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
     "graphql": "^14.6.0",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.10.1",
