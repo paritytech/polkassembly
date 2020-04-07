@@ -40,6 +40,7 @@
     "apollo-link": "^1.2.13",
     "apollo-link-ws": "^1.0.19",
     "chalk": "^3.0.0",
+    "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "graphql": "^14.6.0",

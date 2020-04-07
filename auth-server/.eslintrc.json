@@ -19,12 +19,14 @@
     },
     "plugins": [
         "@typescript-eslint",
+        "header",
         "security"
     ],
     "rules": {
         "@typescript-eslint/no-unused-vars": "error",
         "arrow-spacing":["warn",{ "before": true, "after": true }],
         "comma-dangle": ["error", "never"],
+        "header/header": [2, "../header.js"],
         "indent": ["error", "tab"],
         "no-multiple-empty-lines": ["error", {"max": 1}],
         "no-trailing-spaces": ["warn"],
