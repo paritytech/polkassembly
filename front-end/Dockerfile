@@ -1,5 +1,5 @@
 # Stage 1 - the build process
-FROM node:10 as build-deps
+FROM node:12 as build-deps
 
 ENV REACT_APP_ENV="dev"
 ARG REACT_APP_HASURA_GRAPHQL_URL
