@@ -29,7 +29,7 @@ interface Props {
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
-	const [err, setErr] = useState<Error | null>(null);
+	const [error, setErr] = useState<Error | null>(null);
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [isAccountLoading, setIsAccountLoading] = useState(true);
@@ -37,7 +37,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
 	const [addressLoginStartMutation] = useAddressLoginStartMutation();
-	const [addressLoginMutation, { loading, error }] = useAddressLoginMutation();
+	const [addressLoginMutation, { loading }] = useAddressLoginMutation();
 	const currentUser = useContext(UserDetailsContext);
 
 	useEffect(() => {
@@ -178,8 +178,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				</>
 			}
 			<div>
-				{error && <FilteredError text={error.message}/>}
-				{err && <FilteredError text={err.message}/>}
+				{error && <FilteredError className='info' text={error.message}/>}
 			</div>
 			<Divider horizontal>Or</Divider>
 			<div className={'mainButtonContainer'}>
