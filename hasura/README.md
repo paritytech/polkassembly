@@ -94,3 +94,11 @@ In case the `public` DB schema is empty, you'll need to run the migration manual
 - Make sure to install [hasura-cli](https://docs.hasura.io/1.0/graphql/manual/hasura-cli/index.html).
 - `cd ./hasura-migrations` go to the migration directory
 - `hasura migrate apply --admin-secret <YOUR_HASURA_ADMIN_SECRET>` to apply the migration
+
+## HealthCheck Url
+
+healthcheck url for hasura is:
+
+```
+/healthz
+```
