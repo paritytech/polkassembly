@@ -39,3 +39,11 @@ We use `@graphql-codegen` to generate types directly form the DB types (hasura).
 ### Run
 In the project directory, you can run:
 - `yarn; yarn start`
+
+## HealthCheck Url
+
+healthcheck url for front end nginx server is:
+
+```
+/healthcheck
+```
