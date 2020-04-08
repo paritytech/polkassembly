@@ -44,6 +44,7 @@ export default {
 	LOGOUT_SUCCESSFUL: 'Successfully logged out.',
 	NAME_CHANGED_SUCCESSFULLY: 'Name changed succefully.',
 	NAME_INVALID_ERROR: 'Display name must be between 3 and 30 characters long.',
+	NEW_PROPOSAL_CREATED_MAIL_SENT: 'New Proposal created mail sent.',
 	NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL: 'Notification preference changed successfully.',
 	NO_CORRESPONDING_REFRESH_TOKEN: 'No corresponding refresh-token found.',
 	NO_USER_FOUND_WITH_USERNAME: 'No user found with this username',

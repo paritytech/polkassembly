@@ -9,11 +9,11 @@ import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
-import { MessageType } from '../types';
+import { CommentType, MessageType, OnchainLinkType } from '../types';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
-const sendPostCommentSubscription = async (comment): Promise<MessageType> => {
+const sendPostCommentSubscription = async (comment: CommentType): Promise<MessageType> => {
 	const { post_id, author_id } = comment;
 
 	if (!post_id) {
@@ -52,7 +52,7 @@ const sendPostCommentSubscription = async (comment): Promise<MessageType> => {
 	return { message: messages.EVENT_POST_SUBSCRIPTION_MAIL_SENT };
 };
 
-const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
+const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
 	const {
 		proposer_address,
 		post_id,
@@ -141,7 +141,7 @@ const sendOwnProposalCreated = async (onchainLink): Promise<MessageType> => {
 	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
 
-const sendNewProposalCreated = async (onchainLink) => {
+const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
 	const {
 		post_id,
 		onchain_motion_id,
@@ -204,12 +204,15 @@ const sendNewProposalCreated = async (onchainLink) => {
 		sendNewProposalCreatedEmail(user, type, id);
 	});
 
-	Promise.all(promises).catch(error => console.error(error));
+	await Promise.all(promises).catch(error => console.error(error));
+
+	return { message: messages.NEW_PROPOSAL_CREATED_MAIL_SENT };
 };
 
-export const commentCreateHook = async (req: Request, res: Response) => {
+export const commentCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		return res.status(403).json({ message: messages.UNAUTHORISED });
+		res.status(403).json({ message: messages.UNAUTHORISED });
+		return;
 	}
 
 	const comment = req.body?.event?.data?.new || {};
@@ -219,9 +222,10 @@ export const commentCreateHook = async (req: Request, res: Response) => {
 	res.json(result);
 };
 
-export const onchainLinksCreateHook = async (req: Request, res: Response) => {
+export const onchainLinksCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		return res.status(403).json({ message: messages.UNAUTHORISED });
+		res.status(403).json({ message: messages.UNAUTHORISED });
+		return;
 	}
 
 	const onchainLink = req.body?.event?.data?.new || {};
@@ -229,7 +233,8 @@ export const onchainLinksCreateHook = async (req: Request, res: Response) => {
 	const result = await sendOwnProposalCreated(onchainLink);
 
 	if (result.message === messages.EVENT_PROPOSAL_CREATED_MAIL_SENT) {
-		return res.json(result);
+		res.json(result);
+		return;
 	}
 	// Doing this in background as several emails needs to be sent
 	sendNewProposalCreated(onchainLink);

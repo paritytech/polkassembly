@@ -106,3 +106,17 @@ export interface NotificationPreferencesType {
 export interface AddressLoginStartType extends MessageType {
     signMessage: string;
 }
+
+export interface CommentType {
+    post_id: number;
+    author_id: number;
+}
+
+export interface OnchainLinkType {
+    proposer_address: string;
+    post_id: number;
+    onchain_motion_id: number;
+    onchain_proposal_id: number;
+    onchain_referendum_id: number;
+    onchain_treasury_proposal_id: number;
+}
