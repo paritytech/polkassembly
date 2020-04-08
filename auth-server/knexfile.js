@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 const dotenv = require('dotenv');
 
-dotenv.load();
+dotenv.config();
 
 // e.g. 'postgres://postgres:postgres@localhost:5431/governance-auth'
 const devConnectionUrl = process.env.DATABASE_URL;
