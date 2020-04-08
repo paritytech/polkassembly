@@ -5,15 +5,10 @@
 import { UserInputError } from 'apollo-server';
 
 import AuthService from '../../services/auth';
-import { MessageType } from '../../types';
+import { MessageType, ResetPasswordArgs } from '../../types';
 import messages from '../../utils/messages';
 
-interface ArgumentsType {
-	newPassword: string;
-	token: string;
-}
-
-export default async (parent: void, { token, newPassword }: ArgumentsType): Promise<MessageType> => {
+export default async (parent: void, { token, newPassword }: ResetPasswordArgs): Promise<MessageType> => {
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}

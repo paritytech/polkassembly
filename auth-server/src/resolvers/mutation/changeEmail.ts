@@ -5,16 +5,12 @@
 import { UserInputError } from 'apollo-server';
 
 import AuthService from '../../services/auth';
-import { ChangeResponseType, Context } from '../../types';
+import { ChangeEmailArgs, ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
 
-interface ArgumentsType {
-	email: string;
-}
-
-export default async (parent: void, { email }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { email }: ChangeEmailArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (!validateEmail(email)) {

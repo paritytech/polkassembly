@@ -3,14 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { ChangeResponseType } from '../../types';
+import { ChangeResponseType, VerifyEmailArgs } from '../../types';
 import messages from '../../utils/messages';
 
-interface ArgumentsType {
-	token: string;
-}
-
-export default async (parent: void, { token }: ArgumentsType): Promise<ChangeResponseType> => {
+export default async (parent: void, { token }: VerifyEmailArgs): Promise<ChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 	const updatedJWT = await authServiceInstance.VerifyEmail(token);
 

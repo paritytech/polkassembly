@@ -3,15 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { ChangeResponseType, Context, NotificationPreferencesType } from '../../types';
+import { ChangeNotificationPreferenceArgs, ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgumentsType {
-	notificationPreferences: NotificationPreferencesType;
-}
-
-export default async (parent: void, { notificationPreferences }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { notificationPreferences }: ChangeNotificationPreferenceArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const { postParticipated, postCreated, newProposal, ownProposal } = notificationPreferences;
 

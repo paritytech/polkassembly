@@ -5,15 +5,11 @@
 import { UserInputError } from 'apollo-server';
 
 import AuthService from '../../services/auth';
-import { MessageType } from '../../types';
+import { MessageType, RequestResetPasswordArgs } from '../../types';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
 
-interface ArgumentsType {
-	email: string;
-}
-
-export default async (parent: void, { email }: ArgumentsType): Promise<MessageType> => {
+export default async (parent: void, { email }: RequestResetPasswordArgs): Promise<MessageType> => {
 	const authServiceInstance = new AuthService();
 
 	if (!validateEmail(email)) {

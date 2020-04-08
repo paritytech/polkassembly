@@ -3,16 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { ChangeResponseType, Context } from '../../types';
+import { ChangeNameArgs, ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 import validateName from '../../utils/validateName';
 
-interface ArgumentsType {
-	newName: string;
-}
-
-export default async (parent: void, { newName }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { newName }: ChangeNameArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	validateName(newName);

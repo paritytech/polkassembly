@@ -133,3 +133,105 @@ export interface JsonSchema {
     required: string[];
     type: string;
 }
+
+export interface AddressLinConfirmArgs {
+	address_id: number;
+	signature: string;
+}
+
+export interface SubscriptionArgs {
+	post_id: number;
+}
+
+export interface UserArgs {
+	id: number;
+}
+
+export interface UsersArgs {
+	limit: number;
+	page: number;
+}
+
+export interface AddressLinkStartArgs {
+	network: string;
+	address: string;
+}
+
+export interface AddressLoginArgs {
+	address: string;
+	signature: string;
+}
+
+export interface AddressLoginStartArgs {
+	address: string;
+}
+
+export interface AddressUnlinkArgs {
+	address: string;
+}
+
+export interface ChangeEmailArgs {
+	email: string;
+}
+
+export interface ChangeNameArgs {
+	newName: string;
+}
+
+export interface ChangeNotificationPreferenceArgs {
+	notificationPreferences: NotificationPreferencesType;
+}
+
+export interface ChangePasswordArgs {
+	newPassword: string;
+	oldPassword: string;
+}
+
+export interface ChangeUsernameArgs {
+	username: string;
+}
+
+export interface LoginArgs {
+	username: string;
+	password: string;
+}
+
+export interface PostSubscribeArgs {
+	post_id: number;
+}
+
+export interface PostUnsubscribeArgs {
+	post_id: number;
+}
+
+export interface ReportContentArgs {
+	network: string;
+	type: string;
+	content_id: string;
+	reason: string;
+	comments: string;
+}
+
+export interface RequestResetPasswordArgs {
+	email: string;
+}
+
+export interface ResetPasswordArgs {
+	newPassword: string;
+	token: string;
+}
+
+export interface SignupArgs {
+	email: string;
+	name: string;
+	password: string;
+	username: string;
+}
+
+export interface UndoEmailChangeArgs {
+	token: string;
+}
+
+export interface VerifyEmailArgs {
+	token: string;
+}

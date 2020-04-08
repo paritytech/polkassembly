@@ -4,14 +4,10 @@
 
 import PostSubscription from '../../model/PostSubscription';
 import AuthService from '../../services/auth';
-import { Context, Subscription } from '../../types';
+import { Context, Subscription, SubscriptionArgs } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 
-interface ArgumentsType {
-	post_id: number;
-}
-
-export default async (parent: void, { post_id }: ArgumentsType, ctx: Context): Promise<Subscription> => {
+export default async (parent: void, { post_id }: SubscriptionArgs, ctx: Context): Promise<Subscription> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

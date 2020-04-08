@@ -3,16 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { ChangeResponseType, Context } from '../../types';
+import { AddressLinConfirmArgs, ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface ArgumentsType {
-	address_id: number;
-	signature: string;
-}
-
-export default async (parent: void, { address_id, signature }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { address_id, signature }: AddressLinConfirmArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 

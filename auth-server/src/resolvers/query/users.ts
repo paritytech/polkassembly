@@ -3,14 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import User from '../../model/User';
-import { PublicUser } from '../../types';
+import { PublicUser, UsersArgs } from '../../types';
 
-interface ArgumentsType {
-	limit: number;
-	page: number;
-}
-
-export default async (parent: void, { limit, page }: ArgumentsType): Promise<PublicUser[]> => {
+export default async (parent: void, { limit, page }: UsersArgs): Promise<PublicUser[]> => {
 	limit = limit || 25;
 	page = page || 1;
 	if (page < 1) {

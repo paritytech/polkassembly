@@ -6,12 +6,9 @@ import { AuthenticationError } from 'apollo-server';
 import messages from 'src/utils/messages';
 
 import User from '../../model/User';
-import { PublicUser } from '../../types';
+import { PublicUser, UserArgs } from '../../types';
 
-interface ArgumentsType {
-	id: number;
-}
-export default async (parent: void, { id }: ArgumentsType): Promise<PublicUser | null> => {
+export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
 	const user = await User
 		.query()
 		.where('id', id)
