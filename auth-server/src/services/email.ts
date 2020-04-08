@@ -9,6 +9,7 @@ import EmailVerificationToken from '../model/EmailVerificationToken';
 import PasswordResetToken from '../model/PasswordResetToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
+import { CommentType } from '../types';
 import {
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
@@ -72,7 +73,7 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken): v
 		console.error('Password reset email not sent', e));
 };
 
-export const sendPostSubscriptionMail = (user: User, author: User, comment: any): void => {
+export const sendPostSubscriptionMail = (user: User, author: User, comment: CommentType): void => {
 	if (!apiKey) {
 		console.warn('There is a new comment on the post you are subscribed to');
 		return;

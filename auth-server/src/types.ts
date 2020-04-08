@@ -110,6 +110,7 @@ export interface AddressLoginStartType extends MessageType {
 export interface CommentType {
     post_id: number;
     author_id: number;
+    content: string;
 }
 
 export interface OnchainLinkType {

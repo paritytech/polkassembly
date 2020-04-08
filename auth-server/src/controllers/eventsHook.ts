@@ -37,15 +37,17 @@ const sendPostCommentSubscription = async (comment: CommentType): Promise<Messag
 	}
 
 	if (Array.isArray(subscriptions)) {
-		subscriptions.forEach(async subscription => {
+		subscriptions.forEach(subscription => {
 			// users shouldn't be notified for their own comments
 			if (subscription.user_id === author_id) {
 				return;
 			}
 
-			const user = await getUserFromUserId(subscription.user_id);
-
-			sendPostSubscriptionMail(user, author, comment);
+			getUserFromUserId(subscription.user_id)
+				.then((user) => {
+					sendPostSubscriptionMail(user, author, comment);
+				})
+				.catch((error) => console.error(error));
 		});
 	}
 
