@@ -4,6 +4,7 @@
 
 import { Model } from 'objection';
 
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
@@ -15,34 +16,25 @@ export default class RefreshToken extends Model {
 	valid!: boolean
 	expires!: string
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'refresh_tokens';
 	}
 
-	static get idColumn () {
+	static get idColumn (): string {
 		return 'id';
 	}
 
-	getToken () {
+	static get jsonSchema (): JsonSchema {
 		return {
-			token: this.token,
-			user_id: this.user_id,
-			valid: this.valid,
-			expires: this.expires
-		};
-	}
-
-	static get jsonSchema () {
-		return {
-			type: 'object',
-			required: ['token', 'user_id'],
 			properties: {
+				expires: { type: 'string' },
 				id: { type: 'integer' },
 				token: { type: 'string' },
 				user_id: { type: 'integer' },
-				valid: { type: 'boolean' },
-				expires: { type: 'string' }
-			}
+				valid: { type: 'boolean' }
+			},
+			required: ['token', 'user_id'],
+			type: 'object'
 		};
 	}
 }

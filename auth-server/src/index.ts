@@ -17,6 +17,7 @@ import expressValidator from 'express-validator';
 import resolvers from './resolvers';
 import routes from './routes';
 import schema from './schema';
+import { Context } from './types';
 
 dotenv.config();
 
@@ -60,7 +61,7 @@ if (process.env.NODE_ENV === 'test') {
  */
 const app = express();
 const server = new ApolloServer({
-	context: ({ req, res }) => ({ req, res }),
+	context: ({ req, res }): Context => ({ req, res }),
 	resolvers,
 	typeDefs: schema
 });

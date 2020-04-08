@@ -120,3 +120,15 @@ export interface OnchainLinkType {
     onchain_referendum_id: number;
     onchain_treasury_proposal_id: number;
 }
+
+export interface JsonSchema {
+    properties: {
+        [key: string]: {
+            maxLength?: number;
+            minLength?: number;
+            type: string;
+        };
+    };
+    required: string[];
+    type: string;
+}

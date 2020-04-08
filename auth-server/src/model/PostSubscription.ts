@@ -4,6 +4,7 @@
 
 import { Model } from 'objection';
 
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
@@ -21,15 +22,7 @@ export default class PostSubscription extends Model {
 		return 'id';
 	}
 
-	getToken () {
-		return {
-			id: this.id,
-			post_id: this.post_id,
-			user_id: this.user_id
-		};
-	}
-
-	static get jsonSchema () {
+	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {
 				id: { type: 'integer' },

@@ -4,37 +4,28 @@
 
 import { Model } from 'objection';
 
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
 
 export default class Notification extends Model {
 	readonly id!: number
-	new_proposal: boolean
-	own_proposal: boolean
-	post_created: boolean
-	post_participated: boolean
+	new_proposal!: boolean
+	own_proposal!: boolean
+	post_created!: boolean
+	post_participated!: boolean
 	user_id!: number
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'notification';
 	}
 
-	static get idColumn () {
+	static get idColumn (): string {
 		return 'id';
 	}
 
-	getToken () {
-		return {
-			new_proposal: this.new_proposal,
-			own_proposal: this.own_proposal,
-			post_created: this.post_created,
-			post_participated: this.post_participated,
-			user_id: this.user_id
-		};
-	}
-
-	static get jsonSchema () {
+	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {
 				id: { type: 'integer' },

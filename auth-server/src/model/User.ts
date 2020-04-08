@@ -5,6 +5,7 @@
 import * as argon2 from 'argon2';
 import { Model } from 'objection';
 
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
@@ -18,31 +19,20 @@ export default class User extends Model {
 	name!: string
 	username!: string
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'users';
 	}
 
-	static get idColumn () {
+	static get idColumn (): string {
 		return 'id';
 	}
 
-	getUser () {
-		return {
-			email: this.email,
-			email_verified: this.email_verified,
-			id: this.id,
-			name: this.name,
-			username: this.username
-		};
-	}
-
-	verifyPassword (password: string) {
+	verifyPassword (password: string): Promise<boolean> {
 		return argon2.verify(this.password, password);
 	}
 
-	static get jsonSchema () {
+	static get jsonSchema (): JsonSchema {
 		return {
-
 			properties: {
 				email: { maxLength: 255, type: 'string' },
 				email_verified: { type: 'boolean' },

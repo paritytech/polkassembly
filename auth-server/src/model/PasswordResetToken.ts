@@ -4,35 +4,27 @@
 
 import { Model } from 'objection';
 
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
 
 export default class PasswordResetToken extends Model {
-	expires: string
+	expires!: string
 	readonly id!: number
 	token!: string
 	user_id!: number
-	valid: boolean
+	valid!: boolean
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'password_reset_token';
 	}
 
-	static get idColumn () {
+	static get idColumn (): string {
 		return 'id';
 	}
 
-	getToken () {
-		return {
-			expires: this.expires,
-			token: this.token,
-			user_id: this.user_id,
-			valid: this.valid
-		};
-	}
-
-	static get jsonSchema () {
+	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {
 				expires: { type: 'string' },
