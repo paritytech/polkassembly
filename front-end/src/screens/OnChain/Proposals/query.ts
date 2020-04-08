@@ -62,6 +62,7 @@ export const QUERY_LATEST_PROPOSALS = gql`
                     status
                 }
                 preimage {
+                    id
                     method
                 }
             }
