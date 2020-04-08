@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as sgMail from '@sendgrid/mail';
 import * as ejs from 'ejs';
 
 import EmailVerificationToken from '../model/EmailVerificationToken';
@@ -19,6 +18,8 @@ import {
 	undoEmailChangeEmailTemplate,
 	verificationEmailTemplate
 } from '../utils/emailTemplates';
+
+const sgMail = require("@sendgrid/mail");
 
 const apiKey = process.env.SENDGRID_API_KEY;
 const FROM = 'noreply@polkassembly.io';

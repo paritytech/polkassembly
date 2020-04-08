@@ -5,7 +5,7 @@
   "scripts": {
     "test": "docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test . && docker-compose -f docker-compose-test.yaml up --abort-on-container-exit",
     "test:dangerous": "knex migrate:latest && mocha -r ts-node/register test/**/*.spec.ts",
-    "start": "yarn migrate && yarn tsc && node build/src/index.js",
+    "start": "yarn tsc && yarn migrate && node build/src/index.js",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "tsc": "tsc",

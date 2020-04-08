@@ -2,6 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+/* eslint-disable import/first */
+
+// load env vars
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 /**
  * Module dependencies.
  */
@@ -10,7 +17,6 @@ import bodyParser from 'body-parser';
 import chalk from 'chalk';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import expressValidator from 'express-validator';
 
@@ -18,13 +24,6 @@ import resolvers from './resolvers';
 import routes from './routes';
 import schema from './schema';
 import { Context } from './types';
-
-dotenv.config();
-
-/**
- * Load environment variables from .env file, where API keys and passwords are configured.
- */
-dotenv.load({ path: '.env' });
 
 if (process.env.NODE_ENV === 'test') {
 	if (!process.env.JWT_PRIVATE_KEY_TEST) {

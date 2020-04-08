@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { AuthenticationError } from 'apollo-server';
-import messages from 'src/utils/messages';
 
 import User from '../../model/User';
 import { PublicUser, UserArgs } from '../../types';
+import messages from '../../utils/messages';
 
 export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
 	const user = await User
