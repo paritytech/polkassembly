@@ -1,7 +1,7 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-
+import { Response } from 'express';
 import { NotFoundError, ValidationError } from 'objection';
 import {
 	CheckViolationError,
@@ -13,7 +13,7 @@ import {
 } from 'objection-db-errors';
 
 // In this example `res` is an express response object.
-export default function errorHandler (err: any, res: any): void {
+export default function errorHandler (err: Error | ValidationError | NotFoundError | UniqueViolationError | NotNullViolationError | ForeignKeyViolationError | CheckViolationError | DataError | DBError, res: Response): void {
 	console.log(err && err.stack);
 	if (err instanceof ValidationError) {
 		switch (err.type) {

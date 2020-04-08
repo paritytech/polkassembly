@@ -19,7 +19,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
+import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -48,7 +48,7 @@ const NOTIFICATION_DEFAULTS = {
 };
 
 export default class AuthService {
-	public async GetUser (token: string): Promise<UserObjectType> {
+	public async GetUser (token: string): Promise<User> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		return getUserFromUserId(userId);
@@ -74,7 +74,7 @@ export default class AuthService {
 			token: await this.getSignedToken(user),
 			user: {
 				email: user.email,
-				email_verified: user.email_verified,
+				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
 				username: user.username
@@ -125,7 +125,7 @@ export default class AuthService {
 			token: await this.getSignedToken(user),
 			user: {
 				email: user.email,
-				email_verified: user.email_verified,
+				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
 				username: user.username
@@ -222,7 +222,7 @@ export default class AuthService {
 			token: await this.getSignedToken(user),
 			user: {
 				email: user.email,
-				email_verified: user.email_verified,
+				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
 				username: user.username
@@ -423,7 +423,7 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async resendVerifyEmailToken (token: string) {
+	public async resendVerifyEmailToken (token: string): Promise<void> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
@@ -672,7 +672,7 @@ export default class AuthService {
 		const tokenContent: JWTPayploadType = {
 
 			email,
-			email_verified,
+			email_verified: email_verified || false,
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
