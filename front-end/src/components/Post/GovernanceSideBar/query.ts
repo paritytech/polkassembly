@@ -8,6 +8,7 @@ export const getCouncilMembers= gql`
     query getCouncilMembers{
         councils(last: 1){
             members {
+                id
                 address
             }
         }
