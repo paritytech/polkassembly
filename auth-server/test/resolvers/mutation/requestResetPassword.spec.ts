@@ -11,6 +11,8 @@ import signup from '../../../src/resolvers/mutation/signup';
 import requestResetPassword from '../../../src/resolvers/mutation/requestResetPassword';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getPwdResetTokenKey } from '../../../src/services/auth';
+import { redisGet } from '../../../src/redis';
 
 describe('requestResetPassword mutation', () => {
 	let signupResult;
@@ -26,6 +28,8 @@ describe('requestResetPassword mutation', () => {
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
+	const newPassword = 'longenough';
+	let token = '';
 
 	before(async () => {
 		signupResult = await signup(null, { email, password, username, name }, fakectx);
@@ -39,10 +43,60 @@ describe('requestResetPassword mutation', () => {
 	});
 
 	it('should be able to request a password reset', async () => {
+
 		const res = await requestResetPassword(null, { email });
 
+		const user = await User
+			.query()
+			.where('email', email)
+			.first();
+
+		const passwordResetToken = await redisGet(getPwdResetTokenKey(user.id));
+		token = passwordResetToken;
+
+		expect(passwordResetToken).to.not.be.empty;
 		expect(res.message).to.eq(messages.RESET_PASSWORD_RETURN_MESSAGE);
 	});
+
+	// it('should not be able to reset password with a short password', async () => {
+
+	// 	try {
+	// 		await resetPassword(null, { token, newPassword: 'short' });
+	// 	} catch (error) {
+	// 		expect(error).to.exist;
+	// 		expect(error).to.be.an.instanceof(UserInputError);
+	// 		expect(error.message).to.eq(messages.PASSWORD_LENGTH_ERROR);
+	// 	}
+	// });
+
+	// it('should not be able to reset password with a wrong token', async () => {
+
+	// 	try {
+	// 		await resetPassword(null, { token: uuid(), newPassword });
+	// 	} catch (error) {
+	// 		expect(error).to.exist;
+	// 		expect(error).to.be.an.instanceof(AuthenticationError);
+	// 		expect(error.message).to.eq(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
+	// 	}
+	// });
+
+	// it('should be able to reset password with a valid token', async () => {
+
+	// 	const res = await resetPassword(null, { token, newPassword });
+
+	// 	expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL);
+	// });
+
+	// it('should not be able to change password with an expired token', async () => {
+
+	// 	try {
+	// 		await resetPassword(null, { token, newPassword });
+	// 	} catch (error) {
+	// 		expect(error).to.exist;
+	// 		expect(error).to.be.an.instanceof(AuthenticationError);
+	// 		expect(error.message).to.eq(messages.PASSWORD_RESET_TOKEN_INVALID);
+	// 	}
+	// });
 
 	it('should not be able to request reset password with an invalid email', async () => {
 		const email = 'wrong@email';
