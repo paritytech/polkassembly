@@ -84,7 +84,7 @@ describe('addressLogin mutation', () => {
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
-			expect(error.message).to.eq(messages.ADDRESS_LOGIN_INVALID_SIGNATURE);
+			expect(error.message).to.eq(messages.ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED);
 		}
 	});
 });
