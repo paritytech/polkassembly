@@ -29,7 +29,7 @@ import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
 import { Keyring } from '@polkadot/api';
 import verifySignature from '../utils/verifySignature';
-import { redisGet, redisSetex } from '../redis';
+import { redisGet, redisSetex, redisDel } from '../redis';
 
 const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
 const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
@@ -582,6 +582,8 @@ export default class AuthService {
 				password
 			})
 			.findById(Number(userId));
+
+		await redisDel(getPwdResetTokenKey(token));
 	}
 
 	public async UndoEmailChange(token: string) {
