@@ -10614,7 +10614,7 @@ export type GetCouncilMembersQuery = (
     { __typename?: 'Council' }
     & { members: Maybe<Array<(
       { __typename?: 'CouncilMember' }
-      & Pick<CouncilMember, 'address'>
+      & Pick<CouncilMember, 'id' | 'address'>
     )>> }
   )>> }
 );
@@ -11045,7 +11045,7 @@ export type LatestMotionPostsQuery = (
           & Pick<MotionStatus, 'id' | 'status'>
         )>>, preimage: Maybe<(
           { __typename?: 'Preimage' }
-          & Pick<Preimage, 'method'>
+          & Pick<Preimage, 'id' | 'method'>
         )> }
       )>> }
     )> }
@@ -11090,7 +11090,7 @@ export type LatestDemocracyProposalPostsQuery = (
           & Pick<ProposalStatus, 'id' | 'status'>
         )>>, preimage: Maybe<(
           { __typename?: 'Preimage' }
-          & Pick<Preimage, 'method'>
+          & Pick<Preimage, 'id' | 'method'>
         )> }
       )>> }
     )> }
@@ -11134,7 +11134,7 @@ export type LatestReferendaPostsQuery = (
           & Pick<ReferendumStatus, 'id' | 'status'>
         )>>, preimage: Maybe<(
           { __typename?: 'Preimage' }
-          & Pick<Preimage, 'method'>
+          & Pick<Preimage, 'id' | 'method'>
         )> }
       )>> }
     )> }
@@ -12003,6 +12003,7 @@ export const GetCouncilMembersDocument = gql`
     query getCouncilMembers {
   councils(last: 1) {
     members {
+      id
       address
     }
   }
@@ -12729,6 +12730,7 @@ export const LatestMotionPostsDocument = gql`
           status
         }
         preimage {
+          id
           method
         }
       }
@@ -12799,6 +12801,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
           status
         }
         preimage {
+          id
           method
         }
       }
@@ -12870,6 +12873,7 @@ export const LatestReferendaPostsDocument = gql`
           status
         }
         preimage {
+          id
           method
         }
       }

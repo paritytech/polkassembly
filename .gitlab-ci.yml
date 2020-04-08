@@ -1,4 +1,4 @@
-image: parity/kubetools:latest
+image: parity/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "gcr.io/test-installations-222013"
@@ -157,6 +157,26 @@ dockerize-chain-db-watcher:
     # - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
     # deploy yaml to cluster
     - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
+
+    # test, update/deploy redis server using helm
+    - export REDIS_PASSWORD=$(echo "$REDIS_URL" | sed -r 's#redis://:([^@]+).*$#\1#g')
+    - helm repo add bitnami https://charts.bitnami.com/bitnami
+    - helm repo update
+
+    # test install/upgrade
+    - helm upgrade redis bitnami/redis
+      --dry-run
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --set password=${REDIS_PASSWORD}
+
+    # install/upgrade redis server
+    - helm upgrade redis bitnami/redis
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --set password=${REDIS_PASSWORD}
 
 deploy-staging:
   stage: deploy

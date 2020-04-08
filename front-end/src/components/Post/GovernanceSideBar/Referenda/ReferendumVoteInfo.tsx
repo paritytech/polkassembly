@@ -21,7 +21,7 @@ interface Props {
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const ZERO = new BN(0);
 	const { api, apiReady } = useContext(ApiContext);
-	const [totalVotes, setTotalVotes] = useState(ZERO);
+	const [turnout, setTurnout] = useState(ZERO);
 	const [electorate, setElectorate] = useState(ZERO);
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
@@ -46,7 +46,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			if (_info?.isOngoing){
 				setAyeVotes(_info?.asOngoing.tally.ayes);
 				setNayVotes(_info?.asOngoing.tally.nays);
-				setTotalVotes(_info?.asOngoing.tally.turnout);
+				setTurnout(_info?.asOngoing.tally.turnout);
 			}
 		})
 			.then( unsub => {unsubscribe = unsub;})
@@ -83,9 +83,9 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			return;
 		}
 
-		const x = getPassingThreshold(nayVotes, electorate, totalVotes, threshold);
+		const x = getPassingThreshold(nayVotes, electorate, turnout, threshold);
 		setPassingThreshold(x);
-	}, [electorate, nayVotes, threshold, totalVotes]);
+	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
 		<Grid className={className} columns={3} divided>
@@ -93,12 +93,11 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				ayeVotes={ayeVotes}
 				passingThreshold={passingThreshold}
 				nayVotes={nayVotes}
-				totalVotes={totalVotes}
 			/>
 			<Grid.Row>
 				<Grid.Column>
 					<h6>Turnout</h6>
-					<div>{formatBnBalance(totalVotes, { numberAfterComma: 2 })}</div>
+					<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
 				</Grid.Column>
 				<Grid.Column width={5}>
 					<h6>Aye</h6>
