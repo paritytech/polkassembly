@@ -10,7 +10,7 @@ interface ArgumentsType {
 	page: number;
 }
 
-export default async (parent: any, { limit, page }: ArgumentsType): Promise<PublicUser[]> => {
+export default async (parent: void, { limit, page }: ArgumentsType): Promise<PublicUser[]> => {
 	limit = limit || 25;
 	page = page || 1;
 	if (page < 1) {

@@ -10,7 +10,7 @@ interface ArgumentsType {
 	token: string;
 }
 
-export default async (parent: any, { token }: ArgumentsType): Promise<UndoEmailChangeResponseType> => {
+export default async (parent: void, { token }: ArgumentsType): Promise<UndoEmailChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 	const { updatedToken, email } = await authServiceInstance.UndoEmailChange(token);
 

@@ -12,7 +12,7 @@ interface ArgumentsType {
 	post_id: number;
 }
 
-export default async (parent: any, { post_id }: ArgumentsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: void, { post_id }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

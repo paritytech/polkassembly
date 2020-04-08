@@ -15,7 +15,7 @@ interface ArgumentsType {
 	address: string;
 }
 
-export default async (parent: any, { network, address }: ArgumentsType, ctx: Context): Promise<AddressLinkStartType> => {
+export default async (parent: void, { network, address }: ArgumentsType, ctx: Context): Promise<AddressLinkStartType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

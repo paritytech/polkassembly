@@ -11,7 +11,7 @@ interface ArgumentsType {
 	signature: string;
 }
 
-export default async (parent: any, { address, signature }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: void, { address, signature }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
 	const authServiceInstance = new AuthService();
 
 	const { user, token, refreshToken } = await authServiceInstance.AddressLogin(address, signature);

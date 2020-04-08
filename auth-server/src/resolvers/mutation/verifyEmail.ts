@@ -10,7 +10,7 @@ interface ArgumentsType {
 	token: string;
 }
 
-export default async (parent: any, { token }: ArgumentsType): Promise<ChangeResponseType> => {
+export default async (parent: void, { token }: ArgumentsType): Promise<ChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 	const updatedJWT = await authServiceInstance.VerifyEmail(token);
 

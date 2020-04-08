@@ -14,7 +14,7 @@ interface ArgumentsType {
 	email: string;
 }
 
-export default async (parent: any, { email }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { email }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (!validateEmail(email)) {

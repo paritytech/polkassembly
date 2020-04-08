@@ -11,7 +11,7 @@ interface ArgumentsType {
 	notificationPreferences: NotificationPreferencesType;
 }
 
-export default async (parent: any, { notificationPreferences }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { notificationPreferences }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const { postParticipated, postCreated, newProposal, ownProposal } = notificationPreferences;
 

@@ -13,7 +13,7 @@ interface ArgumentsType {
 	email: string;
 }
 
-export default async (parent: any, { email }: ArgumentsType): Promise<MessageType> => {
+export default async (parent: void, { email }: ArgumentsType): Promise<MessageType> => {
 	const authServiceInstance = new AuthService();
 
 	if (!validateEmail(email)) {

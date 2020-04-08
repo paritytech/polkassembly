@@ -11,7 +11,7 @@ interface ArgumentsType {
 	address: string;
 }
 
-export default async (parent: any, { address }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { address }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 

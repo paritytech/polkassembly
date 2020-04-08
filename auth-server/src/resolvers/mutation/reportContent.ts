@@ -19,7 +19,7 @@ interface ArgumentsType {
 	comments: string;
 }
 
-export default async (parent: any, { network, type, content_id, reason, comments }: ArgumentsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: void, { network, type, content_id, reason, comments }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

@@ -11,7 +11,7 @@ interface ArgumentsType {
 	post_id: number;
 }
 
-export default async (parent: any, { post_id }: ArgumentsType, ctx: Context): Promise<Subscription> => {
+export default async (parent: void, { post_id }: ArgumentsType, ctx: Context): Promise<Subscription> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);

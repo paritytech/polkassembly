@@ -13,7 +13,7 @@ interface ArgumentsType {
 	token: string;
 }
 
-export default async (parent: any, { token, newPassword }: ArgumentsType): Promise<MessageType> => {
+export default async (parent: void, { token, newPassword }: ArgumentsType): Promise<MessageType> => {
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}

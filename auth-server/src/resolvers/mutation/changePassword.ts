@@ -14,7 +14,7 @@ interface ArgumentsType {
 	oldPassword: string;
 }
 
-export default async (parent: any, { oldPassword, newPassword }: ArgumentsType, ctx: Context): Promise<MessageType> => {
+export default async (parent: void, { oldPassword, newPassword }: ArgumentsType, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (newPassword.length < 6) {

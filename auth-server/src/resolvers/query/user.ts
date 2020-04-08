@@ -11,7 +11,7 @@ import { PublicUser } from '../../types';
 interface ArgumentsType {
 	id: number;
 }
-export default async (parent: any, { id }: ArgumentsType): Promise<PublicUser | null> => {
+export default async (parent: void, { id }: ArgumentsType): Promise<PublicUser | null> => {
 	const user = await User
 		.query()
 		.where('id', id)

@@ -19,7 +19,7 @@ interface ArgumentsType {
 	username: string;
 }
 
-export default async (parent: any, { email, password, username, name }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: void, { email, password, username, name }: ArgumentsType, ctx: Context): Promise<SignUpResultType> => {
 	if (email && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}

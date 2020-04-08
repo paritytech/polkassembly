@@ -7,7 +7,7 @@ import { Context, MessageType } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-export default async (parent: any, args, ctx: Context): Promise<MessageType> => {
+export default async (parent: void, args: void, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	const authServiceInstance = new AuthService();

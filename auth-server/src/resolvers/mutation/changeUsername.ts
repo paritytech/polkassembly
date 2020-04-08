@@ -12,7 +12,7 @@ interface ArgumentsType {
 	username: string;
 }
 
-export default async (parent: any, { username }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { username }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	validateUsername(username);

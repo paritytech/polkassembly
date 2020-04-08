@@ -11,7 +11,7 @@ interface LoginArgumentsType{
 	password: string;
 }
 
-export default async (parent: any, { username, password }: LoginArgumentsType, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: void, { username, password }: LoginArgumentsType, ctx: Context): Promise<SignUpResultType> => {
 	const authServiceInstance = new AuthService();
 	const { user, token, refreshToken } = await authServiceInstance.Login(username, password);
 	setRefreshTokenCookie(ctx.res, refreshToken);

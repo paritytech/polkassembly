@@ -10,7 +10,7 @@ interface ArgumentsType {
 	address: string;
 }
 
-export default async (parent: any, { address }: ArgumentsType): Promise<AddressLoginStartType> => {
+export default async (parent: void, { address }: ArgumentsType): Promise<AddressLoginStartType> => {
 	const authServiceInstance = new AuthService();
 
 	return {

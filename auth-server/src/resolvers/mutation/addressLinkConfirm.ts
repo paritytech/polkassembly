@@ -12,7 +12,7 @@ interface ArgumentsType {
 	signature: string;
 }
 
-export default async (parent: any, { address_id, signature }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { address_id, signature }: ArgumentsType, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 
