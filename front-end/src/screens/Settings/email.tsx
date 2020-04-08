@@ -2,19 +2,19 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useChangeEmailMutation, useResendVerifyEmailTokenMutation } from '../../generated/graphql';
-import { NotificationStatus } from '../../types';
 import { handleTokenChange } from '../../services/auth.service';
-import cleanError from '../../util/cleanError';
+import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import cleanError from '../../util/cleanError';
 
 interface Props{
 	className?: string

@@ -2,33 +2,30 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { GoReply } from 'react-icons/go';
 import styled from '@xstyled/styled-components';
+import { ApolloQueryResult } from 'apollo-client';
+import React, { useContext,useState } from 'react';
+import { Controller,useForm } from 'react-hook-form';
+import { GoReply } from 'react-icons/go';
 
-import ContentForm from '../ContentForm';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
-	useAddPostCommentMutation,
-	usePostSubscribeMutation,
-
 	DiscussionPostAndCommentsQuery,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery,
-
 	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables
-} from '../../generated/graphql';
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	useAddPostCommentMutation,
+	usePostSubscribeMutation } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
+import ContentForm from '../ContentForm';
 
 interface Props {
 	className?: string
@@ -41,7 +38,7 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 	const [content, setContent] = useState('');
 	const { control, errors, handleSubmit } = useForm();
 
-	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
+	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
 	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 

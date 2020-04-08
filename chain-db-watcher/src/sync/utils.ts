@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+/* eslint-disable camelcase */
 import { OnchainMotionFragment } from 'src/generated/chain-db-graphql';
 import { OnchainMotionSyncType, OnchainReferendaValueSyncType, SyncData, SyncMap } from 'src/types';
 
@@ -94,8 +95,8 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 						return {
 							...prev,
 							[curr.referendumId]: {
-								preimageHash: curr.preimageHash,
-								blockCreationHash: curr?.referendumStatus?.[0]?.blockNumber?.hash
+								blockCreationHash: curr?.referendumStatus?.[0]?.blockNumber?.hash,
+								preimageHash: curr.preimageHash
 							} as OnchainReferendaValueSyncType
 						};
 					} else {
@@ -129,17 +130,17 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 					}, {});
 
 	return {
-		onchain: {
-			motions: onchainMotionMap,
-			proposals: onchainProposalMap,
-			referenda: onchainReferendaMap,
-			treasuryProposals: onchainTreasuryProposalMap
-		},
 		discussion: {
 			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
 			referenda: discussionReferendaMap,
 			treasuryProposals: discussionTreasuryProposalMap
+		},
+		onchain: {
+			motions: onchainMotionMap,
+			proposals: onchainProposalMap,
+			referenda: onchainReferendaMap,
+			treasuryProposals: onchainTreasuryProposalMap
 		}
 	};
 };

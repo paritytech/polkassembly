@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+/* eslint-disable camelcase */
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
@@ -251,8 +252,8 @@ export const addDiscussionPostAndProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_TITLE,
 		topicId: Number(democracyTopicId),
@@ -327,8 +328,8 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainTreasuryProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainTreasuryProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_TREASURY_TITLE,
 		topicId: Number(treasuryTopicId),
@@ -404,8 +405,8 @@ export const updateTreasuryProposalWithMotion = async ({
 
 		const discussionSdk = getDiscussionSdk(client);
 		const data = await discussionSdk.addMotionIdToTreasuryProposalMutation({
-			treasuryProposalId: onchainTreasuryProposalId,
-			motionId: onchainMotionProposalId
+			motionId: onchainMotionProposalId,
+			treasuryProposalId: onchainTreasuryProposalId
 		});
 
 		const affectedRows = data?.update_onchain_links?.affected_rows;
@@ -455,8 +456,8 @@ export const addDiscussionPostAndMotion = async ({
 
 	const motionAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainMotionProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainMotionProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_MOTION_TITLE,
 		topicId: Number(councilTopicId),

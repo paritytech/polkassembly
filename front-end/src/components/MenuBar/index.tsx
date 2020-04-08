@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Menu, Icon, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
+import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';

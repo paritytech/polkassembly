@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Form as SUIForm, FormProps as SUIFormProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import Input from './Input';
 import Field from './Field';
 import Group from './Group';
+import Input from './Input';
 
 type FormProps = SUIFormProps & {
     className? : string,
@@ -26,15 +26,15 @@ export function Form({ className, standalone=true, ...props } : FormProps): Reac
 const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
-		margin-top: 4rem;
+		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
+		border-color: grey_border;
+		border-radius: 3px;
 	}
 
 	h3 {
-		font-family: font_mono;
 		font-size: 2.4rem;
 		margin-bottom: 3rem;
 	}
@@ -146,5 +146,11 @@ const StyledForm = styled(SUIForm)`
 	.ui.selection.active.dropdown:hover,
 	.ui.selection.active.dropdown .menu {
 		border-color: grey_light;
+	}
+
+	.ui.horizontal.divider  {
+		color: black_text !important;
+		margin: 3rem 0;
+		font-weight: 400;
 	}
 `;

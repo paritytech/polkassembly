@@ -4,6 +4,7 @@
 
 import BN from 'bn.js';
 import { chainProperties } from 'src/global/networkConstants';
+
 import getNetwork from './getNetwork';
 
 const BITLENGTH = 128;
@@ -27,7 +28,7 @@ function isValidNumber (bn: BN, isZeroable?: boolean): boolean {
         // cannot be > than allowed max
         !bn.lt(getGlobalMaxValue()) ||
         // check if 0 and it should be a value
-        (!isZeroable && bn.eq(ZERO)) ||
+        !isZeroable && bn.eq(ZERO) ||
         // check that the bitlengths fit
         bn.bitLength() > BITLENGTH
 	) {

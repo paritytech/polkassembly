@@ -9,6 +9,7 @@ export const postReactionFields = gql`
         id
         reacting_user {
             id
+            username
         }
         reaction
         created_at
@@ -30,6 +31,7 @@ export const commentReactionFields = gql`
         id
         reacting_user {
             id
+            username
         }
         reaction
         created_at

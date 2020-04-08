@@ -2,15 +2,15 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
+import React, { useContext,useState } from 'react';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useChangePasswordMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
-import cleanError from '../../util/cleanError';
-import FilteredError from '../../ui-components/FilteredError';
 import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import cleanError from '../../util/cleanError';
 
 const Password = (): JSX.Element => {
 	const [currentPassword, setCurrentPassword] = useState<string | null | undefined>('');

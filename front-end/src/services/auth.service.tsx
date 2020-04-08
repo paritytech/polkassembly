@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { UserDetailsContextType } from '../types';
 import { LoginResponse } from '../generated/graphql';
+import { UserDetailsContextType } from '../types';
 
 /**
  * Store the JWT token in localstorage

@@ -2,18 +2,18 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import Loader from 'src/ui-components/Loader';
 
-import { Form } from '../../../../ui-components/Form';
-import Button from '../../../../ui-components/Button';
 import { ApiContext } from '../../../../context/ApiContext';
 import { NotificationContext } from '../../../../context/NotificationContext';
-import { NotificationStatus, LoadingStatusType } from '../../../../types';
-import Loader from 'src/ui-components/Loader';
+import { LoadingStatusType,NotificationStatus } from '../../../../types';
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
+import Button from '../../../../ui-components/Button';
+import { Form } from '../../../../ui-components/Form';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]

@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import * as React from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
