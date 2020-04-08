@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState } from 'react';
-import { Radio, CheckboxProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import React, { useState } from 'react';
+import { CheckboxProps,Radio } from 'semantic-ui-react';
 
 import { usePost_TopicsQuery } from '../../generated/graphql';
 import FilteredError from '../../ui-components/FilteredError';
@@ -86,6 +86,6 @@ export default styled(TopicsRadio)`
 
 	.ui.checked.radio.checkbox label {
 		background-color: grey_primary;
-		color: white;	
+		color: white;
 	}
 `;

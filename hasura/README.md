@@ -28,6 +28,9 @@ insert into post_topics values  (5, 'General');
 
 insert into post_types values (1, 'Discussion');
 insert into post_types values (2, 'On chain');
+
+insert into reactions values (1, '👍');
+insert into reactions values (2, '👎');
 ```
 
 ### Indexes
@@ -51,6 +54,8 @@ So add these entries in /etc/hosts
 127.0.0.1       auth-server-service
 127.0.0.1       nodewatcher.nodewatcher
 ```
+
+As Docker only supports host networking on Linux, Mac users need to replace the host names in the hasura migrations yaml files with `http://host.docker.internal`.
 
 ### Migration
 

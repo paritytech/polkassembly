@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 
 export const commentFields = gql`
     fragment commentFields on comments {
+        id
         author {
             id
             name
@@ -13,7 +14,6 @@ export const commentFields = gql`
         }
         content
         created_at
-        id
         updated_at
     }
 `;

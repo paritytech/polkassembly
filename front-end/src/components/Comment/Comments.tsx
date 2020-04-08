@@ -6,16 +6,20 @@ import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Comment from './Comment';
 import {
 	CommentFieldsFragment,
+	DiscussionPostAndCommentsQuery,
+	DiscussionPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryVariables,
 	ProposalPostAndCommentsQuery,
 	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
-	DiscussionPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQuery,
-	DiscussionPostAndCommentsQuery
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables
 } from '../../generated/graphql';
+import Comment from './Comment';
 
 interface Props{
 	className?: string
@@ -24,7 +28,11 @@ interface Props{
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
 		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>

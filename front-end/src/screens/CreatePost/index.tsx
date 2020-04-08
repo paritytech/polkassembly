@@ -2,22 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useContext } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { Grid } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import React, { useContext,useState } from 'react';
+import { Controller,useForm } from 'react-hook-form';
+import { Grid } from 'semantic-ui-react';
 
 import ContentForm from '../../components/ContentForm';
+import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import TopicsRadio from './TopicsRadio';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
-import TitleForm from '../../components/TitleForm';
+import TopicsRadio from './TopicsRadio';
 
 interface Props {
 	className?: string
@@ -82,7 +82,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	};
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
-	const onContentChange = (data: Array<string>) => {setContent(data[0]); return(data[0].length ? data[0] : null);};
+	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
 
 	return (
 		<Grid>

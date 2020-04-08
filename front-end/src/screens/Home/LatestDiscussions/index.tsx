@@ -4,8 +4,8 @@
 
 import React from 'react';
 
-import { useLatestDiscussionPostsQuery } from '../../../generated/graphql';
 import DiscussionsListing from '../../../components/Listings/DiscussionsListing';
+import { useLatestDiscussionPostsQuery } from '../../../generated/graphql';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
 

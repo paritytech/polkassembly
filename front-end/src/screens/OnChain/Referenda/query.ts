@@ -53,7 +53,11 @@ export const QUERY_LATEST_REFERENDA = gql`
                     id
                     status
                 }
+                preimage {
+                    method
+                }
             }
+            proposer_address
         }
     }
 }`;

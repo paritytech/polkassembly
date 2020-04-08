@@ -3,9 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Keyring } from '@polkadot/api';
-
-import getNetwork from './getNetwork';
-import { chainProperties } from '../global/networkConstants';
+import { chainProperties } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
 /**
  * Return an address encoded for the current network

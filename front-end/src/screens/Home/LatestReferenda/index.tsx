@@ -4,8 +4,8 @@
 
 import React from 'react';
 
-import { useLatestReferendaPostsQuery } from '../../../generated/graphql';
 import ReferendaListing from '../../../components/Listings/ReferendaListing';
+import { useLatestReferendaPostsQuery } from '../../../generated/graphql';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';

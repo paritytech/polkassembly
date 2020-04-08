@@ -1,0 +1,13 @@
+- args:
+    hasura_fields:
+    - user_id
+    name: reacting_user
+    remote_field:
+      user:
+        arguments:
+          id: $user_id
+    remote_schema: auth
+    table:
+      name: post_reactions
+      schema: public
+  type: create_remote_relationship

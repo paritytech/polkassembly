@@ -102,3 +102,7 @@ export interface NotificationPreferencesType {
     newProposal: boolean,
     ownProposal: boolean
 }
+
+export interface AddressLoginStartType extends MessageType {
+    signMessage: string
+}

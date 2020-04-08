@@ -4,11 +4,11 @@
 
 import React from 'react';
 
-import { useLatestMotionPostsQuery } from '../../../generated/graphql';
 import MotionsListing from '../../../components/Listings/MotionsListing';
+import { useLatestMotionPostsQuery } from '../../../generated/graphql';
+import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
-import { post_type } from '../../../global/post_types';
 
 interface Props {
 	className?: string

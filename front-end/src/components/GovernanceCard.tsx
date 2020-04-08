@@ -2,34 +2,35 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as React from 'react';
-import { Icon, Segment } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
-import CreationLabel from '../ui-components/CreationLabel';
+import * as React from 'react';
+import { Icon, Responsive, Segment } from 'semantic-ui-react';
+
+import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
 
-interface DiscussionProps {
-    className?: string
-    comments?: string
-    created_at: Date
-    displayname?: string | null
-    onchainId?: number | null
-    status?: string | null
+interface GovernanceProps {
+	address?: string
+	className?: string
+	comments?: string
+	created_at?: Date
+	method?: string
+	onchainId?: number | null
+	status?: string | null
 	title: string
 	topic: string
-    username: string
 }
 
-const Discussion = function ({
+const GovernanceAction = function ({
+	address,
 	className,
 	comments,
-	created_at,
-	displayname,
+	method,
 	onchainId,
 	status,
 	title,
-	username
-}:DiscussionProps) {
+	topic
+}:GovernanceProps) {
 
 	return (
 		<div className={className}>
@@ -38,38 +39,50 @@ const Discussion = function ({
 					<h5>#{onchainId}</h5>
 				</Segment>
 				<Segment>
-					<h4 className={'proposalTitle'}>{title}</h4>
-					<CreationLabel
-						created_at={created_at}
-						displayname={displayname}
-						username={username}
-					/>
+					<Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+						<div className='title-wrapper'>
+							<h4>{method ? method : title}</h4>
+							{title && method && <h5>{title}</h5>}
+						</div>
+						<OnchainCreationLabel
+							address={address}
+							topic={topic}
+						/>
+						{status && <StatusTag className='statusTag' status={status}/>}
+					</Responsive>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						<div className='title-wrapper'>
+							<h4>{method ? method : title}</h4>
+							<OnchainCreationLabel
+								address={address}
+								topic={topic}
+							/>
+						</div>
+						{status && <StatusTag className='statusTag' status={status}/>}
+						{title && method && <h5>{title}</h5>}
+					</Responsive>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
 					</ul>
 				</Segment>
-				{status &&
-					<Segment className='statusSegment'>
-						<StatusTag className='statusTag' status={status}/>
-					</Segment>
-				}
 			</Segment.Group>
 		</div>
 	);
 };
 
-export default styled(Discussion)`
+export default styled(GovernanceAction)`
 	padding: 2rem 3rem 1.5rem 3rem;
-    background-color: white;
+	background-color: white;
 	border-style: solid;
-    border-width: 1px;
-	border-color: grey_light;
+	border-width: 1px;
+	border-color: grey_border;
+	border-radius: 3px;
 	
 	&:hover {
 		background-color: white_transparent;
-        border-style: solid;
-        border-width: 1px;
-        text-decoration: none;
+		border-style: solid;
+		border-width: 1px;
+		text-decoration: none;
 	}
 	overflow-wrap: break-word;
 
@@ -91,25 +104,30 @@ export default styled(Discussion)`
 		max-width: 6rem;
 	}
 
-	.statusSegment {
-		min-width: 10rem!important;
-		max-width: 11rem;
-	}
-
-    .statusTag{
+	.statusTag{
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
 	
-    h4, h5 {
-        font-family: font_default;
-        display: block;
-		margin-bottom: 0.3rem; 
+	.title-wrapper {
+		max-width: calc(100% - 10rem);
+
+		@media only screen and (max-width: 576px) {
+			max-width: calc(100% - 9rem);
+		}
+	}
+
+	h4, h5 {
+		font-family: font_default;
+		display: block;
+		margin-bottom: 0.6rem; 
 	}
 
 	h4 {
 		font-size: lg;
+		display: inline-flex;
+		margin-right: 0.6rem;
 	}
 
 	h5 {
@@ -117,23 +135,30 @@ export default styled(Discussion)`
 		line-height: 1.4;
 	}
 
-	.creationlabel {
-		display: block;
+	.originLabel {
+		display: inline-flex;
+		font-size: sm;
+		color: black_text;
 	}
-    ul {
-        color: grey_secondary;
-        font-size: xs;
-        font-weight: 500;
-        margin-top: 0.8rem;
-        li {
-            display: inline;
-            margin-right: 1.5rem;
-        }
+
+	.address, .topic {
+		margin-left: 0.6rem;
+	}
+
+	ul {
+		color: grey_secondary;
+		font-size: xs;
+		font-weight: 500;
+		margin-top: 0.8rem;
+		li {
+			display: inline;
+			margin-right: 1.5rem;
+		}
 	}
 	
-    @media only screen and (max-width: 576px) {
-        & {
-            padding: 1.2rem 1.5rem;       
+	@media only screen and (max-width: 576px) {
+		& {
+			padding: 1.2rem 1.5rem;       
 		}
 		
 		h4 {
@@ -149,5 +174,5 @@ export default styled(Discussion)`
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
 		}
-    }
+	}
 `;

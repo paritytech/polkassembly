@@ -2,21 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useEffect, useState } from 'react';
 import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
 import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect, useState } from 'react';
 
-import shortenAddress from '../util/shortenAddress';
 import { ApiContext } from '../context/ApiContext';
+import shortenAddress from '../util/shortenAddress';
 
 interface Props {
 	className?: string
 	address: string
 	accountName?: string
+	displayInline?: boolean
 }
 
-const Address = ({ address, accountName, className }: Props): JSX.Element => {
+const Address = ({ address, accountName, className, displayInline }: Props): JSX.Element => {
 	const { api } = useContext(ApiContext);
 	const [display, setDisplay] = useState<string>('');
 
@@ -37,16 +38,25 @@ const Address = ({ address, accountName, className }: Props): JSX.Element => {
 	}, [address, api]);
 
 	return (
-		<div className={className}>
+		<div className={displayInline ? `${className} inline`: className}>
 			<Identicon
-				className='image'
+				className='image identicon'
 				value={address}
-				size={32}
+				size={displayInline ? 16 : 32}
 				theme={'polkadot'}
 			/>
 			<div className='content'>
-				<div className='header'>{display || accountName || ''}</div>
-				<div className='description'>{shortenAddress(address)}</div>
+				{displayInline
+					? display || accountName
+						? <div className={'header inline'}>{display || accountName}</div>
+						: <div className={'description inline'}>{shortenAddress(address)}</div>
+
+					:
+					<>
+						<div className={'header'}>{display || accountName}</div>
+						<div className={'description'}>{shortenAddress(address)}</div>
+					</>
+				}
 			</div>
 		</div>
 	);
@@ -58,9 +68,12 @@ export default styled(Address)`
 	align-items: center;
 
 	.content {
-		padding-left: 1rem;
 		display: inline-block;
 		line-height: 1.6rem;
+	}
+
+	.identicon {
+		margin-right: 0.8rem;
 	}
 
 	.header {
@@ -68,10 +81,17 @@ export default styled(Address)`
 		font-weight: 500;
 		font-size: sm;
 		filter: grayscale(100%);
+		margin-right: 0.4rem;
 	}
 
 	.description {
 		color: grey_primary;
 		font-size: xs;
+		margin-right: 0.4rem;
+	}
+
+	.inline {
+		display: inline-flex !important;
+		font-size: sm !important;
 	}
 `;

@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Button as SUIButton, ButtonProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
 const Button = (props : ButtonProps) => {
 	return <SUIButton {...props} />;
@@ -84,7 +84,7 @@ export default styled(Button)`
 				color: white;
 				box-shadow: box_shadow_secondary_red;
 				outline: none;
-			}	
+			}
 		}
 		&.ui.social.button {
 			background-color: white;
@@ -92,6 +92,7 @@ export default styled(Button)`
 			font-size: sm;
 			border: none;
 			padding: 0.7rem 0.7rem;
+			margin: 0 0.4rem 0 0;
 			text-transform: none;
 			letter-spacing: 0rem;
 			border-radius: 0.2rem;

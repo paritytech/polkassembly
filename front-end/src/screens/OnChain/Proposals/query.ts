@@ -61,7 +61,11 @@ export const QUERY_LATEST_PROPOSALS = gql`
                     id
                     status
                 }
+                preimage {
+                    method
+                }
             }
+            proposer_address
         }
     }
 }`;

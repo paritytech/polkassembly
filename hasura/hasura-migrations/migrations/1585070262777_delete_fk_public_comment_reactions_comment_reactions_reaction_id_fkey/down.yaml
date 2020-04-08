@@ -1,0 +1,4 @@
+- args:
+    sql: alter table "public"."comment_reactions" add foreign key ("reaction_id")
+      references "public"."reactions"("id") on update cascade on delete cascade;
+  type: run_sql

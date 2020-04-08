@@ -80,6 +80,11 @@ spec:
             configMapKeyRef:
               key: DOMAIN_PROTOCOL
               name: auth-server-config
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_URL
+              name: auth-server-config
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.14
         command: ["/cloud_sql_proxy",

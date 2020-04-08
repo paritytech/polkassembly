@@ -1,0 +1,7 @@
+- args:
+    name: post_reactions
+    new_name: reactions
+    table:
+      name: posts
+      schema: public
+  type: rename_relationship

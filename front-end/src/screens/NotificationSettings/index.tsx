@@ -2,17 +2,17 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState, useEffect } from 'react';
-import { Grid, Checkbox, CheckboxProps } from 'semantic-ui-react';
 import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect,useState } from 'react';
+import { Checkbox, CheckboxProps,Grid } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useChangeNotificationPreferenceMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
-import FilteredError from '../../ui-components/FilteredError';
 import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 
 interface Props {
@@ -124,7 +124,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 							<Checkbox label='Notified for your own proposals' checked={ownProposal} toggle onChange={handleOwnProposalChange} />
 						</Form.Field>
 					</Form.Group>
-					{changed ? (
+					{changed ?
 						<Form.Group>
 							<Form.Field width={6}>
 								{error && <FilteredError text={error.message}/>}
@@ -137,7 +137,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 								</Button>
 							</Form.Field>
 						</Form.Group>
-					): null}
+						: null}
 				</Form>
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>

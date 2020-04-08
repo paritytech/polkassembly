@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+/* eslint-disable camelcase */
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
@@ -251,8 +252,8 @@ export const addDiscussionPostAndProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_TITLE,
 		topicId: Number(democracyTopicId),
@@ -284,7 +285,7 @@ export const addDiscussionPostAndProposal = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Proposal ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Proposal ${onchainProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndProposal execution error, proposal id ${onchainProposalId}\n`), err);
@@ -327,8 +328,8 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainTreasuryProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainTreasuryProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_TREASURY_TITLE,
 		topicId: Number(treasuryTopicId),
@@ -360,7 +361,7 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Treasury proposal ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Treasury proposal ${onchainTreasuryProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndTreasuryProposal execution error, treasury proposal id ${onchainTreasuryProposalId}\n`), err);
@@ -404,8 +405,8 @@ export const updateTreasuryProposalWithMotion = async ({
 
 		const discussionSdk = getDiscussionSdk(client);
 		const data = await discussionSdk.addMotionIdToTreasuryProposalMutation({
-			treasuryProposalId: onchainTreasuryProposalId,
-			motionId: onchainMotionProposalId
+			motionId: onchainMotionProposalId,
+			treasuryProposalId: onchainTreasuryProposalId
 		});
 
 		const affectedRows = data?.update_onchain_links?.affected_rows;
@@ -455,8 +456,8 @@ export const addDiscussionPostAndMotion = async ({
 
 	const motionAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		onchainMotionProposalId,
 		content: DEFAULT_DESCRIPTION,
+		onchainMotionProposalId,
 		proposerAddress: proposer,
 		title: DEFAULT_MOTION_TITLE,
 		topicId: Number(councilTopicId),
@@ -488,7 +489,7 @@ export const addDiscussionPostAndMotion = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Motion ${addedId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Motion ${onchainMotionProposalId} added to the database.`);
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndMotion execution error, motion id ${onchainMotionProposalId}\n`), err);
