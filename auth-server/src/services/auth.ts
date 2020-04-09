@@ -670,7 +670,6 @@ export default class AuthService {
 			.join(',');
 
 		const tokenContent: JWTPayploadType = {
-
 			email,
 			email_verified: email_verified || false,
 			'https://hasura.io/jwt/claims': {
