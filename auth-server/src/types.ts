@@ -3,6 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Request, Response } from 'express';
+import { Config as KnexConfig } from 'knex'
+
+export interface Config {
+    [index: string]: KnexConfig
+}
 
 interface FileType {
     path: string;
