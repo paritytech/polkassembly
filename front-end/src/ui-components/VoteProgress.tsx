@@ -43,8 +43,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 		<div className={className}>
 			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
 			<div
-				className='voteNumbers'
-				style={{ position: 'absolute', right: 0 }}
+				className='voteNumbers nay'
 			>
 				Nay: {bnToStringBalanceDelimitor(nayVotes)} {tokenSymbol}
 			</div>
@@ -64,6 +63,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 };
 
 export default styled(VoteProgress)`
+	position: relative;
 	width: 100%;
 	margin: 1rem 0 2.4rem 0;
 
@@ -78,14 +78,19 @@ export default styled(VoteProgress)`
 	.voteNumbers {
 		display: inline-block;
 		color: grey_primary;
-		font-size: s;
+		font-size: sm;
 		margin-bottom: -1rem;
+	}
+
+	.nay {
+		position: absolute;
+		left: calc(66% + 10px);
 	}
 
 	#passingThreshold {
 		display: inline-block;
 		color: grey_primary;
-		font-size: s;
+		font-size: sm;
 		margin-top: -1rem;
 	}
 
