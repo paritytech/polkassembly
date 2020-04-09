@@ -10,6 +10,8 @@ import { chainProperties } from 'src/global/networkConstants';
 import formatBnBalance from 'src/util/formatBnBalance';
 import getNetwork from 'src/util/getNetwork';
 
+import Card from '../../../../ui-components/Card';
+
 interface Props {
 	className?: string
 	proposalId: number
@@ -50,25 +52,33 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	}, [api, apiReady, proposalId]);
 
 	return (
-		<Grid className={className} columns={3} divided>
-			<Grid.Row>
-				<Grid.Column>
-					<h6>Deposit</h6>
-					<div>{deposit}</div>
-				</Grid.Column>
-				<Grid.Column>
-					<h6>Seconded by</h6>
-					{seconds ? <div>{seconds} addresses</div> : null}
-				</Grid.Column>
-				<Grid.Column>
-					<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-					<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
-				</Grid.Column>
-			</Grid.Row>
-		</Grid>
+		<Card className={className}>
+			<Grid columns={3} divided>
+				<h3>Deposits</h3>
+				<Grid.Row>
+					<Grid.Column>
+						<h6>Deposit</h6>
+						<div>{deposit}</div>
+					</Grid.Column>
+					<Grid.Column>
+						<h6>Seconded by</h6>
+						{seconds ? <div>{seconds} addresses</div> : null}
+					</Grid.Column>
+					<Grid.Column>
+						<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
+						<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+		</Card>
 	);
 };
 
 export default styled(ProposalVoteInfo)`
 	margin-bottom: 1rem;
+
+	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),
+	.ui.divided.grid:not([class*="vertically divided"])>.row>.column {
+		box-shadow: none;
+	}
 `;

@@ -13,6 +13,7 @@ import { LoadingStatusType,NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
 import AyeNayButtons from 'src/ui-components/AyeNayButtons';
 import Button from 'src/ui-components/Button';
+import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import Loader from 'src/ui-components/Loader';
 
@@ -124,7 +125,7 @@ const VoteMotion = ({
 					? <div className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
 					</div>
-					: <>
+					: <Card>
 						<AccountSelectionForm
 							title='Second with account'
 							accounts={accounts}
@@ -136,7 +137,7 @@ const VoteMotion = ({
 							onClickAye={() => voteMotion(true)}
 							onClickNay={() => voteMotion(false)}
 						/>
-					</>
+					</Card>
 			}
 		</>;
 

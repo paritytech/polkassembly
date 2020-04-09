@@ -13,6 +13,7 @@ import { NotificationContext } from '../../../../context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from '../../../../types';
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
 import Button from '../../../../ui-components/Button';
+import Card from '../../../../ui-components/Card';
 import { Form } from '../../../../ui-components/Form';
 
 interface Props {
@@ -91,7 +92,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 					? <div className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
 					</div>
-					: <>
+					: <Card>
 						<AccountSelectionForm
 							title='Second with account'
 							accounts={accounts}
@@ -105,7 +106,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 						>
 								Second
 						</Button>
-					</>
+					</Card>
 			}
 		</div>
 	);

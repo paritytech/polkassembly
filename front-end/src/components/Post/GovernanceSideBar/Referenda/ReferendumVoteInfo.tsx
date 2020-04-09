@@ -8,6 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { VoteThreshold } from 'src/types';
+import Card from 'src/ui-components/Card';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 import { getPassingThreshold } from 'src/util/getPassingThreshold';
@@ -88,30 +89,43 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
-		<Grid className={className} columns={3} divided>
+		<Card className={className}>
+			<h3>Votes</h3>
 			<VoteProgress
 				ayeVotes={ayeVotes}
+				className='vote-progress'
 				passingThreshold={passingThreshold}
 				nayVotes={nayVotes}
 			/>
-			<Grid.Row>
-				<Grid.Column>
-					<h6>Turnout</h6>
-					<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
-				</Grid.Column>
-				<Grid.Column width={5}>
-					<h6>Aye</h6>
-					<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
-				</Grid.Column>
-				<Grid.Column width={5}>
-					<h6>Nay</h6>
-					<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
-				</Grid.Column>
-			</Grid.Row>
-		</Grid>
+			<Grid columns={3} divided>
+				<Grid.Row>
+					<Grid.Column>
+						<h6>Turnout</h6>
+						<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
+					</Grid.Column>
+					<Grid.Column width={5}>
+						<h6>Aye</h6>
+						<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
+					</Grid.Column>
+					<Grid.Column width={5}>
+						<h6>Nay</h6>
+						<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+		</Card>
 	);
 };
 
 export default styled(ReferendumVoteInfo)`
 	margin-bottom: 1rem;
+
+	.vote-progress {
+		margin-bottom: 4rem;
+	}
+
+	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),
+	.ui.divided.grid:not([class*="vertically divided"])>.row>.column {
+		box-shadow: none;
+	}
 `;

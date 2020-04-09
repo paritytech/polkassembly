@@ -12,6 +12,7 @@ import { NotificationContext } from 'src/context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from 'src/types';
 import BalanceInput from 'src/ui-components/BalanceInput';
 import Button from 'src/ui-components/Button';
+import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import Loader from 'src/ui-components/Loader';
@@ -126,7 +127,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 					? <div className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
 					</div>
-					: <>
+					: <Card>
 						<AccountSelectionForm
 							title='Vote with account'
 							accounts={accounts}
@@ -145,7 +146,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 							onClickAye={() => voteRefrendum(true)}
 							onClickNay={() => voteRefrendum(false)}
 						/>
-					</>
+					</Card>
 			}
 		</div>
 	);
