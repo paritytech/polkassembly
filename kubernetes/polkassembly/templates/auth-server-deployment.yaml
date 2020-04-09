@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "polkassembly.authServer.fullname" . }}
+  name: {{ .Values.authServer.name }}
   labels:
     {{- include "polkassembly.authServer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.authServer.replicaCount }}
   selector:
     matchLabels:
-      {{- include "polkassembly.authServer.matchLabels" . | nindent 6 }}
+      {{- include "polkassembly.authServer.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:

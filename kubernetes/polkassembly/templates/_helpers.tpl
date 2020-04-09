@@ -12,6 +12,7 @@ Create unified labels for polkassembly components
 {{- define "polkassembly.common.matchLabels" -}}
 app: {{ template "polkassembly.name" . }}
 release: {{ .Release.Name }}
+chain: {{ .Values.chainName }}
 {{- end -}}
 
 {{- define "polkassembly.common.metaLabels" -}}
@@ -25,8 +26,12 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 {{- define "polkassembly.frontend.matchLabels" -}}
-component: {{ .Values.frontend.name | quote }}
 {{ include "polkassembly.common.matchLabels" . }}
+{{ include "polkassembly.frontend.selectorLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.frontend.selectorLabels" -}}
+component: {{ .Values.frontend.name }}
 {{- end -}}
 
 {{- define "polkassembly.authServer.labels" -}}
@@ -35,8 +40,13 @@ component: {{ .Values.frontend.name | quote }}
 {{- end -}}
 
 {{- define "polkassembly.authServer.matchLabels" -}}
-component: {{ .Values.authServer.name | quote }}
+component: {{ .Values.authServer.name }}
 {{ include "polkassembly.common.matchLabels" . }}
+{{ include "polkassembly.authServer.selectorLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.authServer.selectorLabels" -}}
+component: {{ .Values.authServer.name }}
 {{- end -}}
 
 {{- define "polkassembly.hasura.labels" -}}
@@ -45,8 +55,12 @@ component: {{ .Values.authServer.name | quote }}
 {{- end -}}
 
 {{- define "polkassembly.hasura.matchLabels" -}}
-component: {{ .Values.hasura.name | quote }}
+{{ include "polkassembly.hasura.selectorLabels" . }}
 {{ include "polkassembly.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.hasura.selectorLabels" -}}
+component: {{ .Values.hasura.name }}
 {{- end -}}
 
 {{- define "polkassembly.chainDbWatcher.labels" -}}
@@ -55,7 +69,12 @@ component: {{ .Values.hasura.name | quote }}
 {{- end -}}
 
 {{- define "polkassembly.chainDbWatcher.matchLabels" -}}
-component: {{ .Values.chainDbWatcher.name | quote }}
+{{ include "polkassembly.chainDbWatcher.selectorLabels" . }}
+{{ include "polkassembly.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.chainDbWatcher.selectorLabels" -}}
+component: {{ .Values.chainDbWatcher.name }}
 {{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 

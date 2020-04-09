@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "polkassembly.frontend.fullname" . }}
+  name: {{ .Values.frontend.name }}
   labels:
     {{- include "polkassembly.frontend.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:
     matchLabels:
-      {{- include "polkassembly.frontend.matchLabels" . | nindent 6 }}
+      {{- include "polkassembly.frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:

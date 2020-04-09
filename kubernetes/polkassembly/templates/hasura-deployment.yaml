@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "polkassembly.hasura.fullname" . }}
+  name: {{ .Values.hasura.name }}
   labels:
     {{- include "polkassembly.hasura.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.hasura.replicaCount }}
   selector:
     matchLabels:
-      {{- include "polkassembly.hasura.matchLabels" . | nindent 6 }}
+      {{- include "polkassembly.hasura.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:

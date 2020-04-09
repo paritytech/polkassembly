@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "polkassembly.chainDbWatcher.fullname" . }}
+  name: {{ .Values.chainDbWatcher.name }}
   labels:
     {{- include "polkassembly.chainDbWatcher.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.chainDbWatcher.replicaCount }}
   selector:
     matchLabels:
-      {{- include "polkassembly.chainDbWatcher.matchLabels" . | nindent 6 }}
+      {{- include "polkassembly.chainDbWatcher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
