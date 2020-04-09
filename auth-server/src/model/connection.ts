@@ -2,8 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-const Knex = require('knex');
-const connection = require('../../knexfile');
+import Knex from 'knex';
+
+import connection from '../../knexfile';
 
 export default Knex(connection);
 
