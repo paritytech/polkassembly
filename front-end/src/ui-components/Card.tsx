@@ -27,4 +27,15 @@ export default styled(Card)`
 	@media only screen and (max-width: 768px) {
 		padding: 2rem;
 	}
+
+	font-size: sm;
+
+	h5, h6 {
+		font-size: 1.4rem;
+	}
+
+	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),
+	.ui.divided.grid:not([class*="vertically divided"])>.row>.column {
+		box-shadow: none;
+	}
 `;

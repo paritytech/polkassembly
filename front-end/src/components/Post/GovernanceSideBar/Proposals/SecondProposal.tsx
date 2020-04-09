@@ -97,6 +97,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 							title='Second with account'
 							accounts={accounts}
 							address={address}
+							balance={api && true}
 							onAccountChange={onAccountChange}
 						/>
 						<Button

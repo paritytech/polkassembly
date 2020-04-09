@@ -53,8 +53,8 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 	return (
 		<Card className={className}>
+			<h3>Deposits</h3>
 			<Grid columns={3} divided>
-				<h3>Deposits</h3>
 				<Grid.Row>
 					<Grid.Column>
 						<h6>Deposit</h6>
@@ -76,9 +76,4 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 export default styled(ProposalVoteInfo)`
 	margin-bottom: 1rem;
-
-	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),
-	.ui.divided.grid:not([class*="vertically divided"])>.row>.column {
-		box-shadow: none;
-	}
 `;

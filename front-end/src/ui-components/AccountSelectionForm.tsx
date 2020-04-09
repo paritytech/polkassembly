@@ -8,18 +8,20 @@ import React from 'react';
 import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import { Form } from 'src/ui-components/Form';
 
+import Balance from '../components/Balance';
 import AddressDropdown from './AddressDropdown';
 import HelperTooltip from './HelperTooltip';
 
 interface Props{
 	title: string
     accounts: InjectedAccountWithMeta[]
-    address: string
+	address: string
+	balance?: boolean
     className?: string;
     onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const AccountSelectionForm = ({ title, accounts, address, className, onAccountChange }: Props) =>
+const AccountSelectionForm = ({ title, accounts, address, balance, className, onAccountChange }: Props) =>
 	<Form.Field className={className} width={16}>
 		<label>{title}
 			<HelperTooltip
@@ -31,6 +33,9 @@ const AccountSelectionForm = ({ title, accounts, address, className, onAccountCh
 			defaultAddress={address || accounts[0]?.address}
 			onAccountChange={onAccountChange}
 		/>
+		{balance &&
+			<Balance address={address} />
+		}
 	</Form.Field>;
 
 export default styled(AccountSelectionForm)`

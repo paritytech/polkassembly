@@ -19,7 +19,6 @@ import Loader from 'src/ui-components/Loader';
 
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
 import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
-import Balance from '../../../Balance';
 
 interface Props {
 	className?: string
@@ -132,9 +131,9 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 							title='Vote with account'
 							accounts={accounts}
 							address={address}
+							balance={api && true}
 							onAccountChange={onAccountChange}
 						/>
-						{api && <Balance address={address} />}
 						<BalanceInput
 							label={'Lock balance'}
 							helpText={'Amount of you are willing to lock for this vote.'}
