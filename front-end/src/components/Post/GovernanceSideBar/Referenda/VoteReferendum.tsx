@@ -97,6 +97,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			<Button
 				primary
 				onClick={getAccounts}
+				size={'large'}
 			>
 				Vote
 			</Button>

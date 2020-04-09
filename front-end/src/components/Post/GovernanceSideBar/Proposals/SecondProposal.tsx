@@ -77,6 +77,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			<Button
 				primary
 				onClick={getAccounts}
+				size={'large'}
 			>
 				Second
 			</Button>
