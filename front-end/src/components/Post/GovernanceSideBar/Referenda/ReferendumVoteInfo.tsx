@@ -123,9 +123,4 @@ export default styled(ReferendumVoteInfo)`
 	.vote-progress {
 		margin-bottom: 4rem;
 	}
-
-	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),
-	.ui.divided.grid:not([class*="vertically divided"])>.row>.column {
-		box-shadow: none;
-	}
 `;
