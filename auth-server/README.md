@@ -216,3 +216,11 @@ On success, we get the response
     }
   }
 }
+
+## HealthCheck Url
+
+healthcheck url for auth service is:
+
+```
+/healthcheck
+```
