@@ -11,16 +11,17 @@ import messages from '../../utils/messages';
 interface argsType {
 	newPassword: string,
 	token: string
+	userId: number
 }
 
-export default async (parent, { token, newPassword }: argsType): Promise<MessageType> => {
+export default async (parent, { token, userId, newPassword }: argsType): Promise<MessageType> => {
 
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 
 	const authServiceInstance = new AuthService();
-	await authServiceInstance.ResetPassword(token, newPassword);
+	await authServiceInstance.ResetPassword(token, userId, newPassword);
 
 	return { message: messages.PASSWORD_RESET_SUCCESSFUL };
 };

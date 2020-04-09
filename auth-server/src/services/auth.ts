@@ -4,7 +4,7 @@
 
 import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 import * as argon2 from 'argon2';
-import { randomBytes } from 'crypto';
+import { randomBytes, timingSafeEqual } from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 import { uuid } from 'uuidv4';
@@ -46,7 +46,7 @@ const NOTIFICATION_DEFAULTS = {
 	own_proposal: true
 };
 
-const getPwdResetTokenKey = (token) => `PRT-${token}`;
+const getPwdResetTokenKey = (userId) => `PRT-${userId}`;
 
 export default class AuthService {
 	constructor(){}
@@ -560,15 +560,21 @@ export default class AuthService {
 
 		const resetToken = uuid();
 
-		await redisSetex(getPwdResetTokenKey(resetToken), ONE_DAY, `${user.id}`);
+		await redisSetex(getPwdResetTokenKey(user.id), ONE_DAY, resetToken);
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
-	public async ResetPassword(token: string, newPassword: string) {
-		const userId = await redisGet(getPwdResetTokenKey(token));
+	public async ResetPassword(token: string, userId: number, newPassword: string) {
+		const storedToken = await redisGet(getPwdResetTokenKey(userId));
 
-		if (!userId) {
+		if (!storedToken) {
+			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
+		}
+
+		const isValid = timingSafeEqual(Buffer.from(token), Buffer.from(storedToken));
+
+		if (!isValid) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
@@ -583,7 +589,7 @@ export default class AuthService {
 			})
 			.findById(Number(userId));
 
-		await redisDel(getPwdResetTokenKey(token));
+		await redisDel(getPwdResetTokenKey(userId));
 	}
 
 	public async UndoEmailChange(token: string) {
