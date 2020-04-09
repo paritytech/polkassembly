@@ -46,7 +46,7 @@ const NOTIFICATION_DEFAULTS = {
 	own_proposal: true
 };
 
-const getPwdResetTokenKey = (userId) => `PRT-${userId}`;
+export const getPwdResetTokenKey = (userId) => `PRT-${userId}`;
 
 export default class AuthService {
 	constructor(){}
