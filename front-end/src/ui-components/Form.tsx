@@ -140,6 +140,10 @@ const StyledForm = styled(SUIForm)`
 			font-weight: 500;
 		}
 
+		.menu>.item {
+			padding: 1rem !important;
+		}
+
 		.menu>.item:hover {
 			background-color: grey_light;
 		}
