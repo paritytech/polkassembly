@@ -6,13 +6,13 @@ import React, { useContext,useState } from 'react';
 import { Grid,Header, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { NotificationContext } from '../../../context/NotificationContext';
-import { useResetPasswordMutation } from '../../../generated/graphql';
-import { useRouter } from '../../../hooks';
-import { NotificationStatus } from '../../../types';
-import Button from '../../../ui-components/Button';
-import FilteredError from '../../../ui-components/FilteredError';
-import { Form } from '../../../ui-components/Form';
+import { NotificationContext } from '../../context/NotificationContext';
+import { useResetPasswordMutation } from '../../generated/graphql';
+import { useRouter } from '../../hooks';
+import { NotificationStatus } from '../../types';
+import Button from '../../ui-components/Button';
+import FilteredError from '../../ui-components/FilteredError';
+import { Form } from '../../ui-components/Form';
 
 interface Props {
 	className?: string
@@ -21,12 +21,14 @@ interface Props {
 const ResetPassword = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
 	const { token } = router.query;
+	const userId = Number((new URLSearchParams(window.location.search)).get("user_id"));
 	const [newPassword, setNewPassword ] = useState('');
 	const { queueNotification } = useContext(NotificationContext);
 	const [resetPassword, { loading, error }] = useResetPasswordMutation({
 		variables: {
 			newPassword,
-			token
+			token,
+			userId
 		}
 	});
 
@@ -40,7 +42,8 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 			resetPassword({
 				variables: {
 					newPassword,
-					token
+					token,
+					userId
 				}
 			}).then(({ data }) => {
 				if (data && data.resetPassword && data.resetPassword.message) {
