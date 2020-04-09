@@ -74,8 +74,7 @@
     "./src/**/*", "knexfile.ts"
   ],
   "exclude": [
-    "node_modules",
-    "test"
+    "node_modules"
   ]
 }
 
