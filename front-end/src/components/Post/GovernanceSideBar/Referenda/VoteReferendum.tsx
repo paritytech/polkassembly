@@ -114,6 +114,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			<Select
 				onChange={onConvictionChange}
 				options={convictionOpts}
+				pointing={'top'}
 				value={conviction}
 			/>
 		</Form.Field>;
@@ -137,6 +138,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						<BalanceInput
 							label={'Lock balance'}
 							helpText={'Amount of you are willing to lock for this vote.'}
+							placeholder={'Lock balance'}
 							onChange={onBalanceChange}
 						/>
 						<VoteLock/>

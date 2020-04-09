@@ -119,6 +119,9 @@ const StyledForm = styled(SUIForm)`
 		label {
 			font-size: sm;
 			font-weight: 400;
+			border-style: solid;
+			border-width: 1px;
+			border-color: grey_light;
 			color: black_text !important;
 		}
 
@@ -129,6 +132,7 @@ const StyledForm = styled(SUIForm)`
 
 	.ui.dropdown,
 	.ui.selection.dropdown {
+		font-size: input_text_size;
 		margin-bottom: 1.2rem;
 		border-radius: 0rem;
 
