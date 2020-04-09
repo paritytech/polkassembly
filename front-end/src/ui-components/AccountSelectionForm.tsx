@@ -14,11 +14,11 @@ import HelperTooltip from './HelperTooltip';
 
 interface Props{
 	title: string
-    accounts: InjectedAccountWithMeta[]
+	accounts: InjectedAccountWithMeta[]
 	address: string
 	balance?: boolean
-    className?: string;
-    onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	className?: string;
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
 const AccountSelectionForm = ({ title, accounts, address, balance, className, onAccountChange }: Props) =>
