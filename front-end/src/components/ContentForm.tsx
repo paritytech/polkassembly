@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
-import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
 import { MarkdownEditor } from '../ui-components/MarkdownEditor';
@@ -53,9 +53,9 @@ export default styled(ContentForm)`
 		font-size: 1.4rem;
 	}
 
-	.react-mde.error > textarea {
-		border-style: solid;
-		border-width: 1px;
+	.react-mde.error > .mde-textarea-wrapper > textarea {
+		border-style: solid !important;
+		border-width: 1px !important;
 		border-color: red_secondary !important;
 	}
 
