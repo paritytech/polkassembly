@@ -29,33 +29,33 @@ import user from './query/user';
 import users from './query/users';
 
 export default {
-	Query: {
-		subscription,
-		token,
-		user,
-		users
-	},
 	Mutation: {
 		addressLinkConfirm,
 		addressLinkStart,
 		addressLogin,
 		addressLoginStart,
 		addressUnlink,
-		login,
-		logout,
-		signup,
-		changeUsername,
 		changeEmail,
+		changeName,
 		changeNotificationPreference,
 		changePassword,
-		changeName,
+		changeUsername,
+		login,
+		logout,
 		postSubscribe,
 		postUnsubscribe,
 		reportContent,
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		signup,
 		undoEmailChange,
 		verifyEmail
+	},
+	Query: {
+		subscription,
+		token,
+		user,
+		users
 	}
 };
