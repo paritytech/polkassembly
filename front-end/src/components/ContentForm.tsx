@@ -17,7 +17,7 @@ interface Props {
 	value?: string
 }
 
-const ContentForm = ({ className, value, errorContent, onChange }:Props): JSX.Element => {
+const ContentForm = ({ className, errorContent, onChange, value }: Props): JSX.Element => {
 
 	return (
 		<div className={className}>
