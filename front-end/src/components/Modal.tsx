@@ -3,7 +3,6 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 
 import { ModalContext } from '../context/ModalContext';
 import Button from '../ui-components/Button';
@@ -49,6 +48,4 @@ const MyModal = ({ className }: Props) => {
 	);
 };
 
-export default styled(MyModal)`
-
-`;
+export default MyModal;
