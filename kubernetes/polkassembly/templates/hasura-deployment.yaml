@@ -14,41 +14,36 @@ spec:
       labels:
         {{- include "polkassembly.hasura.matchLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-      securityContext:
-        {{- toYaml .Values.hasura.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.hasura.securityContext | nindent 12 }}
+        - name: {{ .Values.hasura.name }}-graphql-engine
           image: "{{ .Values.hasura.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.hasura.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.hasura.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: hasura-config
+          {{- end }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: {{ .Values.hasura.name }}
+              containerPort: {{ .Values.hasura.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.hasura.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.16
+          command: /cloud_sql_proxy
+          args:
+            - "-credential_file=/secrets/cloudsql/credentials.json"
+            - {{ .Values.cloudsql.commandline.args | quote }}
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+{{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.hasura.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.hasura.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+{{ toYaml . | indent 8 }}
+{{- end }}

@@ -8,8 +8,6 @@ spec:
   type: {{ .Values.authServer.service.type }}
   ports:
     - port: {{ .Values.authServer.service.port }}
-      targetPort: http
       protocol: TCP
-      name: http
   selector:
     {{- include "polkassembly.authServer.selectorLabels" . | nindent 4 }}

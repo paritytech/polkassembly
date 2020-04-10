@@ -14,41 +14,36 @@ spec:
       labels:
         {{- include "polkassembly.authServer.matchLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-      securityContext:
-        {{- toYaml ".Values.authServer.podSecurityContext" | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml ".Values.authServer.securityContext" | nindent 12 }}
+        - name: {{ .Values.authServer.name }}
           image: "{{ .Values.authServer.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.authServer.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.authServer.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: auth-server-config
+          {{- end }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: {{ .Values.authServer.name }}
+              containerPort: {{ .Values.authServer.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml ".Values.authServer.resources" | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.16
+          command: /cloud_sql_proxy
+          args:
+            - "-credential_file=/secrets/cloudsql/credentials.json"
+            - {{ .Values.cloudsql.commandline.args | quote }}
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+{{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.authServer.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.authServer.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+{{ toYaml . | indent 8 }}
+{{- end }}

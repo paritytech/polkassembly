@@ -2,16 +2,21 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+chainName: kusama
 imagePullSecrets: regcred
 nodeSelector: {}
-cloudsqlInstanceCredentials: some-secret.json-from-gitlab-vars
+
+cloudsql:
+  commandline:
+    args: "-instances=<copy-from-gcp-sql-overview>"
+  instanceCredentials: some-secret.json-from-gitlab-vars
 
 frontend:
   name: frontend
   replicaCount: 1
 
   image:
-    repository: gcr.io/test-installations-222013
+    repository: paritytech/polkassembly-fronte-end
     pullPolicy: Always
 
   nameOverride: ""
@@ -31,7 +36,7 @@ frontend:
       traefik.frontend.entryPoints: "https,http"
     hosts:
       - host: chart-example.local
-        paths: []
+        path: []
     tls: []
 
   resources: {}
@@ -43,21 +48,21 @@ hasura:
   replicaCount: 1
 
   config:
-    hasuraGraphqlAdminSecret: "from-gitlab-vars"
-    hasuraGraphqlDatabaseUrl: "from-gitlab-vars"
-    hasuraGraphqlEnabLeConsole: "true"
-    hasuraGraphqlEnabledLogTypes: "startup, http-log, webhook-log, websocket-log, query-log"
-    hasuraGraphqlUnauthorizedRole: anonymous
-    hasuraPostSubscriptionHook: http://auth-server-service:8010/auth/graphql
-    hasuraPostSubscriptionSecret: "from-gitlab-vars"
-    hasuraCommentCreateEventHook: http://auth-server-service:8010/auth/event/comment/create
-    hasuraOnchainLinkCreateHook: http://auth-server-service:8010/auth/event/onchain_link/create
-    hasuraEventSecret: "from-gitlab-vars"
-    hasuraAuthServerRemoteSchema: http://auth-server-service:8010/auth/graphql
-    hasuraChainDbRemoteSchema: "from-gitlab-vars"
+    HASURA_GRAPHQL_ADMIN_SECRET: "from-gitlab-vars"
+    HASURA_GRAPHQL_DATABASE_URL: "from-gitlab-vars"
+    HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+    HASURA_GRAPHQL_ENABLED_LOG_TYPES: "startup, http-log, webhook-log, websocket-log, query-log"
+    HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+    HASURA_POST_SUBSCRIPTION_HOOK: http://auth-server-service:8010/auth/graphql
+    HASURA_POST_SUBSCRIPTION_SECRET: "from-gitlab-vars"
+    HASURA_COMMENT_CREATE_EVENT_HOOK: http://auth-server-service:8010/auth/event/comment/create
+    HASURA_ONCHAIN_Link_Create_Hook: http://auth-server-service:8010/auth/event/onchain_link/create
+    HASURA_EVENT_SECRET: "from-gitlab-vars"
+    HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
+    HASURA_CHAIN_DB_REMOTE_SCHEMA: "from-gitlab-vars"
 
   image:
-    repository: nginx
+    repository: hasura/graphql-engine:pull2392-b7c91978
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -68,29 +73,32 @@ hasura:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8080
 
   resources: {}
   tolerations: []
   affinity: {}
 
 authServer:
-  name: authServer
+  #name: authServer
+  name: auth-server
   replicaCount: 1
 
   config:
-    proposalBotUserId: from-gtilab-vars
-    databaseUrl: from-giltab-vars
-    domainName: "test.polkassembly.io"
-    hasuraPostSubscriptionSecret: from-gitlab-vars
-    hasuraEventSecret: from-gitlab-vars
-    jwtKeyPassphrase: from-gitlab-vars
-    nodeEnv: "development"
-    port: 8010
-    sendgridApiKey: from-gitlab-vars
+    DOMAIN_NAME: test.polkassembly.io
+    NODE_ENV: development
+    DOMAIN_PROTOCOL: https://
+    PORT: "8010"
+    PROPOSAL_BOT_USER_ID: "11"
+    DATABASE_URL: from-gtilab-vars
+    HASURA_EVENT_SECRET: from-gtilab-vars
+    HASURA_POST_SUBSCRIPTION_SECRET: from-gtilab-vars
+    JWT_KEY_PASSPHRASE: from-gtilab-vars
+    REDIS_URL: from-gtilab-vars
+    SENDGRID_API_KEY: from-gtilab-vars
 
   image:
-    repository: nginx
+    repository: /paritytech/polkassembly-auth-server
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -101,18 +109,18 @@ authServer:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8010
 
   resources: {}
   tolerations: []
   affinity: {}
 
 chainDbWatcher:
-  name: chainDbWatcher
+  name: chain-db-watcher
   replicaCount: 1
 
   image:
-    repository: nginx
+    repository: paritytech/polkassembly-chain-db-watcher
     pullPolicy: IfNotPresent
 
   nameOverride: ""

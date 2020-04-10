@@ -5,15 +5,10 @@ metadata:
   labels:
     {{- include "polkassembly.hasura.labels" . | nindent 4 }}
 data:
-  HASURA_GRAPHQL_ADMIN_SECRET: {{ .Values.hasura.config.hasuraGraphqlAdminSecret }}
-  HASURA_GRAPHQL_DATABASE_URL: {{ .Values.hasura.config.hasuraGraphqlDatabaseUrl }}
-  HASURA_GRAPHQL_ENABLE_CONSOLE: {{ quote .Values.hasura.config.hasuraGraphqlEnabLeConsole }}
-  HASURA_GRAPHQL_ENABLED_LOG_TYPES: {{ quote .Values.hasura.config.hasuraGraphqlEnabledLogTypes }}
-  HASURA_GRAPHQL_UNAUTHORIZED_ROLE: {{ .Values.hasura.config.hasuraGraphqlUnauthorizedRole }}
-  HASURA_POST_SUBSCRIPTION_HOOK: {{ .Values.hasura.config.hasuraPostSubscriptionHook }}
-  HASURA_POST_SUBSCRIPTION_SECRET: {{ .Values.hasura.config.hasuraPostSubscriptionSecret }}
-  HASURA_COMMENT_CREATE_EVENT_HOOK: {{ .Values.hasura.config.hasuraCommentCreateEventHook }}
-  HASURA_ONCHAIN_LINK_CREATE_HOOK: {{ .Values.hasura.config.hasuraOnchainLinkCreateHook }}
-  HASURA_EVENT_SECRET: {{ .Values.hasura.config.hasuraEventSecret }}
-  HASURA_AUTH_SERVER_REMOTE_SCHEMA: {{ .Values.hasura.config.hasuraAuthServerRemoteSchema }}
-  HASURA_CHAIN_DB_REMOTE_SCHEMA: {{ .Values.hasura.config.hasuraChainDbRemoteSchema }}
+  {{- range $key, $val := .Values.hasura.config }}
+  {{ $key }}: {{ $val }}
+  {{- end }}
+{{- with .Values.nodeSelector }}
+nodeSelector:
+{{ toYaml . | indent 2 }}
+{{- end }}

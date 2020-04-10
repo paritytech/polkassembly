@@ -1,5 +1,5 @@
 {{- if .Values.frontend.ingress.enabled -}}
-{{- $fullName := include "polkassembly.frontend.fullname" . -}}
+{{- $svcName := printf "%s-service" .Values.frontend.name -}}
 {{- $svcPort := .Values.frontend.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
@@ -8,9 +8,9 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ .Values.frontend.name }}-ingress
   labels:
-    {{- include "polkassembly.frontend.labels" . | nindent 4 }}
+    {{- include "polkassembly.frontend.matchLabels" . | nindent 4 }}
   {{- with .Values.frontend.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -28,14 +28,12 @@ spec:
 {{- end }}
   rules:
   {{- range .Values.frontend.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ .host }}
       http:
         paths:
-        {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ .path }}
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: {{ $svcName }}
               servicePort: {{ $svcPort }}
-        {{- end }}
   {{- end }}
 {{- end }}
