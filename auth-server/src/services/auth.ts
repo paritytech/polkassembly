@@ -659,7 +659,7 @@ export default class AuthService {
 		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
-		if (id === Number(process.env.PROPOSAL_BOT_USER_ID)) { // eslint-disable-line
+		if (id === Number(process.env.PROPOSAL_BOT_USER_ID)) {
 			allowedRoles.push(Role.PROPOSAL_BOT);
 			currentRole = Role.PROPOSAL_BOT;
 		}
