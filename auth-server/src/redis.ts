@@ -4,7 +4,11 @@
 
 import * as redis from 'redis';
 
-export const client = redis.createClient(process.env.REDIS_URL || '');
+if (!process.env.REDIS_URL) {
+	throw new Error('REDIS_URL is not set');
+}
+
+export const client = redis.createClient(process.env.REDIS_URL);
 
 /**
  * get from redis
