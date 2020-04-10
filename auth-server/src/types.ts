@@ -139,7 +139,7 @@ export interface JsonSchema {
     type: string;
 }
 
-export interface AddressLinConfirmArgs {
+export interface AddressLinkConfirmArgs {
 	address_id: number;
 	signature: string;
 }
