@@ -185,13 +185,13 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 			<ReactMde
 				commands={listCommands}
 				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
+				minEditorHeight={props.height}
+				minPreviewHeight={props.height}
 				name={props.name}
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}
 				selectedTab={selectedTab}
 				value={props.value}
-				minEditorHeight={props.height}
-				minPreviewHeight={props.height}
 				{...props}
 			/>
 		</StyledTextArea>
