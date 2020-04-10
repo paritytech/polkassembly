@@ -155,6 +155,7 @@ const StyledTextArea = styled.div`
 
 interface Props {
 	className?: string
+	height?: number
 	name?: string
 	onChange:  ((value: string) => void) | undefined
     value: string
@@ -189,6 +190,8 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 				onTabChange={setSelectedTab}
 				selectedTab={selectedTab}
 				value={props.value}
+				minEditorHeight={props.height}
+				minPreviewHeight={props.height}
 				{...props}
 			/>
 		</StyledTextArea>

@@ -95,6 +95,7 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 			<div className='comment-box'>
 				<Controller
 					as={<ContentForm
+						height={100}
 						errorContent={errors.content}
 					/>}
 					name='content'
