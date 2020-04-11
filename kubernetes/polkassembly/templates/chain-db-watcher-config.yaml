@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.chainDbWatcher.name }}-config
+  labels:
+    {{- include "polkassembly.chainDbWatcher.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.chainDbWatcher.config }}
+  {{ $key }}: {{ $val }}
+  {{- end }}
+{{- with .Values.nodeSelector }}
+nodeSelector:
+{{ toYaml . | indent 2 }}
+{{- end }}

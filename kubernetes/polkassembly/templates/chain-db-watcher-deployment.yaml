@@ -14,41 +14,23 @@ spec:
       labels:
         {{- include "polkassembly.chainDbWatcher.matchLabels" . | nindent 8 }}
     spec:
+      containers:
+        - name: {{ .Values.chainDbWatcher.name }}
+          image: "{{ .Values.chainDbWatcher.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.chainDbWatcher.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.chainDbWatcher.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: chain-db-watcher-config
+          {{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      securityContext:
-        {{- toYaml ".Values.chainDbWatcher.podSecurityContext" | nindent 8 }}
-      containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml ".Values.chainDbWatcher.securityContext" | nindent 12 }}
-          image: "{{ .Values.chainDbWatcher.image.repository}}:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.chainDbWatcher.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml ".Values.chainDbWatcher.resources" | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+{{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.chainDbWatcher.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.chainDbWatcher.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+{{ toYaml . | indent 8 }}
+{{- end }}

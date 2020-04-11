@@ -26,6 +26,11 @@ spec:
                   key: {{ $key }}
                   name: hasura-config
           {{- end }}
+            - name: HASURA_GRAPHQL_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: HASURA_GRAPHQL_JWT_SECRET
+                  name: graphql-jwt-secret
           ports:
             - name: {{ .Values.hasura.name }}
               containerPort: {{ .Values.hasura.service.port }}

@@ -75,7 +75,6 @@ component: {{ .Values.hasura.name }}
 
 {{- define "polkassembly.chainDbWatcher.selectorLabels" -}}
 component: {{ .Values.chainDbWatcher.name }}
-{{ include "polkassembly.common.matchLabels" . }}
 {{- end -}}
 
 {{/*

@@ -2,14 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-chainName: kusama
-imagePullSecrets: regcred
+chainName: ""
+imagePullSecrets: ""
 nodeSelector: {}
 
 cloudsql:
   commandline:
     args: "-instances=<copy-from-gcp-sql-overview>"
-  instanceCredentials: some-secret.json-from-gitlab-vars
+  instanceCredentials: from-gitlab-vars
 
 frontend:
   name: frontend
@@ -61,6 +61,9 @@ hasura:
     HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
     HASURA_CHAIN_DB_REMOTE_SCHEMA: "from-gitlab-vars"
 
+  secret:
+    HASURA_GRAPHQL_JWT_SECRET: from-gitlab-vars
+
   image:
     repository: hasura/graphql-engine:pull2392-b7c91978
     pullPolicy: IfNotPresent
@@ -97,6 +100,10 @@ authServer:
     REDIS_URL: from-gtilab-vars
     SENDGRID_API_KEY: from-gtilab-vars
 
+  secret:
+    JWT_PRIVATE_KEY: from-gtilab-vars
+    JWT_PUBLIC_KEY: from-gtilab-vars
+
   image:
     repository: /paritytech/polkassembly-auth-server
     pullPolicy: IfNotPresent
@@ -118,6 +125,19 @@ authServer:
 chainDbWatcher:
   name: chain-db-watcher
   replicaCount: 1
+
+  config:
+    PROPOSAL_BOT_USERNAME: from-gitlab-vars
+    PROPOSAL_BOT_PASSWORD: from-gitlab-vars
+    REACT_APP_HASURA_GRAPHQL_URL: "http://hasura-service:8080/v1/graphql"
+    AUTH_SERVER_URL: "http://auth-server-service:8010/auth/graphql"
+    CHAIN_DB_GRAPHQL_URL: from-gitlab-vars
+    HASURA_PROPOSAL_POST_TYPE_ID: "2"
+    DEMOCRACY_TOPIC_ID: "1"
+    COUNCIL_TOPIC_ID: "2"
+    TREASURY_TOPIC_ID: "4"
+    PROPOSAL_BOT_USER_ID: from-gitlab-vars
+    START_FROM: "964710"
 
   image:
     repository: paritytech/polkassembly-chain-db-watcher

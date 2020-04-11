@@ -26,6 +26,13 @@ spec:
                   key: {{ $key }}
                   name: auth-server-config
           {{- end }}
+          {{- range $key, $val := .Values.authServer.secret }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $key }}
+                  name: auth-jwt-key
+          {{- end }}
           ports:
             - name: {{ .Values.authServer.name }}
               containerPort: {{ .Values.authServer.service.port }}
