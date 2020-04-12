@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.chainDbWatcher.name }}
-          image: "{{ .Values.chainDbWatcher.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.chainDbWatcher.image.repository }}:{{ .Values.dockerTag }}"
           imagePullPolicy: {{ .Values.chainDbWatcher.image.pullPolicy }}
           env:
           {{- range $key, $val := .Values.chainDbWatcher.config }}

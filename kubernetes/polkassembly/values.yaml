@@ -5,6 +5,7 @@
 chainName: ""
 imagePullSecrets: ""
 nodeSelector: {}
+dockerTag: master
 
 cloudsql:
   commandline:
@@ -16,7 +17,7 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: paritytech/polkassembly-fronte-end
+    repository: paritytech/polkassembly-front-end
     pullPolicy: Always
 
   nameOverride: ""

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.hasura.name }}-graphql-engine
-          image: "{{ .Values.hasura.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.hasura.image.repository }}"
           imagePullPolicy: {{ .Values.hasura.image.pullPolicy }}
           env:
           {{- range $key, $val := .Values.hasura.config }}

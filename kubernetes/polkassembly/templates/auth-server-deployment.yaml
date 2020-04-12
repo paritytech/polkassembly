@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.authServer.name }}
-          image: "{{ .Values.authServer.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.authServer.image.repository }}:{{ .Values.dockerTag }}"
           imagePullPolicy: {{ .Values.authServer.image.pullPolicy }}
           env:
           {{- range $key, $val := .Values.authServer.config }}

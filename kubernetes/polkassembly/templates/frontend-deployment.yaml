@@ -20,7 +20,7 @@ spec:
     {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.frontend.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.dockerTag }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http

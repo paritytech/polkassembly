@@ -1,7 +1,7 @@
-image: parity/kubetools:latest
+image: parity/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
-  CI_REGISTRY:                     "gcr.io/test-installations-222013"
+  CI_REGISTRY:                     "paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
@@ -10,7 +10,6 @@ stages:
   - test
   - dockerize
   - deploy
-  - post-deploy
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -118,13 +117,35 @@ dockerize-chain-db-watcher:
 
 .deploy-k8s:                   &deploy-k8s
   script:
-    - export DOCKER_TAG
-    # check syntax
-    - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
-    # print rendered yaml
-    - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
-    # deploy yaml to cluster
-    - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
+    - helm upgrade polkassembly kubernetes/polkassembly
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
+      # global vars
+      --set dockerTag=${DOCKER_TAG}
+      --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
+      --set cloudsql.commandline.args: "-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}"
+      # hasura vars
+      --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
+      --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set hasura.config.HASURA_CHAIN_DB_REMOTE_SCHEMA=${HASURA_CHAIN_DB_REMOTE_SCHEMA}
+      --set hasura.config.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      # auth-server vars
+      --set authServer.config.DATABASE_URL=${DATABASE_URL}
+      --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
+      --set authServer.config.REDIS_URL=${REDIS_URL}
+      --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      --set authServer.secret.JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
+      --set authServer.secret.JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      # chain-db-watcher vars
+      --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
+      --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
+      --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
+      --set chainDbWatcher.config.PROPOSAL_BOT_USER_ID=${PROPOSAL_BOT_USER_ID}
 
 deploy-staging:
   stage: deploy
