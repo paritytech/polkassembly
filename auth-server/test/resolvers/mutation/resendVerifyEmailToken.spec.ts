@@ -49,8 +49,8 @@ describe('resendVerifyEmailToken mutation', () => {
 			.first();
 
 		expect(verifyToken).to.exist;
-		expect(verifyToken.valid).to.be.true;
-		expect(verifyToken.token).to.be.a('string');
+		expect(verifyToken?.valid).to.be.true;
+		expect(verifyToken?.token).to.be.a('string');
 	});
 
 	it('should not be able to resend verify email token with wrong jwt', async () => {

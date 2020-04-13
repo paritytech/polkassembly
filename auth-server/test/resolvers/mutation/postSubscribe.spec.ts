@@ -22,10 +22,7 @@ describe('post subscribe mutation', () => {
 		},
 		res: {
 			header: { 'refresh_token' : '' },
-			cookie: function(name, value){
-				// eslint-disable-next-line security/detect-object-injection
-				this.header[name] = value;
-			}
+			cookie: () => {}
 		}
 	} as any;
 
@@ -59,8 +56,8 @@ describe('post subscribe mutation', () => {
 			.first();
 
 		expect(dbSubscription).to.exist;
-		expect(dbSubscription.post_id).to.equals(post_id);
-		expect(dbSubscription.user_id).to.equals(signupResult.user.id);
+		expect(dbSubscription?.post_id).to.equals(post_id);
+		expect(dbSubscription?.user_id).to.equals(signupResult.user.id);
 		expect(res.message).to.eq(messages.SUBSCRIPTION_SUCCESSFUL);
 	});
 

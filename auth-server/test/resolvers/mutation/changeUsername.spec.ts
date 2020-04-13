@@ -47,7 +47,7 @@ describe('changeUsername mutation', () => {
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.username).to.be.equal(username);
+		expect(dbUser?.username).to.be.equal(username);
 		expect(result.message).to.be.equal(messages.USERNAME_CHANGE_SUCCESSFUL);
 	});
 

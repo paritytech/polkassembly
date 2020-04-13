@@ -40,8 +40,8 @@ describe('user query', () => {
 	it('should return user with id', async () => {
 		const id = dbUser.id;
 		const result = await user(undefined, { id });
-		expect(result.id).to.equal(id);
-		expect(result.username).to.equal(username);
-		expect(result.name).to.equal(name);
+		expect(result?.id).to.equal(id);
+		expect(result?.username).to.equal(username);
+		expect(result?.name).to.equal(name);
 	});
 });

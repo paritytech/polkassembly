@@ -64,7 +64,7 @@ describe('user query', () => {
 			default: {
 				query: () => ({
 					offset: () => ({
-						limit: (limit) => {
+						limit: (limit: number) => {
 							calledLimit = limit;
 							return [];
 						}

@@ -15,7 +15,7 @@ import messages from '../../../src/utils/messages';
 
 describe('undoEmailChange mutation', () => {
 	let signupResult: any;
-	let undoToken;
+	let undoToken: any;
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -54,14 +54,14 @@ describe('undoEmailChange mutation', () => {
 	});
 
 	it('should be able to undo email change with valid token', async () => {
-		const res = await undoEmailChange(undefined, { token: undoToken.token });
+		const res = await undoEmailChange(undefined, { token: undoToken?.token });
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.email).to.equal(undoToken.email);
+		expect(dbUser?.email).to.equal(undoToken?.email);
 		expect(res.message).to.eq(messages.EMAIL_UNDO_SUCCESSFUL);
 		expect(res.token).to.exist;
 	});

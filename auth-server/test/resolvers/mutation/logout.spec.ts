@@ -13,7 +13,6 @@ import messages from '../../../src/utils/messages';
 
 describe('logout mutation', () => {
 	let signupResult : SignUpResultType;
-	let refresh_token : string;
 
 	let fakectx: Context = {
 		req: {
@@ -22,10 +21,7 @@ describe('logout mutation', () => {
 		},
 		res: {
 			header: { 'refresh_token' : '' },
-			cookie: function(name, value){
-				// eslint-disable-next-line security/detect-object-injection
-				this.header[name] = value;
-			}
+			cookie: () => {}
 		}
 	} as any;
 
@@ -36,8 +32,6 @@ describe('logout mutation', () => {
 
 	before(async () => {
 		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		refresh_token = fakectx.res.header['refresh_token'];
-		fakectx.req.cookies['refresh_token'] = refresh_token; // eslint-disable-line
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
