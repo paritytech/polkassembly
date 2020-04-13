@@ -36,13 +36,13 @@ interface Props {
 const PostCommentForm = ({ className, postId, refetch }: Props) => {
 	const { id, notification, username } = useContext(UserDetailsContext);
 	const [content, setContent] = useState('');
-	const { control, errors, handleSubmit } = useForm();
+	const { control, errors, handleSubmit, setValue } = useForm();
 
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
 	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 
-	if (!id) return <div>You must loggin to comment.</div>;
+	if (!id) return <div>You must log in to comment.</div>;
 
 	const createSubscription = (postId: number) => {
 		if (!notification?.postParticipated) {
@@ -73,12 +73,13 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 			.then(({ data }) => {
 				if (data && data.insert_comments && data.insert_comments.affected_rows > 0) {
 					setContent('');
+					setValue('content', '');
 					refetch();
 					createSubscription(postId);
 				} else {
 					throw new Error('No data returned from the saving comment query');
 				}
-				refetch();})
+			})
 			.catch((e) => console.error('Error saving comment',e));
 	};
 
@@ -87,7 +88,6 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 			{error && <FilteredError text={error.message}/>}
 			<Avatar
 				className='avatar'
-				/* displayname={author.name} */
 				username={username || ''}
 				size={'lg'}
 			/>
@@ -95,6 +95,7 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 			<div className='comment-box'>
 				<Controller
 					as={<ContentForm
+						height={100}
 						errorContent={errors.content}
 					/>}
 					name='content'
