@@ -4,8 +4,8 @@
 
 import BN from 'bn.js';
 
-import newtonRaphson from './newton-raphson';
-import solveQuadraticEquation from './solveQuadraticEquation';
+import { newtonRaphson } from './newton-raphson';
+import { solveQuadraticEquation } from './solveQuadraticEquation';
 import { VoteThreshold,VoteThresholdEnum } from './types';
 
 /**
@@ -14,9 +14,9 @@ import { VoteThreshold,VoteThresholdEnum } from './types';
  * @param nays The amount of nay votes, including the mutliplication factors
  * @param electorate The total issuance of token in the network
  * @param threshold The type of bias of the vote
- */
+ **/
 
-export default function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThreshold): BN | boolean {
+export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThreshold): BN | boolean {
 	const ONE = new BN(1);
 	const TWO = new BN(2);
 	const THREE = new BN(3);

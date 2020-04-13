@@ -14,7 +14,16 @@ interface Options{
     verbose: boolean
 }
 
-export default function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, options?: Options) {
+/**
+ * @name newtonRaphson
+ * @summary Returns the root of a polynomial function of degree 3 using the Newton Raphson algorithm.
+ * @param f function that taxes x as parameter and returns the polynomial function of degree 3.
+ * @param fp the derivative of f
+ * @param x0 the starting point of the iteration.
+ * @param options optional options to specify the `tolerance`, `epsilon`, macIterations` or `verbose`.
+ **/
+
+export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, options?: Options) {
 	let x1: BN, y: BN, yp: BN, tol: BN, maxIter: number, iter: number, verbose: boolean, eps: BN;
 
 	tol = options?.tolerance === undefined ? new BN(1e-7) : options.tolerance;
