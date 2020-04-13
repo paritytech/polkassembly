@@ -75,5 +75,3 @@ spec:
             configMapKeyRef:
               key: START_FROM
               name: chain-db-watcher-config
-      imagePullSecrets:
-      - name: regcred

@@ -23,6 +23,4 @@ spec:
         - containerPort: 80
           name: http
           protocol: TCP
-      imagePullSecrets:
-      - name: regcred
       restartPolicy: Always
