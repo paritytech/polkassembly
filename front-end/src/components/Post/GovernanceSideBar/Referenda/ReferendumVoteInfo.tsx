@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { getPassingThreshold } from '@polkassembly/util';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,7 +11,6 @@ import { ApiContext } from 'src/context/ApiContext';
 import { VoteThreshold } from 'src/types';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
-import { getPassingThreshold } from 'src/util/getPassingThreshold';
 
 interface Props {
 	className?: string
@@ -83,7 +83,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			return;
 		}
 
-		const x = getPassingThreshold(nayVotes, electorate, turnout, threshold);
+		const x = getPassingThreshold(nayVotes, electorate, threshold);
 		setPassingThreshold(x);
 	}, [electorate, nayVotes, threshold, turnout]);
 
