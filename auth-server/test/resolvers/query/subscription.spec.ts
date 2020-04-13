@@ -34,7 +34,7 @@ describe('post subscription query', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
 	});
 
@@ -46,9 +46,9 @@ describe('post subscription query', () => {
 	});
 
 	it('should be able to check if user is subscribed to a post', async () => {
-		await postSubscribe(null, { post_id }, fakectx);
+		await postSubscribe(undefined, { post_id }, fakectx);
 
-		const result = await subscription(null, { post_id }, fakectx);
+		const result = await subscription(undefined, { post_id }, fakectx);
 
 		expect(result.subscribed).to.be.true;
 	});

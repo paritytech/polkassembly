@@ -36,7 +36,7 @@ describe('post subscribe mutation', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
 	});
 
@@ -48,7 +48,7 @@ describe('post subscribe mutation', () => {
 	});
 
 	it('should be able to subscribe to a post', async () => {
-		const res = await postSubscribe(null, { post_id }, fakectx);
+		const res = await postSubscribe(undefined, { post_id }, fakectx);
 
 		const dbSubscription = await PostSubscription
 			.query()
@@ -65,7 +65,7 @@ describe('post subscribe mutation', () => {
 	});
 
 	it('should show already subscribed if subscribed again', async () => {
-		const result = await postSubscribe(null, { post_id }, fakectx);
+		const result = await postSubscribe(undefined, { post_id }, fakectx);
 
 		expect(result.message).to.equals(messages.SUBSCRIPTION_ALREADY_EXISTS);
 	});
@@ -75,7 +75,7 @@ describe('post subscribe mutation', () => {
 		fakectx_wrong_jwt.req.headers.authorization = 'Bearer wrong';
 
 		try {
-			await postSubscribe(null, { post_id }, fakectx_wrong_jwt);
+			await postSubscribe(undefined, { post_id }, fakectx_wrong_jwt);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

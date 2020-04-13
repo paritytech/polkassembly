@@ -35,7 +35,7 @@ describe('logout mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		refresh_token = fakectx.res.header['refresh_token'];
 		fakectx.req.cookies['refresh_token'] = refresh_token; // eslint-disable-line
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
@@ -49,7 +49,7 @@ describe('logout mutation', () => {
 	});
 
 	it('should be able to logout', async () => {
-		const result = await logout(null, null, fakectx);
+		const result = await logout(undefined, undefined, fakectx);
 
 		expect(result.message).to.exist;
 		expect(result.message).to.eq(messages.LOGOUT_SUCCESSFUL);

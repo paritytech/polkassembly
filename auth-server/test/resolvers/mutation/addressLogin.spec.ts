@@ -16,7 +16,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLogin mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -35,10 +35,10 @@ describe('addressLogin mutation', () => {
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 
-		const linkStartRes = await addressLinkStart(null, { network, address }, fakectx);
+		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
 		await Address
 			.query()
@@ -47,7 +47,7 @@ describe('addressLogin mutation', () => {
 			})
 			.findById(linkStartRes.address_id);
 
-		await addressLinkConfirm(null, { signature, address_id: linkStartRes.address_id }, fakectx);
+		await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
 	});
 
 	after(async () => {
@@ -65,7 +65,7 @@ describe('addressLogin mutation', () => {
 	it('should be able to login with addresss', async () => {
 		const signature = '0x4a6b16e017b6dd5ed35ad46ab751ff89358ed4e77a86e67e3946355b4ea53872cc0fd504f96860ef371a2ade186d8852d34b3fe651540054306099e8082dd68e';
 
-		const result = await addressLogin(null, { address, signature }, fakectx);
+		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
 		expect(result.user.id).to.exist;
 		expect(result.user.id).to.a('number');
@@ -80,7 +80,7 @@ describe('addressLogin mutation', () => {
 		const signature = '0xaaaa';
 
 		try {
-			await addressLogin(null, { address, signature }, fakectx);
+			await addressLogin(undefined, { address, signature }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

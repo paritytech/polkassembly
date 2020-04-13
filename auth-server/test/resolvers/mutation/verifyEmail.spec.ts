@@ -14,7 +14,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('verifyEmail mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	let verifyToken;
 	let fakectx: Context = {
 		req: {},
@@ -28,7 +28,7 @@ describe('verifyEmail mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 
 		verifyToken = await EmailVerificationToken
 			.query()
@@ -53,7 +53,7 @@ describe('verifyEmail mutation', () => {
 	});
 
 	it('should be able to verify email with valid token', async () => {
-		const res = await verifyEmail(null, { token: verifyToken.token });
+		const res = await verifyEmail(undefined, { token: verifyToken.token });
 
 		const dbUser = await User
 			.query()
@@ -67,7 +67,7 @@ describe('verifyEmail mutation', () => {
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await verifyEmail(null, { token: uuid() });
+			await verifyEmail(undefined, { token: uuid() });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

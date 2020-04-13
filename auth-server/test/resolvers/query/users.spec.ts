@@ -43,7 +43,7 @@ describe('user query', () => {
 	});
 
 	it('should return users with limit', async () => {
-		const result = await users(null, { limit: 5, page: 1 });
+		const result = await users(undefined, { limit: 5, page: 1 });
 		result.forEach((user, i) => {
 			// eslint-disable-next-line security/detect-object-injection
 			expect(user.id).to.equals(dbUsers[i].id);
@@ -51,7 +51,7 @@ describe('user query', () => {
 	});
 
 	it('should return users for particular page', async () => {
-		const result = await users(null, { limit: 5, page: 2 });
+		const result = await users(undefined, { limit: 5, page: 2 });
 
 		result.forEach((user, i) => {
 			expect(user.id).to.equals(dbUsers[i + 5].id);
@@ -76,7 +76,7 @@ describe('user query', () => {
 		const users = require('../../../src/resolvers/query/users');
 		rewiremock.disable();
 
-		await users.default(null, { limit: 101 });
+		await users.default(undefined, { limit: 101 });
 
 		expect(calledLimit).to.equal(100);
 	});

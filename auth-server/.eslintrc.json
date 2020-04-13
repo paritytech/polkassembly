@@ -18,7 +18,7 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": ["./tsconfig.json"]
-      },
+    },
     "plugins": [
         "@typescript-eslint",
         "header",
@@ -45,5 +45,5 @@
         "simple-import-sort/sort": "error",
         "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
         "switch-colon-spacing": ["error", {"after": true, "before": false}]
-        }
+    }
 }
