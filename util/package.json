@@ -1,6 +1,6 @@
 {
   "name": "@polkassembly/util",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Set of utility functions for Polkassembly and more.",
   "repository": {
     "type": "git",
@@ -42,5 +42,9 @@
     "eslint-plugin-standard": "^4.0.1",
     "typescript": "^3.8.3"
   },
-  "keywords": ["Polkassembly", "Polkadot", "newton-raphson"]
+  "keywords": [
+    "Polkassembly",
+    "Polkadot",
+    "newton-raphson"
+  ]
 }
