@@ -1,7 +1,7 @@
 image: parity/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
-  CI_REGISTRY:                     "gcr.io/test-installations-222013"
+  CI_REGISTRY:                     "paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
