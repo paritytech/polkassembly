@@ -14,6 +14,11 @@ interface Options{
     verbose: boolean
 }
 
+export interface NewtonRaphsonResult {
+	foundRoot: boolean;
+	result?: BN;
+}
+
 /**
  * @name newtonRaphson
  * @summary Returns the root of a polynomial function of degree 3 using the Newton Raphson algorithm.
@@ -23,7 +28,7 @@ interface Options{
  * @param options optional options to specify the `tolerance`, `epsilon`, macIterations` or `verbose`.
  **/
 
-export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, options?: Options) {
+export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, options?: Options): NewtonRaphsonResult {
 	let x1: BN, y: BN, yp: BN, tol: BN, maxIter: number, iter: number, verbose: boolean, eps: BN;
 
 	tol = options?.tolerance === undefined ? new BN(1e-7) : options.tolerance;
@@ -41,7 +46,7 @@ export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, opti
 			if (verbose) {
 				console.log('Newton-Raphson: failed to converged due to nearly zero first derivative');
 			}
-			return false;
+			return { foundRoot: false };
 		}
 
 		// Update the guess:
@@ -52,7 +57,7 @@ export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, opti
 			if (verbose) {
 				console.log('Newton-Raphson: converged to x = ' + x1.toString() + ' after ' + iter + ' iterations');
 			}
-			return x1;
+			return { foundRoot: true, result: x1 };
 		}
 
 		// Transfer update to the new guess:
@@ -63,5 +68,5 @@ export function newtonRaphson (f: (x: BN) => BN, fp: (x: BN) => BN, x0: BN, opti
 		console.log('Newton-Raphson: Maximum iterations reached (' + maxIter + ')');
 	}
 
-	return false;
+	return { foundRoot: false };
 }

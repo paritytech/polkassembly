@@ -4,9 +4,9 @@
 
 import BN from 'bn.js';
 
-import { newtonRaphson } from './newton-raphson';
+import { newtonRaphson, NewtonRaphsonResult } from './newton-raphson';
 import { solveQuadraticEquation } from './solveQuadraticEquation';
-import { VoteThreshold,VoteThresholdEnum } from './types';
+import { PassingThresholdResult,VoteThreshold,VoteThresholdEnum } from './types';
 
 /**
  * @name getPassingThreshold
@@ -16,7 +16,7 @@ import { VoteThreshold,VoteThresholdEnum } from './types';
  * @param threshold The type of bias of the vote
  **/
 
-export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThreshold): BN | boolean {
+export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThreshold ): PassingThresholdResult {
 	const ONE = new BN(1);
 	const TWO = new BN(2);
 	const THREE = new BN(3);
@@ -25,14 +25,20 @@ export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThr
 
 	if (nays.isZero()){
 		// there is no vote against, any number of aye>0 would work
-		return ONE;
+		return {
+			isValid: true,
+			passingThreshold: ONE
+		};
 	}
 
 	if (threshold === VoteThresholdEnum.Simplemajority){
-		return nays;
+		return {
+			isValid: true,
+			passingThreshold: nays
+		};
 	}
 
-	let result: BN | boolean = false;
+	let result: NewtonRaphsonResult = { foundRoot: false };
 
 	if (threshold === VoteThresholdEnum.Supermajorityapproval){
 		const f = (x: BN) => {
@@ -47,14 +53,24 @@ export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThr
 
 		let i = 1;
 
-		while (!result || i > MAX_ITERATIONS){
+		while (!result.foundRoot || i > MAX_ITERATIONS){
 			result = newtonRaphson(f, fp, initialGuess.mul(TEN).pow(new BN(i)));
 			i++;
 		}
+
+		return result.foundRoot
+			? {
+				isValid: false
+			}
+			: {
+				isValid: true,
+				passingThreshold: result.result as BN
+			};
 	} else {
 		const res = solveQuadraticEquation(electorate.neg(), nays.pow(TWO), nays.pow(THREE));
-		result = BN.max(res[0],res[1]);
+		return {
+			isValid: true,
+			passingThreshold: BN.max(res[0],res[1])
+		} ;
 	}
-
-	return result;
 }
