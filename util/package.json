@@ -1,0 +1,46 @@
+{
+  "name": "@polkassembly/util",
+  "version": "0.1.0",
+  "description": "Set of utility functions for Polkassembly and more.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/paritytech/polkassembly/util.git"
+  },
+  "author": "Parity Technologies <admin@parity.io>",
+  "files": [
+    "build"
+  ],
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build --watch",
+    "lint": "npx eslint ./src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npx eslint ./src/ --ext .js,.jsx,.ts,.tsx --fix",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn lint",
+    "test": "echo skipped"
+  },
+  "dependencies": {
+    "@polkadot/util": "^2.8.1",
+    "bn.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-header": "^3.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
+    "eslint-plugin-standard": "^4.0.1",
+    "typescript": "^3.8.3"
+  },
+  "keywords": ["Polkassembly", "Polkadot", "newton-raphson"]
+}
