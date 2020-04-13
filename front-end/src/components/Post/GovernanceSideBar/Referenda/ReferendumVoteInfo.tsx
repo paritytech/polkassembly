@@ -83,8 +83,10 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			return;
 		}
 
-		const x = getPassingThreshold(nayVotes, electorate, threshold);
-		setPassingThreshold(x);
+		const res = getPassingThreshold(nayVotes, electorate, threshold);
+		if (res.isValid && res.passingThreshold) {
+			setPassingThreshold(res.passingThreshold);
+		}
 	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
