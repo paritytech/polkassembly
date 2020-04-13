@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: auth-server
-        image: gcr.io/test-installations-222013/polkassembly-auth-server:${DOCKER_TAG}
+        image: paritytech/polkassembly-auth-server:${DOCKER_TAG}
         imagePullPolicy: Always
         env:
         - name: JWT_KEY_PASSPHRASE
@@ -101,5 +101,3 @@ spec:
       - name: cloudsql-instance-credentials
         secret:
           secretName: cloudsql-instance-credentials
-      imagePullSecrets:
-      - name: regcred
