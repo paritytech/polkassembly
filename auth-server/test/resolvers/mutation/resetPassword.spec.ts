@@ -59,11 +59,16 @@ describe('requestResetPassword mutation', () => {
 		expect(res.message).to.eq(messages.RESET_PASSWORD_RETURN_MESSAGE);
 	});
 
-	it('should be able to reset password with a valid token', async () => {
+	it('should not be able to request reset password with an invalid email', async () => {
+		const email = 'wrong@email';
 
-		const res = await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword });
-
-		expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL);
+		try {
+			await requestResetPassword(undefined, { email });
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.INVALID_EMAIL);
+		}
 	});
 
 	it('should not be able to reset password with a short password', async () => {
@@ -88,16 +93,11 @@ describe('requestResetPassword mutation', () => {
 		}
 	});
 
-	it('should not be able to request reset password with an invalid email', async () => {
-		const email = 'wrong@email';
+	it('should be able to reset password with a valid token', async () => {
 
-		try {
-			await requestResetPassword(undefined, { email });
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(UserInputError);
-			expect(error.message).to.eq(messages.INVALID_EMAIL);
-		}
+		const res = await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword });
+
+		expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL);
 	});
 
 	it('should not be able to change password with token that was used already', async () => {
