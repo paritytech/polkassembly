@@ -5,7 +5,15 @@
 import { bnSqrt } from '@polkadot/util';
 import BN from 'bn.js';
 
-export default function (a: BN, b: BN, c: BN): BN[] {
+/**
+ * @name solveQuadraticEquation
+ * @summary Returns the root of a polynomial function of degree 2, a*x^2 + b*x + c where a, b and c are BN from bn.js.
+ * @param a
+ * @param b
+ * @param c
+ **/
+
+export function solveQuadraticEquation(a: BN, b: BN, c: BN): BN[] {
 	const TWO = new BN(2);
 	const FOUR = new BN(4);
 
