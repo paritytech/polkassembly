@@ -100,7 +100,7 @@ describe('requestResetPassword mutation', () => {
 		}
 	});
 
-	it('should not be able to change password with an expired token', async () => {
+	it('should not be able to change password with token that was used already', async () => {
 		await redisDel(getPwdResetTokenKey(signupResult.user.id));
 
 		try {
