@@ -72,7 +72,7 @@ describe('changeEmail mutation', () => {
 
 	it('should not be able to change email with an invalid password', async () => {
 		const password = 'wrong';
-		const email = 'blabla@blou.de';
+		const email = 'blaasdbla@blou.de';
 
 		try {
 			await changeEmail(undefined, { email, password }, fakectx);
