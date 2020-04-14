@@ -33,7 +33,7 @@ const AccountSelectionForm = ({ accounts, address, className, onAccountChange, t
 			defaultAddress={address || accounts[0]?.address}
 			onAccountChange={onAccountChange}
 		/>
-		{balance &&
+		{withBalance &&
 			<Balance address={address} />
 		}
 	</Form.Field>;
