@@ -38,7 +38,7 @@ const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHR
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
-const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
+export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
