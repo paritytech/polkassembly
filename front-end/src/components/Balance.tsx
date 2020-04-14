@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { DeriveBalancesAccount } from '@polkadot/api-derive/types';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import formatBnBalance from 'src/util/formatBnBalance';
 
@@ -10,9 +11,10 @@ import { ApiContext } from '../context/ApiContext';
 
 interface Props {
 	address: string
+	className?: string
 }
 
-const Balance = ({ address }: Props) => {
+const Balance = ({ address, className }: Props) => {
 	const [balance, setBalance] = useState<string>('0');
 	const { api } = useContext(ApiContext);
 
@@ -34,10 +36,17 @@ const Balance = ({ address }: Props) => {
 	}, [address, api]);
 
 	return (
-		<div className='text-muted'>
-			{formatBnBalance(balance, { numberAfterComma: 2, withUnit: true })} available.
+		<div className={className}>
+			<span>{formatBnBalance(balance, { numberAfterComma: 2, withUnit: true })}</span> available.
 		</div>
 	);
 };
 
-export default Balance;
+export default styled(Balance)`
+	color: black_text;
+
+	span {
+		color: black_primary;
+		font-weight: 500;
+	}
+`;

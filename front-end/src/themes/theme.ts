@@ -31,9 +31,9 @@ export const theme = {
 		input_text_size: '1.3rem',
 		lg: '1.8rem',
 		md: '1.5rem',
-		sm: '1.2rem',
+		sm: '1.3rem',
 		xl: '3rem',
-		xs: '1.1rem'
+		xs: '1.2rem'
 	},
 	fonts: {
 		font_default: 'Roboto',

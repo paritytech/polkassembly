@@ -34,7 +34,7 @@ const AccountSelectionForm = ({ accounts, address, className, onAccountChange, t
 			onAccountChange={onAccountChange}
 		/>
 		{withBalance &&
-			<Balance address={address} />
+			<Balance address={address} className='balance'/>
 		}
 	</Form.Field>;
 
@@ -53,5 +53,9 @@ export default styled(AccountSelectionForm)`
 
 	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
 		border-color: grey_light;
+	}
+
+	.balance {
+		text-align: right;
 	}
 `;
