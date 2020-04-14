@@ -121,6 +121,6 @@ export default styled(ReferendumVoteInfo)`
 	margin-bottom: 1rem;
 
 	.vote-progress {
-		margin-bottom: 4rem;
+		margin-bottom: 5rem;
 	}
 `;

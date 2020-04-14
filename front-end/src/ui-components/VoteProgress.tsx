@@ -73,7 +73,7 @@ export default styled(VoteProgress)`
 
 	hr {
 		width: 0.2rem;
-		height: 1.5rem;
+		height: 2rem;
 		border: none;
 		background-color: grey_secondary;
 		margin: -0.2rem 0 0 0;
