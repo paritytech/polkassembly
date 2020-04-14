@@ -16,7 +16,7 @@ interface Props{
 	title: string
 	accounts: InjectedAccountWithMeta[]
 	address: string
-	balance?: boolean
+	withBalance?: boolean
 	className?: string;
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
