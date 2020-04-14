@@ -7,10 +7,9 @@ import React, { useContext, useEffect,useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
+import Card from 'src/ui-components/Card';
 import formatBnBalance from 'src/util/formatBnBalance';
 import getNetwork from 'src/util/getNetwork';
-
-import Card from 'src/ui-components/Card';
 
 interface Props {
 	className?: string
