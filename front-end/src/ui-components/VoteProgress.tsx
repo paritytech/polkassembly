@@ -84,7 +84,7 @@ export default styled(VoteProgress)`
 
 	.nay {
 		position: absolute;
-		left: calc(66% + 10px);
+		right: 0;
 	}
 
 	#passingThreshold {
