@@ -2,9 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
 import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
-import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
 import { MarkdownEditor } from '../ui-components/MarkdownEditor';
@@ -13,17 +13,19 @@ import messages from '../util/messages';
 interface Props {
 	className?: string
 	errorContent?: FieldError | NestDataObject<any> | NestDataObject<any>[] | FieldError[] | undefined
+	height?: number
 	onChange?: (content: string) => void
 	value?: string
 }
 
-const ContentForm = ({ className, value, errorContent, onChange }:Props): JSX.Element => {
+const ContentForm = ({ className, errorContent, height, onChange, value }: Props): JSX.Element => {
 
 	return (
 		<div className={className}>
 			<Form.Group className={errorContent? 'error':''}>
 				<MarkdownEditor
 					className={ errorContent? 'error':''}
+					height={height}
 					name={'content'}
 					onChange={onChange}
 					value={value || ''}
@@ -53,9 +55,9 @@ export default styled(ContentForm)`
 		font-size: 1.4rem;
 	}
 
-	.react-mde.error > textarea {
-		border-style: solid;
-		border-width: 1px;
+	.react-mde.error > .mde-textarea-wrapper > textarea {
+		border-style: solid !important;
+		border-width: 1px !important;
 		border-color: red_secondary !important;
 	}
 
