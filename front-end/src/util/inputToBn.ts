@@ -22,13 +22,14 @@ function getGlobalMaxValue (): BN {
 }
 
 function isValidNumber (bn: BN, isZeroable?: boolean): boolean {
+	const bnEqZero = !isZeroable && bn.eq(ZERO);
 	if (
 		// cannot be negative
 		bn.lt(ZERO) ||
         // cannot be > than allowed max
         !bn.lt(getGlobalMaxValue()) ||
         // check if 0 and it should be a value
-        !isZeroable && bn.eq(ZERO) ||
+        bnEqZero ||
         // check that the bitlengths fit
         bn.bitLength() > BITLENGTH
 	) {
