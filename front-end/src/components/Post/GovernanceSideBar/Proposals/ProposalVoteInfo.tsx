@@ -10,7 +10,7 @@ import { chainProperties } from 'src/global/networkConstants';
 import formatBnBalance from 'src/util/formatBnBalance';
 import getNetwork from 'src/util/getNetwork';
 
-import Card from '../../../../ui-components/Card';
+import Card from 'src/ui-components/Card';
 
 interface Props {
 	className?: string
