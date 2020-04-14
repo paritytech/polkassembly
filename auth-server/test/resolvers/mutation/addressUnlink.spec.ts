@@ -2,21 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
+
 import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 
-import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
+import User from '../../../src/model/User';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressUnlink mutation', () => {
-	let signupResult;
-	let dbAddress;
+	let signupResult: any;
+	let dbAddress: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -31,7 +32,7 @@ describe('addressUnlink mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 
 		const keyring = new Keyring({ type: 'sr25519' });
@@ -63,7 +64,7 @@ describe('addressUnlink mutation', () => {
 		const wrongAddress = 'aaaata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upaaaa';
 
 		try {
-			await addressUnlink(null, { address: wrongAddress }, fakectx);
+			await addressUnlink(undefined, { address: wrongAddress }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
@@ -72,10 +73,10 @@ describe('addressUnlink mutation', () => {
 	});
 
 	it('should be able to unlink an address', async () => {
-		const res = await addressUnlink(null, { address: dbAddress.address }, fakectx);
+		const res = await addressUnlink(undefined, { address: dbAddress?.address }, fakectx);
 		const dbAddressRes = await Address
 			.query()
-			.findById(dbAddress.id);
+			.findById(dbAddress?.id);
 
 		expect(dbAddressRes).to.not.exist;
 		expect(res.message).to.be.equal(messages.ADDRESS_UNLINKING_SUCCESS);
@@ -85,7 +86,7 @@ describe('addressUnlink mutation', () => {
 		fakectx.req.headers.authorization = 'Bearer wrong';
 
 		try {
-			await addressUnlink(null, { address: dbAddress.address }, fakectx);
+			await addressUnlink(undefined, { address: dbAddress?.address }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

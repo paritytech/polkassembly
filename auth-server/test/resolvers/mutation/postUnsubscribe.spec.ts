@@ -23,10 +23,7 @@ describe('post unSubscribe mutation', () => {
 		},
 		res: {
 			header: { 'refresh_token' : '' },
-			cookie: function(name, value){
-				// eslint-disable-next-line security/detect-object-injection
-				this.header[name] = value;
-			}
+			cookie: () => {}
 		}
 	} as any;
 
@@ -37,10 +34,10 @@ describe('post unSubscribe mutation', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
 
-		await postSubscribe(null, { post_id }, fakectx);
+		await postSubscribe(undefined, { post_id }, fakectx);
 	});
 
 	after(async () => {
@@ -51,7 +48,7 @@ describe('post unSubscribe mutation', () => {
 	});
 
 	it('should be able to unsubscribe from a post', async () => {
-		const res = await postUnsubscribe(null, { post_id }, fakectx);
+		const res = await postUnsubscribe(undefined, { post_id }, fakectx);
 
 		const dbSubscription = await PostSubscription
 			.query()
@@ -66,7 +63,7 @@ describe('post unSubscribe mutation', () => {
 	});
 
 	it('should not be able to unsubscribe a second time', async () => {
-		const result = await postUnsubscribe(null, { post_id }, fakectx);
+		const result = await postUnsubscribe(undefined, { post_id }, fakectx);
 
 		expect(result.message).to.equals(messages.SUBSCRIPTION_DOES_NOT_EXIST);
 	});
@@ -75,7 +72,7 @@ describe('post unSubscribe mutation', () => {
 		const fakectx_wrong_jwt = fakectx;
 		fakectx_wrong_jwt.req.headers.authorization = 'Bearer wrong';
 		try {
-			await postUnsubscribe(null, { post_id }, fakectx_wrong_jwt);
+			await postUnsubscribe(undefined, { post_id }, fakectx_wrong_jwt);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
