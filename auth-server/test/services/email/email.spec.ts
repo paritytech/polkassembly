@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
 import { expect } from 'chai';
-import uuid from 'uuid';
+import { uuid } from 'uuidv4';
 
 import rewiremock from 'rewiremock';
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
@@ -102,7 +102,7 @@ xdescribe('Email Service', () => {
 		expect(message.to).to.equals('test@email.com');
 		expect(message.from).to.equals('noreply@polkassembly.io');
 		expect(message.subject).to.equals('Reset Your Password');
-		expect(message.html).to.contains(`reset-password?token=${token.token}`);
+		expect(message.html).to.contains(`reset-password?token=${token}`);
 
 		await User
 			.query()
