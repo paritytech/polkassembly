@@ -53,10 +53,14 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 			/>
 			<div
 				id='passingThreshold'
-				style={{ left: passingThresholdPercent + '%', position: 'absolute' }}
+				style={{ left: passingThresholdPercent + '%' }}
 			>
 				<hr/>
-				Threshold: {bnToStringBalanceDelimitor(passingThreshold)} {tokenSymbol}
+				<div
+					className={ passingThresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
+				>
+					Threshold: {bnToStringBalanceDelimitor(passingThreshold)} {tokenSymbol}
+				</div>
 			</div>
 		</div>
 	);
@@ -89,9 +93,21 @@ export default styled(VoteProgress)`
 
 	#passingThreshold {
 		display: inline-block;
+		position: absolute;
+		white-space: nowrap;
 		color: grey_primary;
 		font-size: sm;
 		margin-top: -1rem;
+	}
+
+	.threshold-left {
+		position: absolute;
+		left: 0;
+	}
+
+	.threshold-right {
+		position: absolute;
+		right: 0;
 	}
 
     .ui.progress {
