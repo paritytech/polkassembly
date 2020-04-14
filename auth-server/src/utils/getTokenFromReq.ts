@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { Request } from 'express';
 import { AuthenticationError } from 'apollo-server';
+import { Request } from 'express';
 
 /**
  * Get Token from request

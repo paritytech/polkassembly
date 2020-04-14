@@ -79,6 +79,8 @@ async function main (): Promise<void> {
 		variables: { startBlock }
 	}).subscribe({
 		next: ({ data }): void => {
+			console.log('Treasury data received', JSON.stringify(data, null, 2));
+
 			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
 				const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
 				treasuryProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
@@ -102,6 +104,8 @@ async function main (): Promise<void> {
 		variables: { startBlock }
 	}).subscribe({
 		next: ({ data }): void => {
+			console.log('Motion data received', JSON.stringify(data, null, 2));
+
 			if (data?.motion.mutation === subscriptionMutation.Created) {
 				const { author, motionProposalId, motionProposalArguments, section } = data.motion.node;
 				motionDiscussionExists(motionProposalId).then(alreadyExist => {
@@ -134,6 +138,8 @@ async function main (): Promise<void> {
 		variables: { startBlock }
 	}).subscribe({
 		next: ({ data }): void => {
+			console.log('Proposal data received', JSON.stringify(data, null, 2));
+
 			if (data?.proposal.mutation === subscriptionMutation.Created) {
 				const { proposalId, author } = data.proposal.node;
 				proposalDiscussionExists(proposalId).then(alreadyExist => {
@@ -157,6 +163,8 @@ async function main (): Promise<void> {
 		variables: { startBlock }
 	}).subscribe({
 		next: ({ data }): void => {
+			console.log('Referendum data received', JSON.stringify(data, null, 2));
+
 			if (data?.referendum.mutation === subscriptionMutation.Created) {
 				const {
 					preimageHash,

@@ -14,9 +14,11 @@ import addressLogin from '../../../src/resolvers/mutation/addressLogin';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { redisSetex, redisGet } from '../../../src/redis';
+import { ADDRESS_LOGIN_TTL } from '../../../src/services/auth';
 
 describe('addressLogin mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -35,10 +37,10 @@ describe('addressLogin mutation', () => {
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 
-		const linkStartRes = await addressLinkStart(null, { network, address }, fakectx);
+		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
 		await Address
 			.query()
@@ -47,7 +49,10 @@ describe('addressLogin mutation', () => {
 			})
 			.findById(linkStartRes.address_id);
 
-		await addressLinkConfirm(null, { signature, address_id: linkStartRes.address_id }, fakectx);
+		await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
+
+		// mock the addressLoginStart
+		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
 	});
 
 	after(async () => {
@@ -62,10 +67,22 @@ describe('addressLogin mutation', () => {
 			.del();
 	});
 
-	it('should be able to login with addresss', async () => {
-		const signature = '0x4a6b16e017b6dd5ed35ad46ab751ff89358ed4e77a86e67e3946355b4ea53872cc0fd504f96860ef371a2ade186d8852d34b3fe651540054306099e8082dd68e';
+	it('should not be able to login with invalid signature', async () => {
+		const signature = '0xaaaa';
 
-		const result = await addressLogin(null, { address, signature }, fakectx);
+		try {
+			await addressLogin(undefined, { address, signature }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_LOGIN_INVALID_SIGNATURE);
+		}
+	});
+
+	it('should be able to login with addresss', async () => {
+		const signature = '0x20ecf8208acc2e357ec98af1cde7d446b6458483c33c23a3da16e9a7bd5ec56ffeec92d0da02c53e71d164f6e8b69a29b58f47ab4ffb11db429f65b479b65189';
+
+		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
 		expect(result.user.id).to.exist;
 		expect(result.user.id).to.a('number');
@@ -76,11 +93,11 @@ describe('addressLogin mutation', () => {
 		expect(result.token).to.be.a('string');
 	});
 
-	it('should not be able to login with invalid signature', async () => {
-		const signature = '0xaaaa';
+	it('should not be able to login with the same signed message again', async () => {
+		const signature = '0x20ecf8208acc2e357ec98af1cde7d446b6458483c33c23a3da16e9a7bd5ec56ffeec92d0da02c53e71d164f6e8b69a29b58f47ab4ffb11db429f65b479b65189';
 
 		try {
-			await addressLogin(null, { address, signature }, fakectx);
+			await addressLogin(undefined, { address, signature }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

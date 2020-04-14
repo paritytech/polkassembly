@@ -13,7 +13,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('requestResetPassword mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -28,7 +28,7 @@ describe('requestResetPassword mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 	});
 
 	after(async () => {
@@ -39,7 +39,8 @@ describe('requestResetPassword mutation', () => {
 	});
 
 	it('should be able to request a password reset', async () => {
-		const res = await requestResetPassword(null, { email });
+
+		const res = await requestResetPassword(undefined, { email });
 
 		expect(res.message).to.eq(messages.RESET_PASSWORD_RETURN_MESSAGE);
 	});
@@ -48,7 +49,7 @@ describe('requestResetPassword mutation', () => {
 		const email = 'wrong@email';
 
 		try {
-			await requestResetPassword(null, { email });
+			await requestResetPassword(undefined, { email });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

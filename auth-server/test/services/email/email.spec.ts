@@ -44,7 +44,7 @@ xdescribe('Email Service', () => {
 
 		rewiremock('@sendgrid/mail').with({
 			setApiKey: noop,
-			send: (msg) => {
+			send: (msg: any) => {
 				message = msg;
 				return Promise.resolve();
 			}
@@ -88,7 +88,7 @@ xdescribe('Email Service', () => {
 
 		rewiremock('@sendgrid/mail').with({
 			setApiKey: noop,
-			send: (msg) => {
+			send: (msg: any) => {
 				message = msg;
 				return Promise.resolve();
 			}

@@ -14,8 +14,8 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('undoEmailChange mutation', () => {
-	let signupResult;
-	let undoToken;
+	let signupResult: any;
+	let undoToken: any;
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -28,7 +28,7 @@ describe('undoEmailChange mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 
 		undoToken = await UndoEmailChangeToken
 			.query()
@@ -54,21 +54,21 @@ describe('undoEmailChange mutation', () => {
 	});
 
 	it('should be able to undo email change with valid token', async () => {
-		const res = await undoEmailChange(null, { token: undoToken.token });
+		const res = await undoEmailChange(undefined, { token: undoToken?.token });
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.email).to.equal(undoToken.email);
+		expect(dbUser?.email).to.equal(undoToken?.email);
 		expect(res.message).to.eq(messages.EMAIL_UNDO_SUCCESSFUL);
 		expect(res.token).to.exist;
 	});
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await undoEmailChange(null, { token: uuid() });
+			await undoEmailChange(undefined, { token: uuid() });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

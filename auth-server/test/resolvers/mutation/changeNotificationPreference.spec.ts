@@ -13,7 +13,7 @@ import messages from '../../../src/utils/messages';
 import User from '../../../src/model/User';
 
 describe('changeNotificationPreference mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -28,7 +28,7 @@ describe('changeNotificationPreference mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
@@ -50,14 +50,14 @@ describe('changeNotificationPreference mutation', () => {
 			.where({ user_id: signupResult.user.id })
 			.first();
 
-		expect(notification.post_participated).to.be.true;
-		expect(notification.post_created).to.be.true;
-		expect(notification.new_proposal).to.be.false;
-		expect(notification.own_proposal).to.be.true;
+		expect(notification?.post_participated).to.be.true;
+		expect(notification?.post_created).to.be.true;
+		expect(notification?.new_proposal).to.be.false;
+		expect(notification?.own_proposal).to.be.true;
 	});
 
 	it('should be able to change Notification Preference', async () => {
-		await changeNotificationPreference(null, {
+		await changeNotificationPreference(undefined, {
 			notificationPreferences: {
 				postParticipated: false,
 				postCreated: false,
@@ -71,16 +71,16 @@ describe('changeNotificationPreference mutation', () => {
 			.where({ user_id: signupResult.user.id })
 			.first();
 
-		expect(notification.post_participated).to.be.false;
-		expect(notification.post_created).to.be.false;
-		expect(notification.new_proposal).to.be.true;
-		expect(notification.own_proposal).to.be.false;
+		expect(notification?.post_participated).to.be.false;
+		expect(notification?.post_created).to.be.false;
+		expect(notification?.new_proposal).to.be.true;
+		expect(notification?.own_proposal).to.be.false;
 	});
 
 	it('should not be able to change Notification Preference with wrong jwt', async () => {
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changeNotificationPreference(null, {
+			await changeNotificationPreference(undefined, {
 				notificationPreferences: {
 					postParticipated: false,
 					postCreated: false,

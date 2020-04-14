@@ -9,7 +9,7 @@ import { Response } from 'express';
  * @param res http response
  * @param refreshToken refres token string
  */
-export default (res: Response, refreshToken: string) => {
+export default (res: Response, refreshToken: string): void => {
 	res.cookie(
 		'refresh_token',
 		refreshToken,

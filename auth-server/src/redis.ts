@@ -4,6 +4,10 @@
 
 import * as redis from 'redis';
 
+if (!process.env.REDIS_URL) {
+	throw new Error('REDIS_URL is not set');
+}
+
 export const client = redis.createClient(process.env.REDIS_URL);
 
 /**
@@ -14,7 +18,7 @@ export const client = redis.createClient(process.env.REDIS_URL);
  * @returns values string
  */
 export const redisGet = (key: string): Promise<string> => new Promise((resolve, reject) => {
-	client.get(key, (err, value) => {
+	client.get(key, (err: Error | null, value: string) => {
 		if (err) {
 			return reject(err);
 		}
@@ -30,7 +34,7 @@ export const redisGet = (key: string): Promise<string> => new Promise((resolve, 
  * @param value string
  */
 export const redisSet = (key: string, value: string): Promise<string> => new Promise((resolve, reject) => {
-	client.set(key, value, (err, reply) => {
+	client.set(key, value, (err: Error | null, reply: string) => {
 		if (err) {
 			return reject(err);
 		}
@@ -47,7 +51,7 @@ export const redisSet = (key: string, value: string): Promise<string> => new Pro
  * @param value string
  */
 export const redisSetex = (key: string, ttl: number, value: string): Promise<string> => new Promise((resolve, reject) => {
-	client.setex(key, ttl, value, (err, reply) => {
+	client.setex(key, ttl, value, (err: Error | null, reply: string) => {
 		if (err) {
 			return reject(err);
 		}
