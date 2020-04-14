@@ -4,11 +4,10 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { rewiremock } from '../../rewiremock';
 import users from '../../../src/resolvers/query/users';
 import User from '../../../src/model/User';
 
-describe('user query', () => {
+describe('users query', () => {
 	let dbUsers: User[] = [];
 	const email = 'test@email.com';
 	const password = 'testpass';
@@ -18,7 +17,7 @@ describe('user query', () => {
 	const email_verified = false;
 
 	before(async () => {
-		for (let i = 0; i < 15; i++) {
+		for (let i = 0; i < 102; i++) {
 			dbUsers.push(await User
 				.query()
 				.allowInsert('[email, password, username, name]')
@@ -50,7 +49,7 @@ describe('user query', () => {
 		});
 	});
 
-	it('should return users for particular page', async () => {
+	it('should return users for a particular page', async () => {
 		const result = await users(undefined, { limit: 5, page: 2 });
 
 		result.forEach((user, i) => {
@@ -59,25 +58,8 @@ describe('user query', () => {
 	});
 
 	it('should limit users to 100 if > 100 is requested', async () => {
-		let calledLimit = 0;
-		rewiremock(() => require('../../../src/model/User')).with({
-			default: {
-				query: () => ({
-					offset: () => ({
-						limit: (limit: number) => {
-							calledLimit = limit;
-							return [];
-						}
-					})
-				})
-			}
-		});
-		rewiremock.enable();
-		const users = require('../../../src/resolvers/query/users');
-		rewiremock.disable();
+		const result = await users(undefined, { limit: 101, page: 1 });
 
-		await users.default(undefined, { limit: 101 });
-
-		expect(calledLimit).to.equal(100);
+		expect(result.length).to.equal(100);
 	});
 });
