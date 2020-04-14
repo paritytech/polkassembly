@@ -23,10 +23,6 @@ export default class User extends Model {
 		return 'users';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	verifyPassword (password: string): Promise<boolean> {
 		return argon2.verify(this.password, password);
 	}

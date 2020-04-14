@@ -24,10 +24,6 @@ export default class ContentReport extends Model {
 		return 'content_report';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

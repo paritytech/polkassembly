@@ -20,10 +20,6 @@ export default class PasswordResetToken extends Model {
 		return 'password_reset_token';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

@@ -19,10 +19,6 @@ export default class EmailVerificationToken extends Model {
 		return 'email_verification_token';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

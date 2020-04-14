@@ -18,10 +18,6 @@ export default class PostSubscription extends Model {
 		return 'post_subscription';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

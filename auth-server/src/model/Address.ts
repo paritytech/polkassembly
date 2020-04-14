@@ -22,10 +22,6 @@ export default class Address extends Model {
 		return 'address';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

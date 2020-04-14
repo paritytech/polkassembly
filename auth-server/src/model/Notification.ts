@@ -21,10 +21,6 @@ export default class Notification extends Model {
 		return 'notification';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {

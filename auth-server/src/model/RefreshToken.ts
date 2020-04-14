@@ -20,10 +20,6 @@ export default class RefreshToken extends Model {
 		return 'refresh_tokens';
 	}
 
-	static get idColumn (): string {
-		return 'id';
-	}
-
 	static get jsonSchema (): JsonSchema {
 		return {
 			properties: {
