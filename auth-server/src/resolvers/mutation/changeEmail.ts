@@ -10,7 +10,7 @@ import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
 
-export default async (parent: void, { email }: ChangeEmailArgs, ctx: Context): Promise<ChangeResponseType> => {
+export default async (parent: void, { email, password }: ChangeEmailArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
 	if (!validateEmail(email)) {
@@ -18,7 +18,7 @@ export default async (parent: void, { email }: ChangeEmailArgs, ctx: Context): P
 	}
 
 	const authServiceInstance = new AuthService();
-	const updatedJWT = await authServiceInstance.ChangeEmail(token, email);
+	const updatedJWT = await authServiceInstance.ChangeEmail(token, email, password);
 
 	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL, token: updatedJWT };
 };

@@ -5,5 +5,6 @@
 export default `
     changeUsername(
         username: String!
+        password: String!
     ): ChangeResponse
 `;
