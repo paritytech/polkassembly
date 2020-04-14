@@ -21,7 +21,7 @@ interface Props{
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const AccountSelectionForm = ({ title, accounts, address, balance, className, onAccountChange }: Props) =>
+const AccountSelectionForm = ({ accounts, address, className, onAccountChange, title, withBalance = false }: Props) =>
 	<Form.Field className={className} width={16}>
 		<label>{title}
 			<HelperTooltip
