@@ -69,9 +69,12 @@
     "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
     // "skipLibCheck": true,                     /* Skip checking .d.ts files for errors */
     "pretty": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "noEmit": false
   },
   "include": [
-    "./src/**/*", "knexfile.ts"
+    "./src/**/*", "knexfile.ts", "./test/**/*"
   ],
   "exclude": [
     "node_modules"

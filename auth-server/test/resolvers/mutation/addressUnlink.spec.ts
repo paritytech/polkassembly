@@ -2,13 +2,14 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
+
 import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 
-import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
+import User from '../../../src/model/User';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
