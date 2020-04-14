@@ -61,6 +61,19 @@ describe('changeUsername mutation', () => {
 		}
 	});
 
+	it('should not be able to change username with wrong password', async () => {
+		const password = 'wrong';
+		const username = 'newuser';
+
+		try {
+			await changeUsername(undefined, { username, password }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
+		}
+	});
+
 	it('should not be able to change name with wrong jwt', async () => {
 		const username = 'newusername';
 		fakectx.req.headers.authorization = 'Bearer wrong';
@@ -106,18 +119,6 @@ describe('changeUsername mutation', () => {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
 			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
-		}
-	});
-
-	it('should not be able to change username with wrong password', async () => {
-		const password = 'wrong';
-
-		try {
-			await changeUsername(undefined, { username, password }, fakectx);
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(UserInputError);
-			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
 		}
 	});
 });

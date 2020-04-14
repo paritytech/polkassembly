@@ -70,6 +70,19 @@ describe('changeEmail mutation', () => {
 		expect(undoToken[0].token).to.not.be.empty;
 	});
 
+	it('should not be able to change email with an invalid password', async () => {
+		const password = 'wrong';
+		const email = 'blabla@blou.de';
+
+		try {
+			await changeEmail(undefined, { email, password }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
+		}
+	});
+
 	it('should not be able to change email with an invalid jwt', async () => {
 		const email = 'blabla@blou.de';
 		fakectx.req.headers.authorization = 'Bearer wrong';
@@ -121,17 +134,5 @@ describe('changeEmail mutation', () => {
 
 		expect(token).to.exist;
 		expect(message).to.equal(messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL);
-	});
-
-	it('should not be able to change email with an invalid password', async () => {
-		const password = 'wrong';
-
-		try {
-			await changeEmail(undefined, { email, password }, fakectx);
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(UserInputError);
-			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
-		}
 	});
 });
