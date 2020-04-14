@@ -4,22 +4,16 @@
 
 import { gql } from 'apollo-server-express';
 
-import notification from './query/notification';
-import userQuery from './query/user';
-import usersQuery from './query/users';
-import subscription from './query/subscription';
-import tokenQuery from './query/token';
-
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
 import addressLoginStart from './mutation/addressLoginStart';
 import addressUnlink from './mutation/addressUnlink';
-import changeUsernameMutation from './mutation/changeUsername';
 import changeEmailMutation from './mutation/changeEmail';
-import changePasswordMutation from './mutation/changePassword';
 import changeNameMutation from './mutation/changeName';
 import changeNotificationPreference from './mutation/changeNotificationPreference';
+import changePasswordMutation from './mutation/changePassword';
+import changeUsernameMutation from './mutation/changeUsername';
 import loginMutation from './mutation/login';
 import logoutMutation from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
@@ -31,10 +25,14 @@ import resetPassword from './mutation/resetPassword';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
-
+import notification from './query/notification';
+import subscription from './query/subscription';
+import tokenQuery from './query/token';
+import userQuery from './query/user';
+import usersQuery from './query/users';
+import address from './type/address';
 import addressLinkType from './type/addressLinkType';
 import addressLoginType from './type/addressLoginType';
-import address from './type/address';
 import changeResponseType from './type/changeResponse';
 import loginResponseType from './type/loginResponse';
 import messageType from './type/message';

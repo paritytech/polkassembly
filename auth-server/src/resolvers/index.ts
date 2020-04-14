@@ -7,11 +7,11 @@ import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
 import addressLoginStart from './mutation/addressLoginStart';
 import addressUnlink from './mutation/addressUnlink';
-import changeUsername from './mutation/changeUsername';
 import changeEmail from './mutation/changeEmail';
+import changeName from './mutation/changeName';
 import changeNotificationPreference from './mutation/changeNotificationPreference';
 import changePassword from './mutation/changePassword';
-import changeName from './mutation/changeName';
+import changeUsername from './mutation/changeUsername';
 import login from './mutation/login';
 import logout from './mutation/logout';
 import postSubscribe from './mutation/postSubscribe';
@@ -23,40 +23,39 @@ import resetPassword from './mutation/resetPassword';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
-
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';
 import users from './query/users';
 
 export default {
-	Query: {
-		subscription,
-		token,
-		user,
-		users
-	},
 	Mutation: {
 		addressLinkConfirm,
 		addressLinkStart,
 		addressLogin,
 		addressLoginStart,
 		addressUnlink,
-		login,
-		logout,
-		signup,
-		changeUsername,
 		changeEmail,
+		changeName,
 		changeNotificationPreference,
 		changePassword,
-		changeName,
+		changeUsername,
+		login,
+		logout,
 		postSubscribe,
 		postUnsubscribe,
 		reportContent,
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		signup,
 		undoEmailChange,
 		verifyEmail
+	},
+	Query: {
+		subscription,
+		token,
+		user,
+		users
 	}
 };

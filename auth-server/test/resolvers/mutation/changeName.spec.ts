@@ -12,7 +12,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('changeName mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -27,7 +27,7 @@ describe('changeName mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
@@ -40,14 +40,14 @@ describe('changeName mutation', () => {
 
 	it('should be able to change name', async () => {
 		const newName = 'new name';
-		const res = await changeName(null, { newName }, fakectx);
+		const res = await changeName(undefined, { newName }, fakectx);
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.name).to.be.equal(newName);
+		expect(dbUser?.name).to.be.equal(newName);
 		expect(res.message).to.eq(messages.NAME_CHANGED_SUCCESSFULLY);
 	});
 
@@ -55,7 +55,7 @@ describe('changeName mutation', () => {
 		const newName = 'new name that is waaaaayyyyyyyy too long';
 
 		try {
-			await changeName(null, { newName }, fakectx);
+			await changeName(undefined, { newName }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -67,7 +67,7 @@ describe('changeName mutation', () => {
 		const newName = 'a';
 
 		try {
-			await changeName(null, { newName }, fakectx);
+			await changeName(undefined, { newName }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -79,7 +79,7 @@ describe('changeName mutation', () => {
 		const newName = 'new name';
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changeName(null, { newName }, fakectx);
+			await changeName(undefined, { newName }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

@@ -4,52 +4,40 @@
 
 import * as argon2 from 'argon2';
 import { Model } from 'objection';
+
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
 
 export default class User extends Model {
 	readonly id!: number
-	username!: string
 	email!: string
+	email_verified: boolean | undefined
 	password!: string
 	salt!: string
 	name!: string
-	email_verified: boolean
+	username!: string
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'users';
 	}
 
-	static get idColumn () {
-		return 'id';
-	}
-
-	getUser () {
-		return {
-			email: this.email,
-			id: this.id,
-			name: this.name,
-			username: this.username,
-			email_verified: this.email_verified
-		};
-	}
-
-	verifyPassword (password) {
+	verifyPassword (password: string): Promise<boolean> {
 		return argon2.verify(this.password, password);
 	}
 
-	static get jsonSchema () {
+	static get jsonSchema (): JsonSchema {
 		return {
-			type: 'object',
-			required: ['username'],
 			properties: {
+				email: { maxLength: 255, type: 'string' },
+				email_verified: { type: 'boolean' },
 				id: { type: 'integer' },
-				username: { type: 'string', minLength: 1, maxLength: 255 },
-				email: { type: 'string', maxLength: 255 },
-				name: { type: 'string', maxLength: 512 },
-				email_verified: { type: 'boolean' }
-			}
+				name: { maxLength: 512, type: 'string' },
+				username: { maxLength: 255, minLength: 1, type: 'string' }
+			},
+			required: ['username'],
+			type: 'object'
 		};
 	}
 }

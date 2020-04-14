@@ -13,7 +13,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('changePassword mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -28,7 +28,7 @@ describe('changePassword mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
@@ -46,20 +46,20 @@ describe('changePassword mutation', () => {
 			.where({ id: signupResult.user.id })
 			.first();
 
-		await changePassword(null, { oldPassword: password, newPassword }, fakectx);
+		await changePassword(undefined, { oldPassword: password, newPassword }, fakectx);
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.password).to.not.equal(oldDbUser.password);
+		expect(dbUser?.password).to.not.equal(oldDbUser?.password);
 	});
 
 	it('should be able to login with the new password', async () => {
 		const newPassword = 'newpass';
 
-		const result = await login(null, { password: newPassword, username }, fakectx);
+		const result = await login(undefined, { password: newPassword, username }, fakectx);
 		expect(result.user.id).to.exist;
 		expect(result.user.id).to.a('number');
 		expect(result.user.email).to.equal(email);
@@ -73,7 +73,7 @@ describe('changePassword mutation', () => {
 		const newPassword = 'newpass';
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changePassword(null, { oldPassword: password, newPassword }, fakectx);
+			await changePassword(undefined, { oldPassword: password, newPassword }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -84,7 +84,7 @@ describe('changePassword mutation', () => {
 	it('should not be able to change for a short password', async () => {
 		const newPassword = 'newpa';
 		try {
-			await changePassword(null, { oldPassword: password, newPassword }, fakectx);
+			await changePassword(undefined, { oldPassword: password, newPassword }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

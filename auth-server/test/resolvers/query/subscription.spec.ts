@@ -2,28 +2,26 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
+
 import { expect } from 'chai';
 
 import User from '../../../src/model/User';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
-import subscription from '../../../src/resolvers/query/subscription';
 import signup from '../../../src/resolvers/mutation/signup';
+import subscription from '../../../src/resolvers/query/subscription';
 import { Context, SignUpResultType } from '../../../src/types';
 
 describe('post subscription query', () => {
-	let signupResult : SignUpResultType;
+	let signupResult: SignUpResultType;
 
-	let fakectx: Context = {
+	const fakectx: Context = {
 		req: {
 			headers: {},
 			cookies: {}
 		},
 		res: {
-			header: { 'refresh_token' : '' },
-			cookie: function(name, value){
-				// eslint-disable-next-line security/detect-object-injection
-				this.header[name] = value;
-			}
+			header: { refresh_token: '' },
+			cookie: () => {}
 		}
 	} as any;
 
@@ -34,7 +32,7 @@ describe('post subscription query', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
 	});
 
@@ -46,9 +44,9 @@ describe('post subscription query', () => {
 	});
 
 	it('should be able to check if user is subscribed to a post', async () => {
-		await postSubscribe(null, { post_id }, fakectx);
+		await postSubscribe(undefined, { post_id }, fakectx);
 
-		const result = await subscription(null, { post_id }, fakectx);
+		const result = await subscription(undefined, { post_id }, fakectx);
 
 		expect(result.subscribed).to.be.true;
 	});
