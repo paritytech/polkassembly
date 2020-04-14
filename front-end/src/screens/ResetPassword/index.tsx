@@ -21,7 +21,7 @@ interface Props {
 const ResetPassword = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
 	const { token } = router.query;
-	const userId = Number((new URLSearchParams(window.location.search)).get("user_id"));
+	const userId = Number(new URLSearchParams(window.location.search).get('user_id'));
 	const [newPassword, setNewPassword ] = useState('');
 	const { queueNotification } = useContext(NotificationContext);
 	const [resetPassword, { loading, error }] = useResetPasswordMutation({
