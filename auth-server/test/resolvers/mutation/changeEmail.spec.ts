@@ -131,7 +131,7 @@ describe('changeEmail mutation', () => {
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
-			expect(error.message).to.eq(messages.INVALID_EMAIL);
+			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
 		}
 	});
 });
