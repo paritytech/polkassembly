@@ -24,7 +24,7 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 	return (
 		<div className={className}>
 			{postStatus && <StatusTag className='post_tags' status={postStatus}/>}
-			<h2>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h2>
+			<h2 className={postStatus ? 'onchain-title' : ''}>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h2>
 			<div className='post_info'>
 				{onchainId || onchainId === 0 ?
 					null :
@@ -53,7 +53,7 @@ export default styled(PostContent)`
 	position: relative;
 	margin-bottom: 3rem;
 
-	h2 {
+	.onchain-title {
 		max-width: calc(100% - 10rem);
 
 		@media only screen and (max-width: 576px) {
