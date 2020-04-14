@@ -133,7 +133,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 							title='Vote with account'
 							accounts={accounts}
 							address={address}
-							balance={api && true}
+							withBalance
 							onAccountChange={onAccountChange}
 						/>
 						<BalanceInput
