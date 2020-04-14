@@ -14,7 +14,7 @@ import resetPassword from '../../../src/resolvers/mutation/resetPassword';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getPwdResetTokenKey } from '../../../src/services/auth';
-import { redisGet, redisDel } from '../../../src/redis';
+import { redisGet } from '../../../src/redis';
 
 describe('requestResetPassword mutation', () => {
 	let signupResult: any;
@@ -101,8 +101,6 @@ describe('requestResetPassword mutation', () => {
 	});
 
 	it('should not be able to change password with token that was used already', async () => {
-		await redisDel(getPwdResetTokenKey(signupResult.user.id));
-
 		try {
 			await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword });
 		} catch (error) {
