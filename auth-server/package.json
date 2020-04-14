@@ -6,7 +6,7 @@
     "test": "docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test . && docker-compose -f docker-compose-test.yaml up --renew-anon-volumes --abort-on-container-exit --exit-code-from auth-test",
     "test:dangerous": "yarn migrate && mocha -r ts-node/register test/**/*.spec.ts --exit",
     "start": "yarn tsc && yarn migrate && node build/src/index.js",
-    "lint": "npx eslint ./src/ --ext .js,.ts",  
+    "lint": "npx eslint ./src/ --ext .js,.ts", 
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "tsc": "tsc",
     "migrate": "knex migrate:latest"
