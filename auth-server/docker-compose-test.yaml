@@ -20,6 +20,7 @@ services:
     restart: "no"
     depends_on:
       - "postgres-test"
+      - "redis"
     environment:
       NODE_ENV: test
       TEST_DATABASE_URL: "postgres://postgres:postgres@postgres-test:5433/governance-auth-test"
