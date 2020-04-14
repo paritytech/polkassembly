@@ -7,13 +7,12 @@ import { UserInputError } from 'apollo-server';
 import messages from './messages';
 
 export default (name: string): void => {
-
 	// empty name are accepted
 	if (name === '') {
 		return;
 	}
 
-	if (name.length < 3 || name.length > 30){
+	if (name.length < 3 || name.length > 30) {
 		throw new UserInputError(messages.NAME_INVALID_ERROR);
 	}
 };

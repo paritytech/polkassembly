@@ -4,13 +4,13 @@
 
 import { AuthenticationError } from 'apollo-server';
 
-import messages from './messages';
 import User from '../model/User';
+import messages from './messages';
 
 /**
  * Get User from userId
  */
-export default async (userId: number) => {
+export default async (userId: number): Promise<User> => {
 	const user = await User
 		.query()
 		.where('id', userId)

@@ -5,8 +5,8 @@
 export default `
     signup(
         email: String
+        name: String
         password: String!
         username: String!
-        name: String
     ): LoginResponse
 `;

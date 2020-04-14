@@ -6,16 +6,11 @@ import { uuid } from 'uuidv4';
 
 import Address from '../../model/Address';
 import AuthService from '../../services/auth';
-import { Context, AddressLinkStartType } from '../../types';
+import { AddressLinkStartArgs, AddressLinkStartType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	network: string
-	address: string
-}
-
-export default async (parent, { network, address }: argsType, ctx: Context): Promise<AddressLinkStartType>  => {
+export default async (parent: void, { network, address }: AddressLinkStartArgs, ctx: Context): Promise<AddressLinkStartType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -24,12 +19,12 @@ export default async (parent, { network, address }: argsType, ctx: Context): Pro
 		.query()
 		.allowInsert('[network, address, user_id, sign_message, verified]')
 		.insert({
-			network,
 			address,
-			user_id: user.id,
+			network,
 			sign_message: uuid(),
+			user_id: user.id,
 			verified: false
 		});
 
-	return { message: messages.ADDRESS_LINKING_STARTED, sign_message: dbAddress.sign_message, address_id: dbAddress.id };
+	return { address_id: dbAddress.id, message: messages.ADDRESS_LINKING_STARTED, sign_message: dbAddress.sign_message };
 };
