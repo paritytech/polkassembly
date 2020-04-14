@@ -21,7 +21,9 @@ interface Props{
 }
 
 const Email = ({ className }: Props): JSX.Element => {
+	const [editing, setEditing] = useState(false);
 	const [email, setEmail] = useState<string | null | undefined>('');
+	const [password, setPassword] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation();
 	const [resendVerifyEmailTokenMutation] = useResendVerifyEmailTokenMutation();
@@ -32,15 +34,31 @@ const Email = ({ className }: Props): JSX.Element => {
 	}, [currentUser.email]);
 
 	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
+	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+	const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+		event.preventDefault();
+		setEditing(true);
+	};
+
+	const handleChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
+
+		if (!password) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please type your password',
+				status: NotificationStatus.ERROR
+			});
+			return;
+		}
 
 		if (email || email === '') {
 			changeEmailMutation({
 				variables: {
-					email
+					email,
+					password
 				}
 			})
 				.then(({ data }) => {
@@ -62,6 +80,7 @@ const Email = ({ className }: Props): JSX.Element => {
 								email_verified: false
 							};
 						});
+						setEditing(false);
 					}
 				}).catch((e) => {
 					queueNotification({
@@ -95,34 +114,60 @@ const Email = ({ className }: Props): JSX.Element => {
 	};
 
 	return (
-		<Form standalone={false}>
-			<Form.Group className={className}>
+		<Form className={className} standalone={false}>
+			<Form.Group>
 				<Form.Field width={10}>
 					<label>Email</label>
+					{editing ?
+						<input
+							value={email || ''}
+							onChange={onEmailChange}
+							placeholder='mail@example.com'
+							type='email'
+						/> :
+						<div>{email}</div>
+					}
+				</Form.Field>
+				{!editing && <Form.Field width={6}>
+					<label>&nbsp;</label>
+					<Button
+						secondary
+						disabled={loading}
+						onClick={handleEdit}
+					>
+					Edit
+					</Button>
+				</Form.Field>}
+			</Form.Group>
+			{editing && <Form.Group>
+				<Form.Field width={10}>
+					<label>Password</label>
 					<input
-						value={email || ''}
-						onChange={onEmailChange}
-						placeholder='mail@example.com'
-						type='email'
+						value={password || ''}
+						onChange={onPasswordChange}
+						placeholder='password'
+						type='password'
 					/>
 					{error && <FilteredError text={error.message}/>}
-					{email && !currentUser.email_verified &&
-						<div className={'warning-text'}>
-							<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
-						</div>
-					}
 				</Form.Field>
 				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
 						secondary
 						disabled={loading}
-						onClick={handleClick}
+						onClick={handleChange}
 						type='submit'
 					>
 					Change
 					</Button>
 				</Form.Field>
+			</Form.Group>}
+			<Form.Group>
+				{email && !currentUser.email_verified &&
+					<div className={'warning-text'}>
+						<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+					</div>
+				}
 			</Form.Group>
 		</Form>
 	);

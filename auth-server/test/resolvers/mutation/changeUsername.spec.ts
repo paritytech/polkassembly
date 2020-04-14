@@ -40,7 +40,7 @@ describe('changeUsername mutation', () => {
 
 	it('should be able to change username', async () => {
 		const username = 'newusername';
-		const result = await changeUsername(undefined, { username }, fakectx);
+		const result = await changeUsername(undefined, { username, password }, fakectx);
 
 		const dbUser = await User
 			.query()
@@ -53,7 +53,7 @@ describe('changeUsername mutation', () => {
 
 	it('should not be able to change username to existing username', async () => {
 		try {
-			await changeUsername(undefined, { username }, fakectx);
+			await changeUsername(undefined, { username, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
@@ -65,7 +65,7 @@ describe('changeUsername mutation', () => {
 		const username = 'newusername';
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changeUsername(undefined, { username }, fakectx);
+			await changeUsername(undefined, { username, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -77,7 +77,7 @@ describe('changeUsername mutation', () => {
 		const username = 'user name';
 
 		try {
-			await changeUsername(undefined, { username }, fakectx);
+			await changeUsername(undefined, { username, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -89,7 +89,7 @@ describe('changeUsername mutation', () => {
 		const username = 'newnamethatiswaaaaayyyyyyyytoolong';
 
 		try {
-			await changeUsername(undefined, { username }, fakectx);
+			await changeUsername(undefined, { username, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -101,7 +101,19 @@ describe('changeUsername mutation', () => {
 		const username = 'a';
 
 		try {
-			await changeUsername(undefined, { username }, fakectx);
+			await changeUsername(undefined, { username, password }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.USERNAME_INVALID_ERROR);
+		}
+	});
+
+	it('should not be able to change username with wrong password', async () => {
+		const password = 'wrong';
+
+		try {
+			await changeUsername(undefined, { username, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

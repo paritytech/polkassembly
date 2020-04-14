@@ -20,7 +20,9 @@ interface Props {
 }
 
 const Username = ({ className }:Props): JSX.Element => {
+	const [editing, setEditing] = useState(false);
 	const [username, setUsername] = useState<string | null | undefined>('');
+	const [password, setPassword] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeUsernameMutation, { loading, error }] = useChangeUsernameMutation();
 	const { queueNotification } = useContext(NotificationContext);
@@ -30,14 +32,30 @@ const Username = ({ className }:Props): JSX.Element => {
 	}, [currentUser.username]);
 
 	const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.currentTarget.value);
+	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+	const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+		event.preventDefault();
+		setEditing(true);
+	};
+
+	const handleChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		event.stopPropagation();
+
+		if (!password) {
+			queueNotification({
+				header: 'Failed!',
+				message: 'Please type your password',
+				status: NotificationStatus.ERROR
+			});
+			return;
+		}
 
 		if (username) {
 			changeUsernameMutation({
 				variables: {
+					password,
 					username
 				}
 			})
@@ -58,6 +76,7 @@ const Username = ({ className }:Props): JSX.Element => {
 							username
 						};
 					});
+					setEditing(false);
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
@@ -74,11 +93,35 @@ const Username = ({ className }:Props): JSX.Element => {
 			<Form.Group>
 				<Form.Field width={10}>
 					<label>Username</label>
+					{editing ?
+						<input
+							value={username || ''}
+							onChange={onUserNameChange}
+							placeholder='username'
+							type='text'
+						/> :
+						<div>{username}</div>
+					}
+				</Form.Field>
+				{!editing && <Form.Field width={6}>
+					<label>&nbsp;</label>
+					<Button
+						secondary
+						disabled={loading}
+						onClick={handleEdit}
+					>
+					Edit
+					</Button>
+				</Form.Field>}
+			</Form.Group>
+			{editing && <Form.Group>
+				<Form.Field width={10}>
+					<label>Password</label>
 					<input
-						value={username || ''}
-						onChange={onUserNameChange}
-						placeholder='username'
-						type='text'
+						value={password || ''}
+						onChange={onPasswordChange}
+						placeholder='password'
+						type='password'
 					/>
 					{error && <FilteredError text={error.message}/>}
 				</Form.Field>
@@ -87,13 +130,13 @@ const Username = ({ className }:Props): JSX.Element => {
 					<Button
 						secondary
 						disabled={loading}
-						onClick={handleClick}
-						type="submit"
+						onClick={handleChange}
+						type='submit'
 					>
 					Change
 					</Button>
 				</Form.Field>
-			</Form.Group>
+			</Form.Group>}
 		</Form>
 	);
 };
