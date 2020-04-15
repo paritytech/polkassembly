@@ -2,7 +2,8 @@ image: parity/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "paritytech"
-  DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
+  ##DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
+  DOCKER_TAG:                      "fv-test"
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
   # Variables required by Gitlab scanning
@@ -164,7 +165,7 @@ dockerize-chain-db-watcher:
       --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
       --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
       --set hasura.config.HASURA_CHAIN_DB_REMOTE_SCHEMA=${HASURA_CHAIN_DB_REMOTE_SCHEMA}
-      --set hasura.config.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
       --set authServer.config.DATABASE_URL=${DATABASE_URL}
       --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
       --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
