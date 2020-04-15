@@ -32,7 +32,7 @@ export  default function (value: BN | string, options: Options): string {
 
 	let comma = '.';
 	const { numberAfterComma, withThousandDelimitor = true, withUnit } = options;
-	const commaLtZero = numberAfterComma && numberAfterComma < 0;
+	const numberAfterCommaLtZero = numberAfterComma && numberAfterComma < 0;
 
 	if (commaLtZero || numberAfterComma === 0){
 		comma = '';
@@ -49,4 +49,3 @@ export  default function (value: BN | string, options: Options): string {
 
 	return `${prefix}${comma}${suffix} ${unit}`;
 }
-
