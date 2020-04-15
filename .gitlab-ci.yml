@@ -172,8 +172,8 @@ dockerize-chain-db-watcher:
       --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
       --set authServer.config.REDIS_URL=${REDIS_URL}
       --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      --set authServer.secret.AUTH_SERVER_JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
-      --set authServer.secret.AUTH_SERVER_JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
+      --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
+      --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
       --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
       --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
       --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
