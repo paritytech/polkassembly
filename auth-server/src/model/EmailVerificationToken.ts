@@ -3,6 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Model } from 'objection';
+
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
@@ -11,34 +13,22 @@ export default class EmailVerificationToken extends Model {
 	readonly id!: number
 	token!: string
 	user_id!: number
-	valid: boolean
+	valid!: boolean
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'email_verification_token';
 	}
 
-	static get idColumn () {
-		return 'id';
-	}
-
-	getToken () {
+	static get jsonSchema (): JsonSchema {
 		return {
-			token: this.token,
-			user_id: this.user_id,
-			valid: this.valid
-		};
-	}
-
-	static get jsonSchema () {
-		return {
-			type: 'object',
-			required: ['token', 'user_id'],
 			properties: {
 				id: { type: 'integer' },
 				token: { type: 'string' },
 				user_id: { type: 'integer' },
 				valid: { type: 'boolean' }
-			}
+			},
+			required: ['token', 'user_id'],
+			type: 'object'
 		};
 	}
 }

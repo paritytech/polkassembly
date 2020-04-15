@@ -3,51 +3,38 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Model } from 'objection';
+
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
 
 export default class Address extends Model {
 	readonly id!: number
-	network: string
-	address: string
-	public_key: string
+	network!: string
+	address!: string
+	public_key!: string
 	user_id!: number
-	sign_message: string
+	sign_message!: string
 	verified!: boolean
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'address';
 	}
 
-	static get idColumn () {
-		return 'id';
-	}
-
-	getToken () {
+	static get jsonSchema (): JsonSchema {
 		return {
-			network: this.network,
-			address: this.address,
-			user_id: this.user_id,
-			public_key: this.public_key,
-			sign_message: this.sign_message, // message which will be signed for proving address
-			verified: this.verified
-		};
-	}
-
-	static get jsonSchema () {
-		return {
-			type: 'object',
-			required: ['user_id'],
 			properties: {
+				address: { type: 'string' },
 				id: { type: 'integer' },
 				network: { type: 'network' },
-				address: { type: 'string' },
 				public_key: { type: 'string' },
-				user_id: { type: 'integer' },
 				sign_message: { type: 'string' },
+				user_id: { type: 'integer' },
 				verified: { type: 'boolean' }
-			}
+			},
+			required: ['user_id'],
+			type: 'object'
 		};
 	}
 }

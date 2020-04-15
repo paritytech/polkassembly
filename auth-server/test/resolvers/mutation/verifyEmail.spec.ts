@@ -14,8 +14,8 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('verifyEmail mutation', () => {
-	let signupResult;
-	let verifyToken;
+	let signupResult: any;
+	let verifyToken: any;
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -28,7 +28,7 @@ describe('verifyEmail mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 
 		verifyToken = await EmailVerificationToken
 			.query()
@@ -48,26 +48,26 @@ describe('verifyEmail mutation', () => {
 
 		await EmailVerificationToken
 			.query()
-			.where({ id: verifyToken.id })
+			.where({ id: verifyToken?.id })
 			.del();
 	});
 
 	it('should be able to verify email with valid token', async () => {
-		const res = await verifyEmail(null, { token: verifyToken.token });
+		const res = await verifyEmail(undefined, { token: verifyToken?.token });
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.email_verified).to.be.true;
+		expect(dbUser?.email_verified).to.be.true;
 		expect(res.message).to.eq(messages.EMAIL_VERIFICATION_SUCCESSFUL);
 		expect(res.token).to.exist;
 	});
 
 	it('should throw an error if token is invalid', async () => {
 		try {
-			await verifyEmail(null, { token: uuid() });
+			await verifyEmail(undefined, { token: uuid() });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

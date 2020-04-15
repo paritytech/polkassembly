@@ -4,15 +4,11 @@
 
 import PostSubscription from '../../model/PostSubscription';
 import AuthService from '../../services/auth';
-import { Context, MessageType } from '../../types';
+import { Context, MessageType, PostSubscribeArgs } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-interface argsType {
-	post_id: number
-}
-
-export default async (parent, { post_id }: argsType, ctx: Context): Promise<MessageType>  => {
+export default async (parent: void, { post_id }: PostSubscribeArgs, ctx: Context): Promise<MessageType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -20,8 +16,8 @@ export default async (parent, { post_id }: argsType, ctx: Context): Promise<Mess
 	const dbSubscription = await PostSubscription
 		.query()
 		.where({
-			user_id: user.id,
-			post_id: post_id
+			post_id: post_id,
+			user_id: user.id
 		})
 		.first();
 
@@ -33,8 +29,8 @@ export default async (parent, { post_id }: argsType, ctx: Context): Promise<Mess
 		.query()
 		.allowInsert('[user_id, post_id]')
 		.insert({
-			user_id: user.id,
-			post_id
+			post_id,
+			user_id: user.id
 		});
 
 	return { message: messages.SUBSCRIPTION_SUCCESSFUL };

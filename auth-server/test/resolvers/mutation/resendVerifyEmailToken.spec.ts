@@ -13,7 +13,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('resendVerifyEmailToken mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -28,7 +28,7 @@ describe('resendVerifyEmailToken mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
@@ -40,7 +40,7 @@ describe('resendVerifyEmailToken mutation', () => {
 	});
 
 	it('should be able to resend verify email token', async () => {
-		await resendVerifyEmailToken(null, null, fakectx);
+		await resendVerifyEmailToken(undefined, undefined, fakectx);
 
 		const verifyToken = await EmailVerificationToken
 			.query()
@@ -49,14 +49,14 @@ describe('resendVerifyEmailToken mutation', () => {
 			.first();
 
 		expect(verifyToken).to.exist;
-		expect(verifyToken.valid).to.be.true;
-		expect(verifyToken.token).to.be.a('string');
+		expect(verifyToken?.valid).to.be.true;
+		expect(verifyToken?.token).to.be.a('string');
 	});
 
 	it('should not be able to resend verify email token with wrong jwt', async () => {
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await resendVerifyEmailToken(null,null, fakectx);
+			await resendVerifyEmailToken(undefined,undefined, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

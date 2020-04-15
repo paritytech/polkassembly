@@ -12,7 +12,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('changeUsername mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -27,7 +27,7 @@ describe('changeUsername mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
@@ -40,20 +40,20 @@ describe('changeUsername mutation', () => {
 
 	it('should be able to change username', async () => {
 		const username = 'newusername';
-		const result = await changeUsername(null, { username }, fakectx);
+		const result = await changeUsername(undefined, { username }, fakectx);
 
 		const dbUser = await User
 			.query()
 			.where({ id: signupResult.user.id })
 			.first();
 
-		expect(dbUser.username).to.be.equal(username);
+		expect(dbUser?.username).to.be.equal(username);
 		expect(result.message).to.be.equal(messages.USERNAME_CHANGE_SUCCESSFUL);
 	});
 
 	it('should not be able to change username to existing username', async () => {
 		try {
-			await changeUsername(null, { username }, fakectx);
+			await changeUsername(undefined, { username }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
@@ -65,7 +65,7 @@ describe('changeUsername mutation', () => {
 		const username = 'newusername';
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changeUsername(null, { username }, fakectx);
+			await changeUsername(undefined, { username }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -77,7 +77,7 @@ describe('changeUsername mutation', () => {
 		const username = 'user name';
 
 		try {
-			await changeUsername(null, { username }, fakectx);
+			await changeUsername(undefined, { username }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -89,7 +89,7 @@ describe('changeUsername mutation', () => {
 		const username = 'newnamethatiswaaaaayyyyyyyytoolong';
 
 		try {
-			await changeUsername(null, { username }, fakectx);
+			await changeUsername(undefined, { username }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -101,7 +101,7 @@ describe('changeUsername mutation', () => {
 		const username = 'a';
 
 		try {
-			await changeUsername(null, { username }, fakectx);
+			await changeUsername(undefined, { username }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

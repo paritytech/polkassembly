@@ -11,7 +11,7 @@ import { AuthenticationError } from 'apollo-server';
 import messages from '../../../src/utils/messages';
 
 describe('login mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -24,7 +24,7 @@ describe('login mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 	});
 
 	after(async () => {
@@ -35,7 +35,7 @@ describe('login mutation', () => {
 	});
 
 	it('should be able to login', async () => {
-		const result = await login(null, { username, password }, fakectx);
+		const result = await login(undefined, { username, password }, fakectx);
 
 		expect(result.user.id).to.exist;
 		expect(result.user.id).to.a('number');
@@ -48,7 +48,7 @@ describe('login mutation', () => {
 
 	it('should throw an error if username doesn\'t exist', async () => {
 		try {
-			await login(null, { username: 'notexist', password }, fakectx);
+			await login(undefined, { username: 'notexist', password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -58,7 +58,7 @@ describe('login mutation', () => {
 
 	it('should throw an error if password is wrong', async () => {
 		try {
-			await login(null, { username, password: 'wrong' }, fakectx);
+			await login(undefined, { username, password: 'wrong' }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

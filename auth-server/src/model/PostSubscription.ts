@@ -3,6 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Model } from 'objection';
+
+import { JsonSchema } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
@@ -12,31 +14,19 @@ export default class PostSubscription extends Model {
 	user_id!: number
 	post_id!: number
 
-	static get tableName () {
+	static get tableName (): string {
 		return 'post_subscription';
 	}
 
-	static get idColumn () {
-		return 'id';
-	}
-
-	getToken () {
+	static get jsonSchema (): JsonSchema {
 		return {
-			id: this.id,
-			user_id: this.user_id,
-			post_id: this.post_id
-		};
-	}
-
-	static get jsonSchema () {
-		return {
-			type: 'object',
-			required: ['user_id', 'post_id'],
 			properties: {
 				id: { type: 'integer' },
-				user_id: { type: 'integer' },
-				post_id: { type: 'integer' }
-			}
+				post_id: { type: 'integer' },
+				user_id: { type: 'integer' }
+			},
+			required: ['user_id', 'post_id'],
+			type: 'object'
 		};
 	}
 }

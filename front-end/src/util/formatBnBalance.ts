@@ -32,12 +32,13 @@ export  default function (value: BN | string, options: Options): string {
 
 	let comma = '.';
 	const { numberAfterComma, withThousandDelimitor = true, withUnit } = options;
+	const numberAfterCommaLtZero = numberAfterComma && numberAfterComma < 0;
 
-	if (numberAfterComma && numberAfterComma < 0 || numberAfterComma === 0){
+	if (numberAfterCommaLtZero || numberAfterComma === 0){
 		comma = '';
 		suffix = '';
 	} else if (numberAfterComma && numberAfterComma > 0){
-		suffix = suffix.slice(0,numberAfterComma);
+		suffix = suffix.slice(0, numberAfterComma);
 	}
 
 	if (withThousandDelimitor){
@@ -48,4 +49,3 @@ export  default function (value: BN | string, options: Options): string {
 
 	return `${prefix}${comma}${suffix} ${unit}`;
 }
-
