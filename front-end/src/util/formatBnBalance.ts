@@ -34,7 +34,7 @@ export  default function (value: BN | string, options: Options): string {
 	const { numberAfterComma, withThousandDelimitor = true, withUnit } = options;
 	const numberAfterCommaLtZero = numberAfterComma && numberAfterComma < 0;
 
-	if (commaLtZero || numberAfterComma === 0){
+	if (numberAfterCommaLtZero || numberAfterComma === 0){
 		comma = '';
 		suffix = '';
 	} else if (numberAfterComma && numberAfterComma > 0){
