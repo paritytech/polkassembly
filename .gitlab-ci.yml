@@ -5,6 +5,21 @@ variables:
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
+  # Variables required by Gitlab scanning
+  SAST_DISABLE_DIND:               "true"
+  SCAN_KUBERNETES_MANIFESTS:       "true"
+  ANALYZER_TARGET_DIR:             "auth-server/"
+  DS_DISABLE_DIND:                 "true"
+
+# Enable Gitlab's security scanning
+include:
+  - template: SAST.gitlab-ci.yml
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Scanning.gitlab-ci.yml
+
+kubesec-sast:
+  variables:
+    ANALYZER_TARGET_DIR: "kubernetes/"
 
 stages:
   - test
@@ -53,6 +68,23 @@ lint-back-end:
   tags:
     - linux-docker
 
+lint-chain-db-watcher:
+  stage: test
+  image: node:12
+  interruptible:                   true
+  dependencies:                    []
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd chain-db-watcher
+    - yarn install
+    - yarn lint
+  rules:
+    - changes:
+      - "chain-db-watcher/**/*"
+  tags:
+    - linux-docker
+
 #### stage:                        dockerize
 
 .build_and_push:                   &build_and_push
@@ -82,6 +114,7 @@ dockerize:staging-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
     - master
+    - /^fv-.*/
   <<: *build_and_push
 
 dockerize:production-front-end:
@@ -101,6 +134,7 @@ dockerize-auth-server:
     name: parity-build
   only:
     - master
+    - /^fv-.*/
     - tags
   <<: *build_and_push
 
@@ -110,6 +144,7 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
     - master
+    - /^fv-.*/
     - tags
   <<: *build_and_push
 
@@ -147,6 +182,26 @@ dockerize-chain-db-watcher:
       --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
       --set chainDbWatcher.config.PROPOSAL_BOT_USER_ID=${PROPOSAL_BOT_USER_ID}
 
+    # test, update/deploy redis server using helm
+    - export REDIS_PASSWORD=$(echo "$REDIS_URL" | sed -r 's#redis://:([^@]+).*$#\1#g')
+    - helm repo add bitnami https://charts.bitnami.com/bitnami
+    - helm repo update
+
+    # test install/upgrade
+    - helm upgrade redis bitnami/redis
+      --dry-run
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --set password=${REDIS_PASSWORD}
+
+    # install/upgrade redis server
+    - helm upgrade redis bitnami/redis
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --set password=${REDIS_PASSWORD}
+
 deploy-staging:
   stage: deploy
   environment:
@@ -155,6 +210,7 @@ deploy-staging:
     - kubernetes-parity-build
   only:
     - master
+    - /^fv-.*/
   <<: *deploy-k8s
 
 deploy-production:

@@ -2,57 +2,59 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import Comments from '../Comment/Comments';
-import NoPostFound from '../NoPostFound';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import CreatePostComment from './PostCommentForm';
-import EditablePostContent from '../EditablePostContent';
 import {
+	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
-	ProposalPostAndCommentsQueryHookResult,
-	ReferendumPostAndCommentsQueryHookResult,
-	MotionPostAndCommentsQueryHookResult,
-	TreasuryProposalPostAndCommentsQueryHookResult,
-
 	DiscussionPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQueryVariables,
-	ReferendumPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryHookResult,
 	MotionPostAndCommentsQueryVariables,
-	TreasuryProposalPostAndCommentsQueryVariables,
-
+	MotionPostFragment,
+	OnchainLinkMotionFragment,
 	OnchainLinkProposalFragment,
 	OnchainLinkReferendumFragment,
-	OnchainLinkMotionFragment,
 	OnchainLinkTreasuryProposalFragment,
-
-	ProposalPostFragment,
-	ReferendumPostFragment,
-	MotionPostFragment,
-	TreasuryProposalPostFragment,
-
-	DiscussionPostAndCommentsQuery,
 	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryHookResult,
+	ProposalPostAndCommentsQueryVariables,
+	ProposalPostFragment,
 	ReferendumPostAndCommentsQuery,
-	MotionPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQuery
-} from '../../generated/graphql';
-import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
-import ReportButton from '../ReportButton';
+	ReferendumPostAndCommentsQueryHookResult,
+	ReferendumPostAndCommentsQueryVariables,
+	ReferendumPostFragment,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryHookResult,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import Comments from '../Comment/Comments';
+import EditablePostContent from '../EditablePostContent';
+import NoPostFound from '../NoPostFound';
+import PostReactionBar from '../Reactionbar/PostReactionBar';
+import ReportButton from '../ReportButton';
+import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
+import GovenanceSideBar from './GovernanceSideBar';
+import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
 import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
-import GovenanceSideBar from './GovernanceSideBar';
 
 interface Props {
 	className?: string
-	data: DiscussionPostAndCommentsQueryHookResult['data'] | ProposalPostAndCommentsQueryHookResult['data'] | ReferendumPostAndCommentsQueryHookResult['data'] | MotionPostAndCommentsQueryHookResult['data'] | TreasuryProposalPostAndCommentsQueryHookResult['data']
+	data: (
+		DiscussionPostAndCommentsQueryHookResult['data'] |
+		ProposalPostAndCommentsQueryHookResult['data'] |
+		ReferendumPostAndCommentsQueryHookResult['data'] |
+		MotionPostAndCommentsQueryHookResult['data'] |
+		TreasuryProposalPostAndCommentsQueryHookResult['data']
+	)
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
@@ -63,12 +65,8 @@ interface Props {
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
-	const [isPostReplyFormVisible, setPostReplyFormVisibile] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
-	const togglePostReplyForm = () => {
-		setPostReplyFormVisibile(!isPostReplyFormVisible);
-	};
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
 
 	if (!post) return <NoPostFound
@@ -115,11 +113,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	}
 
 	const canEdit = !isEditing && (
-		(post.author?.id === id) ||
-		(isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address)) ||
-		(isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address)) ||
-		(isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address)) ||
-		(isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address))
+		post.author?.id === id ||
+		isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address) ||
+		isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address) ||
+		isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address) ||
+		isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address)
 	);
 
 	return (
@@ -134,19 +132,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						refetch={refetch}
 						toggleEdit={toggleEdit}
 					/>
-
-					{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-					{id && !isEditing && <Button className={'social'} onClick={togglePostReplyForm}><Icon name='reply'/>Reply</Button>}
-					{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-					{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
-
-					{ id && isPostReplyFormVisible &&
-						<CreatePostComment
-							onHide={togglePostReplyForm}
-							postId={post.id}
-							refetch={refetch}
-						/>
-					}
+					<div className='actions-bar'>
+						<PostReactionBar className='reactions' postId={post.id} />
+						{id && <div className='vl'/>}
+						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+					</div>
 				</div>
 				{ isMotion &&
 					<PostMotionInfo
@@ -174,6 +166,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						refetch={refetch}
 					/>
 				}
+				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
 			</Grid.Column>
 			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
 				<GovenanceSideBar
@@ -196,14 +189,37 @@ export default styled(Post)`
 		background-color: white;
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
-		padding: 3rem;
+		border-color: grey_border;
+		border-radius: 3px;
+		padding: 3rem 3rem 0.8rem 3rem;
 		margin-bottom: 1rem;
+	}
+
+	.actions-bar {
+		display: flex;
+		align-items: center;
+	}
+
+	.reactions {
+		display: inline-flex;
+		border: none;
+		padding: 0.4rem 0;
+		margin: 0rem;
+	}
+
+	.vl {
+		display: inline-flex;
+		border-left-style: solid;
+		border-left-width: 1px;
+		border-left-color: grey_border;
+		height: 2rem;
+		margin: 0 1.2rem 0 0.8rem;
 	}
 
 	@media only screen and (max-width: 576px) {
 		.post_content {
-			padding: 2rem
+			padding: 2rem;
+			border-radius: 0px;
 		}
 	}
 

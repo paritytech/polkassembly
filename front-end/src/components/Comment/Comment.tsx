@@ -2,23 +2,26 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
-import styled from '@xstyled/styled-components';
 
-import EditableCommentContent from './EditableCommentContent';
 import {
 	CommentFieldsFragment,
-	ProposalPostAndCommentsQueryVariables,
-	ProposalPostAndCommentsQuery,
-	ReferendumPostAndCommentsQueryVariables,
+	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQuery,
-	DiscussionPostAndCommentsQuery
-} from '../../generated/graphql';
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
 import CreationLabel from '../../ui-components/CreationLabel';
 import UpdateLabel from '../../ui-components/UpdateLabel';
+import EditableCommentContent from './EditableCommentContent';
 
 interface Props{
 	className?: string,
@@ -27,7 +30,11 @@ interface Props{
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
 		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
@@ -44,21 +51,25 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 				className='avatar'
 				displayname={author.name}
 				username={author.username}
+				size={'lg'}
 			/>
 			<div className='comment-box'>
 				<CreationLabel
+					className='creation-label'
 					created_at={created_at}
 					displayname={author.name}
 					text={'commented'}
 					username={author.username}
 				/>
 				<UpdateLabel
+					className='update-label'
 					created_at={created_at}
 					updated_at={updated_at}
 				/>
 				<EditableCommentContent
 					authorId={author.id}
 					className='comment-content'
+					comment={comment}
 					commentId={id}
 					content={content}
 					refetch={refetch}
@@ -75,7 +86,6 @@ export default styled(Comment)`
 		display: inline-block;
 		flex: 0 0 4rem;
 		margin-right: 2rem;
-
 		@media only screen and (max-width: 576px) {
 			display: none;
 		}
@@ -83,19 +93,31 @@ export default styled(Comment)`
 
 	.comment-box {
 		background-color: white;
-		padding: 2rem 3rem 2rem 3rem;
 		border-style: solid;
 		border-width: 1px;
-		border-color: grey_light;
+		border-color: grey_border;
+		border-radius: 3px;
 		margin-bottom: 1rem;
-		width: calc(100% - 6rem);
+		width: 100%;
 
 		@media only screen and (max-width: 576px) {
 			width: 100%;
+			border-radius: 0px;
 		}
 	}
 
+	.creation-label {
+		display: inline-block;
+		padding: 1rem 0 0.8rem 2rem;
+		margin-bottom: 0;
+	}
+
+	.update-label {
+		display: inline-block;
+	}
+
 	.comment-content {
-		margin-top: 1.2rem;
+		padding: 0.8rem 2rem;
+		width: 100%;
 	}
 `;

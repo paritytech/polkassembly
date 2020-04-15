@@ -2,29 +2,55 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useState, useContext, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useContext, useEffect,useState } from 'react';
+import { Controller,useForm } from 'react-hook-form';
 import { GoCheck, GoX } from 'react-icons/go';
 import { Icon } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
 
-import ContentForm from '../ContentForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useEditCommentMutation, ProposalPostAndCommentsQueryVariables, ProposalPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables, DiscussionPostAndCommentsQueryVariables, ReferendumPostAndCommentsQuery, DiscussionPostAndCommentsQuery } from '../../generated/graphql';
-import ReportButton from '../ReportButton';
+import {
+	CommentFieldsFragment,
+	DiscussionPostAndCommentsQuery,
+	DiscussionPostAndCommentsQueryVariables,
+	MotionPostAndCommentsQuery,
+	MotionPostAndCommentsQueryVariables,
+	ProposalPostAndCommentsQuery,
+	ProposalPostAndCommentsQueryVariables,
+	ReferendumPostAndCommentsQuery,
+	ReferendumPostAndCommentsQueryVariables,
+	TreasuryProposalPostAndCommentsQuery,
+	TreasuryProposalPostAndCommentsQueryVariables,
+	useEditCommentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import Markdown from '../../ui-components/Markdown';
+import ContentForm from '../ContentForm';
+import CommentReactionBar from '../Reactionbar/CommentReactionBar';
+import ReportButton from '../ReportButton';
 
 interface Props {
 	authorId: number,
 	className?: string,
+	comment: CommentFieldsFragment,
 	commentId: string,
 	content: string,
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (variables?:
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		ReferendumPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		undefined
+	) =>
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
@@ -63,7 +89,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			})
 			.catch((e) => console.error('Error saving comment: ',e));
 	};
-	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return(data[0].length ? data[0] : null);};
+	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
 	const [editCommentMutation, { error }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
@@ -96,8 +122,12 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 						:
 						<>
 							<Markdown md={content} />
-							{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-							{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
+							<div className='actions-bar'>
+								<CommentReactionBar className='reactions' commentId={commentId} />
+								{id && <div className='vl'/>}
+								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
+							</div>
 						</>
 				}
 			</div>
@@ -106,9 +136,31 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 };
 
 export default styled(EditableCommentContent)`
+
 	.button-container {
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
+	}
+
+	.actions-bar {
+		display: flex;
+		align-items: center;
+	}
+
+	.reactions {
+		display: inline-flex;
+		border: none;
+		padding: 0.4rem 0;
+		margin: 0rem;
+	}
+
+	.vl {
+		display: inline-flex;
+		border-left-style: solid;
+		border-left-width: 1px;
+		border-left-color: grey_border;
+		height: 2rem;
+		margin: 0 1.2rem 0 0.8rem;
 	}
 `;

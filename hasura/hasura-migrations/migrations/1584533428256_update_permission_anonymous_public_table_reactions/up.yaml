@@ -1,0 +1,13 @@
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - id
+      - reaction
+      filter: {}
+      limit: null
+    role: anonymous
+    table:
+      name: reactions
+      schema: public
+  type: create_select_permission

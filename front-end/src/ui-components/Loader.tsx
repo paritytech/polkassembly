@@ -7,12 +7,13 @@ import { Dimmer, Loader as SUILoader } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 interface Props{
-    className?: string
+	className?: string
+	text?: string
 }
-const Loader = ({ className }: Props) => {
+const Loader = ({ className, text = 'Loading' }: Props) => {
 	return (
 		<Dimmer inverted active className={className}>
-			<SUILoader inverted>Loading</SUILoader>
+			<SUILoader inverted>{text}</SUILoader>
 		</Dimmer>
 	);
 };

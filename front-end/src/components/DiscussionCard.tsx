@@ -2,9 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import * as React from 'react';
 import { Icon } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
+
 import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
@@ -12,7 +13,8 @@ const DiscussionCard = styled.div`
     background-color: white;
     border-style: solid;
     border-width: 1px;
-    border-color: grey_light;
+    border-color: grey_border;
+    border-radius: 3px;
     &:hover {
         background-color: white_transparent;
         border-style: solid;

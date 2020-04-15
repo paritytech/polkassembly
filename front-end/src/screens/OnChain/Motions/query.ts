@@ -57,7 +57,12 @@ export const QUERY_LATEST_MOTIONS = gql`
                     id
                     status
                 }
+                preimage {
+                    id
+                    method
+                }
             }
+            proposer_address
         }
     }
 }`;

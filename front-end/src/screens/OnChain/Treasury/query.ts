@@ -62,6 +62,7 @@ export const QUERY_LATEST_TREASURY_PROPOSALS = gql`
                     status
                 }
             }
+            proposer_address
         }
     }
 }`;

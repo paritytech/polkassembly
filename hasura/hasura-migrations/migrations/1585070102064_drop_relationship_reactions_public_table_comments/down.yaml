@@ -1,0 +1,12 @@
+- args:
+    name: reactions
+    table:
+      name: comments
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping: {}
+        remote_table:
+          name: reactions
+          schema: public
+  type: create_array_relationship

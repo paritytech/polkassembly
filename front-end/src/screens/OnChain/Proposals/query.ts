@@ -61,7 +61,12 @@ export const QUERY_LATEST_PROPOSALS = gql`
                     id
                     status
                 }
+                preimage {
+                    id
+                    method
+                }
             }
+            proposer_address
         }
     }
 }`;

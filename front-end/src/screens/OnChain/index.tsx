@@ -6,11 +6,11 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
+import InfoBox from '../../ui-components/InfoBox';
 import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
 import TreasuryContainer from './Treasury';
-import InfoBox from '../../ui-components/InfoBox';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

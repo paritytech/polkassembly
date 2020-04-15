@@ -53,6 +53,7 @@ DATABASE_URL="postgres://<user>:<password>@localhost:5431/governance-auth"
 HASURA_EVENT_SECRET="<shared secret key with hasura>"
 DOMAIN_NAME="polkassembly.io"
 DOMAIN_PROTOCOL="http://"
+REDIS_URL="redis://:<redis secret>@127.0.0.1:6379"
 ```
 
 `proposal_bot` is a special user identified by its id. We should grant it with the `proposal_bot` role when it signs-in.
@@ -215,3 +216,11 @@ On success, we get the response
     }
   }
 }
+
+## HealthCheck Url
+
+healthcheck url for auth service is:
+
+```
+/healthcheck
+```

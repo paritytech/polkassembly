@@ -2,18 +2,19 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useState, useEffect } from 'react';
-import styled from '@xstyled/styled-components';
-import { DropdownProps, Icon, Popup } from 'semantic-ui-react';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-
-import AddressDropdown from '../AddressDropdown';
-import { ApiContext } from '../../../context/ApiContext';
-import { NotificationContext } from '../../../context/NotificationContext';
+import styled from '@xstyled/styled-components';
+import React, { useContext, useEffect,useState } from 'react';
+import { DropdownProps } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
+import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { NotificationStatus } from '../../../types';
-import Button from '../../../ui-components/Button';
-import { Form } from '../../../ui-components/Form';
+import { LoadingStatusType,NotificationStatus } from 'src/types';
+import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
+import AyeNayButtons from 'src/ui-components/AyeNayButtons';
+import Button from 'src/ui-components/Button';
+import { Form } from 'src/ui-components/Form';
+import Loader from 'src/ui-components/Loader';
 
 interface Props {
 	accounts: InjectedAccountWithMeta[]
@@ -35,6 +36,7 @@ const VoteMotion = ({
 	onAccountChange
 }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const [isCouncil, setIsCouncil] = useState(false);
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
@@ -71,20 +73,26 @@ const VoteMotion = ({
 			return;
 		}
 
+		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
 		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
 
 		vote.signAndSend(address, ({ status }) => {
-			if (status.isFinalized) {
+			if (status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on motion #${motionId} successfully finalized`,
+					message: `Vote on motion #${motionId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
-				console.log(`Completed at block hash #${status.asFinalized.toString()}`);
+				setLoadingStatus({ isLoading: false, message: '' });
+				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
 			} else {
+				if (status.isBroadcast){
+					setLoadingStatus({ isLoading: true, message: 'Broadcasting the vote' });
+				}
 				console.log(`Current status: ${status.type}`);
 			}
 		}).catch((error) => {
+			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
 			queueNotification({
@@ -95,75 +103,42 @@ const VoteMotion = ({
 		});
 	};
 
-	if (accounts.length === 0) {
-		return (
-			<div className={className}>
-				<div className='card'>
-					<Form standalone={false}>
-						<h4>Vote</h4>
-						<Form.Group>
-							<Form.Field className='button-container'>
-								<div>Only council members can vote on motions.</div><br/>
-								<Button
-									primary
-									onClick={getAccounts}
-								>
-									Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</div>
-			</div>
-		);
-	}
+	const GetAccountsButton = () =>
+		<Form.Field className='button-container'>
+			<div>Only council members can vote on motions.</div><br/>
+			<Button
+				primary
+				onClick={getAccounts}
+			>
+				Vote
+			</Button>
+		</Form.Field>;
+
+	const noAccount = accounts.length === 0;
 
 	const VotingForm = () =>
-		<Form standalone={false}>
-			<h4>Vote</h4>
-			<Form.Group>
-				<Form.Field width={16}>
-					<label>Vote with account
-						<Popup
-							trigger={<Icon name='question circle'/>}
-							content='You can choose account from polkadot-js extension.'
-							style={{ fontSize: '1.2rem', marginLeft: '-1rem' }}
-							hoverable={true}
+		<>
+			{ noAccount
+				? <GetAccountsButton />
+				: loadingStatus.isLoading
+					? <div className={'LoaderWrapper'}>
+						<Loader text={loadingStatus.message}/>
+					</div>
+					: <>
+						<AccountSelectionForm
+							title='Second with account'
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
 						/>
-					</label>
-					<AddressDropdown
-						accounts={accounts}
-						defaultAddress={address || accounts[0]?.address}
-						onAccountChange={onAccountChange}
-					/>
-				</Form.Field>
-			</Form.Group>
-			<Form.Group>
-				<Form.Field className='button-container' width={8}>
-					<Button
-						fluid
-						basic
-						className='primary negative'
-						disabled={!apiReady}
-						onClick={() => voteMotion(false)}
-					>
-						<Icon name='thumbs down' />
-						Nay
-					</Button>
-				</Form.Field>
-				<Form.Field className='button-container' width={8}>
-					<Button
-						fluid
-						className='primary positive'
-						disabled={!apiReady}
-						onClick={() => voteMotion(true)}
-					>
-						<Icon name='thumbs up' />
-								Aye
-					</Button>
-				</Form.Field>
-			</Form.Group>
-		</Form>;
+						<AyeNayButtons
+							disabled={!apiReady}
+							onClickAye={() => voteMotion(true)}
+							onClickNay={() => voteMotion(false)}
+						/>
+					</>
+			}
+		</>;
 
 	const NotCouncil = () =>
 		<>
@@ -173,58 +148,20 @@ const VoteMotion = ({
 
 	return (
 		<div className={className}>
-			<div className='card'>
-				{isCouncil || forceVote
-					? <VotingForm/>
-					: <NotCouncil/>
-				}
-
-			</div>
+			{isCouncil || forceVote
+				? <VotingForm/>
+				: <NotCouncil/>
+			}
 		</div>
 	);
 };
 
 export default styled(VoteMotion)`
-	.card {
-		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-		margin-bottom: 1rem;
-		@media only screen and (max-width: 768px) {
-			padding: 2rem;
-		}
+	.LoaderWrapper {
+		height: 15rem;
 	}
 
-	.ui.selection.dropdown {
-		border-radius: 0rem;
+	.button-container {
+		margin-top: 2rem !important;
 	}
-
-	.ui.dropdown .menu .active.item {
-		font-weight: 500;
-	}
-
-	.ui.dropdown .menu>.item:hover {
-		background-color: grey_light;
-	}
-
-	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
-		border-color: grey_light;
-	}
-
-	i.icon.question.circle:before {
-		color: grey_secondary;
-	}
-
-	@media only screen and (max-width: 768px) {
-		.ui.form {
-			padding: 0rem;
-		}
-
-		.button-container {
-			margin-bottom: 1rem!important;
-		}
-	}
-
 `;

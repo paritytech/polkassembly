@@ -2,12 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as jwt from 'jsonwebtoken';
+import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 import { uuid } from 'uuidv4';
-import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
+import validator from 'validator';
 
 import {
 	sendUndoEmailChangeEmail,
@@ -29,6 +30,7 @@ import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
 import { Keyring } from '@polkadot/api';
 import verifySignature from '../utils/verifySignature';
+import { redisGet, redisSetex } from '../redis';
 
 const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
 const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
@@ -36,7 +38,7 @@ const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRA
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
-
+const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
 	post_participated: true,
@@ -67,6 +69,57 @@ export default class AuthService {
 		const correctPassword = await user.verifyPassword(password);
 		if (!correctPassword) {
 			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
+		}
+
+		return {
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username,
+				name: user.name,
+				email_verified: user.email_verified
+			},
+			token: await this.getSignedToken(user),
+			refreshToken: await this.getRefreshToken(user)
+		};
+	}
+
+	public async AddressLoginStart(address: string): Promise<string> {
+		const signMessage = uuid();
+
+		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
+	public async AddressLogin(address: string, signature: string): Promise<AuthObjectType> {
+		const signMessage = await redisGet(address);
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
+		}
+
+		const user = await User
+			.query()
+			.findById(addressObj.user_id);
+
+		if (!user) {
+			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
 		}
 
 		return {
@@ -206,7 +259,7 @@ export default class AuthService {
 	}
 
 	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
-		if (oldPassword === newPassword) {
+		if (validator.equals(oldPassword, newPassword)) {
 			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER);
 		}
 

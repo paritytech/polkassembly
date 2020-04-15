@@ -1,0 +1,6 @@
+- args:
+    name: reactor
+    table:
+      name: comment_reactions
+      schema: public
+  type: delete_remote_relationship

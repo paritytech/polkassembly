@@ -2,18 +2,22 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import styled from '@xstyled/styled-components';
-import { web3Accounts, web3FromSource, web3Enable } from '@polkadot/extension-dapp';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-
-import { ApiContext } from '../../../context/ApiContext';
-import ExtensionNotDetected from '../../ExtensionNotDetected';
-import SecondProposal from './SecondProposal';
-import VoteReferendum from './VoteReferendum';
+import { ApiContext } from 'src/context/ApiContext';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
-import { proposalStatus, referendumStatus, motionStatus } from 'src/global/statuses';
+import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
+import { VoteThreshold } from 'src/types';
+import { Form } from 'src/ui-components/Form';
+
+import ExtensionNotDetected from '../../ExtensionNotDetected';
+import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
+import SecondProposal from './Proposals/SecondProposal';
+import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
+import VoteReferendum from './Referenda/VoteReferendum';
 import VoteMotion from './VoteMotion';
 
 interface Props {
@@ -35,6 +39,8 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { api } = useContext(ApiContext);
+
+	const canVote = !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status);
 
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
@@ -98,49 +104,76 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		);
 	}
 
-	if (status && [proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status)){
-		return (
-			<>
-				{isMotion &&
-					<VoteMotion
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						motionId={onchainId}
-						motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-						onAccountChange={onAccountChange}
-					/>}
-				{isProposal &&
-					<SecondProposal
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						onAccountChange={onAccountChange}
-						proposalId={onchainId}
-					/>}
-
-				{isReferendum &&
-					<VoteReferendum
-						accounts={accounts}
-						address={address}
-						getAccounts={getAccounts}
-						onAccountChange={onAccountChange}
-						referendumId={onchainId}
-					/>}
-			</>
-		);
-	}
-
-	return null;
+	return (
+		<>
+			{ canVote
+				? <div className={className}>
+					<div className='card'>
+						<Form standalone={false}>
+							{isMotion && canVote &&
+							<VoteMotion
+								accounts={accounts}
+								address={address}
+								getAccounts={getAccounts}
+								motionId={onchainId}
+								motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+								onAccountChange={onAccountChange}
+							/>
+							}
+							{isProposal &&
+								<>
+									{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
+									{canVote && <SecondProposal
+										accounts={accounts}
+										address={address}
+										getAccounts={getAccounts}
+										onAccountChange={onAccountChange}
+										proposalId={onchainId}
+									/>}
+								</>
+							}
+							{isReferendum &&
+								<>
+									{(onchainId || onchainId === 0) && <ReferendumVoteInfo
+										referendumId={onchainId}
+										// eslint-disable-next-line no-extra-parens
+										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
+									/>}
+									{canVote && <VoteReferendum
+										accounts={accounts}
+										address={address}
+										getAccounts={getAccounts}
+										onAccountChange={onAccountChange}
+										referendumId={onchainId}
+									/>
+									}
+								</>
+							}
+						</Form>
+					</div>
+				</div>
+				: null
+			}
+		</>
+	);
 };
 
 export default styled(GovenanceSideBar)`
 	.card {
 		background-color: white;
-		padding: 2rem 3rem 4rem 3rem;
+		padding: 2rem 3rem 2rem 3rem;
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
 		margin-bottom: 1rem;
+		@media only screen and (max-width: 768px) {
+			padding: 2rem;
+		}
+	}
+	
+	@media only screen and (max-width: 768px) {
+		.ui.form {
+			padding: 0rem;
+		}
 	}
 `;

@@ -7,8 +7,8 @@ import { FieldError, NestDataObject } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import { Form } from '../ui-components/Form';
-import messages from '../util/messages';
 import { MarkdownEditor } from '../ui-components/MarkdownEditor';
+import messages from '../util/messages';
 
 interface Props {
 	className?: string

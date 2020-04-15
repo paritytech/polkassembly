@@ -12,6 +12,8 @@ export type Scalars = {
   DateTime: any,
   timestamptz: any,
   uuid: any,
+  timestamp: any,
+  bpchar: any,
   Json: any,
   Long: any,
   Upload: any,
@@ -30,6 +32,12 @@ export type AddressLinkType = {
   address_id?: Maybe<Scalars['Int']>,
   message?: Maybe<Scalars['String']>,
   sign_message?: Maybe<Scalars['String']>,
+};
+
+export type AddressLoginType = {
+   __typename?: 'AddressLoginType',
+  message?: Maybe<Scalars['String']>,
+  signMessage?: Maybe<Scalars['String']>,
 };
 
 export type AggregateBlockIndex = {
@@ -479,6 +487,19 @@ export type BlockNumberWhereUniqueInput = {
   number?: Maybe<Scalars['Int']>,
 };
 
+
+export type Bpchar_Comparison_Exp = {
+  _eq?: Maybe<Scalars['bpchar']>,
+  _gt?: Maybe<Scalars['bpchar']>,
+  _gte?: Maybe<Scalars['bpchar']>,
+  _in?: Maybe<Array<Scalars['bpchar']>>,
+  _is_null?: Maybe<Scalars['Boolean']>,
+  _lt?: Maybe<Scalars['bpchar']>,
+  _lte?: Maybe<Scalars['bpchar']>,
+  _neq?: Maybe<Scalars['bpchar']>,
+  _nin?: Maybe<Array<Scalars['bpchar']>>,
+};
+
 export enum CacheControlScope {
   Private = 'PRIVATE',
   Public = 'PUBLIC'
@@ -490,16 +511,290 @@ export type ChangeResponse = {
   token?: Maybe<Scalars['String']>,
 };
 
+export type Comment_Reactions = {
+   __typename?: 'comment_reactions',
+  comment: Comments,
+  comment_id: Scalars['uuid'],
+  created_at: Scalars['timestamp'],
+  id: Scalars['Int'],
+  reacting_user?: Maybe<User>,
+  reaction: Scalars['bpchar'],
+  updated_at: Scalars['timestamp'],
+  user_id: Scalars['Int'],
+};
+
+export type Comment_Reactions_Aggregate = {
+   __typename?: 'comment_reactions_aggregate',
+  aggregate?: Maybe<Comment_Reactions_Aggregate_Fields>,
+  nodes: Array<Comment_Reactions>,
+};
+
+export type Comment_Reactions_Aggregate_Fields = {
+   __typename?: 'comment_reactions_aggregate_fields',
+  avg?: Maybe<Comment_Reactions_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Comment_Reactions_Max_Fields>,
+  min?: Maybe<Comment_Reactions_Min_Fields>,
+  stddev?: Maybe<Comment_Reactions_Stddev_Fields>,
+  stddev_pop?: Maybe<Comment_Reactions_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Comment_Reactions_Stddev_Samp_Fields>,
+  sum?: Maybe<Comment_Reactions_Sum_Fields>,
+  var_pop?: Maybe<Comment_Reactions_Var_Pop_Fields>,
+  var_samp?: Maybe<Comment_Reactions_Var_Samp_Fields>,
+  variance?: Maybe<Comment_Reactions_Variance_Fields>,
+};
+
+
+export type Comment_Reactions_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+export type Comment_Reactions_Aggregate_Order_By = {
+  avg?: Maybe<Comment_Reactions_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Comment_Reactions_Max_Order_By>,
+  min?: Maybe<Comment_Reactions_Min_Order_By>,
+  stddev?: Maybe<Comment_Reactions_Stddev_Order_By>,
+  stddev_pop?: Maybe<Comment_Reactions_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Comment_Reactions_Stddev_Samp_Order_By>,
+  sum?: Maybe<Comment_Reactions_Sum_Order_By>,
+  var_pop?: Maybe<Comment_Reactions_Var_Pop_Order_By>,
+  var_samp?: Maybe<Comment_Reactions_Var_Samp_Order_By>,
+  variance?: Maybe<Comment_Reactions_Variance_Order_By>,
+};
+
+export type Comment_Reactions_Arr_Rel_Insert_Input = {
+  data: Array<Comment_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>,
+};
+
+export type Comment_Reactions_Avg_Fields = {
+   __typename?: 'comment_reactions_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Comment_Reactions_Bool_Exp>>>,
+  _not?: Maybe<Comment_Reactions_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Comment_Reactions_Bool_Exp>>>,
+  comment?: Maybe<Comments_Bool_Exp>,
+  comment_id?: Maybe<Uuid_Comparison_Exp>,
+  created_at?: Maybe<Timestamp_Comparison_Exp>,
+  id?: Maybe<Int_Comparison_Exp>,
+  reaction?: Maybe<Bpchar_Comparison_Exp>,
+  updated_at?: Maybe<Timestamp_Comparison_Exp>,
+  user_id?: Maybe<Int_Comparison_Exp>,
+};
+
+export enum Comment_Reactions_Constraint {
+  CommentReactionsPkey = 'comment_reactions_pkey'
+}
+
+export type Comment_Reactions_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Insert_Input = {
+  comment?: Maybe<Comments_Obj_Rel_Insert_Input>,
+  comment_id?: Maybe<Scalars['uuid']>,
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
+  updated_at?: Maybe<Scalars['timestamp']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Max_Fields = {
+   __typename?: 'comment_reactions_max_fields',
+  id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Max_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Min_Fields = {
+   __typename?: 'comment_reactions_min_fields',
+  id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Min_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Mutation_Response = {
+   __typename?: 'comment_reactions_mutation_response',
+  affected_rows: Scalars['Int'],
+  returning: Array<Comment_Reactions>,
+};
+
+export type Comment_Reactions_Obj_Rel_Insert_Input = {
+  data: Comment_Reactions_Insert_Input,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>,
+};
+
+export type Comment_Reactions_On_Conflict = {
+  constraint: Comment_Reactions_Constraint,
+  update_columns: Array<Comment_Reactions_Update_Column>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>,
+};
+
+export type Comment_Reactions_Order_By = {
+  comment?: Maybe<Comments_Order_By>,
+  comment_id?: Maybe<Order_By>,
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  reaction?: Maybe<Order_By>,
+  updated_at?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export enum Comment_Reactions_Select_Column {
+  CommentId = 'comment_id',
+  CreatedAt = 'created_at',
+  Id = 'id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Comment_Reactions_Set_Input = {
+  comment_id?: Maybe<Scalars['uuid']>,
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
+  updated_at?: Maybe<Scalars['timestamp']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Stddev_Fields = {
+   __typename?: 'comment_reactions_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Stddev_Pop_Fields = {
+   __typename?: 'comment_reactions_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Stddev_Samp_Fields = {
+   __typename?: 'comment_reactions_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Sum_Fields = {
+   __typename?: 'comment_reactions_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Comment_Reactions_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export enum Comment_Reactions_Update_Column {
+  CommentId = 'comment_id',
+  CreatedAt = 'created_at',
+  Id = 'id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Comment_Reactions_Var_Pop_Fields = {
+   __typename?: 'comment_reactions_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Var_Samp_Fields = {
+   __typename?: 'comment_reactions_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Variance_Fields = {
+   __typename?: 'comment_reactions_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Comment_Reactions_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
 export type Comments = {
    __typename?: 'comments',
   author?: Maybe<User>,
   author_id: Scalars['Int'],
+  comment_reactions: Array<Comment_Reactions>,
+  comment_reactions_aggregate: Comment_Reactions_Aggregate,
   content: Scalars['String'],
   created_at: Scalars['timestamptz'],
   id: Scalars['uuid'],
   post: Posts,
   post_id: Scalars['Int'],
   updated_at: Scalars['timestamptz'],
+};
+
+
+export type CommentsComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type CommentsComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
 };
 
 export type Comments_Aggregate = {
@@ -564,6 +859,7 @@ export type Comments_Bool_Exp = {
   _not?: Maybe<Comments_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Comments_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
+  comment_reactions?: Maybe<Comment_Reactions_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Uuid_Comparison_Exp>,
@@ -583,6 +879,7 @@ export type Comments_Inc_Input = {
 
 export type Comments_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
+  comment_reactions?: Maybe<Comment_Reactions_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['uuid']>,
@@ -644,6 +941,7 @@ export type Comments_On_Conflict = {
 
 export type Comments_Order_By = {
   author_id?: Maybe<Order_By>,
+  comment_reactions_aggregate?: Maybe<Comment_Reactions_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
@@ -2376,6 +2674,8 @@ export type Mutation = {
    __typename?: 'Mutation',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
+  addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2405,6 +2705,17 @@ export type MutationAddressLinkConfirmArgs = {
 export type MutationAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
+};
+
+
+export type MutationAddressLoginArgs = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type MutationAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -2496,6 +2807,8 @@ export type Mutation_Root = {
    __typename?: 'mutation_root',
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
+  addressLogin?: Maybe<LoginResponse>,
+  addressLoginStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2580,14 +2893,18 @@ export type Mutation_Root = {
   deleteTreasurySpendProposal?: Maybe<TreasurySpendProposal>,
   deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
+  delete_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
   executeRaw: Scalars['Json'],
+  insert_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
   insert_comments?: Maybe<Comments_Mutation_Response>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
@@ -2652,8 +2969,10 @@ export type Mutation_Root = {
   updateTreasurySpendProposal?: Maybe<TreasurySpendProposal>,
   updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
+  update_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
   update_comments?: Maybe<Comments_Mutation_Response>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  update_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_posts?: Maybe<Posts_Mutation_Response>,
@@ -2696,6 +3015,17 @@ export type Mutation_RootAddressLinkConfirmArgs = {
 export type Mutation_RootAddressLinkStartArgs = {
   address: Scalars['String'],
   network: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLoginArgs = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type Mutation_RootAddressLoginStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -3120,6 +3450,11 @@ export type Mutation_RootDeleteValidatorArgs = {
 };
 
 
+export type Mutation_RootDelete_Comment_ReactionsArgs = {
+  where: Comment_Reactions_Bool_Exp
+};
+
+
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp
 };
@@ -3127,6 +3462,11 @@ export type Mutation_RootDelete_CommentsArgs = {
 
 export type Mutation_RootDelete_Onchain_LinksArgs = {
   where: Onchain_Links_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_ReactionsArgs = {
+  where: Post_Reactions_Bool_Exp
 };
 
 
@@ -3151,6 +3491,12 @@ export type Mutation_RootExecuteRawArgs = {
 };
 
 
+export type Mutation_RootInsert_Comment_ReactionsArgs = {
+  objects: Array<Comment_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>,
   on_conflict?: Maybe<Comments_On_Conflict>
@@ -3160,6 +3506,12 @@ export type Mutation_RootInsert_CommentsArgs = {
 export type Mutation_RootInsert_Onchain_LinksArgs = {
   objects: Array<Onchain_Links_Insert_Input>,
   on_conflict?: Maybe<Onchain_Links_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_ReactionsArgs = {
+  objects: Array<Post_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>
 };
 
 
@@ -3536,6 +3888,13 @@ export type Mutation_RootUpdateValidatorArgs = {
 };
 
 
+export type Mutation_RootUpdate_Comment_ReactionsArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>,
+  _set?: Maybe<Comment_Reactions_Set_Input>,
+  where: Comment_Reactions_Bool_Exp
+};
+
+
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>,
   _set?: Maybe<Comments_Set_Input>,
@@ -3547,6 +3906,13 @@ export type Mutation_RootUpdate_Onchain_LinksArgs = {
   _inc?: Maybe<Onchain_Links_Inc_Input>,
   _set?: Maybe<Onchain_Links_Set_Input>,
   where: Onchain_Links_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_ReactionsArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>,
+  _set?: Maybe<Post_Reactions_Set_Input>,
+  where: Post_Reactions_Bool_Exp
 };
 
 
@@ -4561,6 +4927,281 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>,
 };
 
+export type Post_Reactions = {
+   __typename?: 'post_reactions',
+  created_at: Scalars['timestamp'],
+  id: Scalars['Int'],
+  post: Posts,
+  post_id: Scalars['Int'],
+  reacting_user?: Maybe<User>,
+  reaction: Scalars['bpchar'],
+  updated_at: Scalars['timestamp'],
+  user_id: Scalars['Int'],
+};
+
+export type Post_Reactions_Aggregate = {
+   __typename?: 'post_reactions_aggregate',
+  aggregate?: Maybe<Post_Reactions_Aggregate_Fields>,
+  nodes: Array<Post_Reactions>,
+};
+
+export type Post_Reactions_Aggregate_Fields = {
+   __typename?: 'post_reactions_aggregate_fields',
+  avg?: Maybe<Post_Reactions_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Post_Reactions_Max_Fields>,
+  min?: Maybe<Post_Reactions_Min_Fields>,
+  stddev?: Maybe<Post_Reactions_Stddev_Fields>,
+  stddev_pop?: Maybe<Post_Reactions_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Post_Reactions_Stddev_Samp_Fields>,
+  sum?: Maybe<Post_Reactions_Sum_Fields>,
+  var_pop?: Maybe<Post_Reactions_Var_Pop_Fields>,
+  var_samp?: Maybe<Post_Reactions_Var_Samp_Fields>,
+  variance?: Maybe<Post_Reactions_Variance_Fields>,
+};
+
+
+export type Post_Reactions_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Reactions_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+export type Post_Reactions_Aggregate_Order_By = {
+  avg?: Maybe<Post_Reactions_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Post_Reactions_Max_Order_By>,
+  min?: Maybe<Post_Reactions_Min_Order_By>,
+  stddev?: Maybe<Post_Reactions_Stddev_Order_By>,
+  stddev_pop?: Maybe<Post_Reactions_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Post_Reactions_Stddev_Samp_Order_By>,
+  sum?: Maybe<Post_Reactions_Sum_Order_By>,
+  var_pop?: Maybe<Post_Reactions_Var_Pop_Order_By>,
+  var_samp?: Maybe<Post_Reactions_Var_Samp_Order_By>,
+  variance?: Maybe<Post_Reactions_Variance_Order_By>,
+};
+
+export type Post_Reactions_Arr_Rel_Insert_Input = {
+  data: Array<Post_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>,
+};
+
+export type Post_Reactions_Avg_Fields = {
+   __typename?: 'post_reactions_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Reactions_Bool_Exp>>>,
+  _not?: Maybe<Post_Reactions_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Post_Reactions_Bool_Exp>>>,
+  created_at?: Maybe<Timestamp_Comparison_Exp>,
+  id?: Maybe<Int_Comparison_Exp>,
+  post?: Maybe<Posts_Bool_Exp>,
+  post_id?: Maybe<Int_Comparison_Exp>,
+  reaction?: Maybe<Bpchar_Comparison_Exp>,
+  updated_at?: Maybe<Timestamp_Comparison_Exp>,
+  user_id?: Maybe<Int_Comparison_Exp>,
+};
+
+export enum Post_Reactions_Constraint {
+  PostReactionsPkey = 'post_reactions_pkey'
+}
+
+export type Post_Reactions_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  post?: Maybe<Posts_Obj_Rel_Insert_Input>,
+  post_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
+  updated_at?: Maybe<Scalars['timestamp']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Max_Fields = {
+   __typename?: 'post_reactions_max_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Max_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Min_Fields = {
+   __typename?: 'post_reactions_min_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Min_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Mutation_Response = {
+   __typename?: 'post_reactions_mutation_response',
+  affected_rows: Scalars['Int'],
+  returning: Array<Post_Reactions>,
+};
+
+export type Post_Reactions_Obj_Rel_Insert_Input = {
+  data: Post_Reactions_Insert_Input,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>,
+};
+
+export type Post_Reactions_On_Conflict = {
+  constraint: Post_Reactions_Constraint,
+  update_columns: Array<Post_Reactions_Update_Column>,
+  where?: Maybe<Post_Reactions_Bool_Exp>,
+};
+
+export type Post_Reactions_Order_By = {
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  post?: Maybe<Posts_Order_By>,
+  post_id?: Maybe<Order_By>,
+  reaction?: Maybe<Order_By>,
+  updated_at?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export enum Post_Reactions_Select_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Post_Reactions_Set_Input = {
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  reaction?: Maybe<Scalars['bpchar']>,
+  updated_at?: Maybe<Scalars['timestamp']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Stddev_Fields = {
+   __typename?: 'post_reactions_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Stddev_Pop_Fields = {
+   __typename?: 'post_reactions_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Stddev_Samp_Fields = {
+   __typename?: 'post_reactions_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Sum_Fields = {
+   __typename?: 'post_reactions_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Reactions_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export enum Post_Reactions_Update_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Post_Reactions_Var_Pop_Fields = {
+   __typename?: 'post_reactions_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Var_Samp_Fields = {
+   __typename?: 'post_reactions_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Reactions_Variance_Fields = {
+   __typename?: 'post_reactions_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Reactions_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
 export type Post_Topics = {
    __typename?: 'post_topics',
   id: Scalars['Int'],
@@ -5027,6 +5668,8 @@ export type Posts = {
   created_at: Scalars['timestamptz'],
   id: Scalars['Int'],
   onchain_link?: Maybe<Onchain_Links>,
+  post_reactions: Array<Post_Reactions>,
+  post_reactions_aggregate: Post_Reactions_Aggregate,
   title: Scalars['String'],
   topic: Post_Topics,
   topic_id: Scalars['Int'],
@@ -5051,6 +5694,24 @@ export type PostsComments_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Comments_Order_By>>,
   where?: Maybe<Comments_Bool_Exp>
+};
+
+
+export type PostsPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type PostsPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
 };
 
 export type Posts_Aggregate = {
@@ -5124,6 +5785,7 @@ export type Posts_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
+  post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
   topic?: Maybe<Post_Topics_Bool_Exp>,
   topic_id?: Maybe<Int_Comparison_Exp>,
@@ -5150,6 +5812,7 @@ export type Posts_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
+  post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -5228,6 +5891,7 @@ export type Posts_Order_By = {
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
+  post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
   topic?: Maybe<Post_Topics_Order_By>,
   topic_id?: Maybe<Order_By>,
@@ -6814,6 +7478,9 @@ export type Query_Root = {
   blockNumber?: Maybe<BlockNumber>,
   blockNumbers: Array<Maybe<BlockNumber>>,
   blockNumbersConnection: BlockNumberConnection,
+  comment_reactions: Array<Comment_Reactions>,
+  comment_reactions_aggregate: Comment_Reactions_Aggregate,
+  comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
@@ -6849,6 +7516,9 @@ export type Query_Root = {
   onchain_links: Array<Onchain_Links>,
   onchain_links_aggregate: Onchain_Links_Aggregate,
   onchain_links_by_pk?: Maybe<Onchain_Links>,
+  post_reactions: Array<Post_Reactions>,
+  post_reactions_aggregate: Post_Reactions_Aggregate,
+  post_reactions_by_pk?: Maybe<Post_Reactions>,
   post_topics: Array<Post_Topics>,
   post_topics_aggregate: Post_Topics_Aggregate,
   post_topics_by_pk?: Maybe<Post_Topics>,
@@ -6961,6 +7631,29 @@ export type Query_RootBlockNumbersConnectionArgs = {
   orderBy?: Maybe<BlockNumberOrderByInput>,
   skip?: Maybe<Scalars['Int']>,
   where?: Maybe<BlockNumberWhereInput>
+};
+
+
+export type Query_RootComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type Query_RootComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type Query_RootComment_Reactions_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -7254,6 +7947,29 @@ export type Query_RootOnchain_Links_AggregateArgs = {
 
 
 export type Query_RootOnchain_Links_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+export type Query_RootPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type Query_RootPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type Query_RootPost_Reactions_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -8776,12 +9492,18 @@ export type Subscription = {
 
 export type Subscription_Root = {
    __typename?: 'subscription_root',
+  comment_reactions: Array<Comment_Reactions>,
+  comment_reactions_aggregate: Comment_Reactions_Aggregate,
+  comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
   onchain_links: Array<Onchain_Links>,
   onchain_links_aggregate: Onchain_Links_Aggregate,
   onchain_links_by_pk?: Maybe<Onchain_Links>,
+  post_reactions: Array<Post_Reactions>,
+  post_reactions_aggregate: Post_Reactions_Aggregate,
+  post_reactions_by_pk?: Maybe<Post_Reactions>,
   post_topics: Array<Post_Topics>,
   post_topics_aggregate: Post_Topics_Aggregate,
   post_topics_by_pk?: Maybe<Post_Topics>,
@@ -8791,6 +9513,29 @@ export type Subscription_Root = {
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
+};
+
+
+export type Subscription_RootComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type Subscription_RootComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>,
+  where?: Maybe<Comment_Reactions_Bool_Exp>
+};
+
+
+export type Subscription_RootComment_Reactions_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -8836,6 +9581,29 @@ export type Subscription_RootOnchain_Links_AggregateArgs = {
 
 
 export type Subscription_RootOnchain_Links_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+export type Subscription_RootPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type Subscription_RootPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>,
+  where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type Subscription_RootPost_Reactions_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -8906,6 +9674,19 @@ export type Subscription_RootPosts_AggregateArgs = {
 
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int']
+};
+
+
+export type Timestamp_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamp']>,
+  _gt?: Maybe<Scalars['timestamp']>,
+  _gte?: Maybe<Scalars['timestamp']>,
+  _in?: Maybe<Array<Scalars['timestamp']>>,
+  _is_null?: Maybe<Scalars['Boolean']>,
+  _lt?: Maybe<Scalars['timestamp']>,
+  _lte?: Maybe<Scalars['timestamp']>,
+  _neq?: Maybe<Scalars['timestamp']>,
+  _nin?: Maybe<Array<Scalars['timestamp']>>,
 };
 
 
@@ -9764,6 +10545,55 @@ export type EditCommentMutation = (
   )> }
 );
 
+export type LoginMutationVariables = {
+  password: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type LoginMutation = (
+  { __typename?: 'mutation_root' }
+  & { login: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
+);
+
+export type AddressLoginStartMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type AddressLoginStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLoginStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
+export type AddressLoginMutationVariables = {
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type AddressLoginMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressLogin: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+    )> }
+  )> }
+);
+
 export type LogoutMutationVariables = {};
 
 
@@ -9784,7 +10614,7 @@ export type GetCouncilMembersQuery = (
     { __typename?: 'Council' }
     & { members: Maybe<Array<(
       { __typename?: 'CouncilMember' }
-      & Pick<CouncilMember, 'address'>
+      & Pick<CouncilMember, 'id' | 'address'>
     )>> }
   )>> }
 );
@@ -9816,6 +10646,110 @@ export type AddPostCommentMutation = (
   & { insert_comments: Maybe<(
     { __typename?: 'comments_mutation_response' }
     & Pick<Comments_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type PostReactionFieldsFragment = (
+  { __typename?: 'post_reactions' }
+  & Pick<Post_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
+  & { reacting_user: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username'>
+  )> }
+);
+
+export type PostReactionsQueryVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostReactionsQuery = (
+  { __typename?: 'query_root' }
+  & { post_reactions: Array<(
+    { __typename?: 'post_reactions' }
+    & PostReactionFieldsFragment
+  )> }
+);
+
+export type CommentReactionFieldsFragment = (
+  { __typename?: 'comment_reactions' }
+  & Pick<Comment_Reactions, 'id' | 'reaction' | 'created_at' | 'updated_at'>
+  & { reacting_user: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username'>
+  )> }
+);
+
+export type CommentReactionsQueryVariables = {
+  commentId: Scalars['uuid']
+};
+
+
+export type CommentReactionsQuery = (
+  { __typename?: 'query_root' }
+  & { comment_reactions: Array<(
+    { __typename?: 'comment_reactions' }
+    & CommentReactionFieldsFragment
+  )> }
+);
+
+export type AddPostReactionMutationVariables = {
+  postId: Scalars['Int'],
+  userId: Scalars['Int'],
+  reaction: Scalars['bpchar']
+};
+
+
+export type AddPostReactionMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_post_reactions: Maybe<(
+    { __typename?: 'post_reactions_mutation_response' }
+    & Pick<Post_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type AddCommentReactionMutationVariables = {
+  commentId: Scalars['uuid'],
+  userId: Scalars['Int'],
+  reaction: Scalars['bpchar']
+};
+
+
+export type AddCommentReactionMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_comment_reactions: Maybe<(
+    { __typename?: 'comment_reactions_mutation_response' }
+    & Pick<Comment_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type DeletePostReactionMutationVariables = {
+  postId: Scalars['Int'],
+  userId: Scalars['Int'],
+  reaction: Scalars['bpchar']
+};
+
+
+export type DeletePostReactionMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_post_reactions: Maybe<(
+    { __typename?: 'post_reactions_mutation_response' }
+    & Pick<Post_Reactions_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type DeleteCommentReactionMutationVariables = {
+  commentId: Scalars['uuid'],
+  userId: Scalars['Int'],
+  reaction: Scalars['bpchar']
+};
+
+
+export type DeleteCommentReactionMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_comment_reactions: Maybe<(
+    { __typename?: 'comment_reactions_mutation_response' }
+    & Pick<Comment_Reactions_Mutation_Response, 'affected_rows'>
   )> }
 );
 
@@ -9888,7 +10822,7 @@ export type Get_Refresh_TokenQuery = (
 
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
-  & Pick<Comments, 'content' | 'created_at' | 'id' | 'updated_at'>
+  & Pick<Comments, 'id' | 'content' | 'created_at' | 'updated_at'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'username'>
@@ -9985,24 +10919,6 @@ export type LatestDiscussionPostsQuery = (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
     ) }
-  )> }
-);
-
-export type LoginMutationVariables = {
-  password: Scalars['String'],
-  username: Scalars['String']
-};
-
-
-export type LoginMutation = (
-  { __typename?: 'mutation_root' }
-  & { login: Maybe<(
-    { __typename?: 'LoginResponse' }
-    & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
-    )> }
   )> }
 );
 
@@ -10120,14 +11036,17 @@ export type LatestMotionPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_motion_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
       & { onchain_motion: Array<Maybe<(
         { __typename?: 'Motion' }
         & Pick<Motion, 'id'>
         & { motionStatus: Maybe<Array<(
           { __typename?: 'MotionStatus' }
           & Pick<MotionStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -10162,14 +11081,17 @@ export type LatestDemocracyProposalPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'proposer_address'>
       & { onchain_proposal: Array<Maybe<(
         { __typename?: 'Proposal' }
         & Pick<Proposal, 'id'>
         & { proposalStatus: Maybe<Array<(
           { __typename?: 'ProposalStatus' }
           & Pick<ProposalStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -10203,14 +11125,17 @@ export type LatestReferendaPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
       & { onchain_referendum: Array<Maybe<(
         { __typename?: 'Referendum' }
         & Pick<Referendum, 'id'>
         & { referendumStatus: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
-        )>> }
+        )>>, preimage: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
       )>> }
     )> }
   )> }
@@ -10245,7 +11170,7 @@ export type LatestDemocracyTreasuryProposalPostsQuery = (
       & Pick<Post_Topics, 'id' | 'name'>
     ), onchain_link: Maybe<(
       { __typename?: 'onchain_links' }
-      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id'>
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
       & { onchain_treasury_spend_proposal: Array<Maybe<(
         { __typename?: 'TreasurySpendProposal' }
         & Pick<TreasurySpendProposal, 'id'>
@@ -10591,6 +11516,30 @@ export type VerifyEmailMutation = (
   )> }
 );
 
+export const PostReactionFieldsFragmentDoc = gql`
+    fragment postReactionFields on post_reactions {
+  id
+  reacting_user {
+    id
+    username
+  }
+  reaction
+  created_at
+  updated_at
+}
+    `;
+export const CommentReactionFieldsFragmentDoc = gql`
+    fragment commentReactionFields on comment_reactions {
+  id
+  reacting_user {
+    id
+    username
+  }
+  reaction
+  created_at
+  updated_at
+}
+    `;
 export const TopicFragmentDoc = gql`
     fragment topic on post_topics {
   id
@@ -10599,6 +11548,7 @@ export const TopicFragmentDoc = gql`
     `;
 export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on comments {
+  id
   author {
     id
     name
@@ -10606,7 +11556,6 @@ export const CommentFieldsFragmentDoc = gql`
   }
   content
   created_at
-  id
   updated_at
 }
     `;
@@ -10906,6 +11855,119 @@ export function useEditCommentMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = ApolloReactCommon.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
+export const LoginDocument = gql`
+    mutation LOGIN($password: String!, $username: String!) {
+  login(password: $password, username: $username) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
+  }
+}
+    `;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const AddressLoginStartDocument = gql`
+    mutation AddressLoginStart($address: String!) {
+  addressLoginStart(address: $address) {
+    message
+    signMessage
+  }
+}
+    `;
+export type AddressLoginStartMutationFn = ApolloReactCommon.MutationFunction<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
+
+/**
+ * __useAddressLoginStartMutation__
+ *
+ * To run a mutation, you first call `useAddressLoginStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLoginStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLoginStartMutation, { data, loading, error }] = useAddressLoginStartMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressLoginStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLoginStartMutation, AddressLoginStartMutationVariables>(AddressLoginStartDocument, baseOptions);
+      }
+export type AddressLoginStartMutationHookResult = ReturnType<typeof useAddressLoginStartMutation>;
+export type AddressLoginStartMutationResult = ApolloReactCommon.MutationResult<AddressLoginStartMutation>;
+export type AddressLoginStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginStartMutation, AddressLoginStartMutationVariables>;
+export const AddressLoginDocument = gql`
+    mutation AddressLogin($address: String!, $signature: String!) {
+  addressLogin(address: $address, signature: $signature) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+    }
+    token
+  }
+}
+    `;
+export type AddressLoginMutationFn = ApolloReactCommon.MutationFunction<AddressLoginMutation, AddressLoginMutationVariables>;
+
+/**
+ * __useAddressLoginMutation__
+ *
+ * To run a mutation, you first call `useAddressLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressLoginMutation, { data, loading, error }] = useAddressLoginMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *      signature: // value for 'signature'
+ *   },
+ * });
+ */
+export function useAddressLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressLoginMutation, AddressLoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressLoginMutation, AddressLoginMutationVariables>(AddressLoginDocument, baseOptions);
+      }
+export type AddressLoginMutationHookResult = ReturnType<typeof useAddressLoginMutation>;
+export type AddressLoginMutationResult = ApolloReactCommon.MutationResult<AddressLoginMutation>;
+export type AddressLoginMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressLoginMutation, AddressLoginMutationVariables>;
 export const LogoutDocument = gql`
     mutation LOGOUT {
   logout {
@@ -10941,6 +12003,7 @@ export const GetCouncilMembersDocument = gql`
     query getCouncilMembers {
   councils(last: 1) {
     members {
+      id
       address
     }
   }
@@ -11040,6 +12103,210 @@ export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
 export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
 export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const PostReactionsDocument = gql`
+    query PostReactions($postId: Int!) {
+  post_reactions(where: {post_id: {_eq: $postId}}) {
+    ...postReactionFields
+  }
+}
+    ${PostReactionFieldsFragmentDoc}`;
+
+/**
+ * __usePostReactionsQuery__
+ *
+ * To run a query within a React component, call `usePostReactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostReactionsQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostReactionsQuery, PostReactionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<PostReactionsQuery, PostReactionsQueryVariables>(PostReactionsDocument, baseOptions);
+      }
+export function usePostReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostReactionsQuery, PostReactionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PostReactionsQuery, PostReactionsQueryVariables>(PostReactionsDocument, baseOptions);
+        }
+export type PostReactionsQueryHookResult = ReturnType<typeof usePostReactionsQuery>;
+export type PostReactionsLazyQueryHookResult = ReturnType<typeof usePostReactionsLazyQuery>;
+export type PostReactionsQueryResult = ApolloReactCommon.QueryResult<PostReactionsQuery, PostReactionsQueryVariables>;
+export const CommentReactionsDocument = gql`
+    query CommentReactions($commentId: uuid!) {
+  comment_reactions(where: {comment_id: {_eq: $commentId}}) {
+    ...commentReactionFields
+  }
+}
+    ${CommentReactionFieldsFragmentDoc}`;
+
+/**
+ * __useCommentReactionsQuery__
+ *
+ * To run a query within a React component, call `useCommentReactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentReactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentReactionsQuery({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useCommentReactionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CommentReactionsQuery, CommentReactionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<CommentReactionsQuery, CommentReactionsQueryVariables>(CommentReactionsDocument, baseOptions);
+      }
+export function useCommentReactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CommentReactionsQuery, CommentReactionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CommentReactionsQuery, CommentReactionsQueryVariables>(CommentReactionsDocument, baseOptions);
+        }
+export type CommentReactionsQueryHookResult = ReturnType<typeof useCommentReactionsQuery>;
+export type CommentReactionsLazyQueryHookResult = ReturnType<typeof useCommentReactionsLazyQuery>;
+export type CommentReactionsQueryResult = ApolloReactCommon.QueryResult<CommentReactionsQuery, CommentReactionsQueryVariables>;
+export const AddPostReactionDocument = gql`
+    mutation AddPostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
+  __typename
+  insert_post_reactions(objects: {post_id: $postId, user_id: $userId, reaction: $reaction}) {
+    affected_rows
+  }
+}
+    `;
+export type AddPostReactionMutationFn = ApolloReactCommon.MutationFunction<AddPostReactionMutation, AddPostReactionMutationVariables>;
+
+/**
+ * __useAddPostReactionMutation__
+ *
+ * To run a mutation, you first call `useAddPostReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostReactionMutation, { data, loading, error }] = useAddPostReactionMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *      reaction: // value for 'reaction'
+ *   },
+ * });
+ */
+export function useAddPostReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostReactionMutation, AddPostReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostReactionMutation, AddPostReactionMutationVariables>(AddPostReactionDocument, baseOptions);
+      }
+export type AddPostReactionMutationHookResult = ReturnType<typeof useAddPostReactionMutation>;
+export type AddPostReactionMutationResult = ApolloReactCommon.MutationResult<AddPostReactionMutation>;
+export type AddPostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostReactionMutation, AddPostReactionMutationVariables>;
+export const AddCommentReactionDocument = gql`
+    mutation AddCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
+  __typename
+  insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction: $reaction}) {
+    affected_rows
+  }
+}
+    `;
+export type AddCommentReactionMutationFn = ApolloReactCommon.MutationFunction<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
+
+/**
+ * __useAddCommentReactionMutation__
+ *
+ * To run a mutation, you first call `useAddCommentReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCommentReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCommentReactionMutation, { data, loading, error }] = useAddCommentReactionMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *      userId: // value for 'userId'
+ *      reaction: // value for 'reaction'
+ *   },
+ * });
+ */
+export function useAddCommentReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddCommentReactionMutation, AddCommentReactionMutationVariables>(AddCommentReactionDocument, baseOptions);
+      }
+export type AddCommentReactionMutationHookResult = ReturnType<typeof useAddCommentReactionMutation>;
+export type AddCommentReactionMutationResult = ApolloReactCommon.MutationResult<AddCommentReactionMutation>;
+export type AddCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
+export const DeletePostReactionDocument = gql`
+    mutation DeletePostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
+  delete_post_reactions(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
+    affected_rows
+  }
+}
+    `;
+export type DeletePostReactionMutationFn = ApolloReactCommon.MutationFunction<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
+
+/**
+ * __useDeletePostReactionMutation__
+ *
+ * To run a mutation, you first call `useDeletePostReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePostReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePostReactionMutation, { data, loading, error }] = useDeletePostReactionMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *      reaction: // value for 'reaction'
+ *   },
+ * });
+ */
+export function useDeletePostReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeletePostReactionMutation, DeletePostReactionMutationVariables>(DeletePostReactionDocument, baseOptions);
+      }
+export type DeletePostReactionMutationHookResult = ReturnType<typeof useDeletePostReactionMutation>;
+export type DeletePostReactionMutationResult = ApolloReactCommon.MutationResult<DeletePostReactionMutation>;
+export type DeletePostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
+export const DeleteCommentReactionDocument = gql`
+    mutation DeleteCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
+  delete_comment_reactions(where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteCommentReactionMutationFn = ApolloReactCommon.MutationFunction<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>;
+
+/**
+ * __useDeleteCommentReactionMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentReactionMutation, { data, loading, error }] = useDeleteCommentReactionMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *      userId: // value for 'userId'
+ *      reaction: // value for 'reaction'
+ *   },
+ * });
+ */
+export function useDeleteCommentReactionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>(DeleteCommentReactionDocument, baseOptions);
+      }
+export type DeleteCommentReactionMutationHookResult = ReturnType<typeof useDeleteCommentReactionMutation>;
+export type DeleteCommentReactionMutationResult = ApolloReactCommon.MutationResult<DeleteCommentReactionMutation>;
+export type DeleteCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>;
 export const ReportContentDocument = gql`
     mutation ReportContent($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
   reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
@@ -11359,46 +12626,6 @@ export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks
 export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
 export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
-export const LoginDocument = gql`
-    mutation LOGIN($password: String!, $username: String!) {
-  login(password: $password, username: $username) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-    }
-    token
-  }
-}
-    `;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
-
-/**
- * __useLoginMutation__
- *
- * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [loginMutation, { data, loading, error }] = useLoginMutation({
- *   variables: {
- *      password: // value for 'password'
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
-      }
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const MotionPostAndCommentsDocument = gql`
     query MotionPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {
@@ -11502,7 +12729,12 @@ export const LatestMotionPostsDocument = gql`
           id
           status
         }
+        preimage {
+          id
+          method
+        }
       }
+      proposer_address
     }
   }
 }
@@ -11568,7 +12800,12 @@ export const LatestDemocracyProposalPostsDocument = gql`
           id
           status
         }
+        preimage {
+          id
+          method
+        }
       }
+      proposer_address
     }
   }
 }
@@ -11635,7 +12872,12 @@ export const LatestReferendaPostsDocument = gql`
           id
           status
         }
+        preimage {
+          id
+          method
+        }
       }
+      proposer_address
     }
   }
 }
@@ -11702,6 +12944,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
           status
         }
       }
+      proposer_address
     }
   }
 }

@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { useEffect } from 'react';
+
 import useRouter from './useRouter';
 
 export default function (refId?: number | null) {
@@ -10,7 +11,7 @@ export default function (refId?: number | null) {
 	const { history } = useRouter();
 
 	useEffect(( ) => {
-		if (refId) {
+		if (refId || refId === 0) {
 			history.push(`/referendum/${refId}`);
 		}
 	});

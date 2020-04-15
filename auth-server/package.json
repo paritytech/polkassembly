@@ -26,13 +26,14 @@
   },
   "homepage": "https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/auth-webhooks/passport-js#readme",
   "dependencies": {
-    "@polkadot/api": "^1.1.0-beta.12",
-    "@polkadot/types": "^1.1.0-beta.12",
-    "@polkadot/util": "^2.0.1",
-    "@polkadot/util-crypto": "^2.0.1",
+    "@polkadot/api": "^1.7.1",
+    "@polkadot/types": "^1.7.1",
+    "@polkadot/util": "^2.6.2",
+    "@polkadot/util-crypto": "^2.6.2",
     "@sendgrid/mail": "^6.4.0",
     "@types/ejs": "^3.0.1",
     "@types/mocha": "^5.2.7",
+    "@types/redis": "^2.8.17",
     "apollo-server": "^2.9.12",
     "apollo-server-express": "^2.9.12",
     "argon2": "^0.25.1",
@@ -43,6 +44,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "ejs": "^3.0.1",
+    "eslint-plugin-header": "^3.0.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.0",
     "graphql": "^14.5.8",
@@ -55,8 +57,9 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.5.0",
+    "redis": "^3.0.2",
     "tmp": "^0.1.0",
-    "typescript": "^3.7.2",
+    "typescript": "^3.8.3",
     "uuidv4": "^6.0.0",
     "validator": "^12.2.0"
   },
@@ -67,11 +70,11 @@
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
     "chai": "^4.2.0",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.7.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.1",
@@ -80,5 +83,9 @@
     "rewiremock": "^3.13.9",
     "supertest": "^4.0.2",
     "ts-node": "^8.5.4"
+  },
+  "resolutions": {
+    "kind-of": ">=6.0.3",
+    "minimist": ">1.2.3"
   }
 }

@@ -31,29 +31,11 @@ const subscriptionMutation = {
 const eventStatus = {
 	Started: 'Started'
 };
+
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
 const startBlock = Number(process.env.START_FROM) || 0;
 
 async function main (): Promise<void> {
-	console.log(`🔄 Syncing chain-db and discussion-db from block ${startBlock}...`);
-	await syncDBs();
-
-	const getWsClient = function (wsurl: string): SubscriptionClient {
-		const client = new SubscriptionClient(wsurl, { reconnect: true }, ws);
-		return client;
-	};
-
-	// wsurl: GraphQL endpoint
-	// query: GraphQL query (use gql`` from the 'graphql-tag' library)
-	// variables: Query variables object
-	const createSubscriptionObservable = (
-		wsurl: string,
-		query: any,
-		variables?: any
-	) => {
-		const link = new WebSocketLink(getWsClient(wsurl));
-		return execute(link, { query: query, variables: variables });
-	};
 	if (!graphQLEndpoint) {
 		console.error(
 			chalk.red('GraphQL endpoint not set in environment variables!')
@@ -61,34 +43,42 @@ async function main (): Promise<void> {
 		return;
 	}
 
-	const proposalSubscriptionClient = createSubscriptionObservable(
-		graphQLEndpoint,
-		proposalSubscription,
-		{ startBlock }
-	);
+	const syncMessage = `🔄 Syncing chain-db and discussion-db using ${graphQLEndpoint}, from block ${startBlock}...`;
 
-	const referendumSubscriptionClient = createSubscriptionObservable(
-		graphQLEndpoint,
-		referendumSubscription,
-		{ startBlock }
-	);
+	console.log(syncMessage);
+	await syncDBs();
 
-	const motionSubscriptionClient = createSubscriptionObservable(
+	const client = new SubscriptionClient(
 		graphQLEndpoint,
-		motionSubscription,
-		{ startBlock }
-	);
+		{
+			connectionCallback: (error): void => { if (error) console.error('connectionCallback', error); },
+			reconnect: true,
+			timeout: 30000
+		},
+		ws);
 
-	const treasurySpendProposalSubscriptionClient = createSubscriptionObservable(
-		graphQLEndpoint,
-		treasurySpendProposalSubscription,
-		{ startBlock }
-	);
+	client.onConnecting(() => { console.log('---> Connecting...'); });
+	client.onConnected(() => { console.log('---> Connected'); });
+	client.onError((error) => { console.error('---> WS Client error', error); });
+	client.onDisconnected(() => { console.log('---> Disconnected'); });
+	client.onReconnecting(() => { console.log('---> Reconnecting...'); });
+	client.onReconnected(() => {
+		console.log('---> Reconnected');
+		console.log(syncMessage);
+		syncDBs();
+	});
+
+	// leave next, error, complete in this order
+	/* eslint-disable sort-keys */
+	const link = new WebSocketLink(client);
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
-	treasurySpendProposalSubscriptionClient.subscribe(
-		({ data }): void => {
+	execute(link, {
+		query: treasurySpendProposalSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
 			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
 				const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
 				treasuryProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
@@ -100,13 +90,18 @@ async function main (): Promise<void> {
 				}).catch(error => console.error(chalk.red(error)));
 			}
 		},
-		err => {
-			console.error(chalk.red(err));
+		error: error => { throw new Error(`Subscription (treasury) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (treasury) completed');
+			process.exit(1);
 		}
-	);
+	});
 
-	motionSubscriptionClient.subscribe(
-		({ data }): void => {
+	execute(link, {
+		query: motionSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
 			if (data?.motion.mutation === subscriptionMutation.Created) {
 				const { author, motionProposalId, motionProposalArguments, section } = data.motion.node;
 				motionDiscussionExists(motionProposalId).then(alreadyExist => {
@@ -127,13 +122,18 @@ async function main (): Promise<void> {
 				}).catch(error => console.error(chalk.red(error)));
 			}
 		},
-		err => {
-			console.error(chalk.red(err));
+		error: error => { throw new Error(`Subscription (motion) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (motion) completed');
+			process.exit(1);
 		}
-	);
+	});
 
-	proposalSubscriptionClient.subscribe(
-		({ data }): void => {
+	execute(link, {
+		query: proposalSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
 			if (data?.proposal.mutation === subscriptionMutation.Created) {
 				const { proposalId, author } = data.proposal.node;
 				proposalDiscussionExists(proposalId).then(alreadyExist => {
@@ -145,47 +145,59 @@ async function main (): Promise<void> {
 				}).catch(error => console.error(chalk.red(error)));
 			}
 		},
-		err => {
-			console.error(chalk.red(err));
+		error: error => { throw new Error(`Subscription (proposal) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (proposal) completed');
+			process.exit(1);
 		}
-	);
+	});
 
-	referendumSubscriptionClient.subscribe(({ data }): void => {
-		if (data?.referendum.mutation === subscriptionMutation.Created) {
-			const {
-				preimageHash,
-				referendumId,
-				referendumStatus
-			} = data?.referendum?.node;
+	execute(link, {
+		query: referendumSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
+			if (data?.referendum.mutation === subscriptionMutation.Created) {
+				const {
+					preimageHash,
+					referendumId,
+					referendumStatus
+				} = data?.referendum?.node;
 
-			// At referendum creation, there should be only
-			// a "Started" status event.
-			if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
-				console.error(
-					chalk.red(
-						`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
-					)
-				);
-				return;
+				// At referendum creation, there should be only
+				// a "Started" status event.
+				if (!(referendumStatus?.[0]?.status === eventStatus.Started)) {
+					console.error(
+						chalk.red(
+							`Referendem with id ${referendumId.toString()} has an unexpected status. Expect "${eventStatus.Started}", got ${referendumStatus?.[0]?.status}."`
+						)
+					);
+					return;
+				}
+
+				if (!preimageHash) {
+					throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
+				}
+
+				if (!referendumId && referendumId !== 0) {
+					throw new Error(`Unexpect referendumId, got ${referendumId}`);
+				}
+
+				// FIXME This only takes care of motion and democracy proposals
+				// it does not cater for tech committee proposals
+				addDiscussionReferendum({
+					preimageHash,
+					referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
+					referendumId
+				}).catch(e => {
+					console.error(chalk.red(e));
+				});
 			}
-
-			if (!preimageHash) {
-				throw new Error(`Unexpect preimage hash, got ${preimageHash}`);
-			}
-
-			if (!referendumId && referendumId !== 0) {
-				throw new Error(`Unexpect referendumId, got ${referendumId}`);
-			}
-
-			// FIXME This only takes care of motion and democracy proposals
-			// it does not cater for tech committee proposals
-			addDiscussionReferendum({
-				preimageHash,
-				referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
-				referendumId
-			}).catch(e => {
-				console.error(chalk.red(e));
-			});
+		},
+		error: error => { throw new Error(`Subscription (proposal) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (proposal) completed');
+			process.exit(1);
 		}
 	});
 }
