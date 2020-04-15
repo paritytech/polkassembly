@@ -38,7 +38,7 @@ spec:
               containerPort: {{ .Values.authServer.service.port }}
               protocol: TCP
         - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.16
+          image: gcr.io/cloudsql-docker/gce-proxy:1.14
           command:
             - "/cloud_sql_proxy"
             - "-credential_file=/secrets/cloudsql/credentials.json"
