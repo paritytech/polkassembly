@@ -39,8 +39,8 @@ spec:
               protocol: TCP
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.16
-          command: /cloud_sql_proxy
-          args:
+          command:
+            - "/cloud_sql_proxy"
             - "-credential_file=/secrets/cloudsql/credentials.json"
             - {{ .Values.cloudsql.commandline.args | quote }}
           volumeMounts:
