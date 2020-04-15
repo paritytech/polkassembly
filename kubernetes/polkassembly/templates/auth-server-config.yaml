@@ -6,7 +6,7 @@ metadata:
     {{- include "polkassembly.authServer.labels" . | nindent 4 }}
 data:
   {{- range $key, $val := .Values.authServer.config }}
-  {{ $key }}: {{ $val }}
+  {{ $key }}: {{ $val | quote }}
   {{- end }}
 {{- with .Values.nodeSelector }}
 nodeSelector:
