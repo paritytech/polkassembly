@@ -13,12 +13,12 @@ import AddressDropdown from './AddressDropdown';
 import HelperTooltip from './HelperTooltip';
 
 interface Props{
-	title: string
 	accounts: InjectedAccountWithMeta[]
 	address: string
-	withBalance?: boolean
 	className?: string;
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	title: string
+	withBalance?: boolean
 }
 
 const AccountSelectionForm = ({ accounts, address, className, onAccountChange, title, withBalance = false }: Props) =>
