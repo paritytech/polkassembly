@@ -33,6 +33,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import ScrollToTop from '../../ui-components/ScrollToTopButton';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
@@ -121,65 +122,67 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	);
 
 	return (
-		<Grid className={className}>
-			<Grid.Column mobile={16} tablet={16} computer={10}>
-				<div className='post_content'>
-					<EditablePostContent
-						isEditing={isEditing}
-						onchainId={onchainId}
-						post={post}
-						postStatus={postStatus}
-						refetch={refetch}
-						toggleEdit={toggleEdit}
-					/>
-					<div className='actions-bar'>
-						<PostReactionBar className='reactions' postId={post.id} />
-						{id && <div className='vl'/>}
-						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+		<ScrollToTop>
+			<Grid className={className}>
+				<Grid.Column mobile={16} tablet={16} computer={10}>
+					<div className='post_content'>
+						<EditablePostContent
+							isEditing={isEditing}
+							onchainId={onchainId}
+							post={post}
+							postStatus={postStatus}
+							refetch={refetch}
+							toggleEdit={toggleEdit}
+						/>
+						<div className='actions-bar'>
+							<PostReactionBar className='reactions' postId={post.id} />
+							{id && <div className='vl'/>}
+							{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+							{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+							{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+						</div>
 					</div>
-				</div>
-				{ isMotion &&
-					<PostMotionInfo
-						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+					{ isMotion &&
+						<PostMotionInfo
+							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+						/>
+					}
+					{ isProposal &&
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+					}
+					{ isReferendum &&
+						<PostReferendumInfo
+							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+						/>
+					}
+					{ isTreasuryProposal &&
+						<PostTreasuryInfo
+							onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
+						/>
+					}
+					{ !!post.comments?.length &&
+						<Comments
+							comments={post.comments}
+							refetch={refetch}
+						/>
+					}
+					{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
+				</Grid.Column>
+				<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
+					<GovenanceSideBar
+						isMotion={isMotion}
+						isProposal={isProposal}
+						isReferendum={isReferendum}
+						isTreasuryProposal={isTreasuryProposal}
+						onchainId={onchainId}
+						onchainLink={definedOnchainLink}
+						status={postStatus}
 					/>
-				}
-				{ isProposal &&
-					<PostProposalInfo
-						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-					/>
-				}
-				{ isReferendum &&
-					<PostReferendumInfo
-						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-					/>
-				}
-				{ isTreasuryProposal &&
-					<PostTreasuryInfo
-						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
-					/>
-				}
-				{ !!post.comments?.length &&
-					<Comments
-						comments={post.comments}
-						refetch={refetch}
-					/>
-				}
-				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
-			</Grid.Column>
-			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6}>
-				<GovenanceSideBar
-					isMotion={isMotion}
-					isProposal={isProposal}
-					isReferendum={isReferendum}
-					isTreasuryProposal={isTreasuryProposal}
-					onchainId={onchainId}
-					onchainLink={definedOnchainLink}
-					status={postStatus}
-				/>
-			</Grid.Column>
-		</Grid>
+				</Grid.Column>
+			</Grid>
+		</ScrollToTop>
 	);
 };
 
