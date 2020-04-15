@@ -100,7 +100,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			queueNotification({
 				header: 'Success!',
-				message: addressLinkConfirmResult && addressLinkConfirmResult.data && addressLinkConfirmResult.data.addressLinkConfirm && addressLinkConfirmResult.data.addressLinkConfirm.message || '',
+				message: addressLinkConfirmResult?.data?.addressLinkConfirm?.message || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
@@ -136,7 +136,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			queueNotification({
 				header: 'Success!',
-				message: addressUnlinkConfirmResult && addressUnlinkConfirmResult.data && addressUnlinkConfirmResult.data.addressUnlink && addressUnlinkConfirmResult.data.addressUnlink.message || '',
+				message: addressUnlinkConfirmResult?.data?.addressUnlink?.message || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {
