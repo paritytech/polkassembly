@@ -106,7 +106,7 @@ authServer:
     AUTH_SERVER_JWT_PUBLIC_KEY: from-gtilab-vars
 
   image:
-    repository: /paritytech/polkassembly-auth-server
+    repository: paritytech/polkassembly-auth-server
     pullPolicy: IfNotPresent
 
   nameOverride: ""
