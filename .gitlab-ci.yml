@@ -13,14 +13,14 @@ variables:
   DS_DISABLE_DIND:                 "true"
 
 # Enable Gitlab's security scanning
-include:
-  - template: SAST.gitlab-ci.yml
-  - template: Dependency-Scanning.gitlab-ci.yml
-  - template: License-Scanning.gitlab-ci.yml
-
-kubesec-sast:
-  variables:
-    ANALYZER_TARGET_DIR: "kubernetes/"
+# include:
+#   - template: SAST.gitlab-ci.yml
+#   - template: Dependency-Scanning.gitlab-ci.yml
+#   - template: License-Scanning.gitlab-ci.yml
+#
+# kubesec-sast:
+#   variables:
+#     ANALYZER_TARGET_DIR: "kubernetes/"
 
 stages:
   - test
