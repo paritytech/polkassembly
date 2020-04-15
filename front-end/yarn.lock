@@ -2154,10 +2154,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot/wasm-crypto/-/wasm-crypto-1.2.1.tgz#2189702447acd28d763886359576c87562241767"
   integrity sha512-nckIoZBV4nBZdeKwFwH5t7skS7L7GO5EFUl5B1F6uCjUfdNpDz3DtqbYQHcLdCZNmG4TDLg6w/1J+rkl2SiUZw==
 
-"@polkassembly/util@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@polkassembly/util/-/util-0.1.2.tgz#098db293da8187b49881d37bfab134e38bedaf4e"
-  integrity sha512-c+8U8CyYLJEJExMbxpRL4U5/nTMoyXZsV+D6ANoMhHPab9QZb+qrQ2hZoEznsybephRz61p88zXvkCStEqccLQ==
+"@polkassembly/util@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@polkassembly/util/-/util-0.1.3.tgz#994ac4cb2cfe8bc12db8aa06d596d9afdcea7bbf"
+  integrity sha512-BIEREw4G5+jjcObv25blf4nfVH5FPVIbvqKPw4FtRoYD0xBvaJ4KFetV+iPkqX2fNY0U2bjCtiOaTDOSyd92sQ==
   dependencies:
     "@polkadot/util" "^2.8.1"
     bn.js "^5.1.1"
