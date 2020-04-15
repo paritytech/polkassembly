@@ -4,11 +4,10 @@
 
 import styled from '@xstyled/styled-components';
 import React, { Component } from 'react';
-import { FaAngleUp } from 'react-icons/fa';
+import { Icon } from 'semantic-ui-react';
 import Button from 'src/ui-components/Button';
 
 interface Props {
-	className?: string
 	hasScrolled?: boolean
 }
 
@@ -40,10 +39,10 @@ class ScrollingWrapper extends Component<{}, Props> {
 			<>
 				{this.state.hasScrolled &&
 					<ButtonContainer>
-						<Button onClick={() => this.scrollToTop()} primary><FaAngleUp /> Back to Top</Button>
+						<Button onClick={() => this.scrollToTop()} primary><Icon className='icon' name='angle up' />Back To Top</Button>
 					</ButtonContainer>
 				}
-				<ScrollingWrapperContainer /* ref={this.myRef} */>
+				<ScrollingWrapperContainer>
 					{this.props.children}
 				</ScrollingWrapperContainer>
 			</>
@@ -58,6 +57,11 @@ const ButtonContainer = styled.div`
 	bottom: 2rem;
 	right: 4rem;
 	z-index: 2;
+
+	@media only screen and (max-width: 768px) {
+		right: 50%;
+		margin-right: -7rem;
+	}
 `;
 
 const ScrollingWrapperContainer = styled.div`

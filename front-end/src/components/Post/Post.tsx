@@ -33,7 +33,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
-import ScrollToTop from '../../ui-components/ScrollToTopButton';
+import ScrollToTopWrapper from '../../ui-components/ScrollToTopWrapper';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
@@ -122,7 +122,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	);
 
 	return (
-		<ScrollToTop>
+		<ScrollToTopWrapper>
 			<Grid className={className}>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='post_content'>
@@ -182,7 +182,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					/>
 				</Grid.Column>
 			</Grid>
-		</ScrollToTop>
+		</ScrollToTopWrapper>
 	);
 };
 
