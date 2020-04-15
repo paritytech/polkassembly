@@ -118,7 +118,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const treasuryAddressesIncludesProposer = isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address);
 	const canEdit = !isEditing && (
 		post.author?.id === id ||
-		proposalAddressesIncludesProposer ||
+		isProposalProposer ||
 		referendumAddressesIncludesProposer ||
 		motionAddressesIncludesProposer ||
 		treasuryAddressesIncludesProposer
