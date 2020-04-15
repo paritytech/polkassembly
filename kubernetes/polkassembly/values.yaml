@@ -102,8 +102,8 @@ authServer:
     SENDGRID_API_KEY: from-gtilab-vars
 
   secret:
-    JWT_PRIVATE_KEY: from-gtilab-vars
-    JWT_PUBLIC_KEY: from-gtilab-vars
+    AUTH_SERVER_JWT_PRIVATE_KEY: from-gtilab-vars
+    AUTH_SERVER_JWT_PUBLIC_KEY: from-gtilab-vars
 
   image:
     repository: /paritytech/polkassembly-auth-server
