@@ -60,11 +60,11 @@ export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThr
 
 		return result.foundRoot
 			? {
-				isValid: false
-			}
-			: {
 				isValid: true,
 				passingThreshold: result.result as BN
+			}
+			: {
+				isValid: false
 			};
 	} else {
 		const res = solveQuadraticEquation(electorate.neg(), nays.pow(TWO), nays.pow(THREE));

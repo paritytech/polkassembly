@@ -1,6 +1,6 @@
 {
   "name": "@polkassembly/util",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Set of utility functions for Polkassembly and more.",
   "repository": {
     "type": "git",
