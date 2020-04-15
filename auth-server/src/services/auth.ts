@@ -2,61 +2,59 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-server';
+import { Keyring } from '@polkadot/api';
+import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import * as jwt from 'jsonwebtoken';
-import * as moment from 'moment';
+import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import { uuid } from 'uuidv4';
 import validator from 'validator';
 
-import {
-	sendUndoEmailChangeEmail,
-	sendVerificationEmail,
-	sendResetPasswordEmail
-} from './email';
 import Address from '../model/Address';
-import Notification from '../model/Notification';
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
+import Notification from '../model/Notification';
 import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
+import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
-import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role, UserObjectType } from '../types';
+import { redisGet, redisSetex } from '../redis';
+import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
-import { Keyring } from '@polkadot/api';
 import verifySignature from '../utils/verifySignature';
-import { redisGet, redisSetex } from '../redis';
+import {
+	sendResetPasswordEmail,
+	sendUndoEmailChangeEmail,
+	sendVerificationEmail
+} from './email';
 
-const privateKey = process.env.NODE_ENV === 'test'? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
-const jwtPublicKey = process.env.NODE_ENV === 'test'? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
-const passphrase = process.env.NODE_ENV === 'test'? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
+const privateKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PRIVATE_KEY_TEST : process.env.JWT_PRIVATE_KEY;
+const jwtPublicKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PUBLIC_KEY_TEST : process.env.JWT_PUBLIC_KEY;
+const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
-const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
+export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
-	post_participated: true,
-	post_created: true,
 	new_proposal: false,
-	own_proposal: true
+	own_proposal: true,
+	post_created: true,
+	post_participated: true
 };
 
 export default class AuthService {
-	constructor(){}
-
-	public async GetUser(token: string): Promise<UserObjectType> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async GetUser (token: string): Promise<User> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		return getUserFromUserId(userId);
 	}
 
-	public async Login(username, password): Promise<AuthObjectType> {
+	public async Login (username: string, password: string): Promise<AuthObjectType> {
 		const user = await User
 			.query()
 			.where('username', username)
@@ -72,19 +70,19 @@ export default class AuthService {
 		}
 
 		return {
-			user: {
-				id: user.id,
-				email: user.email,
-				username: user.username,
-				name: user.name,
-				email_verified: user.email_verified
-			},
+			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user),
-			refreshToken: await this.getRefreshToken(user)
+			user: {
+				email: user.email,
+				email_verified: user.email_verified || false,
+				id: user.id,
+				name: user.name,
+				username: user.username
+			}
 		};
 	}
 
-	public async AddressLoginStart(address: string): Promise<string> {
+	public async AddressLoginStart (address: string): Promise<string> {
 		const signMessage = uuid();
 
 		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
@@ -92,7 +90,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async AddressLogin(address: string, signature: string): Promise<AuthObjectType> {
+	public async AddressLogin (address: string, signature: string): Promise<AuthObjectType> {
 		const signMessage = await redisGet(address);
 
 		if (!signMessage) {
@@ -123,19 +121,19 @@ export default class AuthService {
 		}
 
 		return {
-			user: {
-				id: user.id,
-				email: user.email,
-				username: user.username,
-				name: user.name,
-				email_verified: user.email_verified
-			},
+			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user),
-			refreshToken: await this.getRefreshToken(user)
+			user: {
+				email: user.email,
+				email_verified: user.email_verified || false,
+				id: user.id,
+				name: user.name,
+				username: user.username
+			}
 		};
 	}
 
-	public async Logout(token: string, refreshToken: string) {
+	public async Logout (token: string, refreshToken: string): Promise<void> {
 		if (!refreshToken) {
 			throw new AuthenticationError(messages.REFRESH_TOKEN_NOT_PROVIDED);
 		}
@@ -149,7 +147,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.NO_CORRESPONDING_REFRESH_TOKEN);
 		}
 
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		if (refreshTokenObj.user_id !== userId) {
 			throw new AuthenticationError(messages.JWT_REFRESH_TOKEN_USER_MISMATCH);
@@ -161,7 +159,7 @@ export default class AuthService {
 			.where({ token: refreshToken });
 	}
 
-	public async SignUp(email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+	public async SignUp (email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
 			.where('username', username)
@@ -190,11 +188,11 @@ export default class AuthService {
 			.allowInsert('[email, password, username, name]')
 			.insert({
 				email,
+				email_verified: false,
+				name,
 				password,
 				salt: salt.toString('hex'),
-				username,
-				name,
-				email_verified: false
+				username
 			});
 
 		await Notification
@@ -220,19 +218,19 @@ export default class AuthService {
 		}
 
 		return {
-			user: {
-				id: user.id,
-				email: user.email,
-				username: user.username,
-				name: user.name,
-				email_verified: user.email_verified
-			},
+			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user),
-			refreshToken: await this.getRefreshToken(user)
+			user: {
+				email: user.email,
+				email_verified: user.email_verified || false,
+				id: user.id,
+				name: user.name,
+				username: user.username
+			}
 		};
 	}
 
-	public async RefreshToken(token: string): Promise<string> {
+	public async RefreshToken (token: string): Promise<string> {
 		const refreshToken = await RefreshToken
 			.query()
 			.where('token', token)
@@ -255,15 +253,19 @@ export default class AuthService {
 			.where('id', refreshToken.user_id)
 			.first();
 
+		if (!user) {
+			throw new ForbiddenError(messages.USER_NOT_FOUND);
+		}
+
 		return this.getSignedToken(user);
 	}
 
-	public async ChangePassword(token: string, oldPassword: string, newPassword: string) {
+	public async ChangePassword (token: string, oldPassword: string, newPassword: string): Promise<void> {
 		if (validator.equals(oldPassword, newPassword)) {
 			throw new UserInputError(messages.OLD_AND_NEW_PASSWORD_MUST_DIFFER);
 		}
 
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
 		const correctPassword = await user.verifyPassword(oldPassword);
@@ -277,14 +279,14 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({
-				salt: salt.toString('hex'),
-				password
+				password,
+				salt: salt.toString('hex')
 			})
 			.findById(userId);
 	}
 
-	public async AddressUnlink(token: string, address: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async AddressUnlink (token: string, address: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
 		const dbAddress = await Address
@@ -310,8 +312,8 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async AddressLinkConfirm(token: string, address_id: number, signature: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async AddressLinkConfirm (token: string, address_id: number, signature: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
 		const dbAddress = await Address
@@ -346,8 +348,8 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeName(token: string, newName: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async ChangeName (token: string, newName: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		await User
 			.query()
@@ -359,7 +361,7 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async VerifyEmail(token: string): Promise<string> {
+	public async VerifyEmail (token: string): Promise<string> {
 		const verifyToken = await EmailVerificationToken
 			.query()
 			.where('token', token)
@@ -388,8 +390,8 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeNotificationPreference(token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async ChangeNotificationPreference (token: string, { postParticipated, postCreated, newProposal, ownProposal }: NotificationPreferencesType): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 		let notification = await Notification
 			.query()
@@ -407,10 +409,10 @@ export default class AuthService {
 		}
 
 		const update = {
-			post_participated: postParticipated === undefined ? notification.post_participated: postParticipated,
-			post_created: postCreated === undefined ? notification.post_created: postCreated,
-			new_proposal: newProposal === undefined ? notification.new_proposal: newProposal,
-			own_proposal: ownProposal === undefined ? notification.own_proposal: ownProposal
+			new_proposal: newProposal === undefined ? notification.new_proposal : newProposal,
+			own_proposal: ownProposal === undefined ? notification.own_proposal : ownProposal,
+			post_created: postCreated === undefined ? notification.post_created : postCreated,
+			post_participated: postParticipated === undefined ? notification.post_participated : postParticipated
 		};
 
 		await Notification
@@ -421,8 +423,8 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async resendVerifyEmailToken(token: string) {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async resendVerifyEmailToken (token: string): Promise<void> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
 		if (!user.email) {
@@ -447,8 +449,8 @@ export default class AuthService {
 		sendVerificationEmail(user, verifyToken);
 	}
 
-	public async ChangeUsername(token: string, username: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async ChangeUsername (token: string, username: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
 			.where('username', username)
@@ -470,8 +472,8 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeEmail(token: string, email: string): Promise<string> {
-		const userId = await getUserIdFromJWT(token, jwtPublicKey);
+	public async ChangeEmail (token: string, email: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
 			.where('email', email)
@@ -507,9 +509,9 @@ export default class AuthService {
 			.query()
 			.allowInsert('[token, user_id, email, valid]')
 			.insert({
+				email: user.email,
 				token: uuid(),
 				user_id: userId,
-				email: user.email,
 				valid: true
 			});
 
@@ -547,7 +549,7 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async RequestResetPassword(email: string) {
+	public async RequestResetPassword (email: string): Promise<void> {
 		const user = await User
 			.query()
 			.where('email', email)
@@ -563,16 +565,16 @@ export default class AuthService {
 			.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({
+				expires,
 				token: uuid(),
 				user_id: user.id,
-				valid: true,
-				expires
+				valid: true
 			});
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
-	public async ResetPassword(token: string, newPassword: string) {
+	public async ResetPassword (token: string, newPassword: string): Promise<void> {
 		const resetToken = await PasswordResetToken
 			.query()
 			.where('token', token)
@@ -596,8 +598,8 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({
-				salt: salt.toString('hex'),
-				password
+				password,
+				salt: salt.toString('hex')
 			})
 			.findById(resetToken.user_id);
 
@@ -607,7 +609,7 @@ export default class AuthService {
 			.findById(resetToken.id);
 	}
 
-	public async UndoEmailChange(token: string) {
+	public async UndoEmailChange (token: string): Promise<{email: string; updatedToken: string}> {
 		const undoToken = await UndoEmailChangeToken
 			.query()
 			.where('token', token)
@@ -636,10 +638,20 @@ export default class AuthService {
 
 		const user = await getUserFromUserId(undoToken.user_id);
 
-		return { updatedToken: await this.getSignedToken(user), email: user.email };
+		return { email: user.email, updatedToken: await this.getSignedToken(user) };
 	}
 
-	private async getSignedToken({ id, name, username, email, email_verified }): Promise<string> {
+	private async getSignedToken ({ email, email_verified, id, name, username }: User): Promise<string> {
+		if (!privateKey) {
+			const key = process.env.NODE_ENV === 'test' ? 'JWT_PRIVATE_KEY_TEST' : 'JWT_PRIVATE_KEY';
+			throw new ForbiddenError(`${key} not set. Aborting.`);
+		}
+
+		if (!passphrase) {
+			const key = process.env.NODE_ENV === 'test' ? 'JWT_KEY_PASSPHRASE_TEST' : 'JWT_KEY_PASSPHRASE';
+			throw new ForbiddenError(`${key} not set. Aborting.`);
+		}
+
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
 
@@ -647,31 +659,31 @@ export default class AuthService {
 		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
-		if (id == process.env.PROPOSAL_BOT_USER_ID) { // eslint-disable-line
+		if (id === Number(process.env.PROPOSAL_BOT_USER_ID)) {
 			allowedRoles.push(Role.PROPOSAL_BOT);
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
 		const kusamaAddresses = addresses
-			.filter(address => (address.network === KUSAMA && address.verified))
-			.map(address => (`"${address.address}"`))
+			.filter(address => address.network === KUSAMA && address.verified)
+			.map(address => `"${address.address}"`)
 			.join(',');
 
-		const tokenContent : JWTPayploadType = {
-			sub: `${id}`,
-			name,
-			username,
+		const tokenContent: JWTPayploadType = {
 			email,
-			email_verified,
-			notification,
-			iat: Math.floor(Date.now() / 1000),
+			email_verified: email_verified || false,
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
+				'x-hasura-kusama': `{${kusamaAddresses}}`,
 				'x-hasura-user-email': email,
-				'x-hasura-user-id': `${id}`,
-				'x-hasura-kusama': `{${kusamaAddresses}}`
-			}
+				'x-hasura-user-id': `${id}`
+			},
+			iat: Math.floor(Date.now() / 1000),
+			name,
+			notification,
+			sub: `${id}`,
+			username
 		};
 
 		return jwt.sign(
@@ -681,7 +693,7 @@ export default class AuthService {
 		);
 	}
 
-	private async getRefreshToken({ id }): Promise<string> {
+	private async getRefreshToken ({ id }: {id: number}): Promise<string> {
 		const token = uuid();
 		const user_id = id;
 		const valid = true;
@@ -689,10 +701,10 @@ export default class AuthService {
 		const refreshToken = await RefreshToken.query()
 			.allowInsert('[token, user_id, valid, expires]')
 			.insert({
+				expires,
 				token,
 				user_id,
-				valid,
-				expires
+				valid
 			});
 
 		return refreshToken.token;

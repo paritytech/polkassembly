@@ -15,7 +15,7 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('requestResetPassword mutation', () => {
-	let signupResult;
+	let signupResult: any;
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -32,7 +32,7 @@ describe('requestResetPassword mutation', () => {
 	let token = '';
 
 	before(async () => {
-		signupResult = await signup(null, { email, password, username, name }, fakectx);
+		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 	});
 
 	after(async () => {
@@ -49,7 +49,7 @@ describe('requestResetPassword mutation', () => {
 
 	it('should be able to request a password reset', async () => {
 
-		const res = await requestResetPassword(null, { email });
+		const res = await requestResetPassword(undefined, { email });
 
 		const passwordResetToken = await PasswordResetToken
 			.query()
@@ -66,7 +66,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a short password', async () => {
 
 		try {
-			await resetPassword(null, { token, newPassword: 'short' });
+			await resetPassword(undefined, { token, newPassword: 'short' });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -77,7 +77,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a wrong token', async () => {
 
 		try {
-			await resetPassword(null, { token: uuid(), newPassword });
+			await resetPassword(undefined, { token: uuid(), newPassword });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -87,7 +87,7 @@ describe('requestResetPassword mutation', () => {
 
 	it('should be able to reset password with a valid token', async () => {
 
-		const res = await resetPassword(null, { token, newPassword });
+		const res = await resetPassword(undefined, { token, newPassword });
 
 		expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL);
 	});
@@ -95,7 +95,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to change password with an expired token', async () => {
 
 		try {
-			await resetPassword(null, { token, newPassword });
+			await resetPassword(undefined, { token, newPassword });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -107,7 +107,7 @@ describe('requestResetPassword mutation', () => {
 		const email = 'wrong@email';
 
 		try {
-			await requestResetPassword(null, { email });
+			await requestResetPassword(undefined, { email });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);

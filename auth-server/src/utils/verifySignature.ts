@@ -7,7 +7,7 @@ import { schnorrkelVerify } from '@polkadot/util-crypto';
 
 const keyring = new Keyring({ type: 'sr25519' });
 
-export default (message: string, address: string, signature: string) => {
+export default (message: string, address: string, signature: string): boolean => {
 	const publicKey = keyring.decodeAddress(address);
 
 	return schnorrkelVerify(message, signature, publicKey);

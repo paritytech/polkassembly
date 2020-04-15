@@ -4,14 +4,10 @@
 
 import PostSubscription from '../../model/PostSubscription';
 import AuthService from '../../services/auth';
-import { Context, Subscription  } from '../../types';
+import { Context, Subscription, SubscriptionArgs } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 
-interface argsType {
-	post_id: number
-}
-
-export default async (parent, { post_id }: argsType, ctx: Context): Promise<Subscription> => {
+export default async (parent: void, { post_id }: SubscriptionArgs, ctx: Context): Promise<Subscription> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
@@ -19,8 +15,8 @@ export default async (parent, { post_id }: argsType, ctx: Context): Promise<Subs
 	const subscription = await PostSubscription
 		.query()
 		.where({
-			user_id: user.id,
-			post_id: post_id
+			post_id: post_id,
+			user_id: user.id
 		})
 		.first();
 
