@@ -57,10 +57,10 @@ hasura:
     HASURA_POST_SUBSCRIPTION_HOOK: http://auth-server-service:8010/auth/graphql
     HASURA_POST_SUBSCRIPTION_SECRET: "from-gitlab-vars"
     HASURA_COMMENT_CREATE_EVENT_HOOK: http://auth-server-service:8010/auth/event/comment/create
-    HASURA_ONCHAIN_Link_Create_Hook: http://auth-server-service:8010/auth/event/onchain_link/create
     HASURA_EVENT_SECRET: "from-gitlab-vars"
     HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
     HASURA_CHAIN_DB_REMOTE_SCHEMA: "from-gitlab-vars"
+    HASURA_ONCHAIN_LINK_CREATE_HOOK: "http://auth-server-service:8010/auth/event/onchain_link/create"
 
   secret:
     HASURA_GRAPHQL_JWT_SECRET: from-gitlab-vars
