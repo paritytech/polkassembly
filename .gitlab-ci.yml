@@ -2,8 +2,7 @@ image: parity/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "paritytech"
-  ##DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
-  DOCKER_TAG:                      "fv-test"
+  DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       3
   # Variables required by Gitlab scanning
@@ -13,14 +12,14 @@ variables:
   DS_DISABLE_DIND:                 "true"
 
 # Enable Gitlab's security scanning
-# include:
-#   - template: SAST.gitlab-ci.yml
-#   - template: Dependency-Scanning.gitlab-ci.yml
-#   - template: License-Scanning.gitlab-ci.yml
-#
-# kubesec-sast:
-#   variables:
-#     ANALYZER_TARGET_DIR: "kubernetes/"
+include:
+  - template: SAST.gitlab-ci.yml
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Scanning.gitlab-ci.yml
+
+kubesec-sast:
+  variables:
+    ANALYZER_TARGET_DIR: "kubernetes/"
 
 stages:
   - test
@@ -102,7 +101,7 @@ lint-chain-db-watcher:
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     - echo "$BUILD_ARGS"
-    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin 
+    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
     - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
     - docker push "$DOCKER_IMAGE_FULL_NAME"
 
@@ -115,7 +114,6 @@ dockerize:staging-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
     - master
-    # - /^fv-.*/
   <<: *build_and_push
 
 dockerize:production-front-end:
@@ -135,7 +133,6 @@ dockerize-auth-server:
     name: parity-build
   only:
     - master
-    # - /^fv-.*/
     - tags
   <<: *build_and_push
 
@@ -145,7 +142,6 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
     - master
-    # - /^fv-.*/
     - tags
   <<: *build_and_push
 
@@ -207,7 +203,6 @@ deploy-staging:
     - kubernetes-parity-build
   only:
     - master
-    - /^fv-.*/
   <<: *deploy-k8s
 
 deploy-production:
