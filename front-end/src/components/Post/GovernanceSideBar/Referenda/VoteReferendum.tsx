@@ -125,9 +125,9 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
+					</Card>
 					: <Card>
 						<AccountSelectionForm
 							title='Vote with account'
@@ -159,11 +159,6 @@ export default styled(VoteRefrendum)`
 		height: 40rem;
 		position: absolute;
 		width: 100%;
-		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
-		border-radius: 3px;
 	}
 
 	.button-container {
