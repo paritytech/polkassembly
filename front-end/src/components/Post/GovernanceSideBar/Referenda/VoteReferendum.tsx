@@ -156,7 +156,14 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 export default styled(VoteRefrendum)`
 	.LoaderWrapper {
-		height: 15rem;
+		height: 40rem;
+		position: absolute;
+		width: 100%;
+		background-color: white;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_border;
+		border-radius: 3px;
 	}
 
 	.button-container {
