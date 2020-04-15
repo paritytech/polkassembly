@@ -139,7 +139,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						<BalanceInput
 							label={'Lock balance'}
 							helpText={'Amount of you are willing to lock for this vote.'}
-							placeholder={'Lock balance'}
+							placeholder={'123'}
 							onChange={onBalanceChange}
 						/>
 						<VoteLock/>
