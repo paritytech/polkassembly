@@ -17,7 +17,7 @@ interface GovernanceProps {
 	method?: string
 	onchainId?: number | null
 	status?: string | null
-	title: string
+	title?: string | null
 	topic: string
 }
 
@@ -32,6 +32,8 @@ const GovernanceAction = function ({
 	topic
 }:GovernanceProps) {
 
+	const mainTitle = <h4>{method || title || 'Title not edited'}</h4>;
+	const subTitle = title && method && <h5>{title}</h5>;
 	return (
 		<div className={className}>
 			<Segment.Group horizontal>
@@ -41,8 +43,8 @@ const GovernanceAction = function ({
 				<Segment>
 					<Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
 						<div className='title-wrapper'>
-							<h4>{method ? method : title}</h4>
-							{title && method && <h5>{title}</h5>}
+							{mainTitle}
+							{subTitle}
 						</div>
 						<OnchainCreationLabel
 							address={address}
@@ -52,14 +54,14 @@ const GovernanceAction = function ({
 					</Responsive>
 					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 						<div className='title-wrapper'>
-							<h4>{method ? method : title}</h4>
+							{mainTitle}
 							<OnchainCreationLabel
 								address={address}
 								topic={topic}
 							/>
 						</div>
 						{status && <StatusTag className='statusTag' status={status}/>}
-						{title && method && <h5>{title}</h5>}
+						{subTitle}
 					</Responsive>
 					<ul>
 						<li><Icon name='comment' /> {comments} comments</li>
