@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.hasura.name }}-service
+  labels:
+    {{- include "polkassembly.hasura.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.hasura.service.type }}
+  ports:
+    - port: {{ .Values.hasura.service.port }}
+      protocol: TCP
+  selector:
+    {{- include "polkassembly.hasura.selectorLabels" . | nindent 4 }}
