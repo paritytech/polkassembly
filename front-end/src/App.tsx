@@ -89,7 +89,7 @@ const App = () => {
 													<Route path="/request-reset-password">
 														<RequestResetPassword/>
 													</Route>
-													<Route path="/reset-password/:token">
+													<Route path="/reset-password">
 														<ResetPassword/>
 													</Route>
 													<Route path="/signup">

@@ -54,7 +54,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 		return;
 	}
 
-	const resetUrl = `${DOMAIN}/reset-password/${token}?user_id=${user.id}`;
+	const resetUrl = `${DOMAIN}/reset-password?token=${token}&userId=${user.id}`;
 	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.name || '' });
 
 	const msg = {

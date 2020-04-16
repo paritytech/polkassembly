@@ -20,8 +20,7 @@ interface Props {
 
 const ResetPassword = ({ className }:Props): JSX.Element => {
 	const router = useRouter();
-	const { token } = router.query;
-	const userId = Number(new URLSearchParams(window.location.search).get('user_id'));
+	const { token, userId } = router.query;
 	const [newPassword, setNewPassword ] = useState('');
 	const { queueNotification } = useContext(NotificationContext);
 	const [resetPassword, { loading, error }] = useResetPasswordMutation({
@@ -60,13 +59,13 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 		}
 	};
 
-	const renderNoTokenError = () => {
-		if (token) return null;
+	const renderNoTokenUserIdError = () => {
+		if (token && userId) return null;
 
 		return (
 			<Header as='h2' icon>
 				<Icon name='ambulance' />
-				No token password reset token provided
+				Password reset token and/or userId missing
 			</Header>
 		);
 	};
@@ -75,8 +74,8 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 		<Grid className={className}>
 			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={6}/>
 			<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={4}>
-				{renderNoTokenError()}
-				{ token && <Form>
+				{renderNoTokenUserIdError()}
+				{ token && userId && <Form>
 					<h3>Set new password</h3>
 					<Form.Group>
 						<Form.Field width={16}>
