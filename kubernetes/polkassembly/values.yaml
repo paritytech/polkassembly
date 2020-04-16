@@ -93,7 +93,7 @@ authServer:
     NODE_ENV: development
     DOMAIN_PROTOCOL: https://
     PORT: "8010"
-    PROPOSAL_BOT_USER_ID: "11"
+    PROPOSAL_BOT_USER_ID: "1"
     DATABASE_URL: from-gtilab-vars
     HASURA_EVENT_SECRET: from-gtilab-vars
     HASURA_POST_SUBSCRIPTION_SECRET: from-gtilab-vars
