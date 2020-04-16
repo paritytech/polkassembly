@@ -129,20 +129,27 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						<Loader text={loadingStatus.message}/>
 					</Card>
 					: <Card>
-						<AccountSelectionForm
-							title='Vote with account'
-							accounts={accounts}
-							address={address}
-							withBalance
-							onAccountChange={onAccountChange}
-						/>
-						<BalanceInput
-							label={'Lock balance'}
-							helpText={'Amount of you are willing to lock for this vote.'}
-							placeholder={'123'}
-							onChange={onBalanceChange}
-						/>
-						<VoteLock/>
+						{apiReady
+							?
+							<>
+								<AccountSelectionForm
+									title='Vote with account'
+									accounts={accounts}
+									address={address}
+									withBalance
+									onAccountChange={onAccountChange}
+								/>
+								<BalanceInput
+									label={'Lock balance'}
+									helpText={'Amount of you are willing to lock for this vote.'}
+									placeholder={'123'}
+									onChange={onBalanceChange}
+								/>
+								<VoteLock/>
+							</>
+							:
+							<div className='error-text'>Polkadot API is not available.</div>
+						}
 						<AyeNayButtons
 							disabled={!apiReady}
 							onClickAye={() => voteRefrendum(true)}
@@ -161,7 +168,7 @@ export default styled(VoteRefrendum)`
 		width: 100%;
 	}
 
-	.button-container {
-		margin-top: 2rem !important;
+	.error-text {
+		margin-bottom: 1rem;
 	}
 `;

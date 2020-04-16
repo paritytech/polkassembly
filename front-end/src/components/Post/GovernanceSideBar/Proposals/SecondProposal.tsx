@@ -90,17 +90,22 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			{ noAccount
 				? <GetAccountsButton />
 				:loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
+					</Card>
 					: <Card>
-						<AccountSelectionForm
-							title='Second with account'
-							accounts={accounts}
-							address={address}
-							withBalance
-							onAccountChange={onAccountChange}
-						/>
+						{apiReady
+							?
+							<AccountSelectionForm
+								title='Second with account'
+								accounts={accounts}
+								address={address}
+								withBalance
+								onAccountChange={onAccountChange}
+							/>
+							:
+							<div className='error-text'>Polkadot API is not available.</div>
+						}
 						<Button
 							primary
 							disabled={!apiReady}
@@ -118,9 +123,11 @@ export default styled(SecondProposal)`
 
 	.LoaderWrapper {
 		height: 15rem;
+		position: absolute;
+		width: 100%;
 	}
 
-	.button-container {
-		margin-top: 2rem !important;
+	.error-text {
+		margin-bottom: 1rem;
 	}
 `;

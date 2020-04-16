@@ -122,16 +122,21 @@ const VoteMotion = ({
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
+					</Card>
 					: <Card>
-						<AccountSelectionForm
-							title='Second with account'
-							accounts={accounts}
-							address={address}
-							onAccountChange={onAccountChange}
-						/>
+						{apiReady
+							?
+							<AccountSelectionForm
+								title='Second with account'
+								accounts={accounts}
+								address={address}
+								onAccountChange={onAccountChange}
+							/>
+							:
+							<div className='error-text'>Polkadot API is not available.</div>
+						}
 						<AyeNayButtons
 							disabled={!apiReady}
 							onClickAye={() => voteMotion(true)}
@@ -160,9 +165,11 @@ const VoteMotion = ({
 export default styled(VoteMotion)`
 	.LoaderWrapper {
 		height: 15rem;
+		position: absolute;
+		width: 100%;
 	}
 
-	.button-container {
-		margin-top: 2rem !important;
+	.error-text {
+		margin-bottom: 1rem;
 	}
 `;
