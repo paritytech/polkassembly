@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.chainDbWatcher.name }}
+  labels:
+    {{- include "polkassembly.chainDbWatcher.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.chainDbWatcher.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "polkassembly.chainDbWatcher.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "polkassembly.chainDbWatcher.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.chainDbWatcher.name }}
+          image: "{{ .Values.chainDbWatcher.image.repository }}:{{ .Values.dockerTag }}"
+          imagePullPolicy: {{ .Values.chainDbWatcher.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.chainDbWatcher.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: chain-db-watcher-config
+          {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}

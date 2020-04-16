@@ -1,0 +1,27 @@
+# PARITY-PROD values for polkassembly.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+chainName: kusama
+nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
+
+frontend:
+  ingress:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/redirect-entry-point: https
+    hosts:
+      - host: kusama.polkassembly.io
+        path: /
+      - host: polkassembly.io
+        path: /
+    tls: []
+
+authServer:
+  config:
+    DOMAIN_NAME: "kusama.polkassembly.io"
+    PROPOSAL_BOT_USER_ID: "1"
+chainDbWatcher:
+  config:
+    PROPOSAL_BOT_USER_ID: "1"
+

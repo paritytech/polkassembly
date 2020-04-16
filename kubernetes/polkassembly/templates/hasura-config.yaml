@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.hasura.name }}-config
+  labels:
+    {{- include "polkassembly.hasura.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.hasura.config }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}

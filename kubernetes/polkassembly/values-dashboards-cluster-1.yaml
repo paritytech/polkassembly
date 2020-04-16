@@ -1,0 +1,25 @@
+# DASHBOARDS-CLUSTER-1 values for polkassembly.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+chainName: kusama
+nodeSelector: {}
+
+frontend:
+  ingress:
+    enabled: true 
+    annotations:
+      traefik.ingress.kubernetes.io/redirect-entry-point: https
+
+    hosts:
+      - host: test.polkassembly.io
+        paths: []
+    tls: []
+
+authServer:
+  config:
+    domainName: "test.polkassembly.io"
+    PROPOSAL_BOT_USER_ID: "11"
+chainDbWatcher:
+  config:
+    PROPOSAL_BOT_USER_ID: "11"
