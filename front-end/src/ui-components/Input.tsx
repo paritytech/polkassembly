@@ -15,21 +15,29 @@ function Input ({ className, invalid = false, ...props } : Props){
 }
 
 export default styled(Input)`
-    font-family: font_default;
-    font-size: input_text;
+    .ui.input>input {
+        font-family: font_default;
+        font-size: input_text_size;
+        border-width: 1px;
+        border-color: grey_light;
+        border-radius: 0rem;
+        text-indent: 0rem;
+        padding: 1rem;
+        margin-bottom: 1.2rem;
+        &:focus {
+            font-family: font_default;
+            font-size: 1.3rem;
+            color: black_text;
+            border-color: grey_primary;
+            border-radius: 0rem;
+        }
+        &:hover {
+            border-color: grey_secondary;
+        }
+    }
 
     &.invalid > .ui.input > input {
         color: red_primary !important;
         border-color: red_primary !important;
     }
-    /* color: black_primary;
-    border-style: solid;
-    border-width: 1px;
-    border-color: grey_light;
-    border-radius: 0rem;
-    padding: 0.625rem 0 0.5rem 0;
-    &:focus {
-        outline: 0;
-        border-color: grey_light;
-    }*/
 `;

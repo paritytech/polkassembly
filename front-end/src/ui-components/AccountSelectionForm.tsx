@@ -8,18 +8,20 @@ import React from 'react';
 import { DropdownProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import { Form } from 'src/ui-components/Form';
 
+import Balance from '../components/Balance';
 import AddressDropdown from './AddressDropdown';
 import HelperTooltip from './HelperTooltip';
 
 interface Props{
+	accounts: InjectedAccountWithMeta[]
+	address: string
+	className?: string;
+	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 	title: string
-    accounts: InjectedAccountWithMeta[]
-    address: string
-    className?: string;
-    onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
+	withBalance?: boolean
 }
 
-const AccountSelectionForm = ({ title, accounts, address, className, onAccountChange }: Props) =>
+const AccountSelectionForm = ({ accounts, address, className, onAccountChange, title, withBalance = false }: Props) =>
 	<Form.Field className={className} width={16}>
 		<label>{title}
 			<HelperTooltip
@@ -31,6 +33,9 @@ const AccountSelectionForm = ({ title, accounts, address, className, onAccountCh
 			defaultAddress={address || accounts[0]?.address}
 			onAccountChange={onAccountChange}
 		/>
+		{withBalance &&
+			<Balance address={address} className='balance'/>
+		}
 	</Form.Field>;
 
 export default styled(AccountSelectionForm)`
@@ -48,5 +53,9 @@ export default styled(AccountSelectionForm)`
 
 	.ui.selection.dropdown:focus, .ui.selection.active.dropdown, .ui.selection.active.dropdown:hover, .ui.selection.active.dropdown .menu {
 		border-color: grey_light;
+	}
+
+	.balance {
+		text-align: right;
 	}
 `;

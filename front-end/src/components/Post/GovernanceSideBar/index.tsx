@@ -108,49 +108,47 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 		<>
 			{ canVote
 				? <div className={className}>
-					<div className='card'>
-						<Form standalone={false}>
-							{isMotion && canVote &&
-							<VoteMotion
-								accounts={accounts}
-								address={address}
-								getAccounts={getAccounts}
-								motionId={onchainId}
-								motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-								onAccountChange={onAccountChange}
-							/>
-							}
-							{isProposal &&
-								<>
-									{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
-									{canVote && <SecondProposal
-										accounts={accounts}
-										address={address}
-										getAccounts={getAccounts}
-										onAccountChange={onAccountChange}
-										proposalId={onchainId}
-									/>}
-								</>
-							}
-							{isReferendum &&
-								<>
-									{(onchainId || onchainId === 0) && <ReferendumVoteInfo
-										referendumId={onchainId}
-										// eslint-disable-next-line no-extra-parens
-										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
-									/>}
-									{canVote && <VoteReferendum
-										accounts={accounts}
-										address={address}
-										getAccounts={getAccounts}
-										onAccountChange={onAccountChange}
-										referendumId={onchainId}
-									/>
-									}
-								</>
-							}
-						</Form>
-					</div>
+					<Form standalone={false}>
+						{isMotion && canVote &&
+						<VoteMotion
+							accounts={accounts}
+							address={address}
+							getAccounts={getAccounts}
+							motionId={onchainId}
+							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+							onAccountChange={onAccountChange}
+						/>
+						}
+						{isProposal &&
+							<>
+								{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
+								{canVote && <SecondProposal
+									accounts={accounts}
+									address={address}
+									getAccounts={getAccounts}
+									onAccountChange={onAccountChange}
+									proposalId={onchainId}
+								/>}
+							</>
+						}
+						{isReferendum &&
+							<>
+								{(onchainId || onchainId === 0) && <ReferendumVoteInfo
+									referendumId={onchainId}
+									// eslint-disable-next-line no-extra-parens
+									threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
+								/>}
+								{canVote && <VoteReferendum
+									accounts={accounts}
+									address={address}
+									getAccounts={getAccounts}
+									onAccountChange={onAccountChange}
+									referendumId={onchainId}
+								/>
+								}
+							</>
+						}
+					</Form>
 				</div>
 				: null
 			}
@@ -159,17 +157,6 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 };
 
 export default styled(GovenanceSideBar)`
-	.card {
-		background-color: white;
-		padding: 2rem 3rem 2rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_light;
-		margin-bottom: 1rem;
-		@media only screen and (max-width: 768px) {
-			padding: 2rem;
-		}
-	}
 	
 	@media only screen and (max-width: 768px) {
 		.ui.form {

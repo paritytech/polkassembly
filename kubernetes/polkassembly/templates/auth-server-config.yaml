@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.authServer.name }}-config
+  labels:
+    {{- include "polkassembly.authServer.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.authServer.config }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- with .Values.nodeSelector }}
+nodeSelector:
+{{ toYaml . | indent 2 }}
+{{- end }}
