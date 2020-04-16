@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.hasura.name }}
+  labels:
+    {{- include "polkassembly.hasura.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.hasura.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "polkassembly.hasura.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "polkassembly.hasura.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.hasura.name }}-graphql-engine
+          image: "{{ .Values.hasura.image.repository }}"
+          imagePullPolicy: {{ .Values.hasura.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.hasura.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: hasura-config
+          {{- end }}
+            - name: HASURA_GRAPHQL_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: HASURA_GRAPHQL_JWT_SECRET
+                  name: graphql-jwt-secret
+          ports:
+            - name: {{ .Values.hasura.name }}
+              containerPort: {{ .Values.hasura.service.port }}
+              protocol: TCP
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.14
+          command:
+            - "/cloud_sql_proxy"
+            - "-credential_file=/secrets/cloudsql/credentials.json"
+            - {{ .Values.cloudsql.commandline.args | quote }}
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}

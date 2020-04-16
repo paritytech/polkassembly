@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.authServer.name }}
+  labels:
+    {{- include "polkassembly.authServer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.authServer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "polkassembly.authServer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "polkassembly.authServer.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.authServer.name }}
+          image: "{{ .Values.authServer.image.repository }}:{{ .Values.dockerTag }}"
+          imagePullPolicy: {{ .Values.authServer.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.authServer.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: auth-server-config
+          {{- end }}
+          {{- range $key, $val := .Values.authServer.secret }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $key }}
+                  name: auth-jwt-key
+          {{- end }}
+          ports:
+            - name: {{ .Values.authServer.name }}
+              containerPort: {{ .Values.authServer.service.port }}
+              protocol: TCP
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.14
+          command:
+            - "/cloud_sql_proxy"
+            - "-credential_file=/secrets/cloudsql/credentials.json"
+            - {{ .Values.cloudsql.commandline.args | quote }}
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}

@@ -35,6 +35,10 @@ export default styled(Button)`
 			font-size: md;
 			padding: 0.8rem 1.6rem;
 		}
+		&.ui.large.button {
+			font-size: lg;
+			padding: 1.2rem 2rem;
+		}
 		&.ui.primary.button {
 			background-color: pink_primary;
 			color: white;
