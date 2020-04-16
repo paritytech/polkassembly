@@ -8,7 +8,3 @@ data:
   {{- range $key, $val := .Values.chainDbWatcher.config }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
-{{- with .Values.nodeSelector }}
-nodeSelector:
-{{ toYaml . | indent 2 }}
-{{- end }}
