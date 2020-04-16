@@ -25,7 +25,6 @@ stages:
   - test
   - dockerize
   - deploy
-  - post-deploy
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -85,7 +84,7 @@ lint-chain-db-watcher:
       - "chain-db-watcher/**/*"
   tags:
     - linux-docker
-    
+
 #### stage:                        dockerize
 
 .build_and_push:                   &build_and_push
@@ -102,7 +101,7 @@ lint-chain-db-watcher:
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
     - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
     - echo "$BUILD_ARGS"
-    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin 
+    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
     - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
     - docker push "$DOCKER_IMAGE_FULL_NAME"
 
@@ -150,13 +149,31 @@ dockerize-chain-db-watcher:
 
 .deploy-k8s:                   &deploy-k8s
   script:
-    - export DOCKER_TAG
-    # check syntax
-    - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst | kubectl --dry-run --validate -n polkassembly apply -f -; done
-    # print rendered yaml
-    # - for f in kubernetes/polkassembly/*yaml; do echo $f; cat $f | envsubst; echo '---'; done
-    # deploy yaml to cluster
-    - for f in kubernetes/polkassembly/*yaml; do cat $f | envsubst | kubectl -n polkassembly apply -f -; done
+    - helm upgrade polkassembly kubernetes/polkassembly
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
+      --set dockerTag=${DOCKER_TAG}
+      --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
+      --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
+      --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
+      --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set hasura.config.HASURA_CHAIN_DB_REMOTE_SCHEMA=${HASURA_CHAIN_DB_REMOTE_SCHEMA}
+      --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      --set authServer.config.DATABASE_URL=${DATABASE_URL}
+      --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
+      --set authServer.config.REDIS_URL=${REDIS_URL}
+      --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
+      --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
+      --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
+      --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
+      --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
+      --set chainDbWatcher.config.PROPOSAL_BOT_USER_ID=${PROPOSAL_BOT_USER_ID}
 
     # test, update/deploy redis server using helm
     - export REDIS_PASSWORD=$(echo "$REDIS_URL" | sed -r 's#redis://:([^@]+).*$#\1#g')

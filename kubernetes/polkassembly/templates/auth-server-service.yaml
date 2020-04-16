@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.authServer.name }}-service
+  labels:
+    {{- include "polkassembly.authServer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.authServer.service.type }}
+  ports:
+    - port: {{ .Values.authServer.service.port }}
+      protocol: TCP
+  selector:
+    {{- include "polkassembly.authServer.selectorLabels" . | nindent 4 }}

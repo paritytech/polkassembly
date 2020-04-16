@@ -20,4 +20,8 @@ const Loader = ({ className, text = 'Loading' }: Props) => {
 
 export default styled(Loader)`
     background-color: inherit!important;
+
+	&.ui.inverted.dimmer {
+		border-radius: 3px;
+	}
 `;
