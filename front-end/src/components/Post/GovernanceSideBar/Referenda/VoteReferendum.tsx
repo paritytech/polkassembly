@@ -12,13 +12,13 @@ import { NotificationContext } from 'src/context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from 'src/types';
 import BalanceInput from 'src/ui-components/BalanceInput';
 import Button from 'src/ui-components/Button';
+import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import Loader from 'src/ui-components/Loader';
 
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
 import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
-import Balance from '../../../Balance';
 
 interface Props {
 	className?: string
@@ -97,6 +97,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			<Button
 				primary
 				onClick={getAccounts}
+				size={'large'}
 			>
 				Vote
 			</Button>
@@ -114,6 +115,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			<Select
 				onChange={onConvictionChange}
 				options={convictionOpts}
+				pointing={'top'}
 				value={conviction}
 			/>
 		</Form.Field>;
@@ -123,20 +125,21 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
-					: <>
+					</Card>
+					: <Card>
 						<AccountSelectionForm
 							title='Vote with account'
 							accounts={accounts}
 							address={address}
+							withBalance
 							onAccountChange={onAccountChange}
 						/>
-						{api && <Balance address={address} />}
 						<BalanceInput
 							label={'Lock balance'}
 							helpText={'Amount of you are willing to lock for this vote.'}
+							placeholder={'123'}
 							onChange={onBalanceChange}
 						/>
 						<VoteLock/>
@@ -145,7 +148,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 							onClickAye={() => voteRefrendum(true)}
 							onClickNay={() => voteRefrendum(false)}
 						/>
-					</>
+					</Card>
 			}
 		</div>
 	);
@@ -153,7 +156,9 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 export default styled(VoteRefrendum)`
 	.LoaderWrapper {
-		height: 15rem;
+		height: 40rem;
+		position: absolute;
+		width: 100%;
 	}
 
 	.button-container {

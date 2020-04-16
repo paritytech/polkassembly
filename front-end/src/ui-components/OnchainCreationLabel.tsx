@@ -23,7 +23,7 @@ const OnchainCreationLabel = ({ address, className, topic }:Props ) => {
 				className='address'
 				displayInline={true}
 			/>
-				from <TopicTag topic={topic} />
+				from <TopicTag className={'topic-tag'} topic={topic} />
 		</div>
 	);
 };
@@ -33,4 +33,8 @@ export default styled(OnchainCreationLabel)`
 	align-items: center;
 	font-size: sm;
 	color: black_text;
+
+	.topic-tag {
+		margin-left: 0.6rem;
+	}
 `;
