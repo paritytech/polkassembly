@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import * as React from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
+import { noTitle } from 'src/global/noTitle';
 
 import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
@@ -32,7 +33,7 @@ const GovernanceAction = function ({
 	topic
 }:GovernanceProps) {
 
-	const mainTitle = <h4>{method || title || 'Title not edited'}</h4>;
+	const mainTitle = <h4>{method || title || noTitle}</h4>;
 	const subTitle = title && method && <h5>{title}</h5>;
 	return (
 		<div className={className}>
