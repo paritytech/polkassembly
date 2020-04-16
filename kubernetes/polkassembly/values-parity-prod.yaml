@@ -20,3 +20,8 @@ frontend:
 authServer:
   config:
     DOMAIN_NAME: "kusama.polkassembly.io"
+    PROPOSAL_BOT_USER_ID: "1"
+chainDbWatcher:
+  config:
+    PROPOSAL_BOT_USER_ID: "1"
+

@@ -19,3 +19,7 @@ frontend:
 authServer:
   config:
     domainName: "test.polkassembly.io"
+    PROPOSAL_BOT_USER_ID: "11"
+chainDbWatcher:
+  config:
+    PROPOSAL_BOT_USER_ID: "11"
