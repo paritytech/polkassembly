@@ -8,6 +8,7 @@ import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
 import Card from 'src/ui-components/Card';
+import Loader from 'src/ui-components/Loader';
 import formatBnBalance from 'src/util/formatBnBalance';
 import getNetwork from 'src/util/getNetwork';
 
@@ -21,6 +22,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
 	const currentNetwork = getNetwork();
+	const [isInfoLoading, setIsInfoLoading] = useState(true);
 
 	useEffect(() => {
 		if (!api) {
@@ -42,6 +44,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 					setDeposit(formatBnBalance(proposal.balance, { numberAfterComma: 2, withUnit: true }));
 				}
 			});
+			setIsInfoLoading(false);
 		})
 			.then(unsub => {unsubscribe = unsub;})
 			.catch(e => console.error(e));
@@ -51,28 +54,44 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	}, [api, apiReady, proposalId]);
 
 	return (
-		<Card className={className}>
-			<h3>Overview</h3>
-			<Grid columns={3} divided>
-				<Grid.Row>
-					<Grid.Column>
-						<h6>Deposit</h6>
-						<div>{deposit}</div>
-					</Grid.Column>
-					<Grid.Column>
-						<h6>Seconded by</h6>
-						{seconds ? <div>{seconds} addresses</div> : null}
-					</Grid.Column>
-					<Grid.Column>
-						<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-						<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
+		<Card className={isInfoLoading ? `LoaderWrapper ${className}` : className}>
+			{isInfoLoading
+				?
+				<Loader />
+				:apiReady
+					?
+					<>
+						<h3>Overview</h3>
+						<Grid columns={3} divided>
+							<Grid.Row>
+								<Grid.Column>
+									<h6>Deposit</h6>
+									<div>{deposit}</div>
+								</Grid.Column>
+								<Grid.Column>
+									<h6>Seconded by</h6>
+									{seconds ? <div>{seconds} addresses</div> : null}
+								</Grid.Column>
+								<Grid.Column>
+									<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
+									<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
+					</>
+					:
+					<div className='error-text'>Polkadot API is not available.</div>
+			}
 		</Card>
 	);
 };
 
 export default styled(ProposalVoteInfo)`
 	margin-bottom: 1rem;
+
+	.LoaderWrapper {
+		height: 15rem;
+		position: absolute;
+		width: 100%;
+	}
 `;

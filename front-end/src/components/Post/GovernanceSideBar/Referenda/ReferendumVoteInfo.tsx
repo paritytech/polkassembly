@@ -10,6 +10,7 @@ import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
+import Loader from 'src/ui-components/Loader';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 
@@ -27,6 +28,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
 	const [nayVotes, setNayVotes] = useState(ZERO);
+	const [isInfoLoading, setIsInfoLoading] = useState(true);
 
 	useEffect(() => {
 		if (!api) {
@@ -49,6 +51,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				setNayVotes(_info?.asOngoing.tally.nays);
 				setTurnout(_info?.asOngoing.tally.turnout);
 			}
+
+			setIsInfoLoading(false);
 		})
 			.then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
@@ -91,30 +95,40 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
-		<Card className={className}>
-			<h3>Overview</h3>
-			<VoteProgress
-				ayeVotes={ayeVotes}
-				className='vote-progress'
-				passingThreshold={passingThreshold}
-				nayVotes={nayVotes}
-			/>
-			<Grid columns={3} divided>
-				<Grid.Row>
-					<Grid.Column>
-						<h6>Turnout</h6>
-						<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<h6>Aye</h6>
-						<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<h6>Nay</h6>
-						<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
+		<Card className={isInfoLoading ? `LoaderWrapper ${className}` : className}>
+			{isInfoLoading
+				?
+				<Loader />
+				:apiReady
+					?
+					<>
+						<h3>Overview</h3>
+						<VoteProgress
+							ayeVotes={ayeVotes}
+							className='vote-progress'
+							passingThreshold={passingThreshold}
+							nayVotes={nayVotes}
+						/>
+						<Grid columns={3} divided>
+							<Grid.Row>
+								<Grid.Column>
+									<h6>Turnout</h6>
+									<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+								<Grid.Column width={5}>
+									<h6>Aye</h6>
+									<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+								<Grid.Column width={5}>
+									<h6>Nay</h6>
+									<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
+					</>
+					:
+					<div className='error-text'>Polkadot API is not available.</div>
+			}
 		</Card>
 	);
 };
@@ -124,5 +138,11 @@ export default styled(ReferendumVoteInfo)`
 
 	.vote-progress {
 		margin-bottom: 5rem;
+	}
+
+	.LoaderWrapper {
+		height: 15rem;
+		position: absolute;
+		width: 100%;
 	}
 `;
