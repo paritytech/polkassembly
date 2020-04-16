@@ -128,7 +128,7 @@ chainDbWatcher:
   replicaCount: 1
 
   config:
-    PROPOSAL_BOT_USERNAME: from-gitlab-vars
+    PROPOSAL_BOT_USERNAME: "proposal_bot"
     PROPOSAL_BOT_PASSWORD: from-gitlab-vars
     REACT_APP_HASURA_GRAPHQL_URL: "http://hasura-service:8080/v1/graphql"
     AUTH_SERVER_URL: "http://auth-server-service:8010/auth/graphql"
