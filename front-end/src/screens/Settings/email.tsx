@@ -125,7 +125,9 @@ const Email = ({ className }: Props): JSX.Element => {
 							placeholder='mail@example.com'
 							type='email'
 						/> :
-						<div>{email}</div>
+						<div className={`current-email ${email ? '' : 'text-muted'}`}>
+							{email ? email : 'No email linked.'}
+						</div>
 					}
 				</Form.Field>
 				{!editing && <Form.Field width={6}>
@@ -174,7 +176,9 @@ const Email = ({ className }: Props): JSX.Element => {
 };
 
 export default styled(Email)`
-
+	.current-email {
+		padding-top: 1rem;
+	}
 	.warning-text {
 		margin-top: 0.5rem;
 		color: red_secondary;
