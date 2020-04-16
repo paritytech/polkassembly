@@ -27,7 +27,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 		variables: {
 			newPassword,
 			token,
-			userId
+			userId: Number(userId)
 		}
 	});
 
@@ -42,7 +42,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 				variables: {
 					newPassword,
 					token,
-					userId
+					userId: Number(userId)
 				}
 			}).then(({ data }) => {
 				if (data && data.resetPassword && data.resetPassword.message) {
