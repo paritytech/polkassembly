@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
 import { expect } from 'chai';
+import { uuid } from 'uuidv4';
 
 import rewiremock from 'rewiremock';
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
-import PasswordResetToken from '../../../src/model/PasswordResetToken';
 import User from '../../../src/model/User';
 
 const noop = () => {};
@@ -83,16 +83,7 @@ xdescribe('Email Service', () => {
 				name
 			})
 			.returning('*');
-		const token = await PasswordResetToken
-			.query()
-			.allowInsert('[token, user_id, valid, expires]')
-			.insert({
-				token: 'test-token',
-				user_id: user.id,
-				valid: true,
-				expires: new Date().toISOString()
-			});
-
+		const token = uuid();
 		let message: any;
 
 		rewiremock('@sendgrid/mail').with({
@@ -111,16 +102,12 @@ xdescribe('Email Service', () => {
 		expect(message.to).to.equals('test@email.com');
 		expect(message.from).to.equals('noreply@polkassembly.io');
 		expect(message.subject).to.equals('Reset Your Password');
-		expect(message.html).to.contains(`reset-password?token=${token.token}`);
+		expect(message.html).to.contains(`reset-password?token=${token}`);
 
 		await User
 			.query()
 			.where({ id: user.id })
 			.del();
 
-		await PasswordResetToken
-			.query()
-			.where({ id: token.id })
-			.del();
 	});
 });

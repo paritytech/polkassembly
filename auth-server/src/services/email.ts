@@ -6,7 +6,6 @@ import sgMail from '@sendgrid/mail';
 import ejs from 'ejs';
 
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import PasswordResetToken from '../model/PasswordResetToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { CommentType } from '../types';
@@ -49,17 +48,14 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 		console.error('Verification Email not sent', e));
 };
 
-export const sendResetPasswordEmail = (user: User, token: PasswordResetToken): void => {
+export const sendResetPasswordEmail = (user: User, token: string): void => {
 	if (!apiKey) {
 		console.warn('Password reset Email not sent due to missing API key');
 		return;
 	}
 
-	const resetUrl = `${DOMAIN}/reset-password/${token.token}`;
-	const text = ejs.render(
-		resetPasswordEmailTemplate,
-		{ resetUrl, username: user.name || '' }
-	);
+	const resetUrl = `${DOMAIN}/reset-password?token=${token}&userId=${user.id}`;
+	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.name || '' });
 
 	const msg = {
 		from: FROM,

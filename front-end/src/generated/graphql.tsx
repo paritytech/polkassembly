@@ -614,22 +614,26 @@ export type Comment_Reactions_Insert_Input = {
 
 export type Comment_Reactions_Max_Fields = {
    __typename?: 'comment_reactions_max_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Max_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Min_Fields = {
    __typename?: 'comment_reactions_min_fields',
+  comment_id?: Maybe<Scalars['uuid']>,
   id?: Maybe<Scalars['Int']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Min_Order_By = {
+  comment_id?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
@@ -659,6 +663,10 @@ export type Comment_Reactions_Order_By = {
   reaction?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
+};
+
+export type Comment_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Comment_Reactions_Select_Column {
@@ -893,6 +901,7 @@ export type Comments_Max_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -901,6 +910,7 @@ export type Comments_Max_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -910,6 +920,7 @@ export type Comments_Min_Fields = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['uuid']>,
   post_id?: Maybe<Scalars['Int']>,
   updated_at?: Maybe<Scalars['timestamptz']>,
 };
@@ -918,6 +929,7 @@ export type Comments_Min_Order_By = {
   author_id?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
 };
@@ -948,6 +960,10 @@ export type Comments_Order_By = {
   post?: Maybe<Posts_Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'],
 };
 
 export enum Comments_Select_Column {
@@ -2083,6 +2099,7 @@ export type MotionStatus = Node & {
   id: Scalars['ID'],
   motion: Motion,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusConnection = {
@@ -2097,6 +2114,7 @@ export type MotionStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   motion: MotionCreateOneWithoutMotionStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusCreateManyWithoutMotionInput = {
@@ -2108,6 +2126,7 @@ export type MotionStatusCreateWithoutMotionInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusEdge = {
@@ -2120,13 +2139,16 @@ export enum MotionStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type MotionStatusPreviousValues = {
    __typename?: 'MotionStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusScalarWhereInput = {
@@ -2161,6 +2183,20 @@ export type MotionStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusSubscriptionPayload = {
@@ -2186,14 +2222,17 @@ export type MotionStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyWithoutMotionInput = {
@@ -2216,6 +2255,7 @@ export type MotionStatusUpdateManyWithWhereNestedInput = {
 export type MotionStatusUpdateWithoutMotionDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateWithWhereUniqueWithoutMotionInput = {
@@ -2263,10 +2303,25 @@ export type MotionStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionSubscriptionPayload = {
@@ -2782,7 +2837,8 @@ export type MutationRequestResetPasswordArgs = {
 
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'],
-  token: Scalars['String']
+  token: Scalars['String'],
+  userId: Scalars['Int']
 };
 
 
@@ -2894,20 +2950,34 @@ export type Mutation_Root = {
   deleteTreasuryStatus?: Maybe<TreasuryStatus>,
   deleteValidator?: Maybe<Validator>,
   delete_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  delete_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   delete_comments?: Maybe<Comments_Mutation_Response>,
+  delete_comments_by_pk?: Maybe<Comments>,
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  delete_onchain_links_by_pk?: Maybe<Onchain_Links>,
   delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  delete_post_reactions_by_pk?: Maybe<Post_Reactions>,
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  delete_post_topics_by_pk?: Maybe<Post_Topics>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
+  delete_post_types_by_pk?: Maybe<Post_Types>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
+  delete_posts_by_pk?: Maybe<Posts>,
   executeRaw: Scalars['Json'],
   insert_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  insert_comment_reactions_one?: Maybe<Comment_Reactions>,
   insert_comments?: Maybe<Comments_Mutation_Response>,
+  insert_comments_one?: Maybe<Comments>,
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  insert_onchain_links_one?: Maybe<Onchain_Links>,
   insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  insert_post_reactions_one?: Maybe<Post_Reactions>,
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  insert_post_topics_one?: Maybe<Post_Topics>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
+  insert_post_types_one?: Maybe<Post_Types>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
+  insert_posts_one?: Maybe<Posts>,
   login?: Maybe<LoginResponse>,
   logout?: Maybe<Message>,
   postSubscribe?: Maybe<Message>,
@@ -2970,12 +3040,19 @@ export type Mutation_Root = {
   updateTreasuryStatus?: Maybe<TreasuryStatus>,
   updateValidator?: Maybe<Validator>,
   update_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>,
+  update_comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   update_comments?: Maybe<Comments_Mutation_Response>,
+  update_comments_by_pk?: Maybe<Comments>,
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>,
+  update_onchain_links_by_pk?: Maybe<Onchain_Links>,
   update_post_reactions?: Maybe<Post_Reactions_Mutation_Response>,
+  update_post_reactions_by_pk?: Maybe<Post_Reactions>,
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>,
+  update_post_topics_by_pk?: Maybe<Post_Topics>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
+  update_post_types_by_pk?: Maybe<Post_Types>,
   update_posts?: Maybe<Posts_Mutation_Response>,
+  update_posts_by_pk?: Maybe<Posts>,
   upsertBlockIndex: BlockIndex,
   upsertBlockNumber: BlockNumber,
   upsertCouncil: Council,
@@ -3455,8 +3532,18 @@ export type Mutation_RootDelete_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootDelete_Comment_Reactions_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid']
 };
 
 
@@ -3465,8 +3552,18 @@ export type Mutation_RootDelete_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_ReactionsArgs = {
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_Reactions_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3475,13 +3572,28 @@ export type Mutation_RootDelete_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootDelete_Post_Topics_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp
 };
 
 
+export type Mutation_RootDelete_Post_Types_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -3497,8 +3609,20 @@ export type Mutation_RootInsert_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootInsert_Comment_Reactions_OneArgs = {
+  object: Comment_Reactions_Insert_Input,
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>,
+  on_conflict?: Maybe<Comments_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input,
   on_conflict?: Maybe<Comments_On_Conflict>
 };
 
@@ -3509,8 +3633,20 @@ export type Mutation_RootInsert_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootInsert_Onchain_Links_OneArgs = {
+  object: Onchain_Links_Insert_Input,
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_ReactionsArgs = {
   objects: Array<Post_Reactions_Insert_Input>,
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_Reactions_OneArgs = {
+  object: Post_Reactions_Insert_Input,
   on_conflict?: Maybe<Post_Reactions_On_Conflict>
 };
 
@@ -3521,14 +3657,32 @@ export type Mutation_RootInsert_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootInsert_Post_Topics_OneArgs = {
+  object: Post_Topics_Insert_Input,
+  on_conflict?: Maybe<Post_Topics_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>,
   on_conflict?: Maybe<Post_Types_On_Conflict>
 };
 
 
+export type Mutation_RootInsert_Post_Types_OneArgs = {
+  object: Post_Types_Insert_Input,
+  on_conflict?: Maybe<Post_Types_On_Conflict>
+};
+
+
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>,
+  on_conflict?: Maybe<Posts_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Posts_OneArgs = {
+  object: Posts_Insert_Input,
   on_conflict?: Maybe<Posts_On_Conflict>
 };
 
@@ -3565,7 +3719,8 @@ export type Mutation_RootRequestResetPasswordArgs = {
 
 export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
-  token: Scalars['String']
+  token: Scalars['String'],
+  userId: Scalars['Int']
 };
 
 
@@ -3895,10 +4050,24 @@ export type Mutation_RootUpdate_Comment_ReactionsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Comment_Reactions_By_PkArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>,
+  _set?: Maybe<Comment_Reactions_Set_Input>,
+  pk_columns: Comment_Reactions_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>,
   _set?: Maybe<Comments_Set_Input>,
   where: Comments_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _inc?: Maybe<Comments_Inc_Input>,
+  _set?: Maybe<Comments_Set_Input>,
+  pk_columns: Comments_Pk_Columns_Input
 };
 
 
@@ -3909,10 +4078,24 @@ export type Mutation_RootUpdate_Onchain_LinksArgs = {
 };
 
 
+export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
+  _inc?: Maybe<Onchain_Links_Inc_Input>,
+  _set?: Maybe<Onchain_Links_Set_Input>,
+  pk_columns: Onchain_Links_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_ReactionsArgs = {
   _inc?: Maybe<Post_Reactions_Inc_Input>,
   _set?: Maybe<Post_Reactions_Set_Input>,
   where: Post_Reactions_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_Reactions_By_PkArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>,
+  _set?: Maybe<Post_Reactions_Set_Input>,
+  pk_columns: Post_Reactions_Pk_Columns_Input
 };
 
 
@@ -3923,6 +4106,13 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
 };
 
 
+export type Mutation_RootUpdate_Post_Topics_By_PkArgs = {
+  _inc?: Maybe<Post_Topics_Inc_Input>,
+  _set?: Maybe<Post_Topics_Set_Input>,
+  pk_columns: Post_Topics_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
@@ -3930,10 +4120,24 @@ export type Mutation_RootUpdate_Post_TypesArgs = {
 };
 
 
+export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
+  _inc?: Maybe<Post_Types_Inc_Input>,
+  _set?: Maybe<Post_Types_Set_Input>,
+  pk_columns: Post_Types_Pk_Columns_Input
+};
+
+
 export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>,
   _set?: Maybe<Posts_Set_Input>,
   where: Posts_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _inc?: Maybe<Posts_Inc_Input>,
+  _set?: Maybe<Posts_Set_Input>,
+  pk_columns: Posts_Pk_Columns_Input
 };
 
 
@@ -4744,6 +4948,10 @@ export type Onchain_Links_Order_By = {
   proposer_address?: Maybe<Order_By>,
 };
 
+export type Onchain_Links_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Onchain_Links_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -5084,6 +5292,10 @@ export type Post_Reactions_Order_By = {
   user_id?: Maybe<Order_By>,
 };
 
+export type Post_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Reactions_Select_Column {
   CreatedAt = 'created_at',
   Id = 'id',
@@ -5352,6 +5564,10 @@ export type Post_Topics_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
 };
 
+export type Post_Topics_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Topics_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -5580,6 +5796,10 @@ export type Post_Types_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>,
 };
 
+export type Post_Types_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
 export enum Post_Types_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -5670,7 +5890,7 @@ export type Posts = {
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
-  title: Scalars['String'],
+  title?: Maybe<Scalars['String']>,
   topic: Post_Topics,
   topic_id: Scalars['Int'],
   type: Post_Types,
@@ -5898,6 +6118,10 @@ export type Posts_Order_By = {
   type?: Maybe<Post_Types_Order_By>,
   type_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
+};
+
+export type Posts_Pk_Columns_Input = {
+  id: Scalars['Int'],
 };
 
 export enum Posts_Select_Column {
@@ -7035,6 +7259,7 @@ export type ProposalStatus = Node & {
   id: Scalars['ID'],
   proposal: Proposal,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusConnection = {
@@ -7049,6 +7274,7 @@ export type ProposalStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   proposal: ProposalCreateOneWithoutProposalStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusCreateManyWithoutProposalInput = {
@@ -7060,6 +7286,7 @@ export type ProposalStatusCreateWithoutProposalInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusEdge = {
@@ -7072,13 +7299,16 @@ export enum ProposalStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ProposalStatusPreviousValues = {
    __typename?: 'ProposalStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusScalarWhereInput = {
@@ -7113,6 +7343,20 @@ export type ProposalStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusSubscriptionPayload = {
@@ -7138,14 +7382,17 @@ export type ProposalStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyWithoutProposalInput = {
@@ -7168,6 +7415,7 @@ export type ProposalStatusUpdateManyWithWhereNestedInput = {
 export type ProposalStatusUpdateWithoutProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
@@ -7215,10 +7463,25 @@ export type ProposalStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalSubscriptionPayload = {
@@ -8568,6 +8831,7 @@ export type ReferendumStatus = Node & {
   id: Scalars['ID'],
   referendum: Referendum,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusConnection = {
@@ -8582,6 +8846,7 @@ export type ReferendumStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   referendum: ReferendumCreateOneWithoutReferendumStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusCreateManyWithoutReferendumInput = {
@@ -8593,6 +8858,7 @@ export type ReferendumStatusCreateWithoutReferendumInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusEdge = {
@@ -8605,13 +8871,16 @@ export enum ReferendumStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ReferendumStatusPreviousValues = {
    __typename?: 'ReferendumStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusScalarWhereInput = {
@@ -8646,6 +8915,20 @@ export type ReferendumStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusSubscriptionPayload = {
@@ -8671,14 +8954,17 @@ export type ReferendumStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   referendum?: Maybe<ReferendumUpdateOneRequiredWithoutReferendumStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyWithoutReferendumInput = {
@@ -8701,6 +8987,7 @@ export type ReferendumStatusUpdateManyWithWhereNestedInput = {
 export type ReferendumStatusUpdateWithoutReferendumDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput = {
@@ -8748,10 +9035,25 @@ export type ReferendumStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumSubscriptionPayload = {
@@ -10167,6 +10469,7 @@ export type TreasuryStatus = Node & {
   id: Scalars['ID'],
   status: Scalars['String'],
   treasurySpendProposal: TreasurySpendProposal,
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusConnection = {
@@ -10181,6 +10484,7 @@ export type TreasuryStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
   treasurySpendProposal: TreasurySpendProposalCreateOneWithoutTreasuryStatusInput,
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusCreateManyWithoutTreasurySpendProposalInput = {
@@ -10192,6 +10496,7 @@ export type TreasuryStatusCreateWithoutTreasurySpendProposalInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusEdge = {
@@ -10204,13 +10509,16 @@ export enum TreasuryStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type TreasuryStatusPreviousValues = {
    __typename?: 'TreasuryStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusScalarWhereInput = {
@@ -10245,6 +10553,20 @@ export type TreasuryStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusSubscriptionPayload = {
@@ -10270,14 +10592,17 @@ export type TreasuryStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
   treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInput>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput = {
@@ -10300,6 +10625,7 @@ export type TreasuryStatusUpdateManyWithWhereNestedInput = {
 export type TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateWithWhereUniqueWithoutTreasurySpendProposalInput = {
@@ -10347,10 +10673,25 @@ export type TreasuryStatusWhereInput = {
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
   treasurySpendProposal?: Maybe<TreasurySpendProposalWhereInput>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type UndoEmailChangeResponse = {
@@ -11291,20 +11632,6 @@ export type ReferendumPostAndCommentsQuery = (
   )> }
 );
 
-export type ResetPasswordMutationVariables = {
-  newPassword: Scalars['String'],
-  token: Scalars['String']
-};
-
-
-export type ResetPasswordMutation = (
-  { __typename?: 'mutation_root' }
-  & { resetPassword: Maybe<(
-    { __typename?: 'Message' }
-    & Pick<Message, 'message'>
-  )> }
-);
-
 export type RequestResetPasswordMutationVariables = {
   email: Scalars['String']
 };
@@ -11313,6 +11640,21 @@ export type RequestResetPasswordMutationVariables = {
 export type RequestResetPasswordMutation = (
   { __typename?: 'mutation_root' }
   & { requestResetPassword: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
+export type ResetPasswordMutationVariables = {
+  newPassword: Scalars['String'],
+  userId: Scalars['Int'],
+  token: Scalars['String']
+};
+
+
+export type ResetPasswordMutation = (
+  { __typename?: 'mutation_root' }
+  & { resetPassword: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
   )> }
@@ -13043,39 +13385,6 @@ export function useReferendumPostAndCommentsLazyQuery(baseOptions?: ApolloReactH
 export type ReferendumPostAndCommentsQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsQuery>;
 export type ReferendumPostAndCommentsLazyQueryHookResult = ReturnType<typeof useReferendumPostAndCommentsLazyQuery>;
 export type ReferendumPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ReferendumPostAndCommentsQuery, ReferendumPostAndCommentsQueryVariables>;
-export const ResetPasswordDocument = gql`
-    mutation resetPassword($newPassword: String!, $token: String!) {
-  resetPassword(newPassword: $newPassword, token: $token) {
-    message
-  }
-}
-    `;
-export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
-
-/**
- * __useResetPasswordMutation__
- *
- * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
- *   variables: {
- *      newPassword: // value for 'newPassword'
- *      token: // value for 'token'
- *   },
- * });
- */
-export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
-        return ApolloReactHooks.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
-      }
-export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
-export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
-export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const RequestResetPasswordDocument = gql`
     mutation requestResetPassword($email: String!) {
   requestResetPassword(email: $email) {
@@ -13108,6 +13417,40 @@ export function useRequestResetPasswordMutation(baseOptions?: ApolloReactHooks.M
 export type RequestResetPasswordMutationHookResult = ReturnType<typeof useRequestResetPasswordMutation>;
 export type RequestResetPasswordMutationResult = ApolloReactCommon.MutationResult<RequestResetPasswordMutation>;
 export type RequestResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
+export const ResetPasswordDocument = gql`
+    mutation resetPassword($newPassword: String!, $userId: Int!, $token: String!) {
+  resetPassword(newPassword: $newPassword, userId: $userId, token: $token) {
+    message
+  }
+}
+    `;
+export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+
+/**
+ * __useResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      userId: // value for 'userId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
+      }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
+export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const ChangeNameDocument = gql`
     mutation changeName($newName: String!) {
   changeName(newName: $newName) {
