@@ -43,7 +43,7 @@ const Email = ({ className }: Props): JSX.Element => {
 	const handleSubmitForm = (data: Record<string, any>):void => {
 		const { email, password } = data;
 
-		if (email || email === '') {
+		if ((email || email === '') && password) {
 			changeEmailMutation({
 				variables: {
 					email,
@@ -115,8 +115,7 @@ const Email = ({ className }: Props): JSX.Element => {
 							placeholder='mail@example.com'
 							type='email'
 							ref={register({
-								pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i,
-								required: true
+								pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
 							})}
 						/> :
 						<div className={`current-email ${email ? '' : 'text-muted'}`}>
