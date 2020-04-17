@@ -100,7 +100,7 @@ const Username = ({ className }:Props): JSX.Element => {
 							placeholder='username'
 							type='text'
 						/> :
-						<div>{username}</div>
+						<div className='current-username'>{username}</div>
 					}
 				</Form.Field>
 				{!editing && <Form.Field width={6}>
@@ -146,5 +146,9 @@ export default styled(Username)`
 		display: flex;
 		flex-direction: column;
 		justify-content: left;
+	}
+
+	.current-username {
+		padding-top: 1rem;
 	}
 `;
