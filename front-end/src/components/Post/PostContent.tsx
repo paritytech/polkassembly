@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
+import { noTitle } from 'src/global/noTitle';
 
 import { DiscussionPostFragment, MotionPostFragment,ProposalPostFragment, ReferendumPostFragment, TreasuryProposalPostFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
@@ -24,7 +25,7 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 	return (
 		<div className={className}>
 			{postStatus && <StatusTag className='post_tags' status={postStatus}/>}
-			<h2 className={postStatus ? 'onchain-title' : ''}>{(onchainId || onchainId === 0) && `#${onchainId}`} {title}</h2>
+			<h2 className={postStatus ? 'onchain-title' : ''}>{(onchainId || onchainId === 0) && `#${onchainId}`} {title || noTitle}</h2>
 			<div className='post_info'>
 				{onchainId || onchainId === 0 ?
 					null :

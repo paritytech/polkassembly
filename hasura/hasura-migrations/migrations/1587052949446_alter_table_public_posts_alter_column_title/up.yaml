@@ -1,0 +1,10 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP DEFAULT;
+  type: run_sql
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP NOT NULL;
+  type: run_sql
