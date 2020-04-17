@@ -29,7 +29,7 @@ import OnChain from './screens/OnChain';
 import PostProposal from './screens/ProposalPost';
 import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
-import ResetPassword from './screens/RequestResetPassword/ResetPassword';
+import ResetPassword from './screens/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import PostTreasury from './screens/TreasuryPost';
@@ -89,7 +89,7 @@ const App = () => {
 													<Route path="/request-reset-password">
 														<RequestResetPassword/>
 													</Route>
-													<Route path="/reset-password/:token">
+													<Route path="/reset-password">
 														<ResetPassword/>
 													</Route>
 													<Route path="/signup">
