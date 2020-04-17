@@ -172,7 +172,6 @@ dockerize-chain-db-watcher:
       --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
       --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
       --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
-      --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
 
     # test, update/deploy redis server using helm
     - export REDIS_PASSWORD=$(echo "$REDIS_URL" | sed -r 's#redis://:([^@]+).*$#\1#g')
