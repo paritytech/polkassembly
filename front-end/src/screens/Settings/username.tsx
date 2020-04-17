@@ -117,7 +117,7 @@ const Username = ({ className }:Props): JSX.Element => {
 						name='password'
 						placeholder='password'
 						type='password'
-						ref={register({ minLength: 6 ,required: true })}
+						ref={register({ minLength: 6, required: true })}
 					/>
 					{error && <FilteredError text={error.message}/>}
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}

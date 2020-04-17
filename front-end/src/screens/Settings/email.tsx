@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -15,6 +16,7 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import cleanError from '../../util/cleanError';
+import messages from '../../util/messages';
 
 interface Props{
 	className?: string
@@ -23,36 +25,23 @@ interface Props{
 const Email = ({ className }: Props): JSX.Element => {
 	const [editing, setEditing] = useState(false);
 	const [email, setEmail] = useState<string | null | undefined>('');
-	const [password, setPassword] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation();
 	const [resendVerifyEmailTokenMutation] = useResendVerifyEmailTokenMutation();
 	const { queueNotification } = useContext(NotificationContext);
+	const { errors, handleSubmit, register } = useForm();
 
 	useEffect(() => {
 		setEmail(currentUser.email);
 	}, [currentUser.email]);
-
-	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
-	const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value);
 
 	const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
 		setEditing(true);
 	};
 
-	const handleChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (!password) {
-			queueNotification({
-				header: 'Failed!',
-				message: 'Please type your password',
-				status: NotificationStatus.ERROR
-			});
-			return;
-		}
+	const handleSubmitForm = (data: Record<string, any>):void => {
+		const { email, password } = data;
 
 		if (email || email === '') {
 			changeEmailMutation({
@@ -114,21 +103,27 @@ const Email = ({ className }: Props): JSX.Element => {
 	};
 
 	return (
-		<Form className={className} standalone={false}>
+		<Form className={className} standalone={false} onSubmit={handleSubmit(handleSubmitForm)}>
 			<Form.Group>
 				<Form.Field width={10}>
 					<label>Email</label>
 					{editing ?
 						<input
-							value={email || ''}
-							onChange={onEmailChange}
+							className={errors.email ? 'error' : ''}
+							defaultValue={email || ''}
+							name='email'
 							placeholder='mail@example.com'
 							type='email'
+							ref={register({
+								pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i,
+								required: true
+							})}
 						/> :
 						<div className={`current-email ${email ? '' : 'text-muted'}`}>
 							{email ? email : 'No email linked.'}
 						</div>
 					}
+					{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 				</Form.Field>
 				{!editing && <Form.Field width={6}>
 					<label>&nbsp;</label>
@@ -145,19 +140,20 @@ const Email = ({ className }: Props): JSX.Element => {
 				<Form.Field width={10}>
 					<label>Password</label>
 					<input
-						value={password || ''}
-						onChange={onPasswordChange}
+						className={errors.password ? 'error' : ''}
+						name='password'
 						placeholder='password'
 						type='password'
+						ref={register({ minLength: 6 ,required: true })}
 					/>
 					{error && <FilteredError text={error.message}/>}
+					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 				</Form.Field>
 				<Form.Field width={6}>
 					<label>&nbsp;</label>
 					<Button
 						secondary
 						disabled={loading}
-						onClick={handleChange}
 						type='submit'
 					>
 					Change
@@ -181,6 +177,14 @@ export default styled(Email)`
 	}
 	.warning-text {
 		margin-top: 0.5rem;
+		color: red_secondary;
+	}
+
+	input.error {
+		border-color: red_secondary !important;
+	}
+
+	.errorText {
 		color: red_secondary;
 	}
 `;
