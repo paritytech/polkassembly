@@ -225,7 +225,8 @@ export interface RequestResetPasswordArgs {
 
 export interface ResetPasswordArgs {
 	newPassword: string;
-	token: string;
+    token: string;
+    userId: number;
 }
 
 export interface SignupArgs {

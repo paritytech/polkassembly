@@ -1,9 +1,6 @@
-// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
-
-import { print } from 'graphql';
 import { GraphQLClient } from 'graphql-request';
+import { print } from 'graphql';
+import { SdkFunctionWrapper, defaultWrapper } from '@graphql-codegen/typescript-graphql-request';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -16,6 +13,8 @@ export type Scalars = {
   DateTime: any;
   timestamptz: any;
   uuid: any;
+  timestamp: any;
+  bpchar: any;
   Json: any;
   Long: any;
   Upload: any;
@@ -34,6 +33,12 @@ export type AddressLinkType = {
   address_id?: Maybe<Scalars['Int']>;
   message?: Maybe<Scalars['String']>;
   sign_message?: Maybe<Scalars['String']>;
+};
+
+export type AddressLoginType = {
+   __typename?: 'AddressLoginType';
+  message?: Maybe<Scalars['String']>;
+  signMessage?: Maybe<Scalars['String']>;
 };
 
 export type AggregateBlockIndex = {
@@ -483,6 +488,19 @@ export type BlockNumberWhereUniqueInput = {
   number?: Maybe<Scalars['Int']>;
 };
 
+
+export type Bpchar_Comparison_Exp = {
+  _eq?: Maybe<Scalars['bpchar']>;
+  _gt?: Maybe<Scalars['bpchar']>;
+  _gte?: Maybe<Scalars['bpchar']>;
+  _in?: Maybe<Array<Scalars['bpchar']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['bpchar']>;
+  _lte?: Maybe<Scalars['bpchar']>;
+  _neq?: Maybe<Scalars['bpchar']>;
+  _nin?: Maybe<Array<Scalars['bpchar']>>;
+};
+
 export enum CacheControlScope {
   Private = 'PRIVATE',
   Public = 'PUBLIC'
@@ -494,16 +512,298 @@ export type ChangeResponse = {
   token?: Maybe<Scalars['String']>;
 };
 
+export type Comment_Reactions = {
+   __typename?: 'comment_reactions';
+  comment: Comments;
+  comment_id: Scalars['uuid'];
+  created_at: Scalars['timestamp'];
+  id: Scalars['Int'];
+  reacting_user?: Maybe<User>;
+  reaction: Scalars['bpchar'];
+  updated_at: Scalars['timestamp'];
+  user_id: Scalars['Int'];
+};
+
+export type Comment_Reactions_Aggregate = {
+   __typename?: 'comment_reactions_aggregate';
+  aggregate?: Maybe<Comment_Reactions_Aggregate_Fields>;
+  nodes: Array<Comment_Reactions>;
+};
+
+export type Comment_Reactions_Aggregate_Fields = {
+   __typename?: 'comment_reactions_aggregate_fields';
+  avg?: Maybe<Comment_Reactions_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Comment_Reactions_Max_Fields>;
+  min?: Maybe<Comment_Reactions_Min_Fields>;
+  stddev?: Maybe<Comment_Reactions_Stddev_Fields>;
+  stddev_pop?: Maybe<Comment_Reactions_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Comment_Reactions_Stddev_Samp_Fields>;
+  sum?: Maybe<Comment_Reactions_Sum_Fields>;
+  var_pop?: Maybe<Comment_Reactions_Var_Pop_Fields>;
+  var_samp?: Maybe<Comment_Reactions_Var_Samp_Fields>;
+  variance?: Maybe<Comment_Reactions_Variance_Fields>;
+};
+
+
+export type Comment_Reactions_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Comment_Reactions_Aggregate_Order_By = {
+  avg?: Maybe<Comment_Reactions_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Comment_Reactions_Max_Order_By>;
+  min?: Maybe<Comment_Reactions_Min_Order_By>;
+  stddev?: Maybe<Comment_Reactions_Stddev_Order_By>;
+  stddev_pop?: Maybe<Comment_Reactions_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Comment_Reactions_Stddev_Samp_Order_By>;
+  sum?: Maybe<Comment_Reactions_Sum_Order_By>;
+  var_pop?: Maybe<Comment_Reactions_Var_Pop_Order_By>;
+  var_samp?: Maybe<Comment_Reactions_Var_Samp_Order_By>;
+  variance?: Maybe<Comment_Reactions_Variance_Order_By>;
+};
+
+export type Comment_Reactions_Arr_Rel_Insert_Input = {
+  data: Array<Comment_Reactions_Insert_Input>;
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>;
+};
+
+export type Comment_Reactions_Avg_Fields = {
+   __typename?: 'comment_reactions_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Comment_Reactions_Bool_Exp>>>;
+  _not?: Maybe<Comment_Reactions_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Comment_Reactions_Bool_Exp>>>;
+  comment?: Maybe<Comments_Bool_Exp>;
+  comment_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  reaction?: Maybe<Bpchar_Comparison_Exp>;
+  updated_at?: Maybe<Timestamp_Comparison_Exp>;
+  user_id?: Maybe<Int_Comparison_Exp>;
+};
+
+export enum Comment_Reactions_Constraint {
+  CommentReactionsPkey = 'comment_reactions_pkey'
+}
+
+export type Comment_Reactions_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Insert_Input = {
+  comment?: Maybe<Comments_Obj_Rel_Insert_Input>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['Int']>;
+  reaction?: Maybe<Scalars['bpchar']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Max_Fields = {
+   __typename?: 'comment_reactions_max_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Max_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Min_Fields = {
+   __typename?: 'comment_reactions_min_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Min_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Mutation_Response = {
+   __typename?: 'comment_reactions_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Comment_Reactions>;
+};
+
+export type Comment_Reactions_Obj_Rel_Insert_Input = {
+  data: Comment_Reactions_Insert_Input;
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>;
+};
+
+export type Comment_Reactions_On_Conflict = {
+  constraint: Comment_Reactions_Constraint;
+  update_columns: Array<Comment_Reactions_Update_Column>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+export type Comment_Reactions_Order_By = {
+  comment?: Maybe<Comments_Order_By>;
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  reaction?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+export enum Comment_Reactions_Select_Column {
+  CommentId = 'comment_id',
+  CreatedAt = 'created_at',
+  Id = 'id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Comment_Reactions_Set_Input = {
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['Int']>;
+  reaction?: Maybe<Scalars['bpchar']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Stddev_Fields = {
+   __typename?: 'comment_reactions_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Stddev_Pop_Fields = {
+   __typename?: 'comment_reactions_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Stddev_Samp_Fields = {
+   __typename?: 'comment_reactions_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Sum_Fields = {
+   __typename?: 'comment_reactions_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Comment_Reactions_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export enum Comment_Reactions_Update_Column {
+  CommentId = 'comment_id',
+  CreatedAt = 'created_at',
+  Id = 'id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Comment_Reactions_Var_Pop_Fields = {
+   __typename?: 'comment_reactions_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Var_Samp_Fields = {
+   __typename?: 'comment_reactions_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Comment_Reactions_Variance_Fields = {
+   __typename?: 'comment_reactions_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Comment_Reactions_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
 export type Comments = {
    __typename?: 'comments';
   author?: Maybe<User>;
   author_id: Scalars['Int'];
+  comment_reactions: Array<Comment_Reactions>;
+  comment_reactions_aggregate: Comment_Reactions_Aggregate;
   content: Scalars['String'];
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
   post: Posts;
   post_id: Scalars['Int'];
   updated_at: Scalars['timestamptz'];
+};
+
+
+export type CommentsComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+
+export type CommentsComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
 };
 
 export type Comments_Aggregate = {
@@ -526,6 +826,7 @@ export type Comments_Aggregate_Fields = {
   var_samp?: Maybe<Comments_Var_Samp_Fields>;
   variance?: Maybe<Comments_Variance_Fields>;
 };
+
 
 export type Comments_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Comments_Select_Column>>;
@@ -567,6 +868,7 @@ export type Comments_Bool_Exp = {
   _not?: Maybe<Comments_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Comments_Bool_Exp>>>;
   author_id?: Maybe<Int_Comparison_Exp>;
+  comment_reactions?: Maybe<Comment_Reactions_Bool_Exp>;
   content?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
@@ -586,6 +888,7 @@ export type Comments_Inc_Input = {
 
 export type Comments_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>;
+  comment_reactions?: Maybe<Comment_Reactions_Arr_Rel_Insert_Input>;
   content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
@@ -599,6 +902,7 @@ export type Comments_Max_Fields = {
   author_id?: Maybe<Scalars['Int']>;
   content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -607,6 +911,7 @@ export type Comments_Max_Order_By = {
   author_id?: Maybe<Order_By>;
   content?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -616,6 +921,7 @@ export type Comments_Min_Fields = {
   author_id?: Maybe<Scalars['Int']>;
   content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -624,6 +930,7 @@ export type Comments_Min_Order_By = {
   author_id?: Maybe<Order_By>;
   content?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -647,12 +954,17 @@ export type Comments_On_Conflict = {
 
 export type Comments_Order_By = {
   author_id?: Maybe<Order_By>;
+  comment_reactions_aggregate?: Maybe<Comment_Reactions_Aggregate_Order_By>;
   content?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post?: Maybe<Posts_Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+};
+
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'];
 };
 
 export enum Comments_Select_Column {
@@ -766,6 +1078,7 @@ export type Council = Node & {
   members?: Maybe<Array<CouncilMember>>;
 };
 
+
 export type CouncilMembersArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -811,6 +1124,7 @@ export type CouncilMember = Node & {
   councils?: Maybe<Array<Council>>;
   id: Scalars['ID'];
 };
+
 
 export type CouncilMemberCouncilsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -1112,6 +1426,7 @@ export type CouncilWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
 };
 
+
 export type Era = Node & {
    __typename?: 'Era';
   eraStartSessionIndex: Session;
@@ -1365,11 +1680,13 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+
 export type LoginResponse = {
    __typename?: 'LoginResponse';
   token?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
 };
+
 
 export type Message = {
    __typename?: 'Message';
@@ -1393,6 +1710,7 @@ export type Motion = {
   treasurySpendProposal?: Maybe<TreasurySpendProposal>;
 };
 
+
 export type MotionMotionProposalArgumentsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -1402,6 +1720,7 @@ export type MotionMotionProposalArgumentsArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<MotionProposalArgumentWhereInput>;
 };
+
 
 export type MotionMotionStatusArgs = {
   after?: Maybe<Scalars['String']>;
@@ -1781,6 +2100,7 @@ export type MotionStatus = Node & {
   id: Scalars['ID'];
   motion: Motion;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type MotionStatusConnection = {
@@ -1795,6 +2115,7 @@ export type MotionStatusCreateInput = {
   id?: Maybe<Scalars['ID']>;
   motion: MotionCreateOneWithoutMotionStatusInput;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type MotionStatusCreateManyWithoutMotionInput = {
@@ -1806,6 +2127,7 @@ export type MotionStatusCreateWithoutMotionInput = {
   blockNumber: BlockNumberCreateOneInput;
   id?: Maybe<Scalars['ID']>;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type MotionStatusEdge = {
@@ -1818,13 +2140,16 @@ export enum MotionStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type MotionStatusPreviousValues = {
    __typename?: 'MotionStatusPreviousValues';
   id: Scalars['ID'];
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type MotionStatusScalarWhereInput = {
@@ -1859,6 +2184,20 @@ export type MotionStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusSubscriptionPayload = {
@@ -1884,14 +2223,17 @@ export type MotionStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusUpdateManyWithoutMotionInput = {
@@ -1914,6 +2256,7 @@ export type MotionStatusUpdateManyWithWhereNestedInput = {
 export type MotionStatusUpdateWithoutMotionDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusUpdateWithWhereUniqueWithoutMotionInput = {
@@ -1961,10 +2304,25 @@ export type MotionStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type MotionStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type MotionSubscriptionPayload = {
@@ -2372,16 +2730,19 @@ export type Mutation = {
    __typename?: 'Mutation';
   addressLinkConfirm?: Maybe<ChangeResponse>;
   addressLinkStart?: Maybe<AddressLinkType>;
+  addressLogin?: Maybe<LoginResponse>;
+  addressLoginStart?: Maybe<AddressLoginType>;
   addressUnlink?: Maybe<ChangeResponse>;
   changeEmail?: Maybe<ChangeResponse>;
   changeName?: Maybe<ChangeResponse>;
-  changeNotificationPreference?: Maybe<Message>;
+  changeNotificationPreference?: Maybe<ChangeResponse>;
   changePassword?: Maybe<Message>;
   changeUsername?: Maybe<ChangeResponse>;
   login?: Maybe<LoginResponse>;
   logout?: Maybe<Message>;
   postSubscribe?: Maybe<Message>;
   postUnsubscribe?: Maybe<Message>;
+  reportContent?: Maybe<Message>;
   requestResetPassword?: Maybe<Message>;
   resendVerifyEmailToken?: Maybe<Message>;
   resetPassword?: Maybe<Message>;
@@ -2390,62 +2751,98 @@ export type Mutation = {
   verifyEmail?: Maybe<ChangeResponse>;
 };
 
+
 export type MutationAddressLinkConfirmArgs = {
   address_id: Scalars['Int'];
   signature: Scalars['String'];
 };
+
 
 export type MutationAddressLinkStartArgs = {
   address: Scalars['String'];
   network: Scalars['String'];
 };
 
+
+export type MutationAddressLoginArgs = {
+  address: Scalars['String'];
+  signature: Scalars['String'];
+};
+
+
+export type MutationAddressLoginStartArgs = {
+  address: Scalars['String'];
+};
+
+
 export type MutationAddressUnlinkArgs = {
   address: Scalars['String'];
 };
 
+
 export type MutationChangeEmailArgs = {
   email: Scalars['String'];
+  password: Scalars['String'];
 };
+
 
 export type MutationChangeNameArgs = {
   newName: Scalars['String'];
 };
 
+
 export type MutationChangeNotificationPreferenceArgs = {
   notificationPreferences?: Maybe<NotificationPreferencesInput>;
 };
+
 
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 };
 
+
 export type MutationChangeUsernameArgs = {
+  password: Scalars['String'];
   username: Scalars['String'];
 };
+
 
 export type MutationLoginArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
 };
 
+
 export type MutationPostSubscribeArgs = {
   post_id: Scalars['Int'];
 };
+
 
 export type MutationPostUnsubscribeArgs = {
   post_id: Scalars['Int'];
 };
 
+
+export type MutationReportContentArgs = {
+  comments?: Maybe<Scalars['String']>;
+  content_id: Scalars['String'];
+  network: Scalars['String'];
+  reason: Scalars['String'];
+  type: Scalars['String'];
+};
+
+
 export type MutationRequestResetPasswordArgs = {
   email: Scalars['String'];
 };
+
 
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'];
   token: Scalars['String'];
 };
+
 
 export type MutationSignupArgs = {
   email?: Maybe<Scalars['String']>;
@@ -2454,9 +2851,11 @@ export type MutationSignupArgs = {
   username: Scalars['String'];
 };
 
+
 export type MutationUndoEmailChangeArgs = {
   token: Scalars['String'];
 };
+
 
 export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
@@ -2466,10 +2865,12 @@ export type Mutation_Root = {
    __typename?: 'mutation_root';
   addressLinkConfirm?: Maybe<ChangeResponse>;
   addressLinkStart?: Maybe<AddressLinkType>;
+  addressLogin?: Maybe<LoginResponse>;
+  addressLoginStart?: Maybe<AddressLoginType>;
   addressUnlink?: Maybe<ChangeResponse>;
   changeEmail?: Maybe<ChangeResponse>;
   changeName?: Maybe<ChangeResponse>;
-  changeNotificationPreference?: Maybe<Message>;
+  changeNotificationPreference?: Maybe<ChangeResponse>;
   changePassword?: Maybe<Message>;
   changeUsername?: Maybe<ChangeResponse>;
   createBlockIndex: BlockIndex;
@@ -2550,21 +2951,40 @@ export type Mutation_Root = {
   deleteTreasurySpendProposal?: Maybe<TreasurySpendProposal>;
   deleteTreasuryStatus?: Maybe<TreasuryStatus>;
   deleteValidator?: Maybe<Validator>;
+  delete_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>;
+  delete_comment_reactions_by_pk?: Maybe<Comment_Reactions>;
   delete_comments?: Maybe<Comments_Mutation_Response>;
+  delete_comments_by_pk?: Maybe<Comments>;
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
+  delete_onchain_links_by_pk?: Maybe<Onchain_Links>;
+  delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>;
+  delete_post_reactions_by_pk?: Maybe<Post_Reactions>;
   delete_post_topics?: Maybe<Post_Topics_Mutation_Response>;
+  delete_post_topics_by_pk?: Maybe<Post_Topics>;
   delete_post_types?: Maybe<Post_Types_Mutation_Response>;
+  delete_post_types_by_pk?: Maybe<Post_Types>;
   delete_posts?: Maybe<Posts_Mutation_Response>;
+  delete_posts_by_pk?: Maybe<Posts>;
   executeRaw: Scalars['Json'];
+  insert_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>;
+  insert_comment_reactions_one?: Maybe<Comment_Reactions>;
   insert_comments?: Maybe<Comments_Mutation_Response>;
+  insert_comments_one?: Maybe<Comments>;
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
+  insert_onchain_links_one?: Maybe<Onchain_Links>;
+  insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>;
+  insert_post_reactions_one?: Maybe<Post_Reactions>;
   insert_post_topics?: Maybe<Post_Topics_Mutation_Response>;
+  insert_post_topics_one?: Maybe<Post_Topics>;
   insert_post_types?: Maybe<Post_Types_Mutation_Response>;
+  insert_post_types_one?: Maybe<Post_Types>;
   insert_posts?: Maybe<Posts_Mutation_Response>;
+  insert_posts_one?: Maybe<Posts>;
   login?: Maybe<LoginResponse>;
   logout?: Maybe<Message>;
   postSubscribe?: Maybe<Message>;
   postUnsubscribe?: Maybe<Message>;
+  reportContent?: Maybe<Message>;
   requestResetPassword?: Maybe<Message>;
   resendVerifyEmailToken?: Maybe<Message>;
   resetPassword?: Maybe<Message>;
@@ -2621,11 +3041,20 @@ export type Mutation_Root = {
   updateTreasurySpendProposal?: Maybe<TreasurySpendProposal>;
   updateTreasuryStatus?: Maybe<TreasuryStatus>;
   updateValidator?: Maybe<Validator>;
+  update_comment_reactions?: Maybe<Comment_Reactions_Mutation_Response>;
+  update_comment_reactions_by_pk?: Maybe<Comment_Reactions>;
   update_comments?: Maybe<Comments_Mutation_Response>;
+  update_comments_by_pk?: Maybe<Comments>;
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
+  update_onchain_links_by_pk?: Maybe<Onchain_Links>;
+  update_post_reactions?: Maybe<Post_Reactions_Mutation_Response>;
+  update_post_reactions_by_pk?: Maybe<Post_Reactions>;
   update_post_topics?: Maybe<Post_Topics_Mutation_Response>;
+  update_post_topics_by_pk?: Maybe<Post_Topics>;
   update_post_types?: Maybe<Post_Types_Mutation_Response>;
+  update_post_types_by_pk?: Maybe<Post_Types>;
   update_posts?: Maybe<Posts_Mutation_Response>;
+  update_posts_by_pk?: Maybe<Posts>;
   upsertBlockIndex: BlockIndex;
   upsertBlockNumber: BlockNumber;
   upsertCouncil: Council;
@@ -2655,424 +3084,648 @@ export type Mutation_Root = {
   verifyEmail?: Maybe<ChangeResponse>;
 };
 
+
 export type Mutation_RootAddressLinkConfirmArgs = {
   address_id: Scalars['Int'];
   signature: Scalars['String'];
 };
+
 
 export type Mutation_RootAddressLinkStartArgs = {
   address: Scalars['String'];
   network: Scalars['String'];
 };
 
+
+export type Mutation_RootAddressLoginArgs = {
+  address: Scalars['String'];
+  signature: Scalars['String'];
+};
+
+
+export type Mutation_RootAddressLoginStartArgs = {
+  address: Scalars['String'];
+};
+
+
 export type Mutation_RootAddressUnlinkArgs = {
   address: Scalars['String'];
 };
 
+
 export type Mutation_RootChangeEmailArgs = {
   email: Scalars['String'];
+  password: Scalars['String'];
 };
+
 
 export type Mutation_RootChangeNameArgs = {
   newName: Scalars['String'];
 };
 
+
 export type Mutation_RootChangeNotificationPreferenceArgs = {
   notificationPreferences?: Maybe<NotificationPreferencesInput>;
 };
+
 
 export type Mutation_RootChangePasswordArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 };
 
+
 export type Mutation_RootChangeUsernameArgs = {
+  password: Scalars['String'];
   username: Scalars['String'];
 };
+
 
 export type Mutation_RootCreateBlockIndexArgs = {
   data: BlockIndexCreateInput;
 };
 
+
 export type Mutation_RootCreateBlockNumberArgs = {
   data: BlockNumberCreateInput;
 };
+
 
 export type Mutation_RootCreateCouncilArgs = {
   data: CouncilCreateInput;
 };
 
+
 export type Mutation_RootCreateCouncilMemberArgs = {
   data: CouncilMemberCreateInput;
 };
+
 
 export type Mutation_RootCreateEraArgs = {
   data: EraCreateInput;
 };
 
+
 export type Mutation_RootCreateHeartBeatArgs = {
   data: HeartBeatCreateInput;
 };
+
 
 export type Mutation_RootCreateMotionArgs = {
   data: MotionCreateInput;
 };
 
+
 export type Mutation_RootCreateMotionProposalArgumentArgs = {
   data: MotionProposalArgumentCreateInput;
 };
+
 
 export type Mutation_RootCreateMotionStatusArgs = {
   data: MotionStatusCreateInput;
 };
 
+
 export type Mutation_RootCreateNominationArgs = {
   data: NominationCreateInput;
 };
+
 
 export type Mutation_RootCreateOfflineValidatorArgs = {
   data: OfflineValidatorCreateInput;
 };
 
+
 export type Mutation_RootCreatePreimageArgs = {
   data: PreimageCreateInput;
 };
+
 
 export type Mutation_RootCreatePreimageArgumentArgs = {
   data: PreimageArgumentCreateInput;
 };
 
+
 export type Mutation_RootCreatePreimageStatusArgs = {
   data: PreimageStatusCreateInput;
 };
+
 
 export type Mutation_RootCreateProposalArgs = {
   data: ProposalCreateInput;
 };
 
+
 export type Mutation_RootCreateProposalStatusArgs = {
   data: ProposalStatusCreateInput;
 };
+
 
 export type Mutation_RootCreateReferendumArgs = {
   data: ReferendumCreateInput;
 };
 
+
 export type Mutation_RootCreateReferendumStatusArgs = {
   data: ReferendumStatusCreateInput;
 };
+
 
 export type Mutation_RootCreateRewardArgs = {
   data: RewardCreateInput;
 };
 
+
 export type Mutation_RootCreateSessionArgs = {
   data: SessionCreateInput;
 };
+
 
 export type Mutation_RootCreateSlashingArgs = {
   data: SlashingCreateInput;
 };
 
+
 export type Mutation_RootCreateStakeArgs = {
   data: StakeCreateInput;
 };
+
 
 export type Mutation_RootCreateTotalIssuanceArgs = {
   data: TotalIssuanceCreateInput;
 };
 
+
 export type Mutation_RootCreateTreasurySpendProposalArgs = {
   data: TreasurySpendProposalCreateInput;
 };
+
 
 export type Mutation_RootCreateTreasuryStatusArgs = {
   data: TreasuryStatusCreateInput;
 };
 
+
 export type Mutation_RootCreateValidatorArgs = {
   data: ValidatorCreateInput;
 };
+
 
 export type Mutation_RootDeleteBlockIndexArgs = {
   where: BlockIndexWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteCouncilArgs = {
   where: CouncilWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteEraArgs = {
   where: EraWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteManyBlockIndexesArgs = {
   where?: Maybe<BlockIndexWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyCouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyErasArgs = {
   where?: Maybe<EraWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyHeartBeatsArgs = {
   where?: Maybe<HeartBeatWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyMotionStatusesArgs = {
   where?: Maybe<MotionStatusWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyMotionsArgs = {
   where?: Maybe<MotionWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyNominationsArgs = {
   where?: Maybe<NominationWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyOfflineValidatorsArgs = {
   where?: Maybe<OfflineValidatorWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyPreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyPreimagesArgs = {
   where?: Maybe<PreimageWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyProposalStatusesArgs = {
   where?: Maybe<ProposalStatusWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyProposalsArgs = {
   where?: Maybe<ProposalWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyReferendumStatusesArgs = {
   where?: Maybe<ReferendumStatusWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyReferendumsArgs = {
   where?: Maybe<ReferendumWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyRewardsArgs = {
   where?: Maybe<RewardWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManySessionsArgs = {
   where?: Maybe<SessionWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManySlashingsArgs = {
   where?: Maybe<SlashingWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyStakesArgs = {
   where?: Maybe<StakeWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyTotalIssuancesArgs = {
   where?: Maybe<TotalIssuanceWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyTreasurySpendProposalsArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>;
 };
+
 
 export type Mutation_RootDeleteManyTreasuryStatusesArgs = {
   where?: Maybe<TreasuryStatusWhereInput>;
 };
 
+
 export type Mutation_RootDeleteManyValidatorsArgs = {
   where?: Maybe<ValidatorWhereInput>;
 };
+
 
 export type Mutation_RootDeleteMotionArgs = {
   where: MotionWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteMotionStatusArgs = {
   where: MotionStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteNominationArgs = {
   where: NominationWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteOfflineValidatorArgs = {
   where: OfflineValidatorWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeletePreimageArgs = {
   where: PreimageWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeletePreimageArgumentArgs = {
   where: PreimageArgumentWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeletePreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteProposalArgs = {
   where: ProposalWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteReferendumArgs = {
   where: ReferendumWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteRewardArgs = {
   where: RewardWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteSessionArgs = {
   where: SessionWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteSlashingArgs = {
   where: SlashingWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteStakeArgs = {
   where: StakeWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteTotalIssuanceArgs = {
   where: TotalIssuanceWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput;
 };
+
 
 export type Mutation_RootDeleteTreasuryStatusArgs = {
   where: TreasuryStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootDeleteValidatorArgs = {
   where: ValidatorWhereUniqueInput;
 };
+
+
+export type Mutation_RootDelete_Comment_ReactionsArgs = {
+  where: Comment_Reactions_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Comment_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
 
 export type Mutation_RootDelete_CommentsArgs = {
   where: Comments_Bool_Exp;
 };
 
+
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Mutation_RootDelete_Onchain_LinksArgs = {
   where: Onchain_Links_Bool_Exp;
 };
+
+
+export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Mutation_RootDelete_Post_ReactionsArgs = {
+  where: Post_Reactions_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Post_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
 
 export type Mutation_RootDelete_Post_TopicsArgs = {
   where: Post_Topics_Bool_Exp;
 };
 
+
+export type Mutation_RootDelete_Post_Topics_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Mutation_RootDelete_Post_TypesArgs = {
   where: Post_Types_Bool_Exp;
 };
 
+
+export type Mutation_RootDelete_Post_Types_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp;
 };
+
+
+export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
 
 export type Mutation_RootExecuteRawArgs = {
   database?: Maybe<PrismaDatabase>;
   query: Scalars['String'];
 };
 
+
+export type Mutation_RootInsert_Comment_ReactionsArgs = {
+  objects: Array<Comment_Reactions_Insert_Input>;
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Comment_Reactions_OneArgs = {
+  object: Comment_Reactions_Insert_Input;
+  on_conflict?: Maybe<Comment_Reactions_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_CommentsArgs = {
   objects: Array<Comments_Insert_Input>;
   on_conflict?: Maybe<Comments_On_Conflict>;
 };
+
+
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input;
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
 
 export type Mutation_RootInsert_Onchain_LinksArgs = {
   objects: Array<Onchain_Links_Insert_Input>;
   on_conflict?: Maybe<Onchain_Links_On_Conflict>;
 };
 
+
+export type Mutation_RootInsert_Onchain_Links_OneArgs = {
+  object: Onchain_Links_Insert_Input;
+  on_conflict?: Maybe<Onchain_Links_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Post_ReactionsArgs = {
+  objects: Array<Post_Reactions_Insert_Input>;
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Post_Reactions_OneArgs = {
+  object: Post_Reactions_Insert_Input;
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_Post_TopicsArgs = {
   objects: Array<Post_Topics_Insert_Input>;
   on_conflict?: Maybe<Post_Topics_On_Conflict>;
 };
+
+
+export type Mutation_RootInsert_Post_Topics_OneArgs = {
+  object: Post_Topics_Insert_Input;
+  on_conflict?: Maybe<Post_Topics_On_Conflict>;
+};
+
 
 export type Mutation_RootInsert_Post_TypesArgs = {
   objects: Array<Post_Types_Insert_Input>;
   on_conflict?: Maybe<Post_Types_On_Conflict>;
 };
 
+
+export type Mutation_RootInsert_Post_Types_OneArgs = {
+  object: Post_Types_Insert_Input;
+  on_conflict?: Maybe<Post_Types_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>;
   on_conflict?: Maybe<Posts_On_Conflict>;
 };
+
+
+export type Mutation_RootInsert_Posts_OneArgs = {
+  object: Posts_Insert_Input;
+  on_conflict?: Maybe<Posts_On_Conflict>;
+};
+
 
 export type Mutation_RootLoginArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
 };
 
+
 export type Mutation_RootPostSubscribeArgs = {
   post_id: Scalars['Int'];
 };
+
 
 export type Mutation_RootPostUnsubscribeArgs = {
   post_id: Scalars['Int'];
 };
 
+
+export type Mutation_RootReportContentArgs = {
+  comments?: Maybe<Scalars['String']>;
+  content_id: Scalars['String'];
+  network: Scalars['String'];
+  reason: Scalars['String'];
+  type: Scalars['String'];
+};
+
+
 export type Mutation_RootRequestResetPasswordArgs = {
   email: Scalars['String'];
 };
+
 
 export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'];
   token: Scalars['String'];
 };
+
 
 export type Mutation_RootSignupArgs = {
   email?: Maybe<Scalars['String']>;
@@ -3081,264 +3734,331 @@ export type Mutation_RootSignupArgs = {
   username: Scalars['String'];
 };
 
+
 export type Mutation_RootUndoEmailChangeArgs = {
   token: Scalars['String'];
 };
+
 
 export type Mutation_RootUpdateBlockIndexArgs = {
   data: BlockIndexUpdateInput;
   where: BlockIndexWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateBlockNumberArgs = {
   data: BlockNumberUpdateInput;
   where: BlockNumberWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateCouncilArgs = {
   data: CouncilUpdateInput;
   where: CouncilWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateCouncilMemberArgs = {
   data: CouncilMemberUpdateInput;
   where: CouncilMemberWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateEraArgs = {
   data: EraUpdateInput;
   where: EraWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateHeartBeatArgs = {
   data: HeartBeatUpdateInput;
   where: HeartBeatWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateManyBlockIndexesArgs = {
   data: BlockIndexUpdateManyMutationInput;
   where?: Maybe<BlockIndexWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyBlockNumbersArgs = {
   data: BlockNumberUpdateManyMutationInput;
   where?: Maybe<BlockNumberWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyCouncilMembersArgs = {
   data: CouncilMemberUpdateManyMutationInput;
   where?: Maybe<CouncilMemberWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyErasArgs = {
   data: EraUpdateManyMutationInput;
   where?: Maybe<EraWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyHeartBeatsArgs = {
   data: HeartBeatUpdateManyMutationInput;
   where?: Maybe<HeartBeatWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyMotionProposalArgumentsArgs = {
   data: MotionProposalArgumentUpdateManyMutationInput;
   where?: Maybe<MotionProposalArgumentWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyMotionStatusesArgs = {
   data: MotionStatusUpdateManyMutationInput;
   where?: Maybe<MotionStatusWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyMotionsArgs = {
   data: MotionUpdateManyMutationInput;
   where?: Maybe<MotionWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyNominationsArgs = {
   data: NominationUpdateManyMutationInput;
   where?: Maybe<NominationWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyOfflineValidatorsArgs = {
   data: OfflineValidatorUpdateManyMutationInput;
   where?: Maybe<OfflineValidatorWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyPreimageArgumentsArgs = {
   data: PreimageArgumentUpdateManyMutationInput;
   where?: Maybe<PreimageArgumentWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyPreimageStatusesArgs = {
   data: PreimageStatusUpdateManyMutationInput;
   where?: Maybe<PreimageStatusWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyPreimagesArgs = {
   data: PreimageUpdateManyMutationInput;
   where?: Maybe<PreimageWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyProposalStatusesArgs = {
   data: ProposalStatusUpdateManyMutationInput;
   where?: Maybe<ProposalStatusWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyProposalsArgs = {
   data: ProposalUpdateManyMutationInput;
   where?: Maybe<ProposalWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyReferendumStatusesArgs = {
   data: ReferendumStatusUpdateManyMutationInput;
   where?: Maybe<ReferendumStatusWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyReferendumsArgs = {
   data: ReferendumUpdateManyMutationInput;
   where?: Maybe<ReferendumWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyRewardsArgs = {
   data: RewardUpdateManyMutationInput;
   where?: Maybe<RewardWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManySessionsArgs = {
   data: SessionUpdateManyMutationInput;
   where?: Maybe<SessionWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManySlashingsArgs = {
   data: SlashingUpdateManyMutationInput;
   where?: Maybe<SlashingWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyStakesArgs = {
   data: StakeUpdateManyMutationInput;
   where?: Maybe<StakeWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyTotalIssuancesArgs = {
   data: TotalIssuanceUpdateManyMutationInput;
   where?: Maybe<TotalIssuanceWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyTreasurySpendProposalsArgs = {
   data: TreasurySpendProposalUpdateManyMutationInput;
   where?: Maybe<TreasurySpendProposalWhereInput>;
 };
 
+
 export type Mutation_RootUpdateManyTreasuryStatusesArgs = {
   data: TreasuryStatusUpdateManyMutationInput;
   where?: Maybe<TreasuryStatusWhereInput>;
 };
+
 
 export type Mutation_RootUpdateManyValidatorsArgs = {
   data: ValidatorUpdateManyMutationInput;
   where?: Maybe<ValidatorWhereInput>;
 };
 
+
 export type Mutation_RootUpdateMotionArgs = {
   data: MotionUpdateInput;
   where: MotionWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateMotionProposalArgumentArgs = {
   data: MotionProposalArgumentUpdateInput;
   where: MotionProposalArgumentWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateMotionStatusArgs = {
   data: MotionStatusUpdateInput;
   where: MotionStatusWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateNominationArgs = {
   data: NominationUpdateInput;
   where: NominationWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateOfflineValidatorArgs = {
   data: OfflineValidatorUpdateInput;
   where: OfflineValidatorWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdatePreimageArgs = {
   data: PreimageUpdateInput;
   where: PreimageWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdatePreimageArgumentArgs = {
   data: PreimageArgumentUpdateInput;
   where: PreimageArgumentWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdatePreimageStatusArgs = {
   data: PreimageStatusUpdateInput;
   where: PreimageStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateProposalArgs = {
   data: ProposalUpdateInput;
   where: ProposalWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateProposalStatusArgs = {
   data: ProposalStatusUpdateInput;
   where: ProposalStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateReferendumArgs = {
   data: ReferendumUpdateInput;
   where: ReferendumWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateReferendumStatusArgs = {
   data: ReferendumStatusUpdateInput;
   where: ReferendumStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateRewardArgs = {
   data: RewardUpdateInput;
   where: RewardWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateSessionArgs = {
   data: SessionUpdateInput;
   where: SessionWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateSlashingArgs = {
   data: SlashingUpdateInput;
   where: SlashingWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateStakeArgs = {
   data: StakeUpdateInput;
   where: StakeWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateTotalIssuanceArgs = {
   data: TotalIssuanceUpdateInput;
   where: TotalIssuanceWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpdateTreasurySpendProposalArgs = {
   data: TreasurySpendProposalUpdateInput;
   where: TreasurySpendProposalWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateTreasuryStatusArgs = {
   data: TreasuryStatusUpdateInput;
   where: TreasuryStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpdateValidatorArgs = {
   data: ValidatorUpdateInput;
   where: ValidatorWhereUniqueInput;
 };
+
+
+export type Mutation_RootUpdate_Comment_ReactionsArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>;
+  _set?: Maybe<Comment_Reactions_Set_Input>;
+  where: Comment_Reactions_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Comment_Reactions_By_PkArgs = {
+  _inc?: Maybe<Comment_Reactions_Inc_Input>;
+  _set?: Maybe<Comment_Reactions_Set_Input>;
+  pk_columns: Comment_Reactions_Pk_Columns_Input;
+};
+
 
 export type Mutation_RootUpdate_CommentsArgs = {
   _inc?: Maybe<Comments_Inc_Input>;
@@ -3346,11 +4066,41 @@ export type Mutation_RootUpdate_CommentsArgs = {
   where: Comments_Bool_Exp;
 };
 
+
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _inc?: Maybe<Comments_Inc_Input>;
+  _set?: Maybe<Comments_Set_Input>;
+  pk_columns: Comments_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpdate_Onchain_LinksArgs = {
   _inc?: Maybe<Onchain_Links_Inc_Input>;
   _set?: Maybe<Onchain_Links_Set_Input>;
   where: Onchain_Links_Bool_Exp;
 };
+
+
+export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
+  _inc?: Maybe<Onchain_Links_Inc_Input>;
+  _set?: Maybe<Onchain_Links_Set_Input>;
+  pk_columns: Onchain_Links_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUpdate_Post_ReactionsArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>;
+  _set?: Maybe<Post_Reactions_Set_Input>;
+  where: Post_Reactions_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Post_Reactions_By_PkArgs = {
+  _inc?: Maybe<Post_Reactions_Inc_Input>;
+  _set?: Maybe<Post_Reactions_Set_Input>;
+  pk_columns: Post_Reactions_Pk_Columns_Input;
+};
+
 
 export type Mutation_RootUpdate_Post_TopicsArgs = {
   _inc?: Maybe<Post_Topics_Inc_Input>;
@@ -3358,11 +4108,27 @@ export type Mutation_RootUpdate_Post_TopicsArgs = {
   where: Post_Topics_Bool_Exp;
 };
 
+
+export type Mutation_RootUpdate_Post_Topics_By_PkArgs = {
+  _inc?: Maybe<Post_Topics_Inc_Input>;
+  _set?: Maybe<Post_Topics_Set_Input>;
+  pk_columns: Post_Topics_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpdate_Post_TypesArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>;
   _set?: Maybe<Post_Types_Set_Input>;
   where: Post_Types_Bool_Exp;
 };
+
+
+export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
+  _inc?: Maybe<Post_Types_Inc_Input>;
+  _set?: Maybe<Post_Types_Set_Input>;
+  pk_columns: Post_Types_Pk_Columns_Input;
+};
+
 
 export type Mutation_RootUpdate_PostsArgs = {
   _inc?: Maybe<Posts_Inc_Input>;
@@ -3370,11 +4136,20 @@ export type Mutation_RootUpdate_PostsArgs = {
   where: Posts_Bool_Exp;
 };
 
+
+export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _inc?: Maybe<Posts_Inc_Input>;
+  _set?: Maybe<Posts_Set_Input>;
+  pk_columns: Posts_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpsertBlockIndexArgs = {
   create: BlockIndexCreateInput;
   update: BlockIndexUpdateInput;
   where: BlockIndexWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertBlockNumberArgs = {
   create: BlockNumberCreateInput;
@@ -3382,11 +4157,13 @@ export type Mutation_RootUpsertBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertCouncilArgs = {
   create: CouncilCreateInput;
   update: CouncilUpdateInput;
   where: CouncilWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertCouncilMemberArgs = {
   create: CouncilMemberCreateInput;
@@ -3394,11 +4171,13 @@ export type Mutation_RootUpsertCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertEraArgs = {
   create: EraCreateInput;
   update: EraUpdateInput;
   where: EraWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertHeartBeatArgs = {
   create: HeartBeatCreateInput;
@@ -3406,11 +4185,13 @@ export type Mutation_RootUpsertHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertMotionArgs = {
   create: MotionCreateInput;
   update: MotionUpdateInput;
   where: MotionWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertMotionProposalArgumentArgs = {
   create: MotionProposalArgumentCreateInput;
@@ -3418,11 +4199,13 @@ export type Mutation_RootUpsertMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertMotionStatusArgs = {
   create: MotionStatusCreateInput;
   update: MotionStatusUpdateInput;
   where: MotionStatusWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertNominationArgs = {
   create: NominationCreateInput;
@@ -3430,11 +4213,13 @@ export type Mutation_RootUpsertNominationArgs = {
   where: NominationWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertOfflineValidatorArgs = {
   create: OfflineValidatorCreateInput;
   update: OfflineValidatorUpdateInput;
   where: OfflineValidatorWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertPreimageArgs = {
   create: PreimageCreateInput;
@@ -3442,11 +4227,13 @@ export type Mutation_RootUpsertPreimageArgs = {
   where: PreimageWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertPreimageArgumentArgs = {
   create: PreimageArgumentCreateInput;
   update: PreimageArgumentUpdateInput;
   where: PreimageArgumentWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertPreimageStatusArgs = {
   create: PreimageStatusCreateInput;
@@ -3454,11 +4241,13 @@ export type Mutation_RootUpsertPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertProposalArgs = {
   create: ProposalCreateInput;
   update: ProposalUpdateInput;
   where: ProposalWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertProposalStatusArgs = {
   create: ProposalStatusCreateInput;
@@ -3466,11 +4255,13 @@ export type Mutation_RootUpsertProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertReferendumArgs = {
   create: ReferendumCreateInput;
   update: ReferendumUpdateInput;
   where: ReferendumWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertReferendumStatusArgs = {
   create: ReferendumStatusCreateInput;
@@ -3478,11 +4269,13 @@ export type Mutation_RootUpsertReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertRewardArgs = {
   create: RewardCreateInput;
   update: RewardUpdateInput;
   where: RewardWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertSessionArgs = {
   create: SessionCreateInput;
@@ -3490,11 +4283,13 @@ export type Mutation_RootUpsertSessionArgs = {
   where: SessionWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertSlashingArgs = {
   create: SlashingCreateInput;
   update: SlashingUpdateInput;
   where: SlashingWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertStakeArgs = {
   create: StakeCreateInput;
@@ -3502,11 +4297,13 @@ export type Mutation_RootUpsertStakeArgs = {
   where: StakeWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertTotalIssuanceArgs = {
   create: TotalIssuanceCreateInput;
   update: TotalIssuanceUpdateInput;
   where: TotalIssuanceWhereUniqueInput;
 };
+
 
 export type Mutation_RootUpsertTreasurySpendProposalArgs = {
   create: TreasurySpendProposalCreateInput;
@@ -3514,17 +4311,20 @@ export type Mutation_RootUpsertTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertTreasuryStatusArgs = {
   create: TreasuryStatusCreateInput;
   update: TreasuryStatusUpdateInput;
   where: TreasuryStatusWhereUniqueInput;
 };
 
+
 export type Mutation_RootUpsertValidatorArgs = {
   create: ValidatorCreateInput;
   update: ValidatorUpdateInput;
   where: ValidatorWhereUniqueInput;
 };
+
 
 export type Mutation_RootVerifyEmailArgs = {
   token: Scalars['String'];
@@ -3923,6 +4723,7 @@ export type Onchain_Links = {
   proposer_address: Scalars['String'];
 };
 
+
 export type Onchain_LinksOnchain_MotionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3932,6 +4733,7 @@ export type Onchain_LinksOnchain_MotionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<MotionWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Motion>;
 };
+
 
 export type Onchain_LinksOnchain_ProposalArgs = {
   after?: Maybe<Scalars['String']>;
@@ -3943,6 +4745,7 @@ export type Onchain_LinksOnchain_ProposalArgs = {
   where?: Maybe<ProposalWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Proposal>;
 };
 
+
 export type Onchain_LinksOnchain_ReferendumArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3952,6 +4755,7 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<ReferendumWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Referendum>;
 };
+
 
 export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
   after?: Maybe<Scalars['String']>;
@@ -3983,6 +4787,7 @@ export type Onchain_Links_Aggregate_Fields = {
   var_samp?: Maybe<Onchain_Links_Var_Samp_Fields>;
   variance?: Maybe<Onchain_Links_Variance_Fields>;
 };
+
 
 export type Onchain_Links_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Onchain_Links_Select_Column>>;
@@ -4045,7 +4850,6 @@ export type Onchain_Links_Bool_Exp = {
 export enum Onchain_Links_Constraint {
   OnchainLinksOnchainMotionIdKey = 'onchain_links_onchain_motion_id_key',
   OnchainLinksOnchainReferendumIdKey = 'onchain_links_onchain_referendum_id_key',
-  OnchainLinksOnchainTreasuryProposalIdKey = 'onchain_links_onchain_treasury_proposal_id_key',
   OnchainProposalsChainDbIdKey = 'onchain_proposals_chain_db_id_key',
   ProposalsPkey = 'proposals_pkey',
   ProposalsPostIdKey = 'proposals_post_id_key'
@@ -4145,6 +4949,10 @@ export type Onchain_Links_Order_By = {
   post?: Maybe<Posts_Order_By>;
   post_id?: Maybe<Order_By>;
   proposer_address?: Maybe<Order_By>;
+};
+
+export type Onchain_Links_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 export enum Onchain_Links_Select_Column {
@@ -4330,6 +5138,285 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>;
 };
 
+export type Post_Reactions = {
+   __typename?: 'post_reactions';
+  created_at: Scalars['timestamp'];
+  id: Scalars['Int'];
+  post: Posts;
+  post_id: Scalars['Int'];
+  reacting_user?: Maybe<User>;
+  reaction: Scalars['bpchar'];
+  updated_at: Scalars['timestamp'];
+  user_id: Scalars['Int'];
+};
+
+export type Post_Reactions_Aggregate = {
+   __typename?: 'post_reactions_aggregate';
+  aggregate?: Maybe<Post_Reactions_Aggregate_Fields>;
+  nodes: Array<Post_Reactions>;
+};
+
+export type Post_Reactions_Aggregate_Fields = {
+   __typename?: 'post_reactions_aggregate_fields';
+  avg?: Maybe<Post_Reactions_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Post_Reactions_Max_Fields>;
+  min?: Maybe<Post_Reactions_Min_Fields>;
+  stddev?: Maybe<Post_Reactions_Stddev_Fields>;
+  stddev_pop?: Maybe<Post_Reactions_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Post_Reactions_Stddev_Samp_Fields>;
+  sum?: Maybe<Post_Reactions_Sum_Fields>;
+  var_pop?: Maybe<Post_Reactions_Var_Pop_Fields>;
+  var_samp?: Maybe<Post_Reactions_Var_Samp_Fields>;
+  variance?: Maybe<Post_Reactions_Variance_Fields>;
+};
+
+
+export type Post_Reactions_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Reactions_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Post_Reactions_Aggregate_Order_By = {
+  avg?: Maybe<Post_Reactions_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Post_Reactions_Max_Order_By>;
+  min?: Maybe<Post_Reactions_Min_Order_By>;
+  stddev?: Maybe<Post_Reactions_Stddev_Order_By>;
+  stddev_pop?: Maybe<Post_Reactions_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Post_Reactions_Stddev_Samp_Order_By>;
+  sum?: Maybe<Post_Reactions_Sum_Order_By>;
+  var_pop?: Maybe<Post_Reactions_Var_Pop_Order_By>;
+  var_samp?: Maybe<Post_Reactions_Var_Samp_Order_By>;
+  variance?: Maybe<Post_Reactions_Variance_Order_By>;
+};
+
+export type Post_Reactions_Arr_Rel_Insert_Input = {
+  data: Array<Post_Reactions_Insert_Input>;
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>;
+};
+
+export type Post_Reactions_Avg_Fields = {
+   __typename?: 'post_reactions_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Reactions_Bool_Exp>>>;
+  _not?: Maybe<Post_Reactions_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Post_Reactions_Bool_Exp>>>;
+  created_at?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  post?: Maybe<Posts_Bool_Exp>;
+  post_id?: Maybe<Int_Comparison_Exp>;
+  reaction?: Maybe<Bpchar_Comparison_Exp>;
+  updated_at?: Maybe<Timestamp_Comparison_Exp>;
+  user_id?: Maybe<Int_Comparison_Exp>;
+};
+
+export enum Post_Reactions_Constraint {
+  PostReactionsPkey = 'post_reactions_pkey'
+}
+
+export type Post_Reactions_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['Int']>;
+  post?: Maybe<Posts_Obj_Rel_Insert_Input>;
+  post_id?: Maybe<Scalars['Int']>;
+  reaction?: Maybe<Scalars['bpchar']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Max_Fields = {
+   __typename?: 'post_reactions_max_fields';
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Min_Fields = {
+   __typename?: 'post_reactions_min_fields';
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Mutation_Response = {
+   __typename?: 'post_reactions_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Post_Reactions>;
+};
+
+export type Post_Reactions_Obj_Rel_Insert_Input = {
+  data: Post_Reactions_Insert_Input;
+  on_conflict?: Maybe<Post_Reactions_On_Conflict>;
+};
+
+export type Post_Reactions_On_Conflict = {
+  constraint: Post_Reactions_Constraint;
+  update_columns: Array<Post_Reactions_Update_Column>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+export type Post_Reactions_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post?: Maybe<Posts_Order_By>;
+  post_id?: Maybe<Order_By>;
+  reaction?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+export enum Post_Reactions_Select_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Post_Reactions_Set_Input = {
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+  reaction?: Maybe<Scalars['bpchar']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Stddev_Fields = {
+   __typename?: 'post_reactions_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Stddev_Pop_Fields = {
+   __typename?: 'post_reactions_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Stddev_Samp_Fields = {
+   __typename?: 'post_reactions_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Sum_Fields = {
+   __typename?: 'post_reactions_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+export type Post_Reactions_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export enum Post_Reactions_Update_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  Reaction = 'reaction',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
+}
+
+export type Post_Reactions_Var_Pop_Fields = {
+   __typename?: 'post_reactions_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Var_Samp_Fields = {
+   __typename?: 'post_reactions_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+export type Post_Reactions_Variance_Fields = {
+   __typename?: 'post_reactions_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+export type Post_Reactions_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
 export type Post_Topics = {
    __typename?: 'post_topics';
   id: Scalars['Int'];
@@ -4338,6 +5425,7 @@ export type Post_Topics = {
   posts_aggregate: Posts_Aggregate;
 };
 
+
 export type Post_TopicsPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4345,6 +5433,7 @@ export type Post_TopicsPostsArgs = {
   order_by?: Maybe<Array<Posts_Order_By>>;
   where?: Maybe<Posts_Bool_Exp>;
 };
+
 
 export type Post_TopicsPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
@@ -4374,6 +5463,7 @@ export type Post_Topics_Aggregate_Fields = {
   var_samp?: Maybe<Post_Topics_Var_Samp_Fields>;
   variance?: Maybe<Post_Topics_Variance_Fields>;
 };
+
 
 export type Post_Topics_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Post_Topics_Select_Column>>;
@@ -4477,6 +5567,10 @@ export type Post_Topics_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>;
 };
 
+export type Post_Topics_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
 export enum Post_Topics_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -4563,6 +5657,7 @@ export type Post_Types = {
   posts_aggregate: Posts_Aggregate;
 };
 
+
 export type Post_TypesPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4570,6 +5665,7 @@ export type Post_TypesPostsArgs = {
   order_by?: Maybe<Array<Posts_Order_By>>;
   where?: Maybe<Posts_Bool_Exp>;
 };
+
 
 export type Post_TypesPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
@@ -4599,6 +5695,7 @@ export type Post_Types_Aggregate_Fields = {
   var_samp?: Maybe<Post_Types_Var_Samp_Fields>;
   variance?: Maybe<Post_Types_Variance_Fields>;
 };
+
 
 export type Post_Types_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Post_Types_Select_Column>>;
@@ -4702,6 +5799,10 @@ export type Post_Types_Order_By = {
   posts_aggregate?: Maybe<Posts_Aggregate_Order_By>;
 };
 
+export type Post_Types_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
 export enum Post_Types_Select_Column {
   Id = 'id',
   Name = 'name'
@@ -4790,13 +5891,16 @@ export type Posts = {
   created_at: Scalars['timestamptz'];
   id: Scalars['Int'];
   onchain_link?: Maybe<Onchain_Links>;
-  title: Scalars['String'];
+  post_reactions: Array<Post_Reactions>;
+  post_reactions_aggregate: Post_Reactions_Aggregate;
+  title?: Maybe<Scalars['String']>;
   topic: Post_Topics;
   topic_id: Scalars['Int'];
   type: Post_Types;
   type_id: Scalars['Int'];
   updated_at: Scalars['timestamptz'];
 };
+
 
 export type PostsCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
@@ -4806,12 +5910,31 @@ export type PostsCommentsArgs = {
   where?: Maybe<Comments_Bool_Exp>;
 };
 
+
 export type PostsComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Comments_Order_By>>;
   where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type PostsPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+
+export type PostsPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
 };
 
 export type Posts_Aggregate = {
@@ -4834,6 +5957,7 @@ export type Posts_Aggregate_Fields = {
   var_samp?: Maybe<Posts_Var_Samp_Fields>;
   variance?: Maybe<Posts_Variance_Fields>;
 };
+
 
 export type Posts_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Posts_Select_Column>>;
@@ -4884,6 +6008,7 @@ export type Posts_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>;
+  post_reactions?: Maybe<Post_Reactions_Bool_Exp>;
   title?: Maybe<String_Comparison_Exp>;
   topic?: Maybe<Post_Topics_Bool_Exp>;
   topic_id?: Maybe<Int_Comparison_Exp>;
@@ -4910,6 +6035,7 @@ export type Posts_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>;
+  post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>;
   title?: Maybe<Scalars['String']>;
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>;
   topic_id?: Maybe<Scalars['Int']>;
@@ -4988,12 +6114,17 @@ export type Posts_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   onchain_link?: Maybe<Onchain_Links_Order_By>;
+  post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>;
   title?: Maybe<Order_By>;
   topic?: Maybe<Post_Topics_Order_By>;
   topic_id?: Maybe<Order_By>;
   type?: Maybe<Post_Types_Order_By>;
   type_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+};
+
+export type Posts_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 export enum Posts_Select_Column {
@@ -5150,6 +6281,7 @@ export type Preimage = Node & {
   section: Scalars['String'];
 };
 
+
 export type PreimagePreimageArgumentsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5159,6 +6291,7 @@ export type PreimagePreimageArgumentsArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<PreimageArgumentWhereInput>;
 };
+
 
 export type PreimagePreimageStatusArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6042,6 +7175,7 @@ export type Proposal = {
   proposalStatus?: Maybe<Array<ProposalStatus>>;
 };
 
+
 export type ProposalProposalStatusArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6128,6 +7262,7 @@ export type ProposalStatus = Node & {
   id: Scalars['ID'];
   proposal: Proposal;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ProposalStatusConnection = {
@@ -6142,6 +7277,7 @@ export type ProposalStatusCreateInput = {
   id?: Maybe<Scalars['ID']>;
   proposal: ProposalCreateOneWithoutProposalStatusInput;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ProposalStatusCreateManyWithoutProposalInput = {
@@ -6153,6 +7289,7 @@ export type ProposalStatusCreateWithoutProposalInput = {
   blockNumber: BlockNumberCreateOneInput;
   id?: Maybe<Scalars['ID']>;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ProposalStatusEdge = {
@@ -6165,13 +7302,16 @@ export enum ProposalStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ProposalStatusPreviousValues = {
    __typename?: 'ProposalStatusPreviousValues';
   id: Scalars['ID'];
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ProposalStatusScalarWhereInput = {
@@ -6206,6 +7346,20 @@ export type ProposalStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusSubscriptionPayload = {
@@ -6231,14 +7385,17 @@ export type ProposalStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalStatusInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusUpdateManyWithoutProposalInput = {
@@ -6261,6 +7418,7 @@ export type ProposalStatusUpdateManyWithWhereNestedInput = {
 export type ProposalStatusUpdateWithoutProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
@@ -6308,10 +7466,25 @@ export type ProposalStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type ProposalStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ProposalSubscriptionPayload = {
@@ -6547,13 +7720,16 @@ export type Query = {
   users?: Maybe<Array<Maybe<PublicUser>>>;
 };
 
+
 export type QuerySubscriptionArgs = {
   post_id: Scalars['Int'];
 };
 
+
 export type QueryUserArgs = {
   id: Scalars['Int'];
 };
+
 
 export type QueryUsersArgs = {
   limit?: Maybe<Scalars['Int']>;
@@ -6568,6 +7744,9 @@ export type Query_Root = {
   blockNumber?: Maybe<BlockNumber>;
   blockNumbers: Array<Maybe<BlockNumber>>;
   blockNumbersConnection: BlockNumberConnection;
+  comment_reactions: Array<Comment_Reactions>;
+  comment_reactions_aggregate: Comment_Reactions_Aggregate;
+  comment_reactions_by_pk?: Maybe<Comment_Reactions>;
   comments: Array<Comments>;
   comments_aggregate: Comments_Aggregate;
   comments_by_pk?: Maybe<Comments>;
@@ -6603,6 +7782,9 @@ export type Query_Root = {
   onchain_links: Array<Onchain_Links>;
   onchain_links_aggregate: Onchain_Links_Aggregate;
   onchain_links_by_pk?: Maybe<Onchain_Links>;
+  post_reactions: Array<Post_Reactions>;
+  post_reactions_aggregate: Post_Reactions_Aggregate;
+  post_reactions_by_pk?: Maybe<Post_Reactions>;
   post_topics: Array<Post_Topics>;
   post_topics_aggregate: Post_Topics_Aggregate;
   post_topics_by_pk?: Maybe<Post_Topics>;
@@ -6663,9 +7845,11 @@ export type Query_Root = {
   validatorsConnection: ValidatorConnection;
 };
 
+
 export type Query_RootBlockIndexArgs = {
   where: BlockIndexWhereUniqueInput;
 };
+
 
 export type Query_RootBlockIndexesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6677,6 +7861,7 @@ export type Query_RootBlockIndexesArgs = {
   where?: Maybe<BlockIndexWhereInput>;
 };
 
+
 export type Query_RootBlockIndexesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6687,9 +7872,11 @@ export type Query_RootBlockIndexesConnectionArgs = {
   where?: Maybe<BlockIndexWhereInput>;
 };
 
+
 export type Query_RootBlockNumberArgs = {
   where: BlockNumberWhereUniqueInput;
 };
+
 
 export type Query_RootBlockNumbersArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6701,6 +7888,7 @@ export type Query_RootBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>;
 };
 
+
 export type Query_RootBlockNumbersConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6711,6 +7899,30 @@ export type Query_RootBlockNumbersConnectionArgs = {
   where?: Maybe<BlockNumberWhereInput>;
 };
 
+
+export type Query_RootComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+
+export type Query_RootComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+
+export type Query_RootComment_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Query_RootCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6718,6 +7930,7 @@ export type Query_RootCommentsArgs = {
   order_by?: Maybe<Array<Comments_Order_By>>;
   where?: Maybe<Comments_Bool_Exp>;
 };
+
 
 export type Query_RootComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
@@ -6727,17 +7940,21 @@ export type Query_RootComments_AggregateArgs = {
   where?: Maybe<Comments_Bool_Exp>;
 };
 
+
 export type Query_RootComments_By_PkArgs = {
   id: Scalars['uuid'];
 };
+
 
 export type Query_RootCouncilArgs = {
   where: CouncilWhereUniqueInput;
 };
 
+
 export type Query_RootCouncilMemberArgs = {
   where: CouncilMemberWhereUniqueInput;
 };
+
 
 export type Query_RootCouncilMembersArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6749,6 +7966,7 @@ export type Query_RootCouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>;
 };
 
+
 export type Query_RootCouncilMembersConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6758,6 +7976,7 @@ export type Query_RootCouncilMembersConnectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<CouncilMemberWhereInput>;
 };
+
 
 export type Query_RootCouncilsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6769,6 +7988,7 @@ export type Query_RootCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>;
 };
 
+
 export type Query_RootCouncilsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6779,9 +7999,11 @@ export type Query_RootCouncilsConnectionArgs = {
   where?: Maybe<CouncilWhereInput>;
 };
 
+
 export type Query_RootEraArgs = {
   where: EraWhereUniqueInput;
 };
+
 
 export type Query_RootErasArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6793,6 +8015,7 @@ export type Query_RootErasArgs = {
   where?: Maybe<EraWhereInput>;
 };
 
+
 export type Query_RootErasConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6803,9 +8026,11 @@ export type Query_RootErasConnectionArgs = {
   where?: Maybe<EraWhereInput>;
 };
 
+
 export type Query_RootHeartBeatArgs = {
   where: HeartBeatWhereUniqueInput;
 };
+
 
 export type Query_RootHeartBeatsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6817,6 +8042,7 @@ export type Query_RootHeartBeatsArgs = {
   where?: Maybe<HeartBeatWhereInput>;
 };
 
+
 export type Query_RootHeartBeatsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6827,13 +8053,16 @@ export type Query_RootHeartBeatsConnectionArgs = {
   where?: Maybe<HeartBeatWhereInput>;
 };
 
+
 export type Query_RootMotionArgs = {
   where: MotionWhereUniqueInput;
 };
 
+
 export type Query_RootMotionProposalArgumentArgs = {
   where: MotionProposalArgumentWhereUniqueInput;
 };
+
 
 export type Query_RootMotionProposalArgumentsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6845,6 +8074,7 @@ export type Query_RootMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>;
 };
 
+
 export type Query_RootMotionProposalArgumentsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6855,9 +8085,11 @@ export type Query_RootMotionProposalArgumentsConnectionArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>;
 };
 
+
 export type Query_RootMotionStatusArgs = {
   where: MotionStatusWhereUniqueInput;
 };
+
 
 export type Query_RootMotionStatusesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6869,6 +8101,7 @@ export type Query_RootMotionStatusesArgs = {
   where?: Maybe<MotionStatusWhereInput>;
 };
 
+
 export type Query_RootMotionStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6878,6 +8111,7 @@ export type Query_RootMotionStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<MotionStatusWhereInput>;
 };
+
 
 export type Query_RootMotionsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6889,6 +8123,7 @@ export type Query_RootMotionsArgs = {
   where?: Maybe<MotionWhereInput>;
 };
 
+
 export type Query_RootMotionsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6899,13 +8134,16 @@ export type Query_RootMotionsConnectionArgs = {
   where?: Maybe<MotionWhereInput>;
 };
 
+
 export type Query_RootNodeArgs = {
   id: Scalars['ID'];
 };
 
+
 export type Query_RootNominationArgs = {
   where: NominationWhereUniqueInput;
 };
+
 
 export type Query_RootNominationsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6917,6 +8155,7 @@ export type Query_RootNominationsArgs = {
   where?: Maybe<NominationWhereInput>;
 };
 
+
 export type Query_RootNominationsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6927,9 +8166,11 @@ export type Query_RootNominationsConnectionArgs = {
   where?: Maybe<NominationWhereInput>;
 };
 
+
 export type Query_RootOfflineValidatorArgs = {
   where: OfflineValidatorWhereUniqueInput;
 };
+
 
 export type Query_RootOfflineValidatorsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -6941,6 +8182,7 @@ export type Query_RootOfflineValidatorsArgs = {
   where?: Maybe<OfflineValidatorWhereInput>;
 };
 
+
 export type Query_RootOfflineValidatorsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -6951,6 +8193,7 @@ export type Query_RootOfflineValidatorsConnectionArgs = {
   where?: Maybe<OfflineValidatorWhereInput>;
 };
 
+
 export type Query_RootOnchain_LinksArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6958,6 +8201,7 @@ export type Query_RootOnchain_LinksArgs = {
   order_by?: Maybe<Array<Onchain_Links_Order_By>>;
   where?: Maybe<Onchain_Links_Bool_Exp>;
 };
+
 
 export type Query_RootOnchain_Links_AggregateArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>;
@@ -6967,9 +8211,34 @@ export type Query_RootOnchain_Links_AggregateArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>;
 };
 
+
 export type Query_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int'];
 };
+
+
+export type Query_RootPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+
+export type Query_RootPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+
+export type Query_RootPost_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
 
 export type Query_RootPost_TopicsArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>;
@@ -6979,6 +8248,7 @@ export type Query_RootPost_TopicsArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>;
 };
 
+
 export type Query_RootPost_Topics_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6987,9 +8257,11 @@ export type Query_RootPost_Topics_AggregateArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>;
 };
 
+
 export type Query_RootPost_Topics_By_PkArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Query_RootPost_TypesArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>;
@@ -6999,6 +8271,7 @@ export type Query_RootPost_TypesArgs = {
   where?: Maybe<Post_Types_Bool_Exp>;
 };
 
+
 export type Query_RootPost_Types_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7007,9 +8280,11 @@ export type Query_RootPost_Types_AggregateArgs = {
   where?: Maybe<Post_Types_Bool_Exp>;
 };
 
+
 export type Query_RootPost_Types_By_PkArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Query_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
@@ -7019,6 +8294,7 @@ export type Query_RootPostsArgs = {
   where?: Maybe<Posts_Bool_Exp>;
 };
 
+
 export type Query_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7027,17 +8303,21 @@ export type Query_RootPosts_AggregateArgs = {
   where?: Maybe<Posts_Bool_Exp>;
 };
 
+
 export type Query_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Query_RootPreimageArgs = {
   where: PreimageWhereUniqueInput;
 };
 
+
 export type Query_RootPreimageArgumentArgs = {
   where: PreimageArgumentWhereUniqueInput;
 };
+
 
 export type Query_RootPreimageArgumentsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7049,6 +8329,7 @@ export type Query_RootPreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>;
 };
 
+
 export type Query_RootPreimageArgumentsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7059,9 +8340,11 @@ export type Query_RootPreimageArgumentsConnectionArgs = {
   where?: Maybe<PreimageArgumentWhereInput>;
 };
 
+
 export type Query_RootPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
 };
+
 
 export type Query_RootPreimageStatusesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7073,6 +8356,7 @@ export type Query_RootPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
 };
 
+
 export type Query_RootPreimageStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7082,6 +8366,7 @@ export type Query_RootPreimageStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<PreimageStatusWhereInput>;
 };
+
 
 export type Query_RootPreimagesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7093,6 +8378,7 @@ export type Query_RootPreimagesArgs = {
   where?: Maybe<PreimageWhereInput>;
 };
 
+
 export type Query_RootPreimagesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7103,13 +8389,16 @@ export type Query_RootPreimagesConnectionArgs = {
   where?: Maybe<PreimageWhereInput>;
 };
 
+
 export type Query_RootProposalArgs = {
   where: ProposalWhereUniqueInput;
 };
 
+
 export type Query_RootProposalStatusArgs = {
   where: ProposalStatusWhereUniqueInput;
 };
+
 
 export type Query_RootProposalStatusesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7121,6 +8410,7 @@ export type Query_RootProposalStatusesArgs = {
   where?: Maybe<ProposalStatusWhereInput>;
 };
 
+
 export type Query_RootProposalStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7130,6 +8420,7 @@ export type Query_RootProposalStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<ProposalStatusWhereInput>;
 };
+
 
 export type Query_RootProposalsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7141,6 +8432,7 @@ export type Query_RootProposalsArgs = {
   where?: Maybe<ProposalWhereInput>;
 };
 
+
 export type Query_RootProposalsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7151,13 +8443,16 @@ export type Query_RootProposalsConnectionArgs = {
   where?: Maybe<ProposalWhereInput>;
 };
 
+
 export type Query_RootReferendumArgs = {
   where: ReferendumWhereUniqueInput;
 };
 
+
 export type Query_RootReferendumStatusArgs = {
   where: ReferendumStatusWhereUniqueInput;
 };
+
 
 export type Query_RootReferendumStatusesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7169,6 +8464,7 @@ export type Query_RootReferendumStatusesArgs = {
   where?: Maybe<ReferendumStatusWhereInput>;
 };
 
+
 export type Query_RootReferendumStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7178,6 +8474,7 @@ export type Query_RootReferendumStatusesConnectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<ReferendumStatusWhereInput>;
 };
+
 
 export type Query_RootReferendumsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7189,6 +8486,7 @@ export type Query_RootReferendumsArgs = {
   where?: Maybe<ReferendumWhereInput>;
 };
 
+
 export type Query_RootReferendumsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7199,9 +8497,11 @@ export type Query_RootReferendumsConnectionArgs = {
   where?: Maybe<ReferendumWhereInput>;
 };
 
+
 export type Query_RootRewardArgs = {
   where: RewardWhereUniqueInput;
 };
+
 
 export type Query_RootRewardsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7213,6 +8513,7 @@ export type Query_RootRewardsArgs = {
   where?: Maybe<RewardWhereInput>;
 };
 
+
 export type Query_RootRewardsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7223,9 +8524,11 @@ export type Query_RootRewardsConnectionArgs = {
   where?: Maybe<RewardWhereInput>;
 };
 
+
 export type Query_RootSessionArgs = {
   where: SessionWhereUniqueInput;
 };
+
 
 export type Query_RootSessionsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7237,6 +8540,7 @@ export type Query_RootSessionsArgs = {
   where?: Maybe<SessionWhereInput>;
 };
 
+
 export type Query_RootSessionsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7247,9 +8551,11 @@ export type Query_RootSessionsConnectionArgs = {
   where?: Maybe<SessionWhereInput>;
 };
 
+
 export type Query_RootSlashingArgs = {
   where: SlashingWhereUniqueInput;
 };
+
 
 export type Query_RootSlashingsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7261,6 +8567,7 @@ export type Query_RootSlashingsArgs = {
   where?: Maybe<SlashingWhereInput>;
 };
 
+
 export type Query_RootSlashingsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7271,9 +8578,11 @@ export type Query_RootSlashingsConnectionArgs = {
   where?: Maybe<SlashingWhereInput>;
 };
 
+
 export type Query_RootStakeArgs = {
   where: StakeWhereUniqueInput;
 };
+
 
 export type Query_RootStakesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7285,6 +8594,7 @@ export type Query_RootStakesArgs = {
   where?: Maybe<StakeWhereInput>;
 };
 
+
 export type Query_RootStakesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7295,13 +8605,16 @@ export type Query_RootStakesConnectionArgs = {
   where?: Maybe<StakeWhereInput>;
 };
 
+
 export type Query_RootSubscriptionArgs = {
   post_id: Scalars['Int'];
 };
 
+
 export type Query_RootTotalIssuanceArgs = {
   where: TotalIssuanceWhereUniqueInput;
 };
+
 
 export type Query_RootTotalIssuancesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7313,6 +8626,7 @@ export type Query_RootTotalIssuancesArgs = {
   where?: Maybe<TotalIssuanceWhereInput>;
 };
 
+
 export type Query_RootTotalIssuancesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7323,9 +8637,11 @@ export type Query_RootTotalIssuancesConnectionArgs = {
   where?: Maybe<TotalIssuanceWhereInput>;
 };
 
+
 export type Query_RootTreasurySpendProposalArgs = {
   where: TreasurySpendProposalWhereUniqueInput;
 };
+
 
 export type Query_RootTreasurySpendProposalsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7337,6 +8653,7 @@ export type Query_RootTreasurySpendProposalsArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>;
 };
 
+
 export type Query_RootTreasurySpendProposalsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7347,9 +8664,11 @@ export type Query_RootTreasurySpendProposalsConnectionArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>;
 };
 
+
 export type Query_RootTreasuryStatusArgs = {
   where: TreasuryStatusWhereUniqueInput;
 };
+
 
 export type Query_RootTreasuryStatusesArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7361,6 +8680,7 @@ export type Query_RootTreasuryStatusesArgs = {
   where?: Maybe<TreasuryStatusWhereInput>;
 };
 
+
 export type Query_RootTreasuryStatusesConnectionArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -7371,18 +8691,22 @@ export type Query_RootTreasuryStatusesConnectionArgs = {
   where?: Maybe<TreasuryStatusWhereInput>;
 };
 
+
 export type Query_RootUserArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Query_RootUsersArgs = {
   limit?: Maybe<Scalars['Int']>;
   page?: Maybe<Scalars['Int']>;
 };
 
+
 export type Query_RootValidatorArgs = {
   where: ValidatorWhereUniqueInput;
 };
+
 
 export type Query_RootValidatorsArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7393,6 +8717,7 @@ export type Query_RootValidatorsArgs = {
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<ValidatorWhereInput>;
 };
+
 
 export type Query_RootValidatorsConnectionArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7415,6 +8740,7 @@ export type Referendum = {
   referendumStatus?: Maybe<Array<ReferendumStatus>>;
   voteThreshold: Scalars['String'];
 };
+
 
 export type ReferendumReferendumStatusArgs = {
   after?: Maybe<Scalars['String']>;
@@ -7508,6 +8834,7 @@ export type ReferendumStatus = Node & {
   id: Scalars['ID'];
   referendum: Referendum;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ReferendumStatusConnection = {
@@ -7522,6 +8849,7 @@ export type ReferendumStatusCreateInput = {
   id?: Maybe<Scalars['ID']>;
   referendum: ReferendumCreateOneWithoutReferendumStatusInput;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ReferendumStatusCreateManyWithoutReferendumInput = {
@@ -7533,6 +8861,7 @@ export type ReferendumStatusCreateWithoutReferendumInput = {
   blockNumber: BlockNumberCreateOneInput;
   id?: Maybe<Scalars['ID']>;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ReferendumStatusEdge = {
@@ -7545,13 +8874,16 @@ export enum ReferendumStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ReferendumStatusPreviousValues = {
    __typename?: 'ReferendumStatusPreviousValues';
   id: Scalars['ID'];
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type ReferendumStatusScalarWhereInput = {
@@ -7586,6 +8918,20 @@ export type ReferendumStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusSubscriptionPayload = {
@@ -7611,14 +8957,17 @@ export type ReferendumStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   referendum?: Maybe<ReferendumUpdateOneRequiredWithoutReferendumStatusInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusUpdateManyWithoutReferendumInput = {
@@ -7641,6 +8990,7 @@ export type ReferendumStatusUpdateManyWithWhereNestedInput = {
 export type ReferendumStatusUpdateWithoutReferendumDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput = {
@@ -7688,10 +9038,25 @@ export type ReferendumStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type ReferendumSubscriptionPayload = {
@@ -8432,12 +9797,18 @@ export type Subscription = {
 
 export type Subscription_Root = {
    __typename?: 'subscription_root';
+  comment_reactions: Array<Comment_Reactions>;
+  comment_reactions_aggregate: Comment_Reactions_Aggregate;
+  comment_reactions_by_pk?: Maybe<Comment_Reactions>;
   comments: Array<Comments>;
   comments_aggregate: Comments_Aggregate;
   comments_by_pk?: Maybe<Comments>;
   onchain_links: Array<Onchain_Links>;
   onchain_links_aggregate: Onchain_Links_Aggregate;
   onchain_links_by_pk?: Maybe<Onchain_Links>;
+  post_reactions: Array<Post_Reactions>;
+  post_reactions_aggregate: Post_Reactions_Aggregate;
+  post_reactions_by_pk?: Maybe<Post_Reactions>;
   post_topics: Array<Post_Topics>;
   post_topics_aggregate: Post_Topics_Aggregate;
   post_topics_by_pk?: Maybe<Post_Topics>;
@@ -8449,6 +9820,30 @@ export type Subscription_Root = {
   posts_by_pk?: Maybe<Posts>;
 };
 
+
+export type Subscription_RootComment_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootComment_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comment_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comment_Reactions_Order_By>>;
+  where?: Maybe<Comment_Reactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootComment_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Subscription_RootCommentsArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8456,6 +9851,7 @@ export type Subscription_RootCommentsArgs = {
   order_by?: Maybe<Array<Comments_Order_By>>;
   where?: Maybe<Comments_Bool_Exp>;
 };
+
 
 export type Subscription_RootComments_AggregateArgs = {
   distinct_on?: Maybe<Array<Comments_Select_Column>>;
@@ -8465,9 +9861,11 @@ export type Subscription_RootComments_AggregateArgs = {
   where?: Maybe<Comments_Bool_Exp>;
 };
 
+
 export type Subscription_RootComments_By_PkArgs = {
   id: Scalars['uuid'];
 };
+
 
 export type Subscription_RootOnchain_LinksArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>;
@@ -8477,6 +9875,7 @@ export type Subscription_RootOnchain_LinksArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>;
 };
 
+
 export type Subscription_RootOnchain_Links_AggregateArgs = {
   distinct_on?: Maybe<Array<Onchain_Links_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8485,9 +9884,34 @@ export type Subscription_RootOnchain_Links_AggregateArgs = {
   where?: Maybe<Onchain_Links_Bool_Exp>;
 };
 
+
 export type Subscription_RootOnchain_Links_By_PkArgs = {
   id: Scalars['Int'];
 };
+
+
+export type Subscription_RootPost_ReactionsArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootPost_Reactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Reactions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Reactions_Order_By>>;
+  where?: Maybe<Post_Reactions_Bool_Exp>;
+};
+
+
+export type Subscription_RootPost_Reactions_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
 
 export type Subscription_RootPost_TopicsArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>;
@@ -8497,6 +9921,7 @@ export type Subscription_RootPost_TopicsArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>;
 };
 
+
 export type Subscription_RootPost_Topics_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Topics_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8505,9 +9930,11 @@ export type Subscription_RootPost_Topics_AggregateArgs = {
   where?: Maybe<Post_Topics_Bool_Exp>;
 };
 
+
 export type Subscription_RootPost_Topics_By_PkArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Subscription_RootPost_TypesArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>;
@@ -8517,6 +9944,7 @@ export type Subscription_RootPost_TypesArgs = {
   where?: Maybe<Post_Types_Bool_Exp>;
 };
 
+
 export type Subscription_RootPost_Types_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Types_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8525,9 +9953,11 @@ export type Subscription_RootPost_Types_AggregateArgs = {
   where?: Maybe<Post_Types_Bool_Exp>;
 };
 
+
 export type Subscription_RootPost_Types_By_PkArgs = {
   id: Scalars['Int'];
 };
+
 
 export type Subscription_RootPostsArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
@@ -8537,6 +9967,7 @@ export type Subscription_RootPostsArgs = {
   where?: Maybe<Posts_Bool_Exp>;
 };
 
+
 export type Subscription_RootPosts_AggregateArgs = {
   distinct_on?: Maybe<Array<Posts_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8545,9 +9976,24 @@ export type Subscription_RootPosts_AggregateArgs = {
   where?: Maybe<Posts_Bool_Exp>;
 };
 
+
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
 };
+
+
+export type Timestamp_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamp']>;
+  _gt?: Maybe<Scalars['timestamp']>;
+  _gte?: Maybe<Scalars['timestamp']>;
+  _in?: Maybe<Array<Scalars['timestamp']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamp']>;
+  _lte?: Maybe<Scalars['timestamp']>;
+  _neq?: Maybe<Scalars['timestamp']>;
+  _nin?: Maybe<Array<Scalars['timestamp']>>;
+};
+
 
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
@@ -8683,6 +10129,7 @@ export type TreasurySpendProposal = {
   treasuryStatus?: Maybe<Array<TreasuryStatus>>;
   value: Scalars['String'];
 };
+
 
 export type TreasurySpendProposalTreasuryStatusArgs = {
   after?: Maybe<Scalars['String']>;
@@ -9025,6 +10472,7 @@ export type TreasuryStatus = Node & {
   id: Scalars['ID'];
   status: Scalars['String'];
   treasurySpendProposal: TreasurySpendProposal;
+  uniqueStatus: Scalars['String'];
 };
 
 export type TreasuryStatusConnection = {
@@ -9039,6 +10487,7 @@ export type TreasuryStatusCreateInput = {
   id?: Maybe<Scalars['ID']>;
   status: Scalars['String'];
   treasurySpendProposal: TreasurySpendProposalCreateOneWithoutTreasuryStatusInput;
+  uniqueStatus: Scalars['String'];
 };
 
 export type TreasuryStatusCreateManyWithoutTreasurySpendProposalInput = {
@@ -9050,6 +10499,7 @@ export type TreasuryStatusCreateWithoutTreasurySpendProposalInput = {
   blockNumber: BlockNumberCreateOneInput;
   id?: Maybe<Scalars['ID']>;
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type TreasuryStatusEdge = {
@@ -9062,13 +10512,16 @@ export enum TreasuryStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type TreasuryStatusPreviousValues = {
    __typename?: 'TreasuryStatusPreviousValues';
   id: Scalars['ID'];
   status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
 };
 
 export type TreasuryStatusScalarWhereInput = {
@@ -9103,6 +10556,20 @@ export type TreasuryStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>;
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusSubscriptionPayload = {
@@ -9128,14 +10595,17 @@ export type TreasuryStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   status?: Maybe<Scalars['String']>;
   treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInput>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput = {
@@ -9158,6 +10628,7 @@ export type TreasuryStatusUpdateManyWithWhereNestedInput = {
 export type TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusUpdateWithWhereUniqueWithoutTreasurySpendProposalInput = {
@@ -9205,10 +10676,25 @@ export type TreasuryStatusWhereInput = {
   status_not_starts_with?: Maybe<Scalars['String']>;
   status_starts_with?: Maybe<Scalars['String']>;
   treasurySpendProposal?: Maybe<TreasurySpendProposalWhereInput>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
 };
 
 export type TreasuryStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
 };
 
 export type UndoEmailChangeResponse = {
@@ -9218,6 +10704,7 @@ export type UndoEmailChangeResponse = {
   token?: Maybe<Scalars['String']>;
 };
 
+
 export type User = {
    __typename?: 'User';
   email?: Maybe<Scalars['String']>;
@@ -9226,6 +10713,7 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
 };
+
 
 export type Uuid_Comparison_Exp = {
   _eq?: Maybe<Scalars['uuid']>;
@@ -9392,20 +10880,20 @@ export type AddPostAndProposalMutationMutationVariables = {
   authorId: Scalars['Int'];
   proposerAddress: Scalars['String'];
   content: Scalars['String'];
-  title: Scalars['String'];
   topicId: Scalars['Int'];
   typeId: Scalars['Int'];
 };
 
+
 export type AddPostAndProposalMutationMutation = (
   { __typename: 'mutation_root' }
-  & { insert_onchain_links: Maybe<(
+  & { insert_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & { returning: Array<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id'>
-    )>; }
-  )>; }
+    )> }
+  )> }
 );
 
 export type AddPostAndTreasurySpendProposalMutationMutationVariables = {
@@ -9413,20 +10901,20 @@ export type AddPostAndTreasurySpendProposalMutationMutationVariables = {
   authorId: Scalars['Int'];
   proposerAddress: Scalars['String'];
   content: Scalars['String'];
-  title: Scalars['String'];
   topicId: Scalars['Int'];
   typeId: Scalars['Int'];
 };
 
+
 export type AddPostAndTreasurySpendProposalMutationMutation = (
   { __typename: 'mutation_root' }
-  & { insert_onchain_links: Maybe<(
+  & { insert_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & { returning: Array<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id'>
-    )>; }
-  )>; }
+    )> }
+  )> }
 );
 
 export type AddPostAndMotionMutationMutationVariables = {
@@ -9434,44 +10922,46 @@ export type AddPostAndMotionMutationMutationVariables = {
   authorId: Scalars['Int'];
   proposerAddress: Scalars['String'];
   content: Scalars['String'];
-  title: Scalars['String'];
   topicId: Scalars['Int'];
   typeId: Scalars['Int'];
 };
 
+
 export type AddPostAndMotionMutationMutation = (
   { __typename: 'mutation_root' }
-  & { insert_onchain_links: Maybe<(
+  & { insert_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & { returning: Array<(
       { __typename?: 'onchain_links' }
       & Pick<Onchain_Links, 'id'>
-    )>; }
-  )>; }
+    )> }
+  )> }
 );
 
 export type GetProposalWithNoAssociatedReferendumQueryQueryVariables = {
   onchainProposalId: Scalars['Int'];
 };
 
+
 export type GetProposalWithNoAssociatedReferendumQueryQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & Pick<Onchain_Links, 'id'>
-  )>; }
+  )> }
 );
 
 export type GetMotionWithNoAssociatedReferendumQueryQueryVariables = {
   onchainMotionId: Scalars['Int'];
 };
 
+
 export type GetMotionWithNoAssociatedReferendumQueryQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & Pick<Onchain_Links, 'id'>
-  )>; }
+  )> }
 );
 
 export type AddReferendumIdToProposalMutationMutationVariables = {
@@ -9479,12 +10969,13 @@ export type AddReferendumIdToProposalMutationMutationVariables = {
   referendumId: Scalars['Int'];
 };
 
+
 export type AddReferendumIdToProposalMutationMutation = (
   { __typename?: 'mutation_root' }
-  & { update_onchain_links: Maybe<(
+  & { update_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
-  )>; }
+  )> }
 );
 
 export type AddMotionIdToTreasuryProposalMutationMutationVariables = {
@@ -9492,12 +10983,13 @@ export type AddMotionIdToTreasuryProposalMutationMutationVariables = {
   motionId: Scalars['Int'];
 };
 
+
 export type AddMotionIdToTreasuryProposalMutationMutation = (
   { __typename?: 'mutation_root' }
-  & { update_onchain_links: Maybe<(
+  & { update_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
-  )>; }
+  )> }
 );
 
 export type AddReferendumIdToMotionMutationMutationVariables = {
@@ -9505,12 +10997,13 @@ export type AddReferendumIdToMotionMutationMutationVariables = {
   referendumId: Scalars['Int'];
 };
 
+
 export type AddReferendumIdToMotionMutationMutation = (
   { __typename?: 'mutation_root' }
-  & { update_onchain_links: Maybe<(
+  & { update_onchain_links?: Maybe<(
     { __typename?: 'onchain_links_mutation_response' }
     & Pick<Onchain_Links_Mutation_Response, 'affected_rows'>
-  )>; }
+  )> }
 );
 
 export type LoginMutationMutationVariables = {
@@ -9518,58 +11011,63 @@ export type LoginMutationMutationVariables = {
   username: Scalars['String'];
 };
 
+
 export type LoginMutationMutation = (
   { __typename?: 'mutation_root' }
-  & { login: Maybe<(
+  & { login?: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-  )>; }
+  )> }
 );
 
 export type GetDiscussionProposalByIdQueryVariables = {
   onchainProposalId: Scalars['Int'];
 };
 
+
 export type GetDiscussionProposalByIdQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & Pick<Onchain_Links, 'id'>
-  )>; }
+  )> }
 );
 
 export type GetDiscussionMotionProposalByIdQueryVariables = {
   onchainMotionProposalId: Scalars['Int'];
 };
 
+
 export type GetDiscussionMotionProposalByIdQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & Pick<Onchain_Links, 'id'>
-  )>; }
+  )> }
 );
 
 export type GetDiscussionTreasurySpendProposalByIdQueryVariables = {
   onchainTreasuryProposalId: Scalars['Int'];
 };
 
+
 export type GetDiscussionTreasurySpendProposalByIdQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & Pick<Onchain_Links, 'id'>
-  )>; }
+  )> }
 );
 
 export type GetDiscussionMotionsQueryVariables = {};
+
 
 export type GetDiscussionMotionsQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & DiscussionMotionFragment
-  )>; }
+  )> }
 );
 
 export type DiscussionMotionFragment = (
@@ -9579,12 +11077,13 @@ export type DiscussionMotionFragment = (
 
 export type GetDiscussionProposalsQueryVariables = {};
 
+
 export type GetDiscussionProposalsQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & DiscussionProposalFragment
-  )>; }
+  )> }
 );
 
 export type DiscussionProposalFragment = (
@@ -9594,12 +11093,13 @@ export type DiscussionProposalFragment = (
 
 export type GetDiscussionReferendaQueryVariables = {};
 
+
 export type GetDiscussionReferendaQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & DiscussionReferendumFragment
-  )>; }
+  )> }
 );
 
 export type DiscussionReferendumFragment = (
@@ -9609,12 +11109,13 @@ export type DiscussionReferendumFragment = (
 
 export type GetDiscussionTreasuryProposalsQueryVariables = {};
 
+
 export type GetDiscussionTreasuryProposalsQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
     & DiscussionTreasuryProposalFragment
-  )>; }
+  )> }
 );
 
 export type DiscussionTreasuryProposalFragment = (
@@ -9650,9 +11151,9 @@ export const DiscussionTreasuryProposalFragmentDoc = gql`
 }
     `;
 export const AddPostAndProposalMutationDocument = gql`
-    mutation addPostAndProposalMutation($onchainProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $title: String!, $topicId: Int!, $typeId: Int!) {
+    mutation addPostAndProposalMutation($onchainProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
   __typename
-  insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
+  insert_onchain_links(objects: {onchain_proposal_id: $onchainProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
     }
@@ -9660,9 +11161,9 @@ export const AddPostAndProposalMutationDocument = gql`
 }
     `;
 export const AddPostAndTreasurySpendProposalMutationDocument = gql`
-    mutation addPostAndTreasurySpendProposalMutation($onchainTreasuryProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $title: String!, $topicId: Int!, $typeId: Int!) {
+    mutation addPostAndTreasurySpendProposalMutation($onchainTreasuryProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
   __typename
-  insert_onchain_links(objects: {onchain_treasury_proposal_id: $onchainTreasuryProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
+  insert_onchain_links(objects: {onchain_treasury_proposal_id: $onchainTreasuryProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
     }
@@ -9670,9 +11171,9 @@ export const AddPostAndTreasurySpendProposalMutationDocument = gql`
 }
     `;
 export const AddPostAndMotionMutationDocument = gql`
-    mutation addPostAndMotionMutation($onchainMotionProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $title: String!, $topicId: Int!, $typeId: Int!) {
+    mutation addPostAndMotionMutation($onchainMotionProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
   __typename
-  insert_onchain_links(objects: {onchain_motion_id: $onchainMotionProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, title: $title, topic_id: $topicId, type_id: $typeId}}}) {
+  insert_onchain_links(objects: {onchain_motion_id: $onchainMotionProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
     }
@@ -9770,55 +11271,55 @@ export const GetDiscussionTreasuryProposalsDocument = gql`
   }
 }
     ${DiscussionTreasuryProposalFragmentDoc}`;
-export function getSdk (client: GraphQLClient) {
-	return {
-		addPostAndProposalMutation (variables: AddPostAndProposalMutationMutationVariables): Promise<AddPostAndProposalMutationMutation> {
-			return client.request<AddPostAndProposalMutationMutation>(print(AddPostAndProposalMutationDocument), variables);
-		},
-		addPostAndTreasurySpendProposalMutation (variables: AddPostAndTreasurySpendProposalMutationMutationVariables): Promise<AddPostAndTreasurySpendProposalMutationMutation> {
-			return client.request<AddPostAndTreasurySpendProposalMutationMutation>(print(AddPostAndTreasurySpendProposalMutationDocument), variables);
-		},
-		addPostAndMotionMutation (variables: AddPostAndMotionMutationMutationVariables): Promise<AddPostAndMotionMutationMutation> {
-			return client.request<AddPostAndMotionMutationMutation>(print(AddPostAndMotionMutationDocument), variables);
-		},
-		getProposalWithNoAssociatedReferendumQuery (variables: GetProposalWithNoAssociatedReferendumQueryQueryVariables): Promise<GetProposalWithNoAssociatedReferendumQueryQuery> {
-			return client.request<GetProposalWithNoAssociatedReferendumQueryQuery>(print(GetProposalWithNoAssociatedReferendumQueryDocument), variables);
-		},
-		getMotionWithNoAssociatedReferendumQuery (variables: GetMotionWithNoAssociatedReferendumQueryQueryVariables): Promise<GetMotionWithNoAssociatedReferendumQueryQuery> {
-			return client.request<GetMotionWithNoAssociatedReferendumQueryQuery>(print(GetMotionWithNoAssociatedReferendumQueryDocument), variables);
-		},
-		addReferendumIdToProposalMutation (variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
-			return client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables);
-		},
-		addMotionIdToTreasuryProposalMutation (variables: AddMotionIdToTreasuryProposalMutationMutationVariables): Promise<AddMotionIdToTreasuryProposalMutationMutation> {
-			return client.request<AddMotionIdToTreasuryProposalMutationMutation>(print(AddMotionIdToTreasuryProposalMutationDocument), variables);
-		},
-		addReferendumIdToMotionMutation (variables: AddReferendumIdToMotionMutationMutationVariables): Promise<AddReferendumIdToMotionMutationMutation> {
-			return client.request<AddReferendumIdToMotionMutationMutation>(print(AddReferendumIdToMotionMutationDocument), variables);
-		},
-		loginMutation (variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
-			return client.request<LoginMutationMutation>(print(LoginMutationDocument), variables);
-		},
-		getDiscussionProposalById (variables: GetDiscussionProposalByIdQueryVariables): Promise<GetDiscussionProposalByIdQuery> {
-			return client.request<GetDiscussionProposalByIdQuery>(print(GetDiscussionProposalByIdDocument), variables);
-		},
-		getDiscussionMotionProposalById (variables: GetDiscussionMotionProposalByIdQueryVariables): Promise<GetDiscussionMotionProposalByIdQuery> {
-			return client.request<GetDiscussionMotionProposalByIdQuery>(print(GetDiscussionMotionProposalByIdDocument), variables);
-		},
-		getDiscussionTreasurySpendProposalById (variables: GetDiscussionTreasurySpendProposalByIdQueryVariables): Promise<GetDiscussionTreasurySpendProposalByIdQuery> {
-			return client.request<GetDiscussionTreasurySpendProposalByIdQuery>(print(GetDiscussionTreasurySpendProposalByIdDocument), variables);
-		},
-		getDiscussionMotions (variables?: GetDiscussionMotionsQueryVariables): Promise<GetDiscussionMotionsQuery> {
-			return client.request<GetDiscussionMotionsQuery>(print(GetDiscussionMotionsDocument), variables);
-		},
-		getDiscussionProposals (variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
-			return client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables);
-		},
-		getDiscussionReferenda (variables?: GetDiscussionReferendaQueryVariables): Promise<GetDiscussionReferendaQuery> {
-			return client.request<GetDiscussionReferendaQuery>(print(GetDiscussionReferendaDocument), variables);
-		},
-		getDiscussionTreasuryProposals (variables?: GetDiscussionTreasuryProposalsQueryVariables): Promise<GetDiscussionTreasuryProposalsQuery> {
-			return client.request<GetDiscussionTreasuryProposalsQuery>(print(GetDiscussionTreasuryProposalsDocument), variables);
-		}
-	};
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    addPostAndProposalMutation(variables: AddPostAndProposalMutationMutationVariables): Promise<AddPostAndProposalMutationMutation> {
+      return withWrapper(() => client.request<AddPostAndProposalMutationMutation>(print(AddPostAndProposalMutationDocument), variables));
+    },
+    addPostAndTreasurySpendProposalMutation(variables: AddPostAndTreasurySpendProposalMutationMutationVariables): Promise<AddPostAndTreasurySpendProposalMutationMutation> {
+      return withWrapper(() => client.request<AddPostAndTreasurySpendProposalMutationMutation>(print(AddPostAndTreasurySpendProposalMutationDocument), variables));
+    },
+    addPostAndMotionMutation(variables: AddPostAndMotionMutationMutationVariables): Promise<AddPostAndMotionMutationMutation> {
+      return withWrapper(() => client.request<AddPostAndMotionMutationMutation>(print(AddPostAndMotionMutationDocument), variables));
+    },
+    getProposalWithNoAssociatedReferendumQuery(variables: GetProposalWithNoAssociatedReferendumQueryQueryVariables): Promise<GetProposalWithNoAssociatedReferendumQueryQuery> {
+      return withWrapper(() => client.request<GetProposalWithNoAssociatedReferendumQueryQuery>(print(GetProposalWithNoAssociatedReferendumQueryDocument), variables));
+    },
+    getMotionWithNoAssociatedReferendumQuery(variables: GetMotionWithNoAssociatedReferendumQueryQueryVariables): Promise<GetMotionWithNoAssociatedReferendumQueryQuery> {
+      return withWrapper(() => client.request<GetMotionWithNoAssociatedReferendumQueryQuery>(print(GetMotionWithNoAssociatedReferendumQueryDocument), variables));
+    },
+    addReferendumIdToProposalMutation(variables: AddReferendumIdToProposalMutationMutationVariables): Promise<AddReferendumIdToProposalMutationMutation> {
+      return withWrapper(() => client.request<AddReferendumIdToProposalMutationMutation>(print(AddReferendumIdToProposalMutationDocument), variables));
+    },
+    addMotionIdToTreasuryProposalMutation(variables: AddMotionIdToTreasuryProposalMutationMutationVariables): Promise<AddMotionIdToTreasuryProposalMutationMutation> {
+      return withWrapper(() => client.request<AddMotionIdToTreasuryProposalMutationMutation>(print(AddMotionIdToTreasuryProposalMutationDocument), variables));
+    },
+    addReferendumIdToMotionMutation(variables: AddReferendumIdToMotionMutationMutationVariables): Promise<AddReferendumIdToMotionMutationMutation> {
+      return withWrapper(() => client.request<AddReferendumIdToMotionMutationMutation>(print(AddReferendumIdToMotionMutationDocument), variables));
+    },
+    loginMutation(variables: LoginMutationMutationVariables): Promise<LoginMutationMutation> {
+      return withWrapper(() => client.request<LoginMutationMutation>(print(LoginMutationDocument), variables));
+    },
+    getDiscussionProposalById(variables: GetDiscussionProposalByIdQueryVariables): Promise<GetDiscussionProposalByIdQuery> {
+      return withWrapper(() => client.request<GetDiscussionProposalByIdQuery>(print(GetDiscussionProposalByIdDocument), variables));
+    },
+    getDiscussionMotionProposalById(variables: GetDiscussionMotionProposalByIdQueryVariables): Promise<GetDiscussionMotionProposalByIdQuery> {
+      return withWrapper(() => client.request<GetDiscussionMotionProposalByIdQuery>(print(GetDiscussionMotionProposalByIdDocument), variables));
+    },
+    getDiscussionTreasurySpendProposalById(variables: GetDiscussionTreasurySpendProposalByIdQueryVariables): Promise<GetDiscussionTreasurySpendProposalByIdQuery> {
+      return withWrapper(() => client.request<GetDiscussionTreasurySpendProposalByIdQuery>(print(GetDiscussionTreasurySpendProposalByIdDocument), variables));
+    },
+    getDiscussionMotions(variables?: GetDiscussionMotionsQueryVariables): Promise<GetDiscussionMotionsQuery> {
+      return withWrapper(() => client.request<GetDiscussionMotionsQuery>(print(GetDiscussionMotionsDocument), variables));
+    },
+    getDiscussionProposals(variables?: GetDiscussionProposalsQueryVariables): Promise<GetDiscussionProposalsQuery> {
+      return withWrapper(() => client.request<GetDiscussionProposalsQuery>(print(GetDiscussionProposalsDocument), variables));
+    },
+    getDiscussionReferenda(variables?: GetDiscussionReferendaQueryVariables): Promise<GetDiscussionReferendaQuery> {
+      return withWrapper(() => client.request<GetDiscussionReferendaQuery>(print(GetDiscussionReferendaDocument), variables));
+    },
+    getDiscussionTreasuryProposals(variables?: GetDiscussionTreasuryProposalsQueryVariables): Promise<GetDiscussionTreasuryProposalsQuery> {
+      return withWrapper(() => client.request<GetDiscussionTreasuryProposalsQuery>(print(GetDiscussionTreasuryProposalsDocument), variables));
+    }
+  };
 }

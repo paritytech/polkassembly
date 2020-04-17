@@ -28,7 +28,7 @@ export const redisGet = (key: string): Promise<string> => new Promise((resolve, 
 });
 
 /**
- * set value in redis
+ * set key-value in redis
  *
  * @param key string
  * @param value string
@@ -44,7 +44,7 @@ export const redisSet = (key: string, value: string): Promise<string> => new Pro
 });
 
 /**
- * set value in redis with ttl(expiry in seconds)
+ * set key-value in redis with ttl(expiry in seconds)
  *
  * @param key string
  * @param ttl number in seconds
@@ -60,3 +60,17 @@ export const redisSetex = (key: string, ttl: number, value: string): Promise<str
 	});
 });
 
+/**
+ * delete key from redis
+ *
+ * @param key string
+ */
+export const redisDel = (key: string): Promise<number> => new Promise((resolve, reject) => {
+	client.del(key, (err, reply) => {
+		if (err) {
+			return reject(err);
+		}
+
+		resolve(reply);
+	});
+});

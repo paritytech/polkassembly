@@ -5,7 +5,7 @@
 import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
-import { randomBytes } from 'crypto';
+import { randomBytes, timingSafeEqual } from 'crypto';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import { uuid } from 'uuidv4';
@@ -14,11 +14,10 @@ import validator from 'validator';
 import Address from '../model/Address';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import Notification from '../model/Notification';
-import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
-import { redisGet, redisSetex } from '../redis';
+import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
@@ -37,7 +36,7 @@ const jwtPublicKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PUBLIC_KE
 const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
-const ONE_DAY = 24 * 60 * 60 * 1000;
+const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
@@ -46,6 +45,8 @@ const NOTIFICATION_DEFAULTS = {
 	post_created: true,
 	post_participated: true
 };
+
+export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -571,36 +572,23 @@ export default class AuthService {
 			return;
 		}
 
-		const expires = new Date(Date.now() + ONE_DAY).toISOString(); // 24 hours
+		const resetToken = uuid();
 
-		const resetToken = await PasswordResetToken
-			.query()
-			.allowInsert('[token, user_id, valid, expires]')
-			.insert({
-				expires,
-				token: uuid(),
-				user_id: user.id,
-				valid: true
-			});
+		await redisSetex(getPwdResetTokenKey(user.id), ONE_DAY, resetToken);
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
-	public async ResetPassword (token: string, newPassword: string): Promise<void> {
-		const resetToken = await PasswordResetToken
-			.query()
-			.where('token', token)
-			.first();
+	public async ResetPassword (token: string, userId: number, newPassword: string): Promise<void> {
+		const storedToken = await redisGet(getPwdResetTokenKey(userId));
 
-		if (!resetToken) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
-		}
-
-		if (!resetToken.valid) {
+		if (!storedToken) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		if (new Date(resetToken.expires).getTime() < Date.now()) {
+		const isValid = timingSafeEqual(Buffer.from(token), Buffer.from(storedToken));
+
+		if (!isValid) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
@@ -613,12 +601,9 @@ export default class AuthService {
 				password,
 				salt: salt.toString('hex')
 			})
-			.findById(resetToken.user_id);
+			.findById(Number(userId));
 
-		await PasswordResetToken
-			.query()
-			.patch({ valid: false })
-			.findById(resetToken.id);
+		await redisDel(getPwdResetTokenKey(userId));
 	}
 
 	public async UndoEmailChange (token: string): Promise<{email: string; updatedToken: string}> {
