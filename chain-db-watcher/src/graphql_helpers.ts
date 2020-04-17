@@ -22,10 +22,7 @@ const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 const councilTopicId = process.env.COUNCIL_TOPIC_ID;
 
-const DEFAULT_TITLE = 'On chain democracy proposal';
-const DEFAULT_MOTION_TITLE = 'On chain council motion';
-const DEFAULT_TREASURY_TITLE = 'On chain treasury proposal';
-const DEFAULT_DESCRIPTION = 'This content (and title) can be edited by the proposal author to explain the rationale behind the proposal.';
+const DEFAULT_DESCRIPTION = 'The title and description of this proposal can only be edited by the author to explain the rationale behind it. Anyone can comment.';
 
 /**
  * Fetches the JWT from auth server for a "proposal_bot"
@@ -255,7 +252,6 @@ export const addDiscussionPostAndProposal = async ({
 		content: DEFAULT_DESCRIPTION,
 		onchainProposalId,
 		proposerAddress: proposer,
-		title: DEFAULT_TITLE,
 		topicId: Number(democracyTopicId),
 		typeId: Number(proposalPostTypeId)
 	};
@@ -331,7 +327,6 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 		content: DEFAULT_DESCRIPTION,
 		onchainTreasuryProposalId,
 		proposerAddress: proposer,
-		title: DEFAULT_TREASURY_TITLE,
 		topicId: Number(treasuryTopicId),
 		typeId: Number(proposalPostTypeId)
 	};
@@ -459,7 +454,6 @@ export const addDiscussionPostAndMotion = async ({
 		content: DEFAULT_DESCRIPTION,
 		onchainMotionProposalId,
 		proposerAddress: proposer,
-		title: DEFAULT_MOTION_TITLE,
 		topicId: Number(councilTopicId),
 		typeId: Number(proposalPostTypeId)
 	};

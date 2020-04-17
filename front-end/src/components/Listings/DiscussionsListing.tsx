@@ -32,7 +32,7 @@ const Discussions = ({ className, data }: Props) => {
 											? post.comments_aggregate.aggregate.count.toString()
 											: 'no'}
 										created_at={post.created_at}
-										title={post.title}
+										title={post.title || 'No title'}
 										username={post.author.username}
 									/>
 								</Link>}

@@ -10,7 +10,6 @@ export const addPostAndProposalMutation = gql`
         $authorId: Int!,
         $proposerAddress: String!,
         $content: String!,
-        $title: String!,
         $topicId: Int!,
         $typeId: Int!
         ){
@@ -21,7 +20,6 @@ export const addPostAndProposalMutation = gql`
             post: {data: {
                 author_id: $authorId,
                 content: $content,
-                title: $title,
                 topic_id: $topicId,
                 type_id: $typeId
             }
@@ -39,7 +37,6 @@ export const addPostAndTreasurySpendProposalMutation = gql`
         $authorId: Int!,
         $proposerAddress: String!,
         $content: String!,
-        $title: String!,
         $topicId: Int!,
         $typeId: Int!
         ){
@@ -50,7 +47,6 @@ export const addPostAndTreasurySpendProposalMutation = gql`
             post: {data: {
                 author_id: $authorId,
                 content: $content,
-                title: $title,
                 topic_id: $topicId,
                 type_id: $typeId
             }
@@ -68,7 +64,6 @@ export const addPostAndMotionMutation = gql`
         $authorId: Int!,
         $proposerAddress: String!,
         $content: String!,
-        $title: String!,
         $topicId: Int!,
         $typeId: Int!
         ){
@@ -79,7 +74,6 @@ export const addPostAndMotionMutation = gql`
             post: {data: {
                 author_id: $authorId,
                 content: $content,
-                title: $title,
                 topic_id: $topicId,
                 type_id: $typeId
             }
