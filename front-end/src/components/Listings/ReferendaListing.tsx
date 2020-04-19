@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NothingFoundCard from 'src/ui-components/NothingFoundCard';
 
 import { LatestReferendaPostsQuery } from '../../generated/graphql';
 import GovernanceCard from '../GovernanceCard';
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const Referenda = ({ className, data }: Props) => {
-	if (!data.posts || !data.posts.length) return <div>No referendum found.</div>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no referenda.'/>;
 
 	return (
 		<ul className={`${className} referenda__list`}>

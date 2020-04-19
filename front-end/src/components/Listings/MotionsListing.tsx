@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NothingFoundCard from 'src/ui-components/NothingFoundCard';
 
 import { LatestMotionPostsQuery } from '../../generated/graphql';
 import GovernanceCard from '../GovernanceCard';
@@ -16,7 +17,7 @@ interface Props {
 
 const Motions = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <div>No motion found</div>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no motions.'/>;
 
 	return (
 		<ul className={`${className} motions__list`}>
