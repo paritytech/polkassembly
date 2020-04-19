@@ -3,8 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { formatNumber } from '@polkadot/util';
+import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Popup } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import Card from 'src/ui-components/Card';
 import blockToTime from 'src/util/blockToTime';
@@ -44,7 +46,6 @@ const ReferendumCountdown = ({ className, referendumId }: Props) => {
 			const _info = info.unwrapOr(null);
 
 			if (_info?.isOngoing){
-				console.log(_info?.asOngoing.end);
 				setReferendumEndBlock(_info?.asOngoing.end);
 			}
 		})
@@ -56,15 +57,38 @@ const ReferendumCountdown = ({ className, referendumId }: Props) => {
 		return () => unsubscribe && unsubscribe();
 	}, [api, apiReady, referendumId, updateBestBlock]);
 
+	const popupStyle = {
+		fontSize: '1.2rem',
+		marginLeft: '-1rem'
+	};
+
+	const popupContent = <div>
+		<div>Ends at Block <span style={{ fontWeight: 500 }}>#{formatNumber(referendumEndBlock)}</span></div>
+		<div>Current Block <span style={{ fontWeight: 500 }}>#{formatNumber(currentBlock)}</span></div>
+		<div>Remaining Blocks <span style={{ fontWeight: 500 }}>#{formatNumber(blocksRemaining)}</span></div>
+	</div>;
+
 	return (
 		<Card className={className}>
-			<h4>Referendum ending in:</h4>
-			<div>{blockToTime(blocksRemaining)}</div>
-			<div>Referendum ends: {formatNumber(referendumEndBlock)}</div>
-			<div>Current Block: {formatNumber(currentBlock)}</div>
-			<div>Remaining Blocks: {formatNumber(blocksRemaining)}</div>
+			<h5>Referendum Ending In</h5>
+			<Popup
+				className={className}
+				trigger={<h3>{blockToTime(blocksRemaining)}</h3>}
+				content={popupContent}
+				hoverable={true}
+				position='top left'
+				style={popupStyle}
+			/>
 		</Card>
 	);
 };
 
-export default ReferendumCountdown;
+export default styled(ReferendumCountdown)`
+	h3 {
+		margin-bottom: 0;
+	}
+
+	h5 {
+		margin-bottom: 1rem;
+	}
+`;
