@@ -10,13 +10,13 @@ interface Props {
 	text: string;
 }
 
-const Card = ({ className, text }:Props ) => {
+const NothingFoundCard = ({ className, text }:Props ) => {
 	return (
 		<div className={className}><FaInbox className='icon'/>{text}</div>
 	);
 };
 
-export default styled(Card)`
+export default styled(NothingFoundCard)`
 	background-color: grey_border;
 	padding: 2rem 3rem 3rem 3rem;
 	border-radius: 3px;
