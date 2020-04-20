@@ -17,7 +17,7 @@ interface Props {
 
 const Motions = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no motions.'/>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active motions.'/>;
 
 	return (
 		<ul className={`${className} motions__list`}>
