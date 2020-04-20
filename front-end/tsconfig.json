@@ -19,7 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "allowJs": true
   },
   "exclude": [
     "**/generated/**/*",
