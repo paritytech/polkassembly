@@ -44,11 +44,12 @@ function extractTime (value?: number): Time {
 	return addTime([round, 0, 0, 0], extractTime(value - round * DAY));
 }
 
-export default function blockToTime (blocks: BN): string {
+export default function blockToTime (blocks: BN |  number ): string {
 	const network = getNetwork();
 	const blockTime = chainProperties?.[network]?.blockTime;
 
-	const time = extractTime(blocks?.toNumber() * blockTime);
+	blocks = parseInt(blocks.toString());
+	const time = extractTime(blocks * blockTime);
 
 	return time[0].toString() + 'd ' + time[1].toString() + 'h ' + time[2].toString() + 'm ';
 }

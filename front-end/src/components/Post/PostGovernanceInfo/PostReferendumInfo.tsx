@@ -4,6 +4,8 @@
 
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
+import BlockCountdown from 'src/components/BlockCountdown';
+import BlocksToTime from 'src/components/BlocksToTime';
 
 import { OnchainLinkReferendumFragment } from '../../../generated/graphql';
 import AddressComponent from '../../../ui-components/Address';
@@ -39,12 +41,12 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 				{(delay || delay === 0) &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<h6>Delay</h6>
-						{delay}
+						<BlocksToTime blocks={delay} />
 					</Grid.Column>}
 				{end &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<h6>End</h6>
-						{end}
+						<h6>Ends In</h6>
+						<BlockCountdown endBlock={end}/>
 					</Grid.Column>}
 				{voteThreshold &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
