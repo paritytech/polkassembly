@@ -2099,6 +2099,7 @@ export type MotionStatus = Node & {
   id: Scalars['ID'],
   motion: Motion,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusConnection = {
@@ -2113,6 +2114,7 @@ export type MotionStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   motion: MotionCreateOneWithoutMotionStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusCreateManyWithoutMotionInput = {
@@ -2124,6 +2126,7 @@ export type MotionStatusCreateWithoutMotionInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusEdge = {
@@ -2136,13 +2139,16 @@ export enum MotionStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type MotionStatusPreviousValues = {
    __typename?: 'MotionStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type MotionStatusScalarWhereInput = {
@@ -2177,6 +2183,20 @@ export type MotionStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusSubscriptionPayload = {
@@ -2202,14 +2222,17 @@ export type MotionStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateManyWithoutMotionInput = {
@@ -2232,6 +2255,7 @@ export type MotionStatusUpdateManyWithWhereNestedInput = {
 export type MotionStatusUpdateWithoutMotionDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusUpdateWithWhereUniqueWithoutMotionInput = {
@@ -2279,10 +2303,25 @@ export type MotionStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type MotionStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type MotionSubscriptionPayload = {
@@ -7232,6 +7271,7 @@ export type ProposalStatus = Node & {
   id: Scalars['ID'],
   proposal: Proposal,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusConnection = {
@@ -7246,6 +7286,7 @@ export type ProposalStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   proposal: ProposalCreateOneWithoutProposalStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusCreateManyWithoutProposalInput = {
@@ -7257,6 +7298,7 @@ export type ProposalStatusCreateWithoutProposalInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusEdge = {
@@ -7269,13 +7311,16 @@ export enum ProposalStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ProposalStatusPreviousValues = {
    __typename?: 'ProposalStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ProposalStatusScalarWhereInput = {
@@ -7310,6 +7355,20 @@ export type ProposalStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusSubscriptionPayload = {
@@ -7335,14 +7394,17 @@ export type ProposalStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateManyWithoutProposalInput = {
@@ -7365,6 +7427,7 @@ export type ProposalStatusUpdateManyWithWhereNestedInput = {
 export type ProposalStatusUpdateWithoutProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
@@ -7412,10 +7475,25 @@ export type ProposalStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ProposalStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ProposalSubscriptionPayload = {
@@ -8765,6 +8843,7 @@ export type ReferendumStatus = Node & {
   id: Scalars['ID'],
   referendum: Referendum,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusConnection = {
@@ -8779,6 +8858,7 @@ export type ReferendumStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   referendum: ReferendumCreateOneWithoutReferendumStatusInput,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusCreateManyWithoutReferendumInput = {
@@ -8790,6 +8870,7 @@ export type ReferendumStatusCreateWithoutReferendumInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusEdge = {
@@ -8802,13 +8883,16 @@ export enum ReferendumStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type ReferendumStatusPreviousValues = {
    __typename?: 'ReferendumStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type ReferendumStatusScalarWhereInput = {
@@ -8843,6 +8927,20 @@ export type ReferendumStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusSubscriptionPayload = {
@@ -8868,14 +8966,17 @@ export type ReferendumStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   referendum?: Maybe<ReferendumUpdateOneRequiredWithoutReferendumStatusInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateManyWithoutReferendumInput = {
@@ -8898,6 +8999,7 @@ export type ReferendumStatusUpdateManyWithWhereNestedInput = {
 export type ReferendumStatusUpdateWithoutReferendumDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput = {
@@ -8945,10 +9047,25 @@ export type ReferendumStatusWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type ReferendumSubscriptionPayload = {
@@ -10364,6 +10481,7 @@ export type TreasuryStatus = Node & {
   id: Scalars['ID'],
   status: Scalars['String'],
   treasurySpendProposal: TreasurySpendProposal,
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusConnection = {
@@ -10378,6 +10496,7 @@ export type TreasuryStatusCreateInput = {
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
   treasurySpendProposal: TreasurySpendProposalCreateOneWithoutTreasuryStatusInput,
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusCreateManyWithoutTreasurySpendProposalInput = {
@@ -10389,6 +10508,7 @@ export type TreasuryStatusCreateWithoutTreasurySpendProposalInput = {
   blockNumber: BlockNumberCreateOneInput,
   id?: Maybe<Scalars['ID']>,
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusEdge = {
@@ -10401,13 +10521,16 @@ export enum TreasuryStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
 }
 
 export type TreasuryStatusPreviousValues = {
    __typename?: 'TreasuryStatusPreviousValues',
   id: Scalars['ID'],
   status: Scalars['String'],
+  uniqueStatus: Scalars['String'],
 };
 
 export type TreasuryStatusScalarWhereInput = {
@@ -10442,6 +10565,20 @@ export type TreasuryStatusScalarWhereInput = {
   status_not_in?: Maybe<Array<Scalars['String']>>,
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusSubscriptionPayload = {
@@ -10467,14 +10604,17 @@ export type TreasuryStatusUpdateInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
   treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInput>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyDataInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyMutationInput = {
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput = {
@@ -10497,6 +10637,7 @@ export type TreasuryStatusUpdateManyWithWhereNestedInput = {
 export type TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput = {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>,
   status?: Maybe<Scalars['String']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusUpdateWithWhereUniqueWithoutTreasurySpendProposalInput = {
@@ -10544,10 +10685,25 @@ export type TreasuryStatusWhereInput = {
   status_not_starts_with?: Maybe<Scalars['String']>,
   status_starts_with?: Maybe<Scalars['String']>,
   treasurySpendProposal?: Maybe<TreasurySpendProposalWhereInput>,
+  uniqueStatus?: Maybe<Scalars['String']>,
+  uniqueStatus_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_gt?: Maybe<Scalars['String']>,
+  uniqueStatus_gte?: Maybe<Scalars['String']>,
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_lt?: Maybe<Scalars['String']>,
+  uniqueStatus_lte?: Maybe<Scalars['String']>,
+  uniqueStatus_not?: Maybe<Scalars['String']>,
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>,
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>,
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>,
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>,
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>,
 };
 
 export type TreasuryStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>,
+  uniqueStatus?: Maybe<Scalars['String']>,
 };
 
 export type UndoEmailChangeResponse = {
