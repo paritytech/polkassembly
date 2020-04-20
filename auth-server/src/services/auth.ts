@@ -372,9 +372,14 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 		}
 
+		const otherAddresses = await Address
+			.query()
+			.whereNot('id', address_id);
+
 		await Address
 			.query()
 			.patch({
+				default: otherAddresses.length === 0,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				verified: true
 			})
@@ -683,8 +688,15 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
+		let kusamaDefault = '';
 		const kusamaAddresses = addresses
-			.filter(address => address.network === KUSAMA && address.verified)
+			.filter(address => {
+				const isKusama = address.network === KUSAMA && address.verified;
+				if (isKusama && address.default) {
+					kusamaDefault = address.address;
+				}
+				return isKusama;
+			})
 			.map(address => `"${address.address}"`)
 			.join(',');
 
@@ -695,6 +707,7 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-kusama': `{${kusamaAddresses}}`,
+				'x-hasura-kusama-default': kusamaDefault,
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},
