@@ -24,7 +24,6 @@ export function ApiContextProvider(
 	props: ApiContextProviderProps
 ): React.ReactElement {
 	const { children = null } = props;
-
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 
