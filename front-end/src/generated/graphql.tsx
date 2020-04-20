@@ -2727,7 +2727,6 @@ export type MotionWhereUniqueInput = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  addressDefault?: Maybe<ChangeResponse>,
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
@@ -2746,14 +2745,10 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
-};
-
-
-export type MutationAddressDefaultArgs = {
-  address: Scalars['String']
 };
 
 
@@ -2848,6 +2843,11 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSetDefaultAddressArgs = {
+  address: Scalars['String']
+};
+
+
 export type MutationSignupArgs = {
   email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
@@ -2867,7 +2867,6 @@ export type MutationVerifyEmailArgs = {
 
 export type Mutation_Root = {
    __typename?: 'mutation_root',
-  addressDefault?: Maybe<ChangeResponse>,
   addressLinkConfirm?: Maybe<ChangeResponse>,
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
@@ -2993,6 +2992,7 @@ export type Mutation_Root = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   updateBlockIndex?: Maybe<BlockIndex>,
@@ -3087,11 +3087,6 @@ export type Mutation_Root = {
   upsertTreasuryStatus: TreasuryStatus,
   upsertValidator: Validator,
   verifyEmail?: Maybe<ChangeResponse>,
-};
-
-
-export type Mutation_RootAddressDefaultArgs = {
-  address: Scalars['String']
 };
 
 
@@ -3733,6 +3728,11 @@ export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type Mutation_RootSetDefaultAddressArgs = {
+  address: Scalars['String']
 };
 
 
@@ -11777,14 +11777,14 @@ export type ResendVerifyEmailTokenMutation = (
   )> }
 );
 
-export type AddressDefaultMutationVariables = {
+export type SetDefaultAddressMutationVariables = {
   address: Scalars['String']
 };
 
 
-export type AddressDefaultMutation = (
+export type SetDefaultAddressMutation = (
   { __typename?: 'mutation_root' }
-  & { addressDefault: Maybe<(
+  & { setDefaultAddress: Maybe<(
     { __typename?: 'ChangeResponse' }
     & Pick<ChangeResponse, 'message' | 'token'>
   )> }
@@ -13741,39 +13741,39 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
-export const AddressDefaultDocument = gql`
-    mutation addressDefault($address: String!) {
-  addressDefault(address: $address) {
+export const SetDefaultAddressDocument = gql`
+    mutation setDefaultAddress($address: String!) {
+  setDefaultAddress(address: $address) {
     message
     token
   }
 }
     `;
-export type AddressDefaultMutationFn = ApolloReactCommon.MutationFunction<AddressDefaultMutation, AddressDefaultMutationVariables>;
+export type SetDefaultAddressMutationFn = ApolloReactCommon.MutationFunction<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
 
 /**
- * __useAddressDefaultMutation__
+ * __useSetDefaultAddressMutation__
  *
- * To run a mutation, you first call `useAddressDefaultMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddressDefaultMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSetDefaultAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetDefaultAddressMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addressDefaultMutation, { data, loading, error }] = useAddressDefaultMutation({
+ * const [setDefaultAddressMutation, { data, loading, error }] = useSetDefaultAddressMutation({
  *   variables: {
  *      address: // value for 'address'
  *   },
  * });
  */
-export function useAddressDefaultMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressDefaultMutation, AddressDefaultMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddressDefaultMutation, AddressDefaultMutationVariables>(AddressDefaultDocument, baseOptions);
+export function useSetDefaultAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>(SetDefaultAddressDocument, baseOptions);
       }
-export type AddressDefaultMutationHookResult = ReturnType<typeof useAddressDefaultMutation>;
-export type AddressDefaultMutationResult = ApolloReactCommon.MutationResult<AddressDefaultMutation>;
-export type AddressDefaultMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressDefaultMutation, AddressDefaultMutationVariables>;
+export type SetDefaultAddressMutationHookResult = ReturnType<typeof useSetDefaultAddressMutation>;
+export type SetDefaultAddressMutationResult = ApolloReactCommon.MutationResult<SetDefaultAddressMutation>;
+export type SetDefaultAddressMutationOptions = ApolloReactCommon.BaseMutationOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {

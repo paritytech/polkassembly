@@ -12,7 +12,7 @@ import { Grid,Icon } from 'semantic-ui-react';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddressDefaultMutation, useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
+import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation, useSetDefaultAddressMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
@@ -36,7 +36,7 @@ const Address = ({ className }: Props): JSX.Element => {
 	const [addressLinkStartMutation] = useAddressLinkStartMutation();
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
 	const [addressUnlinkMutation] = useAddressUnlinkMutation();
-	const [addressDefaultMutation] = useAddressDefaultMutation();
+	const [setDefaultAddressMutation] = useSetDefaultAddressMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	const handleDetect = async () => {
@@ -56,14 +56,14 @@ const Address = ({ className }: Props): JSX.Element => {
 
 	const handleDefault = async (address: InjectedAccountWithMeta['address']) => {
 		try {
-			const addressDefaultResult = await addressDefaultMutation({
+			const addressDefaultResult = await setDefaultAddressMutation({
 				variables: {
 					address
 				}
 			});
 
-			if (addressDefaultResult.data?.addressDefault?.token) {
-				handleTokenChange(addressDefaultResult.data?.addressDefault?.token);
+			if (addressDefaultResult.data?.setDefaultAddress?.token) {
+				handleTokenChange(addressDefaultResult.data?.setDefaultAddress?.token);
 			}
 
 			currentUser.setUserDetailsContextState((prevState) => {
@@ -75,7 +75,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 			queueNotification({
 				header: 'Success!',
-				message: addressDefaultResult.data?.addressDefault?.message || '',
+				message: addressDefaultResult.data?.setDefaultAddress?.message || '',
 				status: NotificationStatus.SUCCESS
 			});
 		} catch (error) {

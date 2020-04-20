@@ -75,9 +75,9 @@ export const RESEND_VERIFY_EMAIL_TOKEN = gql`
 	}
 `;
 
-export const ADDRESS_DEFAULT = gql`
-	mutation addressDefault($address: String!) {
-		addressDefault(address: $address) {
+export const SET_DEFAULT_ADDRESS = gql`
+	mutation setDefaultAddress($address: String!) {
+		setDefaultAddress(address: $address) {
 			message
 			token
 		}
