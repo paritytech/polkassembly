@@ -5,12 +5,14 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 
-const Spacer = () => {return <div className='spacer'></div>;};
+interface Props {
+	className?: string
+}
+
+const Spacer = ({ className }: Props) => {return <div className={className}></div>;};
 
 export default styled(Spacer)`
-    .spacer {
-        font-size: 0;
-		height: 25px;
-		line-height: 0;
-    }
+    font-size: 0;
+    height: 25px;
+    line-height: 0;
 `;
