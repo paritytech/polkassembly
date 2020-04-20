@@ -20,5 +20,5 @@ export default async (parent: void, { email, password }: ChangeEmailArgs, ctx: C
 	const authServiceInstance = new AuthService();
 	const updatedJWT = await authServiceInstance.ChangeEmail(token, email, password);
 
-	return { message: messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL, token: updatedJWT };
+	return { message: email ? messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL : messages.EMAIL_REMOVE_SUCCESSFUL, token: updatedJWT };
 };
