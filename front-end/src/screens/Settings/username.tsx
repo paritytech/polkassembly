@@ -17,6 +17,7 @@ import { Form } from '../../ui-components/Form';
 import Spacer from '../../ui-components/Spacer';
 import cleanError from '../../util/cleanError';
 import messages from '../../util/messages';
+import * as validation from '../../util/validation';
 
 interface Props {
 	className?: string
@@ -89,7 +90,7 @@ const Username = ({ className }:Props): JSX.Element => {
 							defaultValue={username || ''}
 							name='username'
 							placeholder='username'
-							ref={register({ maxLength:30, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
+							ref={register(validation.username)}
 							type='text'
 						/> :
 						<div className='current-username'>{username}</div>
