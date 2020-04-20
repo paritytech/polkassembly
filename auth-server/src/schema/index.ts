@@ -4,7 +4,6 @@
 
 import { gql } from 'apollo-server-express';
 
-import addressDefault from './mutation/addressDefault';
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
@@ -23,6 +22,7 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setDefaultAddress from './mutation/setDefaultAddress';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
@@ -69,7 +69,6 @@ export default gql`
 	}
 
 	type Mutation {
-		${addressDefault}
 		${addressLinkConfirm}
 		${addressLinkStart}
 		${addressLogin}
@@ -88,6 +87,7 @@ export default gql`
 		${requestResetPassword}
 		${resendVerifyEmailToken}
 		${resetPassword}
+		${setDefaultAddress}
 		${signupMutation}
 		${undoEmailChange}
 		${verifyEmail}
