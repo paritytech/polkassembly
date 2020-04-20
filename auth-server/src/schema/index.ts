@@ -4,6 +4,7 @@
 
 import { gql } from 'apollo-server-express';
 
+import addressDefault from './mutation/addressDefault';
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
@@ -68,6 +69,7 @@ export default gql`
 	}
 
 	type Mutation {
+		${addressDefault}
 		${addressLinkConfirm}
 		${addressLinkStart}
 		${addressLogin}

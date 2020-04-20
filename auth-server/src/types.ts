@@ -157,6 +157,10 @@ export interface UsersArgs {
 	page: number;
 }
 
+export interface AddressDefaultStartArgs {
+    address: string;
+}
+
 export interface AddressLinkStartArgs {
 	network: string;
 	address: string;

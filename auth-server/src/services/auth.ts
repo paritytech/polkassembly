@@ -83,6 +83,40 @@ export default class AuthService {
 		};
 	}
 
+	public async AddressDefault (token: string, address: string): Promise<void> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const addresses = await Address
+			.query()
+			.where('user_id', user.id);
+
+		let defaultAddressId = 0;
+		const otherAddressIds: number[] = [];
+
+		addresses.forEach((dbAddress) => {
+			if (dbAddress.address === address) {
+				defaultAddressId = dbAddress.id;
+			} else {
+				otherAddressIds.push(dbAddress.id);
+			}
+		});
+
+		if (!defaultAddressId) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		await Address
+			.query()
+			.patch({ default: true })
+			.findById(defaultAddressId);
+
+		await Address
+			.query()
+			.patch({ default: false })
+			.where({ id: otherAddressIds });
+	}
+
 	public async AddressLoginStart (address: string): Promise<string> {
 		const signMessage = uuid();
 

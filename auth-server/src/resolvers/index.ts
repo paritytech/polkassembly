@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import addressDefault from './mutation/addressDefault';
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
@@ -30,6 +31,7 @@ import users from './query/users';
 
 export default {
 	Mutation: {
+		addressDefault,
 		addressLinkConfirm,
 		addressLinkStart,
 		addressLogin,
