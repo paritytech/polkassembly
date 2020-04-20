@@ -33,7 +33,7 @@ export default class Address extends Model {
 				public_key: { type: 'string' },
 				sign_message: { type: 'string' },
 				user_id: { type: 'integer' },
-				verified: { type: 'boolean' },
+				verified: { type: 'boolean' }
 			},
 			required: ['user_id'],
 			type: 'object'
