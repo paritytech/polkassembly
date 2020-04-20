@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import addressDefault from './mutation/addressDefault';
 import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
@@ -21,6 +20,7 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setDefaultAddress from './mutation/setDefaultAddress';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
@@ -31,7 +31,6 @@ import users from './query/users';
 
 export default {
 	Mutation: {
-		addressDefault,
 		addressLinkConfirm,
 		addressLinkStart,
 		addressLogin,
@@ -50,6 +49,7 @@ export default {
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		setDefaultAddress,
 		signup,
 		undoEmailChange,
 		verifyEmail

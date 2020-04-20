@@ -83,7 +83,7 @@ export default class AuthService {
 		};
 	}
 
-	public async AddressDefault (token: string, address: string): Promise<string> {
+	public async SetDefaultAddress (token: string, address: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 

@@ -158,7 +158,7 @@ export interface UsersArgs {
 	page: number;
 }
 
-export interface AddressDefaultStartArgs {
+export interface SetDefaultAddressArgs {
     address: string;
 }
 
