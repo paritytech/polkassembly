@@ -24,25 +24,24 @@ export function ApiContextProvider(
 	props: ApiContextProviderProps
 ): React.ReactElement {
 	const { children = null } = props;
+
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 
 	useEffect(() => {
-		async function connect() {
-			const provider = new WsProvider(WS_PROVIDER);
-			const apiResult = await ApiPromise.create({ provider });
+		const provider = new WsProvider(WS_PROVIDER);
+		setApiReady(false);
+		setApi(new ApiPromise({ provider }));
+	},[]);
 
-			setApi(apiResult);
-			apiResult.isReady.then(() => {
+	useEffect(() => {
+		if(api){
+			api.isReady.then(() => {
 				setApiReady(true);
 				console.log('API ready');
 			});
 		}
-
-		connect().catch((error) => {
-			console.error(error);
-		});
-	}, []);
+	}, [api]);
 
 	return (
 		<ApiContext.Provider value={{ api, apiReady }}>
