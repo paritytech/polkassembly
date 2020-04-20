@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Referenda = ({ className, data }: Props) => {
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no referenda.'/>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active referenda.'/>;
 
 	return (
 		<ul className={`${className} referenda__list`}>
