@@ -58,7 +58,7 @@ export default class AuthService {
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
 		const user = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (!user) {
@@ -199,7 +199,7 @@ export default class AuthService {
 	public async SignUp (email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (existing) {
@@ -229,7 +229,7 @@ export default class AuthService {
 				name,
 				password,
 				salt: salt.toString('hex'),
-				username
+				username: username.toLowerCase()
 			});
 
 		await Notification
@@ -495,7 +495,7 @@ export default class AuthService {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (existing) {
@@ -505,7 +505,7 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({
-				username
+				username: username.toLowerCase()
 			})
 			.findById(userId);
 
