@@ -482,13 +482,16 @@ export default class AuthService {
 
 	public async ChangeEmail (token: string, email: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
-		const existing = await User
-			.query()
-			.where('email', email)
-			.first();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		if (email !== '') {
+			const existing = await User
+				.query()
+				.where('email', email)
+				.first();
+
+			if (existing) {
+				throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+			}
 		}
 
 		let user = await getUserFromUserId(userId);
@@ -553,8 +556,10 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		// send verification email in background
-		sendVerificationEmail(user, verifyToken);
+		if (email) {
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);

@@ -13,7 +13,7 @@ import validateEmail from '../../utils/validateEmail';
 export default async (parent: void, { email, password }: ChangeEmailArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 
-	if (!validateEmail(email)) {
+	if (email !== '' && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
