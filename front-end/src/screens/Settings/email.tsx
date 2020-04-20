@@ -15,6 +15,7 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Spacer from '../../ui-components/Spacer';
 import cleanError from '../../util/cleanError';
 import messages from '../../util/messages';
 
@@ -125,7 +126,7 @@ const Email = ({ className }: Props): JSX.Element => {
 					{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 				</Form.Field>
 				{!editing && <Form.Field width={6}>
-					<label>&nbsp;</label>
+					<Spacer />
 					<Button
 						secondary
 						disabled={loading}
@@ -149,7 +150,7 @@ const Email = ({ className }: Props): JSX.Element => {
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 				</Form.Field>
 				<Form.Field width={6}>
-					<label>&nbsp;</label>
+					<Spacer />
 					<Button
 						secondary
 						disabled={loading}
