@@ -39,9 +39,9 @@ export function ApiContextProvider(
 				setApiReady(true);
 				console.log('API ready');
 			})
-			.catch((error) => {
-				console.error(error);
-			});
+				.catch((error) => {
+					console.error(error);
+				});
 		}
 	}, [api]);
 
