@@ -24,7 +24,6 @@ export function ApiContextProvider(
 	props: ApiContextProviderProps
 ): React.ReactElement {
 	const { children = null } = props;
-
 	const [api, setApi] = useState<ApiPromise>();
 	const [apiReady, setApiReady] = useState(false);
 
@@ -39,6 +38,9 @@ export function ApiContextProvider(
 			api.isReady.then(() => {
 				setApiReady(true);
 				console.log('API ready');
+			})
+			.catch((error) => {
+				console.error(error);
 			});
 		}
 	}, [api]);
