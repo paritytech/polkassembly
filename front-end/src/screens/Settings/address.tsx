@@ -12,7 +12,7 @@ import { Grid,Icon } from 'semantic-ui-react';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
+import { useAddressDefaultMutation, useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
@@ -36,6 +36,7 @@ const Address = ({ className }: Props): JSX.Element => {
 	const [addressLinkStartMutation] = useAddressLinkStartMutation();
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
 	const [addressUnlinkMutation] = useAddressUnlinkMutation();
+	const [addressDefaultMutation] = useAddressDefaultMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	const handleDetect = async () => {
@@ -53,8 +54,41 @@ const Address = ({ className }: Props): JSX.Element => {
 		setAccounts(allAccounts);
 	};
 
-	const handleLink = async (address: InjectedAccountWithMeta['address'], account: InjectedAccountWithMeta) => {
+	const handleDefault = async (address: InjectedAccountWithMeta['address']) => {
+		try {
+			const addressDefaultResult = await addressDefaultMutation({
+				variables: {
+					address
+				}
+			});
 
+			if (addressDefaultResult.data?.addressDefault?.token) {
+				handleTokenChange(addressDefaultResult.data?.addressDefault?.token);
+			}
+
+			currentUser.setUserDetailsContextState((prevState) => {
+				return {
+					...prevState,
+					defaultAddress: address
+				};
+			});
+
+			queueNotification({
+				header: 'Success!',
+				message: addressDefaultResult.data?.addressDefault?.message || '',
+				status: NotificationStatus.SUCCESS
+			});
+		} catch (error) {
+			console.error(error);
+			queueNotification({
+				header: 'Failed!',
+				message: cleanError(error.message),
+				status: NotificationStatus.ERROR
+			});
+		}
+	};
+
+	const handleLink = async (address: InjectedAccountWithMeta['address'], account: InjectedAccountWithMeta) => {
 		try {
 			const injected = await web3FromSource(account.meta.source);
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
@@ -94,7 +128,8 @@ const Address = ({ className }: Props): JSX.Element => {
 			!currentUser.addresses?.includes(address) && currentUser.setUserDetailsContextState((prevState) => {
 				return {
 					...prevState,
-					addresses: [...prevState.addresses, address]
+					addresses: [...prevState.addresses, address],
+					defaultAddress: prevState.addresses?.length ? prevState.defaultAddress : address
 				};
 			});
 
@@ -193,12 +228,12 @@ const Address = ({ className }: Props): JSX.Element => {
 
 							return address &&
 								<Grid key={address}>
-									<Grid.Column width={10}>
+									<Grid.Column width={6}>
 										<div className="item">
 											<AddressComponent className="item" address={address} accountName={account.meta.name || ''} />
 										</div>
 									</Grid.Column>
-									<Grid.Column width={6}>
+									<Grid.Column width={4}>
 										<div className="button-container">
 											<Button
 												className={'social'}
@@ -209,10 +244,21 @@ const Address = ({ className }: Props): JSX.Element => {
 											</Button>
 										</div>
 									</Grid.Column>
+									<Grid.Column width={4}>
+										{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
+											<div className="button-container">
+												<Button
+													secondary
+													onClick={() => handleDefault(address)}
+												>
+													Set Default
+												</Button>
+											</div> : null
+										}
+									</Grid.Column>
 								</Grid>
 							;}
 						)}
-
 					</div>
 				</Form.Field>
 			</Form.Group>

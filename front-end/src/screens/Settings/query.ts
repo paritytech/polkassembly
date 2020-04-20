@@ -74,3 +74,12 @@ export const RESEND_VERIFY_EMAIL_TOKEN = gql`
 		}
 	}
 `;
+
+export const ADDRESS_DEFAULT = gql`
+	mutation addressDefault($address: String!) {
+		addressDefault(address: $address) {
+			message
+			token
+		}
+	}
+`;
