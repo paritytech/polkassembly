@@ -114,7 +114,7 @@ export default class AuthService {
 		await Address
 			.query()
 			.patch({ default: false })
-			.where({ id: otherAddressIds });
+			.whereIn('id', otherAddressIds);
 
 		return this.getSignedToken(user);
 	}
