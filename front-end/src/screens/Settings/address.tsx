@@ -221,20 +221,20 @@ const Address = ({ className }: Props): JSX.Element => {
 		<Form className={className} standalone={false}>
 			<Form.Group>
 				<Form.Field width={16}>
-					<label className="header">Available Addresses</label>
-					<div className="ui list">
+					<label className='header'>Available Addresses</label>
+					<div className='ui list'>
 						{accounts.map(account => {
 							const address = getEncodedAddress(account.address);
 
 							return address &&
-								<Grid key={address}>
-									<Grid.Column width={6}>
-										<div className="item">
-											<AddressComponent className="item" address={address} accountName={account.meta.name || ''} />
+								<Grid key={address} className='address-container'>
+									<Grid.Column width={5}>
+										<div className='item'>
+											<AddressComponent className='item' address={address} accountName={account.meta.name || ''} />
 										</div>
 									</Grid.Column>
 									<Grid.Column width={4}>
-										<div className="button-container">
+										<div className='button-container'>
 											<Button
 												className={'social'}
 												negative={currentUser.addresses?.includes(address) ? true : false}
@@ -244,16 +244,18 @@ const Address = ({ className }: Props): JSX.Element => {
 											</Button>
 										</div>
 									</Grid.Column>
-									<Grid.Column width={4}>
+									<Grid.Column width={5} >
 										{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
-											<div className="button-container">
+											<div className='button-container default-button'>
 												<Button
-													secondary
+													className={'social'}
 													onClick={() => handleDefault(address)}
 												>
 													Set Default
 												</Button>
-											</div> : null
+											</div> : <div className='default-label'>
+												<Icon name='check'/> Default Address
+											</div>
 										}
 									</Grid.Column>
 								</Grid>
@@ -267,10 +269,26 @@ const Address = ({ className }: Props): JSX.Element => {
 };
 
 export default styled(Address)`
-
 	.button-container {
 		position: absolute;
 		top: 50%;
 		margin-top: -1.8rem;
+	}
+
+	.address-container {
+		.default-button {
+			display: none;
+		}
+	}
+
+	.address-container:hover {
+		.default-button {
+			display: block;
+		}
+	}
+
+	.default-label {
+		font-weight: bold;
+		color: green_primary;
 	}
 `;
