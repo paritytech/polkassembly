@@ -3,17 +3,16 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { AddressDefaultStartArgs, Context, MessageType } from '../../types';
+import { AddressDefaultStartArgs, ChangeResponseType, Context } from '../../types';
 import getTokenFromReq from '../../utils/getTokenFromReq';
 import messages from '../../utils/messages';
 
-export default async (parent: void, { address }: AddressDefaultStartArgs, ctx: Context): Promise<MessageType> => {
+export default async (parent: void, { address }: AddressDefaultStartArgs, ctx: Context): Promise<ChangeResponseType> => {
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 
-	await authServiceInstance.AddressDefault(token, address);
-
 	return {
-		message: messages.ADDRESS_DEFAULT_SUCCESS
+		message: messages.ADDRESS_DEFAULT_SUCCESS,
+		token: await authServiceInstance.AddressDefault(token, address)
 	};
 };

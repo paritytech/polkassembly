@@ -83,7 +83,7 @@ export default class AuthService {
 		};
 	}
 
-	public async AddressDefault (token: string, address: string): Promise<void> {
+	public async AddressDefault (token: string, address: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
 
@@ -115,6 +115,8 @@ export default class AuthService {
 			.query()
 			.patch({ default: false })
 			.where({ id: otherAddressIds });
+
+		return this.getSignedToken(user);
 	}
 
 	public async AddressLoginStart (address: string): Promise<string> {

@@ -5,5 +5,5 @@
 export default `
     addressDefault(
         address: String!
-    ): Message
+    ): ChangeResponse
 `;
