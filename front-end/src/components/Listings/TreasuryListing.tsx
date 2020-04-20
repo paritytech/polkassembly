@@ -17,7 +17,7 @@ interface Props {
 
 const TreasuryProposals = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no treasury proposals.'/>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active treasury proposals.'/>;
 
 	return (
 		<ul className={`${className} proposals__list`}>
