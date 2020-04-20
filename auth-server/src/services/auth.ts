@@ -374,6 +374,8 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 		}
 
+		// If this linked address is first address to be linked. Then set it to default.
+		// qurying other addresses where id != address_id to check the same.
 		const otherAddresses = await Address
 			.query()
 			.whereNot('id', address_id);
