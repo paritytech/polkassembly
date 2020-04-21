@@ -48,6 +48,9 @@ export default styled(OnchainInfoWrapper)`
 
 	.motion-sub-info{
 		background-color: grey_light;
+		.row {
+			width: 100%;
+		}
 	}
 
 	@media only screen and (max-width: 576px) {
