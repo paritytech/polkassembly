@@ -741,8 +741,6 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 			}
 		} else {
 			associatedMotionId = await getOnchainAssociatedMotionId(preimageHash, referendumCreationBlockNumber);
-			// always 122
-			console.log('associatedMotionId', associatedMotionId);
 
 			// edge case, motion id can be 0, which is falsy
 			if (!associatedMotionId && associatedMotionId !== 0) {

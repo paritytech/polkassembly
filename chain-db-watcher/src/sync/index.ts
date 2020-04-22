@@ -114,7 +114,6 @@ export const syncDBs = async (): Promise<void> => {
 	try {
 		const syncData = await getSyncData();
 		const syncMaps = syncData && getMaps(syncData);
-		console.log('syncMaps', JSON.stringify(syncMaps, null, 2));
 		syncMaps?.onchain?.proposals &&
 		syncMaps?.discussion?.proposals &&
 		await syncProposals(syncMaps.onchain.proposals, syncMaps.discussion.proposals);
