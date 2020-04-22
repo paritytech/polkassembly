@@ -178,7 +178,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				</>
 			}
 			<div>
-				{error && <FilteredError className='info' text={error.message}/>}
+				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
 			<Divider horizontal>Or</Divider>
 			<div className={'mainButtonContainer'}>

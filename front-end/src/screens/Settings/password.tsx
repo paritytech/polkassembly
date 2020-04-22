@@ -74,8 +74,7 @@ const Password = (): JSX.Element => {
 						placeholder='New Password'
 						type='password'
 					/>
-					{error && <FilteredError text={error.message}/>
-					}
+					{error?.message && <FilteredError text={error.message}/>}
 				</Form.Field>
 				<Form.Field width={6}>
 					<Spacer />

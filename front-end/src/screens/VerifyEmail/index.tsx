@@ -55,7 +55,7 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 	return (
 		<>
-			{ error && error.message
+			{ error?.message
 				? <Grid className={className}>
 					<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 					<Grid.Column mobile={16} tablet={12} computer={8} largeScreen={6} widescreen={6}>

@@ -96,7 +96,7 @@ const ResetPassword = ({ className }:Props): JSX.Element => {
 						>
 							Set new password
 						</Button>
-						{error && <FilteredError text={error.message}/>}
+						{error?.message && <FilteredError text={error.message}/>}
 					</div>
 				</Form>}
 			</Grid.Column>
