@@ -383,10 +383,12 @@ export default class AuthService {
 			.query()
 			.whereNot('id', address_id);
 
+		const setAsDefault = otherAddresses.length === 0;
+
 		await Address
 			.query()
 			.patch({
-				default: otherAddresses.length === 0,
+				default: setAsDefault,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				verified: true
 			})
