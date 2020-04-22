@@ -73,15 +73,14 @@ const syncMotions = async (onchainMotions: MotionObjectMap, discussionMotions: O
 
 		// if this motion doesn't exist in the discussion DB
 		if (!discussionMotions[key]) {
-			const motionFollowsTreasury = val.treasuryProposalId || val.treasuryProposalId === 0;
 			// if this motion is associated to a treasury proposal
-			if (motionFollowsTreasury) {
-				const latestMotion = Math.max(...treasuryDeduplicatedMotionsMap[val.treasuryProposalId as number]);
+			if (val.treasuryProposalId || val.treasuryProposalId === 0) {
+				const latestMotion = Math.max(...treasuryDeduplicatedMotionsMap[val.treasuryProposalId]);
 				// and it's the latest motion associated to this treasury
 				if (Number(key) === latestMotion) {
 					await updateTreasuryProposalWithMotion({
 						onchainMotionProposalId: Number(key),
-						onchainTreasuryProposalId: val.treasuryProposalId as number
+						onchainTreasuryProposalId: val.treasuryProposalId
 					});
 				}
 			} else {
@@ -146,7 +145,6 @@ export const syncDBs = async (): Promise<void> => {
 	try {
 		const syncData = await getSyncData();
 		const syncMaps = syncData && getMaps(syncData);
-		const treasuryDeduplicatedMotionsMap = syncMaps?.onchain.motions && getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);
 
 		syncMaps?.onchain?.proposals &&
 		syncMaps?.discussion?.proposals &&
@@ -156,9 +154,10 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.discussion?.treasuryProposals &&
 		await syncTreasuryProposals(syncMaps.onchain.treasuryProposals, syncMaps.discussion.treasuryProposals);
 
-		syncMaps?.onchain?.motions &&
-		syncMaps?.discussion?.motions &&
-		await syncMotions(syncMaps.onchain.motions, syncMaps.discussion.motions, treasuryDeduplicatedMotionsMap as TreasuryDeduplicateMotionMap);
+		if (syncMaps?.onchain?.motions && syncMaps?.discussion?.motions) {
+			const treasuryDeduplicatedMotionsMap = getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);
+			await syncMotions(syncMaps.onchain.motions, syncMaps.discussion.motions, treasuryDeduplicatedMotionsMap);
+		}
 
 		syncMaps?.onchain?.referenda &&
 		syncMaps?.discussion?.referenda &&
