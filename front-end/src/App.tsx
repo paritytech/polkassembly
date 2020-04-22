@@ -47,11 +47,11 @@ const App = () => {
 					<NotificationProvider>
 						<ModalProvider>
 							<UserDetailsProvider>
-								<ApiContextProvider>
-									<Apollo>
-										<GlobalStyle />
-										<Notifications/>
-										<Modal/>
+								<Apollo>
+									<GlobalStyle />
+									<Notifications/>
+									<Modal/>
+									<ApiContextProvider>
 										<div id='page-container'>
 											<MenuBar />
 											<Container>
@@ -123,8 +123,8 @@ const App = () => {
 											</Container>
 											<Footer />
 										</div>
-									</Apollo>
-								</ApiContextProvider>
+									</ApiContextProvider>
+								</Apollo>
 							</UserDetailsProvider>
 						</ModalProvider>
 					</NotificationProvider>

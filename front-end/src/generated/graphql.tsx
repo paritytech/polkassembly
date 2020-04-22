@@ -2780,7 +2780,8 @@ export type MutationAddressUnlinkArgs = {
 
 
 export type MutationChangeEmailArgs = {
-  email: Scalars['String']
+  email: Scalars['String'],
+  password: Scalars['String']
 };
 
 
@@ -2801,6 +2802,7 @@ export type MutationChangePasswordArgs = {
 
 
 export type MutationChangeUsernameArgs = {
+  password: Scalars['String'],
   username: Scalars['String']
 };
 
@@ -3112,7 +3114,8 @@ export type Mutation_RootAddressUnlinkArgs = {
 
 
 export type Mutation_RootChangeEmailArgs = {
-  email: Scalars['String']
+  email: Scalars['String'],
+  password: Scalars['String']
 };
 
 
@@ -3133,6 +3136,7 @@ export type Mutation_RootChangePasswordArgs = {
 
 
 export type Mutation_RootChangeUsernameArgs = {
+  password: Scalars['String'],
   username: Scalars['String']
 };
 
@@ -11674,7 +11678,8 @@ export type ChangeNameMutation = (
 );
 
 export type ChangeUsernameMutationVariables = {
-  username: Scalars['String']
+  username: Scalars['String'],
+  password: Scalars['String']
 };
 
 
@@ -11687,7 +11692,8 @@ export type ChangeUsernameMutation = (
 );
 
 export type ChangeEmailMutationVariables = {
-  email: Scalars['String']
+  email: Scalars['String'],
+  password: Scalars['String']
 };
 
 
@@ -13485,8 +13491,8 @@ export type ChangeNameMutationHookResult = ReturnType<typeof useChangeNameMutati
 export type ChangeNameMutationResult = ApolloReactCommon.MutationResult<ChangeNameMutation>;
 export type ChangeNameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNameMutation, ChangeNameMutationVariables>;
 export const ChangeUsernameDocument = gql`
-    mutation changeUsername($username: String!) {
-  changeUsername(username: $username) {
+    mutation changeUsername($username: String!, $password: String!) {
+  changeUsername(username: $username, password: $password) {
     message
     token
   }
@@ -13508,6 +13514,7 @@ export type ChangeUsernameMutationFn = ApolloReactCommon.MutationFunction<Change
  * const [changeUsernameMutation, { data, loading, error }] = useChangeUsernameMutation({
  *   variables: {
  *      username: // value for 'username'
+ *      password: // value for 'password'
  *   },
  * });
  */
@@ -13518,8 +13525,8 @@ export type ChangeUsernameMutationHookResult = ReturnType<typeof useChangeUserna
 export type ChangeUsernameMutationResult = ApolloReactCommon.MutationResult<ChangeUsernameMutation>;
 export type ChangeUsernameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeUsernameMutation, ChangeUsernameMutationVariables>;
 export const ChangeEmailDocument = gql`
-    mutation changeEmail($email: String!) {
-  changeEmail(email: $email) {
+    mutation changeEmail($email: String!, $password: String!) {
+  changeEmail(email: $email, password: $password) {
     message
     token
   }
@@ -13541,6 +13548,7 @@ export type ChangeEmailMutationFn = ApolloReactCommon.MutationFunction<ChangeEma
  * const [changeEmailMutation, { data, loading, error }] = useChangeEmailMutation({
  *   variables: {
  *      email: // value for 'email'
+ *      password: // value for 'password'
  *   },
  * });
  */

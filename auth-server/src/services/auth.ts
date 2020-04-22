@@ -493,7 +493,7 @@ export default class AuthService {
 		sendVerificationEmail(user, verifyToken);
 	}
 
-	public async ChangeUsername (token: string, username: string): Promise<string> {
+	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
@@ -504,6 +504,13 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
+		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
+
 		await User
 			.query()
 			.patch({
@@ -511,23 +518,31 @@ export default class AuthService {
 			})
 			.findById(userId);
 
-		const user = await getUserFromUserId(userId);
+		user = await getUserFromUserId(userId);
 
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeEmail (token: string, email: string): Promise<string> {
+	public async ChangeEmail (token: string, email: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
-		const existing = await User
-			.query()
-			.where('email', email)
-			.first();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		if (email !== '') {
+			const existing = await User
+				.query()
+				.where('email', email)
+				.first();
+
+			if (existing) {
+				throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+			}
 		}
 
 		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
 
 		const existingUndoToken = await UndoEmailChangeToken
 			.query()
@@ -584,8 +599,10 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		// send verification email in background
-		sendVerificationEmail(user, verifyToken);
+		if (email) {
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);

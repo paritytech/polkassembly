@@ -181,7 +181,8 @@ export interface AddressUnlinkArgs {
 }
 
 export interface ChangeEmailArgs {
-	email: string;
+    email: string;
+    password: string;
 }
 
 export interface ChangeNameArgs {
@@ -198,7 +199,8 @@ export interface ChangePasswordArgs {
 }
 
 export interface ChangeUsernameArgs {
-	username: string;
+    password: string;
+    username: string;
 }
 
 export interface LoginArgs {

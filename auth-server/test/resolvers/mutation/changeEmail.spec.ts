@@ -53,7 +53,7 @@ describe('changeEmail mutation', () => {
 	it('should allow to change an email', async () => {
 		const email = 'blabla@blou.de';
 
-		await changeEmail(undefined, { email }, fakectx);
+		await changeEmail(undefined, { email, password }, fakectx);
 
 		const verifyToken = await EmailVerificationToken
 			.query()
@@ -70,11 +70,24 @@ describe('changeEmail mutation', () => {
 		expect(undoToken[0].token).to.not.be.empty;
 	});
 
+	it('should not be able to change email with an invalid password', async () => {
+		const password = 'wrong';
+		const email = 'blaasdbla@blou.de';
+
+		try {
+			await changeEmail(undefined, { email, password }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(UserInputError);
+			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
+		}
+	});
+
 	it('should not be able to change email with an invalid jwt', async () => {
 		const email = 'blabla@blou.de';
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {
-			await changeEmail(undefined, { email }, fakectx);
+			await changeEmail(undefined, { email, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -87,7 +100,7 @@ describe('changeEmail mutation', () => {
 		const email = 'wrong@email';
 
 		try {
-			await changeEmail(undefined, { email }, fakectx);
+			await changeEmail(undefined, { email, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -99,7 +112,7 @@ describe('changeEmail mutation', () => {
 		const email = 'blabla2@blou.de';
 
 		try {
-			await changeEmail(undefined, { email }, fakectx);
+			await changeEmail(undefined, { email, password }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
@@ -117,7 +130,7 @@ describe('changeEmail mutation', () => {
 			})
 			.where( { user_id: signupResult.user.id });
 
-		const { message, token } = await changeEmail(undefined, { email }, fakectx);
+		const { message, token } = await changeEmail(undefined, { email, password }, fakectx);
 
 		expect(token).to.exist;
 		expect(message).to.equal(messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL);
