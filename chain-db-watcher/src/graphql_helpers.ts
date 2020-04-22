@@ -583,7 +583,7 @@ export const getOnchainAssociatedMotionId = async (preimageHash: string, blockNu
 		});
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getExecutedMotionsWithPreimageHash({ preimageHash, blockNumber });
+		const data = await onchainSdk.getExecutedMotionsWithPreimageHash({ blockNumber, preimageHash });
 
 		if (!data?.motions?.length) {
 			throw new Error(`No council motion was executed with preimage hash: ${preimageHash}.`);
