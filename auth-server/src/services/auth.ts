@@ -94,6 +94,8 @@ export default class AuthService {
 		let defaultAddressId = 0;
 		const otherAddressIds: number[] = [];
 
+		// Going through any linked address for this user
+		// we store the id of the address we want to set as default
 		addresses.forEach((dbAddress) => {
 			if (dbAddress.address === address) {
 				defaultAddressId = dbAddress.id;
