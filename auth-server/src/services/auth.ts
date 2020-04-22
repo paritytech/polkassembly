@@ -377,7 +377,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 		}
 
-		// If this linked address is first address to be linked. Then set it to default.
+		// If this linked address is the first address to be linked. Then set it as default.
 		// querying other addresses where id != address_id to check the same.
 		const otherAddresses = await Address
 			.query()
