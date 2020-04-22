@@ -113,6 +113,7 @@ export default class AuthService {
 			.patch({ default: true })
 			.findById(defaultAddressId);
 
+		// Mark any other address from the user as NOT default
 		await Address
 			.query()
 			.patch({ default: false })
