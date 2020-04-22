@@ -17,7 +17,7 @@ const DiscussionContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestDiscussionPostsQuery({ variables: { limit: 5 } });
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <DiscussionsListing className={className} data={data}/>;
 

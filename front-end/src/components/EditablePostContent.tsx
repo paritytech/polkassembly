@@ -111,7 +111,7 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus
 	return (
 		<>
 			<div className={className}>
-				{error && <FilteredError text={error.message}/>}
+				{error?.message && <FilteredError text={error.message}/>}
 				{
 					isEditing
 						?
