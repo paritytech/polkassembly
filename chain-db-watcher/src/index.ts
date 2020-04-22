@@ -195,7 +195,7 @@ async function main (): Promise<void> {
 				// it does not cater for tech committee proposals
 				addDiscussionReferendum({
 					preimageHash,
-					referendumCreationBlockHash: referendumStatus?.[0]?.blockNumber?.hash,
+					referendumCreationBlockNumber: referendumStatus?.[0]?.blockNumber?.number,
 					referendumId
 				}).catch(e => {
 					console.error(chalk.red(e));

@@ -97,13 +97,13 @@ const syncReferenda = async (onchainReferenda: ReferendumObjectMap, discussionRe
 		Object.keys(onchainReferenda).map(async (key) => {
 			// If this referendum doesn't exist in the discussion DB
 			if (!discussionReferenda[key]) {
-				if (!onchainReferenda[key].blockCreationHash) {
+				if (!onchainReferenda[key].blockCreationNumber) {
 					throw new Error(`No block hash creation found for referendum id: ${key}`);
 				}
 
 				await addDiscussionReferendum({
 					preimageHash: onchainReferenda[key].preimageHash,
-					referendumCreationBlockHash: onchainReferenda[key].blockCreationHash,
+					referendumCreationBlockNumber: onchainReferenda[key].blockCreationNumber,
 					referendumId: Number(key)
 				});
 			}
@@ -114,7 +114,7 @@ export const syncDBs = async (): Promise<void> => {
 	try {
 		const syncData = await getSyncData();
 		const syncMaps = syncData && getMaps(syncData);
-
+		console.log('syncMaps', JSON.stringify(syncMaps, null, 2));
 		syncMaps?.onchain?.proposals &&
 		syncMaps?.discussion?.proposals &&
 		await syncProposals(syncMaps.onchain.proposals, syncMaps.discussion.proposals);

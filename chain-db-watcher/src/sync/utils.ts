@@ -95,7 +95,7 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 						return {
 							...prev,
 							[curr.referendumId]: {
-								blockCreationHash: curr?.referendumStatus?.[0]?.blockNumber?.hash,
+								blockCreationNumber: curr?.referendumStatus?.[0]?.blockNumber?.number,
 								preimageHash: curr.preimageHash
 							} as OnchainReferendaValueSyncType
 						};

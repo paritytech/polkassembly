@@ -38,7 +38,7 @@ export interface OnchainSyncMap {
 
 export interface OnchainReferendaValueSyncType {
     preimageHash: string;
-    blockCreationHash: string;
+    blockCreationNumber: number;
 }
 
 export interface OnchainMotionSyncType {
