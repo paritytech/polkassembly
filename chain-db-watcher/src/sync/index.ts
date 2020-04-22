@@ -69,8 +69,6 @@ const syncMotions = async (onchainMotions: MotionObjectMap, discussionMotions: O
 		// the same treasury id might have several motions attached to it.
 		// only the last motion should be added to the discussion db
 
-		// update if needed with the highest motion id.
-
 		// if this motion doesn't exist in the discussion DB
 		if (!discussionMotions[key]) {
 			const motionFollowsTreasury = val.treasuryProposalId || val.treasuryProposalId === 0;
