@@ -58,6 +58,7 @@ export interface HasuraClaimPayload {
     'x-hasura-user-email': string;
     'x-hasura-user-id': string;
     'x-hasura-kusama': string;
+    'x-hasura-kusama-default': string;
 }
 
 export interface JWTPayploadType {
@@ -155,6 +156,10 @@ export interface UserArgs {
 export interface UsersArgs {
 	limit: number;
 	page: number;
+}
+
+export interface SetDefaultAddressArgs {
+    address: string;
 }
 
 export interface AddressLinkStartArgs {

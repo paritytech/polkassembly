@@ -17,6 +17,7 @@ export default class Address extends Model {
 	user_id!: number
 	sign_message!: string
 	verified!: boolean
+	default!: boolean
 
 	static get tableName (): string {
 		return 'address';
@@ -26,6 +27,7 @@ export default class Address extends Model {
 		return {
 			properties: {
 				address: { type: 'string' },
+				default: { type: 'boolean' },
 				id: { type: 'integer' },
 				network: { type: 'network' },
 				public_key: { type: 'string' },
