@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Icon } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -14,33 +15,40 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Spacer from '../../ui-components/Spacer';
 import cleanError from '../../util/cleanError';
+import messages from '../../util/messages';
 
 interface Props{
 	className?: string
 }
 
 const Email = ({ className }: Props): JSX.Element => {
+	const [editing, setEditing] = useState(false);
 	const [email, setEmail] = useState<string | null | undefined>('');
 	const currentUser = useContext(UserDetailsContext);
 	const [changeEmailMutation, { loading, error }] = useChangeEmailMutation();
 	const [resendVerifyEmailTokenMutation] = useResendVerifyEmailTokenMutation();
 	const { queueNotification } = useContext(NotificationContext);
+	const { errors, handleSubmit, register } = useForm();
 
 	useEffect(() => {
 		setEmail(currentUser.email);
 	}, [currentUser.email]);
 
-	const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.currentTarget.value);
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+	const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
 		event.preventDefault();
-		event.stopPropagation();
+		setEditing(true);
+	};
 
-		if (email || email === '') {
+	const handleSubmitForm = (data: Record<string, any>):void => {
+		const { email, password } = data;
+
+		if ((email || email === '') && password) {
 			changeEmailMutation({
 				variables: {
-					email
+					email,
+					password
 				}
 			})
 				.then(({ data }) => {
@@ -62,6 +70,7 @@ const Email = ({ className }: Props): JSX.Element => {
 								email_verified: false
 							};
 						});
+						setEditing(false);
 					}
 				}).catch((e) => {
 					queueNotification({
@@ -95,43 +104,87 @@ const Email = ({ className }: Props): JSX.Element => {
 	};
 
 	return (
-		<Form standalone={false}>
-			<Form.Group className={className}>
+		<Form className={className} standalone={false} onSubmit={handleSubmit(handleSubmitForm)}>
+			<Form.Group>
 				<Form.Field width={10}>
 					<label>Email</label>
-					<input
-						value={email || ''}
-						onChange={onEmailChange}
-						placeholder='mail@example.com'
-						type='email'
-					/>
-					{error && <FilteredError text={error.message}/>}
-					{email && !currentUser.email_verified &&
-						<div className={'warning-text'}>
-							<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+					{editing ?
+						<input
+							className={errors.email ? 'error' : ''}
+							defaultValue={email || ''}
+							name='email'
+							placeholder='mail@example.com'
+							type='email'
+							ref={register({
+								pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
+							})}
+						/> :
+						<div className={`current-email ${email ? '' : 'text-muted'}`}>
+							{email ? email : 'No email linked.'}
 						</div>
 					}
+					{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 				</Form.Field>
-				<Form.Field width={6}>
-					<label>&nbsp;</label>
+				{!editing && <Form.Field width={6}>
+					<Spacer />
 					<Button
 						secondary
 						disabled={loading}
-						onClick={handleClick}
+						onClick={handleEdit}
+					>
+					Edit
+					</Button>
+				</Form.Field>}
+			</Form.Group>
+			{editing && <Form.Group>
+				<Form.Field width={10}>
+					<label>Password</label>
+					<input
+						className={errors.password ? 'error' : ''}
+						name='password'
+						placeholder='password'
+						type='password'
+						ref={register({ minLength: 6 ,required: true })}
+					/>
+					{error && <FilteredError text={error.message}/>}
+					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
+				</Form.Field>
+				<Form.Field width={6}>
+					<Spacer />
+					<Button
+						secondary
+						disabled={loading}
 						type='submit'
 					>
 					Change
 					</Button>
 				</Form.Field>
+			</Form.Group>}
+			<Form.Group>
+				{email && !currentUser.email_verified &&
+					<div className={'warning-text'}>
+						<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+					</div>
+				}
 			</Form.Group>
 		</Form>
 	);
 };
 
 export default styled(Email)`
-
+	.current-email {
+		padding-top: 1rem;
+	}
 	.warning-text {
 		margin-top: 0.5rem;
+		color: red_secondary;
+	}
+
+	input.error {
+		border-color: red_secondary !important;
+	}
+
+	.errorText {
 		color: red_secondary;
 	}
 `;

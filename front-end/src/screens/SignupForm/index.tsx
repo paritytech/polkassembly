@@ -18,6 +18,7 @@ import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import HelperTooltip from '../../ui-components/HelperTooltip';
 import messages from '../../util/messages';
+import * as validation from '../../util/validation';
 
 interface Props {
 	className?: string
@@ -71,7 +72,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 								className={errors.username ? 'error' : ''}
 								name='username'
 								placeholder='john'
-								ref={register({ maxLength:30, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
+								ref={register(validation.username)}
 								type='text'
 							/>
 							{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}

@@ -23,6 +23,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<h2>Settings</h2>
 				<Divider/>
 				<Username/>
+				<Divider/>
 				<Fullname/>
 				<Divider/>
 				<Email/>
