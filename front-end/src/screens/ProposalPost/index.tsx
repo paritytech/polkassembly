@@ -4,10 +4,10 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import useRedirectGovernancePost from 'src/hooks/useRedirectGovernancePost';
 
 import Post from '../../components/Post/Post';
 import { useProposalPostAndCommentsQuery } from '../../generated/graphql';
-import { useRedirectReferenda } from '../../hooks';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
@@ -16,7 +16,7 @@ export default () => {
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useProposalPostAndCommentsQuery({ variables: { 'id': idNumber } });
 
-	useRedirectReferenda(data?.posts?.[0]?.onchain_link?.onchain_referendum_id);
+	useRedirectGovernancePost({ from: 'proposal', onchainLink: data?.posts?.[0]?.onchain_link });
 
 	if (error) return <FilteredError text={error.message}/>;
 

@@ -3,5 +3,4 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export { default as useRouter } from './useRouter';
-export { default as useRedirectReferenda } from './useRedirectReferenda';
-export { default as useRedirectMotion } from './useRedirectMotion';
+export { default as useRedirectGovernancePost } from './useRedirectGovernancePost';

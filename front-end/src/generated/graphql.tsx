@@ -2745,6 +2745,7 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   verifyEmail?: Maybe<ChangeResponse>,
@@ -2841,6 +2842,11 @@ export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type MutationSetDefaultAddressArgs = {
+  address: Scalars['String']
 };
 
 
@@ -2988,6 +2994,7 @@ export type Mutation_Root = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
   updateBlockIndex?: Maybe<BlockIndex>,
@@ -3725,6 +3732,11 @@ export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type Mutation_RootSetDefaultAddressArgs = {
+  address: Scalars['String']
 };
 
 
@@ -11210,6 +11222,11 @@ export type Post_TopicsQuery = (
   )> }
 );
 
+export type OnchainLinkDiscussionFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'onchain_motion_id' | 'onchain_proposal_id' | 'onchain_treasury_proposal_id'>
+);
+
 export type DiscussionPostFragment = (
   { __typename?: 'posts' }
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
@@ -11219,6 +11236,9 @@ export type DiscussionPostFragment = (
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
+  )>, onchain_link: Maybe<(
+    { __typename?: 'onchain_links' }
+    & OnchainLinkDiscussionFragment
   )>, topic: (
     { __typename?: 'post_topics' }
     & Pick<Post_Topics, 'id' | 'name'>
@@ -11907,6 +11927,15 @@ export const CommentFieldsFragmentDoc = gql`
   updated_at
 }
     `;
+export const OnchainLinkDiscussionFragmentDoc = gql`
+    fragment onchainLinkDiscussion on onchain_links {
+  id
+  onchain_referendum_id
+  onchain_motion_id
+  onchain_proposal_id
+  onchain_treasury_proposal_id
+}
+    `;
 export const DiscussionPostFragmentDoc = gql`
     fragment discussionPost on posts {
   author {
@@ -11921,6 +11950,9 @@ export const DiscussionPostFragmentDoc = gql`
   comments(order_by: {created_at: asc}) {
     ...commentFields
   }
+  onchain_link {
+    ...onchainLinkDiscussion
+  }
   title
   topic {
     id
@@ -11931,7 +11963,8 @@ export const DiscussionPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}`;
+    ${CommentFieldsFragmentDoc}
+${OnchainLinkDiscussionFragmentDoc}`;
 export const OnchainLinkMotionPreimageFragmentDoc = gql`
     fragment onchainLinkMotionPreimage on Preimage {
   hash
