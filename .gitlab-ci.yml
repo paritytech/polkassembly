@@ -93,9 +93,9 @@ lint-chain-db-watcher:
     DOCKER_HOST: tcp://localhost:2375
   tags:
     - kubernetes-parity-build
-  image: docker:git
+  image: docker:18-git
   services:
-    - docker:dind
+    - docker:18-dind
   script:
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
