@@ -5,5 +5,6 @@
 export default `
     changeEmail(
         email: String!
+        password: String!
     ): ChangeResponse
 `;
