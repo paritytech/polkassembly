@@ -16,7 +16,7 @@ export default () => {
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useDiscussionPostAndCommentsQuery({ variables: { 'id': idNumber } });
 
-	if (error) return error?.message && <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} refetch={refetch} />;
 
