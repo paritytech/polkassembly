@@ -22,4 +22,5 @@ export default styled(ButtonLink)`
     display: inline;
     margin: 0;
     padding: 0;
+    text-decoration: underline;
 `;
