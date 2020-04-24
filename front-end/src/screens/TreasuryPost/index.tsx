@@ -4,10 +4,10 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import useRedirectGovernancePost from 'src/hooks/useRedirectGovernancePost';
 
 import Post from '../../components/Post/Post';
 import { useTreasuryProposalPostAndCommentsQuery } from '../../generated/graphql';
-import { useRedirectMotion } from '../../hooks';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
@@ -15,7 +15,7 @@ export default () => {
 	const { id } = useParams();
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useTreasuryProposalPostAndCommentsQuery({ variables: { 'id': idNumber } });
-	useRedirectMotion(data?.posts?.[0]?.onchain_link?.onchain_motion_id);
+	useRedirectGovernancePost({ from: 'treasury', onchainLink: data?.posts?.[0]?.onchain_link });
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

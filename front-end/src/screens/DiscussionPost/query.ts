@@ -6,6 +6,16 @@ import gql from 'graphql-tag';
 
 import { commentFields } from '../../fragments/comments';
 
+const onchainLinkDiscussion = gql`
+    fragment onchainLinkDiscussion on onchain_links {
+        id,
+        onchain_referendum_id,
+        onchain_motion_id,
+        onchain_proposal_id,
+        onchain_treasury_proposal_id,
+    }
+`;
+
 const discussionPost = gql`
     fragment discussionPost on posts {
         author {
@@ -20,6 +30,9 @@ const discussionPost = gql`
         comments(order_by: {created_at: asc}) {
             ...commentFields
         }
+        onchain_link{
+            ...onchainLinkDiscussion
+        }
         title
         topic {
             id
@@ -31,6 +44,7 @@ const discussionPost = gql`
         }
     }
     ${commentFields}
+    ${onchainLinkDiscussion}
 `;
 
 export const QUERY_DISCUSSION_POST_AND_COMMENTS = gql`
