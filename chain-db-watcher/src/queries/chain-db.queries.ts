@@ -5,10 +5,11 @@
 import gql from 'graphql-tag';
 
 export const getExecutedMotionsWithPreimageHash = gql`
-    query getExecutedMotionsWithPreimageHash($preimageHash: String!) {
+    query getExecutedMotionsWithPreimageHash($preimageHash: String!, $blockNumber: Int!) {
         motions(
             where: {
                 AND: [
+                    { motionStatus_some : {blockNumber: {number_lt : $blockNumber}}}
                     { motionStatus_some: { status: "Executed" } }
                     { preimageHash: $preimageHash }
                 ]
@@ -21,14 +22,14 @@ export const getExecutedMotionsWithPreimageHash = gql`
 `;
 
 export const getTabledProposalsAtBlockQuery = gql`
-    query getTabledProposalAtBlock($blockHash: String!) {
+    query getTabledProposalAtBlock($blockNumber: Int!) {
         proposals(
             where: {
                 proposalStatus_some: {
                     AND: [
                         {
                             blockNumber: {
-                                hash: $blockHash
+                                number: $blockNumber
                             }
                         },
                         { status: "Tabled" }
