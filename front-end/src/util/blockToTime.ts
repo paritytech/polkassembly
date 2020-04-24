@@ -1,7 +1,6 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-
 import BN from 'bn.js';
 import { chainProperties } from 'src/global/networkConstants';
 
@@ -44,12 +43,20 @@ function extractTime (value?: number): Time {
 	return addTime([round, 0, 0, 0], extractTime(value - round * DAY));
 }
 
-export default function blockToTime (blocks: BN |  number ): string {
+export default function blockToTime (blocks: BN |  number, blocktime?: BN | number ): string {
 	const network = getNetwork();
-	const blockTime = chainProperties?.[network]?.blockTime;
 
-	blocks = parseInt(blocks.toString());
-	const time = extractTime(blocks * blockTime);
+	if (!blocktime) {
+		blocktime = chainProperties?.[network]?.blockTime / 1000;
+	} else {
+		blocktime = parseInt(blocktime.toString()) / 1000;
+	}
+
+	if (typeof blocks !== 'number') {
+		blocks = parseInt(blocks.toString());
+	}
+
+	const time = extractTime(blocks * blocktime);
 
 	return time[0].toString() + 'd ' + time[1].toString() + 'h ' + time[2].toString() + 'm ';
 }

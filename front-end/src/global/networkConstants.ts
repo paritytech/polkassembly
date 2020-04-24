@@ -16,13 +16,13 @@ export const tokenSymbol = {
 
 export const chainProperties: ChainPropType = {
 	[network.KUSAMA]: {
-		blockTime: 6,
+		blockTime: 6000,
 		ss58Format: 2,
 		tokenDecimals: 12,
 		tokenSymbol: tokenSymbol.KSM
 	},
 	[network.POLKADOT]: {
-		blockTime: 6,
+		blockTime: 6000,
 		ss58Format: 1,
 		tokenDecimals: 18,
 		tokenSymbol: tokenSymbol.DOT
