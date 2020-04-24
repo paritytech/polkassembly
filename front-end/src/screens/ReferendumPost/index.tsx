@@ -15,7 +15,7 @@ export default () => {
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useReferendumPostAndCommentsQuery({ variables: { 'id': idNumber } });
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} isReferendum refetch={refetch} />;
 

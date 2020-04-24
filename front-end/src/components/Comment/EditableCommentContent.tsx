@@ -100,7 +100,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 	return (
 		<>
 			<div className={className}>
-				{error && error.message && <div>{error.message}</div>}
+				{error?.message && <div>{error.message}</div>}
 				{
 					isEditing
 						?
