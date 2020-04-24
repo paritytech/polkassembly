@@ -9,12 +9,14 @@ import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
-import { CommentType, MessageType, OnchainLinkType } from '../types';
+import { CommentCreationHookDataType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import getPostLink from '../utils/getPostLink';
+import getPostType from '../utils/getPostType';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
-const sendPostCommentSubscription = async (comment: CommentType): Promise<MessageType> => {
-	const { post_id, author_id } = comment;
+const sendPostCommentSubscription = async (data: CommentCreationHookDataType): Promise<MessageType> => {
+	const { post_id, author_id } = data;
 
 	if (!post_id) {
 		return { message: messages.EVENT_POST_ID_NOT_FOUND };
@@ -45,7 +47,8 @@ const sendPostCommentSubscription = async (comment: CommentType): Promise<Messag
 
 			getUserFromUserId(subscription.user_id)
 				.then((user) => {
-					sendPostSubscriptionMail(user, author, comment);
+					const url = getPostLink(PostTypeEnum.POST, { post_id: data.post_id });
+					sendPostSubscriptionMail(user, author, data, url);
 				})
 				.catch((error) => console.error(error));
 		});
@@ -57,11 +60,7 @@ const sendPostCommentSubscription = async (comment: CommentType): Promise<Messag
 const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
 	const {
 		proposer_address,
-		post_id,
-		onchain_motion_id,
-		onchain_proposal_id,
-		onchain_referendum_id,
-		onchain_treasury_proposal_id
+		post_id
 	} = onchainLink;
 
 	if (!proposer_address) {
@@ -71,8 +70,6 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 	if (!post_id) {
 		return { message: messages.EVENT_POST_ID_NOT_FOUND };
 	}
-
-	let id = post_id;
 
 	const address = await Address
 		.query()
@@ -116,47 +113,22 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE };
 	}
 
-	let type = '';
+	const type = getPostType(onchainLink);
+	const url = getPostLink(type, onchainLink);
 
-	if (onchain_proposal_id === 0 || onchain_proposal_id) {
-		type = 'proposal';
-		id = onchain_proposal_id;
-	}
-
-	if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
-		type = 'treasury';
-		id = onchain_treasury_proposal_id;
-	}
-
-	if (onchain_motion_id === 0 || onchain_motion_id) {
-		type = 'motion';
-		id = onchain_motion_id;
-	}
-
-	if (onchain_referendum_id === 0 || onchain_referendum_id) {
-		type = 'referendum';
-		id = onchain_referendum_id;
-	}
-
-	sendOwnProposalCreatedEmail(user, type, id);
+	sendOwnProposalCreatedEmail(user, type, url);
 
 	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
 
 const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
 	const {
-		post_id,
-		onchain_motion_id,
-		onchain_proposal_id,
-		onchain_referendum_id,
-		onchain_treasury_proposal_id
+		post_id
 	} = onchainLink;
 
 	if (!post_id) {
 		return { message: messages.EVENT_POST_ID_NOT_FOUND };
 	}
-
-	let id = post_id;
 
 	const notifications = await Notification
 		.query()
@@ -181,29 +153,10 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 			return { message: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
 		}
 
-		let type = '';
+		const type = getPostType(onchainLink);
+		const url = getPostLink(type, onchainLink);
 
-		if (onchain_proposal_id === 0 || onchain_proposal_id) {
-			type = 'proposal';
-			id = onchain_proposal_id;
-		}
-
-		if (onchain_treasury_proposal_id === 0 || onchain_treasury_proposal_id) {
-			type = 'treasury';
-			id = onchain_treasury_proposal_id;
-		}
-
-		if (onchain_motion_id === 0 || onchain_motion_id) {
-			type = 'motion';
-			id = onchain_motion_id;
-		}
-
-		if (onchain_referendum_id === 0 || onchain_referendum_id) {
-			type = 'referendum';
-			id = onchain_referendum_id;
-		}
-
-		sendNewProposalCreatedEmail(user, type, id);
+		sendNewProposalCreatedEmail(user, type, url);
 	});
 
 	await Promise.all(promises).catch(error => console.error(error));
