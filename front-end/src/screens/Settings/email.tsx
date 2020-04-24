@@ -13,6 +13,7 @@ import { useChangeEmailMutation, useResendVerifyEmailTokenMutation } from '../..
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
+import ButtonLink from '../../ui-components/ButtonLink';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import Spacer from '../../ui-components/Spacer';
@@ -163,7 +164,7 @@ const Email = ({ className }: Props): JSX.Element => {
 			<Form.Group>
 				{email && !currentUser.email_verified &&
 					<div className={'warning-text'}>
-						<Icon name='warning circle' />Your email is not verified. <button className='link-button text-muted' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</button>
+						<Icon name='warning circle' />Your email is not verified. <ButtonLink className='text-muted' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</ButtonLink>
 					</div>
 				}
 			</Form.Group>
@@ -186,14 +187,5 @@ export default styled(Email)`
 
 	.errorText {
 		color: red_secondary;
-	}
-
-	.link-button {
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
-		display: inline;
-		margin: 0;
-		padding: 0;
 	}
 `;

@@ -13,6 +13,7 @@ import { LoadingStatusType,NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
 import AyeNayButtons from 'src/ui-components/AyeNayButtons';
 import Button from 'src/ui-components/Button';
+import ButtonLink from 'src/ui-components/ButtonLink';
 import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import Loader from 'src/ui-components/Loader';
@@ -144,7 +145,7 @@ const VoteMotion = ({
 	const NotCouncil = () =>
 		<>
 			<div>No account found from the council :(</div>
-			<button className='link-button' onClick={() => setForceVote(true)}>Let me try still.</button>
+			<ButtonLink onClick={() => setForceVote(true)}>Let me try still.</ButtonLink>
 		</>;
 
 	return (
@@ -164,14 +165,5 @@ export default styled(VoteMotion)`
 
 	.button-container {
 		margin-top: 2rem !important;
-	}
-
-	.link-button {
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
-		display: inline;
-		margin: 0;
-		padding: 0;
 	}
 `;
