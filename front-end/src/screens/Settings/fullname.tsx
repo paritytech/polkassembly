@@ -76,7 +76,7 @@ const Fullname = (): JSX.Element => {
 						placeholder='username'
 						type='text'
 					/>
-					{error && <FilteredError text={error.message}/>}
+					{error?.message && <FilteredError text={error.message}/>}
 				</Form.Field>
 				<Form.Field width={6}>
 					<Spacer />

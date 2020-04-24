@@ -19,7 +19,7 @@ export default () => {
 
 	useRedirectGovernancePost({ from: 'discussion', onchainLink: data?.posts?.[0]?.onchain_link });
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error) return error?.message && <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} refetch={refetch} />;
 

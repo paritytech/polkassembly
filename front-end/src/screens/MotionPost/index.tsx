@@ -18,7 +18,7 @@ export default () => {
 
 	useRedirectGovernancePost({ from: 'motion', onchainLink: data?.posts?.[0]?.onchain_link });
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} isMotion refetch={refetch} />;
 

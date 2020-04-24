@@ -146,7 +146,7 @@ const Email = ({ className }: Props): JSX.Element => {
 						type='password'
 						ref={register({ minLength: 6 ,required: true })}
 					/>
-					{error && <FilteredError text={error.message}/>}
+					{error?.message && <FilteredError text={error.message}/>}
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 				</Form.Field>
 				<Form.Field width={6}>

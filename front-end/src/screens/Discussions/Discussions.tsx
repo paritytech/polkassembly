@@ -13,7 +13,7 @@ const DiscussionsContainer = () => {
 
 	const { data, error } = useLatestDiscussionPostsQuery({ variables: { limit: 20 } });
 
-	if (error) {
+	if (error?.message) {
 		return <FilteredError text={error.message}/>;
 	}
 
