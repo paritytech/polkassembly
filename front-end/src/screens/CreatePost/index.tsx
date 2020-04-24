@@ -109,7 +109,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 					/>
 
 					<TopicsRadio
-						onTopicSelection={(id) => setSetlectedTopic(id)}
+						onTopicSelection={(id: number) => setSetlectedTopic(id)}
 					/>
 
 					<div className={'mainButtonContainer'}>
