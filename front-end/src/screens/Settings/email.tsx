@@ -83,7 +83,7 @@ const Email = ({ className }: Props): JSX.Element => {
 		}
 	};
 
-	const handleResendVerifyEmailTokenClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+	const handleResendVerifyEmailTokenClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.preventDefault();
 		resendVerifyEmailTokenMutation()
 			.then(({ data }) => {
@@ -163,7 +163,7 @@ const Email = ({ className }: Props): JSX.Element => {
 			<Form.Group>
 				{email && !currentUser.email_verified &&
 					<div className={'warning-text'}>
-						<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+						<Icon name='warning circle' />Your email is not verified. <button className='link-button text-muted' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</button>
 					</div>
 				}
 			</Form.Group>
@@ -186,5 +186,14 @@ export default styled(Email)`
 
 	.errorText {
 		color: red_secondary;
+	}
+
+	.link-button {
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		display: inline;
+		margin: 0;
+		padding: 0;
 	}
 `;

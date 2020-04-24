@@ -144,7 +144,7 @@ const VoteMotion = ({
 	const NotCouncil = () =>
 		<>
 			<div>No account found from the council :(</div>
-			<a href='#' onClick={() => setForceVote(true)}>Let me try still.</a>
+			<button className='link-button' onClick={() => setForceVote(true)}>Let me try still.</button>
 		</>;
 
 	return (
@@ -164,5 +164,14 @@ export default styled(VoteMotion)`
 
 	.button-container {
 		margin-top: 2rem !important;
+	}
+
+	.link-button {
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		display: inline;
+		margin: 0;
+		padding: 0;
 	}
 `;
