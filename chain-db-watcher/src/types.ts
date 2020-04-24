@@ -54,7 +54,7 @@ export interface DiscussionSyncMap {
     treasuryProposals?: ObjectMap;
 }
 
-export type TreasuryDeduplicateMotionMap = Record< number, number[]>;
+export type TreasuryDeduplicateMotionMap = Record<number, number[]>;
 
 export type ObjectMap = {[index: string]: string};
 export type MotionObjectMap = {[index: string]: OnchainMotionSyncType};
