@@ -18,7 +18,7 @@ const MotionsContainer = ({ className }:Props) => {
 
 	const { data, error } = useLatestMotionPostsQuery({ variables: { limit: 2, postType: post_type.ON_CHAIN } });
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <MotionsListing className={className} data={data}/>;
 

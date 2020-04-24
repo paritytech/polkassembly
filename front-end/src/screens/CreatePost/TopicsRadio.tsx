@@ -29,7 +29,7 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 
 	if (error) {
 		console.error('Topic retrieval error', error);
-		return <FilteredError text={error.message}/>;
+		return error?.message && <FilteredError text={error.message}/>;
 	}
 
 	return (

@@ -18,7 +18,7 @@ export default () => {
 
 	useRedirectReferenda(data?.posts?.[0]?.onchain_link?.onchain_referendum_id);
 
-	if (error) return <FilteredError text={error.message}/>;
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} isProposal refetch={refetch} />;
 

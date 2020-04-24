@@ -85,7 +85,7 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 
 	return (
 		<div className={className}>
-			{error && <FilteredError text={error.message}/>}
+			{error?.message && <FilteredError text={error.message}/>}
 			<Avatar
 				className='avatar'
 				username={username || ''}
