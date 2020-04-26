@@ -4,17 +4,31 @@
 
 import dotenv from 'dotenv';
 import express from 'express';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
 const app = express();
 
 app.set('host', '0.0.0.0');
-app.set('port', process.env.PORT || 9614);
+app.set('port', process.env.PORT || 8034);
 
-app.use((req, res) => {
-	console.log(req.url);
-	res.json({ status: 'ok' });
+export interface HealthCheckResult {
+    authServerStatus: number;
+}
+
+async function healthcheck (): Promise<HealthCheckResult> {
+	const authServer = await fetch(`${process.env.AUTH_SERVER}/healthcheck`);
+
+	return {
+		authServerStatus: authServer.status
+	};
+}
+
+app.use('/healthcheck', (req, res, next) => {
+	healthcheck()
+		.then((result) => res.json(result))
+		.catch(next);
 });
 
 /**
