@@ -89,7 +89,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: 'Update on post you are subscribed to',
+		subject: `Update on post #${comment.post_id} you are subscribed to`,
 		text,
 		to: user.email
 	};
