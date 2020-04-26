@@ -14,14 +14,23 @@ app.set('host', '0.0.0.0');
 app.set('port', process.env.PORT || 8034);
 
 export interface HealthCheckResult {
-    authServerStatus: number;
+	authServerStatus: number;
+	hasuraServerStatus: number;
+	chainDbWatcherServerStatus: number;
+	reactServerStatus: number;
 }
 
 async function healthcheck (): Promise<HealthCheckResult> {
 	const authServer = await fetch(`${process.env.AUTH_SERVER}/healthcheck`);
+	const hasuraServer = await fetch(`${process.env.HASURA_SERVER}/healthz`);
+	const chainDbWatcherServer = await fetch(`${process.env.HASURA_SERVER}/healthz`);
+	const reactServer = await fetch(`${process.env.REACT_SERVER}/healthcheck`);
 
 	return {
-		authServerStatus: authServer.status
+		authServerStatus: authServer.status,
+		chainDbWatcherServerStatus: chainDbWatcherServer.status,
+		hasuraServerStatus: hasuraServer.status,
+		reactServerStatus: reactServer.status
 	};
 }
 
