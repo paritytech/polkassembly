@@ -279,7 +279,7 @@ export default styled(Address)`
 	}
 
 	.default-label {
-		font-weight: bold;
+		font-weight: 500;
 		color: green_primary;
 	}
 `;
