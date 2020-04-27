@@ -4,6 +4,19 @@
   "license": "GPL-3.0",
   "private": true,
   "homepage": "http://polkassembly.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paritytech/polkassembly.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paritytech/polkassembly/issues"
+  },
+  "author": "Parity Team <admin@parity.io>",
+  "maintainers": [
+    "Nikhil Rajan",
+    "Thibaut Sardan",
+    "Michel Erler"
+  ],
   "dependencies": {
     "@polkadot/api": "^1.9.1",
     "@polkadot/extension-dapp": "^0.22.1",
