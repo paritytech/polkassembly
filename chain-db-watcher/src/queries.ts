@@ -116,7 +116,7 @@ export const motionSubscription = gql`
                 motionProposalId
                 motionStatus(orderBy: id_DESC) {
                     blockNumber {
-                        hash
+                        number
                     }
                     status
                 }
@@ -173,7 +173,7 @@ export const treasurySpendProposalSubscription = gql`
 				treasuryProposalId
                 treasuryStatus(orderBy: id_DESC) {
                     blockNumber {
-                        hash
+                        number
                     }
                     status
                 }

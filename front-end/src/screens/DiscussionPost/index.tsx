@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useRedirectGovernancePost } from 'src/hooks';
 
 import Post from '../../components/Post/Post';
 import { useDiscussionPostAndCommentsQuery } from '../../generated/graphql';
@@ -16,7 +17,9 @@ export default () => {
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useDiscussionPostAndCommentsQuery({ variables: { 'id': idNumber } });
 
-	if (error) return <FilteredError text={error.message}/>;
+	useRedirectGovernancePost({ from: 'discussion', onchainLink: data?.posts?.[0]?.onchain_link });
+
+	if (error?.message) return <FilteredError text={error.message}/>;
 
 	if (data) return <Post data={data} refetch={refetch} />;
 

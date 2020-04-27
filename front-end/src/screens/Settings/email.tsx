@@ -13,6 +13,7 @@ import { useChangeEmailMutation, useResendVerifyEmailTokenMutation } from '../..
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
+import ButtonLink from '../../ui-components/ButtonLink';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import Spacer from '../../ui-components/Spacer';
@@ -83,7 +84,7 @@ const Email = ({ className }: Props): JSX.Element => {
 		}
 	};
 
-	const handleResendVerifyEmailTokenClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+	const handleResendVerifyEmailTokenClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.preventDefault();
 		resendVerifyEmailTokenMutation()
 			.then(({ data }) => {
@@ -146,7 +147,7 @@ const Email = ({ className }: Props): JSX.Element => {
 						type='password'
 						ref={register({ minLength: 6 ,required: true })}
 					/>
-					{error && <FilteredError text={error.message}/>}
+					{error?.message && <FilteredError text={error.message}/>}
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 				</Form.Field>
 				<Form.Field width={6}>
@@ -163,7 +164,7 @@ const Email = ({ className }: Props): JSX.Element => {
 			<Form.Group>
 				{email && !currentUser.email_verified &&
 					<div className={'warning-text'}>
-						<Icon name='warning circle' />Your email is not verified. <a className='text-muted' href='#' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</a>
+						<Icon name='warning circle' />Your email is not verified. <ButtonLink className='text-muted' onClick={handleResendVerifyEmailTokenClick}>Resend verification email.</ButtonLink>
 					</div>
 				}
 			</Form.Group>

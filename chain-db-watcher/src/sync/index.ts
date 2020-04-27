@@ -11,7 +11,7 @@ import {
 	addDiscussionReferendum,
 	updateTreasuryProposalWithMotion
 } from '../graphql_helpers';
-import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData } from '../types';
+import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData, TreasuryDeduplicateMotionMap } from '../types';
 import {
 	getDiscussionMotions,
 	getDiscussionProposals,
@@ -64,15 +64,23 @@ const syncTreasuryProposals = async (onchainTreasuryProposals: ObjectMap, discus
 	}));
 };
 
-const syncMotions = async (onchainMotions: MotionObjectMap, discussionMotions: ObjectMap): Promise<void[]> => {
+const syncMotions = async (onchainMotions: MotionObjectMap, discussionMotions: ObjectMap, treasuryDeduplicatedMotionsMap: TreasuryDeduplicateMotionMap): Promise<void[]> => {
 	return Promise.all(Object.entries(onchainMotions).map(async ([key, val]: [string, OnchainMotionSyncType]) => {
+		// the same treasury id might have several motions attached to it.
+		// only the last motion should be added to the discussion db
+
 		// if this motion doesn't exist in the discussion DB
 		if (!discussionMotions[key]) {
+			// if this motion is associated to a treasury proposal
 			if (val.treasuryProposalId || val.treasuryProposalId === 0) {
-				await updateTreasuryProposalWithMotion({
-					onchainMotionProposalId: Number(key),
-					onchainTreasuryProposalId: val.treasuryProposalId
-				});
+				const latestMotion = Math.max(...treasuryDeduplicatedMotionsMap[val.treasuryProposalId]);
+				// and it's the latest motion associated to this treasury
+				if (Number(key) === latestMotion) {
+					await updateTreasuryProposalWithMotion({
+						onchainMotionProposalId: Number(key),
+						onchainTreasuryProposalId: val.treasuryProposalId
+					});
+				}
 			} else {
 				await addDiscussionPostAndMotion({
 					onchainMotionProposalId: Number(key),
@@ -97,17 +105,38 @@ const syncReferenda = async (onchainReferenda: ReferendumObjectMap, discussionRe
 		Object.keys(onchainReferenda).map(async (key) => {
 			// If this referendum doesn't exist in the discussion DB
 			if (!discussionReferenda[key]) {
-				if (!onchainReferenda[key].blockCreationHash) {
+				if (!onchainReferenda[key].blockCreationNumber) {
 					throw new Error(`No block hash creation found for referendum id: ${key}`);
 				}
 
 				await addDiscussionReferendum({
 					preimageHash: onchainReferenda[key].preimageHash,
-					referendumCreationBlockHash: onchainReferenda[key].blockCreationHash,
+					referendumCreationBlockNumber: onchainReferenda[key].blockCreationNumber,
 					referendumId: Number(key)
 				});
 			}
 		}));
+};
+
+const getTreasuryDeduplicatedMotionsMap = (motionObjectMap: MotionObjectMap): TreasuryDeduplicateMotionMap => {
+	// this map will contain the treasury with the array of motions linked to it
+	// eg: {
+	// 14: [126, 128],
+	// 15: [127, 129]
+	// }
+
+	const treasuryMap: TreasuryDeduplicateMotionMap = {};
+
+	Object.entries(motionObjectMap).forEach(([key, value]) => {
+		// we are only interrested in motions following a treasury
+		if (value.treasuryProposalId || value.treasuryProposalId === 0) {
+			const motionArray = treasuryMap[value.treasuryProposalId] || [];
+			// add the motion to the deduplicated map
+			treasuryMap[value.treasuryProposalId] = [...motionArray, Number(key)];
+		}
+	});
+
+	return treasuryMap;
 };
 
 export const syncDBs = async (): Promise<void> => {
@@ -123,9 +152,10 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.discussion?.treasuryProposals &&
 		await syncTreasuryProposals(syncMaps.onchain.treasuryProposals, syncMaps.discussion.treasuryProposals);
 
-		syncMaps?.onchain?.motions &&
-		syncMaps?.discussion?.motions &&
-		await syncMotions(syncMaps.onchain.motions, syncMaps.discussion.motions);
+		if (syncMaps?.onchain?.motions && syncMaps?.discussion?.motions) {
+			const treasuryDeduplicatedMotionsMap = getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);
+			await syncMotions(syncMaps.onchain.motions, syncMaps.discussion.motions, treasuryDeduplicatedMotionsMap);
+		}
 
 		syncMaps?.onchain?.referenda &&
 		syncMaps?.discussion?.referenda &&

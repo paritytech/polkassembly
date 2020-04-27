@@ -71,7 +71,7 @@ const RequestResetPassword = ({ className }:Props): JSX.Element => {
 						>
 							Request reset
 						</Button>
-						{error && <FilteredError text={error.message}/>}
+						{error?.message && <FilteredError text={error.message}/>}
 					</div>
 				</Form>
 			</Grid.Column>
