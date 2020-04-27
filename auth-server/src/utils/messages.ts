@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default {
+	ADDRESS_DEFAULT_SUCCESS: 'Address has been successfully set as default',
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
 	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
 	ADDRESS_LINKING_SUCCESSFUL: 'Address is successfully linked to your account.',
@@ -17,6 +18,7 @@ export default {
 	EMAIL_CHANGE_NOT_ALLOWED_YET: 'Email change not allowed. Please wait 48 hours after last email change.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	EMAIL_NOT_FOUND: 'There is no email associated with your account.',
+	EMAIL_REMOVE_SUCCESSFUL: 'Email removed from your account.',
 	EMAIL_UNDO_SUCCESSFUL: 'Your email has been reverted to old email.',
 	EMAIL_UNDO_TOKEN_NOT_FOUND: 'Email change undo token not found.',
 	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',

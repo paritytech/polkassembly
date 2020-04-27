@@ -83,6 +83,45 @@ export default class AuthService {
 		};
 	}
 
+	public async SetDefaultAddress (token: string, address: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const addresses = await Address
+			.query()
+			.where('user_id', user.id);
+
+		let defaultAddressId = 0;
+		const otherAddressIds: number[] = [];
+
+		// Going through any linked address for this user
+		// we store the id of the address we want to set as default
+		addresses.forEach((dbAddress) => {
+			if (dbAddress.address === address) {
+				defaultAddressId = dbAddress.id;
+			} else {
+				otherAddressIds.push(dbAddress.id);
+			}
+		});
+
+		if (!defaultAddressId) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		await Address
+			.query()
+			.patch({ default: true })
+			.findById(defaultAddressId);
+
+		// Mark any other address from the user as NOT default
+		await Address
+			.query()
+			.patch({ default: false })
+			.whereIn('id', otherAddressIds);
+
+		return this.getSignedToken(user);
+	}
+
 	public async AddressLoginStart (address: string): Promise<string> {
 		const signMessage = uuid();
 
@@ -338,9 +377,18 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 		}
 
+		// If this linked address is the first address to be linked. Then set it as default.
+		// querying other addresses where id != address_id to check the same.
+		const otherAddresses = await Address
+			.query()
+			.whereNot('id', address_id);
+
+		const setAsDefault = otherAddresses.length === 0;
+
 		await Address
 			.query()
 			.patch({
+				default: setAsDefault,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				verified: true
 			})
@@ -450,7 +498,7 @@ export default class AuthService {
 		sendVerificationEmail(user, verifyToken);
 	}
 
-	public async ChangeUsername (token: string, username: string): Promise<string> {
+	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
@@ -461,6 +509,13 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
+		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
+
 		await User
 			.query()
 			.patch({
@@ -468,23 +523,31 @@ export default class AuthService {
 			})
 			.findById(userId);
 
-		const user = await getUserFromUserId(userId);
+		user = await getUserFromUserId(userId);
 
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeEmail (token: string, email: string): Promise<string> {
+	public async ChangeEmail (token: string, email: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
-		const existing = await User
-			.query()
-			.where('email', email)
-			.first();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		if (email !== '') {
+			const existing = await User
+				.query()
+				.where('email', email)
+				.first();
+
+			if (existing) {
+				throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+			}
 		}
 
 		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
 
 		const existingUndoToken = await UndoEmailChangeToken
 			.query()
@@ -541,8 +604,10 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		// send verification email in background
-		sendVerificationEmail(user, verifyToken);
+		if (email) {
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
@@ -649,8 +714,15 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
+		let kusamaDefault = '';
 		const kusamaAddresses = addresses
-			.filter(address => address.network === KUSAMA && address.verified)
+			.filter(address => {
+				const isKusama = address.network === KUSAMA && address.verified;
+				if (isKusama && address.default) {
+					kusamaDefault = address.address;
+				}
+				return isKusama;
+			})
 			.map(address => `"${address.address}"`)
 			.join(',');
 
@@ -661,6 +733,7 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-kusama': `{${kusamaAddresses}}`,
+				'x-hasura-kusama-default': kusamaDefault,
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},

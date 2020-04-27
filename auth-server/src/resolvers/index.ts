@@ -20,6 +20,7 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setDefaultAddress from './mutation/setDefaultAddress';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
@@ -48,6 +49,7 @@ export default {
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		setDefaultAddress,
 		signup,
 		undoEmailChange,
 		verifyEmail
