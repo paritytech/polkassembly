@@ -156,7 +156,7 @@ const SignupForm = ({ className }:Props): JSX.Element => {
 						>
 							Sign-up
 						</Button>
-						{error && <FilteredError text={error.message}/>}
+						{error?.message && <FilteredError text={error.message}/>}
 					</div>
 				</Form>
 			</Grid.Column>

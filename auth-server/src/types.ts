@@ -113,19 +113,19 @@ export interface AddressLoginStartType extends MessageType {
     signMessage: string;
 }
 
-export interface CommentType {
+export interface CommentCreationHookDataType {
     post_id: number;
     author_id: number;
     content: string;
 }
 
 export interface OnchainLinkType {
-    proposer_address: string;
+    proposer_address?: string;
     post_id: number;
-    onchain_motion_id: number;
-    onchain_proposal_id: number;
-    onchain_referendum_id: number;
-    onchain_treasury_proposal_id: number;
+    onchain_motion_id?: number;
+    onchain_proposal_id?: number;
+    onchain_referendum_id?: number;
+    onchain_treasury_proposal_id?: number;
 }
 
 export interface JsonSchema {
@@ -248,3 +248,13 @@ export interface UndoEmailChangeArgs {
 export interface VerifyEmailArgs {
 	token: string;
 }
+
+export enum PostTypeEnum {
+    POST='post',
+    PROPOSAL = 'proposal',
+    TREASURY = 'treasury',
+    MOTION = 'motion',
+    REFERENDUM = 'referendum',
+}
+
+export type PostType = PostTypeEnum;

@@ -2668,6 +2668,7 @@ export type ValidatorWhereUniqueInput = {
 
 export type GetExecutedMotionsWithPreimageHashQueryVariables = {
   preimageHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
 };
 
 
@@ -2680,7 +2681,7 @@ export type GetExecutedMotionsWithPreimageHashQuery = (
 );
 
 export type GetTabledProposalAtBlockQueryVariables = {
-  blockHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
 };
 
 
@@ -2717,7 +2718,7 @@ export type OnchainReferendumFragment = (
     & Pick<ReferendumStatus, 'id' | 'status'>
     & { blockNumber: (
       { __typename?: 'BlockNumber' }
-      & Pick<BlockNumber, 'id' | 'hash'>
+      & Pick<BlockNumber, 'id' | 'number'>
     ) }
   )>> }
 );
@@ -2790,7 +2791,7 @@ export const OnchainReferendumFragmentDoc = gql`
     status
     blockNumber {
       id
-      hash
+      number
     }
   }
 }
@@ -2822,15 +2823,15 @@ export const OnchainTreasuryProposalFragmentDoc = gql`
 }
     `;
 export const GetExecutedMotionsWithPreimageHashDocument = gql`
-    query getExecutedMotionsWithPreimageHash($preimageHash: String!) {
-  motions(where: {AND: [{motionStatus_some: {status: "Executed"}}, {preimageHash: $preimageHash}]}, orderBy: id_DESC) {
+    query getExecutedMotionsWithPreimageHash($preimageHash: String!, $blockNumber: Int!) {
+  motions(where: {AND: [{motionStatus_some: {blockNumber: {number_lt: $blockNumber}}}, {motionStatus_some: {status: "Executed"}}, {preimageHash: $preimageHash}]}, orderBy: id_DESC) {
     motionProposalId
   }
 }
     `;
 export const GetTabledProposalAtBlockDocument = gql`
-    query getTabledProposalAtBlock($blockHash: String!) {
-  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
+    query getTabledProposalAtBlock($blockNumber: Int!) {
+  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {number: $blockNumber}}, {status: "Tabled"}]}}) {
     proposalId
     preimage {
       hash
