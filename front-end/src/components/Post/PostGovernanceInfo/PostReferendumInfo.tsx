@@ -27,8 +27,9 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 		return null;
 	}
 
-	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
+	const { delay, end, referendumStatus, preimage, voteThreshold } = onchainReferendum?.[0];
 	const { metaDescription, method, preimageArguments } = preimage || {};
+	const { blockNumber, status } = referendumStatus?.[0] || {};
 
 	return (
 		<OnchainInfoWrapper>
@@ -45,8 +46,18 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 					</Grid.Column>}
 				{end &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<h6>Ends In</h6>
-						<BlockCountdown endBlock={end}/>
+						{status == 'Started'
+							?
+							<>
+								<h6>Ends In</h6>
+								<BlockCountdown endBlock={end}/>
+							</>
+							:
+							<>
+								<h6>Started On</h6>
+								<div>{blockNumber?.startDateTime}</div>
+							</>
+						}
 					</Grid.Column>}
 				{voteThreshold &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
