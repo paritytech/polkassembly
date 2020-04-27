@@ -227,7 +227,7 @@ const Address = ({ className }: Props): JSX.Element => {
 							const address = getEncodedAddress(account.address);
 
 							return address &&
-								<Grid key={address} className='address-container'>
+								<Grid key={address}>
 									<Grid.Column width={5}>
 										<div className='item'>
 											<AddressComponent className='item' address={address} accountName={account.meta.name || ''} />
@@ -253,9 +253,12 @@ const Address = ({ className }: Props): JSX.Element => {
 												>
 													Set Default
 												</Button>
-											</div> : <div className='default-label'>
+											</div>: null
+										}
+										{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
+											<div className='default-label'>
 												<Icon name='check'/> Default Address
-											</div>
+											</div> : null
 										}
 									</Grid.Column>
 								</Grid>
@@ -273,18 +276,6 @@ export default styled(Address)`
 		position: absolute;
 		top: 50%;
 		margin-top: -1.8rem;
-	}
-
-	.address-container {
-		.default-button {
-			display: none;
-		}
-	}
-
-	.address-container:hover {
-		.default-button {
-			display: block;
-		}
 	}
 
 	.default-label {
