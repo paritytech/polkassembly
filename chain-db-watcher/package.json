@@ -12,9 +12,9 @@
     "url": "https://github.com/paritytech/polkassembly/issues"
   },
   "maintainers": [
+    "Michel Erler",
     "Nikhil Rajan",
-    "Thibaut Sardan",
-    "Michel Erler"
+    "Thibaut Sardan"
   ],
   "license": "MIT",
   "scripts": {
