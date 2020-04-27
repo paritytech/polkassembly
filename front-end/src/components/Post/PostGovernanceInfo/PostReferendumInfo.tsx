@@ -46,7 +46,7 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 					</Grid.Column>}
 				{end &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
-						{status == 'Started'
+						{status === 'Started'
 							?
 							<>
 								<h6>Ends In</h6>
