@@ -13,6 +13,10 @@ interface Props {
 }
 
 const Footer = ({ className }:Props ): JSX.Element => {
+	const navigateToIssues = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+		event.preventDefault();
+		window.open('https://github.com/paritytech/polkassembly/issues', '_blank');
+	};
 	return (
 		<footer className={className}>
 			<Menu>
@@ -27,6 +31,9 @@ const Footer = ({ className }:Props ): JSX.Element => {
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
 					Privacy Policy
+				</Menu.Item>
+				<Menu.Item as={Link} onClick={navigateToIssues}>
+					Report Issue
 				</Menu.Item>
 			</Menu>
 		</footer>
