@@ -14,6 +14,7 @@ export interface UserDetailsContextType {
     email?: string | null,
     email_verified?: boolean | null,
     addresses?: string[] | null,
+    defaultAddress?: string | null,
     notification: {
 		postParticipated: boolean,
 		postCreated: boolean,
@@ -37,6 +38,7 @@ export interface HasuraClaimPayload {
     'x-hasura-user-email': string
     'x-hasura-user-id': string
     'x-hasura-kusama': string
+    'x-hasura-kusama-default': string
 }
 
 export interface JWTPayploadType {

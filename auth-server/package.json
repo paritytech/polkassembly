@@ -13,18 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hasura/graphql-engine.git"
+    "url": "git+https://github.com/paritytech/polkassembly.git"
   },
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
+    "Michel Erler",
     "Nikhil Rajan",
     "Thibaut Sardan"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hasura/graphql-engine/issues"
+    "url": "https://github.com/paritytech/polkassembly/issues"
   },
-  "homepage": "https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/auth-webhooks/passport-js#readme",
+  "homepage": "http://polkassembly.io/",
   "dependencies": {
     "@polkadot/api": "^1.7.1",
     "@polkadot/types": "^1.7.1",
