@@ -13,7 +13,7 @@ HASURA_SERVER="http://localhost:8080"
 CHAIN_DB_WATCHER_SERVER="http://localhost:8019"
 CHAIN_DB_SERVER="http://0.0.0.0:4466"
 REACT_SERVER="http://localhost:3000"
-KUSAMA_NODE="wss://kusama-rpc.polkadot.io"
+ARCHIVE_NODE_ENDPOINT="wss://kusama-rpc.polkadot.io"
 ```
 
 

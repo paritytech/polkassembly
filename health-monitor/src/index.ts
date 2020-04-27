@@ -5,6 +5,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import fetch from 'node-fetch';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
 dotenv.config();
 
@@ -18,19 +19,63 @@ export interface HealthCheckResult {
 	hasuraServerStatus: number;
 	chainDbWatcherServerStatus: number;
 	reactServerStatus: number;
+	latestBlockNumber: number;
+	prismaVersion: string;
+}
+
+async function getLatestBlockNumber (): Promise<number> {
+	const provider = new WsProvider(process.env.ARCHIVE_NODE_ENDPOINT);
+	const api = await ApiPromise.create({ provider });
+
+	const latestBlockNumber = (
+		await api.derive.chain.bestNumberFinalized()
+	).toNumber();
+
+	return latestBlockNumber;
+}
+
+async function getPrismaVersion () {
+	return fetch(`${process.env.CHAIN_DB_SERVER}/management`, {
+		headers: {
+			'content-type': 'application/json'
+		},
+		body: JSON.stringify({
+			operationName: null,
+			variables: {},
+			query:`{
+				serverInfo {
+					version
+				}
+			}`
+		}),
+		method: 'POST'
+	}).then(res => res.json());
 }
 
 async function healthcheck (): Promise<HealthCheckResult> {
-	const authServer = await fetch(`${process.env.AUTH_SERVER}/healthcheck`);
-	const hasuraServer = await fetch(`${process.env.HASURA_SERVER}/healthz`);
-	const chainDbWatcherServer = await fetch(`${process.env.HASURA_SERVER}/healthz`);
-	const reactServer = await fetch(`${process.env.REACT_SERVER}/healthcheck`);
+	const [
+		authServer,
+		hasuraServer,
+		chainDbWatcherServer,
+		reactServer,
+		latestBlockNumber,
+		prismaVersion
+	] = await Promise.all([
+		fetch(`${process.env.AUTH_SERVER}/healthcheck`),
+		fetch(`${process.env.HASURA_SERVER}/healthz`),
+		fetch(`${process.env.HASURA_SERVER}/healthz`),
+		fetch(`${process.env.REACT_SERVER}/healthcheck`),
+		getLatestBlockNumber(),
+		getPrismaVersion()
+	]);
 
 	return {
 		authServerStatus: authServer.status,
 		chainDbWatcherServerStatus: chainDbWatcherServer.status,
 		hasuraServerStatus: hasuraServer.status,
-		reactServerStatus: reactServer.status
+		reactServerStatus: reactServer.status,
+		latestBlockNumber,
+		prismaVersion: prismaVersion.data.serverInfo.version
 	};
 }
 
