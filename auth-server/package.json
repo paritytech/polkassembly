@@ -17,9 +17,9 @@
   },
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
+    "Michel Erler",
     "Nikhil Rajan",
-    "Thibaut Sardan",
-    "Michel Erler"
+    "Thibaut Sardan"
   ],
   "license": "MIT",
   "bugs": {

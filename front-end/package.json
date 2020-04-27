@@ -13,9 +13,9 @@
   },
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
+    "Michel Erler",
     "Nikhil Rajan",
-    "Thibaut Sardan",
-    "Michel Erler"
+    "Thibaut Sardan"
   ],
   "dependencies": {
     "@polkadot/api": "^1.9.1",
