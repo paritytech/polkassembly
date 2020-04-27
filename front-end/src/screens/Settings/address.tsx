@@ -228,12 +228,12 @@ const Address = ({ className }: Props): JSX.Element => {
 
 							return address &&
 								<Grid key={address}>
-									<Grid.Column width={5}>
+									<Grid.Column width={7}>
 										<div className='item'>
 											<AddressComponent className='item' address={address} accountName={account.meta.name || ''} />
 										</div>
 									</Grid.Column>
-									<Grid.Column width={4}>
+									<Grid.Column width={3}>
 										<div className='button-container'>
 											<Button
 												className={'social'}
@@ -244,7 +244,7 @@ const Address = ({ className }: Props): JSX.Element => {
 											</Button>
 										</div>
 									</Grid.Column>
-									<Grid.Column width={5} >
+									<Grid.Column width={6} >
 										{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
 											<div className='button-container default-button'>
 												<Button
@@ -281,5 +281,7 @@ export default styled(Address)`
 	.default-label {
 		font-weight: 500;
 		color: green_primary;
+		padding: 0.5rem 0;
+		line-height: 1.6rem;
 	}
 `;
