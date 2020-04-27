@@ -127,7 +127,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 					{changed ?
 						<Form.Group>
 							<Form.Field width={6}>
-								{error && <FilteredError text={error.message}/>}
+								{error?.message && <FilteredError text={error.message}/>}
 								<Button
 									secondary
 									onClick={updatePreference}
