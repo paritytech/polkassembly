@@ -48,7 +48,7 @@ const BlocksToTime = ({ blocks, className }:Props ) => {
 			<Popup
 				className={className}
 				trigger={<div>{blockToTime(blocks , blocktime)}</div>}
-				content={`${blocks} blocks $`}
+				content={`${blocks} blocks`}
 				hoverable={true}
 				position='top left'
 				style={popupStyle}
