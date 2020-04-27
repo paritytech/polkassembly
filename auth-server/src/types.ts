@@ -258,3 +258,18 @@ export enum PostTypeEnum {
 }
 
 export type PostType = PostTypeEnum;
+
+export interface AddressSignupStartArgs {
+    address: string;
+    network: string;
+}
+
+export interface AddressSignupConfirmArgs {
+    address: string;
+    email: string;
+    name: string;
+    network: string;
+    password: string;
+    signature: string;
+    username: string;
+}

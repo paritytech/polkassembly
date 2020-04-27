@@ -28,14 +28,14 @@ if (apiKey) {
 	sgMail.setApiKey(apiKey);
 }
 
-export const sendVerificationEmail = (user: User, token: EmailVerificationToken): void => {
+export const sendVerificationEmail = (user: User, token: EmailVerificationToken, password: string | undefined): void => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key');
 		return;
 	}
 
 	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
-	const text = ejs.render(verificationEmailTemplate, { username: user.name || '', verifyUrl });
+	const text = ejs.render(verificationEmailTemplate, { password, username: user.name || '', verifyUrl });
 	const msg = {
 		from: FROM,
 		html: text,

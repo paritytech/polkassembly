@@ -47,6 +47,7 @@ const NOTIFICATION_DEFAULTS = {
 };
 
 export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
+export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -173,6 +174,140 @@ export default class AuthService {
 		};
 	}
 
+	public async AddressSignupStart (address: string): Promise<string> {
+		const signMessage = uuid();
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
+		}
+
+		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
+	public async AddressSignupConfirm (network: string, address: string, signature: string, email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+		const signMessage = await redisGet(getAddressSignupKey(address));
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
+		}
+
+		username = username || address;
+
+		let existing = await User
+			.query()
+			.where('username', username.toLowerCase())
+			.first();
+
+		if (existing) {
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
+		}
+
+		if (email) {
+			existing = await User
+				.query()
+				.where('email', email)
+				.first();
+		}
+
+		if (existing) {
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		}
+
+		const sendPasswordInMail = !password;
+
+		password = password || uuid();
+
+		const salt = randomBytes(32);
+		password = await argon2.hash(password, { salt });
+
+		const user = await User
+			.query()
+			.allowInsert('[email, email_verified, password, username, name]')
+			.insert({
+				email,
+				email_verified: false,
+				name,
+				password,
+				salt: salt.toString('hex'),
+				username: username.toLowerCase()
+			});
+
+		await Notification
+			.query()
+			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+			.insert({
+				user_id: user.id,
+				...NOTIFICATION_DEFAULTS
+			});
+
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(address);
+
+		await Address
+			.query()
+			.allowInsert('[network, address, user_id, sign_message, verified]')
+			.insert({
+				address,
+				default: true,
+				network,
+				public_key: Buffer.from(publicKey).toString('hex'),
+				user_id: user.id,
+				verified: true
+			});
+
+		if (email) {
+			const verifyToken = await EmailVerificationToken
+				.query()
+				.allowInsert('[token, user_id, valid]')
+				.insert({
+					token: uuid(),
+					user_id: user.id,
+					valid: true
+				});
+
+			// send verification email in background
+			if (sendPasswordInMail) {
+				sendVerificationEmail(user, verifyToken, password);
+			} else {
+				sendVerificationEmail(user, verifyToken, undefined);
+			}
+		}
+
+		return {
+			refreshToken: await this.getRefreshToken(user),
+			token: await this.getSignedToken(user),
+			user: {
+				email: user.email,
+				email_verified: user.email_verified || false,
+				id: user.id,
+				name: user.name,
+				username: user.username
+			}
+		};
+	}
+
 	public async Logout (token: string, refreshToken: string): Promise<void> {
 		if (!refreshToken) {
 			throw new AuthenticationError(messages.REFRESH_TOKEN_NOT_PROVIDED);
@@ -225,7 +360,7 @@ export default class AuthService {
 
 		const user = await User
 			.query()
-			.allowInsert('[email, password, username, name]')
+			.allowInsert('[email, email_verified, password, username, name]')
 			.insert({
 				email,
 				email_verified: false,
@@ -254,7 +389,7 @@ export default class AuthService {
 				});
 
 			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
+			sendVerificationEmail(user, verifyToken, undefined);
 		}
 
 		return {
@@ -495,7 +630,7 @@ export default class AuthService {
 				valid: true
 			});
 
-		sendVerificationEmail(user, verifyToken);
+		sendVerificationEmail(user, verifyToken, undefined);
 	}
 
 	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
@@ -606,7 +741,7 @@ export default class AuthService {
 
 		if (email) {
 			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
+			sendVerificationEmail(user, verifyToken, undefined);
 		}
 
 		// send undo token in background
