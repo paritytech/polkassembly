@@ -35,7 +35,7 @@ export const postSubscriptionMailTemplate = `
         Hi <%= username %>!<br/><br/>
 
         <br />
-        <%= authorUsername %> has commented on a <a href="<%= domain %>/post/<%= postId %>">post you subscribed to</a>.<br /><br />
+        <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
         comment: <%= content %><br />
 
@@ -63,7 +63,7 @@ export const ownProposalCreatedEmailTemplate = `
     <p>
         Hi <%= username %>!<br/><br/>
 
-        You have submitted a motion/proposal on chain.<br />
+        You have submitted a <%= type %> on chain.<br />
         Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
         You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a>
@@ -94,7 +94,7 @@ export const reportContentEmailTemplate = `
         <%= reason %> <br />
         Comments:<br />
         <%= comments %> <br />
-        type: <%= type %> <br />
+        Report type: <%= reportType %> <br />
         id: <%= contentId %> <br />
     </p>
 `;

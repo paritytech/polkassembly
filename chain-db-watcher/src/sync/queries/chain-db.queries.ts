@@ -31,7 +31,7 @@ export const getOnchainReferenda = gql`
             status
             blockNumber {
                 id
-                hash
+                number
             }
         }
     }

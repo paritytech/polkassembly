@@ -38,7 +38,7 @@ export interface OnchainSyncMap {
 
 export interface OnchainReferendaValueSyncType {
     preimageHash: string;
-    blockCreationHash: string;
+    blockCreationNumber: number;
 }
 
 export interface OnchainMotionSyncType {
@@ -53,6 +53,8 @@ export interface DiscussionSyncMap {
     referenda?: ObjectMap;
     treasuryProposals?: ObjectMap;
 }
+
+export type TreasuryDeduplicateMotionMap = Record<number, number[]>;
 
 export type ObjectMap = {[index: string]: string};
 export type MotionObjectMap = {[index: string]: OnchainMotionSyncType};

@@ -99,6 +99,7 @@ export default styled(Comment)`
 		border-radius: 3px;
 		margin-bottom: 1rem;
 		width: 100%;
+		word-break: break-word;
 
 		@media only screen and (max-width: 576px) {
 			width: 100%;

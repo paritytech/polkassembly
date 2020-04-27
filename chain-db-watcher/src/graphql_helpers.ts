@@ -499,17 +499,17 @@ export const addDiscussionPostAndMotion = async ({
  *
  * @param {Object} referendumInfo - The referendum we are searching a matching proposal for.
  * @param {string | null} referendumInfo.preimageHash - The preimage hash of the referendum, if any.
- * @param {string} referendumInfo.referendumCreationBlockHash - The block hash at which the referendum was created.
+ * @param {number} referendumInfo.referendumCreationBlockNumber - The block number at which the referendum was created.
  */
 
 interface ReferendumInfo {
 	preimageHash?: string | null;
-	referendumCreationBlockHash: string;
+	referendumCreationBlockNumber: number;
 }
 
 export const getOnchainAssociatedProposalId = async ({
 	preimageHash,
-	referendumCreationBlockHash
+	referendumCreationBlockNumber
 }: ReferendumInfo): Promise<number | undefined> => {
 	if (!chainDBGraphqlUrl) {
 		throw new Error(
@@ -523,18 +523,18 @@ export const getOnchainAssociatedProposalId = async ({
 		});
 
 		const getTabledProposalsAtBlockVariables = {
-			blockHash: referendumCreationBlockHash
+			blockNumber: referendumCreationBlockNumber
 		};
 
 		const onchainSdk = getOnchainSdk(client);
 		const data = await onchainSdk.getTabledProposalAtBlock(getTabledProposalsAtBlockVariables);
 
 		if (!data?.proposals?.length) {
-			console.log(chalk.yellow(`No democracy proposal Id tabled at block: ${referendumCreationBlockHash}. It must have been initiated by a council motion.`));
+			console.log(chalk.yellow(`No democracy proposal tabled at block ${referendumCreationBlockNumber}. It must have been initiated by a council motion.`));
 			return undefined;
 		}
 
-		// if more than one proposal got tabled at this blockHash
+		// if more than one proposal got tabled at this blockNumber
 		// we need to find out which one the current referendum
 		// corresponds to by matching preimage hash if possible.
 		if (data.proposals.length > 1) {
@@ -547,7 +547,7 @@ export const getOnchainAssociatedProposalId = async ({
 				// we got lucky, a matching preimage was found
 				return candidates?.[0]?.proposalId;
 			} else {
-				throw new Error(`Several poposals were tabled at block: ${referendumCreationBlockHash}.\n
+				throw new Error(`Several poposals were tabled at block: ${referendumCreationBlockNumber}.\n
 				The preimage didn't help identify a matching proposal. Preimage hash: ${preimageHash}.`);
 			}
 		} else {
@@ -570,7 +570,7 @@ export const getOnchainAssociatedProposalId = async ({
  * @param {string} preimageHash - The preimage hash for the proposal.
  */
 
-export const getOnchainAssociatedMotionId = async (preimageHash: string): Promise<number | undefined> => {
+export const getOnchainAssociatedMotionId = async (preimageHash: string, blockNumber: number): Promise<number | undefined> => {
 	if (!chainDBGraphqlUrl) {
 		throw new Error(
 			'Please specify an environment variable for the CHAIN_DB_GRAPHQL_URL.'
@@ -583,7 +583,7 @@ export const getOnchainAssociatedMotionId = async (preimageHash: string): Promis
 		});
 
 		const onchainSdk = getOnchainSdk(client);
-		const data = await onchainSdk.getExecutedMotionsWithPreimageHash({ preimageHash });
+		const data = await onchainSdk.getExecutedMotionsWithPreimageHash({ blockNumber, preimageHash });
 
 		if (!data?.motions?.length) {
 			throw new Error(`No council motion was executed with preimage hash: ${preimageHash}.`);
@@ -603,8 +603,8 @@ export const getOnchainAssociatedMotionId = async (preimageHash: string): Promis
 /**
  * Updates the discussion db to add the referendum id information to an existing on_chain_proposal
  *
- * @param onchainProposalId - The preimage hash of the referendum, if any.
- * @param onchainReferendumId - The block hash at which the referendum was created.
+ * @param onchainProposalId - The proposal id of the referendum, if any.
+ * @param onchainReferendumId - The referendum id of the referendum, if any..
  */
 
  interface MatchingInfo {
@@ -696,7 +696,7 @@ export const addReferendumIdToMotion = async ({
 
 interface AddDiscussionReferendum {
 	preimageHash: string;
-	referendumCreationBlockHash: string;
+	referendumCreationBlockNumber: number;
 	referendumId: number;
 }
 
@@ -705,15 +705,15 @@ interface AddDiscussionReferendum {
  * and update the discussion db to add the referendum id
  *
  * @param preimageHash - The preimage hash of the referendum, if any.
- * @param referendumCreationBlockHash - the block hash at which the referendum was created
+ * @param referendumCreationBlockNumber - the block number at which the referendum was created
  * @param onchainReferendumId - The block hash at which the referendum was created.
  */
 
-export const addDiscussionReferendum = async ({ preimageHash, referendumCreationBlockHash, referendumId }: AddDiscussionReferendum): Promise<void> => {
+export const addDiscussionReferendum = async ({ preimageHash, referendumCreationBlockNumber, referendumId }: AddDiscussionReferendum): Promise<void> => {
 	try {
 		const associatedProposalId = await getOnchainAssociatedProposalId({
 			preimageHash,
-			referendumCreationBlockHash
+			referendumCreationBlockNumber
 		});
 		let associatedMotionId: number | undefined;
 
@@ -740,7 +740,7 @@ export const addDiscussionReferendum = async ({ preimageHash, referendumCreation
 				));
 			}
 		} else {
-			associatedMotionId = await getOnchainAssociatedMotionId(preimageHash);
+			associatedMotionId = await getOnchainAssociatedMotionId(preimageHash, referendumCreationBlockNumber);
 
 			// edge case, motion id can be 0, which is falsy
 			if (!associatedMotionId && associatedMotionId !== 0) {
