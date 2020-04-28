@@ -8,7 +8,6 @@ export default `
         email: String
         name: String
         network: String!
-        password: String
         signature: String!
         username: String
     ): LoginResponse

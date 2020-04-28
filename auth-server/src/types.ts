@@ -269,7 +269,6 @@ export interface AddressSignupConfirmArgs {
     email: string;
     name: string;
     network: string;
-    password: string;
     signature: string;
     username: string;
 }

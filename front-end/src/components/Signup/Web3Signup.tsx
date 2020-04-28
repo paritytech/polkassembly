@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
@@ -10,6 +11,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Divider, DropdownProps } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { ModalContext } from '../../context/ModalContext';
@@ -35,11 +37,14 @@ const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
 const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);
 	const [address, setAddress] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [username, setUsername] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [isAccountLoading, setIsAccountLoading] = useState(true);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
+	const { api, apiReady } = useContext(ApiContext);
 	const [addressSignupStartMutation] = useAddressSignupStartMutation();
 	const [addressSignupConfirmMutation, { loading }] = useAddressSignupConfirmMutation();
 	const currentUser = useContext(UserDetailsContext);
@@ -51,6 +56,27 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 			getAccounts();
 		}
 	}, [accounts.length]);
+
+	useEffect(() => {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
+			return;
+		}
+
+		let unsubscribe: () => void;
+
+		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
+			setEmail(info.identity.email || '');
+			setUsername(info.identity.display || info.nickname || '');
+		})
+			.then(unsub => { unsubscribe = unsub; })
+			.catch(e => console.error(e));
+
+		return () => unsubscribe && unsubscribe();
+	},[address, api, apiReady]);
 
 	const getAccounts = async (): Promise<undefined> => {
 		const extensions = await web3Enable(APPNAME);
@@ -125,14 +151,26 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 			const { data: signupResult } = await addressSignupConfirmMutation({
 				variables: {
 					address,
+					email,
 					network: NETWORK,
-					signature
+					signature,
+					username
 				}
 			});
 
 			if (signupResult?.addressSignupConfirm?.token && signupResult?.addressSignupConfirm?.user) {
 				handleLoginUser({ token: signupResult.addressSignupConfirm.token, user: signupResult.addressSignupConfirm.user }, currentUser);
-				setModal({ content: 'Add an email in settings if you want to be able to recover your account!', title: 'Add optional email' });
+				if (email) {
+					setModal({
+						content: 'We sent you an email to verify your address. Click on the link in the email.',
+						title: 'You\'ve got some mail'
+					});
+				} else {
+					setModal({
+						content: 'Add an email in settings if you want to be able to recover your account!',
+						title: 'Add optional email'
+					});
+				}
 				history.push('/');
 			} else {
 				throw new Error('Web3 Login failed');

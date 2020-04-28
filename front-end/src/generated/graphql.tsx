@@ -2782,7 +2782,6 @@ export type MutationAddressSignupConfirmArgs = {
   email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   network: Scalars['String'],
-  password?: Maybe<Scalars['String']>,
   signature: Scalars['String'],
   username?: Maybe<Scalars['String']>
 };
@@ -3140,7 +3139,6 @@ export type Mutation_RootAddressSignupConfirmArgs = {
   email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   network: Scalars['String'],
-  password?: Maybe<Scalars['String']>,
   signature: Scalars['String'],
   username?: Maybe<Scalars['String']>
 };
@@ -11202,7 +11200,6 @@ export type AddressSignupConfirmMutationVariables = {
   signature: Scalars['String'],
   email?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
-  password?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>
 };
 
@@ -12885,8 +12882,8 @@ export type AddressSignupStartMutationHookResult = ReturnType<typeof useAddressS
 export type AddressSignupStartMutationResult = ApolloReactCommon.MutationResult<AddressSignupStartMutation>;
 export type AddressSignupStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressSignupStartMutation, AddressSignupStartMutationVariables>;
 export const AddressSignupConfirmDocument = gql`
-    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!, $email: String, $name: String, $password: String, $username: String) {
-  addressSignupConfirm(network: $network, address: $address, signature: $signature, email: $email, name: $name, password: $password, username: $username) {
+    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!, $email: String, $name: String, $username: String) {
+  addressSignupConfirm(network: $network, address: $address, signature: $signature, email: $email, name: $name, username: $username) {
     user {
       id
       name
@@ -12918,7 +12915,6 @@ export type AddressSignupConfirmMutationFn = ApolloReactCommon.MutationFunction<
  *      signature: // value for 'signature'
  *      email: // value for 'email'
  *      name: // value for 'name'
- *      password: // value for 'password'
  *      username: // value for 'username'
  *   },
  * });

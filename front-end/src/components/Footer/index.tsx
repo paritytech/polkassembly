@@ -32,7 +32,7 @@ const Footer = ({ className }:Props ): JSX.Element => {
 				<Menu.Item as={Link} to="/privacy">
 					Privacy Policy
 				</Menu.Item>
-				<Menu.Item as={Link} onClick={navigateToIssues}>
+				<Menu.Item as={Link} to='#' onClick={navigateToIssues}>
 					Report an Issue
 				</Menu.Item>
 			</Menu>

@@ -73,7 +73,7 @@ const Fullname = (): JSX.Element => {
 					<input
 						value={name || ''}
 						onChange={onNameChange}
-						placeholder='username'
+						placeholder='Display Name'
 						type='text'
 					/>
 					{error?.message && <FilteredError text={error.message}/>}

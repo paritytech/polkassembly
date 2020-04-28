@@ -194,7 +194,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async AddressSignupConfirm (network: string, address: string, signature: string, email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+	public async AddressSignupConfirm (network: string, address: string, signature: string, email: string, username: string, name: string): Promise<AuthObjectType> {
 		const signMessage = await redisGet(getAddressSignupKey(address));
 
 		if (!signMessage) {
@@ -216,8 +216,6 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
 		}
 
-		username = username || address;
-
 		let existing = await User
 			.query()
 			.where('username', username.toLowerCase())
@@ -238,12 +236,8 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const sendPasswordInMail = !password;
-
-		password = password || uuid();
-
 		const salt = randomBytes(32);
-		password = await argon2.hash(password, { salt });
+		const password = await argon2.hash(uuid(), { salt });
 
 		const user = await User
 			.query()
@@ -293,11 +287,7 @@ export default class AuthService {
 				});
 
 			// send verification email in background
-			if (sendPasswordInMail) {
-				sendVerificationEmail(user, verifyToken, password);
-			} else {
-				sendVerificationEmail(user, verifyToken, undefined);
-			}
+			sendVerificationEmail(user, verifyToken);
 		}
 
 		return {
@@ -394,7 +384,7 @@ export default class AuthService {
 				});
 
 			// send verification email in background
-			sendVerificationEmail(user, verifyToken, undefined);
+			sendVerificationEmail(user, verifyToken);
 		}
 
 		return {
@@ -635,7 +625,7 @@ export default class AuthService {
 				valid: true
 			});
 
-		sendVerificationEmail(user, verifyToken, undefined);
+		sendVerificationEmail(user, verifyToken);
 	}
 
 	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
@@ -746,7 +736,7 @@ export default class AuthService {
 
 		if (email) {
 			// send verification email in background
-			sendVerificationEmail(user, verifyToken, undefined);
+			sendVerificationEmail(user, verifyToken);
 		}
 
 		// send undo token in background

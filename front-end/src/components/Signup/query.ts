@@ -35,7 +35,6 @@ export const ADDRESS_SIGNUP_CONFIRM = gql`
         $signature: String!,
         $email: String,
         $name: String,
-        $password: String,
         $username: String
     ) {
         addressSignupConfirm(
@@ -44,7 +43,6 @@ export const ADDRESS_SIGNUP_CONFIRM = gql`
             signature: $signature,
             email: $email,
             name: $name,
-            password: $password,
             username: $username
         ){
             user {
