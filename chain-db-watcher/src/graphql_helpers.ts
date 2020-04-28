@@ -33,12 +33,14 @@ const DEFAULT_DESCRIPTION = 'The title and description of this proposal can only
 
 const getTokenRetried = async (): Promise<string | void> => {
 	if (!discussionGraphqlUrl) {
-		throw new pRetry.AbortError('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
+		throw new pRetry.AbortError(
+			new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.')
+		);
 	}
 
 	if (!proposalBotPassword || !proposalBotUsername) {
 		throw new pRetry.AbortError(
-			"PROPOSAL_BOT_USERNAME or PROPOSAL_BOT_PASSWORD environment variables haven't been set for the proposal bot to login."
+			new Error("PROPOSAL_BOT_USERNAME or PROPOSAL_BOT_PASSWORD environment variables haven't been set for the proposal bot to login.")
 		);
 	}
 
@@ -49,7 +51,9 @@ const getTokenRetried = async (): Promise<string | void> => {
 	if (data.login?.token) {
 		return data?.login?.token;
 	} else {
-		throw new pRetry.AbortError(`Unexpected data at proposal bot login: ${data}`);
+		throw new pRetry.AbortError(
+			new Error(`Unexpected data at proposal bot login: ${data}`)
+		);
 	}
 };
 
