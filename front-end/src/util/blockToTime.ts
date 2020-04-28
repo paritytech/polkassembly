@@ -3,60 +3,35 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import BN from 'bn.js';
 import { chainProperties } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
-import getNetwork from './getNetwork';
+function secondsToDhm(seconds: number) {
+	seconds = Number(seconds);
+	var d = Math.floor(seconds / (3600*24));
+	var h = Math.floor(seconds % (3600*24) / 3600);
+	var m = Math.floor(seconds % 3600 / 60);
 
-type Time = [number, number, number, number];
+	var dDisplay = d + 'd ';
+	var hDisplay = h + 'h ';
+	var mDisplay = m + 'm ';
 
-const HRS = 60 * 60;
-const DAY = HRS * 24;
-
-function addTime (a: Time, b: Time): Time {
-	return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]];
+	return dDisplay + hDisplay + mDisplay;
 }
 
-function extractTime (value?: number): Time {
-	if (!value) {
-		return [0, 0, 0, 0];
-	} else if (value < 60) {
-		return [0, 0, 0, value];
-	}
-
-	const mins = value / 60;
-
-	if (mins < 60) {
-		const round = Math.floor(mins);
-
-		return addTime([0, 0, round, 0], extractTime(value - round * 60));
-	}
-
-	const hrs = mins / 60;
-
-	if (hrs < 24) {
-		const round = Math.floor(hrs);
-
-		return addTime([0, round, 0, 0], extractTime(value - round * HRS));
-	}
-
-	const round = Math.floor(hrs / 24);
-
-	return addTime([round, 0, 0, 0], extractTime(value - round * DAY));
-}
-
-export default function blockToTime (blocks: BN |  number, blocktime?: BN | number ): string {
+export default function blockToTime (blocks: BN |  number, blocktime?: number ): string {
 	const network = getNetwork();
 
 	if (!blocktime) {
 		blocktime = chainProperties?.[network]?.blockTime / 1000;
 	} else {
-		blocktime = parseInt(blocktime.toString()) / 1000;
+		blocktime = blocktime / 1000;
 	}
 
 	if (typeof blocks !== 'number') {
-		blocks = parseInt(blocks.toString());
+		blocks = blocks.toNumber();
 	}
 
-	const time = extractTime(blocks * blocktime);
+	const time = secondsToDhm(blocks * blocktime);
 
-	return time[0].toString() + 'd ' + time[1].toString() + 'h ' + time[2].toString() + 'm ';
+	return time;
 }

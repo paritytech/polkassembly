@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { bnToBn } from '@polkadot/util';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
@@ -22,7 +21,7 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 	const { api, apiReady } = useContext(ApiContext);
 	const [currentBlock, setCurrentBlock] = useState(ZERO);
 	const blocksRemaining = endBlock - currentBlock.toNumber();
-	const DEFAULT_TIME = bnToBn(chainProperties?.[network]?.blockTime);
+	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
 	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
 
 	useEffect(() => {
@@ -38,7 +37,7 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 
 		let unsubscribe: () => void;
 
-		setBlocktime(api.consts.babe?.expectedBlockTime);
+		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
 
 		api.derive.chain.bestNumber((number) => {
 			setCurrentBlock(number);
