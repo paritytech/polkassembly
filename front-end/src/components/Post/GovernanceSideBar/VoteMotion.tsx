@@ -9,7 +9,7 @@ import { DropdownProps } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { LoadingStatusType,NotificationStatus } from 'src/types';
+import { LoadingStatusType, NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
 import AyeNayButtons from 'src/ui-components/AyeNayButtons';
 import Button from 'src/ui-components/Button';

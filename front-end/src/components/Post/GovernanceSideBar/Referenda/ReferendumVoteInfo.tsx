@@ -8,7 +8,7 @@ import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
-import { VoteThreshold } from 'src/types';
+import { LoadingStatusType, VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
 import Loader from 'src/ui-components/Loader';
 import VoteProgress from 'src/ui-components/VoteProgress';
@@ -28,7 +28,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
 	const [nayVotes, setNayVotes] = useState(ZERO);
-	const [isInfoLoading, setIsInfoLoading] = useState(true);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading votes' });
 
 	useEffect(() => {
 		if (!api) {
@@ -38,6 +38,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 		if (!apiReady) {
 			console.error('api not ready');
+			setLoadingStatus({ isLoading: false, message: 'Api not ready' });
 			return;
 		}
 
@@ -52,7 +53,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				setTurnout(_info?.asOngoing.tally.turnout);
 			}
 
-			setIsInfoLoading(false);
+			setLoadingStatus({ isLoading: false, message: '' });
 		})
 			.then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
@@ -95,11 +96,11 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
-		<Card className={isInfoLoading ? `LoaderWrapper ${className}` : className}>
-			{isInfoLoading
+		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
+			{loadingStatus.isLoading
 				?
-				<Loader />
-				:apiReady
+				<Loader text={loadingStatus.message}/>
+				: apiReady
 					?
 					<>
 						<h3>Overview</h3>
@@ -127,7 +128,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 						</Grid>
 					</>
 					:
-					<div className='error-text'>Polkadot API is not available.</div>
+					<div className='error-text'>{loadingStatus.message}</div>
 			}
 		</Card>
 	);

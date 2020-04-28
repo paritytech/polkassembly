@@ -7,6 +7,7 @@ import React, { useContext, useEffect,useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
+import { LoadingStatusType } from 'src/types';
 import Card from 'src/ui-components/Card';
 import Loader from 'src/ui-components/Loader';
 import formatBnBalance from 'src/util/formatBnBalance';
@@ -22,7 +23,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
 	const currentNetwork = getNetwork();
-	const [isInfoLoading, setIsInfoLoading] = useState(true);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading seconds' });
 
 	useEffect(() => {
 		if (!api) {
@@ -32,6 +33,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 		if (!apiReady) {
 			console.error('api not ready');
+			setLoadingStatus({ isLoading: false, message: 'Api not ready' });
 			return;
 		}
 
@@ -44,7 +46,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 					setDeposit(formatBnBalance(proposal.balance, { numberAfterComma: 2, withUnit: true }));
 				}
 			});
-			setIsInfoLoading(false);
+			setLoadingStatus({ isLoading: false, message: '' });
 		})
 			.then(unsub => {unsubscribe = unsub;})
 			.catch(e => console.error(e));
@@ -54,11 +56,11 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	}, [api, apiReady, proposalId]);
 
 	return (
-		<Card className={isInfoLoading ? `LoaderWrapper ${className}` : className}>
-			{isInfoLoading
+		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
+			{loadingStatus.isLoading
 				?
-				<Loader />
-				:apiReady
+				<Loader text={loadingStatus.message}/>
+				: apiReady
 					?
 					<>
 						<h3>Overview</h3>
@@ -80,7 +82,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 						</Grid>
 					</>
 					:
-					<div className='error-text'>Polkadot API is not available.</div>
+					<div className='error-text'>{loadingStatus.message}</div>
 			}
 		</Card>
 	);
