@@ -650,8 +650,8 @@ export const addReferendumIdToProposal = async ({
 /**
  * Updates the discussion db to add the referendum id information to an existing on_chain_motion
  *
- * @param onchainMotionId - The preimage hash of the referendum, if any.
- * @param onchainReferendumId - The block hash at which the referendum was created.
+ * @param onchainMotionId - The motion id linked to the referendum
+ * @param onchainReferendumId - The referendum id to add
  */
 
 interface MatchingMotionInfo {
@@ -706,7 +706,7 @@ interface AddDiscussionReferendum {
  *
  * @param preimageHash - The preimage hash of the referendum, if any.
  * @param referendumCreationBlockNumber - the block number at which the referendum was created
- * @param onchainReferendumId - The block hash at which the referendum was created.
+ * @param onchainReferendumId - The referendum id to add.
  */
 
 export const addDiscussionReferendum = async ({ preimageHash, referendumCreationBlockNumber, referendumId }: AddDiscussionReferendum): Promise<void> => {
