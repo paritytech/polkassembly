@@ -69,7 +69,7 @@ export const referendumSubscription = gql`
 				referendumId
 				referendumStatus(orderBy: id_DESC) {
 					blockNumber {
-						hash
+						number
 					}
 					status
 				}
