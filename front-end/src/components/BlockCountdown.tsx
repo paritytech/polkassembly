@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
@@ -48,18 +49,18 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 		return () => unsubscribe && unsubscribe();
 	}, [api, apiReady]);
 
-	const popupStyle = {
-		fontSize: '1.2rem'
-	};
+	const Div = styled.div`
+		font-size: xs;
+		color: black_text;
+	`;
 
 	return (
 		<Popup
 			className={className}
 			trigger={<div>{blockToTime(blocksRemaining, blocktime)}</div>}
-			content={`#${endBlock}`}
+			content={<Div>{`#${endBlock}`}</Div>}
 			hoverable={true}
 			position='top left'
-			style={popupStyle}
 		/>
 	);
 };

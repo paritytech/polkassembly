@@ -1,6 +1,7 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
+import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
@@ -35,19 +36,19 @@ const BlocksToTime = ({ blocks, className }:Props ) => {
 		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
 	}, [ api, apiReady]);
 
-	const popupStyle = {
-		fontSize: '1.2rem'
-	};
+	const Div = styled.div`
+		font-size: xs;
+		color: black_text;
+	`;
 
 	return (
 		<div className={className}>
 			<Popup
 				className={className}
 				trigger={<div>{blockToTime(blocks , blocktime)}</div>}
-				content={`${blocks} blocks`}
+				content={<Div>{`${blocks} blocks`}</Div>}
 				hoverable={true}
 				position='top left'
-				style={popupStyle}
 			/>
 		</div>
 	);
