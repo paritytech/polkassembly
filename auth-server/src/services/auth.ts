@@ -874,7 +874,7 @@ export default class AuthService {
 				'x-hasura-default-role': currentRole,
 				'x-hasura-kusama': `{${kusamaAddresses}}`,
 				'x-hasura-kusama-default': kusamaDefault,
-				'x-hasura-user-email': email,
+				'x-hasura-user-email': email || '',
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),

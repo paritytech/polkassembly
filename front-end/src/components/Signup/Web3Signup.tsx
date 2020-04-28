@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { Divider, DropdownProps } from 'semantic-ui-react';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressSignupConfirmMutation, useAddressSignupStartMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
@@ -43,6 +44,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 	const [addressSignupConfirmMutation, { loading }] = useAddressSignupConfirmMutation();
 	const currentUser = useContext(UserDetailsContext);
 	const { errors, handleSubmit, register } = useForm();
+	const { setModal } = useContext(ModalContext);
 
 	useEffect(() => {
 		if (!accounts.length) {
@@ -130,6 +132,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 
 			if (signupResult?.addressSignupConfirm?.token && signupResult?.addressSignupConfirm?.user) {
 				handleLoginUser({ token: signupResult.addressSignupConfirm.token, user: signupResult.addressSignupConfirm.user }, currentUser);
+				setModal({ content: 'Add an email in settings page if you want to be able to recover your account!', title: 'Add optional email' });
 				history.push('/');
 			} else {
 				throw new Error('Web3 Login failed');
