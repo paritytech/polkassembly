@@ -106,7 +106,7 @@ const syncReferenda = async (onchainReferenda: ReferendumObjectMap, discussionRe
 			// If this referendum doesn't exist in the discussion DB
 			if (!discussionReferenda[key]) {
 				if (!onchainReferenda[key].blockCreationNumber) {
-					throw new Error(`No block hash creation found for referendum id: ${key}`);
+					throw new Error(`No blockCreationNumber found for referendum id: ${key}`);
 				}
 
 				await addDiscussionReferendum({
