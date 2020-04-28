@@ -187,7 +187,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						</label>
 						{errors.termsandconditions && <div className={'errorText'}>Please agree to the terms of the Polkassembly end user agreement.</div>}
 					</Form.Field>
-					<div>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
+					<div className='privacy'>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -240,5 +240,9 @@ export default styled(SignupForm)`
 
 	.ui.dimmer {
 		height: calc(100% - 6.5rem);
+	}
+
+	.privacy {
+		margin-bottom: 10px;
 	}
 `;
