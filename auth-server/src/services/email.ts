@@ -6,10 +6,9 @@ import sgMail from '@sendgrid/mail';
 import ejs from 'ejs';
 
 import EmailVerificationToken from '../model/EmailVerificationToken';
-import PasswordResetToken from '../model/PasswordResetToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
-import { CommentType } from '../types';
+import { CommentCreationHookDataType, PostType } from '../types';
 import {
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
@@ -49,17 +48,14 @@ export const sendVerificationEmail = (user: User, token: EmailVerificationToken)
 		console.error('Verification Email not sent', e));
 };
 
-export const sendResetPasswordEmail = (user: User, token: PasswordResetToken): void => {
+export const sendResetPasswordEmail = (user: User, token: string): void => {
 	if (!apiKey) {
 		console.warn('Password reset Email not sent due to missing API key');
 		return;
 	}
 
-	const resetUrl = `${DOMAIN}/reset-password/${token.token}`;
-	const text = ejs.render(
-		resetPasswordEmailTemplate,
-		{ resetUrl, username: user.name || '' }
-	);
+	const resetUrl = `${DOMAIN}/reset-password?token=${token}&userId=${user.id}`;
+	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.name || '' });
 
 	const msg = {
 		from: FROM,
@@ -73,7 +69,7 @@ export const sendResetPasswordEmail = (user: User, token: PasswordResetToken): v
 		console.error('Password reset email not sent', e));
 };
 
-export const sendPostSubscriptionMail = (user: User, author: User, comment: CommentType): void => {
+export const sendPostSubscriptionMail = (user: User, author: User, comment: CommentCreationHookDataType, postUrl: string): void => {
 	if (!apiKey) {
 		console.warn('There is a new comment on the post you are subscribed to');
 		return;
@@ -86,8 +82,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 	const text = ejs.render(postSubscriptionMailTemplate, {
 		authorUsername: author.username,
 		content: comment.content,
-		domain: DOMAIN,
-		postId: comment.post_id,
+		postUrl,
 		username: user.name || ''
 	});
 
@@ -128,9 +123,9 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		console.error('Email undo email not sent', e));
 };
 
-export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: number): void => {
+export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: string): void => {
 	if (!apiKey) {
-		console.warn('Own Proposal Created Email not sent due to missing API key');
+		console.warn('Own proposal created email not sent due to missing API key');
 		return;
 	}
 
@@ -138,27 +133,27 @@ export const sendOwnProposalCreatedEmail = (user: User, type: string, postId: nu
 		return;
 	}
 
-	const postUrl = `${DOMAIN}/${type}/${postId}`;
 	const text = ejs.render(ownProposalCreatedEmailTemplate, {
 		domain: DOMAIN,
-		postUrl,
+		postUrl: url,
+		type,
 		username: user.name || ''
 	});
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: 'You have submitted a motion/proposal on chain',
+		subject: `You have submitted a new ${type} on chain`,
 		text,
 		to: user.email
 	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Proposal Created Email not sent', e));
+		console.error('Proposal created email not sent', e));
 };
 
-export const sendNewProposalCreatedEmail = (user: User, type: string, postId: number): void => {
+export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: string): void => {
 	if (!apiKey) {
-		console.warn('New Proposal Created Email not sent due to missing API key');
+		console.warn('New proposal created email not sent due to missing API key');
 		return;
 	}
 
@@ -166,10 +161,9 @@ export const sendNewProposalCreatedEmail = (user: User, type: string, postId: nu
 		return;
 	}
 
-	const postUrl = `${DOMAIN}/${type}/${postId}`;
 	const text = ejs.render(newProposalCreatedEmailTemplate, {
 		domain: DOMAIN,
-		postUrl,
+		postUrl: url,
 		type,
 		username: user.name || ''
 	});
@@ -183,10 +177,10 @@ export const sendNewProposalCreatedEmail = (user: User, type: string, postId: nu
 	};
 
 	sgMail.send(msg).catch(e =>
-		console.error('Proposal Created Email not sent', e));
+		console.error('Proposal created email not sent', e));
 };
 
-export const sendReportContentEmail = (username: string, network: string, type: string, contentId: string, reason: string, comments: string): void => {
+export const sendReportContentEmail = (username: string, network: string, reportType: string, contentId: string, reason: string, comments: string): void => {
 	if (!apiKey) {
 		console.warn('Report Content Email not sent due to missing API key');
 		return;
@@ -197,7 +191,7 @@ export const sendReportContentEmail = (username: string, network: string, type: 
 		contentId,
 		network,
 		reason,
-		type,
+		reportType,
 		username
 	});
 	const msg = {

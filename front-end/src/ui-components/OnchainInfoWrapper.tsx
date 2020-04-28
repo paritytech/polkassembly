@@ -42,12 +42,17 @@ export default styled(OnchainInfoWrapper)`
 	.methodArguments {
 		display: inline-block;
 		overflow-x: auto;
+		overflow-y: auto;
 		width: 100%;
+		max-height: 20rem;
 		word-wrap: normal;
 	}
 
 	.motion-sub-info{
 		background-color: grey_light;
+		.row {
+			width: 100%;
+		}
 	}
 
 	@media only screen and (max-width: 576px) {

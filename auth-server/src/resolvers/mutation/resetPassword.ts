@@ -8,13 +8,13 @@ import AuthService from '../../services/auth';
 import { MessageType, ResetPasswordArgs } from '../../types';
 import messages from '../../utils/messages';
 
-export default async (parent: void, { token, newPassword }: ResetPasswordArgs): Promise<MessageType> => {
+export default async (parent: void, { token, userId, newPassword }: ResetPasswordArgs): Promise<MessageType> => {
 	if (newPassword.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 
 	const authServiceInstance = new AuthService();
-	await authServiceInstance.ResetPassword(token, newPassword);
+	await authServiceInstance.ResetPassword(token, userId, newPassword);
 
 	return { message: messages.PASSWORD_RESET_SUCCESSFUL };
 };

@@ -6,25 +6,26 @@
     "test": "docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test . && docker-compose -f docker-compose-test.yaml up --renew-anon-volumes --abort-on-container-exit --exit-code-from auth-test",
     "test:dangerous": "yarn migrate && mocha -r ts-node/register test/**/*.spec.ts --exit",
     "start": "yarn tsc && yarn migrate && node build/src/index.js",
-    "lint": "npx eslint ./src/ --ext .js,.ts", 
+    "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "tsc": "tsc",
     "migrate": "knex migrate:latest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hasura/graphql-engine.git"
+    "url": "git+https://github.com/paritytech/polkassembly.git"
   },
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
+    "Michel Erler",
     "Nikhil Rajan",
     "Thibaut Sardan"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hasura/graphql-engine/issues"
+    "url": "https://github.com/paritytech/polkassembly/issues"
   },
-  "homepage": "https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/auth-webhooks/passport-js#readme",
+  "homepage": "http://polkassembly.io/",
   "dependencies": {
     "@polkadot/api": "^1.7.1",
     "@polkadot/types": "^1.7.1",
@@ -32,6 +33,7 @@
     "@polkadot/util-crypto": "^2.6.2",
     "@sendgrid/mail": "^6.4.0",
     "@types/graphql": "^14.5.0",
+    "@types/uuid": "^7.0.2",
     "apollo-server": "^2.9.12",
     "apollo-server-express": "^2.9.12",
     "argon2": "^0.25.1",

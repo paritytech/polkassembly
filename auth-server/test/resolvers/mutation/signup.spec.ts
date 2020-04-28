@@ -46,6 +46,17 @@ describe('signup mutation', () => {
 		expect(result.token).to.be.a('string');
 	});
 
+	it('should be able to login with case different for username', async () => {
+		const result = await login(undefined, { password, username: username.toUpperCase() }, fakectx);
+		expect(result.user.id).to.exist;
+		expect(result.user.id).to.a('number');
+		expect(result.user.email).to.equal(email);
+		expect(result.user.name).to.equal(name);
+		expect(result.user.username).to.equal(username);
+		expect(result.token).to.exist;
+		expect(result.token).to.be.a('string');
+	});
+
 	it('should be able to subsequently login', async () => {
 		const result = await login(undefined, { password, username }, fakectx);
 		expect(result.user.id).to.exist;

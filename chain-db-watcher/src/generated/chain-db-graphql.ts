@@ -1,9 +1,6 @@
-// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
-
-import { print } from 'graphql';
 import { GraphQLClient } from 'graphql-request';
+import { print } from 'graphql';
+import { SdkFunctionWrapper, defaultWrapper } from '@graphql-codegen/typescript-graphql-request';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -15,142 +12,6 @@ export type Scalars = {
   Float: number;
   DateTime: any;
   Json: any;
-  Long: any;
-};
-
-export type AggregateBlockIndex = {
-   __typename?: 'AggregateBlockIndex';
-  count: Scalars['Int'];
-};
-
-export type AggregateBlockNumber = {
-   __typename?: 'AggregateBlockNumber';
-  count: Scalars['Int'];
-};
-
-export type AggregateCouncil = {
-   __typename?: 'AggregateCouncil';
-  count: Scalars['Int'];
-};
-
-export type AggregateCouncilMember = {
-   __typename?: 'AggregateCouncilMember';
-  count: Scalars['Int'];
-};
-
-export type AggregateEra = {
-   __typename?: 'AggregateEra';
-  count: Scalars['Int'];
-};
-
-export type AggregateHeartBeat = {
-   __typename?: 'AggregateHeartBeat';
-  count: Scalars['Int'];
-};
-
-export type AggregateMotion = {
-   __typename?: 'AggregateMotion';
-  count: Scalars['Int'];
-};
-
-export type AggregateMotionProposalArgument = {
-   __typename?: 'AggregateMotionProposalArgument';
-  count: Scalars['Int'];
-};
-
-export type AggregateMotionStatus = {
-   __typename?: 'AggregateMotionStatus';
-  count: Scalars['Int'];
-};
-
-export type AggregateNomination = {
-   __typename?: 'AggregateNomination';
-  count: Scalars['Int'];
-};
-
-export type AggregateOfflineValidator = {
-   __typename?: 'AggregateOfflineValidator';
-  count: Scalars['Int'];
-};
-
-export type AggregatePreimage = {
-   __typename?: 'AggregatePreimage';
-  count: Scalars['Int'];
-};
-
-export type AggregatePreimageArgument = {
-   __typename?: 'AggregatePreimageArgument';
-  count: Scalars['Int'];
-};
-
-export type AggregatePreimageStatus = {
-   __typename?: 'AggregatePreimageStatus';
-  count: Scalars['Int'];
-};
-
-export type AggregateProposal = {
-   __typename?: 'AggregateProposal';
-  count: Scalars['Int'];
-};
-
-export type AggregateProposalStatus = {
-   __typename?: 'AggregateProposalStatus';
-  count: Scalars['Int'];
-};
-
-export type AggregateReferendum = {
-   __typename?: 'AggregateReferendum';
-  count: Scalars['Int'];
-};
-
-export type AggregateReferendumStatus = {
-   __typename?: 'AggregateReferendumStatus';
-  count: Scalars['Int'];
-};
-
-export type AggregateReward = {
-   __typename?: 'AggregateReward';
-  count: Scalars['Int'];
-};
-
-export type AggregateSession = {
-   __typename?: 'AggregateSession';
-  count: Scalars['Int'];
-};
-
-export type AggregateSlashing = {
-   __typename?: 'AggregateSlashing';
-  count: Scalars['Int'];
-};
-
-export type AggregateStake = {
-   __typename?: 'AggregateStake';
-  count: Scalars['Int'];
-};
-
-export type AggregateTotalIssuance = {
-   __typename?: 'AggregateTotalIssuance';
-  count: Scalars['Int'];
-};
-
-export type AggregateTreasurySpendProposal = {
-   __typename?: 'AggregateTreasurySpendProposal';
-  count: Scalars['Int'];
-};
-
-export type AggregateTreasuryStatus = {
-   __typename?: 'AggregateTreasuryStatus';
-  count: Scalars['Int'];
-};
-
-export type AggregateValidator = {
-   __typename?: 'AggregateValidator';
-  count: Scalars['Int'];
-};
-
-export type BatchPayload = {
-   __typename?: 'BatchPayload';
-  count: Scalars['Long'];
 };
 
 export type BlockIndex = Node & {
@@ -161,131 +22,6 @@ export type BlockIndex = Node & {
   index: Scalars['Int'];
 };
 
-export type BlockIndexConnection = {
-   __typename?: 'BlockIndexConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<BlockIndexEdge>>;
-  aggregate: AggregateBlockIndex;
-};
-
-export type BlockIndexCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  identifier: Scalars['String'];
-  startFrom: Scalars['Int'];
-  index: Scalars['Int'];
-};
-
-export type BlockIndexEdge = {
-   __typename?: 'BlockIndexEdge';
-  node: BlockIndex;
-  cursor: Scalars['String'];
-};
-
-export enum BlockIndexOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  IdentifierAsc = 'identifier_ASC',
-  IdentifierDesc = 'identifier_DESC',
-  StartFromAsc = 'startFrom_ASC',
-  StartFromDesc = 'startFrom_DESC',
-  IndexAsc = 'index_ASC',
-  IndexDesc = 'index_DESC'
-}
-
-export type BlockIndexPreviousValues = {
-   __typename?: 'BlockIndexPreviousValues';
-  id: Scalars['ID'];
-  identifier: Scalars['String'];
-  startFrom: Scalars['Int'];
-  index: Scalars['Int'];
-};
-
-export type BlockIndexSubscriptionPayload = {
-   __typename?: 'BlockIndexSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<BlockIndex>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<BlockIndexPreviousValues>;
-};
-
-export type BlockIndexSubscriptionWhereInput = {
-  AND?: Maybe<Array<BlockIndexSubscriptionWhereInput>>;
-  OR?: Maybe<Array<BlockIndexSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<BlockIndexSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<BlockIndexWhereInput>;
-};
-
-export type BlockIndexUpdateInput = {
-  identifier?: Maybe<Scalars['String']>;
-  startFrom?: Maybe<Scalars['Int']>;
-  index?: Maybe<Scalars['Int']>;
-};
-
-export type BlockIndexUpdateManyMutationInput = {
-  identifier?: Maybe<Scalars['String']>;
-  startFrom?: Maybe<Scalars['Int']>;
-  index?: Maybe<Scalars['Int']>;
-};
-
-export type BlockIndexWhereInput = {
-  AND?: Maybe<Array<BlockIndexWhereInput>>;
-  OR?: Maybe<Array<BlockIndexWhereInput>>;
-  NOT?: Maybe<Array<BlockIndexWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  identifier?: Maybe<Scalars['String']>;
-  identifier_not?: Maybe<Scalars['String']>;
-  identifier_in?: Maybe<Array<Scalars['String']>>;
-  identifier_not_in?: Maybe<Array<Scalars['String']>>;
-  identifier_lt?: Maybe<Scalars['String']>;
-  identifier_lte?: Maybe<Scalars['String']>;
-  identifier_gt?: Maybe<Scalars['String']>;
-  identifier_gte?: Maybe<Scalars['String']>;
-  identifier_contains?: Maybe<Scalars['String']>;
-  identifier_not_contains?: Maybe<Scalars['String']>;
-  identifier_starts_with?: Maybe<Scalars['String']>;
-  identifier_not_starts_with?: Maybe<Scalars['String']>;
-  identifier_ends_with?: Maybe<Scalars['String']>;
-  identifier_not_ends_with?: Maybe<Scalars['String']>;
-  startFrom?: Maybe<Scalars['Int']>;
-  startFrom_not?: Maybe<Scalars['Int']>;
-  startFrom_in?: Maybe<Array<Scalars['Int']>>;
-  startFrom_not_in?: Maybe<Array<Scalars['Int']>>;
-  startFrom_lt?: Maybe<Scalars['Int']>;
-  startFrom_lte?: Maybe<Scalars['Int']>;
-  startFrom_gt?: Maybe<Scalars['Int']>;
-  startFrom_gte?: Maybe<Scalars['Int']>;
-  index?: Maybe<Scalars['Int']>;
-  index_not?: Maybe<Scalars['Int']>;
-  index_in?: Maybe<Array<Scalars['Int']>>;
-  index_not_in?: Maybe<Array<Scalars['Int']>>;
-  index_lt?: Maybe<Scalars['Int']>;
-  index_lte?: Maybe<Scalars['Int']>;
-  index_gt?: Maybe<Scalars['Int']>;
-  index_gte?: Maybe<Scalars['Int']>;
-};
-
-export type BlockIndexWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-  identifier?: Maybe<Scalars['String']>;
-};
-
 export type BlockNumber = Node & {
    __typename?: 'BlockNumber';
   id: Scalars['ID'];
@@ -293,32 +29,6 @@ export type BlockNumber = Node & {
   authoredBy: Scalars['String'];
   startDateTime: Scalars['DateTime'];
   hash: Scalars['String'];
-};
-
-export type BlockNumberConnection = {
-   __typename?: 'BlockNumberConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<BlockNumberEdge>>;
-  aggregate: AggregateBlockNumber;
-};
-
-export type BlockNumberCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  number: Scalars['Int'];
-  authoredBy: Scalars['String'];
-  startDateTime: Scalars['DateTime'];
-  hash: Scalars['String'];
-};
-
-export type BlockNumberCreateOneInput = {
-  create?: Maybe<BlockNumberCreateInput>;
-  connect?: Maybe<BlockNumberWhereUniqueInput>;
-};
-
-export type BlockNumberEdge = {
-   __typename?: 'BlockNumberEdge';
-  node: BlockNumber;
-  cursor: Scalars['String'];
 };
 
 export enum BlockNumberOrderByInput {
@@ -333,67 +43,6 @@ export enum BlockNumberOrderByInput {
   HashAsc = 'hash_ASC',
   HashDesc = 'hash_DESC'
 }
-
-export type BlockNumberPreviousValues = {
-   __typename?: 'BlockNumberPreviousValues';
-  id: Scalars['ID'];
-  number: Scalars['Int'];
-  authoredBy: Scalars['String'];
-  startDateTime: Scalars['DateTime'];
-  hash: Scalars['String'];
-};
-
-export type BlockNumberSubscriptionPayload = {
-   __typename?: 'BlockNumberSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<BlockNumber>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<BlockNumberPreviousValues>;
-};
-
-export type BlockNumberSubscriptionWhereInput = {
-  AND?: Maybe<Array<BlockNumberSubscriptionWhereInput>>;
-  OR?: Maybe<Array<BlockNumberSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<BlockNumberSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<BlockNumberWhereInput>;
-};
-
-export type BlockNumberUpdateDataInput = {
-  number?: Maybe<Scalars['Int']>;
-  authoredBy?: Maybe<Scalars['String']>;
-  startDateTime?: Maybe<Scalars['DateTime']>;
-  hash?: Maybe<Scalars['String']>;
-};
-
-export type BlockNumberUpdateInput = {
-  number?: Maybe<Scalars['Int']>;
-  authoredBy?: Maybe<Scalars['String']>;
-  startDateTime?: Maybe<Scalars['DateTime']>;
-  hash?: Maybe<Scalars['String']>;
-};
-
-export type BlockNumberUpdateManyMutationInput = {
-  number?: Maybe<Scalars['Int']>;
-  authoredBy?: Maybe<Scalars['String']>;
-  startDateTime?: Maybe<Scalars['DateTime']>;
-  hash?: Maybe<Scalars['String']>;
-};
-
-export type BlockNumberUpdateOneRequiredInput = {
-  create?: Maybe<BlockNumberCreateInput>;
-  connect?: Maybe<BlockNumberWhereUniqueInput>;
-  update?: Maybe<BlockNumberUpdateDataInput>;
-  upsert?: Maybe<BlockNumberUpsertNestedInput>;
-};
-
-export type BlockNumberUpsertNestedInput = {
-  update: BlockNumberUpdateDataInput;
-  create: BlockNumberCreateInput;
-};
 
 export type BlockNumberWhereInput = {
   AND?: Maybe<Array<BlockNumberWhereInput>>;
@@ -472,6 +121,7 @@ export type Council = Node & {
   members?: Maybe<Array<CouncilMember>>;
 };
 
+
 export type CouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>;
   orderBy?: Maybe<CouncilMemberOrderByInput>;
@@ -482,41 +132,13 @@ export type CouncilMembersArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type CouncilConnection = {
-   __typename?: 'CouncilConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<CouncilEdge>>;
-  aggregate: AggregateCouncil;
-};
-
-export type CouncilCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  blockNumber: BlockNumberCreateOneInput;
-  members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>;
-};
-
-export type CouncilCreateManyWithoutMembersInput = {
-  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>;
-  connect?: Maybe<Array<CouncilWhereUniqueInput>>;
-};
-
-export type CouncilCreateWithoutMembersInput = {
-  id?: Maybe<Scalars['ID']>;
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type CouncilEdge = {
-   __typename?: 'CouncilEdge';
-  node: Council;
-  cursor: Scalars['String'];
-};
-
 export type CouncilMember = Node & {
    __typename?: 'CouncilMember';
   id: Scalars['ID'];
   address: Scalars['String'];
   councils?: Maybe<Array<Council>>;
 };
+
 
 export type CouncilMemberCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>;
@@ -528,145 +150,12 @@ export type CouncilMemberCouncilsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type CouncilMemberConnection = {
-   __typename?: 'CouncilMemberConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<CouncilMemberEdge>>;
-  aggregate: AggregateCouncilMember;
-};
-
-export type CouncilMemberCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  address: Scalars['String'];
-  councils?: Maybe<CouncilCreateManyWithoutMembersInput>;
-};
-
-export type CouncilMemberCreateManyWithoutCouncilsInput = {
-  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>;
-  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>;
-};
-
-export type CouncilMemberCreateWithoutCouncilsInput = {
-  id?: Maybe<Scalars['ID']>;
-  address: Scalars['String'];
-};
-
-export type CouncilMemberEdge = {
-   __typename?: 'CouncilMemberEdge';
-  node: CouncilMember;
-  cursor: Scalars['String'];
-};
-
 export enum CouncilMemberOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   AddressAsc = 'address_ASC',
   AddressDesc = 'address_DESC'
 }
-
-export type CouncilMemberPreviousValues = {
-   __typename?: 'CouncilMemberPreviousValues';
-  id: Scalars['ID'];
-  address: Scalars['String'];
-};
-
-export type CouncilMemberScalarWhereInput = {
-  AND?: Maybe<Array<CouncilMemberScalarWhereInput>>;
-  OR?: Maybe<Array<CouncilMemberScalarWhereInput>>;
-  NOT?: Maybe<Array<CouncilMemberScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  address?: Maybe<Scalars['String']>;
-  address_not?: Maybe<Scalars['String']>;
-  address_in?: Maybe<Array<Scalars['String']>>;
-  address_not_in?: Maybe<Array<Scalars['String']>>;
-  address_lt?: Maybe<Scalars['String']>;
-  address_lte?: Maybe<Scalars['String']>;
-  address_gt?: Maybe<Scalars['String']>;
-  address_gte?: Maybe<Scalars['String']>;
-  address_contains?: Maybe<Scalars['String']>;
-  address_not_contains?: Maybe<Scalars['String']>;
-  address_starts_with?: Maybe<Scalars['String']>;
-  address_not_starts_with?: Maybe<Scalars['String']>;
-  address_ends_with?: Maybe<Scalars['String']>;
-  address_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type CouncilMemberSubscriptionPayload = {
-   __typename?: 'CouncilMemberSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<CouncilMember>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<CouncilMemberPreviousValues>;
-};
-
-export type CouncilMemberSubscriptionWhereInput = {
-  AND?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>;
-  OR?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<CouncilMemberSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<CouncilMemberWhereInput>;
-};
-
-export type CouncilMemberUpdateInput = {
-  address?: Maybe<Scalars['String']>;
-  councils?: Maybe<CouncilUpdateManyWithoutMembersInput>;
-};
-
-export type CouncilMemberUpdateManyDataInput = {
-  address?: Maybe<Scalars['String']>;
-};
-
-export type CouncilMemberUpdateManyMutationInput = {
-  address?: Maybe<Scalars['String']>;
-};
-
-export type CouncilMemberUpdateManyWithoutCouncilsInput = {
-  create?: Maybe<Array<CouncilMemberCreateWithoutCouncilsInput>>;
-  connect?: Maybe<Array<CouncilMemberWhereUniqueInput>>;
-  set?: Maybe<Array<CouncilMemberWhereUniqueInput>>;
-  disconnect?: Maybe<Array<CouncilMemberWhereUniqueInput>>;
-  delete?: Maybe<Array<CouncilMemberWhereUniqueInput>>;
-  update?: Maybe<Array<CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput>>;
-  updateMany?: Maybe<Array<CouncilMemberUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<CouncilMemberScalarWhereInput>>;
-  upsert?: Maybe<Array<CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput>>;
-};
-
-export type CouncilMemberUpdateManyWithWhereNestedInput = {
-  where: CouncilMemberScalarWhereInput;
-  data: CouncilMemberUpdateManyDataInput;
-};
-
-export type CouncilMemberUpdateWithoutCouncilsDataInput = {
-  address?: Maybe<Scalars['String']>;
-};
-
-export type CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput = {
-  where: CouncilMemberWhereUniqueInput;
-  data: CouncilMemberUpdateWithoutCouncilsDataInput;
-};
-
-export type CouncilMemberUpsertWithWhereUniqueWithoutCouncilsInput = {
-  where: CouncilMemberWhereUniqueInput;
-  update: CouncilMemberUpdateWithoutCouncilsDataInput;
-  create: CouncilMemberCreateWithoutCouncilsInput;
-};
 
 export type CouncilMemberWhereInput = {
   AND?: Maybe<Array<CouncilMemberWhereInput>>;
@@ -715,81 +204,6 @@ export enum CouncilOrderByInput {
   IdDesc = 'id_DESC'
 }
 
-export type CouncilPreviousValues = {
-   __typename?: 'CouncilPreviousValues';
-  id: Scalars['ID'];
-};
-
-export type CouncilScalarWhereInput = {
-  AND?: Maybe<Array<CouncilScalarWhereInput>>;
-  OR?: Maybe<Array<CouncilScalarWhereInput>>;
-  NOT?: Maybe<Array<CouncilScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-};
-
-export type CouncilSubscriptionPayload = {
-   __typename?: 'CouncilSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Council>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<CouncilPreviousValues>;
-};
-
-export type CouncilSubscriptionWhereInput = {
-  AND?: Maybe<Array<CouncilSubscriptionWhereInput>>;
-  OR?: Maybe<Array<CouncilSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<CouncilSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<CouncilWhereInput>;
-};
-
-export type CouncilUpdateInput = {
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  members?: Maybe<CouncilMemberUpdateManyWithoutCouncilsInput>;
-};
-
-export type CouncilUpdateManyWithoutMembersInput = {
-  create?: Maybe<Array<CouncilCreateWithoutMembersInput>>;
-  connect?: Maybe<Array<CouncilWhereUniqueInput>>;
-  set?: Maybe<Array<CouncilWhereUniqueInput>>;
-  disconnect?: Maybe<Array<CouncilWhereUniqueInput>>;
-  delete?: Maybe<Array<CouncilWhereUniqueInput>>;
-  update?: Maybe<Array<CouncilUpdateWithWhereUniqueWithoutMembersInput>>;
-  deleteMany?: Maybe<Array<CouncilScalarWhereInput>>;
-  upsert?: Maybe<Array<CouncilUpsertWithWhereUniqueWithoutMembersInput>>;
-};
-
-export type CouncilUpdateWithoutMembersDataInput = {
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type CouncilUpdateWithWhereUniqueWithoutMembersInput = {
-  where: CouncilWhereUniqueInput;
-  data: CouncilUpdateWithoutMembersDataInput;
-};
-
-export type CouncilUpsertWithWhereUniqueWithoutMembersInput = {
-  where: CouncilWhereUniqueInput;
-  update: CouncilUpdateWithoutMembersDataInput;
-  create: CouncilCreateWithoutMembersInput;
-};
-
 export type CouncilWhereInput = {
   AND?: Maybe<Array<CouncilWhereInput>>;
   OR?: Maybe<Array<CouncilWhereInput>>;
@@ -818,6 +232,7 @@ export type CouncilWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
 };
 
+
 export type Era = Node & {
    __typename?: 'Era';
   id: Scalars['ID'];
@@ -825,31 +240,6 @@ export type Era = Node & {
   eraStartSessionIndex: Session;
   totalPoints: Scalars['String'];
   individualPoints: Array<Scalars['String']>;
-};
-
-export type EraConnection = {
-   __typename?: 'EraConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<EraEdge>>;
-  aggregate: AggregateEra;
-};
-
-export type EraCreateindividualPointsInput = {
-  set?: Maybe<Array<Scalars['String']>>;
-};
-
-export type EraCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  index: Scalars['Int'];
-  totalPoints: Scalars['String'];
-  individualPoints?: Maybe<EraCreateindividualPointsInput>;
-  eraStartSessionIndex: SessionCreateOneInput;
-};
-
-export type EraEdge = {
-   __typename?: 'EraEdge';
-  node: Era;
-  cursor: Scalars['String'];
 };
 
 export enum EraOrderByInput {
@@ -860,50 +250,6 @@ export enum EraOrderByInput {
   TotalPointsAsc = 'totalPoints_ASC',
   TotalPointsDesc = 'totalPoints_DESC'
 }
-
-export type EraPreviousValues = {
-   __typename?: 'EraPreviousValues';
-  id: Scalars['ID'];
-  index: Scalars['Int'];
-  totalPoints: Scalars['String'];
-  individualPoints: Array<Scalars['String']>;
-};
-
-export type EraSubscriptionPayload = {
-   __typename?: 'EraSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Era>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<EraPreviousValues>;
-};
-
-export type EraSubscriptionWhereInput = {
-  AND?: Maybe<Array<EraSubscriptionWhereInput>>;
-  OR?: Maybe<Array<EraSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<EraSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<EraWhereInput>;
-};
-
-export type EraUpdateindividualPointsInput = {
-  set?: Maybe<Array<Scalars['String']>>;
-};
-
-export type EraUpdateInput = {
-  index?: Maybe<Scalars['Int']>;
-  totalPoints?: Maybe<Scalars['String']>;
-  individualPoints?: Maybe<EraUpdateindividualPointsInput>;
-  eraStartSessionIndex?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type EraUpdateManyMutationInput = {
-  index?: Maybe<Scalars['Int']>;
-  totalPoints?: Maybe<Scalars['String']>;
-  individualPoints?: Maybe<EraUpdateindividualPointsInput>;
-};
 
 export type EraWhereInput = {
   AND?: Maybe<Array<EraWhereInput>>;
@@ -960,65 +306,12 @@ export type HeartBeat = Node & {
   authorityId: Scalars['String'];
 };
 
-export type HeartBeatConnection = {
-   __typename?: 'HeartBeatConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<HeartBeatEdge>>;
-  aggregate: AggregateHeartBeat;
-};
-
-export type HeartBeatCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  authorityId: Scalars['String'];
-  sessionIndex: SessionCreateOneInput;
-};
-
-export type HeartBeatEdge = {
-   __typename?: 'HeartBeatEdge';
-  node: HeartBeat;
-  cursor: Scalars['String'];
-};
-
 export enum HeartBeatOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   AuthorityIdAsc = 'authorityId_ASC',
   AuthorityIdDesc = 'authorityId_DESC'
 }
-
-export type HeartBeatPreviousValues = {
-   __typename?: 'HeartBeatPreviousValues';
-  id: Scalars['ID'];
-  authorityId: Scalars['String'];
-};
-
-export type HeartBeatSubscriptionPayload = {
-   __typename?: 'HeartBeatSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<HeartBeat>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<HeartBeatPreviousValues>;
-};
-
-export type HeartBeatSubscriptionWhereInput = {
-  AND?: Maybe<Array<HeartBeatSubscriptionWhereInput>>;
-  OR?: Maybe<Array<HeartBeatSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<HeartBeatSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<HeartBeatWhereInput>;
-};
-
-export type HeartBeatUpdateInput = {
-  authorityId?: Maybe<Scalars['String']>;
-  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type HeartBeatUpdateManyMutationInput = {
-  authorityId?: Maybe<Scalars['String']>;
-};
 
 export type HeartBeatWhereInput = {
   AND?: Maybe<Array<HeartBeatWhereInput>>;
@@ -1055,9 +348,6 @@ export type HeartBeatWhereInput = {
   sessionIndex?: Maybe<SessionWhereInput>;
 };
 
-export type HeartBeatWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
 
 export type Motion = {
    __typename?: 'Motion';
@@ -1076,6 +366,7 @@ export type Motion = {
   section: Scalars['String'];
 };
 
+
 export type MotionMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>;
   orderBy?: Maybe<MotionProposalArgumentOrderByInput>;
@@ -1086,6 +377,7 @@ export type MotionMotionProposalArgumentsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
+
 export type MotionMotionStatusArgs = {
   where?: Maybe<MotionStatusWhereInput>;
   orderBy?: Maybe<MotionStatusOrderByInput>;
@@ -1094,110 +386,6 @@ export type MotionMotionStatusArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-export type MotionConnection = {
-   __typename?: 'MotionConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<MotionEdge>>;
-  aggregate: AggregateMotion;
-};
-
-export type MotionCreateInput = {
-  author: Scalars['String'];
-  memberCount: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  motionProposalHash: Scalars['String'];
-  motionProposalId: Scalars['Int'];
-  preimageHash?: Maybe<Scalars['String']>;
-  section: Scalars['String'];
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalCreateOneWithoutMotionInput>;
-};
-
-export type MotionCreateOneWithoutMotionProposalArgumentsInput = {
-  create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-};
-
-export type MotionCreateOneWithoutMotionStatusInput = {
-  create?: Maybe<MotionCreateWithoutMotionStatusInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-};
-
-export type MotionCreateOneWithoutPreimageInput = {
-  create?: Maybe<MotionCreateWithoutPreimageInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-};
-
-export type MotionCreateOneWithoutTreasurySpendProposalInput = {
-  create?: Maybe<MotionCreateWithoutTreasurySpendProposalInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-};
-
-export type MotionCreateWithoutMotionProposalArgumentsInput = {
-  author: Scalars['String'];
-  memberCount: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  motionProposalHash: Scalars['String'];
-  motionProposalId: Scalars['Int'];
-  preimageHash?: Maybe<Scalars['String']>;
-  section: Scalars['String'];
-  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalCreateOneWithoutMotionInput>;
-};
-
-export type MotionCreateWithoutMotionStatusInput = {
-  author: Scalars['String'];
-  memberCount: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  motionProposalHash: Scalars['String'];
-  motionProposalId: Scalars['Int'];
-  preimageHash?: Maybe<Scalars['String']>;
-  section: Scalars['String'];
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalCreateOneWithoutMotionInput>;
-};
-
-export type MotionCreateWithoutPreimageInput = {
-  author: Scalars['String'];
-  memberCount: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  motionProposalHash: Scalars['String'];
-  motionProposalId: Scalars['Int'];
-  preimageHash?: Maybe<Scalars['String']>;
-  section: Scalars['String'];
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalCreateOneWithoutMotionInput>;
-};
-
-export type MotionCreateWithoutTreasurySpendProposalInput = {
-  author: Scalars['String'];
-  memberCount: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  motionProposalHash: Scalars['String'];
-  motionProposalId: Scalars['Int'];
-  preimageHash?: Maybe<Scalars['String']>;
-  section: Scalars['String'];
-  motionProposalArguments?: Maybe<MotionProposalArgumentCreateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusCreateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageCreateOneWithoutMotionInput>;
-};
-
-export type MotionEdge = {
-   __typename?: 'MotionEdge';
-  node: Motion;
-  cursor: Scalars['String'];
 };
 
 export enum MotionOrderByInput {
@@ -1242,37 +430,6 @@ export type MotionProposalArgument = Node & {
   value: Scalars['String'];
 };
 
-export type MotionProposalArgumentConnection = {
-   __typename?: 'MotionProposalArgumentConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<MotionProposalArgumentEdge>>;
-  aggregate: AggregateMotionProposalArgument;
-};
-
-export type MotionProposalArgumentCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  value: Scalars['String'];
-  motion: MotionCreateOneWithoutMotionProposalArgumentsInput;
-};
-
-export type MotionProposalArgumentCreateManyWithoutMotionInput = {
-  create?: Maybe<Array<MotionProposalArgumentCreateWithoutMotionInput>>;
-  connect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>;
-};
-
-export type MotionProposalArgumentCreateWithoutMotionInput = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type MotionProposalArgumentEdge = {
-   __typename?: 'MotionProposalArgumentEdge';
-  node: MotionProposalArgument;
-  cursor: Scalars['String'];
-};
-
 export enum MotionProposalArgumentOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -1281,129 +438,6 @@ export enum MotionProposalArgumentOrderByInput {
   ValueAsc = 'value_ASC',
   ValueDesc = 'value_DESC'
 }
-
-export type MotionProposalArgumentPreviousValues = {
-   __typename?: 'MotionProposalArgumentPreviousValues';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type MotionProposalArgumentScalarWhereInput = {
-  AND?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>;
-  OR?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>;
-  NOT?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Scalars['String']>>;
-  name_not_in?: Maybe<Array<Scalars['String']>>;
-  name_lt?: Maybe<Scalars['String']>;
-  name_lte?: Maybe<Scalars['String']>;
-  name_gt?: Maybe<Scalars['String']>;
-  name_gte?: Maybe<Scalars['String']>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  name_starts_with?: Maybe<Scalars['String']>;
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  name_ends_with?: Maybe<Scalars['String']>;
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  value_not?: Maybe<Scalars['String']>;
-  value_in?: Maybe<Array<Scalars['String']>>;
-  value_not_in?: Maybe<Array<Scalars['String']>>;
-  value_lt?: Maybe<Scalars['String']>;
-  value_lte?: Maybe<Scalars['String']>;
-  value_gt?: Maybe<Scalars['String']>;
-  value_gte?: Maybe<Scalars['String']>;
-  value_contains?: Maybe<Scalars['String']>;
-  value_not_contains?: Maybe<Scalars['String']>;
-  value_starts_with?: Maybe<Scalars['String']>;
-  value_not_starts_with?: Maybe<Scalars['String']>;
-  value_ends_with?: Maybe<Scalars['String']>;
-  value_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type MotionProposalArgumentSubscriptionPayload = {
-   __typename?: 'MotionProposalArgumentSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<MotionProposalArgument>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<MotionProposalArgumentPreviousValues>;
-};
-
-export type MotionProposalArgumentSubscriptionWhereInput = {
-  AND?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>;
-  OR?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<MotionProposalArgumentSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<MotionProposalArgumentWhereInput>;
-};
-
-export type MotionProposalArgumentUpdateInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput>;
-};
-
-export type MotionProposalArgumentUpdateManyDataInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type MotionProposalArgumentUpdateManyMutationInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type MotionProposalArgumentUpdateManyWithoutMotionInput = {
-  create?: Maybe<Array<MotionProposalArgumentCreateWithoutMotionInput>>;
-  connect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>;
-  set?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>;
-  disconnect?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>;
-  delete?: Maybe<Array<MotionProposalArgumentWhereUniqueInput>>;
-  update?: Maybe<Array<MotionProposalArgumentUpdateWithWhereUniqueWithoutMotionInput>>;
-  updateMany?: Maybe<Array<MotionProposalArgumentUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<MotionProposalArgumentScalarWhereInput>>;
-  upsert?: Maybe<Array<MotionProposalArgumentUpsertWithWhereUniqueWithoutMotionInput>>;
-};
-
-export type MotionProposalArgumentUpdateManyWithWhereNestedInput = {
-  where: MotionProposalArgumentScalarWhereInput;
-  data: MotionProposalArgumentUpdateManyDataInput;
-};
-
-export type MotionProposalArgumentUpdateWithoutMotionDataInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type MotionProposalArgumentUpdateWithWhereUniqueWithoutMotionInput = {
-  where: MotionProposalArgumentWhereUniqueInput;
-  data: MotionProposalArgumentUpdateWithoutMotionDataInput;
-};
-
-export type MotionProposalArgumentUpsertWithWhereUniqueWithoutMotionInput = {
-  where: MotionProposalArgumentWhereUniqueInput;
-  update: MotionProposalArgumentUpdateWithoutMotionDataInput;
-  create: MotionProposalArgumentCreateWithoutMotionInput;
-};
 
 export type MotionProposalArgumentWhereInput = {
   AND?: Maybe<Array<MotionProposalArgumentWhereInput>>;
@@ -1466,149 +500,12 @@ export type MotionStatus = Node & {
   status: Scalars['String'];
 };
 
-export type MotionStatusConnection = {
-   __typename?: 'MotionStatusConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<MotionStatusEdge>>;
-  aggregate: AggregateMotionStatus;
-};
-
-export type MotionStatusCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-  motion: MotionCreateOneWithoutMotionStatusInput;
-};
-
-export type MotionStatusCreateManyWithoutMotionInput = {
-  create?: Maybe<Array<MotionStatusCreateWithoutMotionInput>>;
-  connect?: Maybe<Array<MotionStatusWhereUniqueInput>>;
-};
-
-export type MotionStatusCreateWithoutMotionInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type MotionStatusEdge = {
-   __typename?: 'MotionStatusEdge';
-  node: MotionStatus;
-  cursor: Scalars['String'];
-};
-
 export enum MotionStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC'
 }
-
-export type MotionStatusPreviousValues = {
-   __typename?: 'MotionStatusPreviousValues';
-  id: Scalars['ID'];
-  status: Scalars['String'];
-};
-
-export type MotionStatusScalarWhereInput = {
-  AND?: Maybe<Array<MotionStatusScalarWhereInput>>;
-  OR?: Maybe<Array<MotionStatusScalarWhereInput>>;
-  NOT?: Maybe<Array<MotionStatusScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Scalars['String']>>;
-  status_not_in?: Maybe<Array<Scalars['String']>>;
-  status_lt?: Maybe<Scalars['String']>;
-  status_lte?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  status_gte?: Maybe<Scalars['String']>;
-  status_contains?: Maybe<Scalars['String']>;
-  status_not_contains?: Maybe<Scalars['String']>;
-  status_starts_with?: Maybe<Scalars['String']>;
-  status_not_starts_with?: Maybe<Scalars['String']>;
-  status_ends_with?: Maybe<Scalars['String']>;
-  status_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type MotionStatusSubscriptionPayload = {
-   __typename?: 'MotionStatusSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<MotionStatus>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<MotionStatusPreviousValues>;
-};
-
-export type MotionStatusSubscriptionWhereInput = {
-  AND?: Maybe<Array<MotionStatusSubscriptionWhereInput>>;
-  OR?: Maybe<Array<MotionStatusSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<MotionStatusSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<MotionStatusWhereInput>;
-};
-
-export type MotionStatusUpdateInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  motion?: Maybe<MotionUpdateOneRequiredWithoutMotionStatusInput>;
-};
-
-export type MotionStatusUpdateManyDataInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type MotionStatusUpdateManyMutationInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type MotionStatusUpdateManyWithoutMotionInput = {
-  create?: Maybe<Array<MotionStatusCreateWithoutMotionInput>>;
-  connect?: Maybe<Array<MotionStatusWhereUniqueInput>>;
-  set?: Maybe<Array<MotionStatusWhereUniqueInput>>;
-  disconnect?: Maybe<Array<MotionStatusWhereUniqueInput>>;
-  delete?: Maybe<Array<MotionStatusWhereUniqueInput>>;
-  update?: Maybe<Array<MotionStatusUpdateWithWhereUniqueWithoutMotionInput>>;
-  updateMany?: Maybe<Array<MotionStatusUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<MotionStatusScalarWhereInput>>;
-  upsert?: Maybe<Array<MotionStatusUpsertWithWhereUniqueWithoutMotionInput>>;
-};
-
-export type MotionStatusUpdateManyWithWhereNestedInput = {
-  where: MotionStatusScalarWhereInput;
-  data: MotionStatusUpdateManyDataInput;
-};
-
-export type MotionStatusUpdateWithoutMotionDataInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type MotionStatusUpdateWithWhereUniqueWithoutMotionInput = {
-  where: MotionStatusWhereUniqueInput;
-  data: MotionStatusUpdateWithoutMotionDataInput;
-};
-
-export type MotionStatusUpsertWithWhereUniqueWithoutMotionInput = {
-  where: MotionStatusWhereUniqueInput;
-  update: MotionStatusUpdateWithoutMotionDataInput;
-  create: MotionStatusCreateWithoutMotionInput;
-};
 
 export type MotionStatusWhereInput = {
   AND?: Maybe<Array<MotionStatusWhereInput>>;
@@ -1667,140 +564,6 @@ export type MotionSubscriptionWhereInput = {
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
   node?: Maybe<MotionWhereInput>;
-};
-
-export type MotionUpdateInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneWithoutMotionInput>;
-};
-
-export type MotionUpdateManyMutationInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-};
-
-export type MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput = {
-  create?: Maybe<MotionCreateWithoutMotionProposalArgumentsInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-  update?: Maybe<MotionUpdateWithoutMotionProposalArgumentsDataInput>;
-  upsert?: Maybe<MotionUpsertWithoutMotionProposalArgumentsInput>;
-};
-
-export type MotionUpdateOneRequiredWithoutMotionStatusInput = {
-  create?: Maybe<MotionCreateWithoutMotionStatusInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-  update?: Maybe<MotionUpdateWithoutMotionStatusDataInput>;
-  upsert?: Maybe<MotionUpsertWithoutMotionStatusInput>;
-};
-
-export type MotionUpdateOneWithoutPreimageInput = {
-  create?: Maybe<MotionCreateWithoutPreimageInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<MotionUpdateWithoutPreimageDataInput>;
-  upsert?: Maybe<MotionUpsertWithoutPreimageInput>;
-};
-
-export type MotionUpdateOneWithoutTreasurySpendProposalInput = {
-  create?: Maybe<MotionCreateWithoutTreasurySpendProposalInput>;
-  connect?: Maybe<MotionWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<MotionUpdateWithoutTreasurySpendProposalDataInput>;
-  upsert?: Maybe<MotionUpsertWithoutTreasurySpendProposalInput>;
-};
-
-export type MotionUpdateWithoutMotionProposalArgumentsDataInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneWithoutMotionInput>;
-};
-
-export type MotionUpdateWithoutMotionStatusDataInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneWithoutMotionInput>;
-};
-
-export type MotionUpdateWithoutPreimageDataInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneWithoutMotionInput>;
-};
-
-export type MotionUpdateWithoutTreasurySpendProposalDataInput = {
-  author?: Maybe<Scalars['String']>;
-  memberCount?: Maybe<Scalars['Int']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  motionProposalHash?: Maybe<Scalars['String']>;
-  motionProposalId?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motionProposalArguments?: Maybe<MotionProposalArgumentUpdateManyWithoutMotionInput>;
-  motionStatus?: Maybe<MotionStatusUpdateManyWithoutMotionInput>;
-  preimage?: Maybe<PreimageUpdateOneWithoutMotionInput>;
-};
-
-export type MotionUpsertWithoutMotionProposalArgumentsInput = {
-  update: MotionUpdateWithoutMotionProposalArgumentsDataInput;
-  create: MotionCreateWithoutMotionProposalArgumentsInput;
-};
-
-export type MotionUpsertWithoutMotionStatusInput = {
-  update: MotionUpdateWithoutMotionStatusDataInput;
-  create: MotionCreateWithoutMotionStatusInput;
-};
-
-export type MotionUpsertWithoutPreimageInput = {
-  update: MotionUpdateWithoutPreimageDataInput;
-  create: MotionCreateWithoutPreimageInput;
-};
-
-export type MotionUpsertWithoutTreasurySpendProposalInput = {
-  update: MotionUpdateWithoutTreasurySpendProposalDataInput;
-  create: MotionCreateWithoutTreasurySpendProposalInput;
 };
 
 export type MotionWhereInput = {
@@ -1930,894 +693,6 @@ export type MotionWhereUniqueInput = {
   motionProposalId?: Maybe<Scalars['Int']>;
 };
 
-export type Mutation = {
-   __typename?: 'Mutation';
-  createHeartBeat: HeartBeat;
-  createOfflineValidator: OfflineValidator;
-  createEra: Era;
-  createSlashing: Slashing;
-  createValidator: Validator;
-  createTotalIssuance: TotalIssuance;
-  createReward: Reward;
-  createNomination: Nomination;
-  createStake: Stake;
-  createCouncil: Council;
-  createCouncilMember: CouncilMember;
-  createMotion: Motion;
-  createMotionProposalArgument: MotionProposalArgument;
-  createMotionStatus: MotionStatus;
-  createProposal: Proposal;
-  createProposalStatus: ProposalStatus;
-  createPreimage: Preimage;
-  createPreimageStatus: PreimageStatus;
-  createPreimageArgument: PreimageArgument;
-  createReferendum: Referendum;
-  createReferendumStatus: ReferendumStatus;
-  createBlockIndex: BlockIndex;
-  createTreasurySpendProposal: TreasurySpendProposal;
-  createTreasuryStatus: TreasuryStatus;
-  createBlockNumber: BlockNumber;
-  createSession: Session;
-  updateHeartBeat?: Maybe<HeartBeat>;
-  updateOfflineValidator?: Maybe<OfflineValidator>;
-  updateEra?: Maybe<Era>;
-  updateSlashing?: Maybe<Slashing>;
-  updateValidator?: Maybe<Validator>;
-  updateTotalIssuance?: Maybe<TotalIssuance>;
-  updateReward?: Maybe<Reward>;
-  updateNomination?: Maybe<Nomination>;
-  updateStake?: Maybe<Stake>;
-  updateCouncil?: Maybe<Council>;
-  updateCouncilMember?: Maybe<CouncilMember>;
-  updateMotion?: Maybe<Motion>;
-  updateMotionProposalArgument?: Maybe<MotionProposalArgument>;
-  updateMotionStatus?: Maybe<MotionStatus>;
-  updateProposal?: Maybe<Proposal>;
-  updateProposalStatus?: Maybe<ProposalStatus>;
-  updatePreimage?: Maybe<Preimage>;
-  updatePreimageStatus?: Maybe<PreimageStatus>;
-  updatePreimageArgument?: Maybe<PreimageArgument>;
-  updateReferendum?: Maybe<Referendum>;
-  updateReferendumStatus?: Maybe<ReferendumStatus>;
-  updateBlockIndex?: Maybe<BlockIndex>;
-  updateTreasurySpendProposal?: Maybe<TreasurySpendProposal>;
-  updateTreasuryStatus?: Maybe<TreasuryStatus>;
-  updateBlockNumber?: Maybe<BlockNumber>;
-  updateSession?: Maybe<Session>;
-  deleteHeartBeat?: Maybe<HeartBeat>;
-  deleteOfflineValidator?: Maybe<OfflineValidator>;
-  deleteEra?: Maybe<Era>;
-  deleteSlashing?: Maybe<Slashing>;
-  deleteValidator?: Maybe<Validator>;
-  deleteTotalIssuance?: Maybe<TotalIssuance>;
-  deleteReward?: Maybe<Reward>;
-  deleteNomination?: Maybe<Nomination>;
-  deleteStake?: Maybe<Stake>;
-  deleteCouncil?: Maybe<Council>;
-  deleteCouncilMember?: Maybe<CouncilMember>;
-  deleteMotion?: Maybe<Motion>;
-  deleteMotionProposalArgument?: Maybe<MotionProposalArgument>;
-  deleteMotionStatus?: Maybe<MotionStatus>;
-  deleteProposal?: Maybe<Proposal>;
-  deleteProposalStatus?: Maybe<ProposalStatus>;
-  deletePreimage?: Maybe<Preimage>;
-  deletePreimageStatus?: Maybe<PreimageStatus>;
-  deletePreimageArgument?: Maybe<PreimageArgument>;
-  deleteReferendum?: Maybe<Referendum>;
-  deleteReferendumStatus?: Maybe<ReferendumStatus>;
-  deleteBlockIndex?: Maybe<BlockIndex>;
-  deleteTreasurySpendProposal?: Maybe<TreasurySpendProposal>;
-  deleteTreasuryStatus?: Maybe<TreasuryStatus>;
-  deleteBlockNumber?: Maybe<BlockNumber>;
-  deleteSession?: Maybe<Session>;
-  upsertHeartBeat: HeartBeat;
-  upsertOfflineValidator: OfflineValidator;
-  upsertEra: Era;
-  upsertSlashing: Slashing;
-  upsertValidator: Validator;
-  upsertTotalIssuance: TotalIssuance;
-  upsertReward: Reward;
-  upsertNomination: Nomination;
-  upsertStake: Stake;
-  upsertCouncil: Council;
-  upsertCouncilMember: CouncilMember;
-  upsertMotion: Motion;
-  upsertMotionProposalArgument: MotionProposalArgument;
-  upsertMotionStatus: MotionStatus;
-  upsertProposal: Proposal;
-  upsertProposalStatus: ProposalStatus;
-  upsertPreimage: Preimage;
-  upsertPreimageStatus: PreimageStatus;
-  upsertPreimageArgument: PreimageArgument;
-  upsertReferendum: Referendum;
-  upsertReferendumStatus: ReferendumStatus;
-  upsertBlockIndex: BlockIndex;
-  upsertTreasurySpendProposal: TreasurySpendProposal;
-  upsertTreasuryStatus: TreasuryStatus;
-  upsertBlockNumber: BlockNumber;
-  upsertSession: Session;
-  updateManyHeartBeats: BatchPayload;
-  updateManyOfflineValidators: BatchPayload;
-  updateManyEras: BatchPayload;
-  updateManySlashings: BatchPayload;
-  updateManyValidators: BatchPayload;
-  updateManyTotalIssuances: BatchPayload;
-  updateManyRewards: BatchPayload;
-  updateManyNominations: BatchPayload;
-  updateManyStakes: BatchPayload;
-  updateManyCouncilMembers: BatchPayload;
-  updateManyMotions: BatchPayload;
-  updateManyMotionProposalArguments: BatchPayload;
-  updateManyMotionStatuses: BatchPayload;
-  updateManyProposals: BatchPayload;
-  updateManyProposalStatuses: BatchPayload;
-  updateManyPreimages: BatchPayload;
-  updateManyPreimageStatuses: BatchPayload;
-  updateManyPreimageArguments: BatchPayload;
-  updateManyReferendums: BatchPayload;
-  updateManyReferendumStatuses: BatchPayload;
-  updateManyBlockIndexes: BatchPayload;
-  updateManyTreasurySpendProposals: BatchPayload;
-  updateManyTreasuryStatuses: BatchPayload;
-  updateManyBlockNumbers: BatchPayload;
-  updateManySessions: BatchPayload;
-  deleteManyHeartBeats: BatchPayload;
-  deleteManyOfflineValidators: BatchPayload;
-  deleteManyEras: BatchPayload;
-  deleteManySlashings: BatchPayload;
-  deleteManyValidators: BatchPayload;
-  deleteManyTotalIssuances: BatchPayload;
-  deleteManyRewards: BatchPayload;
-  deleteManyNominations: BatchPayload;
-  deleteManyStakes: BatchPayload;
-  deleteManyCouncils: BatchPayload;
-  deleteManyCouncilMembers: BatchPayload;
-  deleteManyMotions: BatchPayload;
-  deleteManyMotionProposalArguments: BatchPayload;
-  deleteManyMotionStatuses: BatchPayload;
-  deleteManyProposals: BatchPayload;
-  deleteManyProposalStatuses: BatchPayload;
-  deleteManyPreimages: BatchPayload;
-  deleteManyPreimageStatuses: BatchPayload;
-  deleteManyPreimageArguments: BatchPayload;
-  deleteManyReferendums: BatchPayload;
-  deleteManyReferendumStatuses: BatchPayload;
-  deleteManyBlockIndexes: BatchPayload;
-  deleteManyTreasurySpendProposals: BatchPayload;
-  deleteManyTreasuryStatuses: BatchPayload;
-  deleteManyBlockNumbers: BatchPayload;
-  deleteManySessions: BatchPayload;
-  executeRaw: Scalars['Json'];
-};
-
-export type MutationCreateHeartBeatArgs = {
-  data: HeartBeatCreateInput;
-};
-
-export type MutationCreateOfflineValidatorArgs = {
-  data: OfflineValidatorCreateInput;
-};
-
-export type MutationCreateEraArgs = {
-  data: EraCreateInput;
-};
-
-export type MutationCreateSlashingArgs = {
-  data: SlashingCreateInput;
-};
-
-export type MutationCreateValidatorArgs = {
-  data: ValidatorCreateInput;
-};
-
-export type MutationCreateTotalIssuanceArgs = {
-  data: TotalIssuanceCreateInput;
-};
-
-export type MutationCreateRewardArgs = {
-  data: RewardCreateInput;
-};
-
-export type MutationCreateNominationArgs = {
-  data: NominationCreateInput;
-};
-
-export type MutationCreateStakeArgs = {
-  data: StakeCreateInput;
-};
-
-export type MutationCreateCouncilArgs = {
-  data: CouncilCreateInput;
-};
-
-export type MutationCreateCouncilMemberArgs = {
-  data: CouncilMemberCreateInput;
-};
-
-export type MutationCreateMotionArgs = {
-  data: MotionCreateInput;
-};
-
-export type MutationCreateMotionProposalArgumentArgs = {
-  data: MotionProposalArgumentCreateInput;
-};
-
-export type MutationCreateMotionStatusArgs = {
-  data: MotionStatusCreateInput;
-};
-
-export type MutationCreateProposalArgs = {
-  data: ProposalCreateInput;
-};
-
-export type MutationCreateProposalStatusArgs = {
-  data: ProposalStatusCreateInput;
-};
-
-export type MutationCreatePreimageArgs = {
-  data: PreimageCreateInput;
-};
-
-export type MutationCreatePreimageStatusArgs = {
-  data: PreimageStatusCreateInput;
-};
-
-export type MutationCreatePreimageArgumentArgs = {
-  data: PreimageArgumentCreateInput;
-};
-
-export type MutationCreateReferendumArgs = {
-  data: ReferendumCreateInput;
-};
-
-export type MutationCreateReferendumStatusArgs = {
-  data: ReferendumStatusCreateInput;
-};
-
-export type MutationCreateBlockIndexArgs = {
-  data: BlockIndexCreateInput;
-};
-
-export type MutationCreateTreasurySpendProposalArgs = {
-  data: TreasurySpendProposalCreateInput;
-};
-
-export type MutationCreateTreasuryStatusArgs = {
-  data: TreasuryStatusCreateInput;
-};
-
-export type MutationCreateBlockNumberArgs = {
-  data: BlockNumberCreateInput;
-};
-
-export type MutationCreateSessionArgs = {
-  data: SessionCreateInput;
-};
-
-export type MutationUpdateHeartBeatArgs = {
-  data: HeartBeatUpdateInput;
-  where: HeartBeatWhereUniqueInput;
-};
-
-export type MutationUpdateOfflineValidatorArgs = {
-  data: OfflineValidatorUpdateInput;
-  where: OfflineValidatorWhereUniqueInput;
-};
-
-export type MutationUpdateEraArgs = {
-  data: EraUpdateInput;
-  where: EraWhereUniqueInput;
-};
-
-export type MutationUpdateSlashingArgs = {
-  data: SlashingUpdateInput;
-  where: SlashingWhereUniqueInput;
-};
-
-export type MutationUpdateValidatorArgs = {
-  data: ValidatorUpdateInput;
-  where: ValidatorWhereUniqueInput;
-};
-
-export type MutationUpdateTotalIssuanceArgs = {
-  data: TotalIssuanceUpdateInput;
-  where: TotalIssuanceWhereUniqueInput;
-};
-
-export type MutationUpdateRewardArgs = {
-  data: RewardUpdateInput;
-  where: RewardWhereUniqueInput;
-};
-
-export type MutationUpdateNominationArgs = {
-  data: NominationUpdateInput;
-  where: NominationWhereUniqueInput;
-};
-
-export type MutationUpdateStakeArgs = {
-  data: StakeUpdateInput;
-  where: StakeWhereUniqueInput;
-};
-
-export type MutationUpdateCouncilArgs = {
-  data: CouncilUpdateInput;
-  where: CouncilWhereUniqueInput;
-};
-
-export type MutationUpdateCouncilMemberArgs = {
-  data: CouncilMemberUpdateInput;
-  where: CouncilMemberWhereUniqueInput;
-};
-
-export type MutationUpdateMotionArgs = {
-  data: MotionUpdateInput;
-  where: MotionWhereUniqueInput;
-};
-
-export type MutationUpdateMotionProposalArgumentArgs = {
-  data: MotionProposalArgumentUpdateInput;
-  where: MotionProposalArgumentWhereUniqueInput;
-};
-
-export type MutationUpdateMotionStatusArgs = {
-  data: MotionStatusUpdateInput;
-  where: MotionStatusWhereUniqueInput;
-};
-
-export type MutationUpdateProposalArgs = {
-  data: ProposalUpdateInput;
-  where: ProposalWhereUniqueInput;
-};
-
-export type MutationUpdateProposalStatusArgs = {
-  data: ProposalStatusUpdateInput;
-  where: ProposalStatusWhereUniqueInput;
-};
-
-export type MutationUpdatePreimageArgs = {
-  data: PreimageUpdateInput;
-  where: PreimageWhereUniqueInput;
-};
-
-export type MutationUpdatePreimageStatusArgs = {
-  data: PreimageStatusUpdateInput;
-  where: PreimageStatusWhereUniqueInput;
-};
-
-export type MutationUpdatePreimageArgumentArgs = {
-  data: PreimageArgumentUpdateInput;
-  where: PreimageArgumentWhereUniqueInput;
-};
-
-export type MutationUpdateReferendumArgs = {
-  data: ReferendumUpdateInput;
-  where: ReferendumWhereUniqueInput;
-};
-
-export type MutationUpdateReferendumStatusArgs = {
-  data: ReferendumStatusUpdateInput;
-  where: ReferendumStatusWhereUniqueInput;
-};
-
-export type MutationUpdateBlockIndexArgs = {
-  data: BlockIndexUpdateInput;
-  where: BlockIndexWhereUniqueInput;
-};
-
-export type MutationUpdateTreasurySpendProposalArgs = {
-  data: TreasurySpendProposalUpdateInput;
-  where: TreasurySpendProposalWhereUniqueInput;
-};
-
-export type MutationUpdateTreasuryStatusArgs = {
-  data: TreasuryStatusUpdateInput;
-  where: TreasuryStatusWhereUniqueInput;
-};
-
-export type MutationUpdateBlockNumberArgs = {
-  data: BlockNumberUpdateInput;
-  where: BlockNumberWhereUniqueInput;
-};
-
-export type MutationUpdateSessionArgs = {
-  data: SessionUpdateInput;
-  where: SessionWhereUniqueInput;
-};
-
-export type MutationDeleteHeartBeatArgs = {
-  where: HeartBeatWhereUniqueInput;
-};
-
-export type MutationDeleteOfflineValidatorArgs = {
-  where: OfflineValidatorWhereUniqueInput;
-};
-
-export type MutationDeleteEraArgs = {
-  where: EraWhereUniqueInput;
-};
-
-export type MutationDeleteSlashingArgs = {
-  where: SlashingWhereUniqueInput;
-};
-
-export type MutationDeleteValidatorArgs = {
-  where: ValidatorWhereUniqueInput;
-};
-
-export type MutationDeleteTotalIssuanceArgs = {
-  where: TotalIssuanceWhereUniqueInput;
-};
-
-export type MutationDeleteRewardArgs = {
-  where: RewardWhereUniqueInput;
-};
-
-export type MutationDeleteNominationArgs = {
-  where: NominationWhereUniqueInput;
-};
-
-export type MutationDeleteStakeArgs = {
-  where: StakeWhereUniqueInput;
-};
-
-export type MutationDeleteCouncilArgs = {
-  where: CouncilWhereUniqueInput;
-};
-
-export type MutationDeleteCouncilMemberArgs = {
-  where: CouncilMemberWhereUniqueInput;
-};
-
-export type MutationDeleteMotionArgs = {
-  where: MotionWhereUniqueInput;
-};
-
-export type MutationDeleteMotionProposalArgumentArgs = {
-  where: MotionProposalArgumentWhereUniqueInput;
-};
-
-export type MutationDeleteMotionStatusArgs = {
-  where: MotionStatusWhereUniqueInput;
-};
-
-export type MutationDeleteProposalArgs = {
-  where: ProposalWhereUniqueInput;
-};
-
-export type MutationDeleteProposalStatusArgs = {
-  where: ProposalStatusWhereUniqueInput;
-};
-
-export type MutationDeletePreimageArgs = {
-  where: PreimageWhereUniqueInput;
-};
-
-export type MutationDeletePreimageStatusArgs = {
-  where: PreimageStatusWhereUniqueInput;
-};
-
-export type MutationDeletePreimageArgumentArgs = {
-  where: PreimageArgumentWhereUniqueInput;
-};
-
-export type MutationDeleteReferendumArgs = {
-  where: ReferendumWhereUniqueInput;
-};
-
-export type MutationDeleteReferendumStatusArgs = {
-  where: ReferendumStatusWhereUniqueInput;
-};
-
-export type MutationDeleteBlockIndexArgs = {
-  where: BlockIndexWhereUniqueInput;
-};
-
-export type MutationDeleteTreasurySpendProposalArgs = {
-  where: TreasurySpendProposalWhereUniqueInput;
-};
-
-export type MutationDeleteTreasuryStatusArgs = {
-  where: TreasuryStatusWhereUniqueInput;
-};
-
-export type MutationDeleteBlockNumberArgs = {
-  where: BlockNumberWhereUniqueInput;
-};
-
-export type MutationDeleteSessionArgs = {
-  where: SessionWhereUniqueInput;
-};
-
-export type MutationUpsertHeartBeatArgs = {
-  where: HeartBeatWhereUniqueInput;
-  create: HeartBeatCreateInput;
-  update: HeartBeatUpdateInput;
-};
-
-export type MutationUpsertOfflineValidatorArgs = {
-  where: OfflineValidatorWhereUniqueInput;
-  create: OfflineValidatorCreateInput;
-  update: OfflineValidatorUpdateInput;
-};
-
-export type MutationUpsertEraArgs = {
-  where: EraWhereUniqueInput;
-  create: EraCreateInput;
-  update: EraUpdateInput;
-};
-
-export type MutationUpsertSlashingArgs = {
-  where: SlashingWhereUniqueInput;
-  create: SlashingCreateInput;
-  update: SlashingUpdateInput;
-};
-
-export type MutationUpsertValidatorArgs = {
-  where: ValidatorWhereUniqueInput;
-  create: ValidatorCreateInput;
-  update: ValidatorUpdateInput;
-};
-
-export type MutationUpsertTotalIssuanceArgs = {
-  where: TotalIssuanceWhereUniqueInput;
-  create: TotalIssuanceCreateInput;
-  update: TotalIssuanceUpdateInput;
-};
-
-export type MutationUpsertRewardArgs = {
-  where: RewardWhereUniqueInput;
-  create: RewardCreateInput;
-  update: RewardUpdateInput;
-};
-
-export type MutationUpsertNominationArgs = {
-  where: NominationWhereUniqueInput;
-  create: NominationCreateInput;
-  update: NominationUpdateInput;
-};
-
-export type MutationUpsertStakeArgs = {
-  where: StakeWhereUniqueInput;
-  create: StakeCreateInput;
-  update: StakeUpdateInput;
-};
-
-export type MutationUpsertCouncilArgs = {
-  where: CouncilWhereUniqueInput;
-  create: CouncilCreateInput;
-  update: CouncilUpdateInput;
-};
-
-export type MutationUpsertCouncilMemberArgs = {
-  where: CouncilMemberWhereUniqueInput;
-  create: CouncilMemberCreateInput;
-  update: CouncilMemberUpdateInput;
-};
-
-export type MutationUpsertMotionArgs = {
-  where: MotionWhereUniqueInput;
-  create: MotionCreateInput;
-  update: MotionUpdateInput;
-};
-
-export type MutationUpsertMotionProposalArgumentArgs = {
-  where: MotionProposalArgumentWhereUniqueInput;
-  create: MotionProposalArgumentCreateInput;
-  update: MotionProposalArgumentUpdateInput;
-};
-
-export type MutationUpsertMotionStatusArgs = {
-  where: MotionStatusWhereUniqueInput;
-  create: MotionStatusCreateInput;
-  update: MotionStatusUpdateInput;
-};
-
-export type MutationUpsertProposalArgs = {
-  where: ProposalWhereUniqueInput;
-  create: ProposalCreateInput;
-  update: ProposalUpdateInput;
-};
-
-export type MutationUpsertProposalStatusArgs = {
-  where: ProposalStatusWhereUniqueInput;
-  create: ProposalStatusCreateInput;
-  update: ProposalStatusUpdateInput;
-};
-
-export type MutationUpsertPreimageArgs = {
-  where: PreimageWhereUniqueInput;
-  create: PreimageCreateInput;
-  update: PreimageUpdateInput;
-};
-
-export type MutationUpsertPreimageStatusArgs = {
-  where: PreimageStatusWhereUniqueInput;
-  create: PreimageStatusCreateInput;
-  update: PreimageStatusUpdateInput;
-};
-
-export type MutationUpsertPreimageArgumentArgs = {
-  where: PreimageArgumentWhereUniqueInput;
-  create: PreimageArgumentCreateInput;
-  update: PreimageArgumentUpdateInput;
-};
-
-export type MutationUpsertReferendumArgs = {
-  where: ReferendumWhereUniqueInput;
-  create: ReferendumCreateInput;
-  update: ReferendumUpdateInput;
-};
-
-export type MutationUpsertReferendumStatusArgs = {
-  where: ReferendumStatusWhereUniqueInput;
-  create: ReferendumStatusCreateInput;
-  update: ReferendumStatusUpdateInput;
-};
-
-export type MutationUpsertBlockIndexArgs = {
-  where: BlockIndexWhereUniqueInput;
-  create: BlockIndexCreateInput;
-  update: BlockIndexUpdateInput;
-};
-
-export type MutationUpsertTreasurySpendProposalArgs = {
-  where: TreasurySpendProposalWhereUniqueInput;
-  create: TreasurySpendProposalCreateInput;
-  update: TreasurySpendProposalUpdateInput;
-};
-
-export type MutationUpsertTreasuryStatusArgs = {
-  where: TreasuryStatusWhereUniqueInput;
-  create: TreasuryStatusCreateInput;
-  update: TreasuryStatusUpdateInput;
-};
-
-export type MutationUpsertBlockNumberArgs = {
-  where: BlockNumberWhereUniqueInput;
-  create: BlockNumberCreateInput;
-  update: BlockNumberUpdateInput;
-};
-
-export type MutationUpsertSessionArgs = {
-  where: SessionWhereUniqueInput;
-  create: SessionCreateInput;
-  update: SessionUpdateInput;
-};
-
-export type MutationUpdateManyHeartBeatsArgs = {
-  data: HeartBeatUpdateManyMutationInput;
-  where?: Maybe<HeartBeatWhereInput>;
-};
-
-export type MutationUpdateManyOfflineValidatorsArgs = {
-  data: OfflineValidatorUpdateManyMutationInput;
-  where?: Maybe<OfflineValidatorWhereInput>;
-};
-
-export type MutationUpdateManyErasArgs = {
-  data: EraUpdateManyMutationInput;
-  where?: Maybe<EraWhereInput>;
-};
-
-export type MutationUpdateManySlashingsArgs = {
-  data: SlashingUpdateManyMutationInput;
-  where?: Maybe<SlashingWhereInput>;
-};
-
-export type MutationUpdateManyValidatorsArgs = {
-  data: ValidatorUpdateManyMutationInput;
-  where?: Maybe<ValidatorWhereInput>;
-};
-
-export type MutationUpdateManyTotalIssuancesArgs = {
-  data: TotalIssuanceUpdateManyMutationInput;
-  where?: Maybe<TotalIssuanceWhereInput>;
-};
-
-export type MutationUpdateManyRewardsArgs = {
-  data: RewardUpdateManyMutationInput;
-  where?: Maybe<RewardWhereInput>;
-};
-
-export type MutationUpdateManyNominationsArgs = {
-  data: NominationUpdateManyMutationInput;
-  where?: Maybe<NominationWhereInput>;
-};
-
-export type MutationUpdateManyStakesArgs = {
-  data: StakeUpdateManyMutationInput;
-  where?: Maybe<StakeWhereInput>;
-};
-
-export type MutationUpdateManyCouncilMembersArgs = {
-  data: CouncilMemberUpdateManyMutationInput;
-  where?: Maybe<CouncilMemberWhereInput>;
-};
-
-export type MutationUpdateManyMotionsArgs = {
-  data: MotionUpdateManyMutationInput;
-  where?: Maybe<MotionWhereInput>;
-};
-
-export type MutationUpdateManyMotionProposalArgumentsArgs = {
-  data: MotionProposalArgumentUpdateManyMutationInput;
-  where?: Maybe<MotionProposalArgumentWhereInput>;
-};
-
-export type MutationUpdateManyMotionStatusesArgs = {
-  data: MotionStatusUpdateManyMutationInput;
-  where?: Maybe<MotionStatusWhereInput>;
-};
-
-export type MutationUpdateManyProposalsArgs = {
-  data: ProposalUpdateManyMutationInput;
-  where?: Maybe<ProposalWhereInput>;
-};
-
-export type MutationUpdateManyProposalStatusesArgs = {
-  data: ProposalStatusUpdateManyMutationInput;
-  where?: Maybe<ProposalStatusWhereInput>;
-};
-
-export type MutationUpdateManyPreimagesArgs = {
-  data: PreimageUpdateManyMutationInput;
-  where?: Maybe<PreimageWhereInput>;
-};
-
-export type MutationUpdateManyPreimageStatusesArgs = {
-  data: PreimageStatusUpdateManyMutationInput;
-  where?: Maybe<PreimageStatusWhereInput>;
-};
-
-export type MutationUpdateManyPreimageArgumentsArgs = {
-  data: PreimageArgumentUpdateManyMutationInput;
-  where?: Maybe<PreimageArgumentWhereInput>;
-};
-
-export type MutationUpdateManyReferendumsArgs = {
-  data: ReferendumUpdateManyMutationInput;
-  where?: Maybe<ReferendumWhereInput>;
-};
-
-export type MutationUpdateManyReferendumStatusesArgs = {
-  data: ReferendumStatusUpdateManyMutationInput;
-  where?: Maybe<ReferendumStatusWhereInput>;
-};
-
-export type MutationUpdateManyBlockIndexesArgs = {
-  data: BlockIndexUpdateManyMutationInput;
-  where?: Maybe<BlockIndexWhereInput>;
-};
-
-export type MutationUpdateManyTreasurySpendProposalsArgs = {
-  data: TreasurySpendProposalUpdateManyMutationInput;
-  where?: Maybe<TreasurySpendProposalWhereInput>;
-};
-
-export type MutationUpdateManyTreasuryStatusesArgs = {
-  data: TreasuryStatusUpdateManyMutationInput;
-  where?: Maybe<TreasuryStatusWhereInput>;
-};
-
-export type MutationUpdateManyBlockNumbersArgs = {
-  data: BlockNumberUpdateManyMutationInput;
-  where?: Maybe<BlockNumberWhereInput>;
-};
-
-export type MutationUpdateManySessionsArgs = {
-  data: SessionUpdateManyMutationInput;
-  where?: Maybe<SessionWhereInput>;
-};
-
-export type MutationDeleteManyHeartBeatsArgs = {
-  where?: Maybe<HeartBeatWhereInput>;
-};
-
-export type MutationDeleteManyOfflineValidatorsArgs = {
-  where?: Maybe<OfflineValidatorWhereInput>;
-};
-
-export type MutationDeleteManyErasArgs = {
-  where?: Maybe<EraWhereInput>;
-};
-
-export type MutationDeleteManySlashingsArgs = {
-  where?: Maybe<SlashingWhereInput>;
-};
-
-export type MutationDeleteManyValidatorsArgs = {
-  where?: Maybe<ValidatorWhereInput>;
-};
-
-export type MutationDeleteManyTotalIssuancesArgs = {
-  where?: Maybe<TotalIssuanceWhereInput>;
-};
-
-export type MutationDeleteManyRewardsArgs = {
-  where?: Maybe<RewardWhereInput>;
-};
-
-export type MutationDeleteManyNominationsArgs = {
-  where?: Maybe<NominationWhereInput>;
-};
-
-export type MutationDeleteManyStakesArgs = {
-  where?: Maybe<StakeWhereInput>;
-};
-
-export type MutationDeleteManyCouncilsArgs = {
-  where?: Maybe<CouncilWhereInput>;
-};
-
-export type MutationDeleteManyCouncilMembersArgs = {
-  where?: Maybe<CouncilMemberWhereInput>;
-};
-
-export type MutationDeleteManyMotionsArgs = {
-  where?: Maybe<MotionWhereInput>;
-};
-
-export type MutationDeleteManyMotionProposalArgumentsArgs = {
-  where?: Maybe<MotionProposalArgumentWhereInput>;
-};
-
-export type MutationDeleteManyMotionStatusesArgs = {
-  where?: Maybe<MotionStatusWhereInput>;
-};
-
-export type MutationDeleteManyProposalsArgs = {
-  where?: Maybe<ProposalWhereInput>;
-};
-
-export type MutationDeleteManyProposalStatusesArgs = {
-  where?: Maybe<ProposalStatusWhereInput>;
-};
-
-export type MutationDeleteManyPreimagesArgs = {
-  where?: Maybe<PreimageWhereInput>;
-};
-
-export type MutationDeleteManyPreimageStatusesArgs = {
-  where?: Maybe<PreimageStatusWhereInput>;
-};
-
-export type MutationDeleteManyPreimageArgumentsArgs = {
-  where?: Maybe<PreimageArgumentWhereInput>;
-};
-
-export type MutationDeleteManyReferendumsArgs = {
-  where?: Maybe<ReferendumWhereInput>;
-};
-
-export type MutationDeleteManyReferendumStatusesArgs = {
-  where?: Maybe<ReferendumStatusWhereInput>;
-};
-
-export type MutationDeleteManyBlockIndexesArgs = {
-  where?: Maybe<BlockIndexWhereInput>;
-};
-
-export type MutationDeleteManyTreasurySpendProposalsArgs = {
-  where?: Maybe<TreasurySpendProposalWhereInput>;
-};
-
-export type MutationDeleteManyTreasuryStatusesArgs = {
-  where?: Maybe<TreasuryStatusWhereInput>;
-};
-
-export type MutationDeleteManyBlockNumbersArgs = {
-  where?: Maybe<BlockNumberWhereInput>;
-};
-
-export type MutationDeleteManySessionsArgs = {
-  where?: Maybe<SessionWhereInput>;
-};
-
-export type MutationExecuteRawArgs = {
-  database?: Maybe<PrismaDatabase>;
-  query: Scalars['String'];
-};
-
 export enum MutationType {
   Created = 'CREATED',
   Updated = 'UPDATED',
@@ -2839,29 +714,6 @@ export type Nomination = Node & {
   stakedAmount: Scalars['String'];
 };
 
-export type NominationConnection = {
-   __typename?: 'NominationConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<NominationEdge>>;
-  aggregate: AggregateNomination;
-};
-
-export type NominationCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  validatorController: Scalars['String'];
-  validatorStash: Scalars['String'];
-  nominatorController: Scalars['String'];
-  nominatorStash: Scalars['String'];
-  stakedAmount: Scalars['String'];
-  session: SessionCreateOneInput;
-};
-
-export type NominationEdge = {
-   __typename?: 'NominationEdge';
-  node: Nomination;
-  cursor: Scalars['String'];
-};
-
 export enum NominationOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -2876,52 +728,6 @@ export enum NominationOrderByInput {
   StakedAmountAsc = 'stakedAmount_ASC',
   StakedAmountDesc = 'stakedAmount_DESC'
 }
-
-export type NominationPreviousValues = {
-   __typename?: 'NominationPreviousValues';
-  id: Scalars['ID'];
-  validatorController: Scalars['String'];
-  validatorStash: Scalars['String'];
-  nominatorController: Scalars['String'];
-  nominatorStash: Scalars['String'];
-  stakedAmount: Scalars['String'];
-};
-
-export type NominationSubscriptionPayload = {
-   __typename?: 'NominationSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Nomination>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<NominationPreviousValues>;
-};
-
-export type NominationSubscriptionWhereInput = {
-  AND?: Maybe<Array<NominationSubscriptionWhereInput>>;
-  OR?: Maybe<Array<NominationSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<NominationSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<NominationWhereInput>;
-};
-
-export type NominationUpdateInput = {
-  validatorController?: Maybe<Scalars['String']>;
-  validatorStash?: Maybe<Scalars['String']>;
-  nominatorController?: Maybe<Scalars['String']>;
-  nominatorStash?: Maybe<Scalars['String']>;
-  stakedAmount?: Maybe<Scalars['String']>;
-  session?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type NominationUpdateManyMutationInput = {
-  validatorController?: Maybe<Scalars['String']>;
-  validatorStash?: Maybe<Scalars['String']>;
-  nominatorController?: Maybe<Scalars['String']>;
-  nominatorStash?: Maybe<Scalars['String']>;
-  stakedAmount?: Maybe<Scalars['String']>;
-};
 
 export type NominationWhereInput = {
   AND?: Maybe<Array<NominationWhereInput>>;
@@ -3028,32 +834,6 @@ export type OfflineValidator = Node & {
   others: Array<Scalars['Json']>;
 };
 
-export type OfflineValidatorConnection = {
-   __typename?: 'OfflineValidatorConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<OfflineValidatorEdge>>;
-  aggregate: AggregateOfflineValidator;
-};
-
-export type OfflineValidatorCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  validatorId: Scalars['String'];
-  total: Scalars['String'];
-  own: Scalars['String'];
-  others?: Maybe<OfflineValidatorCreateothersInput>;
-  sessionIndex: SessionCreateOneInput;
-};
-
-export type OfflineValidatorCreateothersInput = {
-  set?: Maybe<Array<Scalars['Json']>>;
-};
-
-export type OfflineValidatorEdge = {
-   __typename?: 'OfflineValidatorEdge';
-  node: OfflineValidator;
-  cursor: Scalars['String'];
-};
-
 export enum OfflineValidatorOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -3064,53 +844,6 @@ export enum OfflineValidatorOrderByInput {
   OwnAsc = 'own_ASC',
   OwnDesc = 'own_DESC'
 }
-
-export type OfflineValidatorPreviousValues = {
-   __typename?: 'OfflineValidatorPreviousValues';
-  id: Scalars['ID'];
-  validatorId: Scalars['String'];
-  total: Scalars['String'];
-  own: Scalars['String'];
-  others: Array<Scalars['Json']>;
-};
-
-export type OfflineValidatorSubscriptionPayload = {
-   __typename?: 'OfflineValidatorSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<OfflineValidator>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<OfflineValidatorPreviousValues>;
-};
-
-export type OfflineValidatorSubscriptionWhereInput = {
-  AND?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>;
-  OR?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<OfflineValidatorSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<OfflineValidatorWhereInput>;
-};
-
-export type OfflineValidatorUpdateInput = {
-  validatorId?: Maybe<Scalars['String']>;
-  total?: Maybe<Scalars['String']>;
-  own?: Maybe<Scalars['String']>;
-  others?: Maybe<OfflineValidatorUpdateothersInput>;
-  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type OfflineValidatorUpdateManyMutationInput = {
-  validatorId?: Maybe<Scalars['String']>;
-  total?: Maybe<Scalars['String']>;
-  own?: Maybe<Scalars['String']>;
-  others?: Maybe<OfflineValidatorUpdateothersInput>;
-};
-
-export type OfflineValidatorUpdateothersInput = {
-  set?: Maybe<Array<Scalars['Json']>>;
-};
 
 export type OfflineValidatorWhereInput = {
   AND?: Maybe<Array<OfflineValidatorWhereInput>>;
@@ -3175,18 +908,6 @@ export type OfflineValidatorWhereInput = {
   sessionIndex?: Maybe<SessionWhereInput>;
 };
 
-export type OfflineValidatorWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type PageInfo = {
-   __typename?: 'PageInfo';
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
-  startCursor?: Maybe<Scalars['String']>;
-  endCursor?: Maybe<Scalars['String']>;
-};
-
 export type Preimage = Node & {
    __typename?: 'Preimage';
   id: Scalars['ID'];
@@ -3203,6 +924,7 @@ export type Preimage = Node & {
   section: Scalars['String'];
 };
 
+
 export type PreimagePreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>;
   orderBy?: Maybe<PreimageArgumentOrderByInput>;
@@ -3212,6 +934,7 @@ export type PreimagePreimageArgumentsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
 };
+
 
 export type PreimagePreimageStatusArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
@@ -3231,37 +954,6 @@ export type PreimageArgument = Node & {
   value: Scalars['String'];
 };
 
-export type PreimageArgumentConnection = {
-   __typename?: 'PreimageArgumentConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<PreimageArgumentEdge>>;
-  aggregate: AggregatePreimageArgument;
-};
-
-export type PreimageArgumentCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  value: Scalars['String'];
-  preimage: PreimageCreateOneWithoutPreimageArgumentsInput;
-};
-
-export type PreimageArgumentCreateManyWithoutPreimageInput = {
-  create?: Maybe<Array<PreimageArgumentCreateWithoutPreimageInput>>;
-  connect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>;
-};
-
-export type PreimageArgumentCreateWithoutPreimageInput = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type PreimageArgumentEdge = {
-   __typename?: 'PreimageArgumentEdge';
-  node: PreimageArgument;
-  cursor: Scalars['String'];
-};
-
 export enum PreimageArgumentOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -3270,129 +962,6 @@ export enum PreimageArgumentOrderByInput {
   ValueAsc = 'value_ASC',
   ValueDesc = 'value_DESC'
 }
-
-export type PreimageArgumentPreviousValues = {
-   __typename?: 'PreimageArgumentPreviousValues';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type PreimageArgumentScalarWhereInput = {
-  AND?: Maybe<Array<PreimageArgumentScalarWhereInput>>;
-  OR?: Maybe<Array<PreimageArgumentScalarWhereInput>>;
-  NOT?: Maybe<Array<PreimageArgumentScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Scalars['String']>>;
-  name_not_in?: Maybe<Array<Scalars['String']>>;
-  name_lt?: Maybe<Scalars['String']>;
-  name_lte?: Maybe<Scalars['String']>;
-  name_gt?: Maybe<Scalars['String']>;
-  name_gte?: Maybe<Scalars['String']>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  name_starts_with?: Maybe<Scalars['String']>;
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  name_ends_with?: Maybe<Scalars['String']>;
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  value_not?: Maybe<Scalars['String']>;
-  value_in?: Maybe<Array<Scalars['String']>>;
-  value_not_in?: Maybe<Array<Scalars['String']>>;
-  value_lt?: Maybe<Scalars['String']>;
-  value_lte?: Maybe<Scalars['String']>;
-  value_gt?: Maybe<Scalars['String']>;
-  value_gte?: Maybe<Scalars['String']>;
-  value_contains?: Maybe<Scalars['String']>;
-  value_not_contains?: Maybe<Scalars['String']>;
-  value_starts_with?: Maybe<Scalars['String']>;
-  value_not_starts_with?: Maybe<Scalars['String']>;
-  value_ends_with?: Maybe<Scalars['String']>;
-  value_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type PreimageArgumentSubscriptionPayload = {
-   __typename?: 'PreimageArgumentSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<PreimageArgument>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<PreimageArgumentPreviousValues>;
-};
-
-export type PreimageArgumentSubscriptionWhereInput = {
-  AND?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>;
-  OR?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<PreimageArgumentSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<PreimageArgumentWhereInput>;
-};
-
-export type PreimageArgumentUpdateInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  preimage?: Maybe<PreimageUpdateOneRequiredWithoutPreimageArgumentsInput>;
-};
-
-export type PreimageArgumentUpdateManyDataInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type PreimageArgumentUpdateManyMutationInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type PreimageArgumentUpdateManyWithoutPreimageInput = {
-  create?: Maybe<Array<PreimageArgumentCreateWithoutPreimageInput>>;
-  connect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>;
-  set?: Maybe<Array<PreimageArgumentWhereUniqueInput>>;
-  disconnect?: Maybe<Array<PreimageArgumentWhereUniqueInput>>;
-  delete?: Maybe<Array<PreimageArgumentWhereUniqueInput>>;
-  update?: Maybe<Array<PreimageArgumentUpdateWithWhereUniqueWithoutPreimageInput>>;
-  updateMany?: Maybe<Array<PreimageArgumentUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<PreimageArgumentScalarWhereInput>>;
-  upsert?: Maybe<Array<PreimageArgumentUpsertWithWhereUniqueWithoutPreimageInput>>;
-};
-
-export type PreimageArgumentUpdateManyWithWhereNestedInput = {
-  where: PreimageArgumentScalarWhereInput;
-  data: PreimageArgumentUpdateManyDataInput;
-};
-
-export type PreimageArgumentUpdateWithoutPreimageDataInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-};
-
-export type PreimageArgumentUpdateWithWhereUniqueWithoutPreimageInput = {
-  where: PreimageArgumentWhereUniqueInput;
-  data: PreimageArgumentUpdateWithoutPreimageDataInput;
-};
-
-export type PreimageArgumentUpsertWithWhereUniqueWithoutPreimageInput = {
-  where: PreimageArgumentWhereUniqueInput;
-  update: PreimageArgumentUpdateWithoutPreimageDataInput;
-  create: PreimageArgumentCreateWithoutPreimageInput;
-};
 
 export type PreimageArgumentWhereInput = {
   AND?: Maybe<Array<PreimageArgumentWhereInput>>;
@@ -3447,129 +1016,6 @@ export type PreimageArgumentWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
 };
 
-export type PreimageConnection = {
-   __typename?: 'PreimageConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<PreimageEdge>>;
-  aggregate: AggregatePreimage;
-};
-
-export type PreimageCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  motion?: Maybe<MotionCreateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
-};
-
-export type PreimageCreateOneWithoutMotionInput = {
-  create?: Maybe<PreimageCreateWithoutMotionInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-};
-
-export type PreimageCreateOneWithoutPreimageArgumentsInput = {
-  create?: Maybe<PreimageCreateWithoutPreimageArgumentsInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-};
-
-export type PreimageCreateOneWithoutPreimageStatusInput = {
-  create?: Maybe<PreimageCreateWithoutPreimageStatusInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-};
-
-export type PreimageCreateOneWithoutProposalInput = {
-  create?: Maybe<PreimageCreateWithoutProposalInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-};
-
-export type PreimageCreateOneWithoutReferendumInput = {
-  create?: Maybe<PreimageCreateWithoutReferendumInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-};
-
-export type PreimageCreateWithoutMotionInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
-};
-
-export type PreimageCreateWithoutPreimageArgumentsInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  motion?: Maybe<MotionCreateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
-};
-
-export type PreimageCreateWithoutPreimageStatusInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  motion?: Maybe<MotionCreateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
-};
-
-export type PreimageCreateWithoutProposalInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  motion?: Maybe<MotionCreateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
-};
-
-export type PreimageCreateWithoutReferendumInput = {
-  id?: Maybe<Scalars['ID']>;
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-  motion?: Maybe<MotionCreateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalCreateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentCreateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusCreateManyWithoutPreimageInput>;
-};
-
-export type PreimageEdge = {
-   __typename?: 'PreimageEdge';
-  node: Preimage;
-  cursor: Scalars['String'];
-};
-
 export enum PreimageOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -3587,17 +1033,6 @@ export enum PreimageOrderByInput {
   SectionDesc = 'section_DESC'
 }
 
-export type PreimagePreviousValues = {
-   __typename?: 'PreimagePreviousValues';
-  id: Scalars['ID'];
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  hash: Scalars['String'];
-  metaDescription: Scalars['String'];
-  method: Scalars['String'];
-  section: Scalars['String'];
-};
-
 export type PreimageStatus = Node & {
    __typename?: 'PreimageStatus';
   id: Scalars['ID'];
@@ -3606,149 +1041,12 @@ export type PreimageStatus = Node & {
   status: Scalars['String'];
 };
 
-export type PreimageStatusConnection = {
-   __typename?: 'PreimageStatusConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<PreimageStatusEdge>>;
-  aggregate: AggregatePreimageStatus;
-};
-
-export type PreimageStatusCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-  preimage: PreimageCreateOneWithoutPreimageStatusInput;
-};
-
-export type PreimageStatusCreateManyWithoutPreimageInput = {
-  create?: Maybe<Array<PreimageStatusCreateWithoutPreimageInput>>;
-  connect?: Maybe<Array<PreimageStatusWhereUniqueInput>>;
-};
-
-export type PreimageStatusCreateWithoutPreimageInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type PreimageStatusEdge = {
-   __typename?: 'PreimageStatusEdge';
-  node: PreimageStatus;
-  cursor: Scalars['String'];
-};
-
 export enum PreimageStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC'
 }
-
-export type PreimageStatusPreviousValues = {
-   __typename?: 'PreimageStatusPreviousValues';
-  id: Scalars['ID'];
-  status: Scalars['String'];
-};
-
-export type PreimageStatusScalarWhereInput = {
-  AND?: Maybe<Array<PreimageStatusScalarWhereInput>>;
-  OR?: Maybe<Array<PreimageStatusScalarWhereInput>>;
-  NOT?: Maybe<Array<PreimageStatusScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Scalars['String']>>;
-  status_not_in?: Maybe<Array<Scalars['String']>>;
-  status_lt?: Maybe<Scalars['String']>;
-  status_lte?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  status_gte?: Maybe<Scalars['String']>;
-  status_contains?: Maybe<Scalars['String']>;
-  status_not_contains?: Maybe<Scalars['String']>;
-  status_starts_with?: Maybe<Scalars['String']>;
-  status_not_starts_with?: Maybe<Scalars['String']>;
-  status_ends_with?: Maybe<Scalars['String']>;
-  status_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type PreimageStatusSubscriptionPayload = {
-   __typename?: 'PreimageStatusSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<PreimageStatus>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<PreimageStatusPreviousValues>;
-};
-
-export type PreimageStatusSubscriptionWhereInput = {
-  AND?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>;
-  OR?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<PreimageStatusSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<PreimageStatusWhereInput>;
-};
-
-export type PreimageStatusUpdateInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  preimage?: Maybe<PreimageUpdateOneRequiredWithoutPreimageStatusInput>;
-};
-
-export type PreimageStatusUpdateManyDataInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type PreimageStatusUpdateManyMutationInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type PreimageStatusUpdateManyWithoutPreimageInput = {
-  create?: Maybe<Array<PreimageStatusCreateWithoutPreimageInput>>;
-  connect?: Maybe<Array<PreimageStatusWhereUniqueInput>>;
-  set?: Maybe<Array<PreimageStatusWhereUniqueInput>>;
-  disconnect?: Maybe<Array<PreimageStatusWhereUniqueInput>>;
-  delete?: Maybe<Array<PreimageStatusWhereUniqueInput>>;
-  update?: Maybe<Array<PreimageStatusUpdateWithWhereUniqueWithoutPreimageInput>>;
-  updateMany?: Maybe<Array<PreimageStatusUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<PreimageStatusScalarWhereInput>>;
-  upsert?: Maybe<Array<PreimageStatusUpsertWithWhereUniqueWithoutPreimageInput>>;
-};
-
-export type PreimageStatusUpdateManyWithWhereNestedInput = {
-  where: PreimageStatusScalarWhereInput;
-  data: PreimageStatusUpdateManyDataInput;
-};
-
-export type PreimageStatusUpdateWithoutPreimageDataInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type PreimageStatusUpdateWithWhereUniqueWithoutPreimageInput = {
-  where: PreimageStatusWhereUniqueInput;
-  data: PreimageStatusUpdateWithoutPreimageDataInput;
-};
-
-export type PreimageStatusUpsertWithWhereUniqueWithoutPreimageInput = {
-  where: PreimageStatusWhereUniqueInput;
-  update: PreimageStatusUpdateWithoutPreimageDataInput;
-  create: PreimageStatusCreateWithoutPreimageInput;
-};
 
 export type PreimageStatusWhereInput = {
   AND?: Maybe<Array<PreimageStatusWhereInput>>;
@@ -3788,179 +1086,6 @@ export type PreimageStatusWhereInput = {
 
 export type PreimageStatusWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
-};
-
-export type PreimageSubscriptionPayload = {
-   __typename?: 'PreimageSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Preimage>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<PreimagePreviousValues>;
-};
-
-export type PreimageSubscriptionWhereInput = {
-  AND?: Maybe<Array<PreimageSubscriptionWhereInput>>;
-  OR?: Maybe<Array<PreimageSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<PreimageSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<PreimageWhereInput>;
-};
-
-export type PreimageUpdateInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
-};
-
-export type PreimageUpdateManyMutationInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-};
-
-export type PreimageUpdateOneRequiredWithoutPreimageArgumentsInput = {
-  create?: Maybe<PreimageCreateWithoutPreimageArgumentsInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-  update?: Maybe<PreimageUpdateWithoutPreimageArgumentsDataInput>;
-  upsert?: Maybe<PreimageUpsertWithoutPreimageArgumentsInput>;
-};
-
-export type PreimageUpdateOneRequiredWithoutPreimageStatusInput = {
-  create?: Maybe<PreimageCreateWithoutPreimageStatusInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-  update?: Maybe<PreimageUpdateWithoutPreimageStatusDataInput>;
-  upsert?: Maybe<PreimageUpsertWithoutPreimageStatusInput>;
-};
-
-export type PreimageUpdateOneWithoutMotionInput = {
-  create?: Maybe<PreimageCreateWithoutMotionInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PreimageUpdateWithoutMotionDataInput>;
-  upsert?: Maybe<PreimageUpsertWithoutMotionInput>;
-};
-
-export type PreimageUpdateOneWithoutProposalInput = {
-  create?: Maybe<PreimageCreateWithoutProposalInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PreimageUpdateWithoutProposalDataInput>;
-  upsert?: Maybe<PreimageUpsertWithoutProposalInput>;
-};
-
-export type PreimageUpdateOneWithoutReferendumInput = {
-  create?: Maybe<PreimageCreateWithoutReferendumInput>;
-  connect?: Maybe<PreimageWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PreimageUpdateWithoutReferendumDataInput>;
-  upsert?: Maybe<PreimageUpsertWithoutReferendumInput>;
-};
-
-export type PreimageUpdateWithoutMotionDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
-};
-
-export type PreimageUpdateWithoutPreimageArgumentsDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
-};
-
-export type PreimageUpdateWithoutPreimageStatusDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
-};
-
-export type PreimageUpdateWithoutProposalDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
-  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
-};
-
-export type PreimageUpdateWithoutReferendumDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
-  metaDescription?: Maybe<Scalars['String']>;
-  method?: Maybe<Scalars['String']>;
-  section?: Maybe<Scalars['String']>;
-  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
-  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
-  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
-  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
-};
-
-export type PreimageUpsertWithoutMotionInput = {
-  update: PreimageUpdateWithoutMotionDataInput;
-  create: PreimageCreateWithoutMotionInput;
-};
-
-export type PreimageUpsertWithoutPreimageArgumentsInput = {
-  update: PreimageUpdateWithoutPreimageArgumentsDataInput;
-  create: PreimageCreateWithoutPreimageArgumentsInput;
-};
-
-export type PreimageUpsertWithoutPreimageStatusInput = {
-  update: PreimageUpdateWithoutPreimageStatusDataInput;
-  create: PreimageCreateWithoutPreimageStatusInput;
-};
-
-export type PreimageUpsertWithoutProposalInput = {
-  update: PreimageUpdateWithoutProposalDataInput;
-  create: PreimageCreateWithoutProposalInput;
-};
-
-export type PreimageUpsertWithoutReferendumInput = {
-  update: PreimageUpdateWithoutReferendumDataInput;
-  create: PreimageCreateWithoutReferendumInput;
 };
 
 export type PreimageWhereInput = {
@@ -4080,10 +1205,6 @@ export type PreimageWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
 };
 
-export enum PrismaDatabase {
-  Default = 'default'
-}
-
 export type Proposal = {
    __typename?: 'Proposal';
   id: Scalars['Int'];
@@ -4095,6 +1216,7 @@ export type Proposal = {
   proposalStatus?: Maybe<Array<ProposalStatus>>;
 };
 
+
 export type ProposalProposalStatusArgs = {
   where?: Maybe<ProposalStatusWhereInput>;
   orderBy?: Maybe<ProposalStatusOrderByInput>;
@@ -4103,54 +1225,6 @@ export type ProposalProposalStatusArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-export type ProposalConnection = {
-   __typename?: 'ProposalConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<ProposalEdge>>;
-  aggregate: AggregateProposal;
-};
-
-export type ProposalCreateInput = {
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  preimageHash: Scalars['String'];
-  proposalId: Scalars['Int'];
-  preimage?: Maybe<PreimageCreateOneWithoutProposalInput>;
-  proposalStatus?: Maybe<ProposalStatusCreateManyWithoutProposalInput>;
-};
-
-export type ProposalCreateOneWithoutPreimageInput = {
-  create?: Maybe<ProposalCreateWithoutPreimageInput>;
-  connect?: Maybe<ProposalWhereUniqueInput>;
-};
-
-export type ProposalCreateOneWithoutProposalStatusInput = {
-  create?: Maybe<ProposalCreateWithoutProposalStatusInput>;
-  connect?: Maybe<ProposalWhereUniqueInput>;
-};
-
-export type ProposalCreateWithoutPreimageInput = {
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  preimageHash: Scalars['String'];
-  proposalId: Scalars['Int'];
-  proposalStatus?: Maybe<ProposalStatusCreateManyWithoutProposalInput>;
-};
-
-export type ProposalCreateWithoutProposalStatusInput = {
-  author: Scalars['String'];
-  depositAmount: Scalars['String'];
-  preimageHash: Scalars['String'];
-  proposalId: Scalars['Int'];
-  preimage?: Maybe<PreimageCreateOneWithoutProposalInput>;
-};
-
-export type ProposalEdge = {
-   __typename?: 'ProposalEdge';
-  node: Proposal;
-  cursor: Scalars['String'];
 };
 
 export enum ProposalOrderByInput {
@@ -4183,149 +1257,12 @@ export type ProposalStatus = Node & {
   status: Scalars['String'];
 };
 
-export type ProposalStatusConnection = {
-   __typename?: 'ProposalStatusConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<ProposalStatusEdge>>;
-  aggregate: AggregateProposalStatus;
-};
-
-export type ProposalStatusCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-  proposal: ProposalCreateOneWithoutProposalStatusInput;
-};
-
-export type ProposalStatusCreateManyWithoutProposalInput = {
-  create?: Maybe<Array<ProposalStatusCreateWithoutProposalInput>>;
-  connect?: Maybe<Array<ProposalStatusWhereUniqueInput>>;
-};
-
-export type ProposalStatusCreateWithoutProposalInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type ProposalStatusEdge = {
-   __typename?: 'ProposalStatusEdge';
-  node: ProposalStatus;
-  cursor: Scalars['String'];
-};
-
 export enum ProposalStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC'
 }
-
-export type ProposalStatusPreviousValues = {
-   __typename?: 'ProposalStatusPreviousValues';
-  id: Scalars['ID'];
-  status: Scalars['String'];
-};
-
-export type ProposalStatusScalarWhereInput = {
-  AND?: Maybe<Array<ProposalStatusScalarWhereInput>>;
-  OR?: Maybe<Array<ProposalStatusScalarWhereInput>>;
-  NOT?: Maybe<Array<ProposalStatusScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Scalars['String']>>;
-  status_not_in?: Maybe<Array<Scalars['String']>>;
-  status_lt?: Maybe<Scalars['String']>;
-  status_lte?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  status_gte?: Maybe<Scalars['String']>;
-  status_contains?: Maybe<Scalars['String']>;
-  status_not_contains?: Maybe<Scalars['String']>;
-  status_starts_with?: Maybe<Scalars['String']>;
-  status_not_starts_with?: Maybe<Scalars['String']>;
-  status_ends_with?: Maybe<Scalars['String']>;
-  status_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type ProposalStatusSubscriptionPayload = {
-   __typename?: 'ProposalStatusSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<ProposalStatus>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<ProposalStatusPreviousValues>;
-};
-
-export type ProposalStatusSubscriptionWhereInput = {
-  AND?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>;
-  OR?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<ProposalStatusSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<ProposalStatusWhereInput>;
-};
-
-export type ProposalStatusUpdateInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  proposal?: Maybe<ProposalUpdateOneRequiredWithoutProposalStatusInput>;
-};
-
-export type ProposalStatusUpdateManyDataInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type ProposalStatusUpdateManyMutationInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type ProposalStatusUpdateManyWithoutProposalInput = {
-  create?: Maybe<Array<ProposalStatusCreateWithoutProposalInput>>;
-  connect?: Maybe<Array<ProposalStatusWhereUniqueInput>>;
-  set?: Maybe<Array<ProposalStatusWhereUniqueInput>>;
-  disconnect?: Maybe<Array<ProposalStatusWhereUniqueInput>>;
-  delete?: Maybe<Array<ProposalStatusWhereUniqueInput>>;
-  update?: Maybe<Array<ProposalStatusUpdateWithWhereUniqueWithoutProposalInput>>;
-  updateMany?: Maybe<Array<ProposalStatusUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<ProposalStatusScalarWhereInput>>;
-  upsert?: Maybe<Array<ProposalStatusUpsertWithWhereUniqueWithoutProposalInput>>;
-};
-
-export type ProposalStatusUpdateManyWithWhereNestedInput = {
-  where: ProposalStatusScalarWhereInput;
-  data: ProposalStatusUpdateManyDataInput;
-};
-
-export type ProposalStatusUpdateWithoutProposalDataInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type ProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
-  where: ProposalStatusWhereUniqueInput;
-  data: ProposalStatusUpdateWithoutProposalDataInput;
-};
-
-export type ProposalStatusUpsertWithWhereUniqueWithoutProposalInput = {
-  where: ProposalStatusWhereUniqueInput;
-  update: ProposalStatusUpdateWithoutProposalDataInput;
-  create: ProposalStatusCreateWithoutProposalInput;
-};
 
 export type ProposalStatusWhereInput = {
   AND?: Maybe<Array<ProposalStatusWhereInput>>;
@@ -4384,64 +1321,6 @@ export type ProposalSubscriptionWhereInput = {
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
   node?: Maybe<ProposalWhereInput>;
-};
-
-export type ProposalUpdateInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  proposalId?: Maybe<Scalars['Int']>;
-  preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>;
-  proposalStatus?: Maybe<ProposalStatusUpdateManyWithoutProposalInput>;
-};
-
-export type ProposalUpdateManyMutationInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  proposalId?: Maybe<Scalars['Int']>;
-};
-
-export type ProposalUpdateOneRequiredWithoutProposalStatusInput = {
-  create?: Maybe<ProposalCreateWithoutProposalStatusInput>;
-  connect?: Maybe<ProposalWhereUniqueInput>;
-  update?: Maybe<ProposalUpdateWithoutProposalStatusDataInput>;
-  upsert?: Maybe<ProposalUpsertWithoutProposalStatusInput>;
-};
-
-export type ProposalUpdateOneWithoutPreimageInput = {
-  create?: Maybe<ProposalCreateWithoutPreimageInput>;
-  connect?: Maybe<ProposalWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<ProposalUpdateWithoutPreimageDataInput>;
-  upsert?: Maybe<ProposalUpsertWithoutPreimageInput>;
-};
-
-export type ProposalUpdateWithoutPreimageDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  proposalId?: Maybe<Scalars['Int']>;
-  proposalStatus?: Maybe<ProposalStatusUpdateManyWithoutProposalInput>;
-};
-
-export type ProposalUpdateWithoutProposalStatusDataInput = {
-  author?: Maybe<Scalars['String']>;
-  depositAmount?: Maybe<Scalars['String']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  proposalId?: Maybe<Scalars['Int']>;
-  preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>;
-};
-
-export type ProposalUpsertWithoutPreimageInput = {
-  update: ProposalUpdateWithoutPreimageDataInput;
-  create: ProposalCreateWithoutPreimageInput;
-};
-
-export type ProposalUpsertWithoutProposalStatusInput = {
-  update: ProposalUpdateWithoutProposalStatusDataInput;
-  create: ProposalCreateWithoutProposalStatusInput;
 };
 
 export type ProposalWhereInput = {
@@ -4519,326 +1398,56 @@ export type ProposalWhereUniqueInput = {
 
 export type Query = {
    __typename?: 'Query';
-  heartBeats: Array<Maybe<HeartBeat>>;
-  offlineValidators: Array<Maybe<OfflineValidator>>;
-  eras: Array<Maybe<Era>>;
-  slashings: Array<Maybe<Slashing>>;
-  validators: Array<Maybe<Validator>>;
-  totalIssuances: Array<Maybe<TotalIssuance>>;
-  rewards: Array<Maybe<Reward>>;
-  nominations: Array<Maybe<Nomination>>;
-  stakes: Array<Maybe<Stake>>;
-  councils: Array<Maybe<Council>>;
-  councilMembers: Array<Maybe<CouncilMember>>;
-  motions: Array<Maybe<Motion>>;
-  motionProposalArguments: Array<Maybe<MotionProposalArgument>>;
-  motionStatuses: Array<Maybe<MotionStatus>>;
-  proposals: Array<Maybe<Proposal>>;
-  proposalStatuses: Array<Maybe<ProposalStatus>>;
-  preimages: Array<Maybe<Preimage>>;
-  preimageStatuses: Array<Maybe<PreimageStatus>>;
-  preimageArguments: Array<Maybe<PreimageArgument>>;
-  referendums: Array<Maybe<Referendum>>;
-  referendumStatuses: Array<Maybe<ReferendumStatus>>;
-  blockIndexes: Array<Maybe<BlockIndex>>;
-  treasurySpendProposals: Array<Maybe<TreasurySpendProposal>>;
-  treasuryStatuses: Array<Maybe<TreasuryStatus>>;
   blockNumbers: Array<Maybe<BlockNumber>>;
+  eras: Array<Maybe<Era>>;
+  heartBeats: Array<Maybe<HeartBeat>>;
+  nominations: Array<Maybe<Nomination>>;
+  offlineValidators: Array<Maybe<OfflineValidator>>;
+  rewards: Array<Maybe<Reward>>;
   sessions: Array<Maybe<Session>>;
-  heartBeat?: Maybe<HeartBeat>;
-  offlineValidator?: Maybe<OfflineValidator>;
-  era?: Maybe<Era>;
-  slashing?: Maybe<Slashing>;
-  validator?: Maybe<Validator>;
-  totalIssuance?: Maybe<TotalIssuance>;
-  reward?: Maybe<Reward>;
-  nomination?: Maybe<Nomination>;
-  stake?: Maybe<Stake>;
-  council?: Maybe<Council>;
-  councilMember?: Maybe<CouncilMember>;
-  motion?: Maybe<Motion>;
-  motionProposalArgument?: Maybe<MotionProposalArgument>;
-  motionStatus?: Maybe<MotionStatus>;
-  proposal?: Maybe<Proposal>;
-  proposalStatus?: Maybe<ProposalStatus>;
-  preimage?: Maybe<Preimage>;
-  preimageStatus?: Maybe<PreimageStatus>;
-  preimageArgument?: Maybe<PreimageArgument>;
-  referendum?: Maybe<Referendum>;
-  referendumStatus?: Maybe<ReferendumStatus>;
-  blockIndex?: Maybe<BlockIndex>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposal>;
-  treasuryStatus?: Maybe<TreasuryStatus>;
+  slashings: Array<Maybe<Slashing>>;
+  stakes: Array<Maybe<Stake>>;
+  totalIssuances: Array<Maybe<TotalIssuance>>;
+  validators: Array<Maybe<Validator>>;
   blockNumber?: Maybe<BlockNumber>;
+  era?: Maybe<Era>;
+  nomination?: Maybe<Nomination>;
+  reward?: Maybe<Reward>;
   session?: Maybe<Session>;
-  heartBeatsConnection: HeartBeatConnection;
-  offlineValidatorsConnection: OfflineValidatorConnection;
-  erasConnection: EraConnection;
-  slashingsConnection: SlashingConnection;
-  validatorsConnection: ValidatorConnection;
-  totalIssuancesConnection: TotalIssuanceConnection;
-  rewardsConnection: RewardConnection;
-  nominationsConnection: NominationConnection;
-  stakesConnection: StakeConnection;
-  councilsConnection: CouncilConnection;
-  councilMembersConnection: CouncilMemberConnection;
-  motionsConnection: MotionConnection;
-  motionProposalArgumentsConnection: MotionProposalArgumentConnection;
-  motionStatusesConnection: MotionStatusConnection;
-  proposalsConnection: ProposalConnection;
-  proposalStatusesConnection: ProposalStatusConnection;
-  preimagesConnection: PreimageConnection;
-  preimageStatusesConnection: PreimageStatusConnection;
-  preimageArgumentsConnection: PreimageArgumentConnection;
-  referendumsConnection: ReferendumConnection;
-  referendumStatusesConnection: ReferendumStatusConnection;
-  blockIndexesConnection: BlockIndexConnection;
-  treasurySpendProposalsConnection: TreasurySpendProposalConnection;
-  treasuryStatusesConnection: TreasuryStatusConnection;
-  blockNumbersConnection: BlockNumberConnection;
-  sessionsConnection: SessionConnection;
-  node?: Maybe<Node>;
+  slashing?: Maybe<Slashing>;
+  stake?: Maybe<Stake>;
+  totalIssuance?: Maybe<TotalIssuance>;
+  validator?: Maybe<Validator>;
+  council?: Maybe<Council>;
+  councils: Array<Maybe<Council>>;
+  councilMember?: Maybe<CouncilMember>;
+  councilMembers: Array<Maybe<CouncilMember>>;
+  motion?: Maybe<Motion>;
+  motions: Array<Maybe<Motion>>;
+  motionProposalArgument?: Maybe<MotionProposalArgument>;
+  motionProposalArguments: Array<Maybe<MotionProposalArgument>>;
+  motionStatus?: Maybe<MotionStatus>;
+  motionStatuses: Array<Maybe<MotionStatus>>;
+  preimage?: Maybe<Preimage>;
+  preimages: Array<Maybe<Preimage>>;
+  preimageArgument?: Maybe<PreimageArgument>;
+  preimageArguments: Array<Maybe<PreimageArgument>>;
+  preimageStatus?: Maybe<PreimageStatus>;
+  preimageStatuses: Array<Maybe<PreimageStatus>>;
+  proposal?: Maybe<Proposal>;
+  proposals: Array<Maybe<Proposal>>;
+  proposalStatus?: Maybe<ProposalStatus>;
+  proposalStatuses: Array<Maybe<ProposalStatus>>;
+  treasurySpendProposal?: Maybe<TreasurySpendProposal>;
+  treasurySpendProposals: Array<Maybe<TreasurySpendProposal>>;
+  treasuryStatus?: Maybe<TreasuryStatus>;
+  treasuryStatuses: Array<Maybe<TreasuryStatus>>;
+  referendum?: Maybe<Referendum>;
+  referendums: Array<Maybe<Referendum>>;
+  referendumStatus?: Maybe<ReferendumStatus>;
+  referendumStatuses: Array<Maybe<ReferendumStatus>>;
 };
 
-export type QueryHeartBeatsArgs = {
-  where?: Maybe<HeartBeatWhereInput>;
-  orderBy?: Maybe<HeartBeatOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryOfflineValidatorsArgs = {
-  where?: Maybe<OfflineValidatorWhereInput>;
-  orderBy?: Maybe<OfflineValidatorOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryErasArgs = {
-  where?: Maybe<EraWhereInput>;
-  orderBy?: Maybe<EraOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QuerySlashingsArgs = {
-  where?: Maybe<SlashingWhereInput>;
-  orderBy?: Maybe<SlashingOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryValidatorsArgs = {
-  where?: Maybe<ValidatorWhereInput>;
-  orderBy?: Maybe<ValidatorOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryTotalIssuancesArgs = {
-  where?: Maybe<TotalIssuanceWhereInput>;
-  orderBy?: Maybe<TotalIssuanceOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryRewardsArgs = {
-  where?: Maybe<RewardWhereInput>;
-  orderBy?: Maybe<RewardOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryNominationsArgs = {
-  where?: Maybe<NominationWhereInput>;
-  orderBy?: Maybe<NominationOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryStakesArgs = {
-  where?: Maybe<StakeWhereInput>;
-  orderBy?: Maybe<StakeOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryCouncilsArgs = {
-  where?: Maybe<CouncilWhereInput>;
-  orderBy?: Maybe<CouncilOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryCouncilMembersArgs = {
-  where?: Maybe<CouncilMemberWhereInput>;
-  orderBy?: Maybe<CouncilMemberOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryMotionsArgs = {
-  where?: Maybe<MotionWhereInput>;
-  orderBy?: Maybe<MotionOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryMotionProposalArgumentsArgs = {
-  where?: Maybe<MotionProposalArgumentWhereInput>;
-  orderBy?: Maybe<MotionProposalArgumentOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryMotionStatusesArgs = {
-  where?: Maybe<MotionStatusWhereInput>;
-  orderBy?: Maybe<MotionStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryProposalsArgs = {
-  where?: Maybe<ProposalWhereInput>;
-  orderBy?: Maybe<ProposalOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryProposalStatusesArgs = {
-  where?: Maybe<ProposalStatusWhereInput>;
-  orderBy?: Maybe<ProposalStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryPreimagesArgs = {
-  where?: Maybe<PreimageWhereInput>;
-  orderBy?: Maybe<PreimageOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryPreimageStatusesArgs = {
-  where?: Maybe<PreimageStatusWhereInput>;
-  orderBy?: Maybe<PreimageStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryPreimageArgumentsArgs = {
-  where?: Maybe<PreimageArgumentWhereInput>;
-  orderBy?: Maybe<PreimageArgumentOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryReferendumsArgs = {
-  where?: Maybe<ReferendumWhereInput>;
-  orderBy?: Maybe<ReferendumOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryReferendumStatusesArgs = {
-  where?: Maybe<ReferendumStatusWhereInput>;
-  orderBy?: Maybe<ReferendumStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryBlockIndexesArgs = {
-  where?: Maybe<BlockIndexWhereInput>;
-  orderBy?: Maybe<BlockIndexOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryTreasurySpendProposalsArgs = {
-  where?: Maybe<TreasurySpendProposalWhereInput>;
-  orderBy?: Maybe<TreasurySpendProposalOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryTreasuryStatusesArgs = {
-  where?: Maybe<TreasuryStatusWhereInput>;
-  orderBy?: Maybe<TreasuryStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
 
 export type QueryBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>;
@@ -4850,6 +1459,62 @@ export type QueryBlockNumbersArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryErasArgs = {
+  where?: Maybe<EraWhereInput>;
+  orderBy?: Maybe<EraOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryHeartBeatsArgs = {
+  where?: Maybe<HeartBeatWhereInput>;
+  orderBy?: Maybe<HeartBeatOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryNominationsArgs = {
+  where?: Maybe<NominationWhereInput>;
+  orderBy?: Maybe<NominationOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryOfflineValidatorsArgs = {
+  where?: Maybe<OfflineValidatorWhereInput>;
+  orderBy?: Maybe<OfflineValidatorOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryRewardsArgs = {
+  where?: Maybe<RewardWhereInput>;
+  orderBy?: Maybe<RewardOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
 export type QuerySessionsArgs = {
   where?: Maybe<SessionWhereInput>;
   orderBy?: Maybe<SessionOrderByInput>;
@@ -4860,141 +1525,8 @@ export type QuerySessionsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryHeartBeatArgs = {
-  where: HeartBeatWhereUniqueInput;
-};
 
-export type QueryOfflineValidatorArgs = {
-  where: OfflineValidatorWhereUniqueInput;
-};
-
-export type QueryEraArgs = {
-  where: EraWhereUniqueInput;
-};
-
-export type QuerySlashingArgs = {
-  where: SlashingWhereUniqueInput;
-};
-
-export type QueryValidatorArgs = {
-  where: ValidatorWhereUniqueInput;
-};
-
-export type QueryTotalIssuanceArgs = {
-  where: TotalIssuanceWhereUniqueInput;
-};
-
-export type QueryRewardArgs = {
-  where: RewardWhereUniqueInput;
-};
-
-export type QueryNominationArgs = {
-  where: NominationWhereUniqueInput;
-};
-
-export type QueryStakeArgs = {
-  where: StakeWhereUniqueInput;
-};
-
-export type QueryCouncilArgs = {
-  where: CouncilWhereUniqueInput;
-};
-
-export type QueryCouncilMemberArgs = {
-  where: CouncilMemberWhereUniqueInput;
-};
-
-export type QueryMotionArgs = {
-  where: MotionWhereUniqueInput;
-};
-
-export type QueryMotionProposalArgumentArgs = {
-  where: MotionProposalArgumentWhereUniqueInput;
-};
-
-export type QueryMotionStatusArgs = {
-  where: MotionStatusWhereUniqueInput;
-};
-
-export type QueryProposalArgs = {
-  where: ProposalWhereUniqueInput;
-};
-
-export type QueryProposalStatusArgs = {
-  where: ProposalStatusWhereUniqueInput;
-};
-
-export type QueryPreimageArgs = {
-  where: PreimageWhereUniqueInput;
-};
-
-export type QueryPreimageStatusArgs = {
-  where: PreimageStatusWhereUniqueInput;
-};
-
-export type QueryPreimageArgumentArgs = {
-  where: PreimageArgumentWhereUniqueInput;
-};
-
-export type QueryReferendumArgs = {
-  where: ReferendumWhereUniqueInput;
-};
-
-export type QueryReferendumStatusArgs = {
-  where: ReferendumStatusWhereUniqueInput;
-};
-
-export type QueryBlockIndexArgs = {
-  where: BlockIndexWhereUniqueInput;
-};
-
-export type QueryTreasurySpendProposalArgs = {
-  where: TreasurySpendProposalWhereUniqueInput;
-};
-
-export type QueryTreasuryStatusArgs = {
-  where: TreasuryStatusWhereUniqueInput;
-};
-
-export type QueryBlockNumberArgs = {
-  where: BlockNumberWhereUniqueInput;
-};
-
-export type QuerySessionArgs = {
-  where: SessionWhereUniqueInput;
-};
-
-export type QueryHeartBeatsConnectionArgs = {
-  where?: Maybe<HeartBeatWhereInput>;
-  orderBy?: Maybe<HeartBeatOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryOfflineValidatorsConnectionArgs = {
-  where?: Maybe<OfflineValidatorWhereInput>;
-  orderBy?: Maybe<OfflineValidatorOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryErasConnectionArgs = {
-  where?: Maybe<EraWhereInput>;
-  orderBy?: Maybe<EraOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QuerySlashingsConnectionArgs = {
+export type QuerySlashingsArgs = {
   where?: Maybe<SlashingWhereInput>;
   orderBy?: Maybe<SlashingOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5004,47 +1536,8 @@ export type QuerySlashingsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryValidatorsConnectionArgs = {
-  where?: Maybe<ValidatorWhereInput>;
-  orderBy?: Maybe<ValidatorOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
 
-export type QueryTotalIssuancesConnectionArgs = {
-  where?: Maybe<TotalIssuanceWhereInput>;
-  orderBy?: Maybe<TotalIssuanceOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryRewardsConnectionArgs = {
-  where?: Maybe<RewardWhereInput>;
-  orderBy?: Maybe<RewardOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryNominationsConnectionArgs = {
-  where?: Maybe<NominationWhereInput>;
-  orderBy?: Maybe<NominationOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryStakesConnectionArgs = {
+export type QueryStakesArgs = {
   where?: Maybe<StakeWhereInput>;
   orderBy?: Maybe<StakeOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5054,7 +1547,80 @@ export type QueryStakesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryCouncilsConnectionArgs = {
+
+export type QueryTotalIssuancesArgs = {
+  where?: Maybe<TotalIssuanceWhereInput>;
+  orderBy?: Maybe<TotalIssuanceOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryValidatorsArgs = {
+  where?: Maybe<ValidatorWhereInput>;
+  orderBy?: Maybe<ValidatorOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryBlockNumberArgs = {
+  where: BlockNumberWhereUniqueInput;
+};
+
+
+export type QueryEraArgs = {
+  where: EraWhereUniqueInput;
+};
+
+
+export type QueryNominationArgs = {
+  where: NominationWhereUniqueInput;
+};
+
+
+export type QueryRewardArgs = {
+  where: RewardWhereUniqueInput;
+};
+
+
+export type QuerySessionArgs = {
+  where: SessionWhereUniqueInput;
+};
+
+
+export type QuerySlashingArgs = {
+  where: SlashingWhereUniqueInput;
+};
+
+
+export type QueryStakeArgs = {
+  where: StakeWhereUniqueInput;
+};
+
+
+export type QueryTotalIssuanceArgs = {
+  where: TotalIssuanceWhereUniqueInput;
+};
+
+
+export type QueryValidatorArgs = {
+  where: ValidatorWhereUniqueInput;
+};
+
+
+export type QueryCouncilArgs = {
+  where: CouncilWhereUniqueInput;
+};
+
+
+export type QueryCouncilsArgs = {
   where?: Maybe<CouncilWhereInput>;
   orderBy?: Maybe<CouncilOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5064,7 +1630,13 @@ export type QueryCouncilsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryCouncilMembersConnectionArgs = {
+
+export type QueryCouncilMemberArgs = {
+  where: CouncilMemberWhereUniqueInput;
+};
+
+
+export type QueryCouncilMembersArgs = {
   where?: Maybe<CouncilMemberWhereInput>;
   orderBy?: Maybe<CouncilMemberOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5074,7 +1646,13 @@ export type QueryCouncilMembersConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryMotionsConnectionArgs = {
+
+export type QueryMotionArgs = {
+  where: MotionWhereUniqueInput;
+};
+
+
+export type QueryMotionsArgs = {
   where?: Maybe<MotionWhereInput>;
   orderBy?: Maybe<MotionOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5084,7 +1662,13 @@ export type QueryMotionsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryMotionProposalArgumentsConnectionArgs = {
+
+export type QueryMotionProposalArgumentArgs = {
+  where: MotionProposalArgumentWhereUniqueInput;
+};
+
+
+export type QueryMotionProposalArgumentsArgs = {
   where?: Maybe<MotionProposalArgumentWhereInput>;
   orderBy?: Maybe<MotionProposalArgumentOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5094,7 +1678,13 @@ export type QueryMotionProposalArgumentsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryMotionStatusesConnectionArgs = {
+
+export type QueryMotionStatusArgs = {
+  where: MotionStatusWhereUniqueInput;
+};
+
+
+export type QueryMotionStatusesArgs = {
   where?: Maybe<MotionStatusWhereInput>;
   orderBy?: Maybe<MotionStatusOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5104,27 +1694,13 @@ export type QueryMotionStatusesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryProposalsConnectionArgs = {
-  where?: Maybe<ProposalWhereInput>;
-  orderBy?: Maybe<ProposalOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+
+export type QueryPreimageArgs = {
+  where: PreimageWhereUniqueInput;
 };
 
-export type QueryProposalStatusesConnectionArgs = {
-  where?: Maybe<ProposalStatusWhereInput>;
-  orderBy?: Maybe<ProposalStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
 
-export type QueryPreimagesConnectionArgs = {
+export type QueryPreimagesArgs = {
   where?: Maybe<PreimageWhereInput>;
   orderBy?: Maybe<PreimageOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5134,17 +1710,13 @@ export type QueryPreimagesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryPreimageStatusesConnectionArgs = {
-  where?: Maybe<PreimageStatusWhereInput>;
-  orderBy?: Maybe<PreimageStatusOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+
+export type QueryPreimageArgumentArgs = {
+  where: PreimageArgumentWhereUniqueInput;
 };
 
-export type QueryPreimageArgumentsConnectionArgs = {
+
+export type QueryPreimageArgumentsArgs = {
   where?: Maybe<PreimageArgumentWhereInput>;
   orderBy?: Maybe<PreimageArgumentOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5154,9 +1726,15 @@ export type QueryPreimageArgumentsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryReferendumsConnectionArgs = {
-  where?: Maybe<ReferendumWhereInput>;
-  orderBy?: Maybe<ReferendumOrderByInput>;
+
+export type QueryPreimageStatusArgs = {
+  where: PreimageStatusWhereUniqueInput;
+};
+
+
+export type QueryPreimageStatusesArgs = {
+  where?: Maybe<PreimageStatusWhereInput>;
+  orderBy?: Maybe<PreimageStatusOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5164,9 +1742,15 @@ export type QueryReferendumsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryReferendumStatusesConnectionArgs = {
-  where?: Maybe<ReferendumStatusWhereInput>;
-  orderBy?: Maybe<ReferendumStatusOrderByInput>;
+
+export type QueryProposalArgs = {
+  where: ProposalWhereUniqueInput;
+};
+
+
+export type QueryProposalsArgs = {
+  where?: Maybe<ProposalWhereInput>;
+  orderBy?: Maybe<ProposalOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5174,9 +1758,15 @@ export type QueryReferendumStatusesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryBlockIndexesConnectionArgs = {
-  where?: Maybe<BlockIndexWhereInput>;
-  orderBy?: Maybe<BlockIndexOrderByInput>;
+
+export type QueryProposalStatusArgs = {
+  where: ProposalStatusWhereUniqueInput;
+};
+
+
+export type QueryProposalStatusesArgs = {
+  where?: Maybe<ProposalStatusWhereInput>;
+  orderBy?: Maybe<ProposalStatusOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5184,7 +1774,13 @@ export type QueryBlockIndexesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryTreasurySpendProposalsConnectionArgs = {
+
+export type QueryTreasurySpendProposalArgs = {
+  where: TreasurySpendProposalWhereUniqueInput;
+};
+
+
+export type QueryTreasurySpendProposalsArgs = {
   where?: Maybe<TreasurySpendProposalWhereInput>;
   orderBy?: Maybe<TreasurySpendProposalOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5194,7 +1790,13 @@ export type QueryTreasurySpendProposalsConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryTreasuryStatusesConnectionArgs = {
+
+export type QueryTreasuryStatusArgs = {
+  where: TreasuryStatusWhereUniqueInput;
+};
+
+
+export type QueryTreasuryStatusesArgs = {
   where?: Maybe<TreasuryStatusWhereInput>;
   orderBy?: Maybe<TreasuryStatusOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -5204,9 +1806,15 @@ export type QueryTreasuryStatusesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QueryBlockNumbersConnectionArgs = {
-  where?: Maybe<BlockNumberWhereInput>;
-  orderBy?: Maybe<BlockNumberOrderByInput>;
+
+export type QueryReferendumArgs = {
+  where: ReferendumWhereUniqueInput;
+};
+
+
+export type QueryReferendumsArgs = {
+  where?: Maybe<ReferendumWhereInput>;
+  orderBy?: Maybe<ReferendumOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5214,18 +1822,20 @@ export type QueryBlockNumbersConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type QuerySessionsConnectionArgs = {
-  where?: Maybe<SessionWhereInput>;
-  orderBy?: Maybe<SessionOrderByInput>;
+
+export type QueryReferendumStatusArgs = {
+  where: ReferendumStatusWhereUniqueInput;
+};
+
+
+export type QueryReferendumStatusesArgs = {
+  where?: Maybe<ReferendumStatusWhereInput>;
+  orderBy?: Maybe<ReferendumStatusOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-export type QueryNodeArgs = {
-  id: Scalars['ID'];
 };
 
 export type Referendum = {
@@ -5240,6 +1850,7 @@ export type Referendum = {
   voteThreshold: Scalars['String'];
 };
 
+
 export type ReferendumReferendumStatusArgs = {
   where?: Maybe<ReferendumStatusWhereInput>;
   orderBy?: Maybe<ReferendumStatusOrderByInput>;
@@ -5248,57 +1859,6 @@ export type ReferendumReferendumStatusArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-export type ReferendumConnection = {
-   __typename?: 'ReferendumConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<ReferendumEdge>>;
-  aggregate: AggregateReferendum;
-};
-
-export type ReferendumCreateInput = {
-  delay: Scalars['Int'];
-  end: Scalars['Int'];
-  preimageHash: Scalars['String'];
-  referendumId: Scalars['Int'];
-  voteThreshold: Scalars['String'];
-  preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>;
-  referendumStatus?: Maybe<ReferendumStatusCreateManyWithoutReferendumInput>;
-};
-
-export type ReferendumCreateOneWithoutPreimageInput = {
-  create?: Maybe<ReferendumCreateWithoutPreimageInput>;
-  connect?: Maybe<ReferendumWhereUniqueInput>;
-};
-
-export type ReferendumCreateOneWithoutReferendumStatusInput = {
-  create?: Maybe<ReferendumCreateWithoutReferendumStatusInput>;
-  connect?: Maybe<ReferendumWhereUniqueInput>;
-};
-
-export type ReferendumCreateWithoutPreimageInput = {
-  delay: Scalars['Int'];
-  end: Scalars['Int'];
-  preimageHash: Scalars['String'];
-  referendumId: Scalars['Int'];
-  voteThreshold: Scalars['String'];
-  referendumStatus?: Maybe<ReferendumStatusCreateManyWithoutReferendumInput>;
-};
-
-export type ReferendumCreateWithoutReferendumStatusInput = {
-  delay: Scalars['Int'];
-  end: Scalars['Int'];
-  preimageHash: Scalars['String'];
-  referendumId: Scalars['Int'];
-  voteThreshold: Scalars['String'];
-  preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>;
-};
-
-export type ReferendumEdge = {
-   __typename?: 'ReferendumEdge';
-  node: Referendum;
-  cursor: Scalars['String'];
 };
 
 export enum ReferendumOrderByInput {
@@ -5334,149 +1894,12 @@ export type ReferendumStatus = Node & {
   status: Scalars['String'];
 };
 
-export type ReferendumStatusConnection = {
-   __typename?: 'ReferendumStatusConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<ReferendumStatusEdge>>;
-  aggregate: AggregateReferendumStatus;
-};
-
-export type ReferendumStatusCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-  referendum: ReferendumCreateOneWithoutReferendumStatusInput;
-};
-
-export type ReferendumStatusCreateManyWithoutReferendumInput = {
-  create?: Maybe<Array<ReferendumStatusCreateWithoutReferendumInput>>;
-  connect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>;
-};
-
-export type ReferendumStatusCreateWithoutReferendumInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type ReferendumStatusEdge = {
-   __typename?: 'ReferendumStatusEdge';
-  node: ReferendumStatus;
-  cursor: Scalars['String'];
-};
-
 export enum ReferendumStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC'
 }
-
-export type ReferendumStatusPreviousValues = {
-   __typename?: 'ReferendumStatusPreviousValues';
-  id: Scalars['ID'];
-  status: Scalars['String'];
-};
-
-export type ReferendumStatusScalarWhereInput = {
-  AND?: Maybe<Array<ReferendumStatusScalarWhereInput>>;
-  OR?: Maybe<Array<ReferendumStatusScalarWhereInput>>;
-  NOT?: Maybe<Array<ReferendumStatusScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Scalars['String']>>;
-  status_not_in?: Maybe<Array<Scalars['String']>>;
-  status_lt?: Maybe<Scalars['String']>;
-  status_lte?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  status_gte?: Maybe<Scalars['String']>;
-  status_contains?: Maybe<Scalars['String']>;
-  status_not_contains?: Maybe<Scalars['String']>;
-  status_starts_with?: Maybe<Scalars['String']>;
-  status_not_starts_with?: Maybe<Scalars['String']>;
-  status_ends_with?: Maybe<Scalars['String']>;
-  status_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type ReferendumStatusSubscriptionPayload = {
-   __typename?: 'ReferendumStatusSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<ReferendumStatus>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<ReferendumStatusPreviousValues>;
-};
-
-export type ReferendumStatusSubscriptionWhereInput = {
-  AND?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>;
-  OR?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<ReferendumStatusSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<ReferendumStatusWhereInput>;
-};
-
-export type ReferendumStatusUpdateInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  referendum?: Maybe<ReferendumUpdateOneRequiredWithoutReferendumStatusInput>;
-};
-
-export type ReferendumStatusUpdateManyDataInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type ReferendumStatusUpdateManyMutationInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type ReferendumStatusUpdateManyWithoutReferendumInput = {
-  create?: Maybe<Array<ReferendumStatusCreateWithoutReferendumInput>>;
-  connect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>;
-  set?: Maybe<Array<ReferendumStatusWhereUniqueInput>>;
-  disconnect?: Maybe<Array<ReferendumStatusWhereUniqueInput>>;
-  delete?: Maybe<Array<ReferendumStatusWhereUniqueInput>>;
-  update?: Maybe<Array<ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput>>;
-  updateMany?: Maybe<Array<ReferendumStatusUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<ReferendumStatusScalarWhereInput>>;
-  upsert?: Maybe<Array<ReferendumStatusUpsertWithWhereUniqueWithoutReferendumInput>>;
-};
-
-export type ReferendumStatusUpdateManyWithWhereNestedInput = {
-  where: ReferendumStatusScalarWhereInput;
-  data: ReferendumStatusUpdateManyDataInput;
-};
-
-export type ReferendumStatusUpdateWithoutReferendumDataInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type ReferendumStatusUpdateWithWhereUniqueWithoutReferendumInput = {
-  where: ReferendumStatusWhereUniqueInput;
-  data: ReferendumStatusUpdateWithoutReferendumDataInput;
-};
-
-export type ReferendumStatusUpsertWithWhereUniqueWithoutReferendumInput = {
-  where: ReferendumStatusWhereUniqueInput;
-  update: ReferendumStatusUpdateWithoutReferendumDataInput;
-  create: ReferendumStatusCreateWithoutReferendumInput;
-};
 
 export type ReferendumStatusWhereInput = {
   AND?: Maybe<Array<ReferendumStatusWhereInput>>;
@@ -5535,68 +1958,6 @@ export type ReferendumSubscriptionWhereInput = {
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
   node?: Maybe<ReferendumWhereInput>;
-};
-
-export type ReferendumUpdateInput = {
-  delay?: Maybe<Scalars['Int']>;
-  end?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  referendumId?: Maybe<Scalars['Int']>;
-  voteThreshold?: Maybe<Scalars['String']>;
-  preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>;
-  referendumStatus?: Maybe<ReferendumStatusUpdateManyWithoutReferendumInput>;
-};
-
-export type ReferendumUpdateManyMutationInput = {
-  delay?: Maybe<Scalars['Int']>;
-  end?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  referendumId?: Maybe<Scalars['Int']>;
-  voteThreshold?: Maybe<Scalars['String']>;
-};
-
-export type ReferendumUpdateOneRequiredWithoutReferendumStatusInput = {
-  create?: Maybe<ReferendumCreateWithoutReferendumStatusInput>;
-  connect?: Maybe<ReferendumWhereUniqueInput>;
-  update?: Maybe<ReferendumUpdateWithoutReferendumStatusDataInput>;
-  upsert?: Maybe<ReferendumUpsertWithoutReferendumStatusInput>;
-};
-
-export type ReferendumUpdateOneWithoutPreimageInput = {
-  create?: Maybe<ReferendumCreateWithoutPreimageInput>;
-  connect?: Maybe<ReferendumWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<ReferendumUpdateWithoutPreimageDataInput>;
-  upsert?: Maybe<ReferendumUpsertWithoutPreimageInput>;
-};
-
-export type ReferendumUpdateWithoutPreimageDataInput = {
-  delay?: Maybe<Scalars['Int']>;
-  end?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  referendumId?: Maybe<Scalars['Int']>;
-  voteThreshold?: Maybe<Scalars['String']>;
-  referendumStatus?: Maybe<ReferendumStatusUpdateManyWithoutReferendumInput>;
-};
-
-export type ReferendumUpdateWithoutReferendumStatusDataInput = {
-  delay?: Maybe<Scalars['Int']>;
-  end?: Maybe<Scalars['Int']>;
-  preimageHash?: Maybe<Scalars['String']>;
-  referendumId?: Maybe<Scalars['Int']>;
-  voteThreshold?: Maybe<Scalars['String']>;
-  preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>;
-};
-
-export type ReferendumUpsertWithoutPreimageInput = {
-  update: ReferendumUpdateWithoutPreimageDataInput;
-  create: ReferendumCreateWithoutPreimageInput;
-};
-
-export type ReferendumUpsertWithoutReferendumStatusInput = {
-  update: ReferendumUpdateWithoutReferendumStatusDataInput;
-  create: ReferendumCreateWithoutReferendumStatusInput;
 };
 
 export type ReferendumWhereInput = {
@@ -5683,27 +2044,6 @@ export type Reward = Node & {
   validatorReward: Scalars['String'];
 };
 
-export type RewardConnection = {
-   __typename?: 'RewardConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<RewardEdge>>;
-  aggregate: AggregateReward;
-};
-
-export type RewardCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  treasuryReward: Scalars['String'];
-  validatorReward: Scalars['String'];
-  authoredBlock: BlockNumberCreateOneInput;
-  sessionIndex: SessionCreateOneInput;
-};
-
-export type RewardEdge = {
-   __typename?: 'RewardEdge';
-  node: Reward;
-  cursor: Scalars['String'];
-};
-
 export enum RewardOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -5712,44 +2052,6 @@ export enum RewardOrderByInput {
   ValidatorRewardAsc = 'validatorReward_ASC',
   ValidatorRewardDesc = 'validatorReward_DESC'
 }
-
-export type RewardPreviousValues = {
-   __typename?: 'RewardPreviousValues';
-  id: Scalars['ID'];
-  treasuryReward: Scalars['String'];
-  validatorReward: Scalars['String'];
-};
-
-export type RewardSubscriptionPayload = {
-   __typename?: 'RewardSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Reward>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<RewardPreviousValues>;
-};
-
-export type RewardSubscriptionWhereInput = {
-  AND?: Maybe<Array<RewardSubscriptionWhereInput>>;
-  OR?: Maybe<Array<RewardSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<RewardSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<RewardWhereInput>;
-};
-
-export type RewardUpdateInput = {
-  treasuryReward?: Maybe<Scalars['String']>;
-  validatorReward?: Maybe<Scalars['String']>;
-  authoredBlock?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  sessionIndex?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type RewardUpdateManyMutationInput = {
-  treasuryReward?: Maybe<Scalars['String']>;
-  validatorReward?: Maybe<Scalars['String']>;
-};
 
 export type RewardWhereInput = {
   AND?: Maybe<Array<RewardWhereInput>>;
@@ -5812,87 +2114,12 @@ export type Session = Node & {
   start: BlockNumber;
 };
 
-export type SessionConnection = {
-   __typename?: 'SessionConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<SessionEdge>>;
-  aggregate: AggregateSession;
-};
-
-export type SessionCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  index: Scalars['Int'];
-  start: BlockNumberCreateOneInput;
-};
-
-export type SessionCreateOneInput = {
-  create?: Maybe<SessionCreateInput>;
-  connect?: Maybe<SessionWhereUniqueInput>;
-};
-
-export type SessionEdge = {
-   __typename?: 'SessionEdge';
-  node: Session;
-  cursor: Scalars['String'];
-};
-
 export enum SessionOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   IndexAsc = 'index_ASC',
   IndexDesc = 'index_DESC'
 }
-
-export type SessionPreviousValues = {
-   __typename?: 'SessionPreviousValues';
-  id: Scalars['ID'];
-  index: Scalars['Int'];
-};
-
-export type SessionSubscriptionPayload = {
-   __typename?: 'SessionSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Session>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<SessionPreviousValues>;
-};
-
-export type SessionSubscriptionWhereInput = {
-  AND?: Maybe<Array<SessionSubscriptionWhereInput>>;
-  OR?: Maybe<Array<SessionSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<SessionSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<SessionWhereInput>;
-};
-
-export type SessionUpdateDataInput = {
-  index?: Maybe<Scalars['Int']>;
-  start?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type SessionUpdateInput = {
-  index?: Maybe<Scalars['Int']>;
-  start?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type SessionUpdateManyMutationInput = {
-  index?: Maybe<Scalars['Int']>;
-};
-
-export type SessionUpdateOneRequiredInput = {
-  create?: Maybe<SessionCreateInput>;
-  connect?: Maybe<SessionWhereUniqueInput>;
-  update?: Maybe<SessionUpdateDataInput>;
-  upsert?: Maybe<SessionUpsertNestedInput>;
-};
-
-export type SessionUpsertNestedInput = {
-  update: SessionUpdateDataInput;
-  create: SessionCreateInput;
-};
 
 export type SessionWhereInput = {
   AND?: Maybe<Array<SessionWhereInput>>;
@@ -5936,26 +2163,6 @@ export type Slashing = Node & {
   amount: Scalars['String'];
 };
 
-export type SlashingConnection = {
-   __typename?: 'SlashingConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<SlashingEdge>>;
-  aggregate: AggregateSlashing;
-};
-
-export type SlashingCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  who: Scalars['String'];
-  amount: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type SlashingEdge = {
-   __typename?: 'SlashingEdge';
-  node: Slashing;
-  cursor: Scalars['String'];
-};
-
 export enum SlashingOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -5964,43 +2171,6 @@ export enum SlashingOrderByInput {
   AmountAsc = 'amount_ASC',
   AmountDesc = 'amount_DESC'
 }
-
-export type SlashingPreviousValues = {
-   __typename?: 'SlashingPreviousValues';
-  id: Scalars['ID'];
-  who: Scalars['String'];
-  amount: Scalars['String'];
-};
-
-export type SlashingSubscriptionPayload = {
-   __typename?: 'SlashingSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Slashing>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<SlashingPreviousValues>;
-};
-
-export type SlashingSubscriptionWhereInput = {
-  AND?: Maybe<Array<SlashingSubscriptionWhereInput>>;
-  OR?: Maybe<Array<SlashingSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<SlashingSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<SlashingWhereInput>;
-};
-
-export type SlashingUpdateInput = {
-  who?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type SlashingUpdateManyMutationInput = {
-  who?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['String']>;
-};
 
 export type SlashingWhereInput = {
   AND?: Maybe<Array<SlashingWhereInput>>;
@@ -6063,65 +2233,12 @@ export type Stake = Node & {
   totalStake: Scalars['String'];
 };
 
-export type StakeConnection = {
-   __typename?: 'StakeConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<StakeEdge>>;
-  aggregate: AggregateStake;
-};
-
-export type StakeCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  totalStake: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type StakeEdge = {
-   __typename?: 'StakeEdge';
-  node: Stake;
-  cursor: Scalars['String'];
-};
-
 export enum StakeOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   TotalStakeAsc = 'totalStake_ASC',
   TotalStakeDesc = 'totalStake_DESC'
 }
-
-export type StakePreviousValues = {
-   __typename?: 'StakePreviousValues';
-  id: Scalars['ID'];
-  totalStake: Scalars['String'];
-};
-
-export type StakeSubscriptionPayload = {
-   __typename?: 'StakeSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Stake>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<StakePreviousValues>;
-};
-
-export type StakeSubscriptionWhereInput = {
-  AND?: Maybe<Array<StakeSubscriptionWhereInput>>;
-  OR?: Maybe<Array<StakeSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<StakeSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<StakeWhereInput>;
-};
-
-export type StakeUpdateInput = {
-  totalStake?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type StakeUpdateManyMutationInput = {
-  totalStake?: Maybe<Scalars['String']>;
-};
 
 export type StakeWhereInput = {
   AND?: Maybe<Array<StakeWhereInput>>;
@@ -6164,136 +2281,40 @@ export type StakeWhereUniqueInput = {
 
 export type Subscription = {
    __typename?: 'Subscription';
-  heartBeat?: Maybe<HeartBeatSubscriptionPayload>;
-  offlineValidator?: Maybe<OfflineValidatorSubscriptionPayload>;
-  era?: Maybe<EraSubscriptionPayload>;
-  slashing?: Maybe<SlashingSubscriptionPayload>;
-  validator?: Maybe<ValidatorSubscriptionPayload>;
-  totalIssuance?: Maybe<TotalIssuanceSubscriptionPayload>;
-  reward?: Maybe<RewardSubscriptionPayload>;
-  nomination?: Maybe<NominationSubscriptionPayload>;
-  stake?: Maybe<StakeSubscriptionPayload>;
-  council?: Maybe<CouncilSubscriptionPayload>;
-  councilMember?: Maybe<CouncilMemberSubscriptionPayload>;
-  motion?: Maybe<MotionSubscriptionPayload>;
-  motionProposalArgument?: Maybe<MotionProposalArgumentSubscriptionPayload>;
-  motionStatus?: Maybe<MotionStatusSubscriptionPayload>;
+  subscribeBlockNumbers?: Maybe<BlockNumber>;
+  subscribeEras?: Maybe<Era>;
+  subscribeHeartBeats?: Maybe<HeartBeat>;
+  subscribeNominations?: Maybe<Nomination>;
+  subscribeOfflineValidators?: Maybe<OfflineValidator>;
+  subscribeRewards?: Maybe<Reward>;
+  subscribeSessions?: Maybe<Session>;
+  subscribeSlashings?: Maybe<Slashing>;
+  subscribeStakes?: Maybe<Stake>;
+  subscribeValidators?: Maybe<Validator>;
   proposal?: Maybe<ProposalSubscriptionPayload>;
-  proposalStatus?: Maybe<ProposalStatusSubscriptionPayload>;
-  preimage?: Maybe<PreimageSubscriptionPayload>;
-  preimageStatus?: Maybe<PreimageStatusSubscriptionPayload>;
-  preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>;
-  referendum?: Maybe<ReferendumSubscriptionPayload>;
-  referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>;
-  blockIndex?: Maybe<BlockIndexSubscriptionPayload>;
+  motion?: Maybe<MotionSubscriptionPayload>;
   treasurySpendProposal?: Maybe<TreasurySpendProposalSubscriptionPayload>;
-  treasuryStatus?: Maybe<TreasuryStatusSubscriptionPayload>;
-  blockNumber?: Maybe<BlockNumberSubscriptionPayload>;
-  session?: Maybe<SessionSubscriptionPayload>;
+  referendum?: Maybe<ReferendumSubscriptionPayload>;
 };
 
-export type SubscriptionHeartBeatArgs = {
-  where?: Maybe<HeartBeatSubscriptionWhereInput>;
-};
-
-export type SubscriptionOfflineValidatorArgs = {
-  where?: Maybe<OfflineValidatorSubscriptionWhereInput>;
-};
-
-export type SubscriptionEraArgs = {
-  where?: Maybe<EraSubscriptionWhereInput>;
-};
-
-export type SubscriptionSlashingArgs = {
-  where?: Maybe<SlashingSubscriptionWhereInput>;
-};
-
-export type SubscriptionValidatorArgs = {
-  where?: Maybe<ValidatorSubscriptionWhereInput>;
-};
-
-export type SubscriptionTotalIssuanceArgs = {
-  where?: Maybe<TotalIssuanceSubscriptionWhereInput>;
-};
-
-export type SubscriptionRewardArgs = {
-  where?: Maybe<RewardSubscriptionWhereInput>;
-};
-
-export type SubscriptionNominationArgs = {
-  where?: Maybe<NominationSubscriptionWhereInput>;
-};
-
-export type SubscriptionStakeArgs = {
-  where?: Maybe<StakeSubscriptionWhereInput>;
-};
-
-export type SubscriptionCouncilArgs = {
-  where?: Maybe<CouncilSubscriptionWhereInput>;
-};
-
-export type SubscriptionCouncilMemberArgs = {
-  where?: Maybe<CouncilMemberSubscriptionWhereInput>;
-};
-
-export type SubscriptionMotionArgs = {
-  where?: Maybe<MotionSubscriptionWhereInput>;
-};
-
-export type SubscriptionMotionProposalArgumentArgs = {
-  where?: Maybe<MotionProposalArgumentSubscriptionWhereInput>;
-};
-
-export type SubscriptionMotionStatusArgs = {
-  where?: Maybe<MotionStatusSubscriptionWhereInput>;
-};
 
 export type SubscriptionProposalArgs = {
   where?: Maybe<ProposalSubscriptionWhereInput>;
 };
 
-export type SubscriptionProposalStatusArgs = {
-  where?: Maybe<ProposalStatusSubscriptionWhereInput>;
+
+export type SubscriptionMotionArgs = {
+  where?: Maybe<MotionSubscriptionWhereInput>;
 };
 
-export type SubscriptionPreimageArgs = {
-  where?: Maybe<PreimageSubscriptionWhereInput>;
-};
-
-export type SubscriptionPreimageStatusArgs = {
-  where?: Maybe<PreimageStatusSubscriptionWhereInput>;
-};
-
-export type SubscriptionPreimageArgumentArgs = {
-  where?: Maybe<PreimageArgumentSubscriptionWhereInput>;
-};
-
-export type SubscriptionReferendumArgs = {
-  where?: Maybe<ReferendumSubscriptionWhereInput>;
-};
-
-export type SubscriptionReferendumStatusArgs = {
-  where?: Maybe<ReferendumStatusSubscriptionWhereInput>;
-};
-
-export type SubscriptionBlockIndexArgs = {
-  where?: Maybe<BlockIndexSubscriptionWhereInput>;
-};
 
 export type SubscriptionTreasurySpendProposalArgs = {
   where?: Maybe<TreasurySpendProposalSubscriptionWhereInput>;
 };
 
-export type SubscriptionTreasuryStatusArgs = {
-  where?: Maybe<TreasuryStatusSubscriptionWhereInput>;
-};
 
-export type SubscriptionBlockNumberArgs = {
-  where?: Maybe<BlockNumberSubscriptionWhereInput>;
-};
-
-export type SubscriptionSessionArgs = {
-  where?: Maybe<SessionSubscriptionWhereInput>;
+export type SubscriptionReferendumArgs = {
+  where?: Maybe<ReferendumSubscriptionWhereInput>;
 };
 
 export type TotalIssuance = Node & {
@@ -6303,65 +2324,12 @@ export type TotalIssuance = Node & {
   amount: Scalars['String'];
 };
 
-export type TotalIssuanceConnection = {
-   __typename?: 'TotalIssuanceConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<TotalIssuanceEdge>>;
-  aggregate: AggregateTotalIssuance;
-};
-
-export type TotalIssuanceCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  amount: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type TotalIssuanceEdge = {
-   __typename?: 'TotalIssuanceEdge';
-  node: TotalIssuance;
-  cursor: Scalars['String'];
-};
-
 export enum TotalIssuanceOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   AmountAsc = 'amount_ASC',
   AmountDesc = 'amount_DESC'
 }
-
-export type TotalIssuancePreviousValues = {
-   __typename?: 'TotalIssuancePreviousValues';
-  id: Scalars['ID'];
-  amount: Scalars['String'];
-};
-
-export type TotalIssuanceSubscriptionPayload = {
-   __typename?: 'TotalIssuanceSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<TotalIssuance>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<TotalIssuancePreviousValues>;
-};
-
-export type TotalIssuanceSubscriptionWhereInput = {
-  AND?: Maybe<Array<TotalIssuanceSubscriptionWhereInput>>;
-  OR?: Maybe<Array<TotalIssuanceSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<TotalIssuanceSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<TotalIssuanceWhereInput>;
-};
-
-export type TotalIssuanceUpdateInput = {
-  amount?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type TotalIssuanceUpdateManyMutationInput = {
-  amount?: Maybe<Scalars['String']>;
-};
 
 export type TotalIssuanceWhereInput = {
   AND?: Maybe<Array<TotalIssuanceWhereInput>>;
@@ -6414,6 +2382,7 @@ export type TreasurySpendProposal = {
   motion?: Maybe<Motion>;
 };
 
+
 export type TreasurySpendProposalTreasuryStatusArgs = {
   where?: Maybe<TreasuryStatusWhereInput>;
   orderBy?: Maybe<TreasuryStatusOrderByInput>;
@@ -6422,57 +2391,6 @@ export type TreasurySpendProposalTreasuryStatusArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-export type TreasurySpendProposalConnection = {
-   __typename?: 'TreasurySpendProposalConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<TreasurySpendProposalEdge>>;
-  aggregate: AggregateTreasurySpendProposal;
-};
-
-export type TreasurySpendProposalCreateInput = {
-  proposer: Scalars['String'];
-  beneficiary: Scalars['String'];
-  value: Scalars['String'];
-  bond: Scalars['String'];
-  treasuryProposalId: Scalars['Int'];
-  treasuryStatus?: Maybe<TreasuryStatusCreateManyWithoutTreasurySpendProposalInput>;
-  motion?: Maybe<MotionCreateOneWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalCreateOneWithoutMotionInput = {
-  create?: Maybe<TreasurySpendProposalCreateWithoutMotionInput>;
-  connect?: Maybe<TreasurySpendProposalWhereUniqueInput>;
-};
-
-export type TreasurySpendProposalCreateOneWithoutTreasuryStatusInput = {
-  create?: Maybe<TreasurySpendProposalCreateWithoutTreasuryStatusInput>;
-  connect?: Maybe<TreasurySpendProposalWhereUniqueInput>;
-};
-
-export type TreasurySpendProposalCreateWithoutMotionInput = {
-  proposer: Scalars['String'];
-  beneficiary: Scalars['String'];
-  value: Scalars['String'];
-  bond: Scalars['String'];
-  treasuryProposalId: Scalars['Int'];
-  treasuryStatus?: Maybe<TreasuryStatusCreateManyWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalCreateWithoutTreasuryStatusInput = {
-  proposer: Scalars['String'];
-  beneficiary: Scalars['String'];
-  value: Scalars['String'];
-  bond: Scalars['String'];
-  treasuryProposalId: Scalars['Int'];
-  motion?: Maybe<MotionCreateOneWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalEdge = {
-   __typename?: 'TreasurySpendProposalEdge';
-  node: TreasurySpendProposal;
-  cursor: Scalars['String'];
 };
 
 export enum TreasurySpendProposalOrderByInput {
@@ -6517,68 +2435,6 @@ export type TreasurySpendProposalSubscriptionWhereInput = {
   updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
   updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
   node?: Maybe<TreasurySpendProposalWhereInput>;
-};
-
-export type TreasurySpendProposalUpdateInput = {
-  proposer?: Maybe<Scalars['String']>;
-  beneficiary?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  bond?: Maybe<Scalars['String']>;
-  treasuryProposalId?: Maybe<Scalars['Int']>;
-  treasuryStatus?: Maybe<TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput>;
-  motion?: Maybe<MotionUpdateOneWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalUpdateManyMutationInput = {
-  proposer?: Maybe<Scalars['String']>;
-  beneficiary?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  bond?: Maybe<Scalars['String']>;
-  treasuryProposalId?: Maybe<Scalars['Int']>;
-};
-
-export type TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInput = {
-  create?: Maybe<TreasurySpendProposalCreateWithoutTreasuryStatusInput>;
-  connect?: Maybe<TreasurySpendProposalWhereUniqueInput>;
-  update?: Maybe<TreasurySpendProposalUpdateWithoutTreasuryStatusDataInput>;
-  upsert?: Maybe<TreasurySpendProposalUpsertWithoutTreasuryStatusInput>;
-};
-
-export type TreasurySpendProposalUpdateOneWithoutMotionInput = {
-  create?: Maybe<TreasurySpendProposalCreateWithoutMotionInput>;
-  connect?: Maybe<TreasurySpendProposalWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<TreasurySpendProposalUpdateWithoutMotionDataInput>;
-  upsert?: Maybe<TreasurySpendProposalUpsertWithoutMotionInput>;
-};
-
-export type TreasurySpendProposalUpdateWithoutMotionDataInput = {
-  proposer?: Maybe<Scalars['String']>;
-  beneficiary?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  bond?: Maybe<Scalars['String']>;
-  treasuryProposalId?: Maybe<Scalars['Int']>;
-  treasuryStatus?: Maybe<TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalUpdateWithoutTreasuryStatusDataInput = {
-  proposer?: Maybe<Scalars['String']>;
-  beneficiary?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  bond?: Maybe<Scalars['String']>;
-  treasuryProposalId?: Maybe<Scalars['Int']>;
-  motion?: Maybe<MotionUpdateOneWithoutTreasurySpendProposalInput>;
-};
-
-export type TreasurySpendProposalUpsertWithoutMotionInput = {
-  update: TreasurySpendProposalUpdateWithoutMotionDataInput;
-  create: TreasurySpendProposalCreateWithoutMotionInput;
-};
-
-export type TreasurySpendProposalUpsertWithoutTreasuryStatusInput = {
-  update: TreasurySpendProposalUpdateWithoutTreasuryStatusDataInput;
-  create: TreasurySpendProposalCreateWithoutTreasuryStatusInput;
 };
 
 export type TreasurySpendProposalWhereInput = {
@@ -6676,149 +2532,12 @@ export type TreasuryStatus = Node & {
   status: Scalars['String'];
 };
 
-export type TreasuryStatusConnection = {
-   __typename?: 'TreasuryStatusConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<TreasuryStatusEdge>>;
-  aggregate: AggregateTreasuryStatus;
-};
-
-export type TreasuryStatusCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-  treasurySpendProposal: TreasurySpendProposalCreateOneWithoutTreasuryStatusInput;
-};
-
-export type TreasuryStatusCreateManyWithoutTreasurySpendProposalInput = {
-  create?: Maybe<Array<TreasuryStatusCreateWithoutTreasurySpendProposalInput>>;
-  connect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>;
-};
-
-export type TreasuryStatusCreateWithoutTreasurySpendProposalInput = {
-  id?: Maybe<Scalars['ID']>;
-  status: Scalars['String'];
-  blockNumber: BlockNumberCreateOneInput;
-};
-
-export type TreasuryStatusEdge = {
-   __typename?: 'TreasuryStatusEdge';
-  node: TreasuryStatus;
-  cursor: Scalars['String'];
-};
-
 export enum TreasuryStatusOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC'
 }
-
-export type TreasuryStatusPreviousValues = {
-   __typename?: 'TreasuryStatusPreviousValues';
-  id: Scalars['ID'];
-  status: Scalars['String'];
-};
-
-export type TreasuryStatusScalarWhereInput = {
-  AND?: Maybe<Array<TreasuryStatusScalarWhereInput>>;
-  OR?: Maybe<Array<TreasuryStatusScalarWhereInput>>;
-  NOT?: Maybe<Array<TreasuryStatusScalarWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_contains?: Maybe<Scalars['ID']>;
-  id_not_contains?: Maybe<Scalars['ID']>;
-  id_starts_with?: Maybe<Scalars['ID']>;
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  id_ends_with?: Maybe<Scalars['ID']>;
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Scalars['String']>>;
-  status_not_in?: Maybe<Array<Scalars['String']>>;
-  status_lt?: Maybe<Scalars['String']>;
-  status_lte?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  status_gte?: Maybe<Scalars['String']>;
-  status_contains?: Maybe<Scalars['String']>;
-  status_not_contains?: Maybe<Scalars['String']>;
-  status_starts_with?: Maybe<Scalars['String']>;
-  status_not_starts_with?: Maybe<Scalars['String']>;
-  status_ends_with?: Maybe<Scalars['String']>;
-  status_not_ends_with?: Maybe<Scalars['String']>;
-};
-
-export type TreasuryStatusSubscriptionPayload = {
-   __typename?: 'TreasuryStatusSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<TreasuryStatus>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<TreasuryStatusPreviousValues>;
-};
-
-export type TreasuryStatusSubscriptionWhereInput = {
-  AND?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>;
-  OR?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<TreasuryStatusSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<TreasuryStatusWhereInput>;
-};
-
-export type TreasuryStatusUpdateInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  treasurySpendProposal?: Maybe<TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInput>;
-};
-
-export type TreasuryStatusUpdateManyDataInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type TreasuryStatusUpdateManyMutationInput = {
-  status?: Maybe<Scalars['String']>;
-};
-
-export type TreasuryStatusUpdateManyWithoutTreasurySpendProposalInput = {
-  create?: Maybe<Array<TreasuryStatusCreateWithoutTreasurySpendProposalInput>>;
-  connect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>;
-  set?: Maybe<Array<TreasuryStatusWhereUniqueInput>>;
-  disconnect?: Maybe<Array<TreasuryStatusWhereUniqueInput>>;
-  delete?: Maybe<Array<TreasuryStatusWhereUniqueInput>>;
-  update?: Maybe<Array<TreasuryStatusUpdateWithWhereUniqueWithoutTreasurySpendProposalInput>>;
-  updateMany?: Maybe<Array<TreasuryStatusUpdateManyWithWhereNestedInput>>;
-  deleteMany?: Maybe<Array<TreasuryStatusScalarWhereInput>>;
-  upsert?: Maybe<Array<TreasuryStatusUpsertWithWhereUniqueWithoutTreasurySpendProposalInput>>;
-};
-
-export type TreasuryStatusUpdateManyWithWhereNestedInput = {
-  where: TreasuryStatusScalarWhereInput;
-  data: TreasuryStatusUpdateManyDataInput;
-};
-
-export type TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput = {
-  status?: Maybe<Scalars['String']>;
-  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-};
-
-export type TreasuryStatusUpdateWithWhereUniqueWithoutTreasurySpendProposalInput = {
-  where: TreasuryStatusWhereUniqueInput;
-  data: TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput;
-};
-
-export type TreasuryStatusUpsertWithWhereUniqueWithoutTreasurySpendProposalInput = {
-  where: TreasuryStatusWhereUniqueInput;
-  update: TreasuryStatusUpdateWithoutTreasurySpendProposalDataInput;
-  create: TreasuryStatusCreateWithoutTreasurySpendProposalInput;
-};
 
 export type TreasuryStatusWhereInput = {
   AND?: Maybe<Array<TreasuryStatusWhereInput>>;
@@ -6869,27 +2588,6 @@ export type Validator = Node & {
   preferences: Scalars['String'];
 };
 
-export type ValidatorConnection = {
-   __typename?: 'ValidatorConnection';
-  pageInfo: PageInfo;
-  edges: Array<Maybe<ValidatorEdge>>;
-  aggregate: AggregateValidator;
-};
-
-export type ValidatorCreateInput = {
-  id?: Maybe<Scalars['ID']>;
-  controller: Scalars['String'];
-  stash: Scalars['String'];
-  preferences: Scalars['String'];
-  session: SessionCreateOneInput;
-};
-
-export type ValidatorEdge = {
-   __typename?: 'ValidatorEdge';
-  node: Validator;
-  cursor: Scalars['String'];
-};
-
 export enum ValidatorOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -6900,46 +2598,6 @@ export enum ValidatorOrderByInput {
   PreferencesAsc = 'preferences_ASC',
   PreferencesDesc = 'preferences_DESC'
 }
-
-export type ValidatorPreviousValues = {
-   __typename?: 'ValidatorPreviousValues';
-  id: Scalars['ID'];
-  controller: Scalars['String'];
-  stash: Scalars['String'];
-  preferences: Scalars['String'];
-};
-
-export type ValidatorSubscriptionPayload = {
-   __typename?: 'ValidatorSubscriptionPayload';
-  mutation: MutationType;
-  node?: Maybe<Validator>;
-  updatedFields?: Maybe<Array<Scalars['String']>>;
-  previousValues?: Maybe<ValidatorPreviousValues>;
-};
-
-export type ValidatorSubscriptionWhereInput = {
-  AND?: Maybe<Array<ValidatorSubscriptionWhereInput>>;
-  OR?: Maybe<Array<ValidatorSubscriptionWhereInput>>;
-  NOT?: Maybe<Array<ValidatorSubscriptionWhereInput>>;
-  mutation_in?: Maybe<Array<MutationType>>;
-  updatedFields_contains?: Maybe<Scalars['String']>;
-  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
-  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
-  node?: Maybe<ValidatorWhereInput>;
-};
-
-export type ValidatorUpdateInput = {
-  controller?: Maybe<Scalars['String']>;
-  stash?: Maybe<Scalars['String']>;
-  preferences?: Maybe<Scalars['String']>;
-  session?: Maybe<SessionUpdateOneRequiredInput>;
-};
-
-export type ValidatorUpdateManyMutationInput = {
-  controller?: Maybe<Scalars['String']>;
-  stash?: Maybe<Scalars['String']>;
-  preferences?: Maybe<Scalars['String']>;
-};
 
 export type ValidatorWhereInput = {
   AND?: Maybe<Array<ValidatorWhereInput>>;
@@ -7010,67 +2668,72 @@ export type ValidatorWhereUniqueInput = {
 
 export type GetExecutedMotionsWithPreimageHashQueryVariables = {
   preimageHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
 };
+
 
 export type GetExecutedMotionsWithPreimageHashQuery = (
   { __typename?: 'Query' }
   & { motions: Array<Maybe<(
     { __typename?: 'Motion' }
     & Pick<Motion, 'motionProposalId'>
-  )>>; }
+  )>> }
 );
 
 export type GetTabledProposalAtBlockQueryVariables = {
-  blockHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
 };
+
 
 export type GetTabledProposalAtBlockQuery = (
   { __typename?: 'Query' }
   & { proposals: Array<Maybe<(
     { __typename?: 'Proposal' }
     & Pick<Proposal, 'proposalId'>
-    & { preimage: Maybe<(
+    & { preimage?: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'hash'>
-    )>; }
-  )>>; }
+    )> }
+  )>> }
 );
 
 export type GetOnchainReferendaQueryVariables = {
   startBlock: Scalars['Int'];
 };
 
+
 export type GetOnchainReferendaQuery = (
   { __typename?: 'Query' }
   & { referendums: Array<Maybe<(
     { __typename?: 'Referendum' }
     & OnchainReferendumFragment
-  )>>; }
+  )>> }
 );
 
 export type OnchainReferendumFragment = (
   { __typename?: 'Referendum' }
   & Pick<Referendum, 'preimageHash' | 'id' | 'referendumId'>
-  & { referendumStatus: Maybe<Array<(
+  & { referendumStatus?: Maybe<Array<(
     { __typename?: 'ReferendumStatus' }
     & Pick<ReferendumStatus, 'id' | 'status'>
     & { blockNumber: (
       { __typename?: 'BlockNumber' }
-      & Pick<BlockNumber, 'id' | 'hash'>
-    ); }
-  )>>; }
+      & Pick<BlockNumber, 'id' | 'number'>
+    ) }
+  )>> }
 );
 
 export type GetOnchainProposalsQueryVariables = {
   startBlock: Scalars['Int'];
 };
 
+
 export type GetOnchainProposalsQuery = (
   { __typename?: 'Query' }
   & { proposals: Array<Maybe<(
     { __typename?: 'Proposal' }
     & OnchainProposalFragment
-  )>>; }
+  )>> }
 );
 
 export type OnchainProposalFragment = (
@@ -7082,33 +2745,35 @@ export type GetOnchainMotionsQueryVariables = {
   startBlock: Scalars['Int'];
 };
 
+
 export type GetOnchainMotionsQuery = (
   { __typename?: 'Query' }
   & { motions: Array<Maybe<(
     { __typename?: 'Motion' }
     & OnchainMotionFragment
-  )>>; }
+  )>> }
 );
 
 export type OnchainMotionFragment = (
   { __typename?: 'Motion' }
   & Pick<Motion, 'author' | 'id' | 'motionProposalId' | 'section'>
-  & { motionProposalArguments: Maybe<Array<(
+  & { motionProposalArguments?: Maybe<Array<(
     { __typename?: 'MotionProposalArgument' }
     & Pick<MotionProposalArgument, 'name' | 'value'>
-  )>>; }
+  )>> }
 );
 
 export type GetOnchainTreasuryProposalsQueryVariables = {
   startBlock: Scalars['Int'];
 };
 
+
 export type GetOnchainTreasuryProposalsQuery = (
   { __typename?: 'Query' }
   & { treasurySpendProposals: Array<Maybe<(
     { __typename?: 'TreasurySpendProposal' }
     & OnchainTreasuryProposalFragment
-  )>>; }
+  )>> }
 );
 
 export type OnchainTreasuryProposalFragment = (
@@ -7126,7 +2791,7 @@ export const OnchainReferendumFragmentDoc = gql`
     status
     blockNumber {
       id
-      hash
+      number
     }
   }
 }
@@ -7158,15 +2823,15 @@ export const OnchainTreasuryProposalFragmentDoc = gql`
 }
     `;
 export const GetExecutedMotionsWithPreimageHashDocument = gql`
-    query getExecutedMotionsWithPreimageHash($preimageHash: String!) {
-  motions(where: {AND: [{motionStatus_some: {status: "Executed"}}, {preimageHash: $preimageHash}]}, orderBy: id_DESC) {
+    query getExecutedMotionsWithPreimageHash($preimageHash: String!, $blockNumber: Int!) {
+  motions(where: {AND: [{motionStatus_some: {blockNumber: {number_lt: $blockNumber}}}, {motionStatus_some: {status: "Executed"}}, {preimageHash: $preimageHash}]}, orderBy: id_DESC) {
     motionProposalId
   }
 }
     `;
 export const GetTabledProposalAtBlockDocument = gql`
-    query getTabledProposalAtBlock($blockHash: String!) {
-  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {hash: $blockHash}}, {status: "Tabled"}]}}) {
+    query getTabledProposalAtBlock($blockNumber: Int!) {
+  proposals(where: {proposalStatus_some: {AND: [{blockNumber: {number: $blockNumber}}, {status: "Tabled"}]}}) {
     proposalId
     preimage {
       hash
@@ -7202,25 +2867,25 @@ export const GetOnchainTreasuryProposalsDocument = gql`
   }
 }
     ${OnchainTreasuryProposalFragmentDoc}`;
-export function getSdk (client: GraphQLClient) {
-	return {
-		getExecutedMotionsWithPreimageHash (variables: GetExecutedMotionsWithPreimageHashQueryVariables): Promise<GetExecutedMotionsWithPreimageHashQuery> {
-			return client.request<GetExecutedMotionsWithPreimageHashQuery>(print(GetExecutedMotionsWithPreimageHashDocument), variables);
-		},
-		getTabledProposalAtBlock (variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
-			return client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables);
-		},
-		getOnchainReferenda (variables: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
-			return client.request<GetOnchainReferendaQuery>(print(GetOnchainReferendaDocument), variables);
-		},
-		getOnchainProposals (variables: GetOnchainProposalsQueryVariables): Promise<GetOnchainProposalsQuery> {
-			return client.request<GetOnchainProposalsQuery>(print(GetOnchainProposalsDocument), variables);
-		},
-		getOnchainMotions (variables: GetOnchainMotionsQueryVariables): Promise<GetOnchainMotionsQuery> {
-			return client.request<GetOnchainMotionsQuery>(print(GetOnchainMotionsDocument), variables);
-		},
-		getOnchainTreasuryProposals (variables: GetOnchainTreasuryProposalsQueryVariables): Promise<GetOnchainTreasuryProposalsQuery> {
-			return client.request<GetOnchainTreasuryProposalsQuery>(print(GetOnchainTreasuryProposalsDocument), variables);
-		}
-	};
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    getExecutedMotionsWithPreimageHash(variables: GetExecutedMotionsWithPreimageHashQueryVariables): Promise<GetExecutedMotionsWithPreimageHashQuery> {
+      return withWrapper(() => client.request<GetExecutedMotionsWithPreimageHashQuery>(print(GetExecutedMotionsWithPreimageHashDocument), variables));
+    },
+    getTabledProposalAtBlock(variables: GetTabledProposalAtBlockQueryVariables): Promise<GetTabledProposalAtBlockQuery> {
+      return withWrapper(() => client.request<GetTabledProposalAtBlockQuery>(print(GetTabledProposalAtBlockDocument), variables));
+    },
+    getOnchainReferenda(variables: GetOnchainReferendaQueryVariables): Promise<GetOnchainReferendaQuery> {
+      return withWrapper(() => client.request<GetOnchainReferendaQuery>(print(GetOnchainReferendaDocument), variables));
+    },
+    getOnchainProposals(variables: GetOnchainProposalsQueryVariables): Promise<GetOnchainProposalsQuery> {
+      return withWrapper(() => client.request<GetOnchainProposalsQuery>(print(GetOnchainProposalsDocument), variables));
+    },
+    getOnchainMotions(variables: GetOnchainMotionsQueryVariables): Promise<GetOnchainMotionsQuery> {
+      return withWrapper(() => client.request<GetOnchainMotionsQuery>(print(GetOnchainMotionsDocument), variables));
+    },
+    getOnchainTreasuryProposals(variables: GetOnchainTreasuryProposalsQueryVariables): Promise<GetOnchainTreasuryProposalsQuery> {
+      return withWrapper(() => client.request<GetOnchainTreasuryProposalsQuery>(print(GetOnchainTreasuryProposalsDocument), variables));
+    }
+  };
 }

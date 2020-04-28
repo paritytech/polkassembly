@@ -98,7 +98,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				</Button>
 			</div>
 			<div>
-				{error && <FilteredError text={error.message}/>}
+				{error?.message && <FilteredError text={error.message}/>}
 			</div>
 			<Responsive minWidth='992'>
 				<Divider horizontal>Or</Divider>

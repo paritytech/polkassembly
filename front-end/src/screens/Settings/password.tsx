@@ -10,6 +10,7 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import Spacer from '../../ui-components/Spacer';
 import cleanError from '../../util/cleanError';
 
 const Password = (): JSX.Element => {
@@ -73,11 +74,10 @@ const Password = (): JSX.Element => {
 						placeholder='New Password'
 						type='password'
 					/>
-					{error && <FilteredError text={error.message}/>
-					}
+					{error?.message && <FilteredError text={error.message}/>}
 				</Form.Field>
 				<Form.Field width={6}>
-					<label>&nbsp;</label>
+					<Spacer />
 					<Button
 						secondary
 						disabled={loading}

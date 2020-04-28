@@ -109,7 +109,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 					/>
 
 					<TopicsRadio
-						onTopicSelection={(id) => setSetlectedTopic(id)}
+						onTopicSelection={(id: number) => setSetlectedTopic(id)}
 					/>
 
 					<div className={'mainButtonContainer'}>
@@ -122,7 +122,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							{isSending || loading ? 'Creating...' : 'Create'}
 						</Button>
 					</div>
-					{error && <FilteredError text={error.message}/>}
+					{error?.message && <FilteredError text={error.message}/>}
 				</Form>
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>

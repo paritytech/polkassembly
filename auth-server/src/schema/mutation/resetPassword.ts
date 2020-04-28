@@ -5,6 +5,7 @@
 export default `
     resetPassword(
         token: String!
+        userId: Int!
         newPassword: String!
     ): Message
 `;

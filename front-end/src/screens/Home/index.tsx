@@ -54,7 +54,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer .treasuryContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer {
 		margin-bottom: 3rem;
 	}
 

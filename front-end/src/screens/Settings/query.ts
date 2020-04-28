@@ -14,8 +14,8 @@ export const MUTATION_CHANGE_NAME = gql`
 `;
 
 export const MUTATION_CHANGE_USERNAME = gql`
-	mutation changeUsername($username: String!){
-		changeUsername(username: $username){
+	mutation changeUsername($username: String!, $password: String!){
+		changeUsername(username: $username, password: $password){
 			message
 			token
 		}
@@ -23,8 +23,8 @@ export const MUTATION_CHANGE_USERNAME = gql`
 `;
 
 export const MUTATION_CHANGE_EMAIL = gql`
-	mutation changeEmail($email: String!){
-		changeEmail(email: $email){
+	mutation changeEmail($email: String!, $password: String!){
+		changeEmail(email: $email, password: $password) {
 			message
 			token
 		}
@@ -71,6 +71,15 @@ export const RESEND_VERIFY_EMAIL_TOKEN = gql`
 	mutation resendVerifyEmailToken {
 		resendVerifyEmailToken {
 			message
+		}
+	}
+`;
+
+export const SET_DEFAULT_ADDRESS = gql`
+	mutation setDefaultAddress($address: String!) {
+		setDefaultAddress(address: $address) {
+			message
+			token
 		}
 	}
 `;

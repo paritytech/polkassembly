@@ -58,6 +58,7 @@ export interface HasuraClaimPayload {
     'x-hasura-user-email': string;
     'x-hasura-user-id': string;
     'x-hasura-kusama': string;
+    'x-hasura-kusama-default': string;
 }
 
 export interface JWTPayploadType {
@@ -112,19 +113,19 @@ export interface AddressLoginStartType extends MessageType {
     signMessage: string;
 }
 
-export interface CommentType {
+export interface CommentCreationHookDataType {
     post_id: number;
     author_id: number;
     content: string;
 }
 
 export interface OnchainLinkType {
-    proposer_address: string;
+    proposer_address?: string;
     post_id: number;
-    onchain_motion_id: number;
-    onchain_proposal_id: number;
-    onchain_referendum_id: number;
-    onchain_treasury_proposal_id: number;
+    onchain_motion_id?: number;
+    onchain_proposal_id?: number;
+    onchain_referendum_id?: number;
+    onchain_treasury_proposal_id?: number;
 }
 
 export interface JsonSchema {
@@ -157,6 +158,10 @@ export interface UsersArgs {
 	page: number;
 }
 
+export interface SetDefaultAddressArgs {
+    address: string;
+}
+
 export interface AddressLinkStartArgs {
 	network: string;
 	address: string;
@@ -176,7 +181,8 @@ export interface AddressUnlinkArgs {
 }
 
 export interface ChangeEmailArgs {
-	email: string;
+    email: string;
+    password: string;
 }
 
 export interface ChangeNameArgs {
@@ -193,7 +199,8 @@ export interface ChangePasswordArgs {
 }
 
 export interface ChangeUsernameArgs {
-	username: string;
+    password: string;
+    username: string;
 }
 
 export interface LoginArgs {
@@ -223,7 +230,8 @@ export interface RequestResetPasswordArgs {
 
 export interface ResetPasswordArgs {
 	newPassword: string;
-	token: string;
+    token: string;
+    userId: number;
 }
 
 export interface SignupArgs {
@@ -240,3 +248,13 @@ export interface UndoEmailChangeArgs {
 export interface VerifyEmailArgs {
 	token: string;
 }
+
+export enum PostTypeEnum {
+    POST='post',
+    PROPOSAL = 'proposal',
+    TREASURY = 'treasury',
+    MOTION = 'motion',
+    REFERENDUM = 'referendum',
+}
+
+export type PostType = PostTypeEnum;

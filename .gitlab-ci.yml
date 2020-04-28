@@ -45,6 +45,7 @@ lint-front-end:
     - cd front-end
     - yarn install
     - yarn lint
+    - yarn build
   rules:
     - changes:
       - "front-end/**/*"
@@ -62,6 +63,7 @@ lint-back-end:
     - cd auth-server
     - yarn install
     - yarn lint
+    - yarn tsc
   rules:
     - changes:
       - "auth-server/**/*"
@@ -79,6 +81,7 @@ lint-chain-db-watcher:
     - cd chain-db-watcher
     - yarn install
     - yarn lint
+    - yarn tsc
   rules:
     - changes:
       - "chain-db-watcher/**/*"
@@ -93,9 +96,9 @@ lint-chain-db-watcher:
     DOCKER_HOST: tcp://localhost:2375
   tags:
     - kubernetes-parity-build
-  image: docker:git
+  image: docker:18-git
   services:
-    - docker:dind
+    - docker:18-dind
   script:
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
@@ -172,7 +175,6 @@ dockerize-chain-db-watcher:
       --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
       --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
       --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
-      --set chainDbWatcher.config.CHAIN_DB_GRAPHQL_URL=${CHAIN_DB_GRAPHQL_URL}
 
     # test, update/deploy redis server using helm
     - export REDIS_PASSWORD=$(echo "$REDIS_URL" | sed -r 's#redis://:([^@]+).*$#\1#g')

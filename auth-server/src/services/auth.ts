@@ -5,7 +5,7 @@
 import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
-import { randomBytes } from 'crypto';
+import { randomBytes, timingSafeEqual } from 'crypto';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import { uuid } from 'uuidv4';
@@ -14,11 +14,10 @@ import validator from 'validator';
 import Address from '../model/Address';
 import EmailVerificationToken from '../model/EmailVerificationToken';
 import Notification from '../model/Notification';
-import PasswordResetToken from '../model/PasswordResetToken';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
-import { redisGet, redisSetex } from '../redis';
+import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
@@ -37,7 +36,7 @@ const jwtPublicKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PUBLIC_KE
 const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
-const ONE_DAY = 24 * 60 * 60 * 1000;
+const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
 const NOTIFICATION_DEFAULTS = {
@@ -46,6 +45,8 @@ const NOTIFICATION_DEFAULTS = {
 	post_created: true,
 	post_participated: true
 };
+
+export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -57,7 +58,7 @@ export default class AuthService {
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
 		const user = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (!user) {
@@ -80,6 +81,45 @@ export default class AuthService {
 				username: user.username
 			}
 		};
+	}
+
+	public async SetDefaultAddress (token: string, address: string): Promise<string> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const addresses = await Address
+			.query()
+			.where('user_id', user.id);
+
+		let defaultAddressId = 0;
+		const otherAddressIds: number[] = [];
+
+		// Going through any linked address for this user
+		// we store the id of the address we want to set as default
+		addresses.forEach((dbAddress) => {
+			if (dbAddress.address === address) {
+				defaultAddressId = dbAddress.id;
+			} else {
+				otherAddressIds.push(dbAddress.id);
+			}
+		});
+
+		if (!defaultAddressId) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		await Address
+			.query()
+			.patch({ default: true })
+			.findById(defaultAddressId);
+
+		// Mark any other address from the user as NOT default
+		await Address
+			.query()
+			.patch({ default: false })
+			.whereIn('id', otherAddressIds);
+
+		return this.getSignedToken(user);
 	}
 
 	public async AddressLoginStart (address: string): Promise<string> {
@@ -162,7 +202,7 @@ export default class AuthService {
 	public async SignUp (email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (existing) {
@@ -192,7 +232,7 @@ export default class AuthService {
 				name,
 				password,
 				salt: salt.toString('hex'),
-				username
+				username: username.toLowerCase()
 			});
 
 		await Notification
@@ -337,9 +377,18 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LINKING_FAILED);
 		}
 
+		// If this linked address is the first address to be linked. Then set it as default.
+		// querying other addresses where id != address_id to check the same.
+		const otherAddresses = await Address
+			.query()
+			.whereNot('id', address_id);
+
+		const setAsDefault = otherAddresses.length === 0;
+
 		await Address
 			.query()
 			.patch({
+				default: setAsDefault,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				verified: true
 			})
@@ -449,41 +498,56 @@ export default class AuthService {
 		sendVerificationEmail(user, verifyToken);
 	}
 
-	public async ChangeUsername (token: string, username: string): Promise<string> {
+	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const existing = await User
 			.query()
-			.where('username', username)
+			.where('username', username.toLowerCase())
 			.first();
 
 		if (existing) {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
+		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
+
 		await User
 			.query()
 			.patch({
-				username
+				username: username.toLowerCase()
 			})
 			.findById(userId);
 
-		const user = await getUserFromUserId(userId);
+		user = await getUserFromUserId(userId);
 
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeEmail (token: string, email: string): Promise<string> {
+	public async ChangeEmail (token: string, email: string, password: string): Promise<string> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
-		const existing = await User
-			.query()
-			.where('email', email)
-			.first();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		if (email !== '') {
+			const existing = await User
+				.query()
+				.where('email', email)
+				.first();
+
+			if (existing) {
+				throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+			}
 		}
 
 		let user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new UserInputError(messages.INCORRECT_PASSWORD);
+		}
 
 		const existingUndoToken = await UndoEmailChangeToken
 			.query()
@@ -540,8 +604,10 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		// send verification email in background
-		sendVerificationEmail(user, verifyToken);
+		if (email) {
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
@@ -559,36 +625,23 @@ export default class AuthService {
 			return;
 		}
 
-		const expires = new Date(Date.now() + ONE_DAY).toISOString(); // 24 hours
+		const resetToken = uuid();
 
-		const resetToken = await PasswordResetToken
-			.query()
-			.allowInsert('[token, user_id, valid, expires]')
-			.insert({
-				expires,
-				token: uuid(),
-				user_id: user.id,
-				valid: true
-			});
+		await redisSetex(getPwdResetTokenKey(user.id), ONE_DAY, resetToken);
 
 		sendResetPasswordEmail(user, resetToken);
 	}
 
-	public async ResetPassword (token: string, newPassword: string): Promise<void> {
-		const resetToken = await PasswordResetToken
-			.query()
-			.where('token', token)
-			.first();
+	public async ResetPassword (token: string, userId: number, newPassword: string): Promise<void> {
+		const storedToken = await redisGet(getPwdResetTokenKey(userId));
 
-		if (!resetToken) {
-			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_NOT_FOUND);
-		}
-
-		if (!resetToken.valid) {
+		if (!storedToken) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		if (new Date(resetToken.expires).getTime() < Date.now()) {
+		const isValid = timingSafeEqual(Buffer.from(token), Buffer.from(storedToken));
+
+		if (!isValid) {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
@@ -601,12 +654,9 @@ export default class AuthService {
 				password,
 				salt: salt.toString('hex')
 			})
-			.findById(resetToken.user_id);
+			.findById(Number(userId));
 
-		await PasswordResetToken
-			.query()
-			.patch({ valid: false })
-			.findById(resetToken.id);
+		await redisDel(getPwdResetTokenKey(userId));
 	}
 
 	public async UndoEmailChange (token: string): Promise<{email: string; updatedToken: string}> {
@@ -664,8 +714,15 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
+		let kusamaDefault = '';
 		const kusamaAddresses = addresses
-			.filter(address => address.network === KUSAMA && address.verified)
+			.filter(address => {
+				const isKusama = address.network === KUSAMA && address.verified;
+				if (isKusama && address.default) {
+					kusamaDefault = address.address;
+				}
+				return isKusama;
+			})
 			.map(address => `"${address.address}"`)
 			.join(',');
 
@@ -676,6 +733,7 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-kusama': `{${kusamaAddresses}}`,
+				'x-hasura-kusama-default': kusamaDefault,
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},
