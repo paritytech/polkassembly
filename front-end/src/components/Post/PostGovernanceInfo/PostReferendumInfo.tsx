@@ -54,7 +54,7 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 							</>
 							:
 							<>
-								<h6>Started On</h6>
+								<h6>Ended On</h6>
 								<div>{blockNumber?.startDateTime}</div>
 							</>
 						}
