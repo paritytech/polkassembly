@@ -38,16 +38,16 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 
 		let unsubscribe: () => void;
 
-		setBlocktime(api?.consts.babe?.expectedBlockTime);
+		setBlocktime(api.consts.babe?.expectedBlockTime);
 
-		api?.derive.chain.bestNumber((number) => {
+		api.derive.chain.bestNumber((number) => {
 			setCurrentBlock(number);
 		})
 			.then(unsub => {unsubscribe = unsub;})
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, apiReady, blocksRemaining]);
+	}, [api, apiReady]);
 
 	const popupStyle = {
 		fontSize: '1.2rem'

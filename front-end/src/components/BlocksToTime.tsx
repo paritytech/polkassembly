@@ -33,10 +33,7 @@ const BlocksToTime = ({ blocks, className }:Props ) => {
 			return;
 		}
 
-		let unsubscribe: () => void;
-
-		setBlocktime(api?.consts.babe?.expectedBlockTime);
-		return () => unsubscribe && unsubscribe();
+		setBlocktime(api.consts.babe?.expectedBlockTime);
 	}, [ api, apiReady]);
 
 	const popupStyle = {
