@@ -11,6 +11,7 @@ import { decodePostgresArray } from '../util/decodePostgressArray';
 
 const initialUserDetailsContext : UserDetailsContextType = {
 	addresses: [],
+	defaultAddress: '',
 	email: null,
 	email_verified: false,
 	id: null,
@@ -60,6 +61,7 @@ try {
 		}
 		initialUserDetailsContext.email_verified = email_verified || false;
 		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);
+		initialUserDetailsContext.defaultAddress = claims['x-hasura-kusama-default'];
 	}
 } catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.
