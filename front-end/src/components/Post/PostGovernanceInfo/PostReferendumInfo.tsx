@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import * as moment from 'moment';
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 import BlockCountdown from 'src/components/BlockCountdown';
@@ -55,7 +56,7 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 							:
 							<>
 								<h6>Ended On</h6>
-								<div>{blockNumber?.startDateTime}</div>
+								<div>{moment.utc(blockNumber?.startDateTime).format('DD MMM YYYY, HH:mm:ss')}</div>
 							</>
 						}
 					</Grid.Column>}
