@@ -6,6 +6,7 @@
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { GraphQLClient } from 'graphql-request';
+import pRetry from 'p-retry';
 
 import { getSdk as getOnchainSdk } from './generated/chain-db-graphql';
 import { getSdk as getDiscussionSdk } from './generated/discussion-db-graphql';
@@ -30,7 +31,7 @@ const DEFAULT_DESCRIPTION = 'The title and description of this proposal can only
  * it's ok for proposals since there are rarely more than 1 proposal per 15min.
  */
 
-export const getToken = async (): Promise<string | void> => {
+const getTokenRetried = async (): Promise<string | void> => {
 	if (!discussionGraphqlUrl) {
 		throw new Error('Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set.');
 	}
@@ -41,23 +42,25 @@ export const getToken = async (): Promise<string | void> => {
 		);
 	}
 
-	try {
-		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
-		const discussionSdk = getDiscussionSdk(client);
-		const data = await discussionSdk.loginMutation({ password: proposalBotPassword, username: proposalBotUsername });
+	const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+	const discussionSdk = getDiscussionSdk(client);
+	const data = await discussionSdk.loginMutation({ password: proposalBotPassword, username: proposalBotUsername });
 
-		if (data.login?.token) {
-			return data?.login?.token;
-		} else {
-			throw new Error(`Unexpected data at proposal bot login: ${data}`);
-		}
-	} catch (e) {
-		console.error(chalk.red('getToken execution error', e));
-		e.response?.errors &&
-			console.error(chalk.red('GraphQL response errors\n'), e.response.errors);
-		e.response?.data &&
-			console.error(chalk.red('Response data if available\n'), e.response.data);
+	if (data.login?.token) {
+		return data?.login?.token;
+	} else {
+		throw new Error(`Unexpected data at proposal bot login: ${data}`);
 	}
+};
+
+const getToken = async (): Promise<string | void> => {
+	return await pRetry(getTokenRetried, {
+		onFailedAttempt: error => {
+			console.error(chalk.red(`getToken execution error: ${error.message}`),
+				`\n🤞 retrying, attempt ${error.attemptNumber}/${error.attemptNumber + error.retriesLeft}.`);
+		},
+		retries: 8
+	});
 };
 
 /**
