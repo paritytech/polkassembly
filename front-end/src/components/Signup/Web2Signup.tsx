@@ -142,11 +142,11 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						ref={register({ required: true })}
 						type='checkbox'
 					/>
-					{' '}I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
+					I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
 				</label>
 				{errors.termsandconditions && <div className={'errorText'}>Please agree to the terms of the Polkassembly end user agreement.</div>}
 			</Form.Field>
-			<div>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
+			<div className='text-muted'>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
 			<div className={'mainButtonContainer'}>
 				<Button
 					primary
@@ -176,15 +176,6 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 
 export default styled(SignupForm)`
 
-	a {
-			color: grey_primary;
-			border-bottom-style: solid;
-			border-bottom-width: 1px;
-			border-bottom-color: grey_primary;
-		}
-	sup {
-		color: grey_primary;
-	}
 	.mainButtonContainer{
 		align-items: center;
 		display: flex;
@@ -208,12 +199,11 @@ export default styled(SignupForm)`
 		font-size: sm !important;
 		font-weight: 400 !important;
 		color: grey_primary !important;
-	}
-
-	.ui.form input[type=checkbox]{
-		position: relative;
-		bottom: 0.2rem;
-		margin-right: 1rem;
-		vertical-align: middle;
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
 	}
 `;
