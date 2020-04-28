@@ -8,7 +8,7 @@ import messages from './messages';
 
 export default (name: string): void => {
 	// empty name are accepted
-	if (name === '') {
+	if (!name || name === '') {
 		return;
 	}
 

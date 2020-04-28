@@ -31,7 +31,7 @@ export default async (
 	validateUsername(username);
 	validateName(name);
 
-	if (password.length < 6) {
+	if (password && password.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 

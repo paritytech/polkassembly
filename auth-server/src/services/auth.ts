@@ -47,6 +47,7 @@ const NOTIFICATION_DEFAULTS = {
 };
 
 export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
+export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 
 export default class AuthService {
@@ -126,13 +127,13 @@ export default class AuthService {
 	public async AddressLoginStart (address: string): Promise<string> {
 		const signMessage = uuid();
 
-		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
+		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
 		return signMessage;
 	}
 
 	public async AddressLogin (address: string, signature: string): Promise<AuthObjectType> {
-		const signMessage = await redisGet(address);
+		const signMessage = await redisGet(getAddressLoginKey(address));
 
 		if (!signMessage) {
 			throw new ForbiddenError(messages.ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED);
@@ -160,6 +161,8 @@ export default class AuthService {
 		if (!user) {
 			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
 		}
+
+		await redisDel(getAddressLoginKey(address));
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -276,6 +279,8 @@ export default class AuthService {
 				user_id: user.id,
 				verified: true
 			});
+
+		await redisDel(getAddressLoginKey(address));
 
 		if (email) {
 			const verifyToken = await EmailVerificationToken
