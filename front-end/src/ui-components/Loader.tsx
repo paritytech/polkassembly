@@ -3,18 +3,38 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimmer, Loader as SUILoader } from 'semantic-ui-react';
 
 interface Props{
 	className?: string
 	text?: string
+	timeout?: number
+	timeoutmessage?: string
 }
-const Loader = ({ className, text = 'Loading' }: Props) => {
+const Loader = ({ className, text = 'Loading', timeout, timeoutmessage = 'Process timeout' }: Props) => {
+	const [displayLoader, setDisplayLoader] = useState(true);
+
+	useEffect(() => {
+		if (timeout) {
+			const timer = setTimeout(() => {
+				setDisplayLoader(false);
+			}, timeout);
+			return () => clearTimeout(timer);
+		}
+	}, [timeout]);
+
 	return (
-		<Dimmer inverted active className={className}>
-			<SUILoader inverted>{text}</SUILoader>
-		</Dimmer>
+		<>
+			{displayLoader
+				?
+				<Dimmer inverted active className={className}>
+					<SUILoader inverted>{text}</SUILoader>
+				</Dimmer>
+				:
+				<div className={`${className} error-text`}>{timeoutmessage}</div>
+			}
+		</>
 	);
 };
 
@@ -23,5 +43,9 @@ export default styled(Loader)`
 
 	&.ui.inverted.dimmer {
 		border-radius: 3px;
+	}
+
+	.error-text {
+		color: red_secondary;
 	}
 `;

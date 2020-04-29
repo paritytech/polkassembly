@@ -121,8 +121,4 @@ export default styled(SecondProposal)`
 		position: absolute;
 		width: 100%;
 	}
-
-	.error-text {
-		margin-bottom: 1rem;
-	}
 `;

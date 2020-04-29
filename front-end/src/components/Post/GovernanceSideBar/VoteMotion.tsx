@@ -164,8 +164,4 @@ export default styled(VoteMotion)`
 		position: absolute;
 		width: 100%;
 	}
-
-	.error-text {
-		margin-bottom: 1rem;
-	}
 `;

@@ -98,7 +98,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
 			{loadingStatus.isLoading
 				?
-				<Loader text={loadingStatus.message}/>
+				<Loader text={loadingStatus.message} timeout={3000} timeoutmessage='Api is unresponsive.'/>
 				:
 				<>
 					<h3>Overview</h3>
