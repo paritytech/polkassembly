@@ -16,6 +16,11 @@ interface Props {
 	endBlock: number;
 }
 
+const DivContent = styled.div`
+	font-size: xs;
+	color: black_text;
+`;
+
 const BlockCountdown = ({ className, endBlock }:Props ) => {
 	const network = getNetwork();
 	const ZERO = new BN(0);
@@ -49,16 +54,11 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 		return () => unsubscribe && unsubscribe();
 	}, [api, apiReady]);
 
-	const Div = styled.div`
-		font-size: xs;
-		color: black_text;
-	`;
-
 	return (
 		<Popup
 			className={className}
 			trigger={<div>{blockToTime(blocksRemaining, blocktime)}</div>}
-			content={<Div>{`#${endBlock}`}</Div>}
+			content={<DivContent>{`#${endBlock}`}</DivContent>}
 			hoverable={true}
 			position='top left'
 		/>

@@ -16,6 +16,11 @@ interface Props {
 	className?: string
 }
 
+const DivContent = styled.div`
+	font-size: xs;
+	color: black_text;
+`;
+
 const BlocksToTime = ({ blocks, className }:Props ) => {
 	const network = getNetwork();
 	const { api, apiReady } = useContext(ApiContext);
@@ -36,17 +41,12 @@ const BlocksToTime = ({ blocks, className }:Props ) => {
 		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
 	}, [ api, apiReady]);
 
-	const Div = styled.div`
-		font-size: xs;
-		color: black_text;
-	`;
-
 	return (
 		<div className={className}>
 			<Popup
 				className={className}
 				trigger={<div>{blockToTime(blocks , blocktime)}</div>}
-				content={<Div>{`${blocks} blocks`}</Div>}
+				content={<DivContent>{`${blocks} blocks`}</DivContent>}
 				hoverable={true}
 				position='top left'
 			/>
