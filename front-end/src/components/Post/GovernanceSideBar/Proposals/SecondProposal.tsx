@@ -106,7 +106,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 							disabled={!apiReady}
 							onClick={secondProposal}
 						>
-								Second
+							Second
 						</Button>
 					</Card>
 			}
