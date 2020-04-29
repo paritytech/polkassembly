@@ -123,7 +123,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		console.error('Email undo email not sent', e));
 };
 
-export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: string): void => {
+export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: string, id: number | undefined): void => {
 	if (!apiKey) {
 		console.warn('Own proposal created email not sent due to missing API key');
 		return;
@@ -142,7 +142,7 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: `You have submitted a new ${type} on chain`,
+		subject: `You have submitted a new ${type} #${id || ''} on chain`,
 		text,
 		to: user.email
 	};
@@ -151,7 +151,7 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		console.error('Proposal created email not sent', e));
 };
 
-export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: string): void => {
+export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: string, id: number | undefined): void => {
 	if (!apiKey) {
 		console.warn('New proposal created email not sent due to missing API key');
 		return;
@@ -171,7 +171,7 @@ export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: str
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: `New ${type} created on chain`,
+		subject: `New ${type} #${id || ''} created on chain`,
 		text,
 		to: user.email
 	};
