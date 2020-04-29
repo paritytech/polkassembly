@@ -221,11 +221,11 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 								ref={register({ required: true })}
 								type='checkbox'
 							/>
-							{' '}I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
+							I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
 						</label>
 						{errors.termsandconditions && <div className={'errorText'}>Please agree to the terms of the Polkassembly end user agreement.</div>}
 					</Form.Field>
-					<div className='privacy'>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
+					<div className='text-muted'>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
@@ -260,6 +260,7 @@ export default styled(SignupForm)`
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		margin-top: 3rem;
 	}
 
 	input.error {
@@ -276,11 +277,22 @@ export default styled(SignupForm)`
 		color: red_secondary;
 	}
 
-	.ui.dimmer {
-		height: calc(100% - 6.5rem);
+	.checkbox-label {
+		position: relative;
+		bottom: 0.1rem;
+		display: inline-block !important;
+		font-size: sm !important;
+		font-weight: 400 !important;
+		color: grey_primary !important;
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
 	}
 
-	.privacy {
-		margin-bottom: 10px;
+	.ui.dimmer {
+		height: calc(100% - 6.5rem);
 	}
 `;
