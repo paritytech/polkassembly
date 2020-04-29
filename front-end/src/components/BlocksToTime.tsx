@@ -42,15 +42,13 @@ const BlocksToTime = ({ blocks, className }:Props ) => {
 	}, [ api, apiReady]);
 
 	return (
-		<div className={className}>
-			<Popup
-				className={className}
-				trigger={<div>{blockToTime(blocks , blocktime)}</div>}
-				content={<DivContent>{`${blocks} blocks`}</DivContent>}
-				hoverable={true}
-				position='top left'
-			/>
-		</div>
+		<Popup
+			className={className}
+			trigger={<div>{blockToTime(blocks , blocktime)}</div>}
+			content={<DivContent>{`${blocks} blocks`}</DivContent>}
+			hoverable={true}
+			position='top left'
+		/>
 	);
 };
 
