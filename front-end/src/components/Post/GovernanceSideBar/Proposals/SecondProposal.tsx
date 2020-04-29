@@ -94,18 +94,13 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 						<Loader text={loadingStatus.message}/>
 					</Card>
 					: <Card>
-						{apiReady
-							?
-							<AccountSelectionForm
-								title='Second with account'
-								accounts={accounts}
-								address={address}
-								withBalance
-								onAccountChange={onAccountChange}
-							/>
-							:
-							<div className='error-text'>Polkadot API is not available.</div>
-						}
+						<AccountSelectionForm
+							title='Second with account'
+							accounts={accounts}
+							address={address}
+							withBalance
+							onAccountChange={onAccountChange}
+						/>
 						<Button
 							primary
 							disabled={!apiReady}

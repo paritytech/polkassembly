@@ -127,17 +127,12 @@ const VoteMotion = ({
 						<Loader text={loadingStatus.message}/>
 					</Card>
 					: <Card>
-						{apiReady
-							?
-							<AccountSelectionForm
-								title='Second with account'
-								accounts={accounts}
-								address={address}
-								onAccountChange={onAccountChange}
-							/>
-							:
-							<div className='error-text'>Polkadot API is not available.</div>
-						}
+						<AccountSelectionForm
+							title='Second with account'
+							accounts={accounts}
+							address={address}
+							onAccountChange={onAccountChange}
+						/>
 						<AyeNayButtons
 							disabled={!apiReady}
 							onClickAye={() => voteMotion(true)}

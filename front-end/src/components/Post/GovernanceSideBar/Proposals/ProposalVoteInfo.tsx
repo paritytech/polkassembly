@@ -33,7 +33,6 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 		if (!apiReady) {
 			console.error('api not ready');
-			setLoadingStatus({ isLoading: false, message: 'Api not ready' });
 			return;
 		}
 
@@ -60,29 +59,26 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 			{loadingStatus.isLoading
 				?
 				<Loader text={loadingStatus.message}/>
-				: apiReady
-					?
-					<>
-						<h3>Overview</h3>
-						<Grid columns={3} divided>
-							<Grid.Row>
-								<Grid.Column>
-									<h6>Deposit</h6>
-									<div>{deposit}</div>
-								</Grid.Column>
-								<Grid.Column>
-									<h6>Seconded by</h6>
-									{seconds ? <div>{seconds} addresses</div> : null}
-								</Grid.Column>
-								<Grid.Column>
-									<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-									<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
-								</Grid.Column>
-							</Grid.Row>
-						</Grid>
-					</>
-					:
-					<div className='error-text'>{loadingStatus.message}</div>
+				:
+				<>
+					<h3>Overview</h3>
+					<Grid columns={3} divided>
+						<Grid.Row>
+							<Grid.Column>
+								<h6>Deposit</h6>
+								<div>{deposit}</div>
+							</Grid.Column>
+							<Grid.Column>
+								<h6>Seconded by</h6>
+								{seconds ? <div>{seconds} addresses</div> : null}
+							</Grid.Column>
+							<Grid.Column>
+								<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
+								<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</>
 			}
 		</Card>
 	);

@@ -38,7 +38,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 		if (!apiReady) {
 			console.error('api not ready');
-			setLoadingStatus({ isLoading: false, message: 'Api not ready' });
 			return;
 		}
 
@@ -100,35 +99,32 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			{loadingStatus.isLoading
 				?
 				<Loader text={loadingStatus.message}/>
-				: apiReady
-					?
-					<>
-						<h3>Overview</h3>
-						<VoteProgress
-							ayeVotes={ayeVotes}
-							className='vote-progress'
-							passingThreshold={passingThreshold}
-							nayVotes={nayVotes}
-						/>
-						<Grid columns={3} divided>
-							<Grid.Row>
-								<Grid.Column>
-									<h6>Turnout</h6>
-									<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
-								</Grid.Column>
-								<Grid.Column width={5}>
-									<h6>Aye</h6>
-									<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
-								</Grid.Column>
-								<Grid.Column width={5}>
-									<h6>Nay</h6>
-									<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
-								</Grid.Column>
-							</Grid.Row>
-						</Grid>
-					</>
-					:
-					<div className='error-text'>{loadingStatus.message}</div>
+				:
+				<>
+					<h3>Overview</h3>
+					<VoteProgress
+						ayeVotes={ayeVotes}
+						className='vote-progress'
+						passingThreshold={passingThreshold}
+						nayVotes={nayVotes}
+					/>
+					<Grid columns={3} divided>
+						<Grid.Row>
+							<Grid.Column>
+								<h6>Turnout</h6>
+								<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<h6>Aye</h6>
+								<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<h6>Nay</h6>
+								<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</>
 			}
 		</Card>
 	);
