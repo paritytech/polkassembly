@@ -25,6 +25,7 @@ stages:
   - test
   - dockerize
   - deploy
+  - publish
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -214,4 +215,17 @@ deploy-production:
     - kubernetes-parity-build
   only:
     - tags
-  <<: *deploy-k8s
+    - /^release-v[0-9]+\.[0-9]+\.[0-9]+$/        # i.e. release-v1.0.1
+
+publish-draft-release:
+  stage: deploy
+  environment:
+    name: parity-prod
+  image: parity/tools:latest
+  only:
+    - tags
+    - /^release-v[0-9]+\.[0-9]+\.[0-9]+$/        # i.e. release-v1.0.1
+  script:
+    - ./.maintain/publish_draft_release.sh
+  interruptible:                   true
+  allow_failure:                   true
