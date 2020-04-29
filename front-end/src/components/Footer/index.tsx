@@ -13,10 +13,7 @@ interface Props {
 }
 
 const Footer = ({ className }:Props ): JSX.Element => {
-	const navigateToIssues = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-		event.preventDefault();
-		window.open('https://github.com/paritytech/polkassembly/issues', '_blank');
-	};
+
 	return (
 		<footer className={className}>
 			<Menu>
@@ -32,8 +29,10 @@ const Footer = ({ className }:Props ): JSX.Element => {
 				<Menu.Item as={Link} to="/privacy">
 					Privacy Policy
 				</Menu.Item>
-				<Menu.Item as={Link} to='#' onClick={navigateToIssues}>
-					Report an Issue
+				<Menu.Item>
+					<a className='item' href='https://github.com/paritytech/polkassembly/issues' target='blank'>
+						Report an Issue
+					</a>
 				</Menu.Item>
 			</Menu>
 		</footer>
@@ -41,30 +40,30 @@ const Footer = ({ className }:Props ): JSX.Element => {
 };
 
 export default styled(Footer)`
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 4rem;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 4rem;
 
-    .ui.menu {
-        background-color: black_full;
-        font-family: font_default;
-        padding: 1rem 3rem;
-        border-radius: 0rem;
-        height: 100%;
+	.ui.menu {
+		background-color: black_full;
+		font-family: font_default;
+		padding: 1rem 3rem;
+		border-radius: 0rem;
+		height: 100%;
 
-        .item {
-            color: grey_secondary;
+		.item {
+			color: grey_secondary;
 			font-size: sm;
 			padding: 1rem;
-            &:hover {
-                color: white;
-            }
-        }
+			&:hover {
+				color: white;
+			}
+		}
 
-        @media only screen and (max-width: 768px)  {
-            flex-direction: column;
-            height: auto;
-        }
-    }
+		@media only screen and (max-width: 768px)  {
+			flex-direction: column;
+			height: auto;
+		}
+	}
 `;
