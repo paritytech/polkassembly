@@ -7,9 +7,8 @@ version="$CI_COMMIT_TAG"
 
 # Note that this is not the last *tagged* version, but the last *published* version
 last_version=$(last_github_release 'paritytech/polkassembly')
-echo "last version version: $last_version $version"
-release_text="$(./generate_changelog.sh $last_version $version)"
-echo "release_text $release_text"
+release_text="$(GITHUB_RELEASE_TOKEN="$GITHUB_RELEASE_TOKEN" ./generate_changelog.sh "$last_version" "$version")"
+
 echo "[+] Pushing release to github"
 # Create release on github
 release_name="Polkassembly $version"
@@ -25,7 +24,7 @@ data=$(jq -Rs --arg version "$version" \
   "prerelease": false
 }' < /dev/null)
 
-# out=$(curl -s -X POST --data "$data" -H "Authorization: token $GITHUB_RELEASE_TOKEN" "$api_base/paritytech/polkassembly/releases")
+out=$(curl -s -X POST --data "$data" -H "Authorization: token $GITHUB_RELEASE_TOKEN" "$api_base/paritytech/polkassembly/releases")
 
 html_url=$(echo "$out" | jq -r .html_url)
 
