@@ -211,7 +211,7 @@ async function main (): Promise<void> {
 	});
 
 	const hostname = '127.0.0.1';
-	const port = Number(process.env.PORT) || 8019;
+	const port = Number(process.env.HEALTH_PORT) || 8019;
 
 	const server = http.createServer((req, res) => {
 		res.statusCode = 200;
