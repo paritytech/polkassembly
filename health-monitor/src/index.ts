@@ -56,11 +56,9 @@ async function getPostsWithAuthor (): Promise<boolean> {
 		},
 		method: 'POST'
 	}).then(res => res.json()).then(({ data }) => {
-		let result = true;
-
-		data?.posts?.forEach((post: any) => {
-			result = result && !!post?.id && !!post?.author?.id;
-		});
+		const result = data?.posts?.reduce((acc: boolean, post: any) => {
+			return acc && !!post?.id && !!post?.author?.id;
+		}, true);
 
 		return result && data?.posts?.length > 0;
 	});
