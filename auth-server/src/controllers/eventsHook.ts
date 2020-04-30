@@ -48,7 +48,7 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 
 			getUserFromUserId(subscription.user_id)
 				.then((user) => {
-					const url = getPostLink(PostTypeEnum.POST, { post_id: data.post_id });
+					const url = getPostLink(PostTypeEnum.POST, data.post_id);
 					sendPostSubscriptionMail(user, author, data, url);
 				})
 				.catch((error) => console.error(error));
@@ -115,8 +115,8 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 	}
 
 	const type = getPostType(onchainLink);
-	const url = getPostLink(type, onchainLink);
 	const id = getPostId(type, onchainLink);
+	const url = getPostLink(type, id);
 
 	sendOwnProposalCreatedEmail(user, type, url, id);
 
@@ -156,8 +156,8 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 		}
 
 		const type = getPostType(onchainLink);
-		const url = getPostLink(type, onchainLink);
 		const id = getPostId(type, onchainLink);
+		const url = getPostLink(type, id);
 
 		sendNewProposalCreatedEmail(user, type, url, id);
 	});
