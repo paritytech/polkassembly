@@ -26,7 +26,6 @@ export function Form({ className, standalone=true, ...props } : FormProps): Reac
 const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
-		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
 		box-shadow: box_shadow_default;
 		border-radius: 3px;
@@ -129,7 +128,10 @@ const StyledForm = styled(SUIForm)`
 	.ui.selection.dropdown {
 		font-size: input_text_size;
 		margin-bottom: 1.2rem;
-		border-radius: 0rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+		border-radius: 0.3rem;
 
 		.menu .active.item {
 			font-weight: 500;

@@ -20,16 +20,16 @@ export default styled(Input)`
         font-size: input_text_size;
         border-width: 1px;
         border-color: grey_light;
-        border-radius: 0rem;
+        border-radius: 0.3rem;
         text-indent: 0rem;
         padding: 1rem;
         margin-bottom: 1.2rem;
         &:focus {
             font-family: font_default;
-            font-size: 1.3rem;
+            font-size: input_text_size;
             color: black_text;
             border-color: grey_primary;
-            border-radius: 0rem;
+            border-radius: 0.3rem;
         }
         &:hover {
             border-color: grey_secondary;
