@@ -9,7 +9,7 @@ import { DropdownProps } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
-import { LoadingStatusType,NotificationStatus } from 'src/types';
+import { LoadingStatusType, NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
 import AyeNayButtons from 'src/ui-components/AyeNayButtons';
 import Button from 'src/ui-components/Button';
@@ -123,9 +123,9 @@ const VoteMotion = ({
 			{ noAccount
 				? <GetAccountsButton />
 				: loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
+					</Card>
 					: <Card>
 						<AccountSelectionForm
 							title='Second with account'
@@ -161,9 +161,7 @@ const VoteMotion = ({
 export default styled(VoteMotion)`
 	.LoaderWrapper {
 		height: 15rem;
-	}
-
-	.button-container {
-		margin-top: 2rem !important;
+		position: absolute;
+		width: 100%;
 	}
 `;
