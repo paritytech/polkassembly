@@ -16,11 +16,12 @@ app.set('port', process.env.PORT || 8034);
 
 export interface HealthCheckResult {
 	authServerStatus: number;
-	hasuraServerStatus: number;
 	chainDbWatcherServerStatus: number;
-	reactServerStatus: number;
+	hasuraServerStatus: number;
 	latestBlockNumber: number;
+	postsWithAuthor: boolean;
 	prismaVersion: string;
+	reactServerStatus: number;
 }
 
 async function getLatestBlockNumber (): Promise<number> {
@@ -33,6 +34,38 @@ async function getLatestBlockNumber (): Promise<number> {
 
 	return latestBlockNumber;
 }
+
+async function getPostsWithAuthor (): Promise<boolean> {
+	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
+		headers: {
+			'content-type': 'application/json'
+		},
+		body: JSON.stringify({
+			operationName: 'LatestDiscussionPosts',
+			variables: { limit: 10 },
+			query:`query LatestDiscussionPosts($limit: Int!) {
+				posts(order_by: {created_at: desc}, limit: $limit) {
+				  id
+				  author {
+					id
+					name
+					username
+				  }
+				}
+			}`
+		}),
+		method: 'POST'
+	}).then(res => res.json()).then(({ data }) => {
+		let result = true;
+
+		data?.posts?.forEach((post: any) => {
+			result = result && !!post.id && !!post?.author?.id;
+		});
+
+		return result && data?.posts?.length > 0;
+	});
+}
+
 
 async function getPrismaVersion () {
 	return fetch(`${process.env.CHAIN_DB_SERVER}/management`, {
@@ -59,14 +92,16 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		chainDbWatcherServer,
 		reactServer,
 		latestBlockNumber,
-		prismaVersion
+		prismaVersion,
+		postsWithAuthor
 	] = await Promise.all([
 		fetch(`${process.env.AUTH_SERVER}/healthcheck`),
 		fetch(`${process.env.HASURA_SERVER}/healthz`),
 		fetch(`${process.env.HASURA_SERVER}/healthz`),
 		fetch(`${process.env.REACT_SERVER}/healthcheck`),
 		getLatestBlockNumber(),
-		getPrismaVersion()
+		getPrismaVersion(),
+		getPostsWithAuthor()
 	]);
 
 	return {
@@ -75,7 +110,8 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		hasuraServerStatus: hasuraServer.status,
 		reactServerStatus: reactServer.status,
 		latestBlockNumber,
-		prismaVersion: prismaVersion.data.serverInfo.version
+		prismaVersion: prismaVersion.data.serverInfo.version,
+		postsWithAuthor
 	};
 }
 
