@@ -23,6 +23,8 @@ export default styled(OnchainInfoWrapper)`
 	border-style: solid;
 	border-width: 5px;
 	border-color: grey_light;
+	border-radius: 0.3rem;
+	box-shadow: box_shadow_default;
 	font-size: sm;
 	overflow-wrap: break-word;
 	margin-bottom: 1rem;

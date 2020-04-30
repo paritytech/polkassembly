@@ -28,9 +28,7 @@ const StyledForm = styled(SUIForm)`
 		background-color: white;
 		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
+		box-shadow: box_shadow_default;
 		border-radius: 3px;
 	}
 

@@ -191,10 +191,8 @@ export default styled(Post)`
 
 	.post_content {
 		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_default;
 		padding: 3rem 3rem 0.8rem 3rem;
 		margin-bottom: 1rem;
 	}

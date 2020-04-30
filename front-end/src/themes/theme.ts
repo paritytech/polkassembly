@@ -25,7 +25,6 @@ export const theme = {
 		red_primary_transparent: 'rgba(255, 90, 71, 0.05)',
 		red_secondary: '#D94C3D',
 		white: '#FFF',
-		white_transparent: 'rgba(255, 255, 255, 0.2)'
 	},
 	fontSizes: {
 		input_text_size: '1.4rem',
@@ -44,6 +43,8 @@ export const theme = {
 		button_radius: '0.3rem'
 	},
 	shadows: {
+		box_shadow_default: '0 0.2rem 0.4rem rgba(46, 47, 48, 0.1)',
+		box_shadow_default_hover: '0 0.4rem 0.6rem rgba(46, 47, 48, 0.2)',
 		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
 		box_shadow_secondary_red: '0 0 0 1px #D94C3D inset'
 	}
