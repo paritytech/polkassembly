@@ -1,6 +1,6 @@
 ## health-monitor
 
-Health monitor service for polkassembly. provides single API which check health of all polkassembly components.
+Health monitor service for Polkassembly. Provides a single API endpoint which checks the health of all Polkassembly components.
 
 ## Installation
 
@@ -15,5 +15,4 @@ CHAIN_DB_SERVER="http://0.0.0.0:4466"
 REACT_SERVER="http://localhost:3000"
 ARCHIVE_NODE_ENDPOINT="wss://kusama-rpc.polkadot.io"
 ```
-
 
