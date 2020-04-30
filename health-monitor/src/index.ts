@@ -19,9 +19,11 @@ export interface HealthCheckResult {
 	chainDbWatcherServerStatus: number;
 	hasuraServerStatus: number;
 	latestBlockNumber: number;
+	onchainLinkReferendumDelays: boolean;
 	postsWithAuthor: boolean;
 	prismaVersion: string;
 	reactServerStatus: number;
+	referendumDelays: boolean;
 }
 
 async function getLatestBlockNumber (): Promise<number> {
@@ -38,7 +40,7 @@ async function getLatestBlockNumber (): Promise<number> {
 async function getPostsWithAuthor (): Promise<boolean> {
 	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
 		body: JSON.stringify({
-			operationName: 'LatestDiscussionPosts',
+			operationName: null,
 			query: `query LatestDiscussionPosts($limit: Int!) {
 				posts(order_by: {created_at: desc}, limit: $limit) {
 				  id
@@ -82,6 +84,54 @@ async function getPrismaVersion (): Promise<string> {
 	}).then(res => res.json()).then(({ data }) => data?.serverInfo?.version);
 }
 
+async function getReferendumDelays (): Promise<boolean> {
+	return fetch(`${process.env.CHAIN_DB_SERVER}`, {
+		body: JSON.stringify({
+			operationName: null,
+			query: `{
+				referendums(last:10){
+				  delay
+				}
+			}`,
+			variables: {}
+		}),
+		headers: {
+			'content-type': 'application/json'
+		},
+		method: 'POST'
+	}).then(res => res.json()).then(({ data }) => data?.referendums?.length > 0);
+}
+
+async function getOnchainLinkReferendumDelays (): Promise<boolean> {
+	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
+		body: JSON.stringify({
+			operationName: null,
+			query: `query LatestDemocracyTreasuryProposalPosts($limit: Int!) {
+				posts(limit: $limit, where: {onchain_link: {onchain_referendum_id: {_is_null: false}}}) {
+				  	id
+				  	onchain_link {
+						id
+						onchain_referendum {
+					  		delay
+						}
+				  	}
+				}
+			}`,
+			variables: { limit: 10 }
+		}),
+		headers: {
+			'content-type': 'application/json'
+		},
+		method: 'POST'
+	}).then(res => res.json()).then(({ data }) => {
+		const result = data?.posts?.reduce((acc: boolean, post: any) => {
+			return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.delay;
+		}, true);
+
+		return result && data?.posts?.length > 0;
+	});
+}
+
 async function healthcheck (): Promise<HealthCheckResult> {
 	const [
 		authServer,
@@ -90,15 +140,19 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		reactServer,
 		latestBlockNumber,
 		prismaVersion,
-		postsWithAuthor
+		postsWithAuthor,
+		referendumDelays,
+		onchainLinkReferendumDelays
 	] = await Promise.all([
 		fetch(`${process.env.AUTH_SERVER}/healthcheck`),
 		fetch(`${process.env.HASURA_SERVER}/healthz`),
-		fetch(`${process.env.HASURA_SERVER}/healthz`),
+		fetch(`${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck`),
 		fetch(`${process.env.REACT_SERVER}/healthcheck`),
 		getLatestBlockNumber(),
 		getPrismaVersion(),
-		getPostsWithAuthor()
+		getPostsWithAuthor(),
+		getReferendumDelays(),
+		getOnchainLinkReferendumDelays()
 	]);
 
 	return {
@@ -106,9 +160,11 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		chainDbWatcherServerStatus: chainDbWatcherServer.status,
 		hasuraServerStatus: hasuraServer.status,
 		latestBlockNumber,
+		onchainLinkReferendumDelays,
 		postsWithAuthor,
 		prismaVersion: prismaVersion,
-		reactServerStatus: reactServer.status
+		reactServerStatus: reactServer.status,
+		referendumDelays
 	};
 }
 
