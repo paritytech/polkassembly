@@ -29,7 +29,7 @@ export default styled(Card)`
 	font-size: sm;
 
 	h5, h6 {
-		font-size: 1.4rem;
+		font-size: sm;
 	}
 
 	.ui.divided.grid:not([class*="vertically divided"])>.column:not(.row),

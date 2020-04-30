@@ -92,7 +92,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 	return (
 		<Card className={className}>
-			<h3>Overview</h3>
 			<VoteProgress
 				ayeVotes={ayeVotes}
 				className='vote-progress'

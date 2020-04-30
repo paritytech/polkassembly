@@ -52,7 +52,6 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 	return (
 		<Card className={className}>
-			<h3>Overview</h3>
 			<Grid columns={3} divided>
 				<Grid.Row>
 					<Grid.Column>
