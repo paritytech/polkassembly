@@ -23,7 +23,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [deposit, setDeposit] = useState('');
 	const { api, apiReady } = useContext(ApiContext);
 	const currentNetwork = getNetwork();
-	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading seconds' });
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading proposal info' });
 
 	useEffect(() => {
 		if (!api) {
