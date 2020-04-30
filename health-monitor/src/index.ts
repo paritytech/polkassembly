@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import dotenv from 'dotenv';
 import express from 'express';
 import fetch from 'node-fetch';
-import { ApiPromise, WsProvider } from '@polkadot/api';
 
 dotenv.config();
 
@@ -37,13 +37,9 @@ async function getLatestBlockNumber (): Promise<number> {
 
 async function getPostsWithAuthor (): Promise<boolean> {
 	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
-		headers: {
-			'content-type': 'application/json'
-		},
 		body: JSON.stringify({
 			operationName: 'LatestDiscussionPosts',
-			variables: { limit: 10 },
-			query:`query LatestDiscussionPosts($limit: Int!) {
+			query: `query LatestDiscussionPosts($limit: Int!) {
 				posts(order_by: {created_at: desc}, limit: $limit) {
 				  id
 				  author {
@@ -52,37 +48,40 @@ async function getPostsWithAuthor (): Promise<boolean> {
 					username
 				  }
 				}
-			}`
+			}`,
+			variables: { limit: 10 }
 		}),
+		headers: {
+			'content-type': 'application/json'
+		},
 		method: 'POST'
 	}).then(res => res.json()).then(({ data }) => {
 		let result = true;
 
 		data?.posts?.forEach((post: any) => {
-			result = result && !!post.id && !!post?.author?.id;
+			result = result && !!post?.id && !!post?.author?.id;
 		});
 
 		return result && data?.posts?.length > 0;
 	});
 }
 
-
-async function getPrismaVersion () {
+async function getPrismaVersion (): Promise<string> {
 	return fetch(`${process.env.CHAIN_DB_SERVER}/management`, {
-		headers: {
-			'content-type': 'application/json'
-		},
 		body: JSON.stringify({
 			operationName: null,
-			variables: {},
-			query:`{
+			query: `{
 				serverInfo {
 					version
 				}
-			}`
+			}`,
+			variables: {}
 		}),
+		headers: {
+			'content-type': 'application/json'
+		},
 		method: 'POST'
-	}).then(res => res.json());
+	}).then(res => res.json()).then(({ data }) => data?.serverInfo?.version);
 }
 
 async function healthcheck (): Promise<HealthCheckResult> {
@@ -108,10 +107,10 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		authServerStatus: authServer.status,
 		chainDbWatcherServerStatus: chainDbWatcherServer.status,
 		hasuraServerStatus: hasuraServer.status,
-		reactServerStatus: reactServer.status,
 		latestBlockNumber,
-		prismaVersion: prismaVersion.data.serverInfo.version,
-		postsWithAuthor
+		postsWithAuthor,
+		prismaVersion: prismaVersion,
+		reactServerStatus: reactServer.status
 	};
 }
 
