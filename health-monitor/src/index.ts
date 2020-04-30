@@ -29,7 +29,7 @@ async function getLatestBlockNumber (): Promise<number> {
 	const api = await ApiPromise.create({ provider });
 
 	const latestBlockNumber = (
-		await api.derive.chain.bestNumberFinalized()
+		await api.derive.chain.bestNumber()
 	).toNumber();
 
 	return latestBlockNumber;
