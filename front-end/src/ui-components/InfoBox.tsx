@@ -51,16 +51,13 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 export default styled(InfoBox)`
     background-color: grey_light;
 	color: black_text;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
 	padding: 2rem 3rem;
 	position: relative;
 	margin-bottom: 2rem;
+	border-radius: 0.6rem;
+	box-shadow: box_shadow_default;
 	
 	h4 {
-		font-family: font_mono;
-		font-size: md;
 		margin-bottom: 1.2rem;
 	}
 
