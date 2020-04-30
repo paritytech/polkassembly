@@ -128,8 +128,6 @@ dockerize:production-front-end:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
-    - master
-    - tags
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
@@ -139,7 +137,7 @@ dockerize-auth-server:
     name: parity-build
   only:
     - master
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -148,7 +146,7 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
     - master
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 #### stage:                        deploy
@@ -216,8 +214,6 @@ deploy-production:
   tags:
     - kubernetes-parity-build
   only:
-    - master
-    - tags
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *deploy-k8s
 
@@ -227,8 +223,6 @@ publish-draft-release:
     name: parity-prod
   image: parity/tools:latest
   only:
-    - master
-    - tags
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   script:
     - ./.maintain/publish_draft_release.sh
