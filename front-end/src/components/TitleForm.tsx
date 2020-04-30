@@ -22,7 +22,6 @@ const TitleForm = ({ className, errorTitle, onChange, value = '' }:Props): JSX.E
 		<div className={className}>
 			<Form.Group>
 				<Form.Field width={16}>
-					<label>Title</label>
 					<input
 						className={errorTitle ? 'error title' : 'title'}
 						name={'title'}
