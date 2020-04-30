@@ -160,8 +160,4 @@ export default styled(VoteRefrendum)`
 		position: absolute;
 		width: 100%;
 	}
-
-	.button-container {
-		margin-top: 2rem !important;
-	}
 `;

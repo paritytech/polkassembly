@@ -90,9 +90,9 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			{ noAccount
 				? <GetAccountsButton />
 				:loadingStatus.isLoading
-					? <div className={'LoaderWrapper'}>
+					? <Card className={'LoaderWrapper'}>
 						<Loader text={loadingStatus.message}/>
-					</div>
+					</Card>
 					: <Card>
 						<AccountSelectionForm
 							title='Second with account'
@@ -106,7 +106,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 							disabled={!apiReady}
 							onClick={secondProposal}
 						>
-								Second
+							Second
 						</Button>
 					</Card>
 			}
@@ -118,9 +118,7 @@ export default styled(SecondProposal)`
 
 	.LoaderWrapper {
 		height: 15rem;
-	}
-
-	.button-container {
-		margin-top: 2rem !important;
+		position: absolute;
+		width: 100%;
 	}
 `;
