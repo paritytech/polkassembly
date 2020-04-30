@@ -3,7 +3,19 @@
   "version": "1.0.0",
   "description": "Service to create porposal posts automatically in polkassembly.io db when an on-chain proposal appears",
   "main": "index.ts",
-  "author": "Thibaut Sardan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paritytech/polkassembly.git"
+  },
+  "author": "Parity Team <admin@parity.io>",
+  "bugs": {
+    "url": "https://github.com/paritytech/polkassembly/issues"
+  },
+  "maintainers": [
+    "Michel Erler",
+    "Nikhil Rajan",
+    "Thibaut Sardan"
+  ],
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,10 +24,6 @@
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "tsc": "tsc",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paritytech/polkassembly/chain-db-watcher.git"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.12.1",
@@ -48,6 +56,7 @@
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.10.1",
     "node-fetch": "^2.6.0",
+    "p-retry": "^4.2.0",
     "subscriptions-transport-ws": "^0.9.16",
     "ts-node": "^8.6.1",
     "typescript": "^3.8.3",

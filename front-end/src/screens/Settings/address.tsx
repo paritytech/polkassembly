@@ -12,7 +12,7 @@ import { Grid,Icon } from 'semantic-ui-react';
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation } from '../../generated/graphql';
+import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation, useSetDefaultAddressMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
 import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
@@ -36,6 +36,7 @@ const Address = ({ className }: Props): JSX.Element => {
 	const [addressLinkStartMutation] = useAddressLinkStartMutation();
 	const [addressLinkConfirmMutation] = useAddressLinkConfirmMutation();
 	const [addressUnlinkMutation] = useAddressUnlinkMutation();
+	const [setDefaultAddressMutation] = useSetDefaultAddressMutation();
 	const { queueNotification } = useContext(NotificationContext);
 
 	const handleDetect = async () => {
@@ -53,8 +54,41 @@ const Address = ({ className }: Props): JSX.Element => {
 		setAccounts(allAccounts);
 	};
 
-	const handleLink = async (address: InjectedAccountWithMeta['address'], account: InjectedAccountWithMeta) => {
+	const handleDefault = async (address: InjectedAccountWithMeta['address']) => {
+		try {
+			const addressDefaultResult = await setDefaultAddressMutation({
+				variables: {
+					address
+				}
+			});
 
+			if (addressDefaultResult.data?.setDefaultAddress?.token) {
+				handleTokenChange(addressDefaultResult.data?.setDefaultAddress?.token);
+			}
+
+			currentUser.setUserDetailsContextState((prevState) => {
+				return {
+					...prevState,
+					defaultAddress: address
+				};
+			});
+
+			queueNotification({
+				header: 'Success!',
+				message: addressDefaultResult.data?.setDefaultAddress?.message || '',
+				status: NotificationStatus.SUCCESS
+			});
+		} catch (error) {
+			console.error(error);
+			queueNotification({
+				header: 'Failed!',
+				message: cleanError(error.message),
+				status: NotificationStatus.ERROR
+			});
+		}
+	};
+
+	const handleLink = async (address: InjectedAccountWithMeta['address'], account: InjectedAccountWithMeta) => {
 		try {
 			const injected = await web3FromSource(account.meta.source);
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
@@ -94,7 +128,8 @@ const Address = ({ className }: Props): JSX.Element => {
 			!currentUser.addresses?.includes(address) && currentUser.setUserDetailsContextState((prevState) => {
 				return {
 					...prevState,
-					addresses: [...prevState.addresses, address]
+					addresses: [...prevState.addresses, address],
+					defaultAddress: prevState.addresses?.length ? prevState.defaultAddress : address
 				};
 			});
 
@@ -186,20 +221,20 @@ const Address = ({ className }: Props): JSX.Element => {
 		<Form className={className} standalone={false}>
 			<Form.Group>
 				<Form.Field width={16}>
-					<label className="header">Available Addresses</label>
-					<div className="ui list">
+					<label className='header'>Available Addresses</label>
+					<div className='ui list'>
 						{accounts.map(account => {
 							const address = getEncodedAddress(account.address);
 
 							return address &&
 								<Grid key={address}>
-									<Grid.Column width={10}>
-										<div className="item">
-											<AddressComponent className="item" address={address} accountName={account.meta.name || ''} />
+									<Grid.Column width={7}>
+										<div className='item'>
+											<AddressComponent className='item' address={address} accountName={account.meta.name || ''} />
 										</div>
 									</Grid.Column>
-									<Grid.Column width={6}>
-										<div className="button-container">
+									<Grid.Column width={3}>
+										<div className='button-container'>
 											<Button
 												className={'social'}
 												negative={currentUser.addresses?.includes(address) ? true : false}
@@ -209,10 +244,26 @@ const Address = ({ className }: Props): JSX.Element => {
 											</Button>
 										</div>
 									</Grid.Column>
+									<Grid.Column width={6} >
+										{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
+											<div className='button-container default-button'>
+												<Button
+													className={'social'}
+													onClick={() => handleDefault(address)}
+												>
+													Set Default
+												</Button>
+											</div>: null
+										}
+										{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
+											<div className='default-label'>
+												<Icon name='check'/> Default Address
+											</div> : null
+										}
+									</Grid.Column>
 								</Grid>
 							;}
 						)}
-
 					</div>
 				</Form.Field>
 			</Form.Group>
@@ -221,10 +272,16 @@ const Address = ({ className }: Props): JSX.Element => {
 };
 
 export default styled(Address)`
-
 	.button-container {
 		position: absolute;
 		top: 50%;
 		margin-top: -1.8rem;
+	}
+
+	.default-label {
+		font-weight: 500;
+		color: green_primary;
+		padding: 0.5rem 0;
+		line-height: 1.6rem;
 	}
 `;

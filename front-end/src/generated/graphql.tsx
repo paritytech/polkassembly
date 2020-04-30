@@ -5906,7 +5906,7 @@ export type Posts = {
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
-  title?: Maybe<Scalars['String']>,
+  title: Scalars['String'],
   topic: Post_Topics,
   topic_id: Scalars['Int'],
   type: Post_Types,
@@ -11791,6 +11791,19 @@ export type ResendVerifyEmailTokenMutation = (
   )> }
 );
 
+export type SetDefaultAddressMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type SetDefaultAddressMutation = (
+  { __typename?: 'mutation_root' }
+  & { setDefaultAddress: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
 export type SignupMutationVariables = {
   email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
@@ -13757,6 +13770,39 @@ export function useResendVerifyEmailTokenMutation(baseOptions?: ApolloReactHooks
 export type ResendVerifyEmailTokenMutationHookResult = ReturnType<typeof useResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationResult = ApolloReactCommon.MutationResult<ResendVerifyEmailTokenMutation>;
 export type ResendVerifyEmailTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<ResendVerifyEmailTokenMutation, ResendVerifyEmailTokenMutationVariables>;
+export const SetDefaultAddressDocument = gql`
+    mutation setDefaultAddress($address: String!) {
+  setDefaultAddress(address: $address) {
+    message
+    token
+  }
+}
+    `;
+export type SetDefaultAddressMutationFn = ApolloReactCommon.MutationFunction<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
+
+/**
+ * __useSetDefaultAddressMutation__
+ *
+ * To run a mutation, you first call `useSetDefaultAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetDefaultAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setDefaultAddressMutation, { data, loading, error }] = useSetDefaultAddressMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useSetDefaultAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>(SetDefaultAddressDocument, baseOptions);
+      }
+export type SetDefaultAddressMutationHookResult = ReturnType<typeof useSetDefaultAddressMutation>;
+export type SetDefaultAddressMutationResult = ApolloReactCommon.MutationResult<SetDefaultAddressMutation>;
+export type SetDefaultAddressMutationOptions = ApolloReactCommon.BaseMutationOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
