@@ -29,7 +29,6 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 	const blocksRemaining = endBlock - currentBlock.toNumber();
 	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
 	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
-	const [calcReady, setCalcReady] = useState(false);
 
 	useEffect(() => {
 		if (!api) {
@@ -45,9 +44,6 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 		let unsubscribe: () => void;
 
 		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
-		const timer = setTimeout(() =>
-			setCalcReady(true), 500
-		);
 
 		api.derive.chain.bestNumber((number) => {
 			setCurrentBlock(number);
@@ -55,16 +51,13 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 			.then(unsub => {unsubscribe = unsub;})
 			.catch(e => console.error(e));
 
-		return () => {
-			unsubscribe && unsubscribe();
-			clearTimeout(timer);
-		};
+		return () => unsubscribe && unsubscribe();
 	}, [api, apiReady]);
 
 	return (
 		<Popup
 			className={className}
-			trigger={<div>{calcReady ? blockToTime(blocksRemaining, blocktime) : ''}</div>}
+			trigger={<div>{blocksRemaining !== endBlock ? blockToTime(blocksRemaining, blocktime) : ''}</div>}
 			content={<DivContent>{`#${endBlock}`}</DivContent>}
 			hoverable={true}
 			position='top left'
