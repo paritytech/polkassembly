@@ -49,6 +49,7 @@ const NOTIFICATION_DEFAULTS = {
 export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
+export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -626,6 +627,65 @@ export default class AuthService {
 			});
 
 		sendVerificationEmail(user, verifyToken);
+	}
+
+	public async SetCredentialsStart (address: string): Promise<string> {
+		const signMessage = uuid();
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
+	public async SetCredentialsConfirm (address: string, newPassword: string, signature: string, username: string): Promise<string> {
+		const signMessage = await redisGet(getSetCredentialsKey(address));
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.SET_CREDENTIALS_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.SET_CREDENTIALS_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		const userId = addressObj.user_id;
+		let user = await getUserFromUserId(userId);
+
+		const salt = randomBytes(32);
+		const password = await argon2.hash(newPassword, { salt });
+
+		await User
+			.query()
+			.patch({
+				password,
+				salt: salt.toString('hex'),
+				username: username.toLowerCase()
+			})
+			.findById(userId);
+
+		user = await getUserFromUserId(userId);
+
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {

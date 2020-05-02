@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { AddressLoginStartArgs, AddressLoginStartType } from '../../types';
+import { AddressArgs, ChallengeMessage } from '../../types';
 import messages from '../../utils/messages';
 
-export default async (parent: void, { address }: AddressLoginStartArgs): Promise<AddressLoginStartType> => {
+export default async (parent: void, { address }: AddressArgs): Promise<ChallengeMessage> => {
 	const authServiceInstance = new AuthService();
 
 	return {

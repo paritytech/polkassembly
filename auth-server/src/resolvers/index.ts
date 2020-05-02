@@ -22,6 +22,8 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setCredentialsConfirm from './mutation/setCredentialsConfirm';
+import setCredentialsStart from './mutation/setCredentialsStart';
 import setDefaultAddress from './mutation/setDefaultAddress';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
@@ -53,6 +55,8 @@ export default {
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		setCredentialsConfirm,
+		setCredentialsStart,
 		setDefaultAddress,
 		signup,
 		undoEmailChange,

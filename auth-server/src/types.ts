@@ -109,7 +109,7 @@ export interface NotificationPreferencesType {
     ownProposal: boolean;
 }
 
-export interface AddressLoginStartType extends MessageType {
+export interface ChallengeMessage extends MessageType {
     signMessage: string;
 }
 
@@ -158,7 +158,7 @@ export interface UsersArgs {
 	page: number;
 }
 
-export interface SetDefaultAddressArgs {
+export interface AddressArgs {
     address: string;
 }
 
@@ -170,14 +170,6 @@ export interface AddressLinkStartArgs {
 export interface AddressLoginArgs {
 	address: string;
 	signature: string;
-}
-
-export interface AddressLoginStartArgs {
-	address: string;
-}
-
-export interface AddressUnlinkArgs {
-	address: string;
 }
 
 export interface ChangeEmailArgs {
@@ -272,3 +264,10 @@ export interface AddressSignupConfirmArgs {
     signature: string;
     username: string;
 }
+
+export interface SetCredentialsConfirmArgs {
+    address: string;
+    password: string;
+    signature: string;
+    username: string;
+ }
