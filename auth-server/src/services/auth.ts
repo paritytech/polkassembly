@@ -478,6 +478,10 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
 
+		if (dbAddress.default && user.web3signup) {
+			throw new ForbiddenError(messages.ADDRESS_UNLINK_WEB3_NOT_ALLOWED);
+		}
+
 		await Address
 			.query()
 			.where({
