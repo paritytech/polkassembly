@@ -21,7 +21,7 @@ export const theme = {
 		red_light: '#FFF1F0',
 		red_primary: '#FF5A47',
 		red_secondary: '#D94C3D',
-		white: '#FFF',
+		white: '#FFF'
 	},
 	fontSizes: {
 		input_text_size: '1.4rem',
