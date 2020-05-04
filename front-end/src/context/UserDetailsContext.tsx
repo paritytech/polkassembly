@@ -26,7 +26,8 @@ const initialUserDetailsContext : UserDetailsContextType = {
 	setUserDetailsContextState : (): void => {
 		throw new Error('setUserDetailsContextState function must be overridden');
 	},
-	username: null
+	username: null,
+	web3signup: false
 };
 
 const accessToken = getLocalStorageToken();
@@ -41,7 +42,8 @@ try {
 			email,
 			email_verified,
 			notification,
-			'https://hasura.io/jwt/claims': claims
+			'https://hasura.io/jwt/claims': claims,
+			web3signup
 		} = tokenPayload;
 
 		if (id) {
@@ -62,6 +64,7 @@ try {
 		initialUserDetailsContext.email_verified = email_verified || false;
 		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);
 		initialUserDetailsContext.defaultAddress = claims['x-hasura-kusama-default'];
+		initialUserDetailsContext.web3signup = web3signup || false;
 	}
 } catch {
 	//do nothing, the user will be authenticated as soon as there's a new call to the server.

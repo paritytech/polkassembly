@@ -22,6 +22,7 @@ export interface UserDetailsContextType {
 		ownProposal: boolean
 	} | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
+    web3signup?: boolean | null
 }
 
 export enum Role {
@@ -56,6 +57,7 @@ export interface JWTPayploadType {
 		ownProposal: boolean
     }
     'https://hasura.io/jwt/claims': HasuraClaimPayload
+    web3signup: boolean
 }
 
 export interface NotificationContextType {

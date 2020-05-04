@@ -2747,6 +2747,8 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setCredentialsConfirm?: Maybe<ChangeResponse>,
+  setCredentialsStart?: Maybe<AddressLoginType>,
   setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -2859,6 +2861,19 @@ export type MutationResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type MutationSetCredentialsConfirmArgs = {
+  address: Scalars['String'],
+  password?: Maybe<Scalars['String']>,
+  signature: Scalars['String'],
+  username?: Maybe<Scalars['String']>
+};
+
+
+export type MutationSetCredentialsStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -3013,6 +3028,8 @@ export type Mutation_Root = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setCredentialsConfirm?: Maybe<ChangeResponse>,
+  setCredentialsStart?: Maybe<AddressLoginType>,
   setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -3766,6 +3783,19 @@ export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type Mutation_RootSetCredentialsConfirmArgs = {
+  address: Scalars['String'],
+  password?: Maybe<Scalars['String']>,
+  signature: Scalars['String'],
+  username?: Maybe<Scalars['String']>
+};
+
+
+export type Mutation_RootSetCredentialsStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -11893,6 +11923,35 @@ export type SetDefaultAddressMutation = (
   )> }
 );
 
+export type SetCredentialsStartMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type SetCredentialsStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { setCredentialsStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
+export type SetCredentialsConfirmMutationVariables = {
+  address: Scalars['String'],
+  signature: Scalars['String'],
+  username: Scalars['String'],
+  password: Scalars['String']
+};
+
+
+export type SetCredentialsConfirmMutation = (
+  { __typename?: 'mutation_root' }
+  & { setCredentialsConfirm: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
 export type OnchainLinkTreasuryProposalFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_treasury_proposal_id' | 'onchain_motion_id'>
@@ -13991,6 +14050,75 @@ export function useSetDefaultAddressMutation(baseOptions?: ApolloReactHooks.Muta
 export type SetDefaultAddressMutationHookResult = ReturnType<typeof useSetDefaultAddressMutation>;
 export type SetDefaultAddressMutationResult = ApolloReactCommon.MutationResult<SetDefaultAddressMutation>;
 export type SetDefaultAddressMutationOptions = ApolloReactCommon.BaseMutationOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
+export const SetCredentialsStartDocument = gql`
+    mutation setCredentialsStart($address: String!) {
+  setCredentialsStart(address: $address) {
+    message
+    signMessage
+  }
+}
+    `;
+export type SetCredentialsStartMutationFn = ApolloReactCommon.MutationFunction<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
+
+/**
+ * __useSetCredentialsStartMutation__
+ *
+ * To run a mutation, you first call `useSetCredentialsStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetCredentialsStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setCredentialsStartMutation, { data, loading, error }] = useSetCredentialsStartMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useSetCredentialsStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>(SetCredentialsStartDocument, baseOptions);
+      }
+export type SetCredentialsStartMutationHookResult = ReturnType<typeof useSetCredentialsStartMutation>;
+export type SetCredentialsStartMutationResult = ApolloReactCommon.MutationResult<SetCredentialsStartMutation>;
+export type SetCredentialsStartMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
+export const SetCredentialsConfirmDocument = gql`
+    mutation setCredentialsConfirm($address: String!, $signature: String!, $username: String!, $password: String!) {
+  setCredentialsConfirm(address: $address, signature: $signature, username: $username, password: $password) {
+    message
+    token
+  }
+}
+    `;
+export type SetCredentialsConfirmMutationFn = ApolloReactCommon.MutationFunction<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
+
+/**
+ * __useSetCredentialsConfirmMutation__
+ *
+ * To run a mutation, you first call `useSetCredentialsConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetCredentialsConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setCredentialsConfirmMutation, { data, loading, error }] = useSetCredentialsConfirmMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *      signature: // value for 'signature'
+ *      username: // value for 'username'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSetCredentialsConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>(SetCredentialsConfirmDocument, baseOptions);
+      }
+export type SetCredentialsConfirmMutationHookResult = ReturnType<typeof useSetCredentialsConfirmMutation>;
+export type SetCredentialsConfirmMutationResult = ApolloReactCommon.MutationResult<SetCredentialsConfirmMutation>;
+export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
 export const TreasuryProposalPostAndCommentsDocument = gql`
     query TreasuryProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {

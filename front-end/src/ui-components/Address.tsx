@@ -25,7 +25,6 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 		let unsubscribe: () => void;
 
 		if (!api || !apiReady) {
-			console.error('polkadot/api not set or not ready');
 			return;
 		}
 
