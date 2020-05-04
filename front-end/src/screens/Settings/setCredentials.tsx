@@ -174,7 +174,7 @@ const SetCredentials = (): JSX.Element => {
 					open
 					onClose={dismissModal}
 					size='tiny'
-					title={'Report'}
+					title={'Set Username password'}
 				>
 					<Form standalone={false} onSubmit={handleSubmit(handleSetCredentials)}>
 						{extensionNotFound?
