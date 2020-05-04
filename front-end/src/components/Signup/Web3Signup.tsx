@@ -160,6 +160,13 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 
 			if (signupResult?.addressSignupConfirm?.token && signupResult?.addressSignupConfirm?.user) {
 				handleLoginUser({ token: signupResult.addressSignupConfirm.token, user: signupResult.addressSignupConfirm.user }, currentUser);
+				currentUser.setUserDetailsContextState((prevState) => {
+					return {
+						...prevState,
+						addresses: [...prevState.addresses, address],
+						defaultAddress: prevState.addresses?.length ? prevState.defaultAddress : address
+					};
+				});
 				if (email) {
 					setModal({
 						content: 'We sent you an email to verify your address. Click on the link in the email.',
