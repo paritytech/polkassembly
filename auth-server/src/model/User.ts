@@ -18,6 +18,7 @@ export default class User extends Model {
 	salt!: string
 	name!: string
 	username!: string
+	web3signup!: boolean | undefined
 
 	static get tableName (): string {
 		return 'users';
@@ -34,7 +35,8 @@ export default class User extends Model {
 				email_verified: { type: 'boolean' },
 				id: { type: 'integer' },
 				name: { maxLength: 512, type: 'string' },
-				username: { maxLength: 255, minLength: 1, type: 'string' }
+				username: { maxLength: 255, minLength: 1, type: 'string' },
+				web3signup: { type: 'boolean' }
 			},
 			required: ['username'],
 			type: 'object'

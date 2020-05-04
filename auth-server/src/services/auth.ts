@@ -249,7 +249,8 @@ export default class AuthService {
 				name,
 				password,
 				salt: salt.toString('hex'),
-				username: username.toLowerCase()
+				username: username.toLowerCase(),
+				web3signup: true
 			});
 
 		await Notification
@@ -363,7 +364,8 @@ export default class AuthService {
 				name,
 				password,
 				salt: salt.toString('hex'),
-				username: username.toLowerCase()
+				username: username.toLowerCase(),
+				web3signup: false
 			});
 
 		await Notification
@@ -679,7 +681,8 @@ export default class AuthService {
 			.patch({
 				password,
 				salt: salt.toString('hex'),
-				username: username.toLowerCase()
+				username: username.toLowerCase(),
+				web3signup: false
 			})
 			.findById(userId);
 
