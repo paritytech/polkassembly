@@ -884,7 +884,7 @@ export default class AuthService {
 		return { email: user.email, updatedToken: await this.getSignedToken(user) };
 	}
 
-	private async getSignedToken ({ email, email_verified, id, name, username }: User): Promise<string> {
+	private async getSignedToken ({ email, email_verified, id, name, username, web3signup }: User): Promise<string> {
 		if (!privateKey) {
 			const key = process.env.NODE_ENV === 'test' ? 'JWT_PRIVATE_KEY_TEST' : 'JWT_PRIVATE_KEY';
 			throw new ForbiddenError(`${key} not set. Aborting.`);
@@ -934,7 +934,8 @@ export default class AuthService {
 			name,
 			notification,
 			sub: `${id}`,
-			username
+			username,
+			web3signup: web3signup || false
 		};
 
 		return jwt.sign(

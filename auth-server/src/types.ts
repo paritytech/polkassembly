@@ -70,6 +70,7 @@ export interface JWTPayploadType {
     iat: number;
     notification: NotificationPreferencesType;
     'https://hasura.io/jwt/claims': HasuraClaimPayload;
+    web3signup: boolean;
 }
 
 export interface MessageType {
