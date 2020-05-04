@@ -8,8 +8,9 @@ import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ApiContext } from 'src/context/ApiContext';
-import { VoteThreshold } from 'src/types';
+import { LoadingStatusType, VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
+import Loader from 'src/ui-components/Loader';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 
@@ -27,6 +28,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
 	const [nayVotes, setNayVotes] = useState(ZERO);
+	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading votes' });
 
 	useEffect(() => {
 		if (!api) {
@@ -49,6 +51,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				setNayVotes(_info?.asOngoing.tally.nays);
 				setTurnout(_info?.asOngoing.tally.turnout);
 			}
+
+			setLoadingStatus({ isLoading: false, message: '' });
 		})
 			.then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
@@ -91,29 +95,36 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	}, [electorate, nayVotes, threshold, turnout]);
 
 	return (
-		<Card className={className}>
-			<VoteProgress
-				ayeVotes={ayeVotes}
-				className='vote-progress'
-				passingThreshold={passingThreshold}
-				nayVotes={nayVotes}
-			/>
-			<Grid columns={3} divided>
-				<Grid.Row>
-					<Grid.Column>
-						<h6>Turnout</h6>
-						<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<h6>Aye</h6>
-						<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-					<Grid.Column width={5}>
-						<h6>Nay</h6>
-						<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
+		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
+			{loadingStatus.isLoading
+				?
+				<Loader text={loadingStatus.message} timeout={3000} timeoutText='Api is unresponsive.'/>
+				:
+				<>
+					<VoteProgress
+						ayeVotes={ayeVotes}
+						className='vote-progress'
+						passingThreshold={passingThreshold}
+						nayVotes={nayVotes}
+					/>
+					<Grid columns={3} divided>
+						<Grid.Row>
+							<Grid.Column>
+								<h6>Turnout</h6>
+								<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<h6>Aye</h6>
+								<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<h6>Nay</h6>
+								<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</>
+			}
 		</Card>
 	);
 };
@@ -123,5 +134,11 @@ export default styled(ReferendumVoteInfo)`
 
 	.vote-progress {
 		margin-bottom: 5rem;
+	}
+
+	.LoaderWrapper {
+		height: 15rem;
+		position: absolute;
+		width: 100%;
 	}
 `;

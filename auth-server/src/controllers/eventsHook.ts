@@ -10,6 +10,7 @@ import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
 import { CommentCreationHookDataType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import getPostId from '../utils/getPostId';
 import getPostLink from '../utils/getPostLink';
 import getPostType from '../utils/getPostType';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -47,7 +48,7 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 
 			getUserFromUserId(subscription.user_id)
 				.then((user) => {
-					const url = getPostLink(PostTypeEnum.POST, { post_id: data.post_id });
+					const url = getPostLink(PostTypeEnum.POST, data.post_id);
 					sendPostSubscriptionMail(user, author, data, url);
 				})
 				.catch((error) => console.error(error));
@@ -114,9 +115,10 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 	}
 
 	const type = getPostType(onchainLink);
-	const url = getPostLink(type, onchainLink);
+	const id = getPostId(type, onchainLink);
+	const url = getPostLink(type, id);
 
-	sendOwnProposalCreatedEmail(user, type, url);
+	sendOwnProposalCreatedEmail(user, type, url, id);
 
 	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
@@ -154,9 +156,10 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 		}
 
 		const type = getPostType(onchainLink);
-		const url = getPostLink(type, onchainLink);
+		const id = getPostId(type, onchainLink);
+		const url = getPostLink(type, id);
 
-		sendNewProposalCreatedEmail(user, type, url);
+		sendNewProposalCreatedEmail(user, type, url, id);
 	});
 
 	await Promise.all(promises).catch(error => console.error(error));
