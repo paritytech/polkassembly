@@ -58,6 +58,10 @@ const StyledForm = styled(SUIForm)`
 		}
 	}
 
+	.error-text {
+		color: red_secondary;
+	}
+
 	&.ui.form {
 
 		font-size: sm;
