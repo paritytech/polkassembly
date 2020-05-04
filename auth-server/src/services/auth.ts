@@ -490,6 +490,25 @@ export default class AuthService {
 			})
 			.del();
 
+		if (dbAddress.default) {
+			const newDefault = await Address
+				.query()
+				.where({
+					address,
+					user_id: user.id
+				})
+				.first();
+
+			if (newDefault) {
+				await Address
+					.query()
+					.patch({
+						default: true
+					})
+					.findById(newDefault.id);
+			}
+		}
+
 		return this.getSignedToken(user);
 	}
 
