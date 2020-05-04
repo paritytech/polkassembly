@@ -26,7 +26,7 @@ export default styled(Input)`
         margin-bottom: 1.2rem;
         &:focus {
             font-family: font_default;
-            font-size: 1.3rem;
+            font-size: input_text_size;
             color: black_text;
             border-color: grey_primary;
             border-radius: 0rem;

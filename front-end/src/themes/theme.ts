@@ -28,7 +28,7 @@ export const theme = {
 		white_transparent: 'rgba(255, 255, 255, 0.2)'
 	},
 	fontSizes: {
-		input_text_size: '1.3rem',
+		input_text_size: '1.4rem',
 		lg: '1.8rem',
 		md: '1.5rem',
 		sm: '1.3rem',
