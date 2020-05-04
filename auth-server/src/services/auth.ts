@@ -674,6 +674,15 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
 
+		const existing = await User
+			.query()
+			.where('username', username.toLowerCase())
+			.first();
+
+		if (existing) {
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
+		}
+
 		const userId = addressObj.user_id;
 		let user = await getUserFromUserId(userId);
 
