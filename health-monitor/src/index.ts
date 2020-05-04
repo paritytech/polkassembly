@@ -112,7 +112,7 @@ async function getOnchainLinkReferendumDelays (): Promise<boolean> {
 				  	onchain_link {
 						id
 						onchain_referendum {
-					  		delay
+					  		voteThreshold
 						}
 				  	}
 				}
