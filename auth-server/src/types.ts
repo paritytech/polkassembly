@@ -24,6 +24,7 @@ export interface UserObjectType {
     username: string;
     name: string;
     email_verified: boolean;
+    web3signup: boolean;
 }
 
 export interface TokenType {

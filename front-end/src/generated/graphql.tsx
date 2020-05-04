@@ -2866,9 +2866,9 @@ export type MutationResetPasswordArgs = {
 
 export type MutationSetCredentialsConfirmArgs = {
   address: Scalars['String'],
-  password?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
   signature: Scalars['String'],
-  username?: Maybe<Scalars['String']>
+  username: Scalars['String']
 };
 
 
@@ -3788,9 +3788,9 @@ export type Mutation_RootResetPasswordArgs = {
 
 export type Mutation_RootSetCredentialsConfirmArgs = {
   address: Scalars['String'],
-  password?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
   signature: Scalars['String'],
-  username?: Maybe<Scalars['String']>
+  username: Scalars['String']
 };
 
 
@@ -10789,6 +10789,7 @@ export type User = {
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
+  web3signup?: Maybe<Scalars['Boolean']>,
 };
 
 
@@ -10979,7 +10980,7 @@ export type LoginMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -11010,7 +11011,7 @@ export type AddressLoginMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -11206,7 +11207,7 @@ export type SignupMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -11241,7 +11242,7 @@ export type AddressSignupConfirmMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -12386,6 +12387,7 @@ export const LoginDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }
@@ -12459,6 +12461,7 @@ export const AddressLoginDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }
@@ -12874,6 +12877,7 @@ export const SignupDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }
@@ -12949,6 +12953,7 @@ export const AddressSignupConfirmDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }

@@ -13,6 +13,7 @@ export const SIGNUP = gql`
                 username
                 email
                 email_verified
+                web3signup
             }
             token
         }
@@ -51,6 +52,7 @@ export const ADDRESS_SIGNUP_CONFIRM = gql`
                 username
                 email
                 email_verified
+                web3signup
             }
             token
         }

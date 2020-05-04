@@ -8,6 +8,7 @@ export default `
 		username: String
         name: String
         email: String
-        email_verified: Boolean
+		email_verified: Boolean
+		web3signup: Boolean
 	}
 `;

@@ -43,7 +43,8 @@ export const handleLoginUser = ({ user, token }: LoginResponse, currentUser: Use
 			email_verified: user.email_verified,
 			id: user.id,
 			name: user.name,
-			username: user.username
+			username: user.username,
+			web3signup: user.web3signup
 		};
 	});
 };

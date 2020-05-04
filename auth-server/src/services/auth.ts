@@ -81,7 +81,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -173,7 +174,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -300,7 +302,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -398,7 +401,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
