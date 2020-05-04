@@ -132,7 +132,7 @@ const StyledForm = styled(SUIForm)`
 
 	.ui.dropdown,
 	.ui.selection.dropdown {
-		font-size: input_text_size;
+		font-size: sm;
 		margin-bottom: 1.2rem;
 		border-style: solid;
 		border-width: 1px;
