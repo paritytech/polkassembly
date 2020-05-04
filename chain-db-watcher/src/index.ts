@@ -220,7 +220,7 @@ async function main (): Promise<void> {
 	});
 
 	server.listen(port, hostname, () => {
-		console.log(`Server running at http://${hostname}:${port}/`);
+		console.log(`🩺 Health endpoint available at http://${hostname}:${port}/`);
 	});
 }
 
