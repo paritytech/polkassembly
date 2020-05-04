@@ -13,7 +13,7 @@ import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { handleLoginUser } from '../../services/auth.service';
+import { handleTokenChange } from '../../services/auth.service';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -124,7 +124,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			});
 
 			if (loginResult?.addressLogin?.token && loginResult?.addressLogin?.user) {
-				handleLoginUser({ token: loginResult.addressLogin.token, user: loginResult.addressLogin.user }, currentUser);
+				handleTokenChange(loginResult.addressLogin.token, currentUser);
 				history.push('/');
 			} else {
 				throw new Error('Web3 Login failed');

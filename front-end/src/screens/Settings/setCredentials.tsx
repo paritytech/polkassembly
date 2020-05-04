@@ -125,15 +125,8 @@ const SetCredentials = (): JSX.Element => {
 			});
 
 			if (setResult?.setCredentialsConfirm?.token) {
-				handleTokenChange(setResult?.setCredentialsConfirm?.token);
+				handleTokenChange(setResult?.setCredentialsConfirm?.token, currentUser);
 			}
-			currentUser.setUserDetailsContextState((prevState) => {
-				return {
-					...prevState,
-					username,
-					web3signup: false
-				};
-			});
 		} catch (error) {
 			setErr(error);
 		}

@@ -494,7 +494,6 @@ export default class AuthService {
 			const newDefault = await Address
 				.query()
 				.where({
-					address,
 					user_id: user.id
 				})
 				.first();

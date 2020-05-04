@@ -62,15 +62,8 @@ const Email = ({ className }: Props): JSX.Element => {
 							});
 						}
 						if (data.changeEmail.token) {
-							handleTokenChange(data.changeEmail.token);
+							handleTokenChange(data.changeEmail.token, currentUser);
 						}
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								email,
-								email_verified: false
-							};
-						});
 						setEditing(false);
 					}
 				}).catch((e) => {

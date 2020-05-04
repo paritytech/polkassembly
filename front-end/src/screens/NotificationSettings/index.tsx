@@ -55,20 +55,9 @@ const Settings = ({ className }:Props): JSX.Element => {
 					});
 					setChanged(false);
 				}
-				if (data && data.changeNotificationPreference && data.changeNotificationPreference.token) {
-					handleTokenChange(data.changeNotificationPreference.token);
+				if (data?.changeNotificationPreference?.token) {
+					handleTokenChange(data.changeNotificationPreference.token, currentUser);
 				}
-				currentUser.setUserDetailsContextState((prevState) => {
-					return {
-						...prevState,
-						notification: {
-							newProposal,
-							ownProposal,
-							postCreated,
-							postParticipated
-						}
-					};
-				});
 			}).catch((e) => {
 				queueNotification({
 					header: 'Failed!',

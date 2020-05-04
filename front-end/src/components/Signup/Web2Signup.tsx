@@ -12,7 +12,7 @@ import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSignupMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { handleLoginUser } from '../../services/auth.service';
+import { handleTokenChange } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
@@ -47,9 +47,9 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 			})
 				.then(({ data }) => {
 					if (data && data.signup && data.signup.token && data.signup.user) {
-						handleLoginUser({ token: data.signup.token, user: data.signup.user }, currentUser);
+						handleTokenChange(data.signup.token, currentUser);
 						if (email) {
-							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.' ,title: 'You\'ve got some mail' });
+							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.', title: 'You\'ve got some mail' });
 						}
 						history.push('/');
 					}}
