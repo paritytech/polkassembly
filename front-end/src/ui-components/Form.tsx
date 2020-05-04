@@ -91,7 +91,7 @@ const StyledForm = styled(SUIForm)`
 			border-style: solid;
 			border-width: 1px;
 			border-color: grey_light;
-			border-radius: 0rem;
+			border-radius: 0.3rem;
 			text-indent: 0rem;
 			padding: 1rem;
 			margin-bottom: 1.2rem;
@@ -137,7 +137,7 @@ const StyledForm = styled(SUIForm)`
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
-		border-radius: 0rem;
+		border-radius: 0.3rem;
 
 		.menu .active.item {
 			font-weight: 500;
