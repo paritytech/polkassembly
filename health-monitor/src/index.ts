@@ -125,7 +125,7 @@ async function getOnchainLinkReferendumDelays (): Promise<boolean> {
 		method: 'POST'
 	}).then(res => res.json()).then(({ data }) => {
 		const result = data?.posts?.reduce((acc: boolean, post: any) => {
-			return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.delay;
+			return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.voteThreshold;
 		}, true);
 
 		return result && data?.posts?.length > 0;
