@@ -17,5 +17,6 @@ export default styled(InlineTag)`
         border-radius: 0.2rem;
         letter-spacing: 0.05rem;
         padding: 0.4rem 0.6rem;
+        margin: 0 0.4rem;
     }
 `;

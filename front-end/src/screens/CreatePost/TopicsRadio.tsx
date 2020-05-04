@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useState } from 'react';
-import { CheckboxProps,Radio } from 'semantic-ui-react';
+import { CheckboxProps, Radio } from 'semantic-ui-react';
 
 import { usePost_TopicsQuery } from '../../generated/graphql';
 import FilteredError from '../../ui-components/FilteredError';
@@ -33,8 +33,7 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 	}
 
 	return (
-		<Form.Field className={className}>
-			<label>Topic</label>
+		<Form.Field className={className} title='topic'>
 			<div className='topic-container'>
 				{ data.post_topics.length
 					? data.post_topics.map(({ id, name } : {name: string, id:number}) => {
@@ -55,6 +54,7 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 export default styled(TopicsRadio)`
 	.topic-container {
 		display: flex;
+		margin-top: 3rem;
 	}
 
     .ui.checkbox {
@@ -72,7 +72,7 @@ export default styled(TopicsRadio)`
 			color: black_text;
 			padding: 0.5rem 0.8rem;
 			font-family: font_default;
-			font-size: 1rem;
+			font-size: sm;
 			line-height: 1;
 			border-radius: 0.2rem;
 			letter-spacing: 0.05rem;
