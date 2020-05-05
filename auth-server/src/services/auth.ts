@@ -693,6 +693,8 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
+		await redisDel(getSetCredentialsKey(address));
+
 		return this.getSignedToken(user);
 	}
 
