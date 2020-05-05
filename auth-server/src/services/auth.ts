@@ -624,16 +624,7 @@ export default class AuthService {
 			.patch({ valid: false })
 			.where({ user_id: userId });
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: user.id,
-				valid: true
-			});
-
-		sendVerificationEmail(user, verifyToken);
+		await this.sendVerificationTokenMail(user);
 	}
 
 	public async SetCredentialsStart (address: string): Promise<string> {
@@ -800,21 +791,9 @@ export default class AuthService {
 			.patch({ valid: false })
 			.where({ user_id: userId });
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: userId,
-				valid: true
-			});
-
 		user = await getUserFromUserId(userId);
 
-		if (email) {
-			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
-		}
+		await this.sendVerificationTokenMail(user);
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
