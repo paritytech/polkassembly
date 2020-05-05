@@ -34,28 +34,28 @@ describe('addressSignup mutation', () => {
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
 
 	it('should be able to request signup challenge message', async () => {
-        const result = await addressSignupStart(undefined, { address });
-        const redisSignMessage = await redisGet(getAddressSignupKey(address));
+		const result = await addressSignupStart(undefined, { address });
+		const redisSignMessage = await redisGet(getAddressSignupKey(address));
 
-        expect(result.signMessage).to.be.a('string');
-        expect(result.signMessage).to.equal(redisSignMessage);
-    });
+		expect(result.signMessage).to.be.a('string');
+		expect(result.signMessage).to.equal(redisSignMessage);
+	});
 
-    it('should be able to signup with correct signature', async () => {
-        // mock the addressSignupStart
-        await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
+	it('should be able to signup with correct signature', async () => {
+		// mock the addressSignupStart
+		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
-        const result = await addressSignupConfirm(undefined, { address, email, name, network, signature, username }, fakectx);
+		const result = await addressSignupConfirm(undefined, { address, email, name, network, signature, username }, fakectx);
 
-        expect(result.user.id).to.exist;
+		expect(result.user.id).to.exist;
 		expect(result.user.id).to.a('number');
 		expect(result.user.email).to.equal(email);
 		expect(result.user.name).to.equal(name);
 		expect(result.user.username).to.equal(username);
 		expect(result.token).to.exist;
-        expect(result.token).to.be.a('string');
+		expect(result.token).to.be.a('string');
 
-        const dbuser = await User
+		const dbuser = await User
 			.query()
 			.where({ id: result.user.id })
 			.first();
@@ -63,20 +63,20 @@ describe('addressSignup mutation', () => {
 		const dbAddress = await Address
 			.query()
 			.where({ user_id: result.user.id })
-            .first();
+			.first();
 
-        expect(dbuser).to.exist;
-        expect(dbuser?.username).to.equal(username);
+		expect(dbuser).to.exist;
+		expect(dbuser?.username).to.equal(username);
 
-        expect(dbAddress).to.exist;
-        expect(dbAddress?.address).to.equal(address);
-        expect(dbAddress?.verified).to.be.true;
-        expect(dbAddress?.default).to.be.true;
-    });
+		expect(dbAddress).to.exist;
+		expect(dbAddress?.address).to.equal(address);
+		expect(dbAddress?.verified).to.be.true;
+		expect(dbAddress?.default).to.be.true;
+	});
 
-    it('should be able to login subsequently with address', async () => {
+	it('should be able to login subsequently with address', async () => {
 		// mock the addressLoginStart
-        await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
+		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
 		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
@@ -86,20 +86,20 @@ describe('addressSignup mutation', () => {
 		expect(result.user.name).to.equal(name);
 		expect(result.user.username).to.equal(username);
 		expect(result.token).to.exist;
-        expect(result.token).to.be.a('string');
+		expect(result.token).to.be.a('string');
 
-        await User
-            .query()
-            .where({ id: result.user.id })
-            .del();
+		await User
+			.query()
+			.where({ id: result.user.id })
+			.del();
 
-        await Address
-            .query()
-            .where({ user_id: result.user.id })
-            .del();
-    });
+		await Address
+			.query()
+			.where({ user_id: result.user.id })
+			.del();
+	});
 
-    it('should not be able to signup with invalid signature', async () => {
+	it('should not be able to signup with invalid signature', async () => {
 		const signature = '0xaaaa';
 
 		try {
