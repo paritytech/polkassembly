@@ -154,7 +154,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 					onClick={handleSubmitForm}
 					type="submit"
 				>
-					Sign Up
+					Sign-up
 				</Button>
 				{error?.message && <FilteredError text={error.message}/>}
 			</div>
