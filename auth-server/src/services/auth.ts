@@ -77,6 +77,67 @@ export default class AuthService {
 		return getUserFromUserId(userId);
 	}
 
+	private async createUser (email: string, name: string, password: string, username: string, web3signup: boolean): Promise<User> {
+		const salt = randomBytes(32);
+		password = await argon2.hash(password, { salt });
+
+		const user = await User
+			.query()
+			.allowInsert('[email, email_verified, name, password, salt, username, web3signup]')
+			.insert({
+				email,
+				email_verified: false,
+				name,
+				password,
+				salt: salt.toString('hex'),
+				username: username.toLowerCase(),
+				web3signup
+			});
+
+		await Notification
+			.query()
+			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+			.insert({
+				user_id: user.id,
+				...NOTIFICATION_DEFAULTS
+			});
+
+		return user;
+	}
+
+	private async createAddress (network: string, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(address);
+
+		return Address
+			.query()
+			.allowInsert('[address, default, network, public_key, user_id, verified]')
+			.insert({
+				address,
+				default: defaultAddress,
+				network,
+				public_key: Buffer.from(publicKey).toString('hex'),
+				user_id,
+				verified: true
+			});
+	}
+
+	private async sendVerificationTokenMail (user: User): Promise<void> {
+		if (user.email) {
+			const verifyToken = await EmailVerificationToken
+				.query()
+				.allowInsert('[token, user_id, valid]')
+				.insert({
+					token: uuid(),
+					user_id: user.id,
+					valid: true
+				});
+
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
+	}
+
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
 		const user = await User
 			.query()
@@ -258,60 +319,11 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(uuid(), { salt });
+		const user = await this.createUser(email, name, uuid(), username, true);
 
-		const user = await User
-			.query()
-			.allowInsert('[email, email_verified, password, username, name]')
-			.insert({
-				email,
-				email_verified: false,
-				name,
-				password,
-				salt: salt.toString('hex'),
-				username: username.toLowerCase(),
-				web3signup: true
-			});
-
-		await Notification
-			.query()
-			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
-			.insert({
-				user_id: user.id,
-				...NOTIFICATION_DEFAULTS
-			});
-
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
-		await Address
-			.query()
-			.allowInsert('[network, address, user_id, sign_message, verified]')
-			.insert({
-				address,
-				default: true,
-				network,
-				public_key: Buffer.from(publicKey).toString('hex'),
-				user_id: user.id,
-				verified: true
-			});
-
+		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
-
-		if (email) {
-			const verifyToken = await EmailVerificationToken
-				.query()
-				.allowInsert('[token, user_id, valid]')
-				.insert({
-					token: uuid(),
-					user_id: user.id,
-					valid: true
-				});
-
-			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
-		}
+		await this.sendVerificationTokenMail(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -374,43 +386,9 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const salt = randomBytes(32);
-		password = await argon2.hash(password, { salt });
+		const user = await this.createUser(email, name, password, username, false);
 
-		const user = await User
-			.query()
-			.allowInsert('[email, email_verified, password, username, name]')
-			.insert({
-				email,
-				email_verified: false,
-				name,
-				password,
-				salt: salt.toString('hex'),
-				username: username.toLowerCase(),
-				web3signup: false
-			});
-
-		await Notification
-			.query()
-			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
-			.insert({
-				user_id: user.id,
-				...NOTIFICATION_DEFAULTS
-			});
-
-		if (email) {
-			const verifyToken = await EmailVerificationToken
-				.query()
-				.allowInsert('[token, user_id, valid]')
-				.insert({
-					token: uuid(),
-					user_id: user.id,
-					valid: true
-				});
-
-			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
-		}
+		await this.sendVerificationTokenMail(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -497,8 +475,8 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
 
-		if (dbAddress.default && user.web3signup) {
-			throw new ForbiddenError(messages.ADDRESS_UNLINK_WEB3_NOT_ALLOWED);
+		if (dbAddress.default) {
+			throw new ForbiddenError(messages.ADDRESS_UNLINK_NOT_ALLOWED);
 		}
 
 		await Address
@@ -508,24 +486,6 @@ export default class AuthService {
 				user_id: user.id
 			})
 			.del();
-
-		if (dbAddress.default) {
-			const newDefault = await Address
-				.query()
-				.where({
-					user_id: user.id
-				})
-				.first();
-
-			if (newDefault) {
-				await Address
-					.query()
-					.patch({
-						default: true
-					})
-					.findById(newDefault.id);
-			}
-		}
 
 		return this.getSignedToken(user);
 	}

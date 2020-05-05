@@ -17,7 +17,7 @@ export default {
 	ADDRESS_SIGNUP_SIGN_MESSAGE_EXPIRED: 'Session expired, please signup again.',
 	ADDRESS_SIGNUP_STARTED: 'Please sign and send following message to signup.',
 	ADDRESS_UNLINKING_SUCCESS: 'Address is successfully removed from your account.',
-	ADDRESS_UNLINK_WEB3_NOT_ALLOWED: 'You cannot unlink default address from your account. To do that first set a username and password.',
+	ADDRESS_UNLINK_NOT_ALLOWED: 'You cannot unlink default address from your account.',
 	ADDRESS_USER_NOT_MATCHING: 'You are not allowed to link this address',
 	CONTENT_REPORT_SUCCESSFUL: 'Content reported successfully',
 	CREDENTIALS_CHANGE_SUCCESSFUL: 'Username and password added successfully',
