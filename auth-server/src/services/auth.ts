@@ -200,8 +200,6 @@ export default class AuthService {
 	}
 
 	public async AddressSignupStart (address: string): Promise<string> {
-		const signMessage = uuid();
-
 		const addressObj = await Address
 			.query()
 			.where('address', address)
@@ -210,6 +208,8 @@ export default class AuthService {
 		if (addressObj) {
 			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
 		}
+
+		const signMessage = uuid();
 
 		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
