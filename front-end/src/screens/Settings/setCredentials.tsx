@@ -150,7 +150,7 @@ const SetCredentials = (): JSX.Element => {
 					buttons={
 						<Form.Group>
 							<Button
-								content='Set Username Password'
+								content='Set username and password'
 								disabled={loading}
 								primary
 								onClick={handleSubmit(handleSetCredentials)}
