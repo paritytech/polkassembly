@@ -12,7 +12,7 @@ export default {
 	ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED: 'Session expired, please login again.',
 	ADDRESS_LOGIN_STARTED: 'Please sign and send following message to login.',
 	ADDRESS_NOT_FOUND: 'Address not found',
-	ADDRESS_SIGNUP_ALREADY_EXISTS: 'There is another account associated with this address. Please use login.',
+	ADDRESS_SIGNUP_ALREADY_EXISTS: 'There is already an account associated with this address, you cannot sign-up with this address.',
 	ADDRESS_SIGNUP_INVALID_SIGNATURE: 'Signup with web3 account failed. Invalid signature.',
 	ADDRESS_SIGNUP_SIGN_MESSAGE_EXPIRED: 'Session expired, please signup again.',
 	ADDRESS_SIGNUP_STARTED: 'Please sign and send following message to signup.',
