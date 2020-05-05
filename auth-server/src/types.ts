@@ -80,6 +80,7 @@ export interface ChangeResponseType extends MessageType, TokenType {}
 
 export interface PublicUser {
     id: number;
+    kusamaDefaultAddress?: string;
     name: string;
     username: string;
 }
@@ -163,7 +164,7 @@ export interface SetDefaultAddressArgs {
 }
 
 export interface AddressLinkStartArgs {
-	network: string;
+	network: Network;
 	address: string;
 }
 
@@ -217,7 +218,7 @@ export interface PostUnsubscribeArgs {
 }
 
 export interface ReportContentArgs {
-	network: string;
+	network: Network;
 	type: string;
 	content_id: string;
 	reason: string;
@@ -250,7 +251,7 @@ export interface VerifyEmailArgs {
 }
 
 export enum PostTypeEnum {
-    POST='post',
+    POST = 'post',
     PROPOSAL = 'proposal',
     TREASURY = 'treasury',
     MOTION = 'motion',
@@ -258,3 +259,10 @@ export enum PostTypeEnum {
 }
 
 export type PostType = PostTypeEnum;
+
+export enum NetworkEnum {
+    KUSAMA = 'kusama',
+    POLKADOT = 'polkadot'
+}
+
+export type Network = NetworkEnum;

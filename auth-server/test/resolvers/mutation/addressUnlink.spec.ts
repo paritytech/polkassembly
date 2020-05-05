@@ -12,7 +12,7 @@ import Address from '../../../src/model/Address';
 import User from '../../../src/model/User';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import signup from '../../../src/resolvers/mutation/signup';
-import { Context } from '../../../src/types';
+import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressUnlink mutation', () => {
@@ -43,7 +43,7 @@ describe('addressUnlink mutation', () => {
 			.query()
 			.allowInsert('[network, address, user_id, public_key, sign_message, verified]')
 			.insert({
-				network: 'kusama',
+				network: NetworkEnum.KUSAMA,
 				address,
 				user_id: signupResult.user.id,
 				public_key: Buffer.from(publicKey).toString('hex'),

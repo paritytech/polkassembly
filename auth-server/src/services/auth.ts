@@ -8,6 +8,7 @@ import * as argon2 from 'argon2';
 import { randomBytes, timingSafeEqual } from 'crypto';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
+import getDefaultAddressFromAddressArray from 'src/utils/getDefaultAddressFromAddressArray';
 import { uuid } from 'uuidv4';
 import validator from 'validator';
 
@@ -18,7 +19,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
+import { AuthObjectType, JWTPayploadType, NetworkEnum, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -38,7 +39,7 @@ const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHR
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
-const KUSAMA = 'kusama';
+
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
 	own_proposal: true,
@@ -705,7 +706,7 @@ export default class AuthService {
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
 
-		const addresses = await getAddressesFromUserId(id);
+		const kusamaAddresses = await getAddressesFromUserId(id, NetworkEnum.KUSAMA);
 		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
@@ -714,17 +715,7 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
-		let kusamaDefault = '';
-		const kusamaAddresses = addresses
-			.filter(address => {
-				const isKusama = address.network === KUSAMA && address.verified;
-				if (isKusama && address.default) {
-					kusamaDefault = address.address;
-				}
-				return isKusama;
-			})
-			.map(address => `"${address.address}"`)
-			.join(',');
+		const kusamaDefault = getDefaultAddressFromAddressArray(kusamaAddresses);
 
 		const tokenContent: JWTPayploadType = {
 			email,
@@ -733,7 +724,7 @@ export default class AuthService {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
 				'x-hasura-kusama': `{${kusamaAddresses}}`,
-				'x-hasura-kusama-default': kusamaDefault,
+				'x-hasura-kusama-default': kusamaDefault || '',
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},
