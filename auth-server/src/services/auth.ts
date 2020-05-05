@@ -68,7 +68,7 @@ export const getNetworkAddresses = (addresses: Address[], network: string): Netw
 		addresses: resultAddresses,
 		default: defaultAddress
 	};
-}
+};
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
