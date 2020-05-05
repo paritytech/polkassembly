@@ -247,7 +247,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 					disabled={loading}
 					onClick={handleToggle}
 				>
-					Sign up With Username
+					Sign-up with username
 				</Button>
 			</div>
 		</Form>
