@@ -80,7 +80,7 @@ export interface ChangeResponseType extends MessageType, TokenType {}
 
 export interface PublicUser {
     id: number;
-    kusamaDefaultAddress?: string;
+    kusama_default_address?: string;
     name: string;
     username: string;
 }
@@ -152,11 +152,6 @@ export interface SubscriptionArgs {
 
 export interface UserArgs {
 	id: number;
-}
-
-export interface UsersArgs {
-	limit: number;
-	page: number;
 }
 
 export interface SetDefaultAddressArgs {

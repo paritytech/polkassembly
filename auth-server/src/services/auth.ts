@@ -8,7 +8,6 @@ import * as argon2 from 'argon2';
 import { randomBytes, timingSafeEqual } from 'crypto';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-import getDefaultAddressFromAddressArray from 'src/utils/getDefaultAddressFromAddressArray';
 import { uuid } from 'uuidv4';
 import validator from 'validator';
 
@@ -21,6 +20,7 @@ import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, JWTPayploadType, NetworkEnum, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
+import getDefaultAddressFromAddressArray from '../utils/getDefaultAddressFromAddressArray';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
