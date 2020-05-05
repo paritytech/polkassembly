@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
 
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+
 /**
  * Store the JWT token in localstorage
  * @param token the token received from the authentication header
@@ -54,10 +56,23 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 			} = tokenPayload;
 
 			currentUser.setUserDetailsContextState((prevState) => {
+				let addresses = '';
+				let defaultAddress = '';
+
+				if (NETWORK === 'kusama') {
+					addresses = claims['x-hasura-kusama'];
+					defaultAddress = claims['x-hasura-kusama-default'];
+				}
+
+				if (NETWORK === 'polkadot') {
+					addresses = claims['x-hasura-polkadot'];
+					defaultAddress = claims['x-hasura-polkadot-default'];
+				}
+
 				return {
 					...prevState,
-					addresses: decodePostgresArray(claims['x-hasura-kusama']),
-					defaultAddress: claims['x-hasura-kusama-default'],
+					addresses: decodePostgresArray(addresses),
+					defaultAddress,
 					email,
 					email_verified,
 					id: Number(id),
