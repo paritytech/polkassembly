@@ -20,7 +20,7 @@ export default {
 	ADDRESS_UNLINK_WEB3_NOT_ALLOWED: 'You cannot unlink default address from your account. To do that first set a username and password.',
 	ADDRESS_USER_NOT_MATCHING: 'You are not allowed to link this address',
 	CONTENT_REPORT_SUCCESSFUL: 'Content reported successfully',
-	CREDENTIALS_CHANGE_SUCCESSFUL: 'Username password changed successfully',
+	CREDENTIALS_CHANGE_SUCCESSFUL: 'Username and password added successfully',
 	EMAIL_CHANGE_NOT_ALLOWED_YET: 'Email change not allowed. Please wait 48 hours after last email change.',
 	EMAIL_CHANGE_REQUEST_SUCCESSFUL: 'Email changed. Verification request sent to your email address.',
 	EMAIL_NOT_FOUND: 'There is no email associated with your account.',
