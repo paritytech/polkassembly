@@ -75,7 +75,7 @@ describe('addressSignup mutation', () => {
     });
 
     it('should be able to login subsequently with address', async () => {
-		// mock the addressSignupStart
+		// mock the addressLoginStart
         await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
 		const result = await addressLogin(undefined, { address, signature }, fakectx);
