@@ -2,9 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import 'mocha';
 import { expect } from 'chai';
 import { ForbiddenError } from 'apollo-server';
-import 'mocha';
+import jwt from 'jsonwebtoken';
 
 import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
@@ -48,12 +49,14 @@ describe('addressSignup mutation', () => {
 		const result = await addressSignupConfirm(undefined, { address, email, name, network, signature, username }, fakectx);
 
 		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
-		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
+
+		const token: any = jwt.decode(result.token);
+		expect(token.email).to.equals(email);
+		expect(token.username).to.equals(username);
+		expect(token.sub).to.equals(`${result.user.id}`);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
 
 		const dbuser = await User
 			.query()
@@ -67,6 +70,7 @@ describe('addressSignup mutation', () => {
 
 		expect(dbuser).to.exist;
 		expect(dbuser?.username).to.equal(username);
+		expect(dbuser?.web3signup).to.be.true;
 
 		expect(dbAddress).to.exist;
 		expect(dbAddress?.address).to.equal(address);
@@ -81,12 +85,14 @@ describe('addressSignup mutation', () => {
 		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
 		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
-		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
+
+		const token: any = jwt.decode(result.token);
+		expect(token.email).to.equals(email);
+		expect(token.username).to.equals(username);
+		expect(token.sub).to.equals(`${result.user.id}`);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
 
 		await User
 			.query()
@@ -107,7 +113,7 @@ describe('addressSignup mutation', () => {
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
-			expect(error.message).to.eq(messages.ADDRESS_SIGNUP_INVALID_SIGNATURE);
+			expect(error.message).to.eq(messages.ADDRESS_SIGNUP_SIGN_MESSAGE_EXPIRED);
 		}
 	});
 });
