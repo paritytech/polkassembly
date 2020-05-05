@@ -18,7 +18,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
+import { AuthObjectType, JWTPayploadType, NetworkAddressType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -39,6 +39,7 @@ const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
+const POLKADOT = 'polkadot';
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
 	own_proposal: true,
@@ -50,6 +51,24 @@ export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
+export const getNetworkAddresses = (addresses: Address[], network: string): NetworkAddressType => {
+	let defaultAddress = '';
+	const resultAddresses = addresses
+		.filter(address => {
+			const isNetworkAddress = address.network === network && address.verified;
+			if (isNetworkAddress && address.default) {
+				defaultAddress = address.address;
+			}
+			return isNetworkAddress;
+		})
+		.map(address => `"${address.address}"`)
+		.join(',');
+
+	return {
+		addresses: resultAddresses,
+		default: defaultAddress
+	};
+}
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -942,17 +961,8 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
-		let kusamaDefault = '';
-		const kusamaAddresses = addresses
-			.filter(address => {
-				const isKusama = address.network === KUSAMA && address.verified;
-				if (isKusama && address.default) {
-					kusamaDefault = address.address;
-				}
-				return isKusama;
-			})
-			.map(address => `"${address.address}"`)
-			.join(',');
+		const kusama = getNetworkAddresses(addresses, KUSAMA);
+		const polkadot = getNetworkAddresses(addresses, POLKADOT);
 
 		const tokenContent: JWTPayploadType = {
 			email,
@@ -960,8 +970,10 @@ export default class AuthService {
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
-				'x-hasura-kusama': `{${kusamaAddresses}}`,
-				'x-hasura-kusama-default': kusamaDefault,
+				'x-hasura-kusama': `{${kusama.addresses}}`,
+				'x-hasura-kusama-default': kusama.default,
+				'x-hasura-polkadot': `{${polkadot.addresses}}`,
+				'x-hasura-polkadot-default': polkadot.default,
 				'x-hasura-user-email': email || '',
 				'x-hasura-user-id': `${id}`
 			},

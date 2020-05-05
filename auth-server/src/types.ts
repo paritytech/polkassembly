@@ -60,6 +60,8 @@ export interface HasuraClaimPayload {
     'x-hasura-user-id': string;
     'x-hasura-kusama': string;
     'x-hasura-kusama-default': string;
+    'x-hasura-polkadot': string;
+    'x-hasura-polkadot-default': string;
 }
 
 export interface JWTPayploadType {
@@ -272,4 +274,9 @@ export interface SetCredentialsConfirmArgs {
     password: string;
     signature: string;
     username: string;
- }
+}
+
+export interface NetworkAddressType {
+    addresses: string;
+    default: string;
+}
