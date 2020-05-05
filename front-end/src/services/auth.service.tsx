@@ -4,6 +4,7 @@
 
 import jwt from 'jsonwebtoken';
 
+import { network } from '../global/networkConstants';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
 
@@ -59,12 +60,12 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 				let addresses = '';
 				let defaultAddress = '';
 
-				if (NETWORK === 'kusama') {
+				if (NETWORK === network.KUSAMA) {
 					addresses = claims['x-hasura-kusama'];
 					defaultAddress = claims['x-hasura-kusama-default'];
 				}
 
-				if (NETWORK === 'polkadot') {
+				if (NETWORK === network.POLKADOT) {
 					addresses = claims['x-hasura-polkadot'];
 					defaultAddress = claims['x-hasura-polkadot-default'];
 				}
