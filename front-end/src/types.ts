@@ -40,6 +40,8 @@ export interface HasuraClaimPayload {
     'x-hasura-user-id': string
     'x-hasura-kusama': string
     'x-hasura-kusama-default': string
+    'x-hasura-polkadot': string
+    'x-hasura-polkadot-default': string
 }
 
 export interface JWTPayploadType {

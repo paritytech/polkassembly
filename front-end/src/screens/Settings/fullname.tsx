@@ -38,22 +38,16 @@ const Fullname = (): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeName && data.changeName.message) {
+					if (data?.changeName?.message) {
 						queueNotification({
 							header: 'Success!',
 							message: data.changeName.message,
 							status: NotificationStatus.SUCCESS
 						});
 					}
-					if (data && data.changeName && data.changeName.token) {
-						handleTokenChange(data.changeName.token);
+					if (data?.changeName?.token) {
+						handleTokenChange(data.changeName.token, currentUser);
 					}
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							name
-						};
-					});
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',

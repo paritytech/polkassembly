@@ -18,7 +18,7 @@ import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressSignupConfirmMutation, useAddressSignupStartMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { handleLoginUser } from '../../services/auth.service';
+import { handleTokenChange } from '../../services/auth.service';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -159,14 +159,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 			});
 
 			if (signupResult?.addressSignupConfirm?.token && signupResult?.addressSignupConfirm?.user) {
-				handleLoginUser({ token: signupResult.addressSignupConfirm.token, user: signupResult.addressSignupConfirm.user }, currentUser);
-				currentUser.setUserDetailsContextState((prevState) => {
-					return {
-						...prevState,
-						addresses: [...prevState.addresses, address],
-						defaultAddress: prevState.addresses?.length ? prevState.defaultAddress : address
-					};
-				});
+				handleTokenChange(signupResult.addressSignupConfirm.token, currentUser);
 				if (email) {
 					setModal({
 						content: 'We sent you an email to verify your address. Click on the link in the email.',

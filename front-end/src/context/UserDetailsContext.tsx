@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import React, { createContext, useState } from 'react';
 
 import { getLocalStorageToken } from '../services/auth.service';
-import { JWTPayploadType,UserDetailsContextType } from '../types';
+import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
 
 const initialUserDetailsContext : UserDetailsContextType = {
