@@ -628,8 +628,6 @@ export default class AuthService {
 	}
 
 	public async SetCredentialsStart (address: string): Promise<string> {
-		const signMessage = uuid();
-
 		const addressObj = await Address
 			.query()
 			.where('address', address)
@@ -638,6 +636,8 @@ export default class AuthService {
 		if (!addressObj) {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
+
+		const signMessage = uuid();
 
 		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
