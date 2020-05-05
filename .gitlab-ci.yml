@@ -4,7 +4,7 @@ variables:
   CI_REGISTRY:                     "paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
-  GIT_DEPTH:                       3
+  GIT_DEPTH:                       100
   # Variables required by Gitlab scanning
   SAST_DISABLE_DIND:               "true"
   SCAN_KUBERNETES_MANIFESTS:       "true"

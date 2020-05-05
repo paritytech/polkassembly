@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
 # shellcheck source=lib.sh
 source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/lib.sh"
 
