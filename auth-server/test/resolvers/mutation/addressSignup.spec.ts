@@ -35,10 +35,10 @@ describe('addressSignup mutation', () => {
 
 	it('should be able to request signup challenge message', async () => {
         const result = await addressSignupStart(undefined, { address });
-        const signMessage = await redisGet(getAddressSignupKey(address));
+        const redisSignMessage = await redisGet(getAddressSignupKey(address));
 
         expect(result.signMessage).to.be.a('string');
-        expect(result.signMessage).to.equal(signMessage);
+        expect(result.signMessage).to.equal(redisSignMessage);
     });
 
     it('should be able to signup with correct signature', async () => {
