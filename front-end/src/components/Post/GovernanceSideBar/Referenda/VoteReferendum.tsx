@@ -3,11 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useMemo,useState } from 'react';
 import { DropdownProps, Select } from 'semantic-ui-react';
-import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from 'src/types';
 import BalanceInput from 'src/ui-components/BalanceInput';
@@ -32,7 +32,7 @@ interface Props {
 const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [lockedBalance, setLockedBalance] = useState<BN | undefined>(undefined);
-	const { api, apiReady } = useContext(ApiContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message: '' });
 	const CONVICTIONS: [number, number][] = [1, 2, 4, 8, 16, 32].map((lock, index) => [index + 1, lock]);
 
@@ -51,11 +51,6 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 
 	const onBalanceChange = (balance: BN) => setLockedBalance(balance);
 	const voteRefrendum = async (aye: boolean) => {
-		if (!api) {
-			console.error('polkadot/api not set');
-			return;
-		}
-
 		if (!referendumId && referendumId !== 0) {
 			console.error('referendumId not set');
 			return;
@@ -144,7 +139,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						/>
 						<VoteLock/>
 						<AyeNayButtons
-							disabled={!apiReady}
+							disabled={!isApiReady}
 							onClickAye={() => voteRefrendum(true)}
 							onClickNay={() => voteRefrendum(false)}
 						/>

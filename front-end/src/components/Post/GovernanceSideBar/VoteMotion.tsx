@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import { LoadingStatusType, NotificationStatus } from 'src/types';
@@ -43,7 +43,7 @@ const VoteMotion = ({
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
-	const { api, apiReady } = useContext(ApiContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
@@ -60,11 +60,6 @@ const VoteMotion = ({
 	}, [accounts, currentCouncil]);
 
 	const voteMotion = async (aye: boolean) => {
-		if (!api) {
-			console.error('polkadot/api not set');
-			return;
-		}
-
 		if (!motionId && motionId !== 0) {
 			console.error('motionId not set');
 			return;
@@ -134,7 +129,7 @@ const VoteMotion = ({
 							onAccountChange={onAccountChange}
 						/>
 						<AyeNayButtons
-							disabled={!apiReady}
+							disabled={!isApiReady}
 							onClickAye={() => voteMotion(true)}
 							onClickNay={() => voteMotion(false)}
 						/>
