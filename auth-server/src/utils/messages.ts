@@ -69,7 +69,7 @@ export default {
 	REPORT_TYPE_INVALID: 'Report type can only be post or comment',
 	RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL: 'A new verification mail has been sent to your email.',
 	RESET_PASSWORD_RETURN_MESSAGE: 'The reset password link was sent to this email, if it exists in our database.',
-	SET_CREDENTIALS_INVALID_SIGNATURE: 'Username password change failed. Invalid signature.',
+	SET_CREDENTIALS_INVALID_SIGNATURE: 'Failed to set up a username and password. Invalid signature.',
 	SET_CREDENTIALS_SIGN_MESSAGE_EXPIRED: 'Session expired, please change again.',
 	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
 	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.',
