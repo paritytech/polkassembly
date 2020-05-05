@@ -166,7 +166,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						disabled={loading}
 						onClick={handleToggle}
 					>
-						Sign Up With Web3 Address
+						Sign-up with Web3 address
 					</Button>
 				</div>
 			</Responsive>
