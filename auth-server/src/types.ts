@@ -154,11 +154,6 @@ export interface UserArgs {
 	id: number;
 }
 
-export interface UsersArgs {
-	limit: number;
-	page: number;
-}
-
 export interface SetDefaultAddressArgs {
     address: string;
 }

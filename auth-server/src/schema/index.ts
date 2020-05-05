@@ -30,7 +30,6 @@ import notification from './query/notification';
 import subscription from './query/subscription';
 import tokenQuery from './query/token';
 import userQuery from './query/user';
-import usersQuery from './query/users';
 import address from './type/address';
 import addressLinkType from './type/addressLinkType';
 import addressLoginType from './type/addressLoginType';
@@ -65,7 +64,6 @@ export default gql`
 		${subscription}
 		${tokenQuery}
 		${userQuery}
-		${usersQuery}
 	}
 
 	type Mutation {
