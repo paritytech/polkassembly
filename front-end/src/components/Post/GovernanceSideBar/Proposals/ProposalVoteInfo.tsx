@@ -58,7 +58,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
 			{loadingStatus.isLoading
 				?
-				<Loader text={loadingStatus.message} timeout={3000} timeoutText={'Api is unresponsive'}/>
+				<Loader text={loadingStatus.message} timeout={30000} timeoutText={'Api is unresponsive'}/>
 				:
 				<Grid columns={3} divided>
 					<Grid.Row>

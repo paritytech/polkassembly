@@ -4,7 +4,7 @@ variables:
   CI_REGISTRY:                     "paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
-  GIT_DEPTH:                       3
+  GIT_DEPTH:                       100
   # Variables required by Gitlab scanning
   SAST_DISABLE_DIND:               "true"
   SCAN_KUBERNETES_MANIFESTS:       "true"
@@ -25,6 +25,7 @@ stages:
   - test
   - dockerize
   - deploy
+  - publish
 
 cache:
   key:                             '${CI_JOB_NAME}'
@@ -127,7 +128,7 @@ dockerize:production-front-end:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-auth-server:
@@ -136,7 +137,7 @@ dockerize-auth-server:
     name: parity-build
   only:
     - master
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
@@ -145,7 +146,7 @@ dockerize-chain-db-watcher:
     name: parity-build
   only:
     - master
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 #### stage:                        deploy
@@ -213,5 +214,17 @@ deploy-production:
   tags:
     - kubernetes-parity-build
   only:
-    - tags
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *deploy-k8s
+
+publish-draft-release:
+  stage: publish
+  environment:
+    name: parity-prod
+  image: parity/tools:latest
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  script:
+    - ./.maintain/publish_draft_release.sh
+  interruptible:                   true
+  allow_failure:                   true
