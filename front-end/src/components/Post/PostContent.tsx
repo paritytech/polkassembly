@@ -55,7 +55,7 @@ export default styled(PostContent)`
 	margin-bottom: 3rem;
 
 	.onchain-title {
-		max-width: calc(100% - 10rem);
+		max-width: calc(100% - 12rem);
 
 		@media only screen and (max-width: 576px) {
 			max-width: 100%;
