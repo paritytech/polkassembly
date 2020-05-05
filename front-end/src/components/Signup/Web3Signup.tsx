@@ -232,7 +232,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 							disabled={loading}
 							type='submit'
 						>
-							Sign up
+							Sign-up
 						</Button>
 					</div>
 				</>
