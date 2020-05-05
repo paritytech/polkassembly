@@ -3,11 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { AuthenticationError } from 'apollo-server';
-import getAddressesFromUserId from 'src/utils/getAddressesFromUserId';
-import getDefaultAddressFromAddressArray from 'src/utils/getDefaultAddressFromAddressArray';
 
 import User from '../../model/User';
 import { NetworkEnum, PublicUser, UserArgs } from '../../types';
+import getAddressesFromUserId from '../../utils/getAddressesFromUserId';
+import getDefaultAddressFromAddressArray from '../../utils/getDefaultAddressFromAddressArray';
 import messages from '../../utils/messages';
 
 export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
@@ -25,7 +25,7 @@ export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null
 
 	return {
 		id: user.id,
-		kusamaDefaultAddress: kusamaDefault,
+		kusama_default_address: kusamaDefault,
 		name: user.name,
 		username: user.username
 	};
