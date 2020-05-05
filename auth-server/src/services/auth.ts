@@ -297,7 +297,7 @@ export default class AuthService {
 				verified: true
 			});
 
-		await redisDel(getAddressLoginKey(address));
+		await redisDel(getAddressSignupKey(address));
 
 		if (email) {
 			const verifyToken = await EmailVerificationToken
