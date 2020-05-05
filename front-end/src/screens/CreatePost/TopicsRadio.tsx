@@ -77,6 +77,7 @@ export default styled(TopicsRadio)`
 			border-radius: 0.2rem;
 			letter-spacing: 0.05rem;
 			margin-right: 0.8rem;
+			transition: none;
 			&:hover {
 				background-color: grey_primary;
 				color: white;
