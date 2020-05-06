@@ -11,7 +11,7 @@ import { Divider, Responsive } from 'semantic-ui-react';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
-import { handleLoginUser } from '../../services/auth.service';
+import { handleTokenChange } from '../../services/auth.service';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
@@ -39,7 +39,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				}
 			}).then(({ data }) => {
 				if (data && data.login && data.login.token && data.login.user) {
-					handleLoginUser({ token: data.login.token, user: data.login.user }, currentUser);
+					handleTokenChange(data.login.token, currentUser);
 					history.push('/');
 				}
 			}).catch((e) => {

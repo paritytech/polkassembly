@@ -22,6 +22,7 @@ export interface UserDetailsContextType {
 		ownProposal: boolean
 	} | null,
     setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
+    web3signup?: boolean | null
 }
 
 export enum Role {
@@ -39,6 +40,8 @@ export interface HasuraClaimPayload {
     'x-hasura-user-id': string
     'x-hasura-kusama': string
     'x-hasura-kusama-default': string
+    'x-hasura-polkadot': string
+    'x-hasura-polkadot-default': string
 }
 
 export interface JWTPayploadType {
@@ -56,6 +59,7 @@ export interface JWTPayploadType {
 		ownProposal: boolean
     }
     'https://hasura.io/jwt/claims': HasuraClaimPayload
+    web3signup: boolean
 }
 
 export interface NotificationContextType {

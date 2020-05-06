@@ -3,13 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default `
-	type User {
-		id: Int
-		kusama_default_address: String
-        name: String
+    addressSignupConfirm(
+        address: String!
         email: String
-		email_verified: Boolean
-		username: String
-		web3signup: Boolean
-	}
+        name: String
+        network: String!
+        signature: String!
+        username: String
+    ): LoginResponse
 `;

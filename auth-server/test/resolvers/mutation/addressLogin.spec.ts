@@ -14,8 +14,8 @@ import addressLogin from '../../../src/resolvers/mutation/addressLogin';
 import signup from '../../../src/resolvers/mutation/signup';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
-import { redisSetex, redisGet } from '../../../src/redis';
-import { ADDRESS_LOGIN_TTL } from '../../../src/services/auth';
+import { redisSetex } from '../../../src/redis';
+import { ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
 
 describe('addressLogin mutation', () => {
 	let signupResult: any;
@@ -52,7 +52,7 @@ describe('addressLogin mutation', () => {
 		await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
 
 		// mock the addressLoginStart
-		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
+		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 	});
 
 	after(async () => {

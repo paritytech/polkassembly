@@ -26,7 +26,6 @@ export function Form({ className, standalone=true, ...props } : FormProps): Reac
 const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
-		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
@@ -111,6 +110,13 @@ const StyledForm = styled(SUIForm)`
 		input::selection, textarea::selection {
 			color: black_text;
 			background-color: grey_light;
+		}
+
+		input[type=checkbox]{
+			position: relative;
+			bottom: 0.2rem;
+			margin-right: 1rem;
+			vertical-align: middle;
 		}
 
 		@media only screen and (max-width: 576px) {

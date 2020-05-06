@@ -8,6 +8,8 @@ import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
 import addressLoginStart from './mutation/addressLoginStart';
+import addressSignupConfirm from './mutation/addressSignupConfirm';
+import addressSignupStart from './mutation/addressSignupStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeEmailMutation from './mutation/changeEmail';
 import changeNameMutation from './mutation/changeName';
@@ -22,6 +24,8 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setCredentialsConfirm from './mutation/setCredentialsConfirm';
+import setCredentialsStart from './mutation/setCredentialsStart';
 import setDefaultAddress from './mutation/setDefaultAddress';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
@@ -73,6 +77,8 @@ export default gql`
 		${addressLinkStart}
 		${addressLogin}
 		${addressLoginStart}
+		${addressSignupConfirm}
+		${addressSignupStart}
 		${addressUnlink}
 		${changeUsernameMutation}
 		${changeEmailMutation}
@@ -87,6 +93,8 @@ export default gql`
 		${requestResetPassword}
 		${resendVerifyEmailToken}
 		${resetPassword}
+		${setCredentialsConfirm}
+		${setCredentialsStart}
 		${setDefaultAddress}
 		${signupMutation}
 		${undoEmailChange}
