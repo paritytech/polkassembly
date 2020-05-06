@@ -57,7 +57,7 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 	return (
 		<Popup
 			className={className}
-			trigger={<div>{blocksRemaining !== endBlock ? blockToTime(blocksRemaining, blocktime) : ''}</div>}
+			trigger={<div>{blocksRemaining !== endBlock ? blockToTime(blocksRemaining, blocktime) : endBlock}</div>}
 			content={<DivContent>{`#${endBlock}`}</DivContent>}
 			hoverable={true}
 			position='top left'
