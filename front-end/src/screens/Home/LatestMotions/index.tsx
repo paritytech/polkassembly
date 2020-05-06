@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { post_type } from 'src/global/post_types';
 
 import MotionsListing from '../../../components/Listings/MotionsListing';
@@ -16,7 +16,11 @@ interface Props {
 
 const MotionsContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestMotionPostsQuery({ variables: { limit: 2, postType: post_type.ON_CHAIN } });
+	const { data, error, refetch } = useLatestMotionPostsQuery({ variables: { limit: 2, postType: post_type.ON_CHAIN } });
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

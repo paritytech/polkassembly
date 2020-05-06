@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { post_type } from 'src/global/post_types';
 
 import Referenda from '../../../components/Listings/ReferendaListing';
@@ -16,10 +16,14 @@ interface Props {
 
 const ReferendaContainer = ({ className }:Props) => {
 
-	const { data, error } = useLatestReferendaPostsQuery({ variables: {
+	const { data, error, refetch } = useLatestReferendaPostsQuery({ variables: {
 		limit: 5,
 		postType: post_type.ON_CHAIN
 	} });
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 
