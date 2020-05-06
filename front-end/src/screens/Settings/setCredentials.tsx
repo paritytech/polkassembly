@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { web3Accounts, web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
+import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
 import React, { useContext, useState } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
@@ -30,6 +30,7 @@ const SetCredentials = (): JSX.Element => {
 	const [isAccountLoading, setIsAccountLoading] = useState(true);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
+	const [source, setSource] = useState('');
 	const { errors, handleSubmit, register } = useForm();
 	const [setCredentialsStartMutation] = useSetCredentialsStartMutation();
 	const [setCredentialsConfirmMutation, { loading }] = useSetCredentialsConfirmMutation();
@@ -62,6 +63,7 @@ const SetCredentials = (): JSX.Element => {
 
 			if (account.address === currentUser.defaultAddress) {
 				setAddress(currentUser.defaultAddress);
+				setSource(account.meta.source);
 			}
 		});
 
@@ -77,7 +79,7 @@ const SetCredentials = (): JSX.Element => {
 		}
 
 		try {
-			const injected = await web3FromAddress(address);
+			const injected = await web3FromSource(source);
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
 
 			if (!signRaw) {
