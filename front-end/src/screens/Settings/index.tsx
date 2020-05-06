@@ -3,13 +3,15 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Divider,Grid } from 'semantic-ui-react';
 
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Address from './address';
 import Email from './email';
 import Fullname from './fullname';
 import Password from  './password';
+import SetCredentials from './setCredentials';
 import Username from './username';
 
 interface Props {
@@ -17,19 +19,19 @@ interface Props {
 }
 
 const Settings = ({ className }:Props): JSX.Element => {
+	const { web3signup } = useContext(UserDetailsContext);
+
 	return (
 		<Grid>
 			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
 				<h2>Settings</h2>
 				<Divider/>
-				<Username/>
+				{web3signup ? <SetCredentials /> : <Username/>}
 				<Divider/>
 				<Fullname/>
 				<Divider/>
-				<Email/>
-				<Divider/>
-				<Password/>
-				<Divider/>
+				{web3signup ? null : <><Email/><Divider/></>}
+				{web3signup ? null : <><Password/><Divider/></>}
 				<Address/>
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>

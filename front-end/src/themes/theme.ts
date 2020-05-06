@@ -32,8 +32,9 @@ export const theme = {
 		lg: '1.8rem',
 		md: '1.5rem',
 		sm: '1.3rem',
-		xl: '3rem',
-		xs: '1.2rem'
+		xl: '2.4rem',
+		xs: '1.2rem',
+		xxl: '3rem'
 	},
 	fonts: {
 		font_default: 'Roboto',

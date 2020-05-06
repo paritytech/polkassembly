@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext, useEffect,useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -38,22 +38,16 @@ const Fullname = (): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeName && data.changeName.message) {
+					if (data?.changeName?.message) {
 						queueNotification({
 							header: 'Success!',
 							message: data.changeName.message,
 							status: NotificationStatus.SUCCESS
 						});
 					}
-					if (data && data.changeName && data.changeName.token) {
-						handleTokenChange(data.changeName.token);
+					if (data?.changeName?.token) {
+						handleTokenChange(data.changeName.token, currentUser);
 					}
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							name
-						};
-					});
 				}).catch((e) => {
 					queueNotification({
 						header: 'Failed!',
@@ -73,7 +67,7 @@ const Fullname = (): JSX.Element => {
 					<input
 						value={name || ''}
 						onChange={onNameChange}
-						placeholder='username'
+						placeholder='Display Name'
 						type='text'
 					/>
 					{error?.message && <FilteredError text={error.message}/>}

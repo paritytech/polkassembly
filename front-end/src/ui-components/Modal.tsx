@@ -54,9 +54,9 @@ export default styled(Modal)`
 
 	> .header {
 		border-bottom:0px!important;
-		font-family: font_mono;
-		font-weight: 500!important;
-		font-size: 1.8rem!important;
+		font-family: font_default !important;
+		font-weight: 400!important;
+		font-size: xl!important;
 		padding: 2rem 3rem 0 3rem!important;
 	}
 

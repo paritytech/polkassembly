@@ -15,7 +15,6 @@ export default styled(Button)`
 		font-family: font_default;
 		font-size: md;
 		font-weight: 500;
-		text-transform: capitalize;
 		letter-spacing: 0.06rem;
 		line-height: 1.6rem;
 		border-radius: button_radius;

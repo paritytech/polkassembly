@@ -19,6 +19,7 @@ import { Form } from '../../ui-components/Form';
 import Spacer from '../../ui-components/Spacer';
 import cleanError from '../../util/cleanError';
 import messages from '../../util/messages';
+import * as validation from '../../util/validation';
 
 interface Props{
 	className?: string
@@ -62,15 +63,8 @@ const Email = ({ className }: Props): JSX.Element => {
 							});
 						}
 						if (data.changeEmail.token) {
-							handleTokenChange(data.changeEmail.token);
+							handleTokenChange(data.changeEmail.token, currentUser);
 						}
-						currentUser.setUserDetailsContextState((prevState) => {
-							return {
-								...prevState,
-								email,
-								email_verified: false
-							};
-						});
 						setEditing(false);
 					}
 				}).catch((e) => {
@@ -116,9 +110,7 @@ const Email = ({ className }: Props): JSX.Element => {
 							name='email'
 							placeholder='mail@example.com'
 							type='email'
-							ref={register({
-								pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
-							})}
+							ref={register(validation.email)}
 						/> :
 						<div className={`current-email ${email ? '' : 'text-muted'}`}>
 							{email ? email : 'No email linked.'}

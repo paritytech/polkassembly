@@ -14,6 +14,7 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { logout } from '../../services/auth.service';
+import AddressComponent from '../../ui-components/Address';
 
 interface Props {
 	children?: ReactNode,
@@ -54,7 +55,10 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content: 'Logout', icon:'sign-out', key:'signout', onClick: handleLogout, to:'/' }
 	];
 
-	const userMenu = <><Icon name='user circle' inverted />{username}</>;
+	const userMenu = currentUser.web3signup && currentUser.defaultAddress
+		? <><AddressComponent address={currentUser.defaultAddress} /></>
+		: <><Icon name='user circle' inverted />{username}</>;
+
 	const caretIcon = <Icon name='caret down' inverted />;
 
 	// Mobile Sidebar

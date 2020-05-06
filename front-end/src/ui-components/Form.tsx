@@ -112,6 +112,13 @@ const StyledForm = styled(SUIForm)`
 			background-color: grey_light;
 		}
 
+		input[type=checkbox]{
+			position: relative;
+			bottom: 0.2rem;
+			margin-right: 1rem;
+			vertical-align: middle;
+		}
+
 		@media only screen and (max-width: 576px) {
 			margin-top: 0rem;
 			padding: 2rem;
