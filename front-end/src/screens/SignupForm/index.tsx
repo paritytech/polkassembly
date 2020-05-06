@@ -25,7 +25,6 @@ const Signup = ({ className }: Props) => {
 					: <Web3Signup toggleWeb2Signup={toggleWeb2Signup}/>
 				}
 			</Grid.Column>
-			<Grid.Column only='tablet computer' tablet={2} computer={4} largeScreen={5} widescreen={5}/>
 		</Grid>
 	);
 };
