@@ -18,7 +18,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, NetworkAddressType, NotificationPreferencesType, Role } from '../types';
+import { AuthObjectType, HashedPassword, JWTPayploadType, NetworkAddressType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -77,9 +77,8 @@ export default class AuthService {
 		return getUserFromUserId(userId);
 	}
 
-	private async createUser (email: string, name: string, password: string, username: string, web3signup: boolean): Promise<User> {
-		const salt = randomBytes(32);
-		password = await argon2.hash(password, { salt });
+	private async createUser (email: string, name: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		const user = await User
 			.query()
@@ -89,7 +88,7 @@ export default class AuthService {
 				email_verified: false,
 				name,
 				password,
-				salt: salt.toString('hex'),
+				salt,
 				username: username.toLowerCase(),
 				web3signup
 			});
@@ -136,6 +135,16 @@ export default class AuthService {
 			// send verification email in background
 			sendVerificationEmail(user, verifyToken);
 		}
+	}
+
+	private async getSaltAndHashedPassword (plainPassword: string): Promise<HashedPassword> {
+		const salt = randomBytes(32);
+		const hashedPassword = await argon2.hash(plainPassword, { salt });
+
+		return {
+			password: hashedPassword,
+			salt: salt.toString('hex')
+		};
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -424,20 +433,19 @@ export default class AuthService {
 
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
-
 		const correctPassword = await user.verifyPassword(oldPassword);
+
 		if (!correctPassword) {
 			throw new UserInputError(messages.INCORRECT_PASSWORD);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(userId);
 	}
@@ -660,15 +668,13 @@ export default class AuthService {
 
 		const userId = addressObj.user_id;
 		let user = await getUserFromUserId(userId);
-
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex'),
+				salt,
 				username: username.toLowerCase(),
 				web3signup: false
 			})
@@ -816,14 +822,13 @@ export default class AuthService {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(Number(userId));
 

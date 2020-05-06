@@ -280,3 +280,8 @@ export interface NetworkAddressType {
     addresses: string;
     default: string;
 }
+
+export interface HashedPassword {
+    password: string;
+    salt: string;
+}
