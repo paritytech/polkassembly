@@ -83,3 +83,21 @@ export const SET_DEFAULT_ADDRESS = gql`
 		}
 	}
 `;
+
+export const SET_CREDENTIALS_START = gql`
+	mutation setCredentialsStart($address: String!){
+		setCredentialsStart(address: $address) {
+			message
+			signMessage
+		}
+	}
+`;
+
+export const SET_CREDENTIALS_CONFIRM = gql`
+	mutation setCredentialsConfirm($address: String!, $email: String, $signature: String!, $username: String!, $password: String!) {
+		setCredentialsConfirm(address: $address, email: $email, signature: $signature, username: $username, password: $password) {
+			message
+			token
+		}
+	}
+`;

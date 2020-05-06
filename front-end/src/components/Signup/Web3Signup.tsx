@@ -2,16 +2,19 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
+import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { Divider, DropdownProps } from 'semantic-ui-react';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useAddressLoginMutation, useAddressLoginStartMutation } from '../../generated/graphql';
+import { useAddressSignupConfirmMutation, useAddressSignupStartMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { handleTokenChange } from '../../services/auth.service';
 import AccountSelectionForm from '../../ui-components/AccountSelectionForm';
@@ -23,12 +26,13 @@ import getEncodedAddress from '../../util/getEncodedAddress';
 
 interface Props {
 	className?: string
-	toggleWeb2Login: () => void
+	toggleWeb2Signup: () => void
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
+const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
 
-const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
+const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
@@ -36,9 +40,11 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { history } = useRouter();
-	const [addressLoginStartMutation] = useAddressLoginStartMutation();
-	const [addressLoginMutation, { loading }] = useAddressLoginMutation();
+	const [addressSignupStartMutation] = useAddressSignupStartMutation();
+	const [addressSignupConfirmMutation, { loading }] = useAddressSignupConfirmMutation();
 	const currentUser = useContext(UserDetailsContext);
+	const { errors, handleSubmit, register } = useForm();
+	const { setModal } = useContext(ModalContext);
 
 	useEffect(() => {
 		if (!accounts.length) {
@@ -85,7 +91,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 		setAddress(addressValue);
 	};
 
-	const handleLogin = async () => {
+	const handleSignup = async () => {
 		if (!accounts.length) {
 			return getAccounts();
 		}
@@ -98,13 +104,13 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				return console.error('Signer not available');
 			}
 
-			const { data: startResult } = await addressLoginStartMutation({
+			const { data: startResult } = await addressSignupStartMutation({
 				variables: {
 					address
 				}
 			});
 
-			const signMessage = startResult?.addressLoginStart?.signMessage;
+			const signMessage = startResult?.addressSignupStart?.signMessage;
 
 			if (!signMessage) {
 				throw new Error('Challenge message not found');
@@ -116,15 +122,20 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				type: 'bytes'
 			});
 
-			const { data: loginResult } = await addressLoginMutation({
+			const { data: signupResult } = await addressSignupConfirmMutation({
 				variables: {
 					address,
+					network: NETWORK,
 					signature
 				}
 			});
 
-			if (loginResult?.addressLogin?.token && loginResult?.addressLogin?.user) {
-				handleTokenChange(loginResult.addressLogin.token, currentUser);
+			if (signupResult?.addressSignupConfirm?.token) {
+				handleTokenChange(signupResult.addressSignupConfirm.token, currentUser);
+				setModal({
+					content: 'Add an email in settings if you want to be able to recover your account!',
+					title: 'Add optional email'
+				});
 				history.push('/');
 			} else {
 				throw new Error('Web3 Login failed');
@@ -134,11 +145,11 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 		}
 	};
 
-	const handleToggle = () => toggleWeb2Login();
+	const handleToggle = () => toggleWeb2Signup();
 
 	return (
-		<Form className={className} onSubmit={handleLogin}>
-			<h3>Login</h3>
+		<Form className={className} onSubmit={handleSubmit(handleSignup)}>
+			<h3>Sign-up</h3>
 			{extensionNotFound?
 				<div className='card'>
 					<ExtensionNotDetected />
@@ -166,13 +177,27 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 							onAccountChange={onAccountChange}
 						/>
 					</Form.Group>
+					<Form.Field>
+						<label className='checkbox-label'>
+							<input
+								className={errors.termsandconditions ? 'error' : ''}
+								name='termsandconditions'
+								value='yes'
+								ref={register({ required: true })}
+								type='checkbox'
+							/>
+							I have read and agree to the terms of the <Link to='/terms-and-conditions'>Polkassembly end user agreement</Link>.
+						</label>
+						{errors.termsandconditions && <div className={'errorText'}>Please agree to the terms of the Polkassembly end user agreement.</div>}
+					</Form.Field>
+					<div className='text-muted'>To see how we use your personal data please see our <Link to='/privacy'>privacy notice</Link>.</div>
 					<div className={'mainButtonContainer'}>
 						<Button
 							primary
 							disabled={loading}
 							type='submit'
 						>
-							Login
+							Sign-up
 						</Button>
 					</div>
 				</>
@@ -187,19 +212,20 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					disabled={loading}
 					onClick={handleToggle}
 				>
-					Login With Username
+					Sign-up with username
 				</Button>
 			</div>
 		</Form>
 	);
 };
 
-export default styled(LoginForm)`
+export default styled(SignupForm)`
 	.mainButtonContainer {
 		align-items: center;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		margin-top: 3rem;
 	}
 
 	input.error {
@@ -214,6 +240,21 @@ export default styled(LoginForm)`
 
 	.errorText {
 		color: red_secondary;
+	}
+
+	.checkbox-label {
+		position: relative;
+		bottom: 0.1rem;
+		display: inline-block !important;
+		font-size: sm !important;
+		font-weight: 400 !important;
+		color: grey_primary !important;
+		a {
+			color: grey_primary;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			border-bottom-color: grey_primary;
+		}
 	}
 
 	.ui.dimmer {

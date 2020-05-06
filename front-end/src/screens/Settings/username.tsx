@@ -51,22 +51,16 @@ const Username = ({ className }:Props): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.changeUsername && data.changeUsername.message) {
+					if (data?.changeUsername?.message) {
 						queueNotification({
 							header: 'Success!',
 							message: data.changeUsername.message,
 							status: NotificationStatus.SUCCESS
 						});
 					}
-					if (data && data.changeUsername && data.changeUsername.token) {
-						handleTokenChange(data.changeUsername.token);
+					if (data?.changeUsername?.token) {
+						handleTokenChange(data.changeUsername.token, currentUser);
 					}
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							username
-						};
-					});
 					setEditing(false);
 				}).catch((e) => {
 					queueNotification({

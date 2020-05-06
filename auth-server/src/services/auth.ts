@@ -18,7 +18,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, NotificationPreferencesType, Role } from '../types';
+import { AuthObjectType, HashedPassword, JWTPayploadType, NetworkAddressType, NotificationPreferencesType, Role } from '../types';
 import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -39,6 +39,7 @@ const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const KUSAMA = 'kusama';
+const POLKADOT = 'polkadot';
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
 	own_proposal: true,
@@ -47,12 +48,107 @@ const NOTIFICATION_DEFAULTS = {
 };
 
 export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
+export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
+export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
+export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
+export const getNetworkAddresses = (addresses: Address[], network: string): NetworkAddressType => {
+	let defaultAddress = '';
+	const resultAddresses = addresses
+		.filter(address => {
+			const isNetworkAddress = address.network === network && address.verified;
+			if (isNetworkAddress && address.default) {
+				defaultAddress = address.address;
+			}
+			return isNetworkAddress;
+		})
+		.map(address => `"${address.address}"`)
+		.join(',');
+
+	return {
+		addresses: resultAddresses,
+		default: defaultAddress
+	};
+};
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 
 		return getUserFromUserId(userId);
+	}
+
+	private async createUser (email: string, name: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
+
+		const user = await User
+			.query()
+			.allowInsert('[email, email_verified, name, password, salt, username, web3signup]')
+			.insert({
+				email,
+				email_verified: false,
+				name,
+				password,
+				salt,
+				username: username.toLowerCase(),
+				web3signup
+			});
+
+		await Notification
+			.query()
+			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
+			.insert({
+				user_id: user.id,
+				...NOTIFICATION_DEFAULTS
+			});
+
+		return user;
+	}
+
+	private async createAddress (network: string, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
+		return Address
+			.query()
+			.allowInsert('[address, default, network, public_key, user_id, verified]')
+			.insert({
+				address,
+				default: defaultAddress,
+				network,
+				public_key: this.getPublicKey(address),
+				user_id,
+				verified: true
+			});
+	}
+
+	private async sendVerificationTokenMail (user: User): Promise<void> {
+		if (user.email) {
+			const verifyToken = await EmailVerificationToken
+				.query()
+				.allowInsert('[token, user_id, valid]')
+				.insert({
+					token: uuid(),
+					user_id: user.id,
+					valid: true
+				});
+
+			// send verification email in background
+			sendVerificationEmail(user, verifyToken);
+		}
+	}
+
+	private async getSaltAndHashedPassword (plainPassword: string): Promise<HashedPassword> {
+		const salt = randomBytes(32);
+		const hashedPassword = await argon2.hash(plainPassword, { salt });
+
+		return {
+			password: hashedPassword,
+			salt: salt.toString('hex')
+		};
+	}
+
+	private getPublicKey (address: string): string {
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(address);
+
+		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -78,7 +174,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -125,13 +222,13 @@ export default class AuthService {
 	public async AddressLoginStart (address: string): Promise<string> {
 		const signMessage = uuid();
 
-		await redisSetex(address, ADDRESS_LOGIN_TTL, signMessage);
+		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
 		return signMessage;
 	}
 
 	public async AddressLogin (address: string, signature: string): Promise<AuthObjectType> {
-		const signMessage = await redisGet(address);
+		const signMessage = await redisGet(getAddressLoginKey(address));
 
 		if (!signMessage) {
 			throw new ForbiddenError(messages.ADDRESS_LOGIN_SIGN_MESSAGE_EXPIRED);
@@ -160,6 +257,8 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_LOGIN_NOT_FOUND);
 		}
 
+		await redisDel(getAddressLoginKey(address));
+
 		return {
 			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user),
@@ -168,7 +267,70 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
+			}
+		};
+	}
+
+	public async AddressSignupStart (address: string): Promise<string> {
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
+		}
+
+		const signMessage = uuid();
+
+		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
+	public async AddressSignupConfirm (network: string, address: string, signature: string): Promise<AuthObjectType> {
+		const signMessage = await redisGet(getAddressSignupKey(address));
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
+		}
+
+		const username = uuid().split('-').join('').substring(0, 25);
+		const password = uuid();
+
+		const user = await this.createUser('', '', password, username, true);
+
+		await this.createAddress(network, address, true, user.id);
+		await redisDel(getAddressSignupKey(address));
+		await this.sendVerificationTokenMail(user);
+
+		return {
+			refreshToken: await this.getRefreshToken(user),
+			token: await this.getSignedToken(user),
+			user: {
+				email: user.email,
+				email_verified: user.email_verified || false,
+				id: user.id,
+				name: user.name,
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -220,42 +382,9 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const salt = randomBytes(32);
-		password = await argon2.hash(password, { salt });
+		const user = await this.createUser(email, name, password, username, false);
 
-		const user = await User
-			.query()
-			.allowInsert('[email, password, username, name]')
-			.insert({
-				email,
-				email_verified: false,
-				name,
-				password,
-				salt: salt.toString('hex'),
-				username: username.toLowerCase()
-			});
-
-		await Notification
-			.query()
-			.allowInsert('[user_id, post_participated, post_created, new_proposal, own_proposal]')
-			.insert({
-				user_id: user.id,
-				...NOTIFICATION_DEFAULTS
-			});
-
-		if (email) {
-			const verifyToken = await EmailVerificationToken
-				.query()
-				.allowInsert('[token, user_id, valid]')
-				.insert({
-					token: uuid(),
-					user_id: user.id,
-					valid: true
-				});
-
-			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
-		}
+		await this.sendVerificationTokenMail(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -265,7 +394,8 @@ export default class AuthService {
 				email_verified: user.email_verified || false,
 				id: user.id,
 				name: user.name,
-				username: user.username
+				username: user.username,
+				web3signup: user.web3signup || false
 			}
 		};
 	}
@@ -307,20 +437,19 @@ export default class AuthService {
 
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
-
 		const correctPassword = await user.verifyPassword(oldPassword);
+
 		if (!correctPassword) {
 			throw new UserInputError(messages.INCORRECT_PASSWORD);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(userId);
 	}
@@ -339,6 +468,10 @@ export default class AuthService {
 
 		if (!dbAddress) {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		if (dbAddress.default) {
+			throw new ForbiddenError(messages.ADDRESS_UNLINK_NOT_ALLOWED);
 		}
 
 		await Address
@@ -368,8 +501,6 @@ export default class AuthService {
 		if (dbAddress.user_id !== user.id) {
 			throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
 		}
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(dbAddress.address);
 
 		const isValidSr = verifySignature(dbAddress.sign_message, dbAddress.address, signature);
 
@@ -389,7 +520,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: this.getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);
@@ -486,16 +617,90 @@ export default class AuthService {
 			.patch({ valid: false })
 			.where({ user_id: userId });
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: user.id,
-				valid: true
-			});
+		await this.sendVerificationTokenMail(user);
+	}
 
-		sendVerificationEmail(user, verifyToken);
+	public async SetCredentialsStart (address: string): Promise<string> {
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		const signMessage = uuid();
+
+		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		return signMessage;
+	}
+
+	public async SetCredentialsConfirm (address: string, email: string, newPassword: string, signature: string, username: string): Promise<string> {
+		const signMessage = await redisGet(getSetCredentialsKey(address));
+
+		if (!signMessage) {
+			throw new ForbiddenError(messages.SET_CREDENTIALS_SIGN_MESSAGE_EXPIRED);
+		}
+
+		const isValidSr = verifySignature(signMessage, address, signature);
+
+		if (!isValidSr) {
+			throw new ForbiddenError(messages.SET_CREDENTIALS_INVALID_SIGNATURE);
+		}
+
+		const addressObj = await Address
+			.query()
+			.where('address', address)
+			.first();
+
+		if (!addressObj) {
+			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
+		}
+
+		let existing = await User
+			.query()
+			.where('username', username.toLowerCase())
+			.first();
+
+		if (existing) {
+			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
+		}
+
+		if (email) {
+			existing = await User
+				.query()
+				.where('email', email)
+				.first();
+		}
+
+		if (existing) {
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
+		}
+
+		const userId = addressObj.user_id;
+		let user = await getUserFromUserId(userId);
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
+
+		await User
+			.query()
+			.patch({
+				email,
+				password,
+				salt,
+				username: username.toLowerCase(),
+				web3signup: false
+			})
+			.findById(userId);
+
+		user = await getUserFromUserId(userId);
+
+		await this.sendVerificationTokenMail(user);
+
+		await redisDel(getSetCredentialsKey(address));
+
+		return this.getSignedToken(user);
 	}
 
 	public async ChangeUsername (token: string, username: string, password: string): Promise<string> {
@@ -593,21 +798,9 @@ export default class AuthService {
 			.patch({ valid: false })
 			.where({ user_id: userId });
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: userId,
-				valid: true
-			});
-
 		user = await getUserFromUserId(userId);
 
-		if (email) {
-			// send verification email in background
-			sendVerificationEmail(user, verifyToken);
-		}
+		await this.sendVerificationTokenMail(user);
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
@@ -645,14 +838,13 @@ export default class AuthService {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(Number(userId));
 
@@ -691,7 +883,7 @@ export default class AuthService {
 		return { email: user.email, updatedToken: await this.getSignedToken(user) };
 	}
 
-	private async getSignedToken ({ email, email_verified, id, name, username }: User): Promise<string> {
+	private async getSignedToken ({ email, email_verified, id, name, username, web3signup }: User): Promise<string> {
 		if (!privateKey) {
 			const key = process.env.NODE_ENV === 'test' ? 'JWT_PRIVATE_KEY_TEST' : 'JWT_PRIVATE_KEY';
 			throw new ForbiddenError(`${key} not set. Aborting.`);
@@ -714,17 +906,8 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
-		let kusamaDefault = '';
-		const kusamaAddresses = addresses
-			.filter(address => {
-				const isKusama = address.network === KUSAMA && address.verified;
-				if (isKusama && address.default) {
-					kusamaDefault = address.address;
-				}
-				return isKusama;
-			})
-			.map(address => `"${address.address}"`)
-			.join(',');
+		const kusama = getNetworkAddresses(addresses, KUSAMA);
+		const polkadot = getNetworkAddresses(addresses, POLKADOT);
 
 		const tokenContent: JWTPayploadType = {
 			email,
@@ -732,16 +915,19 @@ export default class AuthService {
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
-				'x-hasura-kusama': `{${kusamaAddresses}}`,
-				'x-hasura-kusama-default': kusamaDefault,
-				'x-hasura-user-email': email,
+				'x-hasura-kusama': `{${kusama.addresses}}`,
+				'x-hasura-kusama-default': kusama.default,
+				'x-hasura-polkadot': `{${polkadot.addresses}}`,
+				'x-hasura-polkadot-default': polkadot.default,
+				'x-hasura-user-email': email || '',
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),
 			name,
 			notification,
 			sub: `${id}`,
-			username
+			username,
+			web3signup: web3signup || false
 		};
 
 		return jwt.sign(

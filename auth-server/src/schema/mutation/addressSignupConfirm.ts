@@ -3,12 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default `
-	type User {
-		id: Int
-		username: String
-        name: String
-        email: String
-		email_verified: Boolean
-		web3signup: Boolean
-	}
+    addressSignupConfirm(
+        address: String!
+        network: String!
+        signature: String!
+    ): LoginResponse
 `;
