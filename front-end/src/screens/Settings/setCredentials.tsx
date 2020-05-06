@@ -117,6 +117,7 @@ const SetCredentials = (): JSX.Element => {
 				handleTokenChange(setResult?.setCredentialsConfirm?.token, currentUser);
 			}
 		} catch (error) {
+			console.error(error);
 			setErr(error);
 		}
 	};
