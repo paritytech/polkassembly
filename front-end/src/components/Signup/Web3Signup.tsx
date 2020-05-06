@@ -149,7 +149,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 
 	return (
 		<Form className={className} onSubmit={handleSubmit(handleSignup)}>
-			<h3>Sign Up</h3>
+			<h3>Sign-up</h3>
 			{extensionNotFound?
 				<div className='card'>
 					<ExtensionNotDetected />
