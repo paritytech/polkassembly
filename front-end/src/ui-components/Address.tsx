@@ -4,10 +4,10 @@
 
 import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { ApiContext } from '../context/ApiContext';
 import shortenAddress from '../util/shortenAddress';
 
 interface Props {
@@ -18,15 +18,16 @@ interface Props {
 }
 
 const Address = ({ address, accountName, className, displayInline }: Props): JSX.Element => {
-	const { api, apiReady } = useContext(ApiContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [display, setDisplay] = useState<string>('');
 
 	useEffect(() => {
-		let unsubscribe: () => void;
 
-		if (!api || !apiReady) {
+		if (!isApiReady){
 			return;
 		}
+
+		let unsubscribe: () => void;
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) =>
 			setDisplay(info.identity.display || info.nickname || ''))
@@ -34,7 +35,7 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, apiReady]);
+	}, [address, api, isApiReady]);
 
 	return (
 		<div className={displayInline ? `${className} inline`: className}>
