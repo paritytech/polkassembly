@@ -91,7 +91,7 @@ const StyledForm = styled(SUIForm)`
 			border-style: solid;
 			border-width: 1px;
 			border-color: grey_light;
-			border-radius: 0.3rem;
+			border-radius: input_border_radius;
 			text-indent: 0rem;
 			padding: 1rem;
 			margin-bottom: 1.2rem;
@@ -100,7 +100,7 @@ const StyledForm = styled(SUIForm)`
 				font-size: input_text_size;
 				color: black_text;
 				border-color: grey_primary;
-				border-radius: 0rem;
+				border-radius: input_border_radius;
 			}
 			&:hover {
 				border-color: grey_secondary;
@@ -137,7 +137,11 @@ const StyledForm = styled(SUIForm)`
 		border-style: solid;
 		border-width: 1px;
 		border-color: grey_light;
-		border-radius: 0.3rem;
+		border-radius: input_border_radius;
+
+		.menu {
+			border-color: grey_light;
+		}
 
 		.menu .active.item {
 			font-weight: 500;
@@ -149,6 +153,10 @@ const StyledForm = styled(SUIForm)`
 
 		.menu>.item:hover {
 			background-color: grey_light;
+		}
+
+		.visible.menu.transition {
+			border-radius: input_border_radius;
 		}
 	}
 

@@ -20,7 +20,7 @@ export default styled(Input)`
         font-size: input_text_size;
         border-width: 1px;
         border-color: grey_light;
-        border-radius: 0.3rem;
+        border-radius: input_border_radius;
         text-indent: 0rem;
         padding: 1rem;
         margin-bottom: 1.2rem;
@@ -29,7 +29,7 @@ export default styled(Input)`
             font-size: input_text_size;
             color: black_text;
             border-color: grey_primary;
-            border-radius: 0.3rem;
+            border-radius: input_border_radius;
         }
         &:hover {
             border-color: grey_secondary;

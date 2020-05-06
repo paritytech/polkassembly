@@ -41,7 +41,8 @@ export const theme = {
 		font_secondary: 'Work Sans'
 	},
 	radii: {
-		button_radius: '0.3rem'
+		button_radius: '0.3rem',
+		input_border_radius: '0.3rem'
 	},
 	shadows: {
 		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
