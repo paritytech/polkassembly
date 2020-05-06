@@ -83,7 +83,7 @@ const SetCredentials = (): JSX.Element => {
 			const signRaw = injected && injected.signer && injected.signer.signRaw;
 
 			if (!signRaw) {
-				return console.error('Signer not available');
+				throw new Error('Signer not available');
 			}
 
 			const { data: startResult } = await setCredentialsStartMutation({
