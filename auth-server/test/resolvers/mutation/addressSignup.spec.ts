@@ -13,10 +13,11 @@ import addressLogin from '../../../src/resolvers/mutation/addressLogin';
 import addressSignupStart from '../../../src/resolvers/mutation/addressSignupStart';
 import addressSignupConfirm from '../../../src/resolvers/mutation/addressSignupConfirm';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
+import setCredentialsConfirm from '../../../src/resolvers/mutation/setCredentialsConfirm';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { redisSetex, redisGet, redisDel } from '../../../src/redis';
-import { getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
+import { getSetCredentialsKey, getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
 
 describe('addressSignup mutation', () => {
 	const fakectx: Context = {
@@ -112,6 +113,24 @@ describe('addressSignup mutation', () => {
 			expect(error).to.be.an.instanceof(ForbiddenError);
 			expect(error.message).to.eq(messages.ADDRESS_UNLINK_NOT_ALLOWED);
 		}
+	});
+
+	it('should be able to set credentials with valid signature', async () => {
+		// mock the setCredentialsStart
+		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		const email = 'test@example.com';
+		const username = 'username';
+		const password = 'password';
+
+		const result = await setCredentialsConfirm(undefined, {address, email, password, signature, username});
+
+		expect(result.token).to.be.a('string');
+
+		const token: any = jwt.decode(result.token);
+		expect(token.sub).to.equals(`${loginResult.user.id}`);
+		expect(token.email).to.equals(email);
+		expect(token.username).to.equals(username);
 	});
 
 	it('should not be able to signup with invalid signature', async () => {
