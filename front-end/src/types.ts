@@ -106,6 +106,7 @@ export type ChainPropType = {
 };
 
 export interface ChainProps {
+	'blockTime': number;
 	'ss58Format': number;
 	'tokenDecimals': number;
 	'tokenSymbol': TokenSymbol;
