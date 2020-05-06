@@ -27,7 +27,6 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 	useEffect(() => {
 		if (!isApiReady) {
-			console.warn('Api not ready');
 			return;
 		}
 

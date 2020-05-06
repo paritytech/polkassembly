@@ -32,7 +32,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 	useEffect(() => {
 		if (!isApiReady) {
-			console.warn('Api not ready');
 			return;
 		}
 
@@ -57,7 +56,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 	useEffect(() => {
 		if (!isApiReady) {
-			console.warn('Api not ready');
 			return;
 		}
 

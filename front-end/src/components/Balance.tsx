@@ -19,7 +19,6 @@ const Balance = ({ address, className }: Props) => {
 
 	useEffect(() => {
 		if (!isApiReady) {
-			console.warn('Api not ready');
 			return;
 		}
 

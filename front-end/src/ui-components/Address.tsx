@@ -24,7 +24,6 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 	useEffect(() => {
 
 		if (!isApiReady){
-			console.warn('Api not ready...');
 			return;
 		}
 
