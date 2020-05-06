@@ -115,7 +115,7 @@ describe('addressSignup mutation', () => {
 		await redisDel(getAddressSignupKey(address))
 	});
 
-	it('should not be able to signup with invalid signature', async () => {
+	it('should not be able to signup with expired token', async () => {
 		try {
 			await addressSignupConfirm(undefined, { address, network, signature: signature }, fakectx);
 		} catch (error) {
