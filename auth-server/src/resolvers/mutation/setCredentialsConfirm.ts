@@ -7,17 +7,21 @@ import { UserInputError } from 'apollo-server';
 import AuthService from '../../services/auth';
 import { ChangeResponseType, SetCredentialsConfirmArgs } from '../../types';
 import messages from '../../utils/messages';
+import validateEmail from '../../utils/validateEmail';
 import validateUsername from '../../utils/validateUsername';
 
-export default async (parent: void, { address, password, signature, username }: SetCredentialsConfirmArgs): Promise<ChangeResponseType> => {
+export default async (parent: void, { address, email, password, signature, username }: SetCredentialsConfirmArgs): Promise<ChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 
 	validateUsername(username);
 	if (password.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
+	if (email && !validateEmail(email)) {
+		throw new UserInputError(messages.INVALID_EMAIL);
+	}
 
-	const updatedJWT = await authServiceInstance.SetCredentialsConfirm(address, password, signature, username);
+	const updatedJWT = await authServiceInstance.SetCredentialsConfirm(address, email, password, signature, username);
 
 	return { message: messages.CREDENTIALS_CHANGE_SUCCESSFUL, token: updatedJWT };
 };

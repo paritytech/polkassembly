@@ -268,6 +268,7 @@ export interface AddressSignupConfirmArgs {
 
 export interface SetCredentialsConfirmArgs {
     address: string;
+    email: string;
     password: string;
     signature: string;
     username: string;

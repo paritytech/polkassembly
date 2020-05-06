@@ -637,7 +637,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async SetCredentialsConfirm (address: string, newPassword: string, signature: string, username: string): Promise<string> {
+	public async SetCredentialsConfirm (address: string, email: string, newPassword: string, signature: string, username: string): Promise<string> {
 		const signMessage = await redisGet(getSetCredentialsKey(address));
 
 		if (!signMessage) {
@@ -659,13 +659,24 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
 
-		const existing = await User
+		let existing = await User
 			.query()
 			.where('username', username.toLowerCase())
 			.first();
 
 		if (existing) {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
+		}
+
+		if (email) {
+			existing = await User
+				.query()
+				.where('email', email)
+				.first();
+		}
+
+		if (existing) {
+			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
 		const userId = addressObj.user_id;
@@ -675,6 +686,7 @@ export default class AuthService {
 		await User
 			.query()
 			.patch({
+				email,
 				password,
 				salt,
 				username: username.toLowerCase(),
@@ -683,6 +695,8 @@ export default class AuthService {
 			.findById(userId);
 
 		user = await getUserFromUserId(userId);
+
+		await this.sendVerificationTokenMail(user);
 
 		await redisDel(getSetCredentialsKey(address));
 

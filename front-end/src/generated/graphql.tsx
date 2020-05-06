@@ -2863,6 +2863,7 @@ export type MutationResetPasswordArgs = {
 
 export type MutationSetCredentialsConfirmArgs = {
   address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   signature: Scalars['String'],
   username: Scalars['String']
@@ -3782,6 +3783,7 @@ export type Mutation_RootResetPasswordArgs = {
 
 export type Mutation_RootSetCredentialsConfirmArgs = {
   address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   password: Scalars['String'],
   signature: Scalars['String'],
   username: Scalars['String']
@@ -11930,6 +11932,7 @@ export type SetCredentialsStartMutation = (
 
 export type SetCredentialsConfirmMutationVariables = {
   address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
   signature: Scalars['String'],
   username: Scalars['String'],
   password: Scalars['String']
@@ -14073,8 +14076,8 @@ export type SetCredentialsStartMutationHookResult = ReturnType<typeof useSetCred
 export type SetCredentialsStartMutationResult = ApolloReactCommon.MutationResult<SetCredentialsStartMutation>;
 export type SetCredentialsStartMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
 export const SetCredentialsConfirmDocument = gql`
-    mutation setCredentialsConfirm($address: String!, $signature: String!, $username: String!, $password: String!) {
-  setCredentialsConfirm(address: $address, signature: $signature, username: $username, password: $password) {
+    mutation setCredentialsConfirm($address: String!, $email: String, $signature: String!, $username: String!, $password: String!) {
+  setCredentialsConfirm(address: $address, email: $email, signature: $signature, username: $username, password: $password) {
     message
     token
   }
@@ -14096,6 +14099,7 @@ export type SetCredentialsConfirmMutationFn = ApolloReactCommon.MutationFunction
  * const [setCredentialsConfirmMutation, { data, loading, error }] = useSetCredentialsConfirmMutation({
  *   variables: {
  *      address: // value for 'address'
+ *      email: // value for 'email'
  *      signature: // value for 'signature'
  *      username: // value for 'username'
  *      password: // value for 'password'

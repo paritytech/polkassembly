@@ -94,8 +94,8 @@ export const SET_CREDENTIALS_START = gql`
 `;
 
 export const SET_CREDENTIALS_CONFIRM = gql`
-	mutation setCredentialsConfirm($address: String!, $signature: String!, $username: String!, $password: String!) {
-		setCredentialsConfirm(address: $address, signature: $signature, username: $username, password: $password) {
+	mutation setCredentialsConfirm($address: String!, $email: String, $signature: String!, $username: String!, $password: String!) {
+		setCredentialsConfirm(address: $address, email: $email, signature: $signature, username: $username, password: $password) {
 			message
 			token
 		}
