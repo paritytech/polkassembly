@@ -21,6 +21,7 @@ import Loader from '../../ui-components/Loader';
 import Modal from '../../ui-components/Modal';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import messages from '../../util/messages';
+import * as validation from '../../util/validation';
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
@@ -206,7 +207,7 @@ const SetCredentials = (): JSX.Element => {
 									className={errors.username ? 'error' : ''}
 									name='username'
 									placeholder='John'
-									ref={register({ maxLength:20, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
+									ref={register(validation.username)}
 									type='text'
 								/>
 								{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}
@@ -222,7 +223,7 @@ const SetCredentials = (): JSX.Element => {
 									className={errors.password ? 'error' : ''}
 									name='password'
 									placeholder='Password'
-									ref={register({ minLength: 6 ,required: true })}
+									ref={register(validation.password)}
 									type='password'
 								/>
 								{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}

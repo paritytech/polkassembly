@@ -16,6 +16,7 @@ import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
 import messages from '../../util/messages';
+import * as validation from '../../util/validation';
 
 interface Props {
 	className?: string
@@ -60,7 +61,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 						className={errors.username ? 'error' : ''}
 						name='username'
 						placeholder='John'
-						ref={register({ maxLength:20, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true })}
+						ref={register(validation.username)}
 						type='text'
 					/>
 					{(errors.username as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MAXLENGTH_ERROR}</span>}
@@ -77,7 +78,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 						className={errors.password ? 'error' : ''}
 						name='password'
 						placeholder='Password'
-						ref={register({ minLength: 6 ,required: true })}
+						ref={register(validation.password)}
 						type='password'
 					/>
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
