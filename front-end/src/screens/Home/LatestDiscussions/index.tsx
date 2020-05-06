@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import DiscussionsListing from '../../../components/Listings/DiscussionsListing';
 import { useLatestDiscussionPostsQuery } from '../../../generated/graphql';
@@ -14,8 +14,11 @@ interface Props {
 }
 
 const DiscussionContainer = ({ className }:Props) => {
+	const { data, error, refetch } = useLatestDiscussionPostsQuery({ variables: { limit: 5 } });
 
-	const { data, error } = useLatestDiscussionPostsQuery({ variables: { limit: 5 } });
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 
