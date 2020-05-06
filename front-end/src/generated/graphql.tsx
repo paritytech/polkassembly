@@ -2731,6 +2731,8 @@ export type Mutation = {
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
   addressLoginStart?: Maybe<AddressLoginType>,
+  addressSignupConfirm?: Maybe<LoginResponse>,
+  addressSignupStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2745,6 +2747,8 @@ export type Mutation = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setCredentialsConfirm?: Maybe<ChangeResponse>,
+  setCredentialsStart?: Maybe<AddressLoginType>,
   setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -2771,6 +2775,18 @@ export type MutationAddressLoginArgs = {
 
 
 export type MutationAddressLoginStartArgs = {
+  address: Scalars['String']
+};
+
+
+export type MutationAddressSignupConfirmArgs = {
+  address: Scalars['String'],
+  network: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type MutationAddressSignupStartArgs = {
   address: Scalars['String']
 };
 
@@ -2845,6 +2861,20 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSetCredentialsConfirmArgs = {
+  address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  signature: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type MutationSetCredentialsStartArgs = {
+  address: Scalars['String']
+};
+
+
 export type MutationSetDefaultAddressArgs = {
   address: Scalars['String']
 };
@@ -2873,6 +2903,8 @@ export type Mutation_Root = {
   addressLinkStart?: Maybe<AddressLinkType>,
   addressLogin?: Maybe<LoginResponse>,
   addressLoginStart?: Maybe<AddressLoginType>,
+  addressSignupConfirm?: Maybe<LoginResponse>,
+  addressSignupStart?: Maybe<AddressLoginType>,
   addressUnlink?: Maybe<ChangeResponse>,
   changeEmail?: Maybe<ChangeResponse>,
   changeName?: Maybe<ChangeResponse>,
@@ -2994,6 +3026,8 @@ export type Mutation_Root = {
   requestResetPassword?: Maybe<Message>,
   resendVerifyEmailToken?: Maybe<Message>,
   resetPassword?: Maybe<Message>,
+  setCredentialsConfirm?: Maybe<ChangeResponse>,
+  setCredentialsStart?: Maybe<AddressLoginType>,
   setDefaultAddress?: Maybe<ChangeResponse>,
   signup?: Maybe<LoginResponse>,
   undoEmailChange?: Maybe<UndoEmailChangeResponse>,
@@ -3111,6 +3145,18 @@ export type Mutation_RootAddressLoginArgs = {
 
 
 export type Mutation_RootAddressLoginStartArgs = {
+  address: Scalars['String']
+};
+
+
+export type Mutation_RootAddressSignupConfirmArgs = {
+  address: Scalars['String'],
+  network: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type Mutation_RootAddressSignupStartArgs = {
   address: Scalars['String']
 };
 
@@ -3732,6 +3778,20 @@ export type Mutation_RootResetPasswordArgs = {
   newPassword: Scalars['String'],
   token: Scalars['String'],
   userId: Scalars['Int']
+};
+
+
+export type Mutation_RootSetCredentialsConfirmArgs = {
+  address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  signature: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type Mutation_RootSetCredentialsStartArgs = {
+  address: Scalars['String']
 };
 
 
@@ -10725,6 +10785,7 @@ export type User = {
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
+  web3signup?: Maybe<Scalars['Boolean']>,
 };
 
 
@@ -10915,7 +10976,7 @@ export type LoginMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -10946,7 +11007,7 @@ export type AddressLoginMutation = (
     & Pick<LoginResponse, 'token'>
     & { user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
     )> }
   )> }
 );
@@ -11124,6 +11185,54 @@ export type ReportContentMutation = (
   & { reportContent: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'message'>
+  )> }
+);
+
+export type SignupMutationVariables = {
+  email?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+  username: Scalars['String'],
+  name?: Maybe<Scalars['String']>
+};
+
+
+export type SignupMutation = (
+  { __typename?: 'mutation_root' }
+  & { signup: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
+    )> }
+  )> }
+);
+
+export type AddressSignupStartMutationVariables = {
+  address: Scalars['String']
+};
+
+
+export type AddressSignupStartMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressSignupStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
+export type AddressSignupConfirmMutationVariables = {
+  network: Scalars['String'],
+  address: Scalars['String'],
+  signature: Scalars['String']
+};
+
+
+export type AddressSignupConfirmMutation = (
+  { __typename?: 'mutation_root' }
+  & { addressSignupConfirm: Maybe<(
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'token'>
   )> }
 );
 
@@ -11611,6 +11720,10 @@ export type OnchainLinkReferendumFragment = (
     & { referendumStatus: Maybe<Array<(
       { __typename?: 'ReferendumStatus' }
       & Pick<ReferendumStatus, 'status' | 'id'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'startDateTime' | 'number'>
+      ) }
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -11804,23 +11917,33 @@ export type SetDefaultAddressMutation = (
   )> }
 );
 
-export type SignupMutationVariables = {
-  email?: Maybe<Scalars['String']>,
-  password: Scalars['String'],
-  username: Scalars['String'],
-  name?: Maybe<Scalars['String']>
+export type SetCredentialsStartMutationVariables = {
+  address: Scalars['String']
 };
 
 
-export type SignupMutation = (
+export type SetCredentialsStartMutation = (
   { __typename?: 'mutation_root' }
-  & { signup: Maybe<(
-    { __typename?: 'LoginResponse' }
-    & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified'>
-    )> }
+  & { setCredentialsStart: Maybe<(
+    { __typename?: 'AddressLoginType' }
+    & Pick<AddressLoginType, 'message' | 'signMessage'>
+  )> }
+);
+
+export type SetCredentialsConfirmMutationVariables = {
+  address: Scalars['String'],
+  email?: Maybe<Scalars['String']>,
+  signature: Scalars['String'],
+  username: Scalars['String'],
+  password: Scalars['String']
+};
+
+
+export type SetCredentialsConfirmMutation = (
+  { __typename?: 'mutation_root' }
+  & { setCredentialsConfirm: Maybe<(
+    { __typename?: 'ChangeResponse' }
+    & Pick<ChangeResponse, 'message' | 'token'>
   )> }
 );
 
@@ -12123,6 +12246,10 @@ export const OnchainLinkReferendumFragmentDoc = gql`
     end
     voteThreshold
     referendumStatus(last: 1) {
+      blockNumber {
+        startDateTime
+        number
+      }
       status
       id
     }
@@ -12258,6 +12385,7 @@ export const LoginDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }
@@ -12331,6 +12459,7 @@ export const AddressLoginDocument = gql`
       username
       email
       email_verified
+      web3signup
     }
     token
   }
@@ -12737,6 +12866,116 @@ export function useReportContentMutation(baseOptions?: ApolloReactHooks.Mutation
 export type ReportContentMutationHookResult = ReturnType<typeof useReportContentMutation>;
 export type ReportContentMutationResult = ApolloReactCommon.MutationResult<ReportContentMutation>;
 export type ReportContentMutationOptions = ApolloReactCommon.BaseMutationOptions<ReportContentMutation, ReportContentMutationVariables>;
+export const SignupDocument = gql`
+    mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
+  signup(email: $email, password: $password, username: $username, name: $name) {
+    user {
+      id
+      name
+      username
+      email
+      email_verified
+      web3signup
+    }
+    token
+  }
+}
+    `;
+export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, baseOptions);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
+export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const AddressSignupStartDocument = gql`
+    mutation AddressSignupStart($address: String!) {
+  addressSignupStart(address: $address) {
+    message
+    signMessage
+  }
+}
+    `;
+export type AddressSignupStartMutationFn = ApolloReactCommon.MutationFunction<AddressSignupStartMutation, AddressSignupStartMutationVariables>;
+
+/**
+ * __useAddressSignupStartMutation__
+ *
+ * To run a mutation, you first call `useAddressSignupStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressSignupStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressSignupStartMutation, { data, loading, error }] = useAddressSignupStartMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useAddressSignupStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressSignupStartMutation, AddressSignupStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressSignupStartMutation, AddressSignupStartMutationVariables>(AddressSignupStartDocument, baseOptions);
+      }
+export type AddressSignupStartMutationHookResult = ReturnType<typeof useAddressSignupStartMutation>;
+export type AddressSignupStartMutationResult = ApolloReactCommon.MutationResult<AddressSignupStartMutation>;
+export type AddressSignupStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressSignupStartMutation, AddressSignupStartMutationVariables>;
+export const AddressSignupConfirmDocument = gql`
+    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!) {
+  addressSignupConfirm(network: $network, address: $address, signature: $signature) {
+    token
+  }
+}
+    `;
+export type AddressSignupConfirmMutationFn = ApolloReactCommon.MutationFunction<AddressSignupConfirmMutation, AddressSignupConfirmMutationVariables>;
+
+/**
+ * __useAddressSignupConfirmMutation__
+ *
+ * To run a mutation, you first call `useAddressSignupConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressSignupConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressSignupConfirmMutation, { data, loading, error }] = useAddressSignupConfirmMutation({
+ *   variables: {
+ *      network: // value for 'network'
+ *      address: // value for 'address'
+ *      signature: // value for 'signature'
+ *   },
+ * });
+ */
+export function useAddressSignupConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddressSignupConfirmMutation, AddressSignupConfirmMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddressSignupConfirmMutation, AddressSignupConfirmMutationVariables>(AddressSignupConfirmDocument, baseOptions);
+      }
+export type AddressSignupConfirmMutationHookResult = ReturnType<typeof useAddressSignupConfirmMutation>;
+export type AddressSignupConfirmMutationResult = ApolloReactCommon.MutationResult<AddressSignupConfirmMutation>;
+export type AddressSignupConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressSignupConfirmMutation, AddressSignupConfirmMutationVariables>;
 export const PostSubscribeDocument = gql`
     mutation PostSubscribe($postId: Int!) {
   postSubscribe(post_id: $postId) {
@@ -13803,48 +14042,76 @@ export function useSetDefaultAddressMutation(baseOptions?: ApolloReactHooks.Muta
 export type SetDefaultAddressMutationHookResult = ReturnType<typeof useSetDefaultAddressMutation>;
 export type SetDefaultAddressMutationResult = ApolloReactCommon.MutationResult<SetDefaultAddressMutation>;
 export type SetDefaultAddressMutationOptions = ApolloReactCommon.BaseMutationOptions<SetDefaultAddressMutation, SetDefaultAddressMutationVariables>;
-export const SignupDocument = gql`
-    mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
-  signup(email: $email, password: $password, username: $username, name: $name) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-    }
-    token
+export const SetCredentialsStartDocument = gql`
+    mutation setCredentialsStart($address: String!) {
+  setCredentialsStart(address: $address) {
+    message
+    signMessage
   }
 }
     `;
-export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
+export type SetCredentialsStartMutationFn = ApolloReactCommon.MutationFunction<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
 
 /**
- * __useSignupMutation__
+ * __useSetCredentialsStartMutation__
  *
- * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSetCredentialsStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetCredentialsStartMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ * const [setCredentialsStartMutation, { data, loading, error }] = useSetCredentialsStartMutation({
  *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
- *      username: // value for 'username'
- *      name: // value for 'name'
+ *      address: // value for 'address'
  *   },
  * });
  */
-export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
-        return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, baseOptions);
+export function useSetCredentialsStartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>(SetCredentialsStartDocument, baseOptions);
       }
-export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
-export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
-export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export type SetCredentialsStartMutationHookResult = ReturnType<typeof useSetCredentialsStartMutation>;
+export type SetCredentialsStartMutationResult = ApolloReactCommon.MutationResult<SetCredentialsStartMutation>;
+export type SetCredentialsStartMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
+export const SetCredentialsConfirmDocument = gql`
+    mutation setCredentialsConfirm($address: String!, $email: String, $signature: String!, $username: String!, $password: String!) {
+  setCredentialsConfirm(address: $address, email: $email, signature: $signature, username: $username, password: $password) {
+    message
+    token
+  }
+}
+    `;
+export type SetCredentialsConfirmMutationFn = ApolloReactCommon.MutationFunction<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
+
+/**
+ * __useSetCredentialsConfirmMutation__
+ *
+ * To run a mutation, you first call `useSetCredentialsConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetCredentialsConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setCredentialsConfirmMutation, { data, loading, error }] = useSetCredentialsConfirmMutation({
+ *   variables: {
+ *      address: // value for 'address'
+ *      email: // value for 'email'
+ *      signature: // value for 'signature'
+ *      username: // value for 'username'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSetCredentialsConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>) {
+        return ApolloReactHooks.useMutation<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>(SetCredentialsConfirmDocument, baseOptions);
+      }
+export type SetCredentialsConfirmMutationHookResult = ReturnType<typeof useSetCredentialsConfirmMutation>;
+export type SetCredentialsConfirmMutationResult = ApolloReactCommon.MutationResult<SetCredentialsConfirmMutation>;
+export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
 export const TreasuryProposalPostAndCommentsDocument = gql`
     query TreasuryProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {

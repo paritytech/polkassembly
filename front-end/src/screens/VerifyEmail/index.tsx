@@ -31,23 +31,19 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 
 	useEffect(() => {
 		verifyEmailMutation().then(({ data }) => {
-			if (data && data.verifyEmail && data.verifyEmail.message && data.verifyEmail.token) {
-				if (data.verifyEmail.token) {
-					handleTokenChange(data.verifyEmail.token);
-				}
-				currentUser.setUserDetailsContextState((prevState) => {
-					return {
-						...prevState,
-						email_verified: true
-					};
-				});
+			if (data?.verifyEmail?.token) {
+				handleTokenChange(data.verifyEmail.token, currentUser);
+			}
+
+			if (data?.verifyEmail?.message) {
 				queueNotification({
 					header: 'Success!',
 					message: data.verifyEmail.message,
 					status: NotificationStatus.SUCCESS
 				});
-				router.history.push('/');
 			}
+
+			router.history.push('/');
 		}).catch((e) => {
 			console.error('Email verification error', e);
 		});

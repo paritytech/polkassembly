@@ -26,7 +26,6 @@ export function Form({ className, standalone=true, ...props } : FormProps): Reac
 const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
-		margin-top: 2rem;
 		padding: 2rem 3rem 3rem 3rem;
 		border-style: solid;
 		border-width: 1px;
@@ -87,21 +86,21 @@ const StyledForm = styled(SUIForm)`
 		input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
 		input[type=text], input[type=time], input[type=url] {
 			font-family: font_default;
-			font-size: 1.3rem;
+			font-size: input_text_size;
 			color: black_primary;
 			border-style: solid;
 			border-width: 1px;
 			border-color: grey_light;
-			border-radius: 0rem;
+			border-radius: input_border_radius;
 			text-indent: 0rem;
 			padding: 1rem;
 			margin-bottom: 1.2rem;
 			&:focus {
 				font-family: font_default;
-				font-size: 1.3rem;
+				font-size: input_text_size;
 				color: black_text;
 				border-color: grey_primary;
-				border-radius: 0rem;
+				border-radius: input_border_radius;
 			}
 			&:hover {
 				border-color: grey_secondary;
@@ -111,6 +110,13 @@ const StyledForm = styled(SUIForm)`
 		input::selection, textarea::selection {
 			color: black_text;
 			background-color: grey_light;
+		}
+
+		input[type=checkbox]{
+			position: relative;
+			bottom: 0.2rem;
+			margin-right: 1rem;
+			vertical-align: middle;
 		}
 
 		@media only screen and (max-width: 576px) {
@@ -133,9 +139,16 @@ const StyledForm = styled(SUIForm)`
 
 	.ui.dropdown,
 	.ui.selection.dropdown {
-		font-size: input_text_size;
+		font-size: sm;
 		margin-bottom: 1.2rem;
-		border-radius: 0rem;
+		border-style: solid;
+		border-width: 1px;
+		border-color: grey_light;
+		border-radius: input_border_radius;
+
+		.menu {
+			border-color: grey_light;
+		}
 
 		.menu .active.item {
 			font-weight: 500;
@@ -147,6 +160,10 @@ const StyledForm = styled(SUIForm)`
 
 		.menu>.item:hover {
 			background-color: grey_light;
+		}
+
+		.visible.menu.transition {
+			border-radius: input_border_radius;
 		}
 	}
 

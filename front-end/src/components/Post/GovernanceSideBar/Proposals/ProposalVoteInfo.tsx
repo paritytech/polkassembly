@@ -58,27 +58,24 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
 			{loadingStatus.isLoading
 				?
-				<Loader text={loadingStatus.message} timeout={3000} timeoutText={'Api is unresponsive'}/>
+				<Loader text={loadingStatus.message} timeout={30000} timeoutText={'Api is unresponsive'}/>
 				:
-				<>
-					<h3>Overview</h3>
-					<Grid columns={3} divided>
-						<Grid.Row>
-							<Grid.Column>
-								<h6>Deposit</h6>
-								<div>{deposit}</div>
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Seconded by</h6>
-								{seconds ? <div>{seconds} addresses</div> : null}
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-								<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</>
+				<Grid columns={3} divided>
+					<Grid.Row>
+						<Grid.Column>
+							<h6>Deposit</h6>
+							<div>{deposit}</div>
+						</Grid.Column>
+						<Grid.Column>
+							<h6>Seconded by</h6>
+							{seconds ? <div>{seconds} addresses</div> : null}
+						</Grid.Column>
+						<Grid.Column>
+							<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
+							<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 			}
 		</Card>
 	);

@@ -6,6 +6,8 @@ import addressLinkConfirm from './mutation/addressLinkConfirm';
 import addressLinkStart from './mutation/addressLinkStart';
 import addressLogin from './mutation/addressLogin';
 import addressLoginStart from './mutation/addressLoginStart';
+import addressSignupConfirm from './mutation/addressSignupConfirm';
+import addressSignupStart from './mutation/addressSignupStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeEmail from './mutation/changeEmail';
 import changeName from './mutation/changeName';
@@ -20,6 +22,8 @@ import reportContent from './mutation/reportContent';
 import requestResetPassword from './mutation/requestResetPassword';
 import resendVerifyEmailToken from './mutation/resendVerifyEmailToken';
 import resetPassword from './mutation/resetPassword';
+import setCredentialsConfirm from './mutation/setCredentialsConfirm';
+import setCredentialsStart from './mutation/setCredentialsStart';
 import setDefaultAddress from './mutation/setDefaultAddress';
 import signup from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
@@ -35,6 +39,8 @@ export default {
 		addressLinkStart,
 		addressLogin,
 		addressLoginStart,
+		addressSignupConfirm,
+		addressSignupStart,
 		addressUnlink,
 		changeEmail,
 		changeName,
@@ -49,6 +55,8 @@ export default {
 		requestResetPassword,
 		resendVerifyEmailToken,
 		resetPassword,
+		setCredentialsConfirm,
+		setCredentialsStart,
 		setDefaultAddress,
 		signup,
 		undoEmailChange,

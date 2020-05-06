@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext,useState } from 'react';
-import { Dropdown, DropdownProps,Icon, TextArea, TextAreaProps } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, Icon, TextArea, TextAreaProps } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useReportContentMutation } from '../../generated/graphql';

@@ -16,8 +16,8 @@ import { UserDetailsContext } from '../context/UserDetailsContext';
 import { Get_Refresh_TokenQueryResult } from '../generated/graphql';
 import {
 	getLocalStorageToken,
-	logout,
-	storeLocalStorageToken
+	handleTokenChange,
+	logout
 } from '../services/auth.service';
 import { JWTPayploadType } from '../types';
 
@@ -99,30 +99,9 @@ const Apollo = ( { children }:Props ) => {
 
 	const handleFetch = (accessToken : string) => {
 		try {
-			const tokenPayload = accessToken && publicKey && jwt.verify(accessToken, publicKey) as JWTPayploadType;
+			accessToken && publicKey && jwt.verify(accessToken, publicKey);
 
-			storeLocalStorageToken(accessToken);
-
-			if (tokenPayload && tokenPayload.sub) {
-				const id = Number(tokenPayload.sub);
-				const name = tokenPayload.name;
-				const username =  tokenPayload.username;
-				const email = tokenPayload.email;
-				const email_verified = tokenPayload.email_verified;
-
-				if (id) {
-					currentUser.setUserDetailsContextState((prevState) => {
-						return {
-							...prevState,
-							email,
-							email_verified,
-							id,
-							name,
-							username
-						};
-					});
-				}
-			}
+			handleTokenChange(accessToken, currentUser);
 		} catch (e) {
 			// the jwt isn't valid
 			console.log('Invalid jwt received.',e);
