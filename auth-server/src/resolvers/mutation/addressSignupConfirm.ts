@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { UserInputError } from 'apollo-server';
-import uid from 'uid';
+import { uuid } from 'uuidv4';
 
 import AuthService from '../../services/auth';
 import { AddressSignupConfirmArgs, Context, SignUpResultType } from '../../types';
@@ -26,7 +26,7 @@ export default async (
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
-	username = username || uid(25);
+	username = username || uuid().split('-').join('').substring(0, 25);
 
 	const authServiceInstance = new AuthService();
 	const { user, token, refreshToken } = await authServiceInstance.AddressSignupConfirm(network, address, signature, email, username, name);
