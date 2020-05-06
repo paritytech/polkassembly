@@ -50,7 +50,7 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 						{status === 'Started'
 							?
 							<>
-								<h6>Ends In</h6>
+								<h6>Ends in</h6>
 								<BlockCountdown endBlock={end}/>
 							</>
 							:
