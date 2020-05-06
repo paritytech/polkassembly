@@ -18,12 +18,11 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, Network, NetworkEnum, NotificationPreferencesType, Role } from '../types';
-import getDefaultAddressFromAddressArray from '../utils/getDefaultAddressFromAddressArray';
+import { AuthObjectType, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
+import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
-import getVerifiedNetworkAddressesFromUserId from '../utils/getVerifiedNetworkAddressesFromUserId';
 import messages from '../utils/messages';
 import verifySignature from '../utils/verifySignature';
 import {
@@ -871,12 +870,12 @@ export default class AuthService {
 			throw new ForbiddenError(`${key} not set. Aborting.`);
 		}
 
+		const networkUserAddressInfo = await getNetworkUserAddressInfoFromUserId(id);
+
+		const notification = await getNotificationPreferencesFromUserId(id);
+
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
-
-		const kusamaAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.KUSAMA);
-		const polkadotAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.POLKADOT);
-		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
 		if (id === Number(process.env.PROPOSAL_BOT_USER_ID)) {
@@ -884,19 +883,16 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
-		const kusamaDefault = getDefaultAddressFromAddressArray(kusamaAddresses);
-		const polkadotDefault = getDefaultAddressFromAddressArray(polkadotAddresses);
-
 		const tokenContent: JWTPayploadType = {
 			email,
 			email_verified: email_verified || false,
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
-				'x-hasura-kusama': `{${kusamaAddresses}}`,
-				'x-hasura-kusama-default': kusamaDefault || '',
-				'x-hasura-polkadot': `{${polkadotAddresses}}`,
-				'x-hasura-polkadot-default': polkadotDefault || '',
+				'x-hasura-kusama': `{${networkUserAddressInfo.kusama.addresses}}`,
+				'x-hasura-kusama-default': networkUserAddressInfo.kusama.default || '',
+				'x-hasura-polkadot': `{${networkUserAddressInfo.polkadot.addresses}}`,
+				'x-hasura-polkadot-default': networkUserAddressInfo.polkadot.default || '',
 				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},

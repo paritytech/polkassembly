@@ -279,3 +279,10 @@ export interface SetCredentialsConfirmArgs {
     username: string;
 }
 
+export interface UserAddressInfo {
+    addresses: string;
+    default: string;
+}
+
+export type NetworkUserAddressInfo = Record<Network, UserAddressInfo>;
+

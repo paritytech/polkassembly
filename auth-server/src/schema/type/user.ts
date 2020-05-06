@@ -5,7 +5,9 @@
 export default `
 	type User {
 		id: Int
-        name: String
+		kusama_default_address: String
+		name: String
+		polkadot_default_address: String
         email: String
 		email_verified: Boolean
 		username: String
