@@ -133,11 +133,13 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						}
 						{isReferendum &&
 							<>
-								{(onchainId || onchainId === 0) && <ReferendumVoteInfo
-									referendumId={onchainId}
-									// eslint-disable-next-line no-extra-parens
-									threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
-								/>}
+								{(onchainId || onchainId === 0) &&
+									<ReferendumVoteInfo
+										referendumId={onchainId}
+										// eslint-disable-next-line no-extra-parens
+										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
+									/>
+								}
 								{canVote && <VoteReferendum
 									accounts={accounts}
 									address={address}
