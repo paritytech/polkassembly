@@ -14,7 +14,7 @@ import addressSignupStart from '../../../src/resolvers/mutation/addressSignupSta
 import addressSignupConfirm from '../../../src/resolvers/mutation/addressSignupConfirm';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
-import { redisSetex, redisGet } from '../../../src/redis';
+import { redisSetex, redisGet, redisDel } from '../../../src/redis';
 import { getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
 
 describe('addressSignup mutation', () => {
@@ -26,9 +26,6 @@ describe('addressSignup mutation', () => {
 			cookie: () => {}
 		}
 	} as any;
-	const email = 'test@email.com';
-	const username = 'testuser';
-	const name = 'test name';
 	const network = 'kusama';
 	const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
@@ -46,14 +43,12 @@ describe('addressSignup mutation', () => {
 		// mock the addressSignupStart
 		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
-		const result = await addressSignupConfirm(undefined, { address, email, name, network, signature, username }, fakectx);
+		const result = await addressSignupConfirm(undefined, { address, network, signature }, fakectx);
 
 		expect(result.user.id).to.exist;
 		expect(result.token).to.be.a('string');
 
 		const token: any = jwt.decode(result.token);
-		expect(token.email).to.equals(email);
-		expect(token.username).to.equals(username);
 		expect(token.sub).to.equals(`${result.user.id}`);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
@@ -69,7 +64,7 @@ describe('addressSignup mutation', () => {
 			.first();
 
 		expect(dbuser).to.exist;
-		expect(dbuser?.username).to.equal(username);
+		expect(dbuser?.username).to.be.a('string');
 		expect(dbuser?.web3signup).to.be.true;
 
 		expect(dbAddress).to.exist;
@@ -88,8 +83,6 @@ describe('addressSignup mutation', () => {
 		expect(result.token).to.be.a('string');
 
 		const token: any = jwt.decode(result.token);
-		expect(token.email).to.equals(email);
-		expect(token.username).to.equals(username);
 		expect(token.sub).to.equals(`${result.user.id}`);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
@@ -106,10 +99,25 @@ describe('addressSignup mutation', () => {
 	});
 
 	it('should not be able to signup with invalid signature', async () => {
-		const signature = '0xaaaa';
+		// mock the addressSignupStart
+		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		const fakeSignature = '0xaaaa';
 
 		try {
-			await addressSignupConfirm(undefined, { address, email, name, network, signature, username }, fakectx);
+			await addressSignupConfirm(undefined, { address, network, signature: fakeSignature }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_SIGNUP_INVALID_SIGNATURE);
+		}
+
+		await redisDel(getAddressSignupKey(address))
+	});
+
+	it('should not be able to signup with invalid signature', async () => {
+		try {
+			await addressSignupConfirm(undefined, { address, network, signature: signature }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

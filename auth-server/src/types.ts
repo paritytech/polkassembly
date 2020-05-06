@@ -262,11 +262,8 @@ export interface AddressSignupStartArgs {
 
 export interface AddressSignupConfirmArgs {
     address: string;
-    email: string;
-    name: string;
     network: string;
     signature: string;
-    username: string;
 }
 
 export interface SetCredentialsConfirmArgs {
