@@ -74,6 +74,8 @@ export default styled(AddressDropdown)`
 	.visible.menu.transition {
 		width: 100%;
 		border-radius: 0;
+		max-height: 20rem;
+		overflow: auto;
 	}
 
 	.dropdown.icon {

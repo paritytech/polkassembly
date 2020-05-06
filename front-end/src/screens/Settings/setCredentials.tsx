@@ -9,13 +9,16 @@ import React, { useContext, useState } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSetCredentialsConfirmMutation, useSetCredentialsStartMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
+import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
 import { Form } from '../../ui-components/Form';
+import HelperTooltip from '../../ui-components/HelperTooltip';
 import Loader from '../../ui-components/Loader';
 import Modal from '../../ui-components/Modal';
 import getEncodedAddress from '../../util/getEncodedAddress';
@@ -35,6 +38,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 	const { errors, handleSubmit, register } = useForm();
 	const [setCredentialsStartMutation] = useSetCredentialsStartMutation();
 	const [setCredentialsConfirmMutation, { loading }] = useSetCredentialsConfirmMutation();
+	const { queueNotification } = useContext(NotificationContext);
 	const currentUser = useContext(UserDetailsContext);
 
 	// Accounts needs to be get to get default account signer
@@ -73,7 +77,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 	};
 
 	const handleSetCredentials = async (data: Record<string, any>): Promise<void> => {
-		const { username, password } = data;
+		const { email, username, password } = data;
 
 		if (!address) {
 			return console.error('Default address not set');
@@ -108,6 +112,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 			const { data: setResult } = await setCredentialsConfirmMutation({
 				variables: {
 					address,
+					email,
 					password,
 					signature,
 					username
@@ -116,6 +121,13 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 
 			if (setResult?.setCredentialsConfirm?.token) {
 				handleTokenChange(setResult?.setCredentialsConfirm?.token, currentUser);
+			}
+			if (setResult?.setCredentialsConfirm?.message) {
+				queueNotification({
+					header: 'Success!',
+					message: setResult.setCredentialsConfirm.message,
+					status: NotificationStatus.SUCCESS
+				});
 			}
 		} catch (error) {
 			console.error(error);
@@ -206,6 +218,24 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 									{(errors.username as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MINLENGTH_ERROR}</span>}
 									{(errors.username as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_PATTERN_ERROR}</span>}
 									{(errors.username as FieldError)?.type === 'required' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_REQUIRED_ERROR}</span>}
+								</Form.Field>
+							</Form.Group>
+							<Form.Group>
+								<Form.Field width={16}>
+									<label>
+										Email
+										<HelperTooltip
+											content='Your email is used for password recovery or discussion notifications.'
+										/>
+									</label>
+									<input
+										className={errors.email ? 'error' : ''}
+										name='email'
+										placeholder='john@doe.com'
+										ref={register(validation.email)}
+										type='text'
+									/>
+									{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
 								</Form.Field>
 							</Form.Group>
 							<Form.Group>

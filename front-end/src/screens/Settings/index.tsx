@@ -30,8 +30,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<Divider/>
 				<Fullname/>
 				<Divider/>
-				<Email/>
-				<Divider/>
+				{web3signup ? null : <><Email/><Divider/></>}
 				{web3signup ? null : <><Password/><Divider/></>}
 				<Address/>
 			</Grid.Column>

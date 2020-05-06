@@ -12,10 +12,12 @@ import Address from '../../../src/model/Address';
 import addressLogin from '../../../src/resolvers/mutation/addressLogin';
 import addressSignupStart from '../../../src/resolvers/mutation/addressSignupStart';
 import addressSignupConfirm from '../../../src/resolvers/mutation/addressSignupConfirm';
+import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
+import setCredentialsConfirm from '../../../src/resolvers/mutation/setCredentialsConfirm';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { redisSetex, redisGet, redisDel } from '../../../src/redis';
-import { getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
+import { getSetCredentialsKey, getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
 
 describe('addressSignup mutation', () => {
 	const fakectx: Context = {
@@ -30,6 +32,19 @@ describe('addressSignup mutation', () => {
 	const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
+	let loginResult: any;
+
+	after(async () => {
+		await User
+			.query()
+			.where({ id: loginResult.user.id })
+			.del();
+
+		await Address
+			.query()
+			.where({ user_id: loginResult.user.id })
+			.del();
+	});
 
 	it('should be able to request signup challenge message', async () => {
 		const result = await addressSignupStart(undefined, { address });
@@ -77,25 +92,45 @@ describe('addressSignup mutation', () => {
 		// mock the addressLoginStart
 		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
-		const result = await addressLogin(undefined, { address, signature }, fakectx);
+		loginResult = await addressLogin(undefined, { address, signature }, fakectx);
 
-		expect(result.user.id).to.exist;
+		fakectx.req.headers.authorization = `Bearer ${loginResult.token}`;
+
+		expect(loginResult.user.id).to.exist;
+		expect(loginResult.token).to.be.a('string');
+
+		const token: any = jwt.decode(loginResult.token);
+		expect(token.sub).to.equals(`${loginResult.user.id}`);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${loginResult.user.id}`);
+	});
+
+	it('should not be able to unlink the default address', async () => {
+		try {
+			await addressUnlink(undefined, { address }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_UNLINK_NOT_ALLOWED);
+		}
+	});
+
+	it('should be able to set credentials with valid signature', async () => {
+		// mock the setCredentialsStart
+		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
+
+		const email = 'test@example.com';
+		const username = 'username';
+		const password = 'password';
+
+		const result = await setCredentialsConfirm(undefined, {address, email, password, signature, username});
+
 		expect(result.token).to.be.a('string');
 
 		const token: any = jwt.decode(result.token);
-		expect(token.sub).to.equals(`${result.user.id}`);
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
-
-		await User
-			.query()
-			.where({ id: result.user.id })
-			.del();
-
-		await Address
-			.query()
-			.where({ user_id: result.user.id })
-			.del();
+		expect(token.sub).to.equals(`${loginResult.user.id}`);
+		expect(token.email).to.equals(email);
+		expect(token.username).to.equals(username);
 	});
 
 	it('should not be able to signup with invalid signature', async () => {

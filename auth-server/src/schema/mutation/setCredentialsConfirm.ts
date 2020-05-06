@@ -5,8 +5,9 @@
 export default `
     setCredentialsConfirm(
         address: String!
+        email: String
+        password: String!
         signature: String!
         username: String!
-        password: String!
     ): ChangeResponse
 `;
