@@ -160,7 +160,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 					buttons={
 						<Form.Group>
 							<Button
-								content='Set username and password'
+								content='Send'
 								disabled={loading}
 								primary
 								onClick={handleSubmit(handleSetCredentials)}
@@ -178,7 +178,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 					open
 					onClose={dismissModal}
 					size='tiny'
-					title={'Set Username password'}
+					title={'Set email, username and password'}
 				>
 					<Form standalone={false} onSubmit={handleSubmit(handleSetCredentials)}>
 						{extensionNotFound?
@@ -265,7 +265,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 							primary
 							onClick={openModal}
 						>
-							Create a username and password
+							Set an email, username and password
 						</Button>
 					</Form.Field>
 				</Form.Group>
