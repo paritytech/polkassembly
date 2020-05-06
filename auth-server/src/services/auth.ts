@@ -105,9 +105,6 @@ export default class AuthService {
 	}
 
 	private async createAddress (network: string, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
 		return Address
 			.query()
 			.allowInsert('[address, default, network, public_key, user_id, verified]')
@@ -115,7 +112,7 @@ export default class AuthService {
 				address,
 				default: defaultAddress,
 				network,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: this.getPublicKey(address),
 				user_id,
 				verified: true
 			});
@@ -145,6 +142,13 @@ export default class AuthService {
 			password: hashedPassword,
 			salt: salt.toString('hex')
 		};
+	}
+
+	private getPublicKey (address: string): string {
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(address);
+
+		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -497,8 +501,6 @@ export default class AuthService {
 		if (dbAddress.user_id !== user.id) {
 			throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
 		}
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(dbAddress.address);
 
 		const isValidSr = verifySignature(dbAddress.sign_message, dbAddress.address, signature);
 
@@ -518,7 +520,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: this.getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);
