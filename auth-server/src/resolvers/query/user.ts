@@ -6,8 +6,8 @@ import { AuthenticationError } from 'apollo-server';
 
 import User from '../../model/User';
 import { NetworkEnum, PublicUser, UserArgs } from '../../types';
-import getAddressesFromUserId from '../../utils/getAddressesFromUserId';
 import getDefaultAddressFromAddressArray from '../../utils/getDefaultAddressFromAddressArray';
+import getAddressesFromUserId from '../../utils/getVerifiedNetworkAddressesFromUserId';
 import messages from '../../utils/messages';
 
 export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
@@ -23,10 +23,14 @@ export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null
 	const kusamaAddresses = await getAddressesFromUserId(id, NetworkEnum.KUSAMA);
 	const kusamaDefault = getDefaultAddressFromAddressArray(kusamaAddresses);
 
+	const polkadotAddresses = await getAddressesFromUserId(id, NetworkEnum.POLKADOT);
+	const polkadotDefault = getDefaultAddressFromAddressArray(polkadotAddresses);
+
 	return {
 		id: user.id,
 		kusama_default_address: kusamaDefault,
 		name: user.name,
+		polkadot_default_address: polkadotDefault,
 		username: user.username
 	};
 };

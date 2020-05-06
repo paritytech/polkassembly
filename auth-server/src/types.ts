@@ -86,6 +86,7 @@ export interface PublicUser {
     id: number;
     kusama_default_address?: string;
     name: string;
+    polkadot_default_address?: string;
     username: string;
 }
 
@@ -156,11 +157,6 @@ export interface SubscriptionArgs {
 
 export interface UserArgs {
 	id: number;
-}
-
-export interface UsersArgs {
-	limit: number;
-	page: number;
 }
 
 export interface AddressArgs {
