@@ -46,6 +46,7 @@ const DiscussionCard = styled.div`
 
 export interface DiscussionProps {
   created_at: Date
+  defaultAddress?: string | null
   displayname?: string | null
   comments?: string
   title: string
@@ -54,6 +55,7 @@ export interface DiscussionProps {
 
 export default function Discussion ({
 	created_at,
+	defaultAddress,
 	displayname,
 	comments,
 	title,
@@ -65,6 +67,7 @@ export default function Discussion ({
 			<h4>{title}</h4>
 			<CreationLabel
 				created_at={created_at}
+				defaultAddress={defaultAddress}
 				displayname={displayname}
 				username={username}
 			/>

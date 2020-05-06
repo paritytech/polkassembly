@@ -11,7 +11,7 @@ import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
 
 interface GovernanceProps {
-	address?: string
+	address: string
 	className?: string
 	comments?: string
 	created_at?: Date

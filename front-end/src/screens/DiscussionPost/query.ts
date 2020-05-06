@@ -4,6 +4,7 @@
 
 import gql from 'graphql-tag';
 
+import { authorFields } from '../../fragments/author';
 import { commentFields } from '../../fragments/comments';
 
 const onchainLinkDiscussion = gql`
@@ -19,9 +20,7 @@ const onchainLinkDiscussion = gql`
 const discussionPost = gql`
     fragment discussionPost on posts {
         author {
-            id
-            name
-            username
+            ...authorFields
         }
         content
         created_at
@@ -43,6 +42,7 @@ const discussionPost = gql`
             name
         }
     }
+    ${authorFields}
     ${commentFields}
     ${onchainLinkDiscussion}
 `;

@@ -92,5 +92,9 @@ export default styled(Address)`
 	.inline {
 		display: inline-flex !important;
 		font-size: sm !important;
+	
+	}
+	&.inline .content {
+		line-height: inherit !important;
 	}
 `;

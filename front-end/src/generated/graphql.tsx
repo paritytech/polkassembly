@@ -5964,7 +5964,7 @@ export type Posts = {
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
-  title: Scalars['String'],
+  title?: Maybe<Scalars['String']>,
   topic: Post_Topics,
   topic_id: Scalars['Int'],
   type: Post_Types,
@@ -7788,7 +7788,6 @@ export type Query = {
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<PublicUser>>>,
 };
 
 
@@ -7799,12 +7798,6 @@ export type QuerySubscriptionArgs = {
 
 export type QueryUserArgs = {
   id: Scalars['Int']
-};
-
-
-export type QueryUsersArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  page?: Maybe<Scalars['Int']>
 };
 
 export type Query_Root = {
@@ -7910,7 +7903,6 @@ export type Query_Root = {
   treasuryStatuses: Array<Maybe<TreasuryStatus>>,
   treasuryStatusesConnection: TreasuryStatusConnection,
   user?: Maybe<User>,
-  users?: Maybe<Array<Maybe<PublicUser>>>,
   validator?: Maybe<Validator>,
   validators: Array<Maybe<Validator>>,
   validatorsConnection: ValidatorConnection,
@@ -8765,12 +8757,6 @@ export type Query_RootTreasuryStatusesConnectionArgs = {
 
 export type Query_RootUserArgs = {
   id: Scalars['Int']
-};
-
-
-export type Query_RootUsersArgs = {
-  limit?: Maybe<Scalars['Int']>,
-  page?: Maybe<Scalars['Int']>
 };
 
 
@@ -10781,7 +10767,9 @@ export type User = {
   email?: Maybe<Scalars['String']>,
   email_verified?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
+  kusama_default_address?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
+  polkadot_default_address?: Maybe<Scalars['String']>,
   username?: Maybe<Scalars['String']>,
   web3signup?: Maybe<Scalars['Boolean']>,
 };
@@ -11284,12 +11272,17 @@ export type Get_Refresh_TokenQuery = (
   )> }
 );
 
+export type AuthorFieldsFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'kusama_default_address' | 'name' | 'polkadot_default_address' | 'username'>
+);
+
 export type CommentFieldsFragment = (
   { __typename?: 'comments' }
   & Pick<Comments, 'id' | 'content' | 'created_at' | 'updated_at'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )> }
 );
 
@@ -11339,7 +11332,7 @@ export type DiscussionPostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
@@ -11380,7 +11373,7 @@ export type LatestDiscussionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username'>
+      & AuthorFieldsFragment
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -11435,7 +11428,7 @@ export type MotionPostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
@@ -11493,7 +11486,7 @@ export type LatestMotionPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username' | 'name'>
+      & AuthorFieldsFragment
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -11538,7 +11531,7 @@ export type LatestDemocracyProposalPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username' | 'name'>
+      & AuthorFieldsFragment
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -11582,7 +11575,7 @@ export type LatestReferendaPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username' | 'name'>
+      & AuthorFieldsFragment
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -11627,7 +11620,7 @@ export type LatestDemocracyTreasuryProposalPostsQuery = (
     & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
     & { author: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username' | 'name'>
+      & AuthorFieldsFragment
     )>, comments_aggregate: (
       { __typename?: 'comments_aggregate' }
       & { aggregate: Maybe<(
@@ -11680,7 +11673,7 @@ export type ProposalPostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
@@ -11738,7 +11731,7 @@ export type ReferendumPostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
@@ -11962,7 +11955,7 @@ export type TreasuryProposalPostFragment = (
   & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username'>
+    & AuthorFieldsFragment
   )>, comments: Array<(
     { __typename?: 'comments' }
     & CommentFieldsFragment
@@ -12047,19 +12040,26 @@ export const TopicFragmentDoc = gql`
   name
 }
     `;
+export const AuthorFieldsFragmentDoc = gql`
+    fragment authorFields on User {
+  id
+  kusama_default_address
+  name
+  polkadot_default_address
+  username
+}
+    `;
 export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on comments {
   id
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
   updated_at
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 export const OnchainLinkDiscussionFragmentDoc = gql`
     fragment onchainLinkDiscussion on onchain_links {
   id
@@ -12072,9 +12072,7 @@ export const OnchainLinkDiscussionFragmentDoc = gql`
 export const DiscussionPostFragmentDoc = gql`
     fragment discussionPost on posts {
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
@@ -12096,7 +12094,8 @@ export const DiscussionPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}
+    ${AuthorFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}
 ${OnchainLinkDiscussionFragmentDoc}`;
 export const OnchainLinkMotionPreimageFragmentDoc = gql`
     fragment onchainLinkMotionPreimage on Preimage {
@@ -12150,9 +12149,7 @@ ${OnchainLinkMotionTreasuryFragmentDoc}`;
 export const MotionPostFragmentDoc = gql`
     fragment motionPost on posts {
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
@@ -12174,7 +12171,8 @@ export const MotionPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}
+    ${AuthorFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}
 ${OnchainLinkMotionFragmentDoc}`;
 export const OnchainLinkProposalFragmentDoc = gql`
     fragment onchainLinkProposal on onchain_links {
@@ -12206,9 +12204,7 @@ export const OnchainLinkProposalFragmentDoc = gql`
 export const ProposalPostFragmentDoc = gql`
     fragment proposalPost on posts {
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
@@ -12230,7 +12226,8 @@ export const ProposalPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}
+    ${AuthorFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}
 ${OnchainLinkProposalFragmentDoc}`;
 export const OnchainLinkReferendumFragmentDoc = gql`
     fragment onchainLinkReferendum on onchain_links {
@@ -12267,9 +12264,7 @@ export const OnchainLinkReferendumFragmentDoc = gql`
 export const ReferendumPostFragmentDoc = gql`
     fragment referendumPost on posts {
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
@@ -12291,7 +12286,8 @@ export const ReferendumPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}
+    ${AuthorFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}`;
 export const OnchainLinkTreasuryProposalFragmentDoc = gql`
     fragment onchainLinkTreasuryProposal on onchain_links {
@@ -12314,9 +12310,7 @@ export const OnchainLinkTreasuryProposalFragmentDoc = gql`
 export const TreasuryProposalPostFragmentDoc = gql`
     fragment treasuryProposalPost on posts {
   author {
-    id
-    name
-    username
+    ...authorFields
   }
   content
   created_at
@@ -12338,7 +12332,8 @@ export const TreasuryProposalPostFragmentDoc = gql`
     name
   }
 }
-    ${CommentFieldsFragmentDoc}
+    ${AuthorFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}
 ${OnchainLinkTreasuryProposalFragmentDoc}`;
 export const EditCommentDocument = gql`
     mutation EditComment($id: uuid!, $content: String!) {
@@ -13212,9 +13207,7 @@ export const LatestDiscussionPostsDocument = gql`
     id
     title
     author {
-      id
-      name
-      username
+      ...authorFields
     }
     created_at
     updated_at
@@ -13229,7 +13222,7 @@ export const LatestDiscussionPostsDocument = gql`
     }
   }
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 
 /**
  * __useLatestDiscussionPostsQuery__
@@ -13331,9 +13324,7 @@ export const LatestMotionPostsDocument = gql`
     id
     title
     author {
-      id
-      username
-      name
+      ...authorFields
     }
     created_at
     updated_at
@@ -13368,7 +13359,7 @@ export const LatestMotionPostsDocument = gql`
     }
   }
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 
 /**
  * __useLatestMotionPostsQuery__
@@ -13402,9 +13393,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
     id
     title
     author {
-      id
-      username
-      name
+      ...authorFields
     }
     created_at
     updated_at
@@ -13439,7 +13428,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
     }
   }
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 
 /**
  * __useLatestDemocracyProposalPostsQuery__
@@ -13474,9 +13463,7 @@ export const LatestReferendaPostsDocument = gql`
     id
     title
     author {
-      id
-      username
-      name
+      ...authorFields
     }
     created_at
     updated_at
@@ -13511,7 +13498,7 @@ export const LatestReferendaPostsDocument = gql`
     }
   }
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 
 /**
  * __useLatestReferendaPostsQuery__
@@ -13545,9 +13532,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
     id
     title
     author {
-      id
-      username
-      name
+      ...authorFields
     }
     created_at
     updated_at
@@ -13578,7 +13563,7 @@ export const LatestDemocracyTreasuryProposalPostsDocument = gql`
     }
   }
 }
-    `;
+    ${AuthorFieldsFragmentDoc}`;
 
 /**
  * __useLatestDemocracyTreasuryProposalPostsQuery__
