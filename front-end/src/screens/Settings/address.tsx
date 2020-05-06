@@ -192,7 +192,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
 							<Button primary onClick={handleDetect}>
-								{currentUser?.addresses?.length ? 'Show Linked Addresses' : 'Link Address'}
+								{currentUser?.addresses?.length ? 'Show linked addresses' : 'Link address'}
 							</Button>
 						</div>
 					</Form.Field>
@@ -205,7 +205,7 @@ const Address = ({ className }: Props): JSX.Element => {
 		<Form className={className} standalone={false}>
 			<Form.Group>
 				<Form.Field width={16}>
-					<label className='header'>Available Addresses</label>
+					<label className='header'>Available addresses</label>
 					<div className='ui list'>
 						{accounts.map(account => {
 							const address = getEncodedAddress(account.address);
@@ -235,13 +235,13 @@ const Address = ({ className }: Props): JSX.Element => {
 													className={'social'}
 													onClick={() => handleDefault(address)}
 												>
-													Set Default
+													Set default
 												</Button>
 											</div>: null
 										}
 										{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
 											<div className='default-label'>
-												<Icon name='check'/> Default Address
+												<Icon name='check'/> Default address
 											</div> : null
 										}
 									</Grid.Column>

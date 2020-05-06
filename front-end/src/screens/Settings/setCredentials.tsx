@@ -4,6 +4,7 @@
 
 import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
 import { stringToHex } from '@polkadot/util';
+import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
 
@@ -23,7 +24,7 @@ import * as validation from '../../util/validation';
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
-const SetCredentials = (): JSX.Element => {
+const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);
 	const [showModal, setShowModal] = useState(false);
 	const [address, setAddress] = useState<string>('');
@@ -159,6 +160,7 @@ const SetCredentials = (): JSX.Element => {
 							/>
 						</Form.Group>
 					}
+					className={className}
 					centered
 					dimmer='inverted'
 					open
@@ -233,7 +235,7 @@ const SetCredentials = (): JSX.Element => {
 							primary
 							onClick={openModal}
 						>
-						Create a username and password
+							Create a username and password
 						</Button>
 					</Form.Field>
 				</Form.Group>
@@ -242,4 +244,14 @@ const SetCredentials = (): JSX.Element => {
 	);
 };
 
-export default SetCredentials;
+export default styled(SetCredentials)`
+	input.error {
+		border-style: solid !important;
+		border-width: 1px !important;
+		border-color: red_secondary !important;
+	}
+
+	.errorText {
+		color: red_secondary;
+	}
+`;
