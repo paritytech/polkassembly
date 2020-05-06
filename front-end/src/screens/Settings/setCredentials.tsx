@@ -9,9 +9,11 @@ import React, { useContext, useState } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
+import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useSetCredentialsConfirmMutation, useSetCredentialsStartMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
+import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -36,6 +38,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 	const { errors, handleSubmit, register } = useForm();
 	const [setCredentialsStartMutation] = useSetCredentialsStartMutation();
 	const [setCredentialsConfirmMutation, { loading }] = useSetCredentialsConfirmMutation();
+	const { queueNotification } = useContext(NotificationContext);
 	const currentUser = useContext(UserDetailsContext);
 
 	// Accounts needs to be get to get default account signer
@@ -118,6 +121,13 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 
 			if (setResult?.setCredentialsConfirm?.token) {
 				handleTokenChange(setResult?.setCredentialsConfirm?.token, currentUser);
+			}
+			if (setResult?.setCredentialsConfirm?.message) {
+				queueNotification({
+					header: 'Success!',
+					message: setResult.setCredentialsConfirm.message,
+					status: NotificationStatus.SUCCESS
+				});
 			}
 		} catch (error) {
 			console.error(error);
