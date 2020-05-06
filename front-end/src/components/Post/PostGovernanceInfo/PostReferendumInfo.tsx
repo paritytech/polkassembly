@@ -50,12 +50,12 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 						{status === 'Started'
 							?
 							<>
-								<h6>Ends in</h6>
+								<h6>End</h6>
 								<BlockCountdown endBlock={end}/>
 							</>
 							:
 							<>
-								<h6>Ended On</h6>
+								<h6>Ended</h6>
 								<div>{moment.utc(blockNumber?.startDateTime).format('DD MMM YYYY, HH:mm:ss')}</div>
 							</>
 						}
