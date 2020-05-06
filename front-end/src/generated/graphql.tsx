@@ -2781,11 +2781,8 @@ export type MutationAddressLoginStartArgs = {
 
 export type MutationAddressSignupConfirmArgs = {
   address: Scalars['String'],
-  email?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
   network: Scalars['String'],
-  signature: Scalars['String'],
-  username?: Maybe<Scalars['String']>
+  signature: Scalars['String']
 };
 
 
@@ -3153,11 +3150,8 @@ export type Mutation_RootAddressLoginStartArgs = {
 
 export type Mutation_RootAddressSignupConfirmArgs = {
   address: Scalars['String'],
-  email?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
   network: Scalars['String'],
-  signature: Scalars['String'],
-  username?: Maybe<Scalars['String']>
+  signature: Scalars['String']
 };
 
 
@@ -11228,10 +11222,7 @@ export type AddressSignupStartMutation = (
 export type AddressSignupConfirmMutationVariables = {
   network: Scalars['String'],
   address: Scalars['String'],
-  signature: Scalars['String'],
-  email?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>
+  signature: Scalars['String']
 };
 
 
@@ -11240,10 +11231,6 @@ export type AddressSignupConfirmMutation = (
   & { addressSignupConfirm: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
-    )> }
   )> }
 );
 
@@ -11731,6 +11718,10 @@ export type OnchainLinkReferendumFragment = (
     & { referendumStatus: Maybe<Array<(
       { __typename?: 'ReferendumStatus' }
       & Pick<ReferendumStatus, 'status' | 'id'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'startDateTime' | 'number'>
+      ) }
     )>>, preimage: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -12252,6 +12243,10 @@ export const OnchainLinkReferendumFragmentDoc = gql`
     end
     voteThreshold
     referendumStatus(last: 1) {
+      blockNumber {
+        startDateTime
+        number
+      }
       status
       id
     }
@@ -12945,16 +12940,8 @@ export type AddressSignupStartMutationHookResult = ReturnType<typeof useAddressS
 export type AddressSignupStartMutationResult = ApolloReactCommon.MutationResult<AddressSignupStartMutation>;
 export type AddressSignupStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressSignupStartMutation, AddressSignupStartMutationVariables>;
 export const AddressSignupConfirmDocument = gql`
-    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!, $email: String, $name: String, $username: String) {
-  addressSignupConfirm(network: $network, address: $address, signature: $signature, email: $email, name: $name, username: $username) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-      web3signup
-    }
+    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!) {
+  addressSignupConfirm(network: $network, address: $address, signature: $signature) {
     token
   }
 }
@@ -12977,9 +12964,6 @@ export type AddressSignupConfirmMutationFn = ApolloReactCommon.MutationFunction<
  *      network: // value for 'network'
  *      address: // value for 'address'
  *      signature: // value for 'signature'
- *      email: // value for 'email'
- *      name: // value for 'name'
- *      username: // value for 'username'
  *   },
  * });
  */

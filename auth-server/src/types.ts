@@ -265,11 +265,8 @@ export interface AddressSignupStartArgs {
 
 export interface AddressSignupConfirmArgs {
     address: string;
-    email: string;
-    name: string;
     network: Network;
     signature: string;
-    username: string;
 }
 
 export interface SetCredentialsConfirmArgs {
@@ -286,3 +283,7 @@ export interface UserAddressInfo {
 
 export type NetworkUserAddressInfo = Record<Network, UserAddressInfo>;
 
+export interface HashedPassword {
+    password: string;
+    salt: string;
+}

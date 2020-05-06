@@ -2,8 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import * as moment from 'moment';
 import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
+import BlockCountdown from 'src/components/BlockCountdown';
+import BlocksToTime from 'src/components/BlocksToTime';
 
 import { OnchainLinkReferendumFragment } from '../../../generated/graphql';
 import AddressComponent from '../../../ui-components/Address';
@@ -25,8 +28,9 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 		return null;
 	}
 
-	const { delay, end, preimage, voteThreshold } = onchainReferendum?.[0];
+	const { delay, end, referendumStatus, preimage, voteThreshold } = onchainReferendum?.[0];
 	const { metaDescription, method, preimageArguments } = preimage || {};
+	const { blockNumber, status } = referendumStatus?.[0] || {};
 
 	return (
 		<OnchainInfoWrapper>
@@ -39,12 +43,22 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 				{(delay || delay === 0) &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<h6>Delay</h6>
-						{delay}
+						<BlocksToTime blocks={delay} />
 					</Grid.Column>}
 				{end &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<h6>End</h6>
-						{end}
+						{status === 'Started'
+							?
+							<>
+								<h6>End</h6>
+								<BlockCountdown endBlock={end}/>
+							</>
+							:
+							<>
+								<h6>Ended</h6>
+								<div>{moment.utc(blockNumber?.startDateTime).format('DD MMM YYYY, HH:mm:ss')}</div>
+							</>
+						}
 					</Grid.Column>}
 				{voteThreshold &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>

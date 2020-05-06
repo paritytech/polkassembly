@@ -18,7 +18,7 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
+import { AuthObjectType, HashedPassword, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
 import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
@@ -57,9 +57,8 @@ export default class AuthService {
 		return getUserFromUserId(userId);
 	}
 
-	private async createUser (email: string, name: string, password: string, username: string, web3signup: boolean): Promise<User> {
-		const salt = randomBytes(32);
-		password = await argon2.hash(password, { salt });
+	private async createUser (email: string, name: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		const user = await User
 			.query()
@@ -69,7 +68,7 @@ export default class AuthService {
 				email_verified: false,
 				name,
 				password,
-				salt: salt.toString('hex'),
+				salt,
 				username: username.toLowerCase(),
 				web3signup
 			});
@@ -86,9 +85,6 @@ export default class AuthService {
 	}
 
 	private async createAddress (network: Network, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
 		return Address
 			.query()
 			.allowInsert('[address, default, network, public_key, user_id, verified]')
@@ -96,7 +92,7 @@ export default class AuthService {
 				address,
 				default: defaultAddress,
 				network,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: this.getPublicKey(address),
 				user_id,
 				verified: true
 			});
@@ -116,6 +112,23 @@ export default class AuthService {
 			// send verification email in background
 			sendVerificationEmail(user, verifyToken);
 		}
+	}
+
+	private async getSaltAndHashedPassword (plainPassword: string): Promise<HashedPassword> {
+		const salt = randomBytes(32);
+		const hashedPassword = await argon2.hash(plainPassword, { salt });
+
+		return {
+			password: hashedPassword,
+			salt: salt.toString('hex')
+		};
+	}
+
+	private getPublicKey (address: string): string {
+		const keyring = new Keyring({ type: 'sr25519' });
+		const publicKey = keyring.decodeAddress(address);
+
+		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -257,7 +270,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async AddressSignupConfirm (network: Network, address: string, signature: string, email: string, username: string, name: string): Promise<AuthObjectType> {
+	public async AddressSignupConfirm (network: Network, address: string, signature: string): Promise<AuthObjectType> {
 		const signMessage = await redisGet(getAddressSignupKey(address));
 
 		if (!signMessage) {
@@ -279,27 +292,10 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
 		}
 
-		let existing = await User
-			.query()
-			.where('username', username.toLowerCase())
-			.first();
+		const username = uuid().split('-').join('').substring(0, 25);
+		const password = uuid();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
-		}
-
-		if (email) {
-			existing = await User
-				.query()
-				.where('email', email)
-				.first();
-		}
-
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
-		}
-
-		const user = await this.createUser(email, name, uuid(), username, true);
+		const user = await this.createUser('', '', password, username, true);
 
 		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
@@ -421,20 +417,19 @@ export default class AuthService {
 
 		const userId = getUserIdFromJWT(token, jwtPublicKey);
 		const user = await getUserFromUserId(userId);
-
 		const correctPassword = await user.verifyPassword(oldPassword);
+
 		if (!correctPassword) {
 			throw new UserInputError(messages.INCORRECT_PASSWORD);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(userId);
 	}
@@ -486,8 +481,6 @@ export default class AuthService {
 		if (dbAddress.user_id !== user.id) {
 			throw new ForbiddenError(messages.ADDRESS_USER_NOT_MATCHING);
 		}
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(dbAddress.address);
 
 		const isValidSr = verifySignature(dbAddress.sign_message, dbAddress.address, signature);
 
@@ -507,7 +500,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: this.getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);
@@ -657,15 +650,13 @@ export default class AuthService {
 
 		const userId = addressObj.user_id;
 		let user = await getUserFromUserId(userId);
-
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex'),
+				salt,
 				username: username.toLowerCase(),
 				web3signup: false
 			})
@@ -813,14 +804,13 @@ export default class AuthService {
 			throw new AuthenticationError(messages.PASSWORD_RESET_TOKEN_INVALID);
 		}
 
-		const salt = randomBytes(32);
-		const password = await argon2.hash(newPassword, { salt });
+		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		await User
 			.query()
 			.patch({
 				password,
-				salt: salt.toString('hex')
+				salt
 			})
 			.findById(Number(userId));
 

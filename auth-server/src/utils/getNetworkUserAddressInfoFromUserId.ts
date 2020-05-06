@@ -33,18 +33,6 @@ export default async (userId: number): Promise<NetworkUserAddressInfo> => {
 		}
 	});
 
-	// let defaultAddress = '';
-	// const resultAddresses = allAddresses
-	// 	.filter(address => {
-	// 		const isNetworkAddress = address.network === network && address.verified;
-	// 		if (isNetworkAddress && address.default) {
-	// 			defaultAddress = address.address;
-	// 		}
-	// 		return isNetworkAddress;
-	// 	})
-	// 	.map(address => `"${address.address}"`)
-	// 	.join(',');
-
 	const result = {
 		[NetworkEnum.KUSAMA]: {
 			addresses: kusamaAddressses,

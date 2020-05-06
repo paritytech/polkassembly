@@ -94,7 +94,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						name='name'
 						placeholder='Firstname Lastname'
 						type='text'
-						ref={register({ maxLength: 30, minLength: 3, required: false })}
+						ref={register(validation.fullname)}
 					/>
 					{(errors.name as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MAXLENGTH_ERROR}</span>}
 					{(errors.name as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MINLENGTH_ERROR}</span>}
@@ -112,9 +112,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						className={errors.email ? 'error' : ''}
 						name='email'
 						placeholder='john@doe.com'
-						ref={register({
-							pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
-						})}
+						ref={register(validation.email)}
 						type='text'
 					/>
 					{errors.email && <span className={'errorText'}>{messages.VALIDATION_EMAIL_ERROR}</span>}
@@ -127,7 +125,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						className={errors.password ? 'error' : ''}
 						name='password'
 						placeholder='Password'
-						ref={register({ minLength: 6, required: true })}
+						ref={register(validation.password)}
 						type='password'
 					/>
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
