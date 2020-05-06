@@ -7,7 +7,7 @@ import { AuthenticationError } from 'apollo-server';
 import User from '../../model/User';
 import { NetworkEnum, PublicUser, UserArgs } from '../../types';
 import getDefaultAddressFromAddressArray from '../../utils/getDefaultAddressFromAddressArray';
-import getAddressesFromUserId from '../../utils/getVerifiedNetworkAddressesFromUserId';
+import getVerifiedNetworkAddressesFromUserId from '../../utils/getVerifiedNetworkAddressesFromUserId';
 import messages from '../../utils/messages';
 
 export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
@@ -20,10 +20,10 @@ export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null
 		throw new AuthenticationError(messages.USER_NOT_FOUND);
 	}
 
-	const kusamaAddresses = await getAddressesFromUserId(id, NetworkEnum.KUSAMA);
+	const kusamaAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.KUSAMA);
 	const kusamaDefault = getDefaultAddressFromAddressArray(kusamaAddresses);
 
-	const polkadotAddresses = await getAddressesFromUserId(id, NetworkEnum.POLKADOT);
+	const polkadotAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.POLKADOT);
 	const polkadotDefault = getDefaultAddressFromAddressArray(polkadotAddresses);
 
 	return {

@@ -19,11 +19,11 @@ import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, JWTPayploadType, Network, NetworkEnum, NotificationPreferencesType, Role } from '../types';
-import getAddressesFromUserId from '../utils/getAddressesFromUserId';
 import getDefaultAddressFromAddressArray from '../utils/getDefaultAddressFromAddressArray';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
+import getVerifiedNetworkAddressesFromUserId from '../utils/getVerifiedNetworkAddressesFromUserId';
 import messages from '../utils/messages';
 import verifySignature from '../utils/verifySignature';
 import {
@@ -874,8 +874,8 @@ export default class AuthService {
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
 
-		const kusamaAddresses = await getAddressesFromUserId(id, NetworkEnum.KUSAMA);
-		const polkadotAddresses = await getAddressesFromUserId(id, NetworkEnum.POLKADOT);
+		const kusamaAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.KUSAMA);
+		const polkadotAddresses = await getVerifiedNetworkAddressesFromUserId(id, NetworkEnum.POLKADOT);
 		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
