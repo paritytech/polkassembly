@@ -5,10 +5,7 @@
 export default `
     addressSignupConfirm(
         address: String!
-        email: String
-        name: String
         network: String!
         signature: String!
-        username: String
     ): LoginResponse
 `;

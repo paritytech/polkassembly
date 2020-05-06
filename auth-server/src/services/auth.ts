@@ -277,7 +277,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async AddressSignupConfirm (network: string, address: string, signature: string, email: string, username: string, name: string): Promise<AuthObjectType> {
+	public async AddressSignupConfirm (network: string, address: string, signature: string): Promise<AuthObjectType> {
 		const signMessage = await redisGet(getAddressSignupKey(address));
 
 		if (!signMessage) {
@@ -299,27 +299,10 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
 		}
 
-		let existing = await User
-			.query()
-			.where('username', username.toLowerCase())
-			.first();
+		const username = uuid().split('-').join('').substring(0, 25);
+		const password = uuid();
 
-		if (existing) {
-			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
-		}
-
-		if (email) {
-			existing = await User
-				.query()
-				.where('email', email)
-				.first();
-		}
-
-		if (existing) {
-			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
-		}
-
-		const user = await this.createUser(email, name, uuid(), username, true);
+		const user = await this.createUser('', '', password, username, true);
 
 		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
