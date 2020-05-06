@@ -89,7 +89,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
 				:
 				<>
-					<h3>Overview</h3>
 					<VoteProgress
 						ayeVotes={ayeVotes}
 						className='vote-progress'

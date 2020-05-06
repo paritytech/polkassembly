@@ -65,10 +65,7 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 
 export default styled(AddressDropdown)`
 	width: 100%;
-	border-color: grey_light;
-	border-style: solid;
-	border-width: 1px;
-	padding: 1rem .4rem .4rem 1.2rem;
+	padding: 1.4rem .4rem .8rem 1.2rem;
 
 	.address-wrapper {
 		display: inline-block;
