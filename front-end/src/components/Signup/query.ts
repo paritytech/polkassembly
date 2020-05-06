@@ -30,30 +30,8 @@ export const ADDRESS_SIGNUP_START = gql`
 `;
 
 export const ADDRESS_SIGNUP_CONFIRM = gql`
-    mutation AddressSignupConfirm(
-        $network: String!,
-        $address: String!,
-        $signature: String!,
-        $email: String,
-        $name: String,
-        $username: String
-    ) {
-        addressSignupConfirm(
-            network: $network
-            address: $address,
-            signature: $signature,
-            email: $email,
-            name: $name,
-            username: $username
-        ){
-            user {
-                id
-                name
-                username
-                email
-                email_verified
-                web3signup
-            }
+    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!) {
+        addressSignupConfirm(network: $network, address: $address, signature: $signature) {
             token
         }
     }
