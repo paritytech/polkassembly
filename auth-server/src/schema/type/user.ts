@@ -8,7 +8,7 @@ export default `
 		kusama_default_address: String
 		name: String
 		polkadot_default_address: String
-        email: String
+		email: String
 		email_verified: Boolean
 		username: String
 		web3signup: Boolean

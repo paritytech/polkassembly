@@ -31,7 +31,6 @@ const Discussions = ({ className, data }: Props) => {
 								{<Link to={`/post/${post.id}`}>
 									<DiscussionCard
 										defaultAddress={post.author[defaultAddressField]}
-										displayname={post.author.name}
 										comments={post.comments_aggregate.aggregate?.count
 											? post.comments_aggregate.aggregate.count.toString()
 											: 'no'}

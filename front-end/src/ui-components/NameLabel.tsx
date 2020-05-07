@@ -4,31 +4,38 @@
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import { Popup } from 'semantic-ui-react';
 
 import Address from './Address';
 
 interface Props {
     className?: string
     defaultAddress?: string | null
-	displayname?: string | null
 	username?: string
 }
 
-const NameLabel = ({ className, defaultAddress, displayname, username } : Props) => {
+const NameLabel = ({ className, defaultAddress, username } : Props) => {
 
 	return <div className={className}>
 		<div className={'header inline'}>
 			{
 				defaultAddress
-					? <Address address={defaultAddress} displayInline/>
-					: displayname
-						? displayname
-						: username && <span>{username}</span>
+					? <Address address={defaultAddress} displayInline popupContent={username}/>
+					: <span>{username}</span>
 			}
 		</div>
 	</div>;
 };
 
 export default styled(NameLabel)`
+	color: grey_primary;
+	font-weight: 400;
+	font-size: sm;
+	margin-bottom: 0.6rem;
+	display: inline-flex;
+		
+	span {
+		color: black_text;
+		font-weight: 500;
+		margin-right: 0.3rem;
+	}
 `;

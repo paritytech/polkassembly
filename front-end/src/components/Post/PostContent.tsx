@@ -6,7 +6,6 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import { noTitle } from 'src/global/noTitle';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
-import getNetwork from 'src/util/getNetwork';
 
 import { DiscussionPostFragment, MotionPostFragment,ProposalPostFragment, ReferendumPostFragment, TreasuryProposalPostFragment } from '../../generated/graphql';
 import CreationLabel from '../../ui-components/CreationLabel';
@@ -40,7 +39,6 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 							className='md'
 							created_at={created_at}
 							defaultAddress={defaultAddress}
-							displayname={author.name}
 							username={author.username}
 							topic={post.topic.name}
 						/>

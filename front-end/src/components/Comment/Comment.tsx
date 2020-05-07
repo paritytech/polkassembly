@@ -53,7 +53,6 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 		<div className={className}>
 			<Avatar
 				className='avatar'
-				displayname={author.name}
 				username={author.username}
 				size={'lg'}
 			/>
@@ -62,7 +61,6 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					className='creation-label'
 					created_at={created_at}
 					defaultAddress={defaultAddress}
-					displayname={author.name}
 					text={'commented'}
 					username={author.username}
 				/>

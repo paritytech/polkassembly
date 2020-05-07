@@ -35,7 +35,7 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Proposer</h6>
-					<AddressComponent address={proposerAddress} accountName={'Proposer Address'}/>
+					<AddressComponent address={proposerAddress}/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Member Count</h6>
@@ -125,7 +125,7 @@ const TreasuryInfo = ({ treasurySpendProposal }: {treasurySpendProposal?: Onchai
 			{beneficiary &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Beneficiary</h6>
-					<AddressComponent address={beneficiary} accountName={'Beneficiary Address'} />
+					<AddressComponent address={beneficiary} />
 				</Grid.Column>}
 			{value && currentNetwork &&
 					<Grid.Column mobile={16} tablet={8} computer={8}>

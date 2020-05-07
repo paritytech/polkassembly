@@ -13,17 +13,15 @@ interface Props{
 	className?: string
 	created_at?: Date
 	defaultAddress?: string | null
-	displayname?: string | null
 	text?: string
 	topic?: string
 	username?: string
 }
 
-const CreationLabel = ({ className, created_at, displayname, defaultAddress, text='posted', username, topic } : Props) => {
+const CreationLabel = ({ className, created_at, defaultAddress, text='posted', username, topic } : Props) => {
 	return <div className={className}>
 		<NameLabel
 			defaultAddress={defaultAddress}
-			displayname={displayname}
 			username={username}
 		/>
 		{text}&nbsp;
