@@ -32,7 +32,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 		let unsubscribe: () => void;
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) =>
-			setDisplay(info.identity.display || info.nickname || ''))
+			setDisplay(info.identity.displayParent || info.identity.display || info.nickname || ''))
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 
