@@ -34,9 +34,13 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
 			if (info.identity.displayParent && info.identity.display){
+				// when an identity is a sub identity `displayParent` is set
+				// and `display` get the sub identity
 				setMainDisplay(info.identity.displayParent);
 				setSub(info.identity.display);
 			} else {
+				// There should not be a `displayParent` without a `display`
+				// but we can't be too sure.
 				setMainDisplay(info.identity.displayParent || info.identity.display || info.nickname || '');
 			}
 		})
