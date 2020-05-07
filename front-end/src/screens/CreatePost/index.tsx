@@ -136,5 +136,6 @@ export default styled(CreatePost)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-top: 3rem;
 	}
 `;
