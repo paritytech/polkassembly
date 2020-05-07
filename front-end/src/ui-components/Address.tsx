@@ -64,7 +64,8 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 					? popupContent
 						? <Popup
 							trigger={
-								<div className={'header inline'}>{mainDisplay || shortenAddress(address)}
+								<div className={'header inline'}>
+									{mainDisplay || shortenAddress(address)}
 									{sub && <span className='sub'>/{sub}</span>}
 								</div>
 							}
