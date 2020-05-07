@@ -13,7 +13,25 @@ export const SIGNUP = gql`
                 username
                 email
                 email_verified
+                web3signup
             }
+            token
+        }
+    }
+`;
+
+export const ADDRESS_SIGNUP_START = gql`
+    mutation AddressSignupStart($address: String!) {
+        addressSignupStart(address: $address){
+            message
+            signMessage
+        }
+    }
+`;
+
+export const ADDRESS_SIGNUP_CONFIRM = gql`
+    mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!) {
+        addressSignupConfirm(network: $network, address: $address, signature: $signature) {
             token
         }
     }

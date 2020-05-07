@@ -17,6 +17,10 @@ const onchainLinkReferendum = gql`
             end
             voteThreshold
             referendumStatus(last: 1) {
+                blockNumber {
+                    startDateTime
+                    number
+                }
                 status
                 id
             }

@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
 import { LoadingStatusType } from 'src/types';
 import Card from 'src/ui-components/Card';
@@ -21,18 +21,12 @@ interface Props {
 const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 	const [seconds, setSeconds] = useState(0);
 	const [deposit, setDeposit] = useState('');
-	const { api, apiReady } = useContext(ApiContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const currentNetwork = getNetwork();
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading proposal info' });
 
 	useEffect(() => {
-		if (!api) {
-			console.error('polkadot/api not set');
-			return;
-		}
-
-		if (!apiReady) {
-			console.error('api not ready');
+		if (!isApiReady) {
 			return;
 		}
 
@@ -52,7 +46,7 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 
 		return () => unsubscribe && unsubscribe();
 
-	}, [api, apiReady, proposalId]);
+	}, [api, isApiReady, proposalId]);
 
 	return (
 		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
@@ -60,25 +54,22 @@ const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
 				?
 				<Loader text={loadingStatus.message} timeout={30000} timeoutText={'Api is unresponsive'}/>
 				:
-				<>
-					<h3>Overview</h3>
-					<Grid columns={3} divided>
-						<Grid.Row>
-							<Grid.Column>
-								<h6>Deposit</h6>
-								<div>{deposit}</div>
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Seconded by</h6>
-								{seconds ? <div>{seconds} addresses</div> : null}
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
-								<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</>
+				<Grid columns={3} divided>
+					<Grid.Row>
+						<Grid.Column>
+							<h6>Deposit</h6>
+							<div>{deposit}</div>
+						</Grid.Column>
+						<Grid.Column>
+							<h6>Seconded by</h6>
+							{seconds ? <div>{seconds} addresses</div> : null}
+						</Grid.Column>
+						<Grid.Column>
+							<h6>Locked {chainProperties[currentNetwork].tokenSymbol}</h6>
+							<div>{seconds * parseInt(deposit.split(' ')[0]) || 0}</div>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 			}
 		</Card>
 	);

@@ -25,12 +25,13 @@ export const theme = {
 		white_transparent: 'rgba(255, 255, 255, 0.2)'
 	},
 	fontSizes: {
-		input_text_size: '1.3rem',
+		input_text_size: '1.4rem',
 		lg: '1.8rem',
 		md: '1.5rem',
 		sm: '1.3rem',
-		xl: '3rem',
-		xs: '1.2rem'
+		xl: '2.4rem',
+		xs: '1.2rem',
+		xxl: '3rem'
 	},
 	fonts: {
 		font_default: 'Roboto',
@@ -38,7 +39,8 @@ export const theme = {
 		font_secondary: 'Work Sans'
 	},
 	radii: {
-		button_radius: '0.3rem'
+		button_radius: '0.3rem',
+		input_border_radius: '0.3rem'
 	},
 	shadows: {
 		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',

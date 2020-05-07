@@ -24,6 +24,7 @@ export interface UserObjectType {
     username: string;
     name: string;
     email_verified: boolean;
+    web3signup: boolean;
 }
 
 export interface TokenType {
@@ -59,6 +60,8 @@ export interface HasuraClaimPayload {
     'x-hasura-user-id': string;
     'x-hasura-kusama': string;
     'x-hasura-kusama-default': string;
+    'x-hasura-polkadot': string;
+    'x-hasura-polkadot-default': string;
 }
 
 export interface JWTPayploadType {
@@ -70,6 +73,7 @@ export interface JWTPayploadType {
     iat: number;
     notification: NotificationPreferencesType;
     'https://hasura.io/jwt/claims': HasuraClaimPayload;
+    web3signup: boolean;
 }
 
 export interface MessageType {
@@ -109,7 +113,7 @@ export interface NotificationPreferencesType {
     ownProposal: boolean;
 }
 
-export interface AddressLoginStartType extends MessageType {
+export interface ChallengeMessage extends MessageType {
     signMessage: string;
 }
 
@@ -158,7 +162,7 @@ export interface UsersArgs {
 	page: number;
 }
 
-export interface SetDefaultAddressArgs {
+export interface AddressArgs {
     address: string;
 }
 
@@ -170,14 +174,6 @@ export interface AddressLinkStartArgs {
 export interface AddressLoginArgs {
 	address: string;
 	signature: string;
-}
-
-export interface AddressLoginStartArgs {
-	address: string;
-}
-
-export interface AddressUnlinkArgs {
-	address: string;
 }
 
 export interface ChangeEmailArgs {
@@ -258,3 +254,32 @@ export enum PostTypeEnum {
 }
 
 export type PostType = PostTypeEnum;
+
+export interface AddressSignupStartArgs {
+    address: string;
+    network: string;
+}
+
+export interface AddressSignupConfirmArgs {
+    address: string;
+    network: string;
+    signature: string;
+}
+
+export interface SetCredentialsConfirmArgs {
+    address: string;
+    email: string;
+    password: string;
+    signature: string;
+    username: string;
+}
+
+export interface NetworkAddressType {
+    addresses: string;
+    default: string;
+}
+
+export interface HashedPassword {
+    password: string;
+    salt: string;
+}

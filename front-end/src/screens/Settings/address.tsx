@@ -63,15 +63,8 @@ const Address = ({ className }: Props): JSX.Element => {
 			});
 
 			if (addressDefaultResult.data?.setDefaultAddress?.token) {
-				handleTokenChange(addressDefaultResult.data?.setDefaultAddress?.token);
+				handleTokenChange(addressDefaultResult.data?.setDefaultAddress?.token, currentUser);
 			}
-
-			currentUser.setUserDetailsContextState((prevState) => {
-				return {
-					...prevState,
-					defaultAddress: address
-				};
-			});
 
 			queueNotification({
 				header: 'Success!',
@@ -122,7 +115,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			});
 
 			if (addressLinkConfirmResult.data?.addressLinkConfirm?.token) {
-				handleTokenChange(addressLinkConfirmResult.data?.addressLinkConfirm?.token);
+				handleTokenChange(addressLinkConfirmResult.data?.addressLinkConfirm?.token, currentUser);
 			}
 
 			!currentUser.addresses?.includes(address) && currentUser.setUserDetailsContextState((prevState) => {
@@ -157,16 +150,7 @@ const Address = ({ className }: Props): JSX.Element => {
 			});
 
 			if (addressUnlinkConfirmResult.data?.addressUnlink?.token) {
-				handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token);
-			}
-
-			if (currentUser.addresses?.includes(address)) {
-				currentUser.setUserDetailsContextState((prevState) => {
-					return {
-						...prevState,
-						addresses: prevState?.addresses?.filter((prevAddress) => prevAddress !== address)
-					};
-				});
+				handleTokenChange(addressUnlinkConfirmResult.data?.addressUnlink?.token, currentUser);
 			}
 
 			queueNotification({
@@ -208,7 +192,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
 							<Button primary onClick={handleDetect}>
-								{currentUser?.addresses?.length ? 'Show Linked Addresses' : 'Link Address'}
+								{currentUser?.addresses?.length ? 'Show linked addresses' : 'Link address'}
 							</Button>
 						</div>
 					</Form.Field>
@@ -221,7 +205,7 @@ const Address = ({ className }: Props): JSX.Element => {
 		<Form className={className} standalone={false}>
 			<Form.Group>
 				<Form.Field width={16}>
-					<label className='header'>Available Addresses</label>
+					<label className='header'>Available addresses</label>
 					<div className='ui list'>
 						{accounts.map(account => {
 							const address = getEncodedAddress(account.address);
@@ -251,13 +235,13 @@ const Address = ({ className }: Props): JSX.Element => {
 													className={'social'}
 													onClick={() => handleDefault(address)}
 												>
-													Set Default
+													Set default
 												</Button>
 											</div>: null
 										}
 										{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
 											<div className='default-label'>
-												<Icon name='check'/> Default Address
+												<Icon name='check'/> Default address
 											</div> : null
 										}
 									</Grid.Column>
