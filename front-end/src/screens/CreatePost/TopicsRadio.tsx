@@ -33,7 +33,7 @@ const TopicsRadio = ({ className, onTopicSelection }: Props) => {
 	}
 
 	return (
-		<Form.Field className={className} title='topic'>
+		<Form.Field className={className}>
 			<div className='topic-container'>
 				{ data.post_topics.length
 					? data.post_topics.map(({ id, name } : {name: string, id:number}) => {
