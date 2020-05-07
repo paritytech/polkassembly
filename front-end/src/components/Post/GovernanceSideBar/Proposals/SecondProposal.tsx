@@ -3,12 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import Loader from 'src/ui-components/Loader';
 
-import { ApiContext } from '../../../../context/ApiContext';
 import { NotificationContext } from '../../../../context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from '../../../../types';
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
@@ -28,14 +28,9 @@ interface Props {
 const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const { queueNotification } = useContext(NotificationContext);
-	const { api, apiReady } = useContext(ApiContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 
 	const secondProposal = async () => {
-		if (!api) {
-			console.error('polkadot/api not set');
-			return;
-		}
-
 		if (!proposalId && proposalId !== 0) {
 			console.error('proposalId not set');
 			return;
@@ -103,7 +98,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 						/>
 						<Button
 							primary
-							disabled={!apiReady}
+							disabled={!isApiReady}
 							onClick={secondProposal}
 						>
 							Second
