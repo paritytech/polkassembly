@@ -5,13 +5,12 @@
 import Address from '../model/Address';
 
 /**
- * Get Addresses from userId
+ * Get the default address from an array of addresses, if there is any
  */
+
 export default async (userId: number): Promise<Address[]> => {
-	const addresses = await Address
+	return Address
 		.query()
 		.where('user_id', userId);
-
-	return addresses;
 };
 

@@ -14,7 +14,7 @@ import addressSignupStart from '../../../src/resolvers/mutation/addressSignupSta
 import addressSignupConfirm from '../../../src/resolvers/mutation/addressSignupConfirm';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import setCredentialsConfirm from '../../../src/resolvers/mutation/setCredentialsConfirm';
-import { Context } from '../../../src/types';
+import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { redisSetex, redisGet, redisDel } from '../../../src/redis';
 import { getSetCredentialsKey, getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
@@ -28,7 +28,7 @@ describe('addressSignup mutation', () => {
 			cookie: () => {}
 		}
 	} as any;
-	const network = 'kusama';
+	const network = NetworkEnum.KUSAMA;
 	const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';

@@ -7,17 +7,19 @@ import Identicon from '@polkadot/react-identicon';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
+import { Popup } from 'semantic-ui-react';
 
 import shortenAddress from '../util/shortenAddress';
 
 interface Props {
-	className?: string
 	address: string
-	accountName?: string
+	className?: string
 	displayInline?: boolean
+	extensionName?: string
+	popupContent?: string
 }
 
-const Address = ({ address, accountName, className, displayInline }: Props): JSX.Element => {
+const Address = ({ address, className, displayInline, extensionName, popupContent }: Props): JSX.Element => {
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [display, setDisplay] = useState<string>('');
 
@@ -37,6 +39,7 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 		return () => unsubscribe && unsubscribe();
 	}, [address, api, isApiReady]);
 
+	console.log('extensionName',extensionName, display, popupContent);
 	return (
 		<div className={displayInline ? `${className} inline`: className}>
 			<Identicon
@@ -47,15 +50,35 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 			/>
 			<div className='content'>
 				{displayInline
-					? display || accountName
-						? <div className={'header inline'}>{display || accountName}</div>
-						: <div className={'description inline'}>{shortenAddress(address)}</div>
-
-					:
-					<>
-						<div className={'header'}>{display || accountName}</div>
-						<div className={'description'}>{shortenAddress(address)}</div>
-					</>
+					// When inline disregard the extension name.
+					? popupContent
+						? <Popup
+							trigger={<div className={'header inline'}>{display || shortenAddress(address)}</div>}
+							content={popupContent}
+							hoverable={true}
+							position='top center'
+						/>
+						: <>
+							<div className={'description inline'}>{ display || shortenAddress(address)}</div>
+						</>
+					: extensionName || display
+						? popupContent
+							? <Popup
+								trigger={
+									<>
+										<div className={'header'}>{extensionName || display}</div>
+										<div className={'description inline'}>{shortenAddress(address)}</div>
+									</>
+								}
+								content={popupContent}
+								hoverable={true}
+								position='top center'
+							/>
+							: <>
+								<div className={'header'}>{extensionName || display}</div>
+								<div className={'description'}>{shortenAddress(address)}</div>
+							</>
+						: <div className={'description'}>{shortenAddress(address)}</div>
 				}
 			</div>
 		</div>
@@ -93,5 +116,9 @@ export default styled(Address)`
 	.inline {
 		display: inline-flex !important;
 		font-size: sm !important;
+	
+	}
+	&.inline .content {
+		line-height: inherit !important;
 	}
 `;

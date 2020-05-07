@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
 import { LatestDiscussionPostsQuery } from '../../generated/graphql';
 import DiscussionCard from '../DiscussionCard';
@@ -17,6 +18,8 @@ interface Props {
 const Discussions = ({ className, data }: Props) => {
 	if (!data.posts || !data.posts.length) return <div>No discussion found.</div>;
 
+	const defaultAddressField = getDefaultAddressField();
+
 	return (
 		<ul className={`${className} discussions__list`}>
 			{!!data.posts &&
@@ -27,7 +30,7 @@ const Discussions = ({ className, data }: Props) => {
 							<li key={post.id} className='discussions__item'>
 								{<Link to={`/post/${post.id}`}>
 									<DiscussionCard
-										displayname={post?.author?.name}
+										defaultAddress={post.author[defaultAddressField]}
 										comments={post.comments_aggregate.aggregate?.count
 											? post.comments_aggregate.aggregate.count.toString()
 											: 'no'}

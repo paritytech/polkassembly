@@ -25,17 +25,17 @@ const Motions = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_motion_id;
 
-					return !!post?.author?.username &&
+					return !!post?.author?.username && post.onchain_link &&
 						<li key={post.id} className='motions__item'>
 							{<Link to={`/motion/${onchainId}`}>
 								<GovernanceCard
-									address={post.onchain_link?.proposer_address}
+									address={post.onchain_link.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
-									method={post.onchain_link?.onchain_motion?.[0]?.preimage?.method}
+									method={post.onchain_link.onchain_motion?.[0]?.preimage?.method}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status}
+									status={post.onchain_link.onchain_motion?.[0]?.motionStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>

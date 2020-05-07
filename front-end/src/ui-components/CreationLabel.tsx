@@ -5,34 +5,25 @@
 import styled from '@xstyled/styled-components';
 import * as moment from 'moment';
 import React from 'react';
-import { Popup } from 'semantic-ui-react';
 
 import InlineTag from './InlineTag';
+import NameLabel from './NameLabel';
 
 interface Props{
 	className?: string
 	created_at?: Date
-	displayname?: string | null
+	defaultAddress?: string | null
 	text?: string
 	topic?: string
 	username?: string
 }
 
-const CreationLabel = ({ className, created_at, displayname, text='posted', username, topic } : Props) => {
+const CreationLabel = ({ className, created_at, defaultAddress, text='posted', username, topic } : Props) => {
 	return <div className={className}>
-		{
-			displayname
-				?
-				<Popup
-					trigger={<span>{displayname}</span>}
-					content={username}
-					hoverable={true}
-					position='top center'
-				/>
-				: username &&
-					<span>{username}</span>
-
-		}
+		<NameLabel
+			defaultAddress={defaultAddress}
+			username={username}
+		/>
 		{text}&nbsp;
 		{topic &&
 			<>in <InlineTag>{topic}</InlineTag> </>

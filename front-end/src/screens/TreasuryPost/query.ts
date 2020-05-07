@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import gql from 'graphql-tag';
+import { authorFields } from 'src/fragments/author';
 
 import { commentFields } from '../../fragments/comments';
 
@@ -28,9 +29,7 @@ const onchainLinkTreasuryProposal = gql`
 const treasuryProposalPost = gql`
     fragment treasuryProposalPost on posts {
         author {
-            id
-            name
-            username
+            ...authorFields
         }
         content
         created_at
@@ -52,6 +51,7 @@ const treasuryProposalPost = gql`
             name
         }
     }
+    ${authorFields}
     ${commentFields}
     ${onchainLinkTreasuryProposal}
 `;

@@ -25,16 +25,16 @@ const TreasuryProposals = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_treasury_proposal_id;
 
-					return !!post?.author?.username &&
+					return !!post?.author?.username && post.onchain_link &&
 						<li key={post.id} className='proposals__item'>
 							{<Link to={`/treasury/${onchainId}`}>
 								<GovernanceCard
-									address={post.onchain_link?.proposer_address}
+									address={post.onchain_link.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status}
+									status={post.onchain_link.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>

@@ -6,6 +6,7 @@ import { AuthenticationError } from 'apollo-server';
 
 import User from '../../model/User';
 import { PublicUser, UserArgs } from '../../types';
+import getNetworkUserAddressInfoFromUserId from '../../utils/getNetworkUserAddressInfoFromUserId';
 import messages from '../../utils/messages';
 
 export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null> => {
@@ -18,9 +19,13 @@ export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null
 		throw new AuthenticationError(messages.USER_NOT_FOUND);
 	}
 
+	const networkUserAddressInfo = await getNetworkUserAddressInfoFromUserId(id);
+
 	return {
 		id: user.id,
+		kusama_default_address: networkUserAddressInfo.kusama.default,
 		name: user.name,
+		polkadot_default_address: networkUserAddressInfo.polkadot.default,
 		username: user.username
 	};
 };

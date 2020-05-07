@@ -5,10 +5,12 @@
 export default `
 	type User {
 		id: Int
-		username: String
-        name: String
-        email: String
+		kusama_default_address: String
+		name: String
+		polkadot_default_address: String
+		email: String
 		email_verified: Boolean
+		username: String
 		web3signup: Boolean
 	}
 `;

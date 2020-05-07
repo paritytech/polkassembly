@@ -9,7 +9,7 @@ import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
 import addressLinkStart from '../../../src/resolvers/mutation/addressLinkStart';
 import signup from '../../../src/resolvers/mutation/signup';
-import { Context } from '../../../src/types';
+import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLinkStart mutation', () => {
@@ -40,7 +40,7 @@ describe('addressLinkStart mutation', () => {
 	});
 
 	it('should be able to start linking address', async () => {
-		const network = 'kusama';
+		const network = NetworkEnum.KUSAMA;
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		const res = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -60,7 +60,7 @@ describe('addressLinkStart mutation', () => {
 	});
 
 	it('should not be able to start linking address with wrong jwt', async () => {
-		const network = 'kusama';
+		const network = NetworkEnum.KUSAMA;
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		fakectx.req.headers.authorization = 'Bearer wrong';
 		try {

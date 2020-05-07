@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import * as React from 'react';
+import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
 import {
 	CommentFieldsFragment,
@@ -45,11 +46,13 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
+	const defaultAddressField = getDefaultAddressField();
+	const defaultAddress = author[defaultAddressField];
+
 	return (
 		<div className={className}>
 			<Avatar
 				className='avatar'
-				displayname={author.name}
 				username={author.username}
 				size={'lg'}
 			/>
@@ -57,7 +60,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 				<CreationLabel
 					className='creation-label'
 					created_at={created_at}
-					displayname={author.name}
+					defaultAddress={defaultAddress}
 					text={'commented'}
 					username={author.username}
 				/>

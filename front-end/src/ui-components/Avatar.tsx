@@ -7,16 +7,15 @@ import React from 'react';
 
 interface Props {
     className?: string
-	displayname?: string | null
 	username: string | null
 	size?: 'sm' | 'md' | 'lg'
 }
 
-const Avatar = ({ className, displayname, username, size }: Props) => {
+const Avatar = ({ className, username, size }: Props) => {
 
 	return (
 		<div className={size? `${className} ${size}` : className}>
-			{displayname ? displayname.substring(0, 1) : username?.substring(0, 1)}
+			{username?.substring(0, 1)}
 		</div>
 	);
 };

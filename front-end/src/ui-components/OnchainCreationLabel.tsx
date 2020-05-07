@@ -9,7 +9,7 @@ import Address from '../ui-components/Address';
 import TopicTag from '../ui-components/TopicTag';
 
 interface Props {
-	address?: string
+	address: string
 	className?: string
 	topic: string
 }
@@ -19,7 +19,7 @@ const OnchainCreationLabel = ({ address, className, topic }:Props ) => {
 		<div className={className}>
 			by
 			<Address
-				address={address || ''}
+				address={address}
 				className='address'
 				displayInline={true}
 			/>
