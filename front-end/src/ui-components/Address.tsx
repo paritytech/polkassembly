@@ -39,7 +39,6 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 		return () => unsubscribe && unsubscribe();
 	}, [address, api, isApiReady]);
 
-	console.log('extensionName',extensionName, display, popupContent);
 	return (
 		<div className={displayInline ? `${className} inline`: className}>
 			<Identicon
