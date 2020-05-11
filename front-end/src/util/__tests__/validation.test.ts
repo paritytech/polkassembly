@@ -26,7 +26,7 @@ test('Fullname validation', () => {
 
 test('Password validation', () => {
 	const password1 = '123456';
-	const password2 = '1          1';
+	const password2 = 'trailingSpace ';
 
 	expect(password1.length).toBeGreaterThanOrEqual(password.minLength);
 	expect(password2.length).toBeGreaterThanOrEqual(password.minLength);
