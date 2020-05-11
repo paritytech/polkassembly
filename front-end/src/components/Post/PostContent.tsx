@@ -41,12 +41,13 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 							defaultAddress={defaultAddress}
 							username={author.username}
 							topic={post.topic.name}
-						/>
-						<UpdateLabel
-							className='md'
-							created_at={created_at}
-							updated_at={updated_at}
-						/>
+						>
+							<UpdateLabel
+								className='md'
+								created_at={created_at}
+								updated_at={updated_at}
+							/>
+						</CreationLabel>
 					</>
 				}
 			</div>
