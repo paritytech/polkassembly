@@ -61,6 +61,10 @@ export const GlobalStyle = createGlobalStyle`
     .ui.container {
         margin: 4rem auto 0 auto;
         padding-bottom: 8rem;
+
+        @media only screen and (max-width: 1199px) and (min-width: 992px) {
+            width: calc(100% - 4rem);
+        }
     }
 
     h1, h2, h3, h4, h5, h6 {
