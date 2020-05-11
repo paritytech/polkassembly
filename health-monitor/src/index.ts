@@ -106,7 +106,7 @@ async function getOnchainLinkReferendumDelays (): Promise<boolean> {
 	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
 		body: JSON.stringify({
 			operationName: null,
-			query: `query LatestDemocracyTreasuryProposalPosts($limit: Int!) {
+			query: `query HasuraPostsWithLinkedChainDBInfo($limit: Int!) {
 				posts(limit: $limit, where: {onchain_link: {onchain_referendum_id: {_is_null: false}}}) {
 				  	id
 				  	onchain_link {
