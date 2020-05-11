@@ -85,7 +85,7 @@ async function getPrismaVersion (): Promise<string> {
 }
 
 async function getReferendumDelays (): Promise<boolean> {
-	return fetch(`${process.env.CHAIN_DB_SERVER}`, {
+	const { data } = await fetch(`${process.env.CHAIN_DB_SERVER}`, {
 		body: JSON.stringify({
 			operationName: null,
 			query: `{
@@ -99,11 +99,18 @@ async function getReferendumDelays (): Promise<boolean> {
 			'content-type': 'application/json'
 		},
 		method: 'POST'
-	}).then(res => res.json()).then(({ data }) => data?.referendums?.length > 0);
+	}).then(res => res.json());
+	const found = data?.referendums?.length > 0;
+
+	if (!found) {
+		throw new Error('Referendum Delays query not successful.');
+	}
+
+	return found;
 }
 
 async function getOnchainLinkReferendumDelays (): Promise<boolean> {
-	return fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
+	const { data } = await fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
 		body: JSON.stringify({
 			operationName: null,
 			query: `query HasuraPostsWithLinkedChainDBInfo($limit: Int!) {
@@ -123,13 +130,19 @@ async function getOnchainLinkReferendumDelays (): Promise<boolean> {
 			'content-type': 'application/json'
 		},
 		method: 'POST'
-	}).then(res => res.json()).then(({ data }) => {
-		const result = data?.posts?.reduce((acc: boolean, post: any) => {
-			return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.voteThreshold;
-		}, true);
+	}).then(res => res.json());
 
-		return result && data?.posts?.length > 0;
-	});
+	const result = data?.posts?.reduce((acc: boolean, post: any) => {
+		return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.voteThreshold;
+	}, true);
+
+	const found = result && data?.posts?.length > 0;
+
+	if (!found) {
+		throw new Error('OnchainLink Referendum Delays query not successful.');
+	}
+
+	return found;
 }
 
 async function healthcheck (): Promise<HealthCheckResult> {
