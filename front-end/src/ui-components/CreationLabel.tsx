@@ -4,13 +4,14 @@
 
 import styled from '@xstyled/styled-components';
 import * as moment from 'moment';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import InlineTag from './InlineTag';
 import NameLabel from './NameLabel';
 
 interface Props{
 	className?: string
+	children?: ReactNode
 	created_at?: Date
 	defaultAddress?: string | null
 	text?: string
@@ -18,7 +19,7 @@ interface Props{
 	username?: string
 }
 
-const CreationLabel = ({ className, created_at, defaultAddress, text='posted', username, topic } : Props) => {
+const CreationLabel = ({ className, children, created_at, defaultAddress, text='posted', username, topic } : Props) => {
 	return <div className={className}>
 		<NameLabel
 			defaultAddress={defaultAddress}
@@ -31,6 +32,7 @@ const CreationLabel = ({ className, created_at, defaultAddress, text='posted', u
 		{created_at &&
 			moment.utc(created_at, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()
 		}
+		{children}
 	</div>;
 };
 
@@ -38,12 +40,6 @@ export default styled(CreationLabel)`
 	color: grey_primary;
 	font-weight: 400;
 	font-size: sm;
-	margin-bottom: 0.6rem;
 	display: inline-flex;
-		
-	span {
-		color: black_text;
-		font-weight: 500;
-		margin-right: 0.3rem;
-	}
+	align-items: center;
 `;
