@@ -116,7 +116,6 @@ export default styled(Address)`
 
 	.content {
 		display: inline-block;
-		line-height: 1.6rem;
 	}
 
 	.identicon {
@@ -144,11 +143,9 @@ export default styled(Address)`
 		font-size: sm !important;
 	
 	}
-	&.inline .content {
-		line-height: inherit !important;
-	}
 
 	.sub {
 		color: grey_secondary;
+		line-height: inherit;
 	}
 `;

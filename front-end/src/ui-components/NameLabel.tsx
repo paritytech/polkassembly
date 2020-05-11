@@ -30,12 +30,13 @@ export default styled(NameLabel)`
 	color: grey_primary;
 	font-weight: 400;
 	font-size: sm;
-	margin-bottom: 0.6rem;
+	/* margin-bottom: 0.6rem; */
 	display: inline-flex;
 		
 	span {
 		color: black_text;
 		font-weight: 500;
 		margin-right: 0.3rem;
+		line-height: 1.3rem;
 	}
 `;
