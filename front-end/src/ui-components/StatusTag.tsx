@@ -75,14 +75,12 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${motionStatus.PROPOSED} {
 			border-color: blue_primary;
 			color: blue_primary;
-			background-color: blue_primary_transparent;
 		}
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
 		&.${motionStatus.EXECUTED} {
 			border-color: green_primary;
 			color: green_primary;
-			background-color: green_primary_transparent;
 		}
 		&.${referendumStatus.CANCELLED},
 		&.${referendumStatus.NOTPASSED},
@@ -90,7 +88,6 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${motionStatus.DISAPPROVED} {
 			border-color: red_primary;
 			color: red_primary;
-			background-color: red_primary_transparent;
 		}
 	}
 `;

@@ -30,7 +30,7 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 	filteredAccounts.forEach(account => {
 		addressOptions.push({
 			children: <Address
-				accountName={account.meta.name}
+				extensionName={account.meta.name}
 				address={account.address}
 			/>,
 			value: account.address
@@ -55,7 +55,7 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 		options={addressOptions}
 		trigger={<div className='address-wrapper'>
 			<Address
-				accountName={dropdownList[selectedAddress]}
+				extensionName={dropdownList[selectedAddress]}
 				address={defaultAddress}
 			/>
 		</div>}

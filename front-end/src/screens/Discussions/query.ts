@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import gql from 'graphql-tag';
+import { authorFields } from 'src/fragments/author';
 
 export const QUERY_LATEST_DISCUSSIONS = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
@@ -10,9 +11,7 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
             id
             title
             author {
-                id
-                name
-                username
+                ...authorFields
             }
             created_at
             updated_at
@@ -27,4 +26,5 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
             }
         }
     }
+    ${authorFields}
 `;

@@ -34,7 +34,7 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Proposer</h6>
-					<AddressComponent address={proposerAddress} accountName={'Proposer Address'} />
+					<AddressComponent address={proposerAddress}/>
 				</Grid.Column>
 				{bond && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -44,7 +44,7 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 				{beneficiary &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Beneficiary</h6>
-					<AddressComponent address={beneficiary} accountName={'Beneficiary Address'} />
+					<AddressComponent address={beneficiary}/>
 				</Grid.Column>}
 				{value && currentNetwork &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>

@@ -18,8 +18,8 @@ import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { redisDel, redisGet, redisSetex } from '../redis';
-import { AuthObjectType, HashedPassword, JWTPayploadType, NetworkAddressType, NotificationPreferencesType, Role } from '../types';
-import getAddressesFromUserId from '../utils/getAddressesFromUserId';
+import { AuthObjectType, HashedPassword, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
+import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
@@ -38,8 +38,6 @@ const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHR
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
-const KUSAMA = 'kusama';
-const POLKADOT = 'polkadot';
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
 	own_proposal: true,
@@ -51,24 +49,6 @@ export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
-export const getNetworkAddresses = (addresses: Address[], network: string): NetworkAddressType => {
-	let defaultAddress = '';
-	const resultAddresses = addresses
-		.filter(address => {
-			const isNetworkAddress = address.network === network && address.verified;
-			if (isNetworkAddress && address.default) {
-				defaultAddress = address.address;
-			}
-			return isNetworkAddress;
-		})
-		.map(address => `"${address.address}"`)
-		.join(',');
-
-	return {
-		addresses: resultAddresses,
-		default: defaultAddress
-	};
-};
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -104,7 +84,7 @@ export default class AuthService {
 		return user;
 	}
 
-	private async createAddress (network: string, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
+	private async createAddress (network: Network, address: string, defaultAddress: boolean, user_id: number): Promise<Address> {
 		return Address
 			.query()
 			.allowInsert('[address, default, network, public_key, user_id, verified]')
@@ -290,7 +270,7 @@ export default class AuthService {
 		return signMessage;
 	}
 
-	public async AddressSignupConfirm (network: string, address: string, signature: string): Promise<AuthObjectType> {
+	public async AddressSignupConfirm (network: Network, address: string, signature: string): Promise<AuthObjectType> {
 		const signMessage = await redisGet(getAddressSignupKey(address));
 
 		if (!signMessage) {
@@ -894,11 +874,12 @@ export default class AuthService {
 			throw new ForbiddenError(`${key} not set. Aborting.`);
 		}
 
+		const networkUserAddressInfo = await getNetworkUserAddressInfoFromUserId(id);
+
+		const notification = await getNotificationPreferencesFromUserId(id);
+
 		const allowedRoles: Role[] = [Role.USER];
 		let currentRole: Role = Role.USER;
-
-		const addresses = await getAddressesFromUserId(id);
-		const notification = await getNotificationPreferencesFromUserId(id);
 
 		// if our user is the proposal bot, give additional role.
 		if (id === Number(process.env.PROPOSAL_BOT_USER_ID)) {
@@ -906,20 +887,17 @@ export default class AuthService {
 			currentRole = Role.PROPOSAL_BOT;
 		}
 
-		const kusama = getNetworkAddresses(addresses, KUSAMA);
-		const polkadot = getNetworkAddresses(addresses, POLKADOT);
-
 		const tokenContent: JWTPayploadType = {
 			email,
 			email_verified: email_verified || false,
 			'https://hasura.io/jwt/claims': {
 				'x-hasura-allowed-roles': allowedRoles,
 				'x-hasura-default-role': currentRole,
-				'x-hasura-kusama': `{${kusama.addresses}}`,
-				'x-hasura-kusama-default': kusama.default,
-				'x-hasura-polkadot': `{${polkadot.addresses}}`,
-				'x-hasura-polkadot-default': polkadot.default,
-				'x-hasura-user-email': email || '',
+				'x-hasura-kusama': `{${networkUserAddressInfo.kusama.addresses}}`,
+				'x-hasura-kusama-default': networkUserAddressInfo.kusama.default || '',
+				'x-hasura-polkadot': `{${networkUserAddressInfo.polkadot.addresses}}`,
+				'x-hasura-polkadot-default': networkUserAddressInfo.polkadot.default || '',
+				'x-hasura-user-email': email,
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),

@@ -24,17 +24,17 @@ const Referenda = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_referendum_id;
 
-					return !!post?.author?.username &&
+					return !!post?.author?.username && post.onchain_link &&
 						<li key={post.id} className='referenda__item'>
 							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
-									address={post.onchain_link?.proposer_address}
+									address={post.onchain_link.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
-									method={post.onchain_link?.onchain_referendum?.[0]?.preimage?.method}
+									method={post.onchain_link.onchain_referendum?.[0]?.preimage?.method}
 									onchainId={onchainId}
-									status={post.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status}
+									status={post.onchain_link.onchain_referendum?.[0]?.referendumStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>

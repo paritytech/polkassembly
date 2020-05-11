@@ -4,14 +4,14 @@
 
 import { Model } from 'objection';
 
-import { JsonSchema } from '../types';
+import { JsonSchema, Network } from '../types';
 import connection from './connection';
 
 Model.knex(connection);
 
 export default class Address extends Model {
 	readonly id!: number
-	network!: string
+	network!: Network
 	address!: string
 	public_key!: string
 	user_id!: number

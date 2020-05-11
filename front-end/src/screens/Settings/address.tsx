@@ -214,7 +214,7 @@ const Address = ({ className }: Props): JSX.Element => {
 								<Grid key={address}>
 									<Grid.Column width={7}>
 										<div className='item'>
-											<AddressComponent className='item' address={address} accountName={account.meta.name || ''} />
+											<AddressComponent className='item' address={address} extensionName={account.meta.name} />
 										</div>
 									</Grid.Column>
 									<Grid.Column width={3}>

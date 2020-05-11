@@ -31,7 +31,6 @@ import verifyEmail from './mutation/verifyEmail';
 import subscription from './query/subscription';
 import token from './query/token';
 import user from './query/user';
-import users from './query/users';
 
 export default {
 	Mutation: {
@@ -65,7 +64,6 @@ export default {
 	Query: {
 		subscription,
 		token,
-		user,
-		users
+		user
 	}
 };

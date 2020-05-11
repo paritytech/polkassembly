@@ -4,17 +4,12 @@
 
 import gql from 'graphql-tag';
 
-import { authorFields } from './author';
-
-export const commentFields = gql`
-    fragment commentFields on comments {
+export const authorFields = gql`
+    fragment authorFields on User {
         id
-        author {
-            ...authorFields
-        }
-        content
-        created_at
-        updated_at
+        kusama_default_address
+        name
+        polkadot_default_address
+        username
     }
-    ${authorFields}
 `;

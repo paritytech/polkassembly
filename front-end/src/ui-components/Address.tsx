@@ -4,37 +4,51 @@
 
 import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
+import { Popup } from 'semantic-ui-react';
 
-import { ApiContext } from '../context/ApiContext';
 import shortenAddress from '../util/shortenAddress';
 
 interface Props {
-	className?: string
 	address: string
-	accountName?: string
+	className?: string
 	displayInline?: boolean
+	extensionName?: string
+	popupContent?: string
 }
 
-const Address = ({ address, accountName, className, displayInline }: Props): JSX.Element => {
-	const { api, apiReady } = useContext(ApiContext);
-	const [display, setDisplay] = useState<string>('');
+const Address = ({ address, className, displayInline, extensionName, popupContent }: Props): JSX.Element => {
+	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const [mainDisplay, setMainDisplay] = useState<string>('');
+	const [sub, setSub] = useState<string | null>(null);
 
 	useEffect(() => {
-		let unsubscribe: () => void;
 
-		if (!api || !apiReady) {
+		if (!isApiReady){
 			return;
 		}
 
-		api.derive.accounts.info(address, (info: DeriveAccountInfo) =>
-			setDisplay(info.identity.display || info.nickname || ''))
+		let unsubscribe: () => void;
+
+		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
+			if (info.identity.displayParent && info.identity.display){
+				// when an identity is a sub identity `displayParent` is set
+				// and `display` get the sub identity
+				setMainDisplay(info.identity.displayParent);
+				setSub(info.identity.display);
+			} else {
+				// There should not be a `displayParent` without a `display`
+				// but we can't be too sure.
+				setMainDisplay(info.identity.displayParent || info.identity.display || info.nickname || '');
+			}
+		})
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, apiReady]);
+	}, [address, api, isApiReady]);
 
 	return (
 		<div className={displayInline ? `${className} inline`: className}>
@@ -46,15 +60,49 @@ const Address = ({ address, accountName, className, displayInline }: Props): JSX
 			/>
 			<div className='content'>
 				{displayInline
-					? display || accountName
-						? <div className={'header inline'}>{display || accountName}</div>
-						: <div className={'description inline'}>{shortenAddress(address)}</div>
-
-					:
-					<>
-						<div className={'header'}>{display || accountName}</div>
-						<div className={'description'}>{shortenAddress(address)}</div>
-					</>
+					// When inline disregard the extension name.
+					? popupContent
+						? <Popup
+							trigger={
+								<div className={'header inline'}>
+									{mainDisplay || shortenAddress(address)}
+									{sub && <span className='sub'>/{sub}</span>}
+								</div>
+							}
+							content={popupContent}
+							hoverable={true}
+							position='top center'
+						/>
+						: <>
+							<div className={'description inline'}>
+								{ mainDisplay || shortenAddress(address)}
+								{sub && <span className='sub'>/{sub}</span>}
+							</div>
+						</>
+					: extensionName || mainDisplay
+						? popupContent
+							? <Popup
+								trigger={
+									<>
+										<div className={'header'}>
+											{extensionName || mainDisplay}
+											{sub && <span className='sub'>/{sub}</span>}
+										</div>
+										<div className={'description inline'}>{shortenAddress(address)}</div>
+									</>
+								}
+								content={popupContent}
+								hoverable={true}
+								position='top center'
+							/>
+							: <>
+								<div className={'header'}>
+									{extensionName || mainDisplay}
+									{sub && <span className='sub'>/{sub}</span>}
+								</div>
+								<div className={'description'}>{shortenAddress(address)}</div>
+							</>
+						: <div className={'description'}>{shortenAddress(address)}</div>
 				}
 			</div>
 		</div>
@@ -92,5 +140,13 @@ export default styled(Address)`
 	.inline {
 		display: inline-flex !important;
 		font-size: sm !important;
+	
+	}
+	&.inline .content {
+		line-height: inherit !important;
+	}
+
+	.sub {
+		color: grey_secondary;
 	}
 `;

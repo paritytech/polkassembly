@@ -1,0 +1,18 @@
+// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
+import getNetwork from './getNetwork';
+
+export default function(): 'kusama_default_address' | 'polkadot_default_address' {
+	const network = getNetwork();
+
+	switch (network) {
+	case 'kusama':
+		return 'kusama_default_address';
+	case 'polkadot':
+		return 'polkadot_default_address';
+	default:
+		return 'polkadot_default_address';
+	}
+}
