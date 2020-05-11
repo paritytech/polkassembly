@@ -2,8 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { expect } from 'chai';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import 'mocha';
+import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
@@ -57,6 +58,34 @@ describe('addressLinkStart mutation', () => {
 		expect(dbAddress?.verified).to.be.false;
 
 		expect(res.message).to.equal(messages.ADDRESS_LINKING_STARTED);
+	});
+
+	it('should not be able to start linking address if it already exists in db', async () => {
+		const network = NetworkEnum.KUSAMA;
+		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const dbAddress = await Address
+			.query()
+			.allowInsert('[network, address, user_id, sign_message, verified]')
+			.insert({
+				address,
+				network,
+				sign_message: uuid(),
+				user_id: signupResult.user.id,
+				verified: false
+			});
+
+		try {
+			await addressLinkStart(undefined, { network, address }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_ALREADY_EXISTS);
+		}
+
+		await Address
+			.query()
+			.where({ id: dbAddress.id })
+			.del();
 	});
 
 	it('should not be able to start linking address with wrong jwt', async () => {
