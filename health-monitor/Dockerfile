@@ -15,4 +15,4 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-CMD yarn start
+CMD yarn start:prod

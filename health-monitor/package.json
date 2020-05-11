@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "tsc": "tsc",
-    "start:prod": "node build/index.js",
+    "start:prod": "tsc && node build/index.js",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix"
   },
@@ -15,7 +15,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "node-fetch": "^2.6.0",
-    "ts-node": "^8.5.4",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
@@ -34,7 +33,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "ts-node": "^8.5.4"
   },
   "license": "Apache-2.0"
 }
