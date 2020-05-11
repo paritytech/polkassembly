@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import { ApolloQueryResult } from 'apollo-client/core/types';
+import { ApolloQueryResult } from 'apollo-client';
 import * as React from 'react';
 
 import {
