@@ -11,6 +11,7 @@ import { Container } from 'semantic-ui-react';
 
 import Apollo from './components/Apollo';
 import Footer from './components/Footer';
+import Head from './components/Head';
 import MenuBar from './components/MenuBar';
 import Modal from './components/Modal';
 import Notifications from './components/Notifications';
@@ -52,6 +53,7 @@ const App = () => {
 						<ModalProvider>
 							<UserDetailsProvider>
 								<Apollo>
+									<Head />
 									<GlobalStyle />
 									<Notifications/>
 									<Modal/>
