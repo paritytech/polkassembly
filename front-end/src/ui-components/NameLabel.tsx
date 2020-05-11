@@ -30,7 +30,6 @@ export default styled(NameLabel)`
 	color: grey_primary;
 	font-weight: 400;
 	font-size: sm;
-	/* margin-bottom: 0.6rem; */
 	display: inline-flex;
 		
 	span {
