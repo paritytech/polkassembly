@@ -116,25 +116,26 @@ export default styled(Address)`
 
 	.content {
 		display: inline-block;
-		line-height: 1.6rem;
 	}
 
 	.identicon {
 		margin-right: 0.8rem;
 	}
 
+	.header, .description{
+		filter: grayscale(100%);
+		margin-right: 0.4rem;
+	}
+
 	.header {
 		color: black_text;
 		font-weight: 500;
 		font-size: sm;
-		filter: grayscale(100%);
-		margin-right: 0.4rem;
 	}
 
 	.description {
 		color: grey_primary;
 		font-size: xs;
-		margin-right: 0.4rem;
 	}
 
 	.inline {
@@ -142,11 +143,9 @@ export default styled(Address)`
 		font-size: sm !important;
 	
 	}
-	&.inline .content {
-		line-height: inherit !important;
-	}
 
 	.sub {
 		color: grey_secondary;
+		line-height: inherit;
 	}
 `;
