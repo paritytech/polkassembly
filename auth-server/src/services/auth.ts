@@ -12,7 +12,6 @@ import { uuid } from 'uuidv4';
 import validator from 'validator';
 
 import Address from '../model/Address';
-import EmailVerificationToken from '../model/EmailVerificationToken';
 import Notification from '../model/Notification';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
@@ -36,7 +35,7 @@ const jwtPublicKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PUBLIC_KE
 const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
-const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
+export const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
@@ -49,6 +48,7 @@ export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
+export const getEmailVerificationTokenKey = (token: string): string => `SCR-${token}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -100,14 +100,9 @@ export default class AuthService {
 
 	private async sendVerificationTokenMail (user: User): Promise<void> {
 		if (user.email) {
-			const verifyToken = await EmailVerificationToken
-				.query()
-				.allowInsert('[token, user_id, valid]')
-				.insert({
-					token: uuid(),
-					user_id: user.id,
-					valid: true
-				});
+			const verifyToken = uuid();
+
+			await redisSetex(getEmailVerificationTokenKey(verifyToken), ONE_DAY, user.email);
 
 			// send verification email in background
 			sendVerificationEmail(user, verifyToken);
@@ -522,30 +517,29 @@ export default class AuthService {
 	}
 
 	public async VerifyEmail (token: string): Promise<string> {
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where('token', token)
-			.first();
+		const email = await redisGet(getEmailVerificationTokenKey(token));
 
-		if (!verifyToken) {
+		if (!email) {
 			throw new AuthenticationError(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);
 		}
 
-		if (!verifyToken.valid) {
-			throw new AuthenticationError(messages.INVALID_EMAIL_VERIFICATION_TOKEN);
+		let user = await User
+			.query()
+			.where('email', email)
+			.first();
+
+		if (!user) {
+			throw new AuthenticationError(messages.EMAIL_VERIFICATION_USER_NOT_FOUND);
 		}
 
 		await User
 			.query()
 			.patch({ email_verified: true })
-			.findById(verifyToken.user_id);
+			.findById(user.id);
 
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.findById(verifyToken.id);
+		await redisDel(getEmailVerificationTokenKey(token));
 
-		const user = await getUserFromUserId(verifyToken.user_id);
+		user = await getUserFromUserId(user.id);
 
 		return this.getSignedToken(user);
 	}
@@ -590,12 +584,6 @@ export default class AuthService {
 		if (!user.email) {
 			throw new UserInputError(messages.EMAIL_NOT_FOUND);
 		}
-
-		// Invalidate all email verification token for user
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId });
 
 		await this.sendVerificationTokenMail(user);
 	}
@@ -771,12 +759,6 @@ export default class AuthService {
 				email_verified: false
 			})
 			.findById(userId);
-
-		// Invalidate all email verification token for user
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId });
 
 		user = await getUserFromUserId(userId);
 

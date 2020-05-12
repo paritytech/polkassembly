@@ -6,16 +6,17 @@ import { expect } from 'chai';
 import 'mocha';
 import { uuid } from 'uuidv4';
 
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
 import verifyEmail from '../../../src/resolvers/mutation/verifyEmail';
+import { redisDel, redisGet, redisSetex } from '../../../src/redis';
+import { ONE_DAY, getEmailVerificationTokenKey } from '../../../src/services/auth';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('verifyEmail mutation', () => {
 	let signupResult: any;
-	let verifyToken: any;
+	let verifyToken = uuid();
 	let fakectx: Context = {
 		req: {},
 		res: {
@@ -30,14 +31,7 @@ describe('verifyEmail mutation', () => {
 	before(async () => {
 		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
 
-		verifyToken = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: uuid(),
-				user_id: signupResult.user.id,
-				valid: true
-			});
+		await redisSetex(getEmailVerificationTokenKey(verifyToken), ONE_DAY, email);
 	});
 
 	after(async () => {
@@ -46,14 +40,11 @@ describe('verifyEmail mutation', () => {
 			.where({ id: signupResult.user.id })
 			.del();
 
-		await EmailVerificationToken
-			.query()
-			.where({ id: verifyToken?.id })
-			.del();
+		await redisDel(getEmailVerificationTokenKey(verifyToken));
 	});
 
 	it('should be able to verify email with valid token', async () => {
-		const res = await verifyEmail(undefined, { token: verifyToken?.token });
+		const res = await verifyEmail(undefined, { token: verifyToken });
 
 		const dbUser = await User
 			.query()
