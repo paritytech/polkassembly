@@ -21,7 +21,7 @@
     "Nikhil Rajan",
     "Thibaut Sardan"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/paritytech/polkassembly/issues"
   },

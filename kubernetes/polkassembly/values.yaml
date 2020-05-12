@@ -136,6 +136,7 @@ chainDbWatcher:
     COUNCIL_TOPIC_ID: "2"
     TREASURY_TOPIC_ID: "4"
     START_FROM: "964710"
+    HEALTH_PORT: "8019"
 
   image:
     repository: paritytech/polkassembly-chain-db-watcher
