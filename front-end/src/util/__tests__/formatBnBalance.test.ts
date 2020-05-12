@@ -6,7 +6,7 @@ import formatBnBalance from '../formatBnBalance';
 jest.mock('../getNetwork', () => jest.fn(() => {return 'polkadot';}));
 const getNetwork = require('../getNetwork');
 
-describe('Formatting BN Balances', () => {
+describe('Verify BN balance is formatted correctly', () => {
 	beforeEach(() => {
 		jest.resetModules();
 	});
@@ -16,7 +16,7 @@ describe('Formatting BN Balances', () => {
 	const formattedBalance3 = '53.0 KSM';
 	const formattedBalance4 = '53.0 DOT';
 
-	it('in Kusama', () => {
+	it('for Kusama', () => {
 		getNetwork.mockImplementation(() => 'kusama');
 		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
 		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
@@ -26,7 +26,7 @@ describe('Formatting BN Balances', () => {
 		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).not.toEqual(formattedBalance4);
 	});
 
-	it('in Polkadot', () => {
+	it('for Polkadot', () => {
 		getNetwork.mockImplementation(() => 'polkadot');
 		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
 		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);

@@ -7,7 +7,7 @@ import getEncodedAddress from '../getEncodedAddress';
 jest.mock('../getNetwork', () => jest.fn(() => {return 'polkadot';}));
 const getNetwork = require('../getNetwork');
 
-describe('Get Encoded Address', () => {
+describe('Verify address is encoded', () => {
 	beforeEach(() => {
 		jest.resetModules();
 	});
