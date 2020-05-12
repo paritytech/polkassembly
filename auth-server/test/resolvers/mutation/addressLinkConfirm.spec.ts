@@ -72,7 +72,7 @@ describe('addressLinkConfirm mutation', () => {
 
 	it('should not be able to confirm address link with fake signature', async () => {
 		const network = NetworkEnum.KUSAMA;
-		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 		const signature = 'fake';
 

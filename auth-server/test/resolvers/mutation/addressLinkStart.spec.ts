@@ -62,7 +62,7 @@ describe('addressLinkStart mutation', () => {
 
 	it('should not be able to start linking address if it already exists in db', async () => {
 		const network = NetworkEnum.KUSAMA;
-		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const dbAddress = await Address
 			.query()
 			.allowInsert('[network, address, user_id, sign_message, verified]')
@@ -71,7 +71,7 @@ describe('addressLinkStart mutation', () => {
 				network,
 				sign_message: uuid(),
 				user_id: signupResult.user.id,
-				verified: false
+				verified: true
 			});
 
 		try {
