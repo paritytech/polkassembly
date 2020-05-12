@@ -59,7 +59,7 @@ async function getPostsWithAuthor (): Promise<boolean> {
 		method: 'POST'
 	}).then(res => res.json()).then(({ data }) => {
 		const result = data?.posts?.reduce((acc: boolean, post: any) => {
-			return acc && !!post?.id && !!post?.author?.id;
+			return acc && post?.id !== undefined && !!post?.author?.id !== undefined;
 		}, true);
 
 		return result && data?.posts?.length > 0;
@@ -67,7 +67,7 @@ async function getPostsWithAuthor (): Promise<boolean> {
 }
 
 async function getPrismaVersion (): Promise<string> {
-	return fetch(`${process.env.CHAIN_DB_SERVER}/management`, {
+	return fetch(`${process.env.CHAIN_DB}/management`, {
 		body: JSON.stringify({
 			operationName: null,
 			query: `{
@@ -145,6 +145,30 @@ async function getOnchainLinkReferendumVoteThreshold (): Promise<boolean> {
 	return found;
 }
 
+const checkEnvVars = (): void => {
+	if (!process.env.AUTH_SERVER) {
+		throw new Error('AUTH_SERVER variable not set');
+	}
+	if (!process.env.HASURA_SERVER) {
+		throw new Error('HASURA_SERVER variable not set');
+	}
+	if (!process.env.CHAIN_DB_WATCHER_SERVER) {
+		throw new Error('CHAIN_DB_WATCHER_SERVER variable not set');
+	}
+	if (!process.env.CHAIN_DB_SERVER) {
+		throw new Error('CHAIN_DB_SERVER variable not set');
+	}
+	if (!process.env.CHAIN_DB) {
+		throw new Error('CHAIN_DB variable not set');
+	}
+	if (!process.env.REACT_SERVER) {
+		throw new Error('REACT_SERVER variable not set');
+	}
+	if (!process.env.ARCHIVE_NODE_ENDPOINT) {
+		throw new Error('ARCHIVE_NODE_ENDPOINT variable not set');
+	}
+};
+
 async function healthcheck (): Promise<HealthCheckResult> {
 	const [
 		authServer,
@@ -187,11 +211,21 @@ app.use('/healthcheck', (req, res, next) => {
 		.catch(next);
 });
 
+checkEnvVars();
+
 /**
  * Start Express server.
  */
 app.listen(app.get('port'), () => {
 	console.log(`App is running at http://localhost:${app.get('port')}`);
+	console.log(`
+AUTH_SERVER: ${process.env.AUTH_SERVER}/healthcheck
+HASURA_SERVER: ${process.env.HASURA_SERVER}/healthz
+CHAIN_DB_WATCHER_SERVER: ${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck
+CHAIN_DB_SERVER: ${process.env.CHAIN_DB_SERVER}
+CHAIN_DB: ${process.env.CHAIN_DB}/management
+REACT_SERVER: ${process.env.REACT_SERVER}/healthcheck
+`);
 	console.log('  Press CTRL-C to stop\n');
 });
 
