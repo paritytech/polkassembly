@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveAccountInfo } from '@polkadot/api-derive/types';
+import { DeriveAccountInfo, DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
 
 import shortenAddress from '../util/shortenAddress';
+import IdentityBadge from './IdentityBadge';
 
 interface Props {
 	address: string
@@ -23,6 +24,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [mainDisplay, setMainDisplay] = useState<string>('');
 	const [sub, setSub] = useState<string | null>(null);
+	const [identity, setIdentity] = useState<DeriveAccountRegistration | null>(null);
 
 	useEffect(() => {
 
@@ -33,6 +35,8 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 		let unsubscribe: () => void;
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
+			setIdentity(info.identity);
+
 			if (info.identity.displayParent && info.identity.display){
 				// when an identity is a sub identity `displayParent` is set
 				// and `display` get the sub identity
@@ -55,25 +59,29 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			<Identicon
 				className='image identicon'
 				value={address}
-				size={displayInline ? 16 : 32}
+				size={displayInline ? 20 : 32}
 				theme={'polkadot'}
 			/>
 			<div className='content'>
 				{displayInline
 					// When inline disregard the extension name.
 					? popupContent
-						? <Popup
-							trigger={
-								<div className={'header inline'}>
-									{mainDisplay || shortenAddress(address)}
-									{sub && <span className='sub'>/{sub}</span>}
-								</div>
-							}
-							content={popupContent}
-							hoverable={true}
-							position='top center'
-						/>
+						? <>
+							{identity && mainDisplay && <IdentityBadge identity={identity}/>}
+							<Popup
+								trigger={
+									<div className={'header inline'}>
+										{mainDisplay || shortenAddress(address)}
+										{sub && <span className='sub'>/{sub}</span>}
+									</div>
+								}
+								content={popupContent}
+								hoverable={true}
+								position='top center'
+							/>
+						</>
 						: <>
+							{identity && mainDisplay && <IdentityBadge identity={identity}/>}
 							<div className={'description inline'}>
 								{ mainDisplay || shortenAddress(address)}
 								{sub && <span className='sub'>/{sub}</span>}
@@ -84,9 +92,10 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							? <Popup
 								trigger={
 									<>
+										{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
 										<div className={'header'}>
 											{extensionName || mainDisplay}
-											{sub && <span className='sub'>/{sub}</span>}
+											{!extensionName && sub && <span className='sub'>/{sub}</span>}
 										</div>
 										<div className={'description inline'}>{shortenAddress(address)}</div>
 									</>
@@ -97,8 +106,9 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							/>
 							: <>
 								<div className={'header'}>
+									{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
 									{extensionName || mainDisplay}
-									{sub && <span className='sub'>/{sub}</span>}
+									{!extensionName && sub && <span className='sub'>/{sub}</span>}
 								</div>
 								<div className={'description'}>{shortenAddress(address)}</div>
 							</>
