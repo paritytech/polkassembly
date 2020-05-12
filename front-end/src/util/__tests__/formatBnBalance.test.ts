@@ -3,12 +3,36 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import formatBnBalance from '../formatBnBalance';
 
-test('formatting BN Balances', () => {
-	const formattedBalance1 = '100.00 ';
-	const formattedBalance2 = '9 453.0 KSM' || '9 453.0 DOT';
-	const formattedBalance3 = '10 000.0 ';
+jest.mock('../getNetwork', () => jest.fn(() => {return 'polkadot'}) );
+const getNetwork = require('../getNetwork');
 
-	expect(formatBnBalance('100000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
-	expect(formatBnBalance('9453000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance2);
-	expect(formatBnBalance('10000000000000000', { numberAfterComma: 1, withThousandDelimitor: true } )).toEqual(formattedBalance3);
+describe('Formatting BN Balances', () => {
+	beforeEach(() => {
+		jest.resetModules();
+	});
+
+	const formattedBalance1 = '1.00 ';
+	const formattedBalance2 = '1 000 ';
+	const formattedBalance3 = '53.0 KSM';
+	const formattedBalance4 = '53.0 DOT';
+
+	it('in Kusama', () => {
+		getNetwork.mockImplementation(() => 'kusama')
+		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
+		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
+		expect(formatBnBalance('1000000000000000', { withThousandDelimitor: true } )).not.toEqual(formattedBalance2);
+		expect(formatBnBalance('1000000000000000', { numberAfterComma: 0, withThousandDelimitor: true } )).toEqual(formattedBalance2);
+		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance3);
+		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).not.toEqual(formattedBalance4);
+	})
+
+	it('in Polkadot', () => {
+		getNetwork.mockImplementation(() => 'polkadot')
+		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
+		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
+		expect(formatBnBalance('1000000000000', { withThousandDelimitor: true } )).not.toEqual(formattedBalance2);
+		expect(formatBnBalance('1000000000000000000000', { numberAfterComma: 0, withThousandDelimitor: true } )).toEqual(formattedBalance2);
+		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).not.toEqual(formattedBalance3);
+		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance4);
+	})
 });
