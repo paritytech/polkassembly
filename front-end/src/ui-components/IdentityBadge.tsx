@@ -19,7 +19,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 
 	const StyledPopup = styled.div`
 		font-size: sm;
-		color: grey_primary;
+		color: black_text;
 		list-style: none;
 
 		li {
