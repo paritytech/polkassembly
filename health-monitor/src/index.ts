@@ -23,7 +23,7 @@ export interface HealthCheckResult {
 	postsWithAuthor: boolean;
 	prismaVersion: string;
 	reactServerStatus: number;
-	referendumDelays: boolean;
+	referendumVoteThreshold: boolean;
 }
 
 async function getLatestBlockNumber (): Promise<number> {
@@ -109,7 +109,7 @@ async function getReferendumDelays (): Promise<boolean> {
 	return found;
 }
 
-async function getOnchainLinkReferendumDelays (): Promise<boolean> {
+async function getOnchainLinkReferendumVoteThreshold (): Promise<boolean> {
 	const { data } = await fetch(`${process.env.HASURA_SERVER}/v1/graphql`, {
 		body: JSON.stringify({
 			operationName: null,
@@ -133,13 +133,13 @@ async function getOnchainLinkReferendumDelays (): Promise<boolean> {
 	}).then(res => res.json());
 
 	const result = data?.posts?.reduce((acc: boolean, post: any) => {
-		return acc && !!post?.id && !!post?.onchain_link?.onchain_referendum?.voteThreshold;
+		return acc && !!post?.onchain_link?.onchain_referendum?.[0]?.voteThreshold;
 	}, true);
 
 	const found = result && data?.posts?.length > 0;
 
 	if (!found) {
-		throw new Error('OnchainLink Referendum Delays query not successful.');
+		throw new Error('OnchainLink Referendum voteThreshold query not successful.');
 	}
 
 	return found;
@@ -154,7 +154,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		latestBlockNumber,
 		prismaVersion,
 		postsWithAuthor,
-		referendumDelays,
+		referendumVoteThreshold,
 		onchainLinkReferendumDelays
 	] = await Promise.all([
 		fetch(`${process.env.AUTH_SERVER}/healthcheck`),
@@ -165,7 +165,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		getPrismaVersion(),
 		getPostsWithAuthor(),
 		getReferendumDelays(),
-		getOnchainLinkReferendumDelays()
+		getOnchainLinkReferendumVoteThreshold()
 	]);
 
 	return {
@@ -177,7 +177,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		postsWithAuthor,
 		prismaVersion: prismaVersion,
 		reactServerStatus: reactServer.status,
-		referendumDelays
+		referendumVoteThreshold
 	};
 }
 
