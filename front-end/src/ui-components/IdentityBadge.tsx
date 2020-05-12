@@ -28,7 +28,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 
 		.desc {
 			font-weight: 500;
-			margin-right: 1rem;
+			margin-right: 0.3rem;
 		}
 
 		.judgments {
