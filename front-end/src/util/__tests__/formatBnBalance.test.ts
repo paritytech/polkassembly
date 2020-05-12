@@ -11,8 +11,8 @@ describe('Formatting BN Balances', () => {
 		jest.resetModules();
 	});
 
-	const formattedBalance1 = '1.00 ';
-	const formattedBalance2 = '1 000 ';
+	const formattedBalance1 = '1.00';
+	const formattedBalance2 = '1 000';
 	const formattedBalance3 = '53.0 KSM';
 	const formattedBalance4 = '53.0 DOT';
 
