@@ -5,7 +5,7 @@
 import { DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Popup } from 'semantic-ui-react';
 
 const IdentityBadge = ({ className, identity }: {className?: string, identity: DeriveAccountRegistration}) => {
 	const judgements = identity.judgements.filter(([, judgement]): boolean => !judgement.isFeePaid);
@@ -15,8 +15,45 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 	const color: 'brown' | 'green' | 'grey' = isGood ? 'green' : isBad ? 'brown' : 'grey';
 	const iconName = isGood ? 'check circle' : 'minus circle';
 	const infoElem = <Icon name={iconName} color={color} />;
+	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
 
-	return <div className={className}>{infoElem}</div>;
+	const StyledPopup = styled.div`
+		font-size: sm;
+		color: grey_primary;
+		list-style: none;
+
+		li {
+			margin-bottom: 0.3rem;
+		}
+
+		.desc {
+			font-weight: 500;
+			margin-right: 1rem;
+		}
+
+		.judgments {
+			display: inline list-item;
+		}
+	`;
+
+	const popupContent = <StyledPopup>
+		{identity.legal && <li><span className='desc'>legal:</span>{identity.legal}</li>}
+		{identity.email && <li><span className='desc'>email:</span>{identity.email}</li>}
+		{identity?.judgements?.length > 0 && <li><span className='desc'>judgements:</span><span className='judgments'>{displayJudgements}</span></li>}
+		{identity.pgp && <li><span className='desc'>pgp:</span>{identity.pgp}</li>}
+		{identity.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
+		{identity.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
+		{identity.web && <li><span className='desc'>web:</span>{identity.web}</li>}
+	</StyledPopup>;
+
+	return <div className={className}>
+		<Popup
+			trigger={infoElem}
+			content={popupContent}
+			hoverable={true}
+			position='top center'
+		/>
+	</div>;
 };
 
 export default styled(IdentityBadge)`
