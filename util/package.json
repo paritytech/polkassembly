@@ -26,7 +26,7 @@
     "test": "echo skipped"
   },
   "dependencies": {
-    "@polkadot/util": "^2.8.1",
+    "@polkadot/util": "^2.9.1",
     "bn.js": "^5.1.1"
   },
   "devDependencies": {

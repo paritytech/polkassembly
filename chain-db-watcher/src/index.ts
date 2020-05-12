@@ -6,6 +6,7 @@ import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import http from 'http';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
@@ -207,6 +208,19 @@ async function main (): Promise<void> {
 			console.log('Subscription (proposal) completed');
 			process.exit(1);
 		}
+	});
+
+	const hostname = '127.0.0.1';
+	const port = Number(process.env.HEALTH_PORT) || 8019;
+
+	const server = http.createServer((req, res) => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'text/plain');
+		res.end('ok');
+	});
+
+	server.listen(port, hostname, () => {
+		console.log(`[+] Health endpoint available at http://${hostname}:${port}/`);
 	});
 }
 

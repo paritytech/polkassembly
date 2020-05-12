@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import { ApolloQueryResult } from 'apollo-client/core/types';
+import { ApolloQueryResult } from 'apollo-client';
 import * as React from 'react';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
@@ -63,12 +63,12 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 					defaultAddress={defaultAddress}
 					text={'commented'}
 					username={author.username}
-				/>
-				<UpdateLabel
-					className='update-label'
-					created_at={created_at}
-					updated_at={updated_at}
-				/>
+				>
+					<UpdateLabel
+						created_at={created_at}
+						updated_at={updated_at}
+					/>
+				</CreationLabel>
 				<EditableCommentContent
 					authorId={author.id}
 					className='comment-content'
@@ -111,13 +111,9 @@ export default styled(Comment)`
 	}
 
 	.creation-label {
-		display: inline-block;
+		display: inline-flex;
 		padding: 1rem 0 0.8rem 2rem;
 		margin-bottom: 0;
-	}
-
-	.update-label {
-		display: inline-block;
 	}
 
 	.comment-content {
