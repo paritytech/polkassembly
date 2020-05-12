@@ -4,9 +4,9 @@
 import blockToTime from '../blockToTime';
 
 test('blocknumber to time format', () => {
-	const time1 = '1d 12h 40m ';
-	const time2 = '0d 0h 0m ';
-	const time3 = '0d 0h 1m ';
+	const time1 = '1d 12h 40m';
+	const time2 = '0d 0h 0m';
+	const time3 = '0d 0h 1m';
 
 	expect(blockToTime(22000, 6000)).toEqual(time1);
 	expect(blockToTime(22000)).toEqual(time1);

@@ -13,7 +13,7 @@ function secondsToDhm(seconds: number) {
 
 	var dDisplay = d + 'd ';
 	var hDisplay = h + 'h ';
-	var mDisplay = m + 'm ';
+	var mDisplay = m + 'm';
 
 	return dDisplay + hDisplay + mDisplay;
 }
