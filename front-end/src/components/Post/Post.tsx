@@ -126,7 +126,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 
 	return (
 		<Grid className={className}>
-			<Grid.Column mobile={16} tablet={16} computer={11}>
+			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={11}>
 				<div className='post_content'>
 					<EditablePostContent
 						isEditing={isEditing}
@@ -172,7 +172,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
 			</Grid.Column>
-			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={5}>
+			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6} largeScreen={5}>
 				<GovenanceSideBar
 					isMotion={isMotion}
 					isProposal={isProposal}
