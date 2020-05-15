@@ -1,0 +1,12 @@
+- args:
+    role: user
+    table:
+      name: votes
+      schema: public
+  type: drop_delete_permission
+- args:
+    role: user
+    table:
+      name: votes
+      schema: public
+  type: drop_update_permission

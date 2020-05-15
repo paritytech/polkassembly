@@ -1,0 +1,20 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - id
+      - post_id
+      - user_id
+      - address
+      - amount
+      - vote
+      - created_at
+      - updated_at
+      computed_fields: []
+      filter: {}
+      limit: null
+    role: anonymous
+    table:
+      name: votes
+      schema: public
+  type: create_select_permission
