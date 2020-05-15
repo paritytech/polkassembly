@@ -39,7 +39,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					username
 				}
 			}).then(({ data }) => {
-				if (data && data.login && data.login.token && data.login.user) {
+				if (data && data.login && data.login.token) {
 					handleTokenChange(data.login.token, currentUser);
 					history.push('/');
 				}
