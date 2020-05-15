@@ -15,17 +15,12 @@ import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getPwdResetTokenKey } from '../../../src/services/auth';
 import { redisGet } from '../../../src/redis';
+import { getNewUserCtx } from '../../helpers';
 
 describe('requestResetPassword mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
+	let signupUserId = 0;
+
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
@@ -34,13 +29,15 @@ describe('requestResetPassword mutation', () => {
 	let token = '';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
@@ -74,7 +71,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a short password', async () => {
 
 		try {
-			await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword: 'short' });
+			await resetPassword(undefined, { token, userId: signupUserId, newPassword: 'short' });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(UserInputError);
@@ -85,7 +82,7 @@ describe('requestResetPassword mutation', () => {
 	it('should not be able to reset password with a wrong token', async () => {
 
 		try {
-			await resetPassword(undefined, { token: uuid(), userId: signupResult.user.id, newPassword });
+			await resetPassword(undefined, { token: uuid(), userId: signupUserId, newPassword });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);
@@ -95,14 +92,14 @@ describe('requestResetPassword mutation', () => {
 
 	it('should be able to reset password with a valid token', async () => {
 
-		const res = await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword });
+		const res = await resetPassword(undefined, { token, userId: signupUserId, newPassword });
 
 		expect(res.message).to.eq(messages.PASSWORD_RESET_SUCCESSFUL);
 	});
 
 	it('should not be able to change password with token that was used already', async () => {
 		try {
-			await resetPassword(undefined, { token, userId: signupResult.user.id, newPassword });
+			await resetPassword(undefined, { token, userId: signupUserId, newPassword });
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(AuthenticationError);

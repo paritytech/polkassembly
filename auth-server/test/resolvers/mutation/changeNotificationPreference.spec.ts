@@ -11,43 +11,38 @@ import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import User from '../../../src/model/User';
+import { getNewUserCtx } from '../../helpers';
 
 describe('changeNotificationPreference mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = 0;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await Notification
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
 	it('should have default Notification Preference after signup', async () => {
 		const notification = await Notification
 			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ user_id: signupUserId })
 			.first();
 
 		expect(notification?.post_participated).to.be.true;
@@ -68,7 +63,7 @@ describe('changeNotificationPreference mutation', () => {
 
 		const notification = await Notification
 			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ user_id: signupUserId })
 			.first();
 
 		expect(notification?.post_participated).to.be.false;

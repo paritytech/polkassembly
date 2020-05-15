@@ -10,22 +10,13 @@ import User from '../../../src/model/User';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
 import postUnsubscribe from '../../../src/resolvers/mutation/postUnsubscribe';
 import signup from '../../../src/resolvers/mutation/signup';
-import { Context, SignUpResultType } from '../../../src/types';
+import { Context, TokenType } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('post unSubscribe mutation', () => {
-	let signupResult : SignUpResultType;
-
-	let fakectx: Context = {
-		req: {
-			headers: {},
-			cookies: {}
-		},
-		res: {
-			header: { 'refresh_token' : '' },
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
+	let signupUserId = 0;
 
 	const email = 'test@email.com';
 	const password = 'testpass';
@@ -34,8 +25,9 @@ describe('post unSubscribe mutation', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		await postSubscribe(undefined, { post_id }, fakectx);
 	});
@@ -43,7 +35,7 @@ describe('post unSubscribe mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
@@ -53,7 +45,7 @@ describe('post unSubscribe mutation', () => {
 		const dbSubscription = await PostSubscription
 			.query()
 			.where({
-				user_id: signupResult.user.id,
+				user_id: signupUserId,
 				post_id: post_id
 			})
 			.first();

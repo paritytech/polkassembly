@@ -3,47 +3,51 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
 import { expect } from 'chai';
-import signup from '../../../src/resolvers/mutation/signup';
+import jwt from 'jsonwebtoken';
+
 import login from '../../../src/resolvers/mutation/login';
 import User from '../../../src/model/User';
 import { Context } from '../../../src/types';
 import { AuthenticationError } from 'apollo-server';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('login mutation', () => {
-	let signupResult: any;
-	let fakectx: Context = {
-		req: {},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = 0;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
 	it('should be able to login', async () => {
 		const result = await login(undefined, { username, password }, fakectx);
 
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
+
+		const token: any = jwt.decode(result.token);
+		const claims = 'https://hasura.io/jwt/claims';
+
+		expect(token.username).to.equal(username);
+		expect(token.name).to.equal(name);
+		expect(token.email).to.equals(email);
+		expect(token[claims]['x-hasura-user-id']).to.equals(token.sub);
+		expect(token[claims]['x-hasura-default-role']).to.equals('user');
+		expect(token[claims]['x-hasura-user-email']).to.equals(email);
 	});
 
 	it('should throw an error if username doesn\'t exist', async () => {

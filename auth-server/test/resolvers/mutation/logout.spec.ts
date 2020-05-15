@@ -8,29 +8,13 @@ import { expect } from 'chai';
 
 import User from '../../../src/model/User';
 import logout from '../../../src/resolvers/mutation/logout';
-import signup from '../../../src/resolvers/mutation/signup';
-import { SignUpResultType } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('logout mutation', () => {
-	let signupResult: SignUpResultType;
+	let signupUserId = 0;
 	let refresh_token: string;
-
-	const fakectx: {req: any, res: any} = {
-		req: {
-			cookies: {},
-			headers: {}
-		},
-		res: {
-			// shortcuting the cookie function, any cookie that is
-			// set by the server, will be set in the header,
-			// so that we can read it later on.
-			cookie: function (name: string, value: any): void {
-				this.header[name] = value;
-			},
-			header: { refresh_token: '' }
-		}
-	};
+	let fakectx: any;
 
 	const email = 'test@email.com';
 	const password = 'testpass';
@@ -38,16 +22,17 @@ describe('logout mutation', () => {
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, name, password, username }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 		// reading the refresh token from the header thanks to our modified cookie function
-		refresh_token = fakectx.res.header.refresh_token;
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		refresh_token = fakectx.res.header['refresh_token'];
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 

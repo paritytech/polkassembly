@@ -9,22 +9,13 @@ import PostSubscription from '../../../src/model/PostSubscription';
 import User from '../../../src/model/User';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
 import signup from '../../../src/resolvers/mutation/signup';
-import { Context, SignUpResultType } from '../../../src/types';
+import { Context, TokenType } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('post subscribe mutation', () => {
-	let signupResult : SignUpResultType;
-
-	let fakectx: Context = {
-		req: {
-			headers: {},
-			cookies: {}
-		},
-		res: {
-			header: { 'refresh_token' : '' },
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = 0;
+	let fakectx: Context;
 
 	const email = 'test@email.com';
 	const password = 'testpass';
@@ -33,14 +24,15 @@ describe('post subscribe mutation', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
@@ -50,14 +42,14 @@ describe('post subscribe mutation', () => {
 		const dbSubscription = await PostSubscription
 			.query()
 			.where({
-				user_id: signupResult.user.id,
+				user_id: signupUserId,
 				post_id: post_id
 			})
 			.first();
 
 		expect(dbSubscription).to.exist;
 		expect(dbSubscription?.post_id).to.equals(post_id);
-		expect(dbSubscription?.user_id).to.equals(signupResult.user.id);
+		expect(dbSubscription?.user_id).to.equals(signupUserId);
 		expect(res.message).to.eq(messages.SUBSCRIPTION_SUCCESSFUL);
 	});
 

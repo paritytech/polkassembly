@@ -11,22 +11,15 @@ import Address from '../../../src/model/Address';
 import addressLinkStart from '../../../src/resolvers/mutation/addressLinkStart';
 import addressLinkConfirm from '../../../src/resolvers/mutation/addressLinkConfirm';
 import addressLogin from '../../../src/resolvers/mutation/addressLogin';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { redisSetex } from '../../../src/redis';
 import { ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
+import { getNewUserCtx } from '../../helpers';
 
 describe('addressLogin mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = 0;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
@@ -37,8 +30,9 @@ describe('addressLogin mutation', () => {
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -58,12 +52,12 @@ describe('addressLogin mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await Address
 			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ user_id: signupUserId })
 			.del();
 	});
 
@@ -84,11 +78,6 @@ describe('addressLogin mutation', () => {
 
 		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 	});
