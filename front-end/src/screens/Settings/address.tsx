@@ -118,14 +118,6 @@ const Address = ({ className }: Props): JSX.Element => {
 				handleTokenChange(addressLinkConfirmResult.data?.addressLinkConfirm?.token, currentUser);
 			}
 
-			!currentUser.addresses?.includes(address) && currentUser.setUserDetailsContextState((prevState) => {
-				return {
-					...prevState,
-					addresses: [...prevState.addresses, address],
-					defaultAddress: prevState.addresses?.length ? prevState.defaultAddress : address
-				};
-			});
-
 			queueNotification({
 				header: 'Success!',
 				message: addressLinkConfirmResult?.data?.addressLinkConfirm?.message || '',
