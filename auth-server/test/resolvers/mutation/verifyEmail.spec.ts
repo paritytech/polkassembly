@@ -8,7 +8,6 @@ import { uuid } from 'uuidv4';
 
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import verifyEmail from '../../../src/resolvers/mutation/verifyEmail';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';

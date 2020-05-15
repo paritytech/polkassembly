@@ -8,7 +8,6 @@ import { uuid } from 'uuidv4';
 
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import undoEmailChange from '../../../src/resolvers/mutation/undoEmailChange';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';

@@ -8,7 +8,6 @@ import 'mocha';
 import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import requestResetPassword from '../../../src/resolvers/mutation/requestResetPassword';
 import resetPassword from '../../../src/resolvers/mutation/resetPassword';
 import { Context } from '../../../src/types';

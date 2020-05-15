@@ -7,7 +7,6 @@ import 'mocha';
 
 import User from '../../../src/model/User';
 import login from '../../../src/resolvers/mutation/login';
-import signup from '../../../src/resolvers/mutation/signup';
 import changePassword from '../../../src/resolvers/mutation/changePassword';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';

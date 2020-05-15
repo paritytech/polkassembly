@@ -9,8 +9,7 @@ import PostSubscription from '../../../src/model/PostSubscription';
 import User from '../../../src/model/User';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
 import postUnsubscribe from '../../../src/resolvers/mutation/postUnsubscribe';
-import signup from '../../../src/resolvers/mutation/signup';
-import { Context, TokenType } from '../../../src/types';
+import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
 

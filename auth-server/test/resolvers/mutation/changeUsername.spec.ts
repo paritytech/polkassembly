@@ -7,7 +7,6 @@ import 'mocha';
 
 import User from '../../../src/model/User';
 import changeUsername from '../../../src/resolvers/mutation/changeUsername';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';

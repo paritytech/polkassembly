@@ -7,7 +7,6 @@ import 'mocha';
 
 import Notification from '../../../src/model/Notification';
 import changeNotificationPreference from '../../../src/resolvers/mutation/changeNotificationPreference';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import User from '../../../src/model/User';

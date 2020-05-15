@@ -8,7 +8,6 @@ import 'mocha';
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
