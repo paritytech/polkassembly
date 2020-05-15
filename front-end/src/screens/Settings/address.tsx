@@ -187,11 +187,11 @@ const Address = ({ className }: Props): JSX.Element => {
 		<Form className={className} standalone={false}>
 			{accounts.length === 0 ?
 				<>
-					<Form.Group>
+					{currentUser?.addresses?.length ? <Form.Group>
 						<Form.Field width={16}>
 							<label className='header'>Linked addresses</label>
 							<div className='ui list'>
-								{currentUser?.addresses?.map(userAddress => {
+								{currentUser?.addresses?.sort().map(userAddress => {
 									const address = getEncodedAddress(userAddress);
 
 									return address &&
@@ -234,7 +234,7 @@ const Address = ({ className }: Props): JSX.Element => {
 								)}
 							</div>
 						</Form.Field>
-					</Form.Group>
+					</Form.Group> : null }
 					<Form.Group>
 						<Form.Field width={16}>
 							<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
