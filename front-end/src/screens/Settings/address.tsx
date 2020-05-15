@@ -183,74 +183,117 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-	if (accounts.length === 0) {
-		return (
-			<Form className={className} standalone={false}>
-				<Form.Group>
+	return (
+		<Form className={className} standalone={false}>
+			{accounts.length === 0 ?
+				<>
+					<Form.Group>
+						<Form.Field width={16}>
+							<label className='header'>Linked addresses</label>
+							<div className='ui list'>
+								{currentUser?.addresses?.map(userAddress => {
+									const address = getEncodedAddress(userAddress);
+
+									return address &&
+										<Grid key={address}>
+											<Grid.Column width={7}>
+												<div className='item'>
+													<AddressComponent className='item' address={address} />
+												</div>
+											</Grid.Column>
+											<Grid.Column width={3}>
+												<div className='button-container'>
+													<Button
+														className={'social'}
+														negative={true}
+														onClick={() => handleUnlink(address)}
+													>
+														{unlinkIcon}
+													</Button>
+												</div>
+											</Grid.Column>
+											<Grid.Column width={6} >
+												{currentUser.defaultAddress !== address ?
+													<div className='button-container default-button'>
+														<Button
+															className={'social'}
+															onClick={() => handleDefault(address)}
+														>
+															Set default
+														</Button>
+													</div>: null
+												}
+												{currentUser.defaultAddress === address ?
+													<div className='default-label'>
+														<Icon name='check'/> Default address
+													</div> : null
+												}
+											</Grid.Column>
+										</Grid>
+									;}
+								)}
+							</div>
+						</Form.Field>
+					</Form.Group>
+					<Form.Group>
+						<Form.Field width={16}>
+							<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+							<div className='link-button-container'>
+								<Button primary onClick={handleDetect}>
+									Show Available Accounts
+								</Button>
+							</div>
+						</Form.Field>
+					</Form.Group>
+				</> : <Form.Group>
 					<Form.Field width={16}>
-						<label>Linked address</label>
-						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
-						<div className='link-button-container'>
-							<Button primary onClick={handleDetect}>
-								{currentUser?.addresses?.length ? 'Show linked addresses' : 'Link address'}
-							</Button>
+						<label className='header'>Available addresses</label>
+						<div className='ui list'>
+							{accounts.map(account => {
+								const address = getEncodedAddress(account.address);
+
+								return address &&
+									<Grid key={address}>
+										<Grid.Column width={7}>
+											<div className='item'>
+												<AddressComponent className='item' address={address} extensionName={account.meta.name} />
+											</div>
+										</Grid.Column>
+										<Grid.Column width={3}>
+											<div className='button-container'>
+												<Button
+													className={'social'}
+													negative={currentUser.addresses?.includes(address) ? true : false}
+													onClick={() => currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
+												>
+													{currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
+												</Button>
+											</div>
+										</Grid.Column>
+										<Grid.Column width={6} >
+											{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
+												<div className='button-container default-button'>
+													<Button
+														className={'social'}
+														onClick={() => handleDefault(address)}
+													>
+														Set default
+													</Button>
+												</div>: null
+											}
+											{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
+												<div className='default-label'>
+													<Icon name='check'/> Default address
+												</div> : null
+											}
+										</Grid.Column>
+									</Grid>
+								;}
+							)}
 						</div>
 					</Form.Field>
 				</Form.Group>
-			</Form>
-		);
-	}
-
-	return (
-		<Form className={className} standalone={false}>
-			<Form.Group>
-				<Form.Field width={16}>
-					<label className='header'>Available addresses</label>
-					<div className='ui list'>
-						{accounts.map(account => {
-							const address = getEncodedAddress(account.address);
-
-							return address &&
-								<Grid key={address}>
-									<Grid.Column width={7}>
-										<div className='item'>
-											<AddressComponent className='item' address={address} extensionName={account.meta.name} />
-										</div>
-									</Grid.Column>
-									<Grid.Column width={3}>
-										<div className='button-container'>
-											<Button
-												className={'social'}
-												negative={currentUser.addresses?.includes(address) ? true : false}
-												onClick={() => currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
-											>
-												{currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
-											</Button>
-										</div>
-									</Grid.Column>
-									<Grid.Column width={6} >
-										{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
-											<div className='button-container default-button'>
-												<Button
-													className={'social'}
-													onClick={() => handleDefault(address)}
-												>
-													Set default
-												</Button>
-											</div>: null
-										}
-										{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
-											<div className='default-label'>
-												<Icon name='check'/> Default address
-											</div> : null
-										}
-									</Grid.Column>
-								</Grid>
-							;}
-						)}
-					</div>
-				</Form.Field>
-			</Form.Group>
+			}
 		</Form>
 	);
 };
