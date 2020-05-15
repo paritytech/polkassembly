@@ -22,7 +22,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 		color: black_text;
 		list-style: none;
 		padding: 1rem;
-		
+
 		li {
 			margin-bottom: 0.3rem;
 		}
@@ -63,6 +63,6 @@ export default styled(IdentityBadge)`
 		color: green_primary !important;
 	}
 	i.grey.circle.icon {
-		color: grey_primary  !important;
+		color: grey_primary !important;
 	}
 `;
