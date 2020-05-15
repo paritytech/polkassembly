@@ -21,7 +21,8 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 		font-size: sm;
 		color: black_text;
 		list-style: none;
-
+		padding: 1rem;
+		
 		li {
 			margin-bottom: 0.3rem;
 		}
