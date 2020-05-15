@@ -70,7 +70,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							{identity && mainDisplay && <IdentityBadge identity={identity}/>}
 							<Popup
 								trigger={
-									<div className={'header inline'}>
+									<div className={'header inline identityName'}>
 										{mainDisplay || shortenAddress(address)}
 										{sub && <span className='sub'>/{sub}</span>}
 									</div>
@@ -81,10 +81,12 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							/>
 						</>
 						: <>
-							{identity && mainDisplay && <IdentityBadge identity={identity}/>}
 							<div className={'description inline'}>
-								{ mainDisplay || shortenAddress(address)}
-								{sub && <span className='sub'>/{sub}</span>}
+								{identity && mainDisplay && <IdentityBadge identity={identity}/>}
+								<span className='identityName'>
+									{ mainDisplay || shortenAddress(address)}
+									{sub && <span className='sub'>/{sub}</span>}
+								</span>
 							</div>
 						</>
 					: extensionName || mainDisplay
@@ -92,10 +94,12 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							? <Popup
 								trigger={
 									<>
-										{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
 										<div className={'header'}>
-											{extensionName || mainDisplay}
-											{!extensionName && sub && <span className='sub'>/{sub}</span>}
+											{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
+											<span className='identityName'>
+												{extensionName || mainDisplay}
+												{!extensionName && sub && <span className='sub'>/{sub}</span>}
+											</span>
 										</div>
 										<div className={'description inline'}>{shortenAddress(address)}</div>
 									</>
@@ -107,8 +111,10 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							: <>
 								<div className={'header'}>
 									{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
-									{extensionName || mainDisplay}
-									{!extensionName && sub && <span className='sub'>/{sub}</span>}
+									<span className='identityName'>
+										{extensionName || mainDisplay}
+										{!extensionName && sub && <span className='sub'>/{sub}</span>}
+									</span>
 								</div>
 								<div className={'description'}>{shortenAddress(address)}</div>
 							</>
@@ -132,20 +138,21 @@ export default styled(Address)`
 		margin-right: 0.8rem;
 	}
 
-	.header, .description{
+	.identityName{
 		filter: grayscale(100%);
-		margin-right: 0.4rem;
 	}
 
 	.header {
 		color: black_text;
 		font-weight: 500;
 		font-size: sm;
+		margin-right: 0.4rem;
 	}
 
 	.description {
 		color: grey_primary;
 		font-size: xs;
+		margin-right: 0.4rem;
 	}
 
 	.inline {
