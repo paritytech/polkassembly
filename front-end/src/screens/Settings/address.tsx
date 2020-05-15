@@ -97,7 +97,7 @@ const Address = ({ className }: Props): JSX.Element => {
 				}
 			});
 
-			if (!addressLinkStartResult || !addressLinkStartResult.data || !addressLinkStartResult.data.addressLinkStart) {
+			if (!addressLinkStartResult?.data?.addressLinkStart) {
 				return console.error('Address link start mutaion failed');
 			}
 
