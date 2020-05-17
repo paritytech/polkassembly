@@ -50,9 +50,6 @@ const CouncilSignals = ({ className, data }: Props) => {
 			let nays = 0;
 			const councilVotes: OffchainVote[]  = [];
 
-			console.log(memberMap);
-			console.log(data?.post_votes);
-
 			data?.post_votes?.forEach(vote => {
 				let defaultAddress = '';
 
