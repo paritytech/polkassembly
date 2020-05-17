@@ -183,7 +183,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
-				<Poll postId={post.id} />
+				{onchainId ? <Poll postId={post.id} /> : null}
 			</Grid.Column>
 		</Grid>
 	);
