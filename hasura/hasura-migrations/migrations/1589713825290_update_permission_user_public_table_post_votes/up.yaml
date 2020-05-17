@@ -1,21 +1,17 @@
 - args:
     permission:
       allow_upsert: true
+      backend_only: false
       check:
         user_id:
           _eq: X-Hasura-User-Id
       columns:
-      - address
-      - amount
       - post_id
       - user_id
       - vote
-      localPresets:
-      - key: ""
-        value: ""
       set: {}
     role: user
     table:
-      name: votes
+      name: post_votes
       schema: public
   type: create_insert_permission

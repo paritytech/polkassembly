@@ -14,6 +14,11 @@ interface Props {
 }
 
 const OffChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
+	let percent = 0;
+	const total = ayeSignals + naySignals;
+	if (total > 0) {
+		percent = ayeSignals/total*100;
+	}
 
 	return (
 		<div className={className}>
@@ -21,7 +26,7 @@ const OffChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
 			<div className='nays'>{naySignals === 1 ? '1 Nay' : `${naySignals} Nays`}</div>
 			<Progress
 				className={'passing'}
-				percent={60}
+				percent={percent}
 			/>
 		</div>
 	);

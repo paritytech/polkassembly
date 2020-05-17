@@ -1,7 +1,7 @@
 - args:
     name: post
     table:
-      name: votes
+      name: post_votes
       schema: public
     using:
       foreign_key_constraint_on: post_id

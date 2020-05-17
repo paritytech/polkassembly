@@ -3,36 +3,76 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import * as React from 'react';
+import { ApolloQueryResult } from 'apollo-client';
+import React, { useContext, useState } from 'react';
 
+import { UserDetailsContext } from '../../../context/UserDetailsContext';
+import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
 import Card from '../../../ui-components/Card';
+import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
 import OffChainSignalBar from '../../../ui-components/OffChainSignalBar';
+import { AYE, NAY } from './votes';
 
 interface Props {
-	className?: string
+	ayes: number,
+	className?: string,
+	nays: number,
+	postId: number
+	refetch: (variables?: PostVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PostVotesQuery>>
 }
 
-const CouncilSignals = ({ className }: Props) => {
-	const voteRefrendum = (bool: Boolean) => {
-		console.log(bool);
+const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
+	const { id } = useContext(UserDetailsContext);
+	const [error, setErr] = useState<Error | null>(null);
+	const [addPostVoteMutation] = useAddPostVoteMutation();
+	const [deleteVoteMutation] = useDeleteVoteMutation();
+
+	const castVote = async (vote: string) => {
+		if (!id) {
+			return;
+		}
+
+		try {
+			await deleteVoteMutation({
+				variables: {
+					postId,
+					userId: id
+				}
+			});
+
+			await addPostVoteMutation({
+				variables: {
+					postId,
+					userId: id,
+					vote
+				}
+			});
+
+			refetch();
+		} catch (error) {
+			setErr(error);
+		}
 	};
 
 	return (
 		<Card className={className}>
 			<OffChainSignalBar
-				ayeSignals={3}
-				naySignals={4}
+				ayeSignals={ayes}
+				naySignals={nays}
 			/>
 			<div className='info text-muted'>Signals are off chain.</div>
-			<Form standalone={false}>
+			<div>
+				{error?.message && <FilteredError className='info' text={error.message}/>}
+			</div>
+			{id ? <Form standalone={false}>
 				<AyeNayButtons
 					disabled={false}
-					onClickAye={() => voteRefrendum(true)}
-					onClickNay={() => voteRefrendum(false)}
+					onClickAye={() => castVote(AYE)}
+					onClickNay={() => castVote(NAY)}
 				/>
-			</Form>
+			</Form> : null}
 		</Card>
 	);
 };
@@ -40,5 +80,9 @@ const CouncilSignals = ({ className }: Props) => {
 export default styled(CouncilSignals)`
 	.info {
 		margin: 1em 0;
+	}
+
+	.errorText {
+		color: red_secondary;
 	}
 `;

@@ -1,6 +1,6 @@
 - args:
     relationship: post
     table:
-      name: votes
+      name: post_votes
       schema: public
   type: drop_relationship

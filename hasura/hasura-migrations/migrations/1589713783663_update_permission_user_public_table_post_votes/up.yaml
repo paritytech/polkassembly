@@ -1,20 +1,19 @@
 - args:
     permission:
-      allow_aggregations: false
+      allow_aggregations: true
+      backend_only: false
       columns:
+      - vote
       - id
       - post_id
       - user_id
-      - address
-      - amount
-      - vote
       - created_at
       - updated_at
       computed_fields: []
       filter: {}
       limit: null
-    role: anonymous
+    role: user
     table:
-      name: votes
+      name: post_votes
       schema: public
   type: create_select_permission

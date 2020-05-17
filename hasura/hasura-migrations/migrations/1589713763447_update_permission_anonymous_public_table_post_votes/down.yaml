@@ -1,6 +1,6 @@
 - args:
-    role: user
+    role: anonymous
     table:
-      name: votes
+      name: post_votes
       schema: public
   type: drop_select_permission

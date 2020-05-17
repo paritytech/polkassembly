@@ -19,10 +19,10 @@ const Card = ({ className, children }:Props ) => {
 export default styled(Card)`
 	background-color: white;
 	padding: 2rem 3rem 2rem 3rem;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_border;
 	border-radius: 3px;
+	-webkit-box-shadow: 5px 5px 5px 0px rgba(227,227,227,1);
+	-moz-box-shadow: 5px 5px 5px 0px rgba(227,227,227,1);
+	box-shadow: 5px 5px 5px 0px rgba(227,227,227,1);
 	margin-bottom: 1rem;
 	@media only screen and (max-width: 768px) {
 		padding: 2rem;

@@ -4,8 +4,8 @@
 
 import gql from 'graphql-tag';
 
-export const votesFields = gql`
-    fragment votesFields on votes {
+export const postVotesFields = gql`
+    fragment postVotesFields on post_votes {
         id
         voter {
             id
@@ -20,26 +20,33 @@ export const votesFields = gql`
 `;
 
 export const QUERY_POST_VOTES = gql`
-    query Votes ($postId: Int!) {
-        votes(where: {post_id: {_eq: $postId}}) {
-            ...votesFields
+    query PostVotes ($postId: Int!) {
+        post_votes(where: {post_id: {_eq: $postId}}) {
+            ...postVotesFields
         }
     }
-    ${votesFields}
+    ${postVotesFields}
 `;
 
-export const ADD_VOTE = gql`
-    mutation AddVote ($postId: Int!, $userId: Int!, $vote: String!) {
+export const ADD_POST_VOTE = gql`
+    mutation AddPostVote ($postId: Int!, $userId: Int!, $vote: bpchar!) {
         __typename
-        insert_votes_one(objects: {post_id: $postId, user_id: $userId, vote: $vote}) {
-            affected_rows
+        insert_post_votes_one(object: {post_id: $postId, user_id: $userId, vote: $vote}) {
+            id
         }
     }
 `;
 
 export const DELETE_VOTE = gql`
-    mutation DeletePostReaction ($postId: Int!, $userId: Int!) {
-        delete_vote(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}}]}) {
+    mutation DeleteVote ($postId: Int!, $userId: Int!) {
+        delete_post_votes(
+            where: {
+                _and: [
+                    {post_id: {_eq: $postId}},
+                    {user_id: {_eq: $userId}}
+                ]
+            }
+        ) {
             affected_rows
         }
     }
