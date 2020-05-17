@@ -2,43 +2,111 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { DeriveElectionsInfo } from '@polkadot/api-derive/types';
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 
+import { PostVotesQuery } from '../../../generated/graphql';
+import { network } from '../../../global/networkConstants';
+import { OffchainVote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
 import CouncilSignalBar from '../../../ui-components/CouncilSignalBar';
+import getEncodedAddress from '../../../util/getEncodedAddress';
+import getNetwork from '../../../util/getNetwork';
+import { AYE, NAY } from './votes';
 
 interface Props {
 	className?: string
+	data?: PostVotesQuery | undefined
 }
 
-const CouncilSignals = ({ className }: Props) => {
-	const addresses = [
-		'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F',
-		'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP',
-		'JKspFU6ohf1Grg3Phdzj2pSgWvsYWzSfKghhfzMbdhNBWs5',
-		'Fr4NzY1udSFFLzb2R3qxVQkwz9cZraWkyfH4h3mVVk7BK7P'
-	];
+const CouncilSignals = ({ className, data }: Props) => {
+	const [ayes, setAyes] = useState(0);
+	const [nays, setNays] = useState(0);
+	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
+
+	useEffect(() => {
+
+		if (!isApiReady){
+			return;
+		}
+
+		let unsubscribe: () => void;
+
+		api.derive.elections.info((info: DeriveElectionsInfo) => {
+			const memberMap: { [address: string]: boolean } = {};
+			const currentNetwork = getNetwork();
+
+			info?.members.map(([accountId]) => {
+				const address = getEncodedAddress(accountId.toString()) || '';
+				memberMap[address] = true;
+			});
+
+			let ayes = 0;
+			let nays = 0;
+			const councilVotes: OffchainVote[]  = [];
+
+			console.log(memberMap);
+			console.log(data?.post_votes);
+
+			data?.post_votes?.forEach(vote => {
+				let defaultAddress = '';
+
+				if (currentNetwork === network.KUSAMA) {
+					defaultAddress = vote.voter?.kusama_default_address || '';
+				}
+
+				if (currentNetwork === network.POLKADOT) {
+					defaultAddress = vote.voter?.polkadot_default_address || '';
+				}
+
+				if (memberMap[defaultAddress]) {
+					councilVotes.push({
+						address: defaultAddress,
+						vote: vote.vote
+					});
+
+					if (vote.vote === AYE) {
+						ayes++;
+					}
+
+					if (vote.vote === NAY) {
+						nays++;
+					}
+				}
+			});
+
+			setAyes(ayes);
+			setNays(nays);
+			setCouncilVotes(councilVotes);
+		})
+			.then(unsub => { unsubscribe = unsub; })
+			.catch(e => console.error(e));
+
+		return () => unsubscribe && unsubscribe();
+	}, [api, isApiReady, data]);
 
 	return (
 		<Card className={className}>
 			<h3>Council Signals</h3>
 			<CouncilSignalBar
-				ayeSignals={3}
-				naySignals={4}
+				ayeSignals={ayes}
+				naySignals={nays}
 			/>
 			<Grid className='council-votes'>
-				{addresses.map(address =>
-					<Grid.Row key={address}>
+				{councilVotes.map(councilVote =>
+					<Grid.Row key={councilVote.address}>
 						<Grid.Column width={12}>
 							<div className='item'>
-								<Address address={address} />
+								<Address address={getEncodedAddress(councilVote.address) || ''} />
 							</div>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							{address === 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F' ? <>
+							{councilVote.vote === AYE ? <>
 								<div className='thumbs up'>
 									<Icon name='thumbs up' />
 								</div>

@@ -39,7 +39,7 @@ const Poll = ({ postId }: Props) => {
 				postId={postId}
 				refetch={refetch}
 			/>
-			<CouncilSignals />
+			<CouncilSignals data={data} />
 		</>
 	);
 };
