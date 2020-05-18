@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.healtMonitor.name }}-config
+  name: {{ .Values.healthMonitor.name }}-config
   labels:
-    {{- include "polkassembly.healtMonitor.labels" . | nindent 4 }}
+    {{- include "polkassembly.healthMonitor.labels" . | nindent 4 }}
 data:
-  {{- range $key, $val := .Values.healtMonitor.config }}
+  {{- range $key, $val := .Values.healthMonitor.config }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
