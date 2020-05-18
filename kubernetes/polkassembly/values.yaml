@@ -166,13 +166,13 @@ healthMonitor:
     # polkassembly hasura chain-db service
     CHAIN_DB_WATCHER_SERVER: "http://chain-db-watcher-service:8019"
     # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
-    CHAIN_DB_SERVER: "http://nomidot-server.nomidot-staging:4000"
+    CHAIN_DB_SERVER: "https://test.nodewatcher-server.polkassembly.io"
     # nodewatcher server ( aka Prisma server )
     CHAIN_DB: "http://nodedwatcher.nodewatcher-staging:4466"
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "wss://kusama-rpc.polkadot.io"
+    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944"
 
   image:
     repository: paritytech/polkassembly-health-monitor
