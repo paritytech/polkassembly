@@ -9,13 +9,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 
 import { PostVotesQuery } from '../../../generated/graphql';
-import { network } from '../../../global/networkConstants';
 import { OffchainVote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
 import CouncilSignalBar from '../../../ui-components/CouncilSignalBar';
+import getDefaultAddressField from '../../../util/getDefaultAddressField';
 import getEncodedAddress from '../../../util/getEncodedAddress';
-import getNetwork from '../../../util/getNetwork';
 import { AYE, NAY } from './votes';
 
 interface Props {
@@ -39,7 +38,6 @@ const CouncilSignals = ({ className, data }: Props) => {
 
 		api.derive.elections.info((info: DeriveElectionsInfo) => {
 			const memberMap: { [address: string]: boolean } = {};
-			const currentNetwork = getNetwork();
 
 			info?.members.map(([accountId]) => {
 				const address = getEncodedAddress(accountId.toString()) || '';
@@ -48,18 +46,11 @@ const CouncilSignals = ({ className, data }: Props) => {
 
 			let ayes = 0;
 			let nays = 0;
+			const defaultAddressField = getDefaultAddressField();
 			const councilVotes: OffchainVote[]  = [];
 
 			data?.post_votes?.forEach(vote => {
-				let defaultAddress = '';
-
-				if (currentNetwork === network.KUSAMA) {
-					defaultAddress = vote.voter?.kusama_default_address || '';
-				}
-
-				if (currentNetwork === network.POLKADOT) {
-					defaultAddress = vote.voter?.polkadot_default_address || '';
-				}
+				const defaultAddress = vote.voter?.[defaultAddressField] || '';
 
 				if (memberMap[defaultAddress]) {
 					councilVotes.push({
