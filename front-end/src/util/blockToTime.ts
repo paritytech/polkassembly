@@ -9,7 +9,7 @@ function secondsToDhm(seconds: number) {
 	seconds = Number(seconds);
 	var d = Math.floor(seconds / (3600*24));
 	var h = Math.floor(seconds % (3600*24) / 3600);
-	var m = Math.floor(seconds % 3600 / 60);
+	var m = seconds < 60 ? Math.ceil(seconds % 3600 / 60) : Math.floor(seconds % 3600 / 60);
 
 	var dDisplay = d + 'd ';
 	var hDisplay = h + 'h ';

@@ -3,13 +3,41 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import blockToTime from '../blockToTime';
 
-test('blocknumber to time format', () => {
-	const time1 = '1d 12h 40m';
-	const time2 = '0d 0h 0m';
-	const time3 = '0d 0h 1m';
+jest.mock('../getNetwork', () => jest.fn(() => {return 'polkadot';}));
+const getNetwork = require('../getNetwork');
 
-	expect(blockToTime(22000, 6000)).toEqual(time1);
-	expect(blockToTime(22000)).toEqual(time1);
-	expect(blockToTime(5)).toEqual(time2);
-	expect(blockToTime(30, 2000)).toEqual(time3);
+const SEC = 1000;
+
+describe('Testing blockToTime', () => {
+	beforeEach(() => {
+		jest.resetModules();
+	});
+
+	it('with Kusama default blocktime (blocks equaling 1m to return 1m)', () => {
+		getNetwork.mockImplementation(() => 'kusama');
+		expect(blockToTime(10)).toEqual('0d 0h 1m');
+	});
+
+	it('with Kusama default blocktime (blocks equaling 7d 23h 59m to return 7d 23h 59m)', () => {
+		getNetwork.mockImplementation(() => 'kusama');
+		expect(blockToTime(115199)).toEqual('7d 23h 59m');
+	});
+
+	it('with Polkadot default blocktime (blocks equaling 1m to return 1m)', () => {
+		getNetwork.mockImplementation(() => 'polkadot');
+		expect(blockToTime(10)).toEqual('0d 0h 1m');
+	});
+
+	it('with Polkadot default blocktime (blocks equaling 7d 23h 59m to return 7d 23h 59m)', () => {
+		getNetwork.mockImplementation(() => 'polkadot');
+		expect(blockToTime(115199)).toEqual('7d 23h 59m');
+	});
+});
+
+it('Testing blockToTime with blocks equaling less than 1m to get rounded up to 1m', () => {
+	expect(blockToTime(1, SEC*6)).toEqual('0d 0h 1m');
+});
+
+it('Testing blockToTime with a blocktime set to 2 sec and blocks equaling 2m to return 2m', () => {
+	expect(blockToTime(60, SEC*2)).toEqual('0d 0h 2m');
 });
