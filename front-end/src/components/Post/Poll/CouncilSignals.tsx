@@ -97,13 +97,11 @@ const CouncilSignals = ({ className, data }: Props) => {
 							{councilVote.vote === AYE ? <>
 								<div className='thumbs up'>
 									<Icon name='thumbs up' />
-								</div>
-								<span> Aye</span>
+								</div> Aye
 							</> : <>
 								<div className='thumbs down'>
 									<Icon name='thumbs down' />
-								</div>
-								<span> Nay</span>
+								</div> Nay
 							</>}
 						</Grid.Column>
 					</Grid.Row>
