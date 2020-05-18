@@ -6,33 +6,40 @@ import formatBnBalance from '../formatBnBalance';
 jest.mock('../getNetwork', () => jest.fn(() => {return 'polkadot';}));
 const getNetwork = require('../getNetwork');
 
-describe('Verify BN balance is formatted correctly', () => {
+describe('Testing formatBnBalance', () => {
 	beforeEach(() => {
 		jest.resetModules();
 	});
 
-	const formattedBalance1 = '1.00';
-	const formattedBalance2 = '1 000';
-	const formattedBalance3 = '53.0 KSM';
-	const formattedBalance4 = '53.0 DOT';
-
-	it('for Kusama', () => {
+	// Kusama formatting
+	it('for Kusama with numberAfterComma option set to 2', () => {
 		getNetwork.mockImplementation(() => 'kusama');
-		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
-		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
-		expect(formatBnBalance('1000000000000000', { withThousandDelimitor: true } )).not.toEqual(formattedBalance2);
-		expect(formatBnBalance('1000000000000000', { numberAfterComma: 0, withThousandDelimitor: true } )).toEqual(formattedBalance2);
-		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance3);
-		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).not.toEqual(formattedBalance4);
+		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).toEqual('1.00');
 	});
 
-	it('for Polkadot', () => {
+	it('for Kusama with withThousandDelimitor option set to false', () => {
+		getNetwork.mockImplementation(() => 'kusama');
+		expect(formatBnBalance('1000000000000000', { numberAfterComma: 0, withThousandDelimitor: false } )).toEqual('1000');
+	});
+
+	it('for Kusama with withUnit option set to true', () => {
+		getNetwork.mockImplementation(() => 'kusama');
+		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual('53.0 KSM');
+	});
+
+	// Polkadot formatting
+	it('for Polkadot with numberAfterComma option set to 2', () => {
 		getNetwork.mockImplementation(() => 'polkadot');
-		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
-		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
-		expect(formatBnBalance('1000000000000', { withThousandDelimitor: true } )).not.toEqual(formattedBalance2);
-		expect(formatBnBalance('1000000000000000000000', { numberAfterComma: 0, withThousandDelimitor: true } )).toEqual(formattedBalance2);
-		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).not.toEqual(formattedBalance3);
-		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance4);
+		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).toEqual('1.00');
+	});
+
+	it('for Polkadot with withThousandDelimitor option set to false', () => {
+		getNetwork.mockImplementation(() => 'polkadot');
+		expect(formatBnBalance('1000000000000000000000', { numberAfterComma: 0, withThousandDelimitor: false  } )).toEqual('1000');
+	});
+
+	it('for Polkadot with withUnit option set to true', () => {
+		getNetwork.mockImplementation(() => 'polkadot');
+		expect(formatBnBalance('53000000000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual('53.0 DOT');
 	});
 });
