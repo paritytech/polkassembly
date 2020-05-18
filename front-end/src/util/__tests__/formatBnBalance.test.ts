@@ -19,7 +19,6 @@ describe('Verify BN balance is formatted correctly', () => {
 	it('for Kusama', () => {
 		getNetwork.mockImplementation(() => 'kusama');
 		expect(formatBnBalance('1000000000000', { numberAfterComma: 2 } )).toEqual(formattedBalance1);
-		expect(formatBnBalance('1000000000000000000', { numberAfterComma: 2 } )).not.toEqual(formattedBalance1);
 		expect(formatBnBalance('1000000000000000', { withThousandDelimitor: true } )).not.toEqual(formattedBalance2);
 		expect(formatBnBalance('1000000000000000', { numberAfterComma: 0, withThousandDelimitor: true } )).toEqual(formattedBalance2);
 		expect(formatBnBalance('53000000000000', { numberAfterComma: 1, withUnit: true } )).toEqual(formattedBalance3);
