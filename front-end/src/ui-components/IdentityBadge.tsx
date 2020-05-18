@@ -58,7 +58,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 };
 
 export default styled(IdentityBadge)`
-    display: inline;
+	display: inline;
 	i.green.circle.icon {
 		color: green_primary !important;
 	}
