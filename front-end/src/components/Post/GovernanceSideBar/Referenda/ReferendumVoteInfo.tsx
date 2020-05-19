@@ -95,19 +95,15 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 						passingThreshold={passingThreshold}
 						nayVotes={nayVotes}
 					/>
-					<Grid columns={3} divided>
+					<Grid columns={2} divided>
 						<Grid.Row>
 							<Grid.Column>
 								<h6>Turnout</h6>
 								<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
 							</Grid.Column>
-							<Grid.Column width={5}>
-								<h6>Aye</h6>
-								<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
-							</Grid.Column>
-							<Grid.Column width={5}>
-								<h6>Nay</h6>
-								<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+							<Grid.Column>
+								<h6>Electorate</h6>
+								<div>{formatBnBalance(electorate, { numberAfterComma: 2 })}</div>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
