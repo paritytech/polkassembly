@@ -150,13 +150,13 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 								<h6>Turnout</h6>
 								<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
 							</Grid.Column>
-							<Grid.Column width={5}>
+							<Grid.Column>
 								<h6>Aye</h6>
-								<div>{formatBnBalance(ayeVotes, { numberAfterComma: 2 })}</div>
+								<div>{formatBnBalance(ayeVotesWithoutConviction, { numberAfterComma: 2 })}</div>
 							</Grid.Column>
-							<Grid.Column width={5}>
+							<Grid.Column>
 								<h6>Nay</h6>
-								<div>{formatBnBalance(nayVotes, { numberAfterComma: 2 })}</div>
+								<div>{formatBnBalance(nayVotesWithoutConviction, { numberAfterComma: 2 })}</div>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>

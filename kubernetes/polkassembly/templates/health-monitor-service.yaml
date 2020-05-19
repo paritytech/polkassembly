@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.healthMonitor.name }}-service
+  labels:
+    {{- include "polkassembly.healthMonitor.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.healthMonitor.config.PORT }}
+      protocol: TCP
+  selector:
+    {{- include "polkassembly.healthMonitor.selectorLabels" . | nindent 4 }}
