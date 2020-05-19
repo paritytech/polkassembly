@@ -55,7 +55,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 				className={isPassing? 'passing': '' }
 				percent={ayePercent}
 			/>
-			<div
+			{passingThresholdPercent > 0 &&  <div
 				id='passingThreshold'
 				style={{ left: passingThresholdPercent + '%' }}
 			>
@@ -65,7 +65,7 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 				>
 					Threshold: {bnToStringBalanceDelimitor(passingThreshold)} {tokenSymbol}
 				</div>
-			</div>
+			</div>}
 		</div>
 	);
 };
