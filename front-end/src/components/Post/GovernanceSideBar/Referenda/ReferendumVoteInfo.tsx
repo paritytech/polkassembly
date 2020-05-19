@@ -39,16 +39,13 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading votes' });
 	const turnoutPercentage = useMemo( () => {
 		if (totalIssuance.isZero()) {
-			return ZERO;
+			return 0;
 		}
-
-		// eslint-disable-next-line no-extra-parens
-		return (turnout.div(totalIssuance)).muln(100);
+		// BN doens't handle floats. If we devide a number by a bigger number (12/100 --> 0.12), the result will be 0
+		// therefore, we first multiply by 10 000, which gives (120 000/100 = 1200) go to Number which supports floats
+		// and devide by 100 to have percentage --> 12.00%
+		return turnout.muln(10000).div(totalIssuance).toNumber()/100;
 	} , [turnout, totalIssuance]);
-
-	console.log('turnout', turnout.toString());
-	console.log('totalIssuance', totalIssuance.toString());
-	console.log('turnoutPercentage',turnoutPercentage);
 
 	const getThreshold = useMemo(
 		() => {
@@ -156,7 +153,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 						<Grid columns={3} divided>
 							<Grid.Row>
 								<Grid.Column>
-									<h6>Turnout { turnoutPercentage.isZero() ?  '' :`(${formatBnBalance(turnoutPercentage, { numberAfterComma: 2, withUnit: false })}%)`}</h6>
+									<h6>Turnout {turnoutPercentage > 0 && <span className='turnoutPercentage'>({turnoutPercentage}%)</span>}</h6>
 									<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
 								</Grid.Column>
 								<Grid.Column>
@@ -186,6 +183,11 @@ export default styled(ReferendumVoteInfo)`
 		height: 15rem;
 		position: absolute;
 		width: 100%;
+	}
+
+	.turnoutPercentage {
+		font-weight: normal;
+		font-size: sm;
 	}
 
 	.progressLoader{
