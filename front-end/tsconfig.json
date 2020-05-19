@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    // "paths": {
+    //   "@src" : ["front-end/src"],
+    //   "@polkassembly/util": ["../util"]
+    // },
     "declaration": true,
     "downlevelIteration": true,
     "esModuleInterop": true,

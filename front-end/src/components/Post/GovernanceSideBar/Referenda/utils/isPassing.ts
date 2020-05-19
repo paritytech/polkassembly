@@ -8,19 +8,16 @@ import { newtonRaphson, NewtonRaphsonResult } from './newton-raphson';
 import { solveQuadraticEquation } from './solveQuadraticEquation';
 import { PassingThresholdResult,VoteThreshold,VoteThresholdEnum } from './types';
 
-export function test (){
-	console.log('hop');
-}
-
 /**
  * @name getPassingThreshold
  * @summary Calculates amount of aye needed for a referendum to pass
  * @param nays The amount of nay votes, including the mutliplication factors
- * @param electorate The total issuance of token in the network
+ * @param naysWithoutConviction The amount of nay votes, without the conviction mutliplication factors
+ * @param totalIssuance The total issuance of token in the network
  * @param threshold The type of bias of the vote
  **/
 
-export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThreshold ): PassingThresholdResult {
+export function getPassingThreshold(nays: BN, naysWithoutConviction: BN, totalIssuance: BN, threshold: VoteThreshold ): PassingThresholdResult {
 	const ONE = new BN(1);
 	const TWO = new BN(2);
 	const THREE = new BN(3);
@@ -46,7 +43,7 @@ export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThr
 
 	if (threshold === VoteThresholdEnum.Supermajorityapproval){
 		const f = (x: BN) => {
-			return x.pow(THREE).add(nays.mul(x.pow(TWO))).sub(nays.pow(TWO).mul(electorate));
+			return x.pow(THREE).add(naysWithoutConviction.mul(x.pow(TWO))).sub(nays.pow(TWO).mul(totalIssuance));
 		};
 
 		const fp = (x: BN) => {
@@ -71,7 +68,7 @@ export function getPassingThreshold(nays: BN, electorate: BN, threshold: VoteThr
 				isValid: false
 			};
 	} else {
-		const res = solveQuadraticEquation(electorate.neg(), nays.pow(TWO), nays.pow(THREE));
+		const res = solveQuadraticEquation(totalIssuance.neg(), naysWithoutConviction.pow(TWO), nays.pow(TWO).mul(naysWithoutConviction));
 		return {
 			isValid: true,
 			passingThreshold: BN.max(res[0],res[1])

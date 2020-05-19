@@ -41,6 +41,8 @@ const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props
 		: passingThresholdNumber/nonPassingDivider*100;
 	const ayePercent = ayeVotesNumber/totalVotesNumber*100;
 
+	console.log('passingThreshold',passingThreshold.toString());
+	console.log('passingThresholdPercent',passingThresholdPercent);
 	return (
 		<div className={className}>
 			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
