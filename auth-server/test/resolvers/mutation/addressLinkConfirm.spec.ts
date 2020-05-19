@@ -16,6 +16,7 @@ import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLinkConfirm mutation', () => {
+	let dbAddressId: any;
 	let signupResult: any;
 	const fakectx: Context = {
 		req: {
@@ -39,6 +40,11 @@ describe('addressLinkConfirm mutation', () => {
 		await User
 			.query()
 			.where({ id: signupResult.user.id })
+			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
 			.del();
 	});
 
@@ -68,6 +74,8 @@ describe('addressLinkConfirm mutation', () => {
 		expect(dbAddress?.verified).to.be.true;
 
 		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
+
+		dbAddressId = dbAddress?.id;
 	});
 
 	it('should not be able to confirm address link with fake signature', async () => {
