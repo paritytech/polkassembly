@@ -66,7 +66,7 @@ async function getPostsWithAuthor (): Promise<boolean> {
 	});
 }
 
-// commented out until the #prisma server is in prod
+// commented out until the prisma server is in prod
 // async function getPrismaVersion (): Promise<string> {
 // 	return fetch(`${process.env.CHAIN_DB}/management`, {
 // 		body: JSON.stringify({
@@ -159,7 +159,7 @@ const checkEnvVars = (): void => {
 	if (!process.env.CHAIN_DB_SERVER) {
 		throw new Error('CHAIN_DB_SERVER variable not set');
 	}
-	// commented out until the #prisma server is in prod
+	// commented out until the prisma server is in prod
 	// if (!process.env.CHAIN_DB) {
 	// 	throw new Error('CHAIN_DB variable not set');
 	// }
@@ -178,6 +178,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		chainDbWatcherServer,
 		reactServer,
 		latestBlockNumber,
+		// commented out until the prisma server is in prod
 		// prismaVersion,
 		postsWithAuthor,
 		referendumVoteThreshold,
@@ -188,7 +189,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		fetch(`${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck`),
 		fetch(`${process.env.REACT_SERVER}/healthcheck`),
 		getLatestBlockNumber(),
-		// commented out until the #prisma server is in prod
+		// commented out until the prisma server is in prod
 		// getPrismaVersion(),
 		getPostsWithAuthor(),
 		getReferendumDelays(),
@@ -202,7 +203,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		latestBlockNumber,
 		onchainLinkReferendumDelays,
 		postsWithAuthor,
-		// commented out until the #prisma server is in prod
+		// commented out until the prisma server is in prod
 		// prismaVersion: prismaVersion,
 		prismaVersion: "this_is_a_mock",
 		reactServerStatus: reactServer.status,
@@ -230,7 +231,7 @@ CHAIN_DB_WATCHER_SERVER: ${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck
 CHAIN_DB_SERVER: ${process.env.CHAIN_DB_SERVER}
 REACT_SERVER: ${process.env.REACT_SERVER}/healthcheck
 `);
-	// commented out until the #prisma server is in prod
+	// commented out until the prisma server is in prod
 	// console.log(`CHAIN_DB: ${process.env.CHAIN_DB}/management`)
 	console.log('  Press CTRL-C to stop\n');
 });
