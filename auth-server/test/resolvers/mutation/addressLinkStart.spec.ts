@@ -14,6 +14,7 @@ import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLinkStart mutation', () => {
+	let dbAddressId: any;
 	let signupResult: any;
 	const fakectx: Context = {
 		req: {
@@ -38,6 +39,11 @@ describe('addressLinkStart mutation', () => {
 			.query()
 			.where({ id: signupResult.user.id })
 			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
+			.del();
 	});
 
 	it('should be able to start linking address', async () => {
@@ -58,6 +64,8 @@ describe('addressLinkStart mutation', () => {
 		expect(dbAddress?.verified).to.be.false;
 
 		expect(res.message).to.equal(messages.ADDRESS_LINKING_STARTED);
+
+		dbAddressId = dbAddress?.id;
 	});
 
 	it('should not be able to start linking address if it already exists in db', async () => {
