@@ -3,7 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { Icon } from 'semantic-ui-react';
 
 interface Props {
 	className?: string;
@@ -15,14 +16,17 @@ const PassingInfo = ({ className, isPassing }:Props ) => {
 	const NO_INFO_TEXT = '-';
 
 	let text = '';
+	let iconName : 'check circle outline' | 'check circle outline' | null = null;
+
 	if (isPassing === null){
 		text = NO_INFO_TEXT;
 	} else {
 		text = isPassing ? 'Passing' : 'Failling';
+		iconName = isPassing ? 'check circle outline' : 'check circle outline';
 	}
 	return (
 		<div className={`${className} ${text === NO_INFO_TEXT ? null : text.toLowerCase()}`}>
-			{text}
+			{iconName && <Icon name={iconName} />}{text}
 		</div>
 	);
 };
@@ -37,6 +41,8 @@ export default styled(PassingInfo)`
 	margin-bottom: 1rem;
 	font-size: xl;
 	color: white;
+	text-align: center;
+	transition-duration: 1s;
 
 	&.passing {
 		background-color: green_primary;

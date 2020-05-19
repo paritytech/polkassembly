@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useMemo,useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { LoadingStatusType, VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
 import Loader from 'src/ui-components/Loader';
 import PassingInfo from 'src/ui-components/PassingInfo';
 import VoteProgress from 'src/ui-components/VoteProgress';
@@ -36,10 +37,21 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [ayeVotesWithoutConviction, setAyeVotesWithoutConviction] = useState(ZERO);
 	const [isPassing, setIsPassing] = useState<boolean | null>(null);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading votes' });
+	const turnoutPercentage = useMemo( () => {
+		if (totalIssuance.isZero()) {
+			return ZERO;
+		}
+
+		// eslint-disable-next-line no-extra-parens
+		return (turnout.div(totalIssuance)).muln(100);
+	} , [turnout, totalIssuance]);
+
+	console.log('turnout', turnout.toString());
+	console.log('totalIssuance', totalIssuance.toString());
+	console.log('turnoutPercentage',turnoutPercentage);
 
 	const getThreshold = useMemo(
 		() => {
-			console.log('bim3');
 			if (!threshold || isPassing === null) return ZERO;
 			// if the referendum is passing, we're interresed in the failing threashold
 			if (isPassing) {
@@ -53,39 +65,35 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 		[ayeVotes, ayeVotesWithoutConviction, isPassing, nayVotes, nayVotesWithoutConviction, threshold, totalIssuance]
 	);
 
-	console.log('boom');
-
 	useEffect(() => {
-		console.log('bim');
 		if (!isApiReady) {
 			return;
 		}
 
 		let unsubscribe: () => void;
 
-		api.derive.democracy.referendums((ref) => {
-			ref.forEach(re => {
-				const totalAye: BN = re.allAye.reduce((acc: BN, curr: DeriveReferendumVote) => {
-					return acc.add(new BN(curr.balance));
-				}, ZERO);
-				const totalNay: BN = re.allNay.reduce((acc: BN, curr: DeriveReferendumVote) => {
-					return acc.add(new BN(curr.balance));
-				}, ZERO);
+		api.derive.democracy.referendums((referendums) => {
+			const referendum = referendums.filter(re => re.index.toNumber() === referendumId)[0];
 
-				console.log('totalAye', totalAye.toString());
-				console.log('totalNay', totalNay.toString());
-				setNayVotesWithoutConviction(totalNay);
-				setAyeVotesWithoutConviction(totalAye);
-				setIsPassing(re.isPassing);
-			});
+			setIsPassing(referendum.isPassing);
+
+			const totalAye: BN = referendum.allAye.reduce((acc: BN, curr: DeriveReferendumVote) => {
+				return acc.add(new BN(curr.balance));
+			}, ZERO);
+			const totalNay: BN = referendum.allNay.reduce((acc: BN, curr: DeriveReferendumVote) => {
+				return acc.add(new BN(curr.balance));
+			}, ZERO);
+
+			setNayVotesWithoutConviction(totalNay);
+			setAyeVotesWithoutConviction(totalAye);
+
 		}).then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady]);
+	}, [api, isApiReady, referendumId]);
 
 	useEffect(() => {
-		console.log('bim2');
 		if (!isApiReady) {
 			return;
 		}
@@ -111,7 +119,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	}, [api, isApiReady, referendumId]);
 
 	useEffect(() => {
-		console.log('bim4');
 		if (!isApiReady) {
 			return;
 		}
@@ -128,41 +135,43 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	},[api, isApiReady]);
 
 	return (
-		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
-			{loadingStatus.isLoading
-				?
-				<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
-				:
-				<>
-					<PassingInfo isPassing={isPassing}/>
-					{isPassing === null
-						? <Loader text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
-						: <VoteProgress
-							ayeVotes={ayeVotes}
-							className='vote-progress'
-							isPassing={isPassing}
-							threshold={getThreshold}
-							nayVotes={nayVotes}
-						/>}
-					<Grid columns={3} divided>
-						<Grid.Row>
-							<Grid.Column>
-								<h6>Turnout</h6>
-								<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Aye</h6>
-								<div>{formatBnBalance(ayeVotesWithoutConviction, { numberAfterComma: 2 })}</div>
-							</Grid.Column>
-							<Grid.Column>
-								<h6>Nay</h6>
-								<div>{formatBnBalance(nayVotesWithoutConviction, { numberAfterComma: 2 })}</div>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</>
-			}
-		</Card>
+		<>
+			<PassingInfo isPassing={isPassing}/>
+			<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
+				{loadingStatus.isLoading
+					?
+					<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
+					:
+					<>
+						{isPassing === null
+							? <Loader className={'progressLoader'} text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
+							: <VoteProgress
+								ayeVotes={ayeVotes}
+								className='vote-progress'
+								isPassing={isPassing}
+								threshold={getThreshold}
+								nayVotes={nayVotes}
+							/>}
+
+						<Grid columns={3} divided>
+							<Grid.Row>
+								<Grid.Column>
+									<h6>Turnout { turnoutPercentage.isZero() ?  '' :`(${formatBnBalance(turnoutPercentage, { numberAfterComma: 2, withUnit: false })}%)`}</h6>
+									<div>{formatBnBalance(turnout, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+								<Grid.Column>
+									<h6>Aye <HelperTooltip content='Aye votes without taking conviction into account'/></h6>
+									<div>{formatBnBalance(ayeVotesWithoutConviction, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+								<Grid.Column>
+									<h6>Nay <HelperTooltip content='Nay votes without taking conviction into account'/></h6>
+									<div>{formatBnBalance(nayVotesWithoutConviction, { numberAfterComma: 2 })}</div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
+					</>
+				}
+			</Card></>
 	);
 };
 
@@ -177,5 +186,10 @@ export default styled(ReferendumVoteInfo)`
 		height: 15rem;
 		position: absolute;
 		width: 100%;
+	}
+
+	.progressLoader{
+		position: inherit;
+		height: 10rem;
 	}
 `;
