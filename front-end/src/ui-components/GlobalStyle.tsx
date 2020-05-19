@@ -42,6 +42,15 @@ export const GlobalStyle = createGlobalStyle`
     ul {
         padding: 0;
     }
+    
+    p {
+        a {
+            color: pink_primary;
+            &:hover {
+                color: pink_secondary;
+            }
+        }
+    }
 
     a:hover {
         text-decoration: none;

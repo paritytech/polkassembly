@@ -4,7 +4,9 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
+import InfoBox from 'src/ui-components/InfoBox';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
@@ -43,6 +45,17 @@ const Home = ({ className }: Props) => {
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
+					{currentUser.id && !currentUser.defaultAddress &&
+						<InfoBox
+							dismissable={true}
+							name='defaultAddress'
+							title='Default Address is here!'
+						>
+							<p><Link to='/settings'>Visit your settings</Link> to set a default address and let other users see your on-chain identity.</p>
+							<p>If you don&apos;t have any on-chain identity yet,&nbsp;
+								<a href='https://wiki.polkadot.network/docs/en/mirror-learn-identity#setting-an-identity' rel='noopener noreferrer' target='_blank'>here is how to set it up</a>.</p>
+						</InfoBox>
+					}
 					{currentUser.id && <div className='mainButtonContainer'>
 						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
 					</div>}
