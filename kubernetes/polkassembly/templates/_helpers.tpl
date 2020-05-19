@@ -20,6 +20,20 @@ chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 heritage: {{ .Release.Service }}
 {{- end -}}
 
+{{- define "polkassembly.healthMonitor.labels" -}}
+{{ include "polkassembly.healthMonitor.matchLabels" . }}
+{{ include "polkassembly.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.healthMonitor.matchLabels" -}}
+{{ include "polkassembly.common.matchLabels" . }}
+{{ include "polkassembly.healthMonitor.selectorLabels" . }}
+{{- end -}}
+
+{{- define "polkassembly.healthMonitor.selectorLabels" -}}
+component: {{ .Values.healthMonitor.name }}
+{{- end -}}
+
 {{- define "polkassembly.frontend.labels" -}}
 {{ include "polkassembly.frontend.matchLabels" . }}
 {{ include "polkassembly.common.metaLabels" . }}
