@@ -11,18 +11,17 @@ import { Grid } from 'semantic-ui-react';
 import { LoadingStatusType, VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
 import Loader from 'src/ui-components/Loader';
+import PassingInfo from 'src/ui-components/PassingInfo';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
 
-import { getPassingThreshold } from './utils';
+import { getFailingThreshold, getPassingThreshold } from './utils';
 
 interface Props {
 	className?: string
 	referendumId: number
 	threshold?: VoteThreshold
 }
-
-const LOCKS = [1, 10, 20, 30, 40, 50, 60];
 
 const ZERO = new BN(0);
 
@@ -34,17 +33,24 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
 	const [nayVotes, setNayVotes] = useState(ZERO);
 	const [nayVotesWithoutConviction, setNayVotesWithoutConviction] = useState(ZERO);
+	const [ayeVotesWithoutConviction, setAyeVotesWithoutConviction] = useState(ZERO);
+	const [isPassing, setIsPassing] = useState<boolean | null>(null);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading votes' });
 
-	const passingThreshold = useMemo(
+	const getThreshold = useMemo(
 		() => {
 			console.log('bim3');
-			if (!threshold) return ZERO;
-			// return ZERO;
-			const res = getPassingThreshold(nayVotes, nayVotesWithoutConviction, totalIssuance, threshold);
-			return res.isValid && res.passingThreshold ? res.passingThreshold : ZERO;
+			if (!threshold || isPassing === null) return ZERO;
+			// if the referendum is passing, we're interresed in the failing threashold
+			if (isPassing) {
+				const res = getFailingThreshold({ ayes: ayeVotes, ayesWithoutConviction: ayeVotesWithoutConviction, threshold, totalIssuance });
+				return res.isValid && res.faillingThreshold ? res.faillingThreshold : ZERO;
+			} else {
+				const res = getPassingThreshold({ nays: nayVotes, naysWithoutConviction: nayVotesWithoutConviction, threshold, totalIssuance });
+				return res.isValid && res.passingThreshold ? res.passingThreshold : ZERO;
+			}
 		},
-		[nayVotes, nayVotesWithoutConviction, threshold, totalIssuance]
+		[ayeVotes, ayeVotesWithoutConviction, isPassing, nayVotes, nayVotesWithoutConviction, threshold, totalIssuance]
 	);
 
 	console.log('boom');
@@ -69,6 +75,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				console.log('totalAye', totalAye.toString());
 				console.log('totalNay', totalNay.toString());
 				setNayVotesWithoutConviction(totalNay);
+				setAyeVotesWithoutConviction(totalAye);
+				setIsPassing(re.isPassing);
 			});
 		}).then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
@@ -89,7 +97,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			const _info = info.unwrapOr(null);
 
 			if (_info?.isOngoing){
-				console.log('_info?.asOngoing',_info?.asOngoing);
 				setAyeVotes(_info?.asOngoing.tally.ayes);
 				setNayVotes(_info?.asOngoing.tally.nays);
 				setTurnout(_info?.asOngoing.tally.turnout);
@@ -127,12 +134,16 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 				<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
 				:
 				<>
-					<VoteProgress
-						ayeVotes={ayeVotes}
-						className='vote-progress'
-						passingThreshold={passingThreshold}
-						nayVotes={nayVotes}
-					/>
+					<PassingInfo isPassing={isPassing}/>
+					{isPassing === null
+						? <Loader text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
+						: <VoteProgress
+							ayeVotes={ayeVotes}
+							className='vote-progress'
+							isPassing={isPassing}
+							threshold={getThreshold}
+							nayVotes={nayVotes}
+						/>}
 					<Grid columns={3} divided>
 						<Grid.Row>
 							<Grid.Column>
