@@ -149,6 +149,15 @@ dockerize-chain-db-watcher:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
+dockerize-health-monitor:
+  stage: dockerize
+  environment:
+    name: parity-build
+  only:
+    - master
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  <<: *build_and_push
+
 #### stage:                        deploy
 
 .deploy-k8s:                   &deploy-k8s

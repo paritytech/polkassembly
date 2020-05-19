@@ -66,23 +66,24 @@ async function getPostsWithAuthor (): Promise<boolean> {
 	});
 }
 
-async function getPrismaVersion (): Promise<string> {
-	return fetch(`${process.env.CHAIN_DB}/management`, {
-		body: JSON.stringify({
-			operationName: null,
-			query: `{
-				serverInfo {
-					version
-				}
-			}`,
-			variables: {}
-		}),
-		headers: {
-			'content-type': 'application/json'
-		},
-		method: 'POST'
-	}).then(res => res.json()).then(({ data }) => data?.serverInfo?.version);
-}
+// commented out until the prisma server is in prod
+// async function getPrismaVersion (): Promise<string> {
+// 	return fetch(`${process.env.CHAIN_DB}/management`, {
+// 		body: JSON.stringify({
+// 			operationName: null,
+// 			query: `{
+// 				serverInfo {
+// 					version
+// 				}
+// 			}`,
+// 			variables: {}
+// 		}),
+// 		headers: {
+// 			'content-type': 'application/json'
+// 		},
+// 		method: 'POST'
+// 	}).then(res => res.json()).then(({ data }) => data?.serverInfo?.version);
+// }
 
 async function getReferendumDelays (): Promise<boolean> {
 	const { data } = await fetch(`${process.env.CHAIN_DB_SERVER}`, {
@@ -158,9 +159,10 @@ const checkEnvVars = (): void => {
 	if (!process.env.CHAIN_DB_SERVER) {
 		throw new Error('CHAIN_DB_SERVER variable not set');
 	}
-	if (!process.env.CHAIN_DB) {
-		throw new Error('CHAIN_DB variable not set');
-	}
+	// commented out until the prisma server is in prod
+	// if (!process.env.CHAIN_DB) {
+	// 	throw new Error('CHAIN_DB variable not set');
+	// }
 	if (!process.env.REACT_SERVER) {
 		throw new Error('REACT_SERVER variable not set');
 	}
@@ -176,7 +178,8 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		chainDbWatcherServer,
 		reactServer,
 		latestBlockNumber,
-		prismaVersion,
+		// commented out until the prisma server is in prod
+		// prismaVersion,
 		postsWithAuthor,
 		referendumVoteThreshold,
 		onchainLinkReferendumDelays
@@ -186,7 +189,8 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		fetch(`${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck`),
 		fetch(`${process.env.REACT_SERVER}/healthcheck`),
 		getLatestBlockNumber(),
-		getPrismaVersion(),
+		// commented out until the prisma server is in prod
+		// getPrismaVersion(),
 		getPostsWithAuthor(),
 		getReferendumDelays(),
 		getOnchainLinkReferendumVoteThreshold()
@@ -199,7 +203,9 @@ async function healthcheck (): Promise<HealthCheckResult> {
 		latestBlockNumber,
 		onchainLinkReferendumDelays,
 		postsWithAuthor,
-		prismaVersion: prismaVersion,
+		// commented out until the prisma server is in prod
+		// prismaVersion: prismaVersion,
+		prismaVersion: "this_is_a_mock",
 		reactServerStatus: reactServer.status,
 		referendumVoteThreshold
 	};
@@ -223,9 +229,10 @@ AUTH_SERVER: ${process.env.AUTH_SERVER}/healthcheck
 HASURA_SERVER: ${process.env.HASURA_SERVER}/healthz
 CHAIN_DB_WATCHER_SERVER: ${process.env.CHAIN_DB_WATCHER_SERVER}/healthcheck
 CHAIN_DB_SERVER: ${process.env.CHAIN_DB_SERVER}
-CHAIN_DB: ${process.env.CHAIN_DB}/management
 REACT_SERVER: ${process.env.REACT_SERVER}/healthcheck
 `);
+	// commented out until the prisma server is in prod
+	// console.log(`CHAIN_DB: ${process.env.CHAIN_DB}/management`)
 	console.log('  Press CTRL-C to stop\n');
 });
 
