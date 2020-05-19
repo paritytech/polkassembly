@@ -7,106 +7,106 @@ import { Dispatch, SetStateAction } from 'react';
 import { network, tokenSymbol } from './global/networkConstants';
 
 export interface UserDetailsContextType {
-    id?: number | null,
-    picture?: string | null,
-    name?: string | null,
-    username?: string | null,
-    email?: string | null,
-    email_verified?: boolean | null,
-    addresses?: string[] | null,
-    defaultAddress?: string | null,
-    notification: {
+	id?: number | null,
+	picture?: string | null,
+	name?: string | null,
+	username?: string | null,
+	email?: string | null,
+	email_verified?: boolean | null,
+	addresses?: string[] | null,
+	defaultAddress?: string | null,
+	notification: {
 		postParticipated: boolean,
 		postCreated: boolean,
 		newProposal: boolean,
 		ownProposal: boolean
 	} | null,
-    setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
-    web3signup?: boolean | null
+	setUserDetailsContextState: Dispatch<SetStateAction<UserDetailsContextType>>;
+	web3signup?: boolean | null
 }
 
 export enum Role {
-    ANONYMOUS = 'anonymous',
-    ADMIN = 'admin',
-    PROPOSAL_BOT = 'proposal_bot',
-    USER = 'user',
+	ANONYMOUS = 'anonymous',
+	ADMIN = 'admin',
+	PROPOSAL_BOT = 'proposal_bot',
+	USER = 'user',
 }
 
 // these are enforced by Hasura
 export interface HasuraClaimPayload {
-    'x-hasura-allowed-roles': Role[]
-    'x-hasura-default-role': Role
-    'x-hasura-user-email': string
-    'x-hasura-user-id': string
-    'x-hasura-kusama': string
-    'x-hasura-kusama-default': string
-    'x-hasura-polkadot': string
-    'x-hasura-polkadot-default': string
+	'x-hasura-allowed-roles': Role[]
+	'x-hasura-default-role': Role
+	'x-hasura-user-email': string
+	'x-hasura-user-id': string
+	'x-hasura-kusama': string
+	'x-hasura-kusama-default': string
+	'x-hasura-polkadot': string
+	'x-hasura-polkadot-default': string
 }
 
 export interface JWTPayploadType {
-    exp: number
-    sub: string
-    name: string
-    username: string
-    email: string
-    email_verified: boolean
-    iat: string
-    notification: {
-        postParticipated: boolean,
+	exp: number
+	sub: string
+	name: string
+	username: string
+	email: string
+	email_verified: boolean
+	iat: string
+	notification: {
+		postParticipated: boolean,
 		postCreated: boolean,
 		newProposal: boolean,
 		ownProposal: boolean
-    }
-    'https://hasura.io/jwt/claims': HasuraClaimPayload
-    web3signup: boolean
+	}
+	'https://hasura.io/jwt/claims': HasuraClaimPayload
+	web3signup: boolean
 }
 
 export interface NotificationContextType {
-    deQueueNotification: (id: number) => void;
-    notificationsQueue: Map<number, NotificationType>
-    queueNotification: (notification: NotificationType) => void;
+	deQueueNotification: (id: number) => void;
+	notificationsQueue: Map<number, NotificationType>
+	queueNotification: (notification: NotificationType) => void;
 }
 
 export enum NotificationStatus {
-    SUCCESS,
-    ERROR,
-    WARNING
+	SUCCESS,
+	ERROR,
+	WARNING
 }
 
 export interface NotificationType {
-    header: string
-    message: string
-    status: NotificationStatus
+	header: string
+	message: string
+	status: NotificationStatus
 }
 
 export interface ModalType {
-    content?: string,
-    title?: string
+	content?: string,
+	title?: string
 }
 
 export interface ModalContextType {
-    dismissModal: () => void,
-    modal: ModalType,
-    setModal: (modal: ModalType) => void;
+	dismissModal: () => void,
+	modal: ModalType,
+	setModal: (modal: ModalType) => void;
 }
 
 export interface AccountMeta {
-    genesisHash: string | undefined
-    name: string
-    source: string
+	genesisHash: string | undefined
+	name: string
+	source: string
 }
 
 export interface Account {
-    address: string
-    meta: AccountMeta
+	address: string
+	meta: AccountMeta
 }
 
 export type Network = typeof network[keyof typeof network];
 export type TokenSymbol = typeof tokenSymbol[keyof typeof tokenSymbol];
 
 export type ChainPropType = {
-    [index: string]: ChainProps;
+	[index: string]: ChainProps;
 };
 
 export interface ChainProps {
@@ -117,8 +117,8 @@ export interface ChainProps {
 }
 
 export interface LoadingStatusType {
-    isLoading: boolean;
-    message: string;
+	isLoading: boolean;
+	message: string;
 }
 
 export interface ReactionMapFields {
@@ -127,9 +127,18 @@ export interface ReactionMapFields {
 }
 
 export enum VoteThresholdEnum {
-    Supermajorityapproval = 'Supermajorityapproval',
-    Supermajorityrejection = 'Supermajorityrejection',
-    Simplemajority = 'Simplemajority'
+	Supermajorityapproval = 'Supermajorityapproval',
+	Supermajorityrejection = 'Supermajorityrejection',
+	Simplemajority = 'Simplemajority'
 }
 
 export type VoteThreshold = keyof typeof VoteThresholdEnum;
+
+export interface MetaContextType {
+	description: string;
+	image: string;
+	setMetaContextState: Dispatch<SetStateAction<MetaContextType>>;
+	title: string;
+	type: string;
+	url: string;
+}
