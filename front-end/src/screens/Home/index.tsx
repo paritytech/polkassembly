@@ -47,6 +47,7 @@ const Home = ({ className }: Props) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id && !currentUser.defaultAddress &&
 						<InfoBox
+							className='default-address-infobox'
 							dismissable={true}
 							name='defaultAddress'
 							title='Default Address is here!'
@@ -85,6 +86,11 @@ export default styled(Home)`
 		}
 	}
 
+	@media only screen and (max-width: 992px) {
+		.default-address-infobox {
+			visibility: hidden;
+		}
+	}
 
 	@media only screen and (max-width: 768px) {
 
