@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.healthMonitor.name }}
+  labels:
+    {{- include "polkassembly.healthMonitor.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.healthMonitor.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "polkassembly.healthMonitor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "polkassembly.healthMonitor.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.healthMonitor.name }}
+          image: "{{ .Values.healthMonitor.image.repository }}:{{ .Values.dockerTag }}"
+          imagePullPolicy: {{ .Values.healthMonitor.image.pullPolicy }}
+          env:
+          {{- range $key, $val := .Values.healthMonitor.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: health-monitor-config
+          {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}

@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-chainName: ""
+chainName: "kusama"
 imagePullSecrets: ""
 nodeSelector: {}
 dockerTag: master
@@ -140,6 +140,42 @@ chainDbWatcher:
 
   image:
     repository: paritytech/polkassembly-chain-db-watcher
+    pullPolicy: IfNotPresent
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  podSecurityContext: {}
+  securityContext: {}
+
+  resources: {}
+  tolerations: []
+  affinity: {}
+
+healthMonitor:
+  name: health-monitor
+  replicaCount: 1
+
+  config:
+    # Listening Port
+    PORT: 8034
+    # polkassembly auth-server
+    AUTH_SERVER: "http://auth-server-service:8010"
+    # polkassembly hasura graphql service
+    HASURA_SERVER: "http://hasura-service:8080"
+    # polkassembly hasura chain-db service
+    CHAIN_DB_WATCHER_SERVER: "http://chain-db-watcher-service:8019"
+    # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
+    CHAIN_DB_SERVER: "https://test.nodewatcher-server.polkassembly.io"
+    # nodewatcher server ( aka Prisma server )
+    CHAIN_DB: "http://nodedwatcher.nodewatcher-staging:4466"
+    # polkassembly frontend-service
+    REACT_SERVER: "http://frontend-service:80"
+    # polkadot rpc node
+    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944"
+
+  image:
+    repository: paritytech/polkassembly-health-monitor
     pullPolicy: IfNotPresent
 
   nameOverride: ""
