@@ -21,16 +21,16 @@
     "Nikhil Rajan",
     "Thibaut Sardan"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/paritytech/polkassembly/issues"
   },
   "homepage": "http://polkassembly.io/",
   "dependencies": {
-    "@polkadot/api": "^1.7.1",
-    "@polkadot/types": "^1.7.1",
-    "@polkadot/util": "^2.6.2",
-    "@polkadot/util-crypto": "^2.6.2",
+    "@polkadot/api": "^1.13.1",
+    "@polkadot/types": "^1.13.1",
+    "@polkadot/util": "^2.9.1",
+    "@polkadot/util-crypto": "^2.9.1",
     "@sendgrid/mail": "^6.4.0",
     "@types/graphql": "^14.5.0",
     "@types/uuid": "^7.0.2",
