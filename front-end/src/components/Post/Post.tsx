@@ -4,9 +4,10 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 
+import { MetaContext } from '../../context/MetaContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
 	DiscussionPostAndCommentsQuery,
@@ -68,6 +69,17 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
+	const currentMeta = useContext(MetaContext);
+
+	useEffect(() => {
+		currentMeta.setMetaContextState((prevState) => {
+			return {
+				...prevState,
+				description: post?.content || prevState.description,
+				title: post?.title || prevState.title
+			};
+		});
+	}, [post, currentMeta]);
 
 	if (!post) return <NoPostFound
 		isMotion={isMotion}
