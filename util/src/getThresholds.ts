@@ -74,10 +74,6 @@ const raphsonIterations = function (f: PolynomialFunction, fp: PolynomialFunctio
  * @summary Calculates amount of nays needed for a referendum to fail
  **/
 export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance, threshold }: getFailingThresholdParamsType): FailingThresholdResult {
-	// console.log('nays', nays.toString());
-	// console.log('naysWithoutConviction',naysWithoutConviction.toString());
-	// console.log('totalIssuance',totalIssuance.toString());
-	// console.log('threshold',threshold.toString());
 
 	if (ayes.isZero() || ayesWithoutConviction.isZero()){
 		// there is no vote against, any number of aye>0 would work
