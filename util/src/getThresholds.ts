@@ -6,7 +6,7 @@ import BN from 'bn.js';
 
 import { newtonRaphson, NewtonRaphsonResult } from './newton-raphson';
 import { solveQuadraticEquation } from './solveQuadraticEquation';
-import { FaillingThresholdResult, PassingThresholdResult, VoteThreshold,VoteThresholdEnum } from './types';
+import { FailingThresholdResult, PassingThresholdResult, VoteThreshold,VoteThresholdEnum } from './types';
 
 interface ThresholdBase {
 	totalIssuance: BN;
@@ -73,7 +73,7 @@ const raphsonIterations = function (f: PolynomialFunction, fp: PolynomialFunctio
  * @name getFailingThreshold
  * @summary Calculates amount of nays needed for a referendum to fail
  **/
-export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance, threshold }: getFailingThresholdParamsType): FaillingThresholdResult {
+export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance, threshold }: getFailingThresholdParamsType): FailingThresholdResult {
 	// console.log('nays', nays.toString());
 	// console.log('naysWithoutConviction',naysWithoutConviction.toString());
 	// console.log('totalIssuance',totalIssuance.toString());
@@ -83,7 +83,7 @@ export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance
 		// there is no vote against, any number of aye>0 would work
 
 		return {
-			faillingThreshold: ONE,
+			failingThreshold: ONE,
 			isValid: true
 		};
 	}
@@ -100,7 +100,7 @@ export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance
 	if (threshold === VoteThresholdEnum.Simplemajority){
 
 		return {
-			faillingThreshold: ayes,
+			failingThreshold: ayes,
 			isValid: true
 		};
 	}
@@ -112,17 +112,20 @@ export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance
 
 		return result.foundRoot
 			? {
-				faillingThreshold: result.result as BN,
+				failingThreshold: result.result as BN,
 				isValid: true
 			}
 			: {
 				isValid: false
 			};
 	} else {
-		const res = solveQuadraticEquation(totalIssuance.neg(), ayesWithoutConviction.pow(TWO), ayes.pow(TWO).mul(ayesWithoutConviction));
+		// SuperMajorityRejection
+		// with v: votes, vc: votes without conviction, t: total issuance
+		// -t*x^2 + v^2*x + (v)^2*vc
+		const res = solveQuadraticEquation(totalIssuance.neg(), ayes.pow(TWO), ayes.pow(TWO).mul(ayesWithoutConviction));
 
 		return {
-			faillingThreshold: BN.max(res[0],res[1]),
+			failingThreshold: BN.max(res[0],res[1]),
 			isValid: true
 		} ;
 	}
@@ -179,6 +182,8 @@ export function getPassingThreshold({ nays, naysWithoutConviction, totalIssuance
 			};
 	} else {
 		// SuperMajorityRejection
+		// with v: votes, vc: votes without conviction, t: total issuance
+		// -t*x^2 + v^2*x + (v)^2*vc
 		const res = solveQuadraticEquation(totalIssuance.neg(), nays.pow(TWO), nays.pow(TWO).mul(naysWithoutConviction));
 		return {
 			isValid: true,

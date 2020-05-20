@@ -20,6 +20,6 @@ export interface PassingThresholdResult extends BaseThresholdResult{
 	passingThreshold?: BN;
 }
 
-export interface FaillingThresholdResult extends BaseThresholdResult{
-	faillingThreshold?: BN;
+export interface FailingThresholdResult extends BaseThresholdResult{
+	failingThreshold?: BN;
 }
