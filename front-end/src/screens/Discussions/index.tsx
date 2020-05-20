@@ -38,7 +38,8 @@ const Discussions = ({ className } : {className?: string}) => {
 						name='discussionsInfo'
 						title='About Discussions'
 					/>
-					<DefaultAddressInfoBox />
+					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
+						<DefaultAddressInfoBox />}
 				</Grid.Column>
 			</Grid>
 		</div>

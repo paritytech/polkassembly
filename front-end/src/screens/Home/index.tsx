@@ -47,7 +47,8 @@ const Home = ({ className }: Props) => {
 					{currentUser.id && <div className='mainButtonContainer'>
 						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
 					</div>}
-					<DefaultAddressInfoBox />
+					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
+						<DefaultAddressInfoBox />}
 				</Grid.Column>
 			</Grid>
 		</div>
