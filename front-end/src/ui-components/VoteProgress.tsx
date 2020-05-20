@@ -39,10 +39,6 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 		: thresholdNumber / totalVotesNumberDivider*100;
 	const ayePercent = ayeVotesNumber/totalVotesNumber*100;
 
-	console.log('totalVotesNumberDivider',totalVotesNumberDivider);
-	console.log('thresholdNumber', thresholdNumber);
-	console.log('passingThreshold',threshold.toString());
-	console.log('passingThresholdPercent',thresholdPercent);
 	return (
 		<div className={className}>
 			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
@@ -55,17 +51,20 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 				className={isPassing? 'passing': '' }
 				percent={ayePercent}
 			/>
-			{thresholdPercent > 0 &&  <div
-				id='passingThreshold'
-				style={{ left: thresholdPercent + '%' }}
-			>
-				<hr/>
-				<div
-					className={ thresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
+			{
+				// don't show the threshold if it's not been calculated yet
+				thresholdPercent > 0 &&  <div
+					id='passingThreshold'
+					style={{ left: thresholdPercent + '%' }}
 				>
-					{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)} {tokenSymbol}
+					<hr/>
+					<div
+						className={ thresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
+					>
+						{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)} {tokenSymbol}
+					</div>
 				</div>
-			</div>}
+			}
 		</div>
 	);
 };

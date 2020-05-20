@@ -133,10 +133,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			<PassingInfo isPassing={isPassing}/>
 			<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>
 				{loadingStatus.isLoading
-					?
-					<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
-					:
-					<>
+					? <Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
+					: <>
 						{
 							isPassing === null
 								? <Loader className={'progressLoader'} text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
@@ -167,7 +165,8 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 						</Grid>
 					</>
 				}
-			</Card></>
+			</Card>
+		</>
 	);
 };
 
