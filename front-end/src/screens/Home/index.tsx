@@ -45,7 +45,7 @@ const Home = ({ className }: Props) => {
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
-					{currentUser.id && !currentUser.defaultAddress &&
+					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
 						<InfoBox
 							className='default-address-infobox'
 							dismissable={true}
