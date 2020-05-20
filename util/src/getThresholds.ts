@@ -138,11 +138,6 @@ export function getFailingThreshold({ ayes, ayesWithoutConviction, totalIssuance
 
 export function getPassingThreshold({ nays, naysWithoutConviction, totalIssuance, threshold }: getPassingThresholdParamsType): PassingThresholdResult {
 
-	// console.log('nays', nays.toString());
-	// console.log('naysWithoutConviction',naysWithoutConviction.toString());
-	// console.log('totalIssuance',totalIssuance.toString());
-	// console.log('threshold',threshold.toString());
-
 	if (nays.isZero() || naysWithoutConviction.isZero()){
 		// there is no vote against, any number of aye>0 would work
 		return {

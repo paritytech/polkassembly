@@ -27,16 +27,12 @@
   },
   "dependencies": {
     "@polkadot/util": "^2.9.1",
-    "bn.js": "^5.1.1",
-    "remove": "^0.1.5"
+    "bn.js": "^5.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
-    "babel-jest": "^26.0.1",
     "eslint": "^6.8.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.1",
