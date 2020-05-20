@@ -12,7 +12,14 @@ export enum VoteThresholdEnum {
 
 export type VoteThreshold = keyof typeof VoteThresholdEnum;
 
-export interface PassingThresholdResult{
+export interface BaseThresholdResult{
 	isValid: boolean;
+}
+
+export interface PassingThresholdResult extends BaseThresholdResult{
 	passingThreshold?: BN;
+}
+
+export interface FaillingThresholdResult extends BaseThresholdResult{
+	faillingThreshold?: BN;
 }

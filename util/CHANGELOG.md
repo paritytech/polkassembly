@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.0 (2020-05-20)
+Add getFaillingThreshold. Use the aye/nay without conviction. The guess on the threshold makes the assumption that all votes have a convistion of x1.
+
 ## 0.1.3 (2020-04-15)
 Fix a case were Supermajority threshold was not returning any value although a root was found.
 
