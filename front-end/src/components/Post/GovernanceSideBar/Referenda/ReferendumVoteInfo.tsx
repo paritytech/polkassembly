@@ -29,7 +29,6 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [turnout, setTurnout] = useState(ZERO);
 	const [totalIssuance, setTotalIssuance] = useState(ZERO);
-	// const [passingThreshold, setPassingThreshold] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
 	const [nayVotes, setNayVotes] = useState(ZERO);
 	const [nayVotesWithoutConviction, setNayVotesWithoutConviction] = useState(ZERO);
@@ -49,7 +48,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	const getThreshold = useMemo(
 		() => {
 			if (!threshold || isPassing === null) return ZERO;
-			// if the referendum is passing, we're interresed in the failing threashold
+			// if the referendum is passing, we're interesed in the failing threshold
 			if (isPassing) {
 				const res = getFailingThreshold({ ayes: ayeVotes, ayesWithoutConviction: ayeVotesWithoutConviction, threshold, totalIssuance });
 				return res.isValid && res.failingThreshold ? res.failingThreshold : ZERO;
@@ -96,8 +95,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 		let unsubscribe: () => void;
 
-		// api.query.democracy.referendumInfoOf(referendumId, (info) => {
-		api.query.democracy.referendumInfoOf(53, (info) => {
+		api.query.democracy.referendumInfoOf(referendumId, (info) => {
 			const _info = info.unwrapOr(null);
 
 			if (_info?.isOngoing){
@@ -139,15 +137,17 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 					<Loader text={loadingStatus.message} timeout={30000} timeoutText='Api is unresponsive.'/>
 					:
 					<>
-						{isPassing === null
-							? <Loader className={'progressLoader'} text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
-							: <VoteProgress
-								ayeVotes={ayeVotes}
-								className='vote-progress'
-								isPassing={isPassing}
-								threshold={getThreshold}
-								nayVotes={nayVotes}
-							/>}
+						{
+							isPassing === null
+								? <Loader className={'progressLoader'} text={'Loading vote progress'} timeout={30000} timeoutText='Vote calculation failed'/>
+								: <VoteProgress
+									ayeVotes={ayeVotes}
+									className='vote-progress'
+									isPassing={isPassing}
+									threshold={getThreshold}
+									nayVotes={nayVotes}
+								/>
+						}
 
 						<Grid columns={3} divided>
 							<Grid.Row>

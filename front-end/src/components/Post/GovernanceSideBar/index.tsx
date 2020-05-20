@@ -40,8 +40,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { api } = useContext(ApiPromiseContext);
 
-	const canVote = true;
-	//  !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status);
+	const canVote = !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status);
 
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;

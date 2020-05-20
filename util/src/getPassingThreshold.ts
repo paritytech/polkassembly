@@ -8,10 +8,6 @@ import { newtonRaphson, NewtonRaphsonResult } from './newton-raphson';
 import { solveQuadraticEquation } from './solveQuadraticEquation';
 import { PassingThresholdResult,VoteThreshold,VoteThresholdEnum } from './types';
 
-export function test (){
-	console.log('hop');
-}
-
 /**
  * @name getPassingThreshold
  * @summary Calculates amount of aye needed for a referendum to pass
