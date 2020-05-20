@@ -45,7 +45,7 @@ export  default function (value: BN | string, options: Options): string {
 		prefix = prefix.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 	}
 
-	const unit = withUnit ? chainProperties[network].tokenSymbol : '';
+	const unit = withUnit ? ` ${chainProperties[network].tokenSymbol}` : '';
 
-	return `${prefix}${comma}${suffix} ${unit}`;
+	return `${prefix}${comma}${suffix}${unit}`;
 }
