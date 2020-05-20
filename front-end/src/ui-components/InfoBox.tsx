@@ -41,7 +41,7 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 						onClick={handleClose}
 					/>
 				</div>}
-				{content}
+				<p>{content}</p>
 				{children}
 			</div>}
 		</>
