@@ -205,20 +205,17 @@ const Address = ({ className }: Props): JSX.Element => {
 												</div>
 											</Grid.Column>
 											<Grid.Column width={6} >
-												{currentUser.defaultAddress !== address ?
-													<div className='button-container default-button'>
+												{currentUser.defaultAddress === address ?
+													<div className='default-label'>
+														<Icon name='check'/> Default address
+													</div> : <div className='button-container default-button'>
 														<Button
 															className={'social'}
 															onClick={() => handleDefault(address)}
 														>
 															Set default
 														</Button>
-													</div>: null
-												}
-												{currentUser.defaultAddress === address ?
-													<div className='default-label'>
-														<Icon name='check'/> Default address
-													</div> : null
+													</div>
 												}
 											</Grid.Column>
 										</Grid>
