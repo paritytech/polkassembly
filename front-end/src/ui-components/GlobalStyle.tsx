@@ -60,6 +60,11 @@ export const GlobalStyle = createGlobalStyle`
         max-width: 1200px;
         padding: 0 2.5rem 0 2.5rem;
         margin: 3.75rem auto 0 auto;
+
+		@media (max-width: 1299px) {
+			padding: 0 2.5rem 0 2.5rem;
+		}
+    }
     }
 
     #page-container {
@@ -71,8 +76,12 @@ export const GlobalStyle = createGlobalStyle`
         margin: 4rem auto 0 auto;
         padding-bottom: 8rem;
 
-        @media only screen and (max-width: 1199px) and (min-width: 992px) {
-            width: calc(100% - 4rem);
+        @media only screen and (max-width: 1299px) and (min-width: 992px) {
+            width: calc(100% - 6rem);
+        }
+
+        @media only screen and (min-width: 1299px) {
+            width: 1238px;
         }
     }
 
@@ -125,17 +134,6 @@ export const GlobalStyle = createGlobalStyle`
 
     .ui.dropdown .menu, .ui.dropdown .menu>.item {
         font-size: sm;
-    }
-
-    @media (max-width: 1200px) {
-        .container-fluid {
-        padding: 0 2.5rem 0 2.5rem;
-        }
-
-        .ui.grid {
-            margin-left: 0;
-            margin-right: 0;
-        }
     }
 
     @media only screen and (max-width: 768px) {
