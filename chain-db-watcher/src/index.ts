@@ -210,7 +210,7 @@ async function main (): Promise<void> {
 		}
 	});
 
-	const hostname = '127.0.0.1';
+	const hostname = '0.0.0.0';
 	const port = Number(process.env.HEALTH_PORT) || 8019;
 
 	const server = http.createServer((req, res) => {
@@ -219,7 +219,7 @@ async function main (): Promise<void> {
 		res.end('ok');
 	});
 
-	server.listen(port, hostname, () => {
+	server.listen(port, () => {
 		console.log(`[+] Health endpoint available at http://${hostname}:${port}/`);
 	});
 }
