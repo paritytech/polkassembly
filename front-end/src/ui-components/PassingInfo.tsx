@@ -21,7 +21,7 @@ const PassingInfo = ({ className, isPassing }:Props ) => {
 	if (isPassing === null){
 		text = NO_INFO_TEXT;
 	} else {
-		text = isPassing ? 'Passing' : 'Failling';
+		text = isPassing ? 'Passing' : 'Failing';
 		iconName = isPassing ? 'check circle outline' : 'check circle outline';
 	}
 	return (
@@ -48,7 +48,7 @@ export default styled(PassingInfo)`
 		background-color: green_primary;
 	}
 
-	&.failling {
+	&.failing {
 		background-color: red_primary;
 	}
 `;

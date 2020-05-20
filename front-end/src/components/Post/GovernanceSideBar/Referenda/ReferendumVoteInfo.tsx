@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { DeriveReferendumVote } from '@polkadot/api-derive/types';
+import { getFailingThreshold, getPassingThreshold } from '@polkassembly/util';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
@@ -15,8 +16,6 @@ import Loader from 'src/ui-components/Loader';
 import PassingInfo from 'src/ui-components/PassingInfo';
 import VoteProgress from 'src/ui-components/VoteProgress';
 import formatBnBalance from 'src/util/formatBnBalance';
-
-import { getFailingThreshold, getPassingThreshold } from './utils';
 
 interface Props {
 	className?: string
@@ -53,7 +52,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			// if the referendum is passing, we're interresed in the failing threashold
 			if (isPassing) {
 				const res = getFailingThreshold({ ayes: ayeVotes, ayesWithoutConviction: ayeVotesWithoutConviction, threshold, totalIssuance });
-				return res.isValid && res.faillingThreshold ? res.faillingThreshold : ZERO;
+				return res.isValid && res.failingThreshold ? res.failingThreshold : ZERO;
 			} else {
 				const res = getPassingThreshold({ nays: nayVotes, naysWithoutConviction: nayVotesWithoutConviction, threshold, totalIssuance });
 				return res.isValid && res.passingThreshold ? res.passingThreshold : ZERO;

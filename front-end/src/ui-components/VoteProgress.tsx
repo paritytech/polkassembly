@@ -63,7 +63,7 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 				<div
 					className={ thresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
 				>
-					{isPassing ? 'Failling' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)} {tokenSymbol}
+					{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)} {tokenSymbol}
 				</div>
 			</div>}
 		</div>
