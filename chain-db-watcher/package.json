@@ -29,6 +29,10 @@
     "@graphql-codegen/cli": "^1.14.0",
     "@graphql-codegen/introspection": "1.12.1",
     "@graphql-codegen/typescript": "^1.14.0",
+    "@graphql-codegen/typescript-graphql-request": "^1.14.0",
+    "@graphql-codegen/typescript-operations": "^1.14.0",
+    "@types/node": "^13.13.9",
+    "@types/node-fetch": "^2.5.7",
     "@types/ws": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
@@ -45,10 +49,6 @@
     "eslint-plugin-standard": "^4.0.1"
   },
   "dependencies": {
-    "@graphql-codegen/typescript-graphql-request": "^1.14.0",
-    "@graphql-codegen/typescript-operations": "^1.14.0",
-    "@types/node": "^13.13.9",
-    "@types/node-fetch": "^2.5.7",
     "apollo-link": "^1.2.14",
     "apollo-link-ws": "^1.0.20",
     "chalk": "^3.0.0",
