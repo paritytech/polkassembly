@@ -20,13 +20,21 @@ export default async (userId: number): Promise<NetworkUserAddressInfo> => {
 	allAddresses.forEach(addressInfo => {
 		switch (addressInfo.network) {
 		case NetworkEnum.KUSAMA:
-			kusamaAddressses.push(addressInfo.address);
-			if (addressInfo.default) kusamaDefault = addressInfo.address;
+			if (addressInfo.verified) {
+				kusamaAddressses.push(addressInfo.address);
+				if (addressInfo.default) {
+					kusamaDefault = addressInfo.address;
+				}
+			}
 			break;
 
 		case NetworkEnum.POLKADOT:
-			polkadotAddressses.push(addressInfo.address);
-			if (addressInfo.default) polkadotDefault = addressInfo.address;
+			if (addressInfo.verified) {
+				polkadotAddressses.push(addressInfo.address);
+				if (addressInfo.default) {
+					polkadotDefault = addressInfo.address;
+				}
+			}
 			break;
 		default:
 			break;

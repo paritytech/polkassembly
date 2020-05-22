@@ -18,6 +18,7 @@ import { getNewUserCtx } from '../../helpers';
 describe('addressLinkConfirm mutation', () => {
 	let signupUserId = 0;
 	let fakectx: Context;
+	let dbAddressId: any;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
@@ -33,6 +34,11 @@ describe('addressLinkConfirm mutation', () => {
 		await User
 			.query()
 			.where({ id: signupUserId })
+			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
 			.del();
 	});
 
@@ -60,13 +66,16 @@ describe('addressLinkConfirm mutation', () => {
 
 		expect(dbAddress?.public_key).to.exist;
 		expect(dbAddress?.verified).to.be.true;
+		expect(dbAddress?.default).to.be.true;
 
 		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
+
+		dbAddressId = dbAddress?.id;
 	});
 
 	it('should not be able to confirm address link with fake signature', async () => {
 		const network = NetworkEnum.KUSAMA;
-		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 		const signature = 'fake';
 
