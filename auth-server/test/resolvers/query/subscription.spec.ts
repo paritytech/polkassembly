@@ -12,7 +12,7 @@ import { Context } from '../../../src/types';
 import { getNewUserCtx } from '../../helpers';
 
 describe('post subscription query', () => {
-	let signupUserId = 0;
+	let signupUserId = -1;
 	let fakectx: Context;
 
 	const email = 'test@email.com';

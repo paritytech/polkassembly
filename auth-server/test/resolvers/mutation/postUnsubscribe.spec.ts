@@ -15,7 +15,7 @@ import { getNewUserCtx } from '../../helpers';
 
 describe('post unSubscribe mutation', () => {
 	let fakectx: Context;
-	let signupUserId = 0;
+	let signupUserId = -1;
 
 	const email = 'test@email.com';
 	const password = 'testpass';

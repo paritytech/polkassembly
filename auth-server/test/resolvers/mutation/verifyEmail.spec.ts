@@ -16,7 +16,7 @@ import { getNewUserCtx } from '../../helpers';
 describe('verifyEmail mutation', () => {
 	let verifyToken: any;
 	let fakectx: Context;
-	let signupUserId = 0;
+	let signupUserId = -1;
 
 	const email = 'test@email.com';
 	const password = 'testpass';

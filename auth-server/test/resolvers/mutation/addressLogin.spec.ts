@@ -18,7 +18,7 @@ import { ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/aut
 import { getNewUserCtx } from '../../helpers';
 
 describe('addressLogin mutation', () => {
-	let signupUserId = 0;
+	let signupUserId = -1;
 	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';

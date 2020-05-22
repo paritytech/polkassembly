@@ -15,7 +15,7 @@ import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
 
 describe('addressLinkStart mutation', () => {
-	let signupUserId = 0;
+	let signupUserId = -1;
 	let fakectx: Context;
 	let dbAddressId: any;
 	const email = 'test@email.com';

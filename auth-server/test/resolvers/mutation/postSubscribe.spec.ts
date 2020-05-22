@@ -14,7 +14,7 @@ import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
 
 describe('post subscribe mutation', () => {
-	let signupUserId = 0;
+	let signupUserId = -1;
 	let fakectx: Context;
 
 	const email = 'test@email.com';
