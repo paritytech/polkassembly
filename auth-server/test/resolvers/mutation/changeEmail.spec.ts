@@ -8,9 +8,7 @@ import 'mocha';
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
 import signup from '../../../src/resolvers/mutation/signup';
-import { redisDel, redisGet } from '../../../src/redis';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
-import { getEmailVerificationTokenKey } from '../../../src/services/auth';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
@@ -40,8 +38,6 @@ describe('changeEmail mutation', () => {
 			.where({ id: signupResult.user.id })
 			.del();
 
-		await redisDel(getEmailVerificationTokenKey('*'));
-
 		await UndoEmailChangeToken
 			.query()
 			.where( { user_id: signupResult.user.id })
@@ -53,14 +49,9 @@ describe('changeEmail mutation', () => {
 
 		await changeEmail(undefined, { email, password }, fakectx);
 
-		const verifyToken = await redisGet(getEmailVerificationTokenKey('*'));
-
 		const undoToken = await UndoEmailChangeToken
 			.query()
 			.where({ user_id: signupResult.user.id, valid: true });
-
-		// expect(verifyToken.length).to.eq(1);
-		// expect(verifyToken[0].token).to.not.be.empty;
 
 		expect(undoToken.length).to.eq(1);
 		expect(undoToken[0].token).to.not.be.empty;

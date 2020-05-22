@@ -7,9 +7,7 @@ import 'mocha';
 
 import User from '../../../src/model/User';
 import resendVerifyEmailToken from '../../../src/resolvers/mutation/resendVerifyEmailToken';
-import { redisGet } from '../../../src/redis';
 import signup from '../../../src/resolvers/mutation/signup';
-import { getEmailVerificationTokenKey } from '../../../src/services/auth';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
@@ -41,13 +39,10 @@ describe('resendVerifyEmailToken mutation', () => {
 	});
 
 	it('should be able to resend verify email token', async () => {
-		await resendVerifyEmailToken(undefined, undefined, fakectx);
+		const result = await resendVerifyEmailToken(undefined, undefined, fakectx);
 
-		const verifyToken = await redisGet(getEmailVerificationTokenKey('*'));
 
-		expect(verifyToken).to.exist;
-		// expect(verifyToken?.valid).to.be.true;
-		// expect(verifyToken?.token).to.be.a('string');
+		expect(result.message).to.equals(messages.RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL);
 	});
 
 	it('should not be able to resend verify email token with wrong jwt', async () => {
