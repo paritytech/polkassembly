@@ -6,7 +6,7 @@ import BN from 'bn.js';
 
 import { newtonRaphson, NewtonRaphsonResult } from './newton-raphson';
 import { solveQuadraticEquation } from './solveQuadraticEquation';
-import { FailingThresholdResult, PassingThresholdResult, VoteThreshold,VoteThresholdEnum } from './types';
+import { FailingThresholdResult, PassingThresholdResult, VoteThreshold, VoteThresholdEnum } from './types';
 
 interface ThresholdBase {
 	totalIssuance: BN;
