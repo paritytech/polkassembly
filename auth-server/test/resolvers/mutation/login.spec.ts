@@ -45,7 +45,6 @@ describe('login mutation', () => {
 		expect(token.username).to.equal(username);
 		expect(token.name).to.equal(name);
 		expect(token.email).to.equals(email);
-		expect(token[claims]['x-hasura-user-id']).to.equals(token.sub);
 		expect(token[claims]['x-hasura-default-role']).to.equals('user');
 		expect(token[claims]['x-hasura-user-email']).to.equals(email);
 	});
