@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ForbiddenError } from 'apollo-server';
 import { uuid } from 'uuidv4';
 
 import Address from '../../model/Address';
@@ -14,6 +15,18 @@ export default async (parent: void, { network, address }: AddressLinkStartArgs, 
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
+
+	const addressObj = await Address
+		.query()
+		.where({
+			address,
+			verified: true
+		})
+		.first();
+
+	if (addressObj) {
+		throw new ForbiddenError(messages.ADDRESS_ALREADY_EXISTS);
+	}
 
 	const dbAddress = await Address
 		.query()
