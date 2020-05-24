@@ -175,68 +175,12 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-	return (
-		<Form className={className} standalone={false}>
-			{accounts.length === 0 ?
-				<>
-					{currentUser?.addresses?.length ? <Form.Group>
-						<Form.Field width={16}>
-							<label className='header'>Linked addresses</label>
-							<div className='ui list'>
-								{currentUser?.addresses?.sort().map(userAddress => {
-									const address = getEncodedAddress(userAddress);
-
-									return address &&
-										<Grid key={address}>
-											<Grid.Column width={7}>
-												<div className='item'>
-													<AddressComponent className='item' address={address} />
-												</div>
-											</Grid.Column>
-											<Grid.Column width={3}>
-												<div className='button-container'>
-													<Button
-														className={'social'}
-														negative={true}
-														onClick={() => handleUnlink(address)}
-													>
-														{unlinkIcon}
-													</Button>
-												</div>
-											</Grid.Column>
-											<Grid.Column width={6} >
-												{currentUser.defaultAddress === address ?
-													<div className='default-label'>
-														<Icon name='check'/> Default address
-													</div> : <div className='button-container default-button'>
-														<Button
-															className={'social'}
-															onClick={() => handleDefault(address)}
-														>
-															Set default
-														</Button>
-													</div>
-												}
-											</Grid.Column>
-										</Grid>
-									;}
-								)}
-							</div>
-						</Form.Field>
-					</Form.Group> : null }
-					<Form.Group>
-						<Form.Field width={16}>
-							<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
-							<div className='link-button-container'>
-								<Button primary onClick={handleDetect}>
-									Show Available Accounts
-								</Button>
-							</div>
-						</Form.Field>
-					</Form.Group>
-				</> : <Form.Group>
+	const addressList = (accounts: InjectedAccountWithMeta[], title: string, showOnlyUnlink: boolean, showAccounts: boolean) => {
+		return (
+			<>
+				<Form.Group>
 					<Form.Field width={16}>
-						<label className='header'>Available addresses</label>
+						<label className='header'>{title}</label>
 						<div className='ui list'>
 							{accounts.map(account => {
 								const address = getEncodedAddress(account.address);
@@ -252,10 +196,10 @@ const Address = ({ className }: Props): JSX.Element => {
 											<div className='button-container'>
 												<Button
 													className={'social'}
-													negative={currentUser.addresses?.includes(address) ? true : false}
-													onClick={() => currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
+													negative={showOnlyUnlink ? true : currentUser.addresses?.includes(address) ? true : false}
+													onClick={() => showOnlyUnlink ? handleUnlink(address) : currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
 												>
-													{currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
+													{showOnlyUnlink ? unlinkIcon : currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
 												</Button>
 											</div>
 										</Grid.Column>
@@ -282,6 +226,30 @@ const Address = ({ className }: Props): JSX.Element => {
 						</div>
 					</Form.Field>
 				</Form.Group>
+				{showAccounts ? <Form.Group>
+					<Form.Field width={16}>
+						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+						<div className='link-button-container'>
+							<Button primary onClick={handleDetect}>
+								Show Available Accounts
+							</Button>
+						</div>
+					</Form.Field>
+				</Form.Group> : null}
+			</>
+		);
+	};
+
+	return (
+		<Form className={className} standalone={false}>
+			{accounts.length
+				? addressList(accounts, 'Available addresses', false, false)
+				: addressList(currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
+					address: address,
+					meta: {
+						source: ''
+					}
+				})) || [], 'Linked addresses', true, true)
 			}
 		</Form>
 	);
