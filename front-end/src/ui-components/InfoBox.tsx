@@ -41,7 +41,7 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 						onClick={handleClose}
 					/>
 				</div>}
-				{content}
+				<p>{content}</p>
 				{children}
 			</div>}
 		</>
@@ -49,18 +49,16 @@ const InfoBox = ({ children, className, content, dismissable, name, title }: Pro
 };
 
 export default styled(InfoBox)`
-    background-color: grey_light;
+	background-color: white;
 	color: black_text;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
+	font-size: sm;
+	border-radius: 6px;
+	box-shadow: box_shadow_big;
 	padding: 2rem 3rem;
 	position: relative;
 	margin-bottom: 2rem;
 	
 	h4 {
-		font-family: font_mono;
-		font-size: md;
 		margin-bottom: 1.2rem;
 	}
 
@@ -72,6 +70,15 @@ export default styled(InfoBox)`
 		&:hover {
 			color: grey_secondary;
 			cursor: pointer;
+		}
+	}
+
+	a {
+		color: black_text;
+		text-decoration: underline;
+		&:hover {
+			color: grey_primary;
+			text-decoration: underline;
 		}
 	}
 `;

@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
+import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
@@ -46,6 +47,8 @@ const Home = ({ className }: Props) => {
 					{currentUser.id && <div className='mainButtonContainer'>
 						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
 					</div>}
+					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
+						<DefaultAddressInfoBox />}
 				</Grid.Column>
 			</Grid>
 		</div>
@@ -72,6 +75,11 @@ export default styled(Home)`
 		}
 	}
 
+	@media only screen and (max-width: 992px) {
+		.default-address-infobox {
+			visibility: hidden;
+		}
+	}
 
 	@media only screen and (max-width: 768px) {
 
@@ -112,5 +120,6 @@ export default styled(Home)`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-bottom: 2rem;
 	}
 `;
