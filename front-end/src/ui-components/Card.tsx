@@ -20,7 +20,7 @@ export default styled(Card)`
 	background-color: white;
 	padding: 2rem 3rem 2rem 3rem;
 	border-radius: 3px;
-	box-shadow: box_shadow_secondary_grey;
+	box-shadow: box_shadow_card;
 	margin-bottom: 1rem;
 	@media only screen and (max-width: 768px) {
 		padding: 2rem;
