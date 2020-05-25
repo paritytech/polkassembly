@@ -62,10 +62,13 @@ const CouncilSignals = ({ className, data }: Props) => {
 			const defaultAddress = vote.voter?.[defaultAddressField] || '';
 
 			if (memberSet.has(defaultAddress)) {
-				councilVotes.push({
-					address: defaultAddress,
-					vote: vote.vote
-				});
+				const address = getEncodedAddress(defaultAddress);
+				if (address) {
+					councilVotes.push({
+						address,
+						vote: vote.vote
+					});
+				}
 
 				if (vote.vote === AYE) {
 					ayes++;
@@ -94,7 +97,7 @@ const CouncilSignals = ({ className, data }: Props) => {
 					<Grid.Row key={councilVote.address}>
 						<Grid.Column width={12}>
 							<div className='item'>
-								<Address address={getEncodedAddress(councilVote.address) || ''} />
+								<Address address={councilVote.address} />
 							</div>
 						</Grid.Column>
 						<Grid.Column width={4}>
