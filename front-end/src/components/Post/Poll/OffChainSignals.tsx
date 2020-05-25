@@ -66,13 +66,13 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 			<div>
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
-			{id ? <Form standalone={false}>
+			{id && <Form standalone={false}>
 				<AyeNayButtons
 					disabled={false}
 					onClickAye={() => castVote(AYE)}
 					onClickNay={() => castVote(NAY)}
 				/>
-			</Form> : null}
+			</Form>}
 		</Card>
 	);
 };
