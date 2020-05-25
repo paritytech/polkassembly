@@ -134,7 +134,12 @@ export enum VoteThresholdEnum {
 
 export type VoteThreshold = keyof typeof VoteThresholdEnum;
 
+export enum Vote {
+    AYE = 'AYE',
+    NAY = 'NAY'
+}
+
 export interface OffchainVote {
     address: string;
-    vote: 'AYE' | 'NAY'
+    vote: Vote;
 }

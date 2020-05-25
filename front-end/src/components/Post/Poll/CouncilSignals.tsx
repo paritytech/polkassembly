@@ -9,13 +9,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 
 import { PostVotesQuery } from '../../../generated/graphql';
-import { OffchainVote } from '../../../types';
+import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
 import CouncilSignalBar from '../../../ui-components/CouncilSignalBar';
 import getDefaultAddressField from '../../../util/getDefaultAddressField';
 import getEncodedAddress from '../../../util/getEncodedAddress';
-import { AYE, NAY } from './votes';
 
 interface Props {
 	className?: string
@@ -58,23 +57,23 @@ const CouncilSignals = ({ className, data }: Props) => {
 		const defaultAddressField = getDefaultAddressField();
 		const councilVotes: OffchainVote[]  = [];
 
-		data?.post_votes?.forEach(vote => {
-			const defaultAddress = vote.voter?.[defaultAddressField] || '';
+		data?.post_votes?.forEach(({ vote, voter }) => {
+			const defaultAddress = voter?.[defaultAddressField] || '';
 
 			if (memberSet.has(defaultAddress)) {
 				const address = getEncodedAddress(defaultAddress);
 				if (address) {
 					councilVotes.push({
 						address,
-						vote: vote.vote
+						vote
 					});
 				}
 
-				if (vote.vote === AYE) {
+				if (vote === Vote.AYE) {
 					ayes++;
 				}
 
-				if (vote.vote === NAY) {
+				if (vote === Vote.NAY) {
 					nays++;
 				}
 			}
@@ -101,7 +100,7 @@ const CouncilSignals = ({ className, data }: Props) => {
 							</div>
 						</Grid.Column>
 						<Grid.Column width={4}>
-							{councilVote.vote === AYE ? <>
+							{councilVote.vote === Vote.AYE ? <>
 								<div className='thumbs up'>
 									<Icon name='thumbs up' />
 								</div> Aye

@@ -8,12 +8,12 @@ import React, { useCallback, useContext, useState } from 'react';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
+import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
 import OffChainSignalBar from '../../../ui-components/OffChainSignalBar';
-import { AYE, NAY } from './votes';
 
 interface Props {
 	ayes: number,
@@ -29,7 +29,7 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 	const [addPostVoteMutation] = useAddPostVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
 
-	const castVote = useCallback((vote: string) => {
+	const castVote = useCallback((vote: Vote) => {
 		if (!id) {
 			return;
 		}
@@ -69,8 +69,8 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 			{id && <Form standalone={false}>
 				<AyeNayButtons
 					disabled={false}
-					onClickAye={() => castVote(AYE)}
-					onClickNay={() => castVote(NAY)}
+					onClickAye={() => castVote(Vote.AYE)}
+					onClickNay={() => castVote(Vote.NAY)}
 				/>
 			</Form>}
 		</Card>

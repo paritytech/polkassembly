@@ -5,11 +5,11 @@
 import React from 'react';
 
 import { usePostVotesQuery } from '../../../generated/graphql';
+import { Vote } from '../../../types';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import CouncilSignals from './CouncilSignals';
 import OffChainSignals from './OffChainSignals';
-import { AYE, NAY } from './votes';
 
 interface Props {
 	postId: number
@@ -20,11 +20,11 @@ const Poll = ({ postId }: Props) => {
 	let ayes = 0;
 	let nays = 0;
 
-	data?.post_votes?.forEach(vote => {
-		if (vote.vote === AYE) {
+	data?.post_votes?.forEach(({ vote }) => {
+		if (vote === Vote.AYE) {
 			ayes++;
 		}
-		if (vote.vote === NAY) {
+		if (vote === Vote.NAY) {
 			nays++;
 		}
 	});
