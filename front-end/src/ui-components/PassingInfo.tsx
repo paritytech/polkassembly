@@ -34,12 +34,9 @@ const PassingInfo = ({ className, isPassing }:Props ) => {
 export default styled(PassingInfo)`
 	background-color: grey_secondary;
 	padding: 2rem 3rem 2rem 3rem;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_border;
 	border-radius: 3px;
 	margin-bottom: 1rem;
-	font-size: xl;
+	font-size: lg;
 	color: white;
 	text-align: center;
 	transition-duration: 1s;
