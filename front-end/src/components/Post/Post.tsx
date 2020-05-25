@@ -183,6 +183,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
+				{/* Showing Poll for only onchain posts */}
 				{onchainId && <Poll postId={post.id} />}
 			</Grid.Column>
 		</Grid>
