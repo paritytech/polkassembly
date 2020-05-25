@@ -16,6 +16,7 @@ import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLinkConfirm mutation', () => {
+	let dbAddressId: any;
 	let signupResult: any;
 	const fakectx: Context = {
 		req: {
@@ -39,6 +40,11 @@ describe('addressLinkConfirm mutation', () => {
 		await User
 			.query()
 			.where({ id: signupResult.user.id })
+			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
 			.del();
 	});
 
@@ -66,13 +72,16 @@ describe('addressLinkConfirm mutation', () => {
 
 		expect(dbAddress?.public_key).to.exist;
 		expect(dbAddress?.verified).to.be.true;
+		expect(dbAddress?.default).to.be.true;
 
 		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
+
+		dbAddressId = dbAddress?.id;
 	});
 
 	it('should not be able to confirm address link with fake signature', async () => {
 		const network = NetworkEnum.KUSAMA;
-		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 		const signature = 'fake';
 

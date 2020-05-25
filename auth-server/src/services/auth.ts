@@ -489,10 +489,13 @@ export default class AuthService {
 		}
 
 		// If this linked address is the first address to be linked. Then set it as default.
-		// querying other addresses where id != address_id to check the same.
+		// querying other verified addresses of user to check the same.
 		const otherAddresses = await Address
 			.query()
-			.whereNot('id', address_id);
+			.where({
+				user_id: userId,
+				verified: true
+			});
 
 		const setAsDefault = otherAddresses.length === 0;
 
