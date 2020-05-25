@@ -6,8 +6,9 @@ import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dap
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
-import React, { useContext,useState } from 'react';
-import { Grid,Icon } from 'semantic-ui-react';
+import React, { useContext, useState } from 'react';
+import { Grid, Icon } from 'semantic-ui-react';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -202,6 +203,11 @@ const Address = ({ className }: Props): JSX.Element => {
 												>
 													{showOnlyUnlink ? unlinkIcon : currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
 												</Button>
+												{currentUser.defaultAddress === address &&
+													<HelperTooltip
+														content='You can&apos;t unlink your default address.'
+													/>
+												}
 											</div>
 										</Grid.Column>
 										<Grid.Column width={6} >
