@@ -18,7 +18,7 @@
     "Thibaut Sardan"
   ],
   "dependencies": {
-    "@polkadot/api": "^1.14.1",
+    "@polkadot/api": "^1.15.1",
     "@polkadot/extension-dapp": "^0.24.1",
     "@polkadot/extension-inject": "^0.24.1",
     "@polkadot/react-identicon": "^0.52.1",
@@ -89,10 +89,10 @@
     "@graphql-codegen/typescript": "1.12.1",
     "@graphql-codegen/typescript-operations": "1.12.1",
     "@graphql-codegen/typescript-react-apollo": "1.12.1",
-    "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/addon-storyshots": "^5.3.18",
-    "@storybook/react": "^5.3.18",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addon-storyshots": "^5.3.19",
+    "@storybook/react": "^5.3.19",
     "@types/jest": "^25.2.3",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "13.5.1",
