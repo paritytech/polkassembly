@@ -10,6 +10,7 @@ import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
+import Button from '../../../ui-components/Button';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
@@ -18,31 +19,44 @@ import OffChainSignalBar from '../../../ui-components/OffChainSignalBar';
 interface Props {
 	ayes: number,
 	className?: string,
+	ownVote?: Vote | null,
 	nays: number,
 	postId: number
 	refetch: (variables?: PostVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PostVotesQuery>>
 }
 
-const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
+const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [error, setErr] = useState<Error | null>(null);
 	const [addPostVoteMutation] = useAddPostVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
 
-	const castVote = useCallback((vote: Vote) => {
+	const cancelVote = useCallback(async () => {
 		if (!id) {
 			return;
 		}
 
 		try {
-			deleteVoteMutation({
+			await deleteVoteMutation({
 				variables: {
 					postId,
 					userId: id
 				}
-			}).catch(console.error);
+			});
 
-			addPostVoteMutation({
+			refetch();
+		} catch (error) {
+			setErr(error);
+		}
+	}, [id, deleteVoteMutation, postId, refetch]);
+
+	const castVote = useCallback(async (vote: Vote) => {
+		if (!id) {
+			return;
+		}
+
+		try {
+			await addPostVoteMutation({
 				variables: {
 					postId,
 					userId: id,
@@ -54,7 +68,7 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, addPostVoteMutation, deleteVoteMutation, postId, refetch]);
+	}, [id, addPostVoteMutation, postId, refetch]);
 
 	return (
 		<Card className={className}>
@@ -66,13 +80,32 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 			<div>
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
-			{id && <Form standalone={false}>
-				<AyeNayButtons
-					disabled={false}
-					onClickAye={() => castVote(Vote.AYE)}
-					onClickNay={() => castVote(Vote.NAY)}
-				/>
-			</Form>}
+			{id && (ownVote
+				? <>
+					<div className='info text-muted'>You voted {ownVote}.</div>
+					<Form standalone={false}>
+						<Form.Group>
+							<Form.Field>
+								<Button
+									fluid
+									basic
+									className='primary negative'
+									onClick={cancelVote}
+								>
+									Cancel Vote
+								</Button>
+							</Form.Field>
+						</Form.Group>
+					</Form>
+				</>
+				: <Form standalone={false}>
+					<AyeNayButtons
+						disabled={false}
+						onClickAye={() => castVote(Vote.AYE)}
+						onClickNay={() => castVote(Vote.NAY)}
+					/>
+				</Form>
+			)}
 		</Card>
 	);
 };
