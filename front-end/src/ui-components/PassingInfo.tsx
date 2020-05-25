@@ -39,7 +39,7 @@ export default styled(PassingInfo)`
 	border-color: grey_border;
 	border-radius: 3px;
 	margin-bottom: 1rem;
-	font-size: xl;
+	font-size: lg;
 	color: white;
 	text-align: center;
 	transition-duration: 1s;
