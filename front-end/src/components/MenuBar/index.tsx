@@ -40,19 +40,19 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 	// Menu Items
 	const contentItems = [
-		{ content:'Discussions', icon:'comments', key:'discussions', to:'/discussions' },
-		{ content: 'On chain', icon:'file alternate', key:'proposals', to:'/onchain' }
+		{ content:'Discussions', icon:'comments', to:'/discussions' },
+		{ content: 'On chain', icon:'file alternate', to:'/onchain' }
 	];
 
 	const loggedOutItems = [
-		{ content:'Login', icon:'sign in', key:'login', to:'/login' },
-		{ content: 'Sign-up', icon:'plus circle', key:'signup', to:'/signup' }
+		{ content:'Login', icon:'sign in', to:'/login' },
+		{ content: 'Sign-up', icon:'plus circle', to:'/signup' }
 	];
 
 	const loggedInItems = [
-		{ content:'Notifications', icon:'bell', key:'notification', to:'/notification-settings' },
-		{ content:'Settings', icon:'cog', key:'settings', to:'/settings' },
-		{ content: 'Logout', icon:'sign-out', key:'signout', onClick: handleLogout, to:'/' }
+		{ content:'Notifications', icon:'bell', to:'/notification-settings' },
+		{ content:'Settings', icon:'cog', to:'/settings' },
+		{ content: 'Logout', icon:'sign-out', onClick: handleLogout, to:'/' }
 	];
 
 	const userMenu = currentUser.web3signup && currentUser.defaultAddress
@@ -94,15 +94,15 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						vertical
 						visible={menuVisible}
 					>
-						{contentItems.map(item => <Menu.Item as={NavLink} key={item.key} onClick={handleClose} {...item} />)}
+						{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 						{username
 							?
 							<>
-								{loggedInItems.map(item => <Menu.Item as={NavLink} key={item.key} {...item}/>)}
+								{loggedInItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
 							</>
 							:
 							<>
-								{loggedOutItems.map(item => <Menu.Item as={NavLink} key={item.key} onClick={handleClose} {...item} />)}
+								{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 							</>
 						}
 					</Sidebar>
@@ -112,18 +112,18 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Responsive minWidth={Responsive.onlyComputer.minWidth}>
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
-					{contentItems.map(item => <Menu.Item as={NavLink} className='desktop_items' key={item.key} {...item} />)}
+					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
 					<Menu.Menu position="right">
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
 									<Dropdown.Menu>
-										{loggedInItems.map(item => <Menu.Item as={NavLink} key={item.key} {...item}/>)}
+										{loggedInItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
 									</Dropdown.Menu>
 								</Dropdown>
 							</>
 							: <>
-								{loggedOutItems.map(item => <Menu.Item as={NavLink} className='user_items' key={item.key} {...item} />)}
+								{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} className='user_items' key={index} {...item} />)}
 							</>
 						}
 					</Menu.Menu>
