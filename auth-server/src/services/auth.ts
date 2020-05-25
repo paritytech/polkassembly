@@ -98,7 +98,7 @@ export default class AuthService {
 			});
 	}
 
-	private async sendVerificationTokenMail (user: User): Promise<void> {
+	private async createAndSendEmailVerificationToken (user: User): Promise<void> {
 		if (user.email) {
 			const verifyToken = uuid();
 
@@ -294,7 +294,7 @@ export default class AuthService {
 
 		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -359,7 +359,7 @@ export default class AuthService {
 
 		const user = await this.createUser(email, name, password, username, false);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
@@ -588,7 +588,7 @@ export default class AuthService {
 			throw new UserInputError(messages.EMAIL_NOT_FOUND);
 		}
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 	}
 
 	public async SetCredentialsStart (address: string): Promise<string> {
@@ -667,7 +667,7 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		await redisDel(getSetCredentialsKey(address));
 
@@ -765,7 +765,7 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
