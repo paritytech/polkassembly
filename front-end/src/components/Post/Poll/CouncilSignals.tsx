@@ -25,11 +25,11 @@ interface Props {
 const CouncilSignals = ({ className, data }: Props) => {
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
+	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 
 	useEffect(() => {
-
 		if (!isApiReady){
 			return;
 		}
@@ -37,46 +37,50 @@ const CouncilSignals = ({ className, data }: Props) => {
 		let unsubscribe: () => void;
 
 		api.derive.elections.info((info: DeriveElectionsInfo) => {
-			const memberMap: { [address: string]: boolean } = {};
+			const memberSet = new Set<string>();
 
 			info?.members.map(([accountId]) => {
 				const address = getEncodedAddress(accountId.toString()) || '';
-				memberMap[address] = true;
+				memberSet.add(address);
 			});
 
-			let ayes = 0;
-			let nays = 0;
-			const defaultAddressField = getDefaultAddressField();
-			const councilVotes: OffchainVote[]  = [];
-
-			data?.post_votes?.forEach(vote => {
-				const defaultAddress = vote.voter?.[defaultAddressField] || '';
-
-				if (memberMap[defaultAddress]) {
-					councilVotes.push({
-						address: defaultAddress,
-						vote: vote.vote
-					});
-
-					if (vote.vote === AYE) {
-						ayes++;
-					}
-
-					if (vote.vote === NAY) {
-						nays++;
-					}
-				}
-			});
-
-			setAyes(ayes);
-			setNays(nays);
-			setCouncilVotes(councilVotes);
+			setMemberSet(memberSet);
 		})
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady, data]);
+	}, [api, isApiReady]);
+
+	useEffect(() => {
+		let ayes = 0;
+		let nays = 0;
+		const defaultAddressField = getDefaultAddressField();
+		const councilVotes: OffchainVote[]  = [];
+
+		data?.post_votes?.forEach(vote => {
+			const defaultAddress = vote.voter?.[defaultAddressField] || '';
+
+			if (memberSet.has(defaultAddress)) {
+				councilVotes.push({
+					address: defaultAddress,
+					vote: vote.vote
+				});
+
+				if (vote.vote === AYE) {
+					ayes++;
+				}
+
+				if (vote.vote === NAY) {
+					nays++;
+				}
+			}
+		});
+
+		setAyes(ayes);
+		setNays(nays);
+		setCouncilVotes(councilVotes);
+	}, [data, memberSet]);
 
 	return (
 		<Card className={className}>
