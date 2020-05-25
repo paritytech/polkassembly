@@ -5,13 +5,14 @@
 import gql from 'graphql-tag';
 
 export const CREATE_POST = gql`
-    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!) {
+    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean) {
         __typename
         insert_posts(objects: {
             author_id: $userId,
             content: $content,
             title: $title,
-            topic_id: $topicId
+            topic_id: $topicId,
+            has_poll: $hasPoll
         }) {
             affected_rows
             returning {

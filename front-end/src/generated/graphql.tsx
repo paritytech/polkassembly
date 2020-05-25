@@ -487,6 +487,18 @@ export type BlockNumberWhereUniqueInput = {
   number?: Maybe<Scalars['Int']>,
 };
 
+export type Boolean_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Boolean']>,
+  _gt?: Maybe<Scalars['Boolean']>,
+  _gte?: Maybe<Scalars['Boolean']>,
+  _in?: Maybe<Array<Scalars['Boolean']>>,
+  _is_null?: Maybe<Scalars['Boolean']>,
+  _lt?: Maybe<Scalars['Boolean']>,
+  _lte?: Maybe<Scalars['Boolean']>,
+  _neq?: Maybe<Scalars['Boolean']>,
+  _nin?: Maybe<Array<Scalars['Boolean']>>,
+};
+
 
 export type Bpchar_Comparison_Exp = {
   _eq?: Maybe<Scalars['bpchar']>,
@@ -6307,6 +6319,7 @@ export type Posts = {
   comments_aggregate: Comments_Aggregate,
   content?: Maybe<Scalars['String']>,
   created_at: Scalars['timestamptz'],
+  has_poll: Scalars['Boolean'],
   id: Scalars['Int'],
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
@@ -6444,6 +6457,7 @@ export type Posts_Bool_Exp = {
   comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
+  has_poll?: Maybe<Boolean_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
@@ -6472,6 +6486,7 @@ export type Posts_Insert_Input = {
   comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
@@ -6552,6 +6567,7 @@ export type Posts_Order_By = {
   comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  has_poll?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
@@ -6572,6 +6588,7 @@ export enum Posts_Select_Column {
   AuthorId = 'author_id',
   Content = 'content',
   CreatedAt = 'created_at',
+  HasPoll = 'has_poll',
   Id = 'id',
   Title = 'title',
   TopicId = 'topic_id',
@@ -6583,6 +6600,7 @@ export type Posts_Set_Input = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -6654,6 +6672,7 @@ export enum Posts_Update_Column {
   AuthorId = 'author_id',
   Content = 'content',
   CreatedAt = 'created_at',
+  HasPoll = 'has_poll',
   Id = 'id',
   Title = 'title',
   TopicId = 'topic_id',
@@ -11920,7 +11939,8 @@ export type CreatePostMutationVariables = {
   userId: Scalars['Int'],
   content: Scalars['String'],
   topicId: Scalars['Int'],
-  title: Scalars['String']
+  title: Scalars['String'],
+  hasPoll?: Maybe<Scalars['Boolean']>
 };
 
 
@@ -11959,7 +11979,7 @@ export type OnchainLinkDiscussionFragment = (
 
 export type DiscussionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12055,7 +12075,7 @@ export type OnchainLinkMotionFragment = (
 
 export type MotionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12300,7 +12320,7 @@ export type OnchainLinkProposalFragment = (
 
 export type ProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12358,7 +12378,7 @@ export type OnchainLinkReferendumFragment = (
 
 export type ReferendumPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12583,7 +12603,7 @@ export type OnchainLinkTreasuryProposalFragment = (
 
 export type TreasuryProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12721,6 +12741,7 @@ export const DiscussionPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12798,6 +12819,7 @@ export const MotionPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12853,6 +12875,7 @@ export const ProposalPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12913,6 +12936,7 @@ export const ReferendumPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12959,6 +12983,7 @@ export const TreasuryProposalPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -13844,9 +13869,9 @@ export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
 export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!, $hasPoll: Boolean) {
   __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId, has_poll: $hasPoll}) {
     affected_rows
     returning {
       id
@@ -13873,6 +13898,7 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePost
  *      content: // value for 'content'
  *      topicId: // value for 'topicId'
  *      title: // value for 'title'
+ *      hasPoll: // value for 'hasPoll'
  *   },
  * });
  */

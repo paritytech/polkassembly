@@ -26,6 +26,7 @@ interface Props {
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [hasPoll, setHasPoll] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
@@ -59,6 +60,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			setIsSending(true);
 			createPostMutation({ variables: {
 				content,
+				hasPoll,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id
@@ -83,6 +85,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
+	const onPollChanged = (event: React.ChangeEvent<HTMLInputElement>) => { setHasPoll(event.target.checked);};
 
 	return (
 		<Grid>
@@ -107,6 +110,12 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						onChange={onContentChange}
 						rules={{ required: true }}
 					/>
+
+					<Form.Group>
+						<Form.Field>
+							<input type='checkbox' onChange={onPollChanged} /> <span className='text-muted'>Add a poll to this discussion</span>
+						</Form.Field>
+					</Form.Group>
 
 					<TopicsRadio
 						onTopicSelection={(id: number) => setSetlectedTopic(id)}
