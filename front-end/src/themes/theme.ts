@@ -43,6 +43,7 @@ export const theme = {
 		input_border_radius: '0.3rem'
 	},
 	shadows: {
+		box_shadow_big: '0 0.8rem 2rem rgba(83, 89, 92, 0.15)',
 		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
 		box_shadow_secondary_red: '0 0 0 1px #D94C3D inset'
 	}

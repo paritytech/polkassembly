@@ -2,8 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { expect } from 'chai';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import 'mocha';
+import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
 import Address from '../../../src/model/Address';
@@ -13,6 +14,7 @@ import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 
 describe('addressLinkStart mutation', () => {
+	let dbAddressId: any;
 	let signupResult: any;
 	const fakectx: Context = {
 		req: {
@@ -37,6 +39,11 @@ describe('addressLinkStart mutation', () => {
 			.query()
 			.where({ id: signupResult.user.id })
 			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
+			.del();
 	});
 
 	it('should be able to start linking address', async () => {
@@ -57,6 +64,36 @@ describe('addressLinkStart mutation', () => {
 		expect(dbAddress?.verified).to.be.false;
 
 		expect(res.message).to.equal(messages.ADDRESS_LINKING_STARTED);
+
+		dbAddressId = dbAddress?.id;
+	});
+
+	it('should not be able to start linking address if it already exists in db', async () => {
+		const network = NetworkEnum.KUSAMA;
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
+		const dbAddress = await Address
+			.query()
+			.allowInsert('[network, address, user_id, sign_message, verified]')
+			.insert({
+				address,
+				network,
+				sign_message: uuid(),
+				user_id: signupResult.user.id,
+				verified: true
+			});
+
+		try {
+			await addressLinkStart(undefined, { network, address }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_ALREADY_EXISTS);
+		}
+
+		await Address
+			.query()
+			.where({ id: dbAddress.id })
+			.del();
 	});
 
 	it('should not be able to start linking address with wrong jwt', async () => {
