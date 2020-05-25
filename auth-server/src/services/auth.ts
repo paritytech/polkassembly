@@ -48,7 +48,7 @@ export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
-export const getEmailVerificationTokenKey = (token: string): string => `SCR-${token}`;
+export const getEmailVerificationTokenKey = (token: string): string => `EVT-${token}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
