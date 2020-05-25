@@ -191,7 +191,6 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}
 				selectedTab={selectedTab}
-				value={props.value}
 				{...props}
 			/>
 		</StyledTextArea>
