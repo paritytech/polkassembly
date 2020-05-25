@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
@@ -29,32 +29,32 @@ const CouncilSignals = ({ className, ayes, nays, postId, refetch }: Props) => {
 	const [addPostVoteMutation] = useAddPostVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
 
-	const castVote = async (vote: string) => {
+	const castVote = useCallback((vote: string) => {
 		if (!id) {
 			return;
 		}
 
 		try {
-			await deleteVoteMutation({
+			deleteVoteMutation({
 				variables: {
 					postId,
 					userId: id
 				}
-			});
+			}).catch(console.error);
 
-			await addPostVoteMutation({
+			addPostVoteMutation({
 				variables: {
 					postId,
 					userId: id,
 					vote
 				}
-			});
+			}).catch(console.error);
 
 			refetch();
 		} catch (error) {
 			setErr(error);
 		}
-	};
+	}, [id, addPostVoteMutation, deleteVoteMutation, postId, refetch]);
 
 	return (
 		<Card className={className}>
