@@ -196,6 +196,7 @@ const Address = ({ className }: Props): JSX.Element => {
 											<div className='button-container'>
 												<Button
 													className={'social'}
+													disabled={currentUser.defaultAddress === address}
 													negative={showOnlyUnlink ? true : currentUser.addresses?.includes(address) ? true : false}
 													onClick={() => showOnlyUnlink ? handleUnlink(address) : currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
 												>
