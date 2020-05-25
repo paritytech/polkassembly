@@ -6,9 +6,7 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React from 'react';
 import { Progress } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
 import formatBnBalance from 'src/util/formatBnBalance';
-import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	ayeVotes: BN,
@@ -27,8 +25,6 @@ const bnToStringBalanceDelimitor = function (bn: BN): string{
 };
 
 const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: Props) => {
-	const network = getNetwork();
-	const tokenSymbol = chainProperties[network].tokenSymbol;
 
 	const thresholdNumber = bnToIntBalance(threshold);
 	const ayeVotesNumber = bnToIntBalance(ayeVotes);
@@ -41,11 +37,11 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 
 	return (
 		<div className={className}>
-			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
+			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)}</div>
 			<div
 				className='voteNumbers nay'
 			>
-				Nay: {bnToStringBalanceDelimitor(nayVotes)} {tokenSymbol}
+				Nay: {bnToStringBalanceDelimitor(nayVotes)}
 			</div>
 			<Progress
 				className={isPassing? 'passing': '' }
@@ -61,7 +57,7 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 					<div
 						className={ thresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
 					>
-						{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)} {tokenSymbol}
+						{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)}
 					</div>
 				</div>
 			}
