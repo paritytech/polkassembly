@@ -6,7 +6,6 @@ import { AuthenticationError } from 'apollo-server';
 import 'mocha';
 
 import User from '../../../src/model/User';
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import resendVerifyEmailToken from '../../../src/resolvers/mutation/resendVerifyEmailToken';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
@@ -35,17 +34,10 @@ describe('resendVerifyEmailToken mutation', () => {
 	});
 
 	it('should be able to resend verify email token', async () => {
-		await resendVerifyEmailToken(undefined, undefined, fakectx);
+		const result = await resendVerifyEmailToken(undefined, undefined, fakectx);
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where({ user_id: signupUserId })
-			.orderBy('id', 'desc')
-			.first();
 
-		expect(verifyToken).to.exist;
-		expect(verifyToken?.valid).to.be.true;
-		expect(verifyToken?.token).to.be.a('string');
+		expect(result.message).to.equals(messages.RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL);
 	});
 
 	it('should not be able to resend verify email token with wrong jwt', async () => {

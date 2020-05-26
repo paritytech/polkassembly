@@ -5,7 +5,6 @@
 import sgMail from '@sendgrid/mail';
 import ejs from 'ejs';
 
-import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { CommentCreationHookDataType, PostType } from '../types';
@@ -28,13 +27,13 @@ if (apiKey) {
 	sgMail.setApiKey(apiKey);
 }
 
-export const sendVerificationEmail = (user: User, token: EmailVerificationToken): void => {
+export const sendVerificationEmail = (user: User, token: string): void => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key');
 		return;
 	}
 
-	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
+	const verifyUrl = `${DOMAIN}/verify-email/${token}`;
 	const text = ejs.render(verificationEmailTemplate, { username: user.name || '', verifyUrl });
 	const msg = {
 		from: FROM,

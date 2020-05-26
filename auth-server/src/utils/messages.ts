@@ -30,6 +30,7 @@ export default {
 	EMAIL_UNDO_TOKEN_NOT_FOUND: 'Email change undo token not found.',
 	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
+	EMAIL_VERIFICATION_USER_NOT_FOUND: 'User not found for this verification token.',
 	EVENT_ADDRESS_NOT_FOUND: 'Address not found.',
 	EVENT_ADDRESS_NOT_VERIFIED: 'Address not verified.',
 	EVENT_AUTHOR_ID_NOT_FOUND: 'Author id not found',
