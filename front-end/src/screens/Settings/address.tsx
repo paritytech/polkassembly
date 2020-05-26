@@ -175,7 +175,6 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-
 	const addressList = (accountsDetails: AccountsDetails) => {
 		const { accounts, showAccounts, showOnlyUnlink, title } = accountsDetails;
 
@@ -207,7 +206,7 @@ const Address = ({ className }: Props): JSX.Element => {
 											</div>
 										</Grid.Column>
 										<Grid.Column width={6} >
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address ?
+											{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address &&
 												<div className='button-container default-button'>
 													<Button
 														className={'social'}
@@ -215,12 +214,12 @@ const Address = ({ className }: Props): JSX.Element => {
 													>
 														Set default
 													</Button>
-												</div>: null
+												</div>
 											}
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address ?
+											{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address &&
 												<div className='default-label'>
 													<Icon name='check'/> Default address
-												</div> : null
+												</div>
 											}
 										</Grid.Column>
 									</Grid>
@@ -229,7 +228,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						</div>
 					</Form.Field>
 				</Form.Group>
-				{showAccounts ? <Form.Group>
+				{showAccounts && <Form.Group>
 					<Form.Field width={16}>
 						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
@@ -238,7 +237,7 @@ const Address = ({ className }: Props): JSX.Element => {
 							</Button>
 						</div>
 					</Form.Field>
-				</Form.Group> : null}
+				</Form.Group>}
 			</>
 		);
 	};
