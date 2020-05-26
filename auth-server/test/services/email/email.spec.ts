@@ -6,8 +6,9 @@ import { expect } from 'chai';
 import { uuid } from 'uuidv4';
 
 import rewiremock from 'rewiremock';
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import User from '../../../src/model/User';
+import { redisDel, redisGet, redisSetex } from '../../../src/redis';
+import { ONE_DAY, getEmailVerificationTokenKey } from '../../../src/services/auth';
 
 const noop = () => {};
 
@@ -31,14 +32,8 @@ xdescribe('Email Service', () => {
 				name
 			})
 			.returning('*');
-		const token = await EmailVerificationToken
-			.query()
-			.allowInsert('[token, user_id, valid]')
-			.insert({
-				token: 'test-token',
-				user_id: user.id,
-				valid: true
-			});
+		const token = 'test-token';
+		await redisSetex(getEmailVerificationTokenKey(token), ONE_DAY, email);
 
 		let message: any;
 
@@ -58,17 +53,14 @@ xdescribe('Email Service', () => {
 		expect(message.to).to.equals('test@email.com');
 		expect(message.from).to.equals('noreply@polkassembly.io');
 		expect(message.subject).to.equals('Verify your email address');
-		expect(message.html).to.contains(`verify-email/${token.token}`);
+		expect(message.html).to.contains(`verify-email/${token}`);
 
 		await User
 			.query()
 			.where({ id: user.id })
 			.del();
 
-		await EmailVerificationToken
-			.query()
-			.where({ id: token.id })
-			.del();
+		await redisDel(getEmailVerificationTokenKey(token));
 	});
 
 	it('should send password reset email', async () => {

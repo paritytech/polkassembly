@@ -3,14 +3,14 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import AuthService from '../../services/auth';
-import { AddressLoginArgs, Context, SignUpResultType } from '../../types';
+import { AddressLoginArgs, Context, TokenType } from '../../types';
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
 
-export default async (parent: void, { address, signature }: AddressLoginArgs, ctx: Context): Promise<SignUpResultType> => {
+export default async (parent: void, { address, signature }: AddressLoginArgs, ctx: Context): Promise<TokenType> => {
 	const authServiceInstance = new AuthService();
 
-	const { user, token, refreshToken } = await authServiceInstance.AddressLogin(address, signature);
+	const { token, refreshToken } = await authServiceInstance.AddressLogin(address, signature);
 	setRefreshTokenCookie(ctx.res, refreshToken);
 
-	return { token, user };
+	return { token };
 };
