@@ -8,34 +8,32 @@ import { uuid } from 'uuidv4';
 
 import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import verifyEmail from '../../../src/resolvers/mutation/verifyEmail';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('verifyEmail mutation', () => {
-	let signupResult: any;
 	let verifyToken: any;
-	let fakectx: Context = {
-		req: {},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
+	let signupUserId = -1;
+
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		verifyToken = await EmailVerificationToken
 			.query()
 			.allowInsert('[token, user_id, valid]')
 			.insert({
 				token: uuid(),
-				user_id: signupResult.user.id,
+				user_id: signupUserId,
 				valid: true
 			});
 	});
@@ -43,7 +41,7 @@ describe('verifyEmail mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await EmailVerificationToken
@@ -57,7 +55,7 @@ describe('verifyEmail mutation', () => {
 
 		const dbUser = await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.first();
 
 		expect(dbUser?.email_verified).to.be.true;

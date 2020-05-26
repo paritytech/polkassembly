@@ -1703,7 +1703,6 @@ export type Int_Comparison_Exp = {
 export type LoginResponse = {
    __typename?: 'LoginResponse',
   token?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
 };
 
 
@@ -11558,10 +11557,6 @@ export type LoginMutation = (
   & { login: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
-    )> }
   )> }
 );
 
@@ -11589,10 +11584,6 @@ export type AddressLoginMutation = (
   & { addressLogin: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
-    )> }
   )> }
 );
 
@@ -11836,10 +11827,6 @@ export type SignupMutation = (
   & { signup: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'token'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'username' | 'email' | 'email_verified' | 'web3signup'>
-    )> }
   )> }
 );
 
@@ -13041,14 +13028,6 @@ export type EditCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<E
 export const LoginDocument = gql`
     mutation LOGIN($password: String!, $username: String!) {
   login(password: $password, username: $username) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-      web3signup
-    }
     token
   }
 }
@@ -13115,14 +13094,6 @@ export type AddressLoginStartMutationOptions = ApolloReactCommon.BaseMutationOpt
 export const AddressLoginDocument = gql`
     mutation AddressLogin($address: String!, $signature: String!) {
   addressLogin(address: $address, signature: $signature) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-      web3signup
-    }
     token
   }
 }
@@ -13632,14 +13603,6 @@ export type ReportContentMutationOptions = ApolloReactCommon.BaseMutationOptions
 export const SignupDocument = gql`
     mutation SIGNUP($email: String, $password: String!, $username: String!, $name: String) {
   signup(email: $email, password: $password, username: $username, name: $name) {
-    user {
-      id
-      name
-      username
-      email
-      email_verified
-      web3signup
-    }
     token
   }
 }

@@ -31,12 +31,7 @@ export interface TokenType {
     token: string;
 }
 
-export interface SignUpResultType extends TokenType {
-    user: UserObjectType;
-}
-
 export interface AuthObjectType extends TokenType {
-    user: UserObjectType;
     refreshToken: string;
 }
 
@@ -287,4 +282,9 @@ export type NetworkUserAddressInfo = Record<Network, UserAddressInfo>;
 export interface HashedPassword {
     password: string;
     salt: string;
+}
+
+export interface ContextUserId {
+    ctx: Context;
+    userId: number;
 }

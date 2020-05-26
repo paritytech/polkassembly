@@ -4,6 +4,7 @@
 import { ForbiddenError, UserInputError } from 'apollo-server';
 import 'mocha';
 import { expect } from 'chai';
+import jwt from 'jsonwebtoken';
 
 import User from '../../../src/model/User';
 import login from '../../../src/resolvers/mutation/login';
@@ -26,65 +27,77 @@ describe('signup mutation', () => {
 
 	it('should be able to signup', async () => {
 		const result = await signup(undefined, { email, password, username, name }, fakectx);
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
+		const token: any = jwt.decode(result.token);
+		const claims = 'https://hasura.io/jwt/claims';
+
+		expect(token.username).to.equal(username);
+		expect(token.name).to.equal(name);
+		expect(token.email).to.equals(email);
+		expect(token[claims]['x-hasura-default-role']).to.equals('user');
+		expect(token[claims]['x-hasura-user-email']).to.equals(email);
+
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 	});
 
 	it('should be able to subsequently login', async () => {
 		const result = await login(undefined, { password, username }, fakectx);
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
+		const token: any = jwt.decode(result.token);
+		const claims = 'https://hasura.io/jwt/claims';
+
+		expect(token.username).to.equal(username);
+		expect(token.name).to.equal(name);
+		expect(token.email).to.equals(email);
+		expect(token[claims]['x-hasura-default-role']).to.equals('user');
+		expect(token[claims]['x-hasura-user-email']).to.equals(email);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 	});
 
 	it('should be able to login with case different for username', async () => {
 		const result = await login(undefined, { password, username: username.toUpperCase() }, fakectx);
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
+		const token: any = jwt.decode(result.token);
+		const claims = 'https://hasura.io/jwt/claims';
+
+		expect(token.username).to.equal(username);
+		expect(token.name).to.equal(name);
+		expect(token.email).to.equals(email);
+		expect(token[claims]['x-hasura-default-role']).to.equals('user');
+		expect(token[claims]['x-hasura-user-email']).to.equals(email);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 	});
 
 	it('should be able to subsequently login', async () => {
 		const result = await login(undefined, { password, username }, fakectx);
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
+		const token: any = jwt.decode(result.token);
+		const claims = 'https://hasura.io/jwt/claims';
+
+		expect(token.username).to.equal(username);
+		expect(token.name).to.equal(name);
+		expect(token.email).to.equals(email);
+		expect(token[claims]['x-hasura-default-role']).to.equals('user');
+		expect(token[claims]['x-hasura-user-email']).to.equals(email);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 
 		await User
 			.query()
-			.where({ id: result.user.id })
+			.where({ id: Number(token.sub) })
 			.del();
 	});
 
 	it('should be able to signup with no display name or email', async () => {
 		const result = await signup(undefined, { email: '', password, name: '', username }, fakectx);
+		const token: any = jwt.decode(result.token);
 
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.username).to.equal(username);
+		expect(token.username).to.equal(username);
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 
 		await User
 			.query()
-			.where({ id: result.user.id })
+			.where({ id: Number(token.sub) })
 			.del();
 	});
 

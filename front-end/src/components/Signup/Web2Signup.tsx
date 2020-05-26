@@ -46,7 +46,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.signup && data.signup.token && data.signup.user) {
+					if (data && data.signup && data.signup.token) {
 						handleTokenChange(data.signup.token, currentUser);
 						if (email) {
 							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.', title: 'You\'ve got some mail' });
