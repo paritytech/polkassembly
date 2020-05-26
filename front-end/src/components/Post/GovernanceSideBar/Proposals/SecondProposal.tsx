@@ -5,7 +5,7 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import Loader from 'src/ui-components/Loader';
 
@@ -29,6 +29,29 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const [seconds, setSeconds] = useState(0);
+
+	useEffect(() => {
+		if (!isApiReady) {
+			return;
+		}
+
+		let unsubscribe: () => void;
+
+		api.derive.democracy.proposals( proposals => {
+			proposals.forEach((proposal) => {
+				if (proposal.index.toNumber() === proposalId && proposal.balance) {
+					setSeconds(proposal.seconds.length);
+				}
+			});
+			setLoadingStatus({ isLoading: false, message: '' });
+		})
+			.then(unsub => {unsubscribe = unsub;})
+			.catch(e => console.error(e));
+
+		return () => unsubscribe && unsubscribe();
+
+	}, [api, isApiReady, proposalId]);
 
 	const secondProposal = async () => {
 		if (!proposalId && proposalId !== 0) {
@@ -37,9 +60,15 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		}
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
-		const second = api.tx.democracy.second(proposalId);
 
-		second.signAndSend(address, ({ status }) => {
+		const params = api.tx.democracy.second.meta.args.length === 2
+			? [proposalId, seconds]
+			: [proposalId];
+
+		// eslint-disable-next-line no-extra-parens
+		const second = (api.tx.democracy as any).second(...params);
+
+		second.signAndSend(address, ({ status }: any) => {
 			if (status.isInBlock) {
 				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
@@ -55,7 +84,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				}
 				console.log(`Current status: ${status.type}`);
 			}
-		}).catch((error) => {
+		}).catch((error: any) => {
 			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
