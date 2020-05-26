@@ -14,7 +14,7 @@ import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation, useSetDefaultAddressMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
-import { NotificationStatus } from '../../types';
+import { AccountsDetails, NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -175,7 +175,10 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-	const addressList = (accounts: InjectedAccountWithMeta[], title: string, showOnlyUnlink: boolean, showAccounts: boolean) => {
+
+	const addressList = (accountsDetails: AccountsDetails) => {
+		const { accounts, showAccounts, showOnlyUnlink, title } = accountsDetails;
+
 		return (
 			<>
 				<Form.Group>
@@ -243,13 +246,21 @@ const Address = ({ className }: Props): JSX.Element => {
 	return (
 		<Form className={className} standalone={false}>
 			{accounts.length
-				? addressList(accounts, 'Available addresses', false, false)
-				: addressList(currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
-					address: address,
-					meta: {
-						source: ''
-					}
-				})) || [], 'Linked addresses', true, true)
+				? addressList({
+					accounts,
+					showAccounts: false,
+					showOnlyUnlink: false,
+					title: 'Available addresses'
+				})
+				: addressList({
+					accounts: currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
+						address: address,
+						meta: { source: '' }
+					})) || [],
+					showAccounts: true,
+					showOnlyUnlink: true,
+					title: 'Linked addresses'
+				})
 			}
 		</Form>
 	);
