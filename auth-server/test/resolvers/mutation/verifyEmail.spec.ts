@@ -7,29 +7,27 @@ import 'mocha';
 import { uuid } from 'uuidv4';
 
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import verifyEmail from '../../../src/resolvers/mutation/verifyEmail';
 import { redisDel, redisGet, redisSetex } from '../../../src/redis';
 import { ONE_DAY, getEmailVerificationTokenKey } from '../../../src/services/auth';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('verifyEmail mutation', () => {
-	let signupResult: any;
-	let verifyToken = uuid();
-	let fakectx: Context = {
-		req: {},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	const verifyToken = uuid();
+	let fakectx: Context;
+	let signupUserId = -1;
+
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		await redisSetex(getEmailVerificationTokenKey(verifyToken), ONE_DAY, email);
 	});
@@ -37,7 +35,7 @@ describe('verifyEmail mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await redisDel(getEmailVerificationTokenKey(verifyToken));
@@ -48,7 +46,7 @@ describe('verifyEmail mutation', () => {
 
 		const dbUser = await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.first();
 
 		expect(dbUser?.email_verified).to.be.true;

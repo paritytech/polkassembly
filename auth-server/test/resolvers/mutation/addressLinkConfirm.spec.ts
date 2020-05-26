@@ -11,35 +11,29 @@ import Address from '../../../src/model/Address';
 import User from '../../../src/model/User';
 import addressLinkConfirm from '../../../src/resolvers/mutation/addressLinkConfirm';
 import addressLinkStart from '../../../src/resolvers/mutation/addressLinkStart';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('addressLinkConfirm mutation', () => {
+	let signupUserId = -1;
+	let fakectx: Context;
 	let dbAddressId: any;
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await Address
@@ -67,7 +61,7 @@ describe('addressLinkConfirm mutation', () => {
 
 		const dbAddress = await Address
 			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ user_id: signupUserId })
 			.first();
 
 		expect(dbAddress?.public_key).to.exist;

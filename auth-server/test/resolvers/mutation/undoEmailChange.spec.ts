@@ -8,27 +8,25 @@ import { uuid } from 'uuidv4';
 
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import undoEmailChange from '../../../src/resolvers/mutation/undoEmailChange';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('undoEmailChange mutation', () => {
-	let signupResult: any;
 	let undoToken: any;
-	let fakectx: Context = {
-		req: {},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
+	let signupUserId = -1;
+
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		undoToken = await UndoEmailChangeToken
 			.query()
@@ -36,7 +34,7 @@ describe('undoEmailChange mutation', () => {
 			.insert({
 				token: uuid(),
 				email,
-				user_id: signupResult.user.id,
+				user_id: signupUserId,
 				valid: true
 			});
 	});
@@ -44,7 +42,7 @@ describe('undoEmailChange mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await UndoEmailChangeToken
@@ -58,7 +56,7 @@ describe('undoEmailChange mutation', () => {
 
 		const dbUser = await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.first();
 
 		expect(dbUser?.email).to.equal(undoToken?.email);

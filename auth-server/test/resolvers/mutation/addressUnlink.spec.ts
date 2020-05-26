@@ -11,29 +11,23 @@ import { uuid } from 'uuidv4';
 import Address from '../../../src/model/Address';
 import User from '../../../src/model/User';
 import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('addressUnlink mutation', () => {
-	let signupResult: any;
+	let signupUserId = -1;
 	let dbAddress: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 
 		const keyring = new Keyring({ type: 'sr25519' });
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
@@ -45,7 +39,7 @@ describe('addressUnlink mutation', () => {
 			.insert({
 				network: NetworkEnum.KUSAMA,
 				address,
-				user_id: signupResult.user.id,
+				user_id: signupUserId,
 				public_key: Buffer.from(publicKey).toString('hex'),
 				sign_message: uuid(),
 				verified: true
@@ -56,7 +50,7 @@ describe('addressUnlink mutation', () => {
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 

@@ -211,7 +211,7 @@ async function healthcheck (): Promise<HealthCheckResult> {
 	};
 }
 
-app.use('/healthcheck', (req, res, next) => {
+app.use('/healthmonitor', (req, res, next) => {
 	healthcheck()
 		.then((result) => res.json(result))
 		.catch(next);

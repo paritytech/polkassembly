@@ -143,15 +143,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -236,15 +228,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -298,15 +282,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -363,15 +339,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 

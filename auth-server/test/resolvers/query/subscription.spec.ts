@@ -7,23 +7,13 @@ import { expect } from 'chai';
 
 import User from '../../../src/model/User';
 import postSubscribe from '../../../src/resolvers/mutation/postSubscribe';
-import signup from '../../../src/resolvers/mutation/signup';
 import subscription from '../../../src/resolvers/query/subscription';
-import { Context, SignUpResultType } from '../../../src/types';
+import { Context } from '../../../src/types';
+import { getNewUserCtx } from '../../helpers';
 
 describe('post subscription query', () => {
-	let signupResult: SignUpResultType;
-
-	const fakectx: Context = {
-		req: {
-			headers: {},
-			cookies: {}
-		},
-		res: {
-			header: { refresh_token: '' },
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = -1;
+	let fakectx: Context;
 
 	const email = 'test@email.com';
 	const password = 'testpass';
@@ -32,14 +22,15 @@ describe('post subscription query', () => {
 	const post_id = 123;
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}`; // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
