@@ -9,7 +9,7 @@ interface Props {
 	className?: string
 	ayeSignals: number
 	naySignals: number
-	councilSize?: number
+	councilSize: number
 }
 
 const CouncilSignalBar = ({ ayeSignals, className, councilSize = 13, naySignals }: Props) => {
