@@ -5,48 +5,36 @@ import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-serv
 import { expect } from 'chai';
 import 'mocha';
 
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
-import signup from '../../../src/resolvers/mutation/signup';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('changeEmail mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = -1;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
 	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username, name);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
-			.del();
-
-		await EmailVerificationToken
-			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 
 		await UndoEmailChangeToken
 			.query()
-			.where( { user_id: signupResult.user.id })
+			.where( { user_id: signupUserId })
 			.del();
 	});
 
@@ -55,16 +43,9 @@ describe('changeEmail mutation', () => {
 
 		await changeEmail(undefined, { email, password }, fakectx);
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where({ user_id: signupResult.user.id, valid: true });
-
 		const undoToken = await UndoEmailChangeToken
 			.query()
-			.where({ user_id: signupResult.user.id, valid: true });
-
-		expect(verifyToken.length).to.eq(1);
-		expect(verifyToken[0].token).to.not.be.empty;
+			.where({ user_id: signupUserId, valid: true });
 
 		expect(undoToken.length).to.eq(1);
 		expect(undoToken[0].token).to.not.be.empty;
@@ -81,19 +62,6 @@ describe('changeEmail mutation', () => {
 			expect(error).to.be.an.instanceof(UserInputError);
 			expect(error.message).to.eq(messages.INCORRECT_PASSWORD);
 		}
-	});
-
-	it('should not be able to change email with an invalid jwt', async () => {
-		const email = 'blabla@blou.de';
-		fakectx.req.headers.authorization = 'Bearer wrong';
-		try {
-			await changeEmail(undefined, { email, password }, fakectx);
-		} catch (error) {
-			expect(error).to.exist;
-			expect(error).to.be.an.instanceof(AuthenticationError);
-			expect(error.message).to.eq(messages.INVALID_JWT);
-		}
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
 	});
 
 	it('should not be able to change email with an invalid email', async () => {
@@ -128,11 +96,23 @@ describe('changeEmail mutation', () => {
 			.patch({
 				created_at: new Date(Date.now() - 49 * 60 * 60 * 1000).toISOString() // now - 49 hours
 			})
-			.where( { user_id: signupResult.user.id });
+			.where( { user_id: signupUserId });
 
 		const { message, token } = await changeEmail(undefined, { email, password }, fakectx);
 
 		expect(token).to.exist;
 		expect(message).to.equal(messages.EMAIL_CHANGE_REQUEST_SUCCESSFUL);
+	});
+
+	it('should not be able to change email with an invalid jwt', async () => {
+		const email = 'blabla@blou.de';
+		fakectx.req.headers.authorization = 'Bearer wrong';
+		try {
+			await changeEmail(undefined, { email, password }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(AuthenticationError);
+			expect(error.message).to.eq(messages.INVALID_JWT);
+		}
 	});
 });

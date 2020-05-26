@@ -12,6 +12,7 @@ last_version="$1"
 all_changes="$(sanitised_git_logs "$last_version" "$version")"
 fix_changes=""
 feature_changes=""
+chore_changes=""
 changes=""
 
 while IFS= read -r line; do
@@ -25,13 +26,18 @@ $line"
     feature_changes="$feature_changes
 $line"
   fi
+  if has_label 'paritytech/polkassembly' "$pr_id" 'x- changelog-chore'; then
+    chore_changes="$chore_changes
+$line"
+  fi
 done <<< "$all_changes"
 
 # Make the polkassembly section if there are any polkassembly changes
 if [ -n "$fix_changes" ] ||
-   [ -n "$feature_changes" ]; then
+  [ -n "$chore_changes" ] ||
+  [ -n "$feature_changes" ]; then
   changes=$(cat << EOF
-Polkassembly changes
+Detailed changes
 -----------------
 
 EOF
@@ -50,9 +56,18 @@ Fixes
 -------
 $fix_changes"
   fi
+  if [ -n "$chore_changes" ]; then
+    changes="$changes
+
+Chores
+-------
+$chore_changes"
+  fi
   release_text="$release_text
 
 $changes"
 fi
+
+
 
 echo "$changes"

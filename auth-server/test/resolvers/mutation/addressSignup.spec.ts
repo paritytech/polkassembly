@@ -32,17 +32,17 @@ describe('addressSignup mutation', () => {
 	const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
-	let loginResult: any;
+	let loginResultUserId = 0;
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: loginResult.user.id })
+			.where({ id: loginResultUserId })
 			.del();
 
 		await Address
 			.query()
-			.where({ user_id: loginResult.user.id })
+			.where({ user_id: loginResultUserId })
 			.del();
 	});
 
@@ -60,22 +60,21 @@ describe('addressSignup mutation', () => {
 
 		const result = await addressSignupConfirm(undefined, { address, network, signature }, fakectx);
 
-		expect(result.user.id).to.exist;
 		expect(result.token).to.be.a('string');
 
 		const token: any = jwt.decode(result.token);
-		expect(token.sub).to.equals(`${result.user.id}`);
+
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${result.user.id}`);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(token.sub);
 
 		const dbuser = await User
 			.query()
-			.where({ id: result.user.id })
+			.where({ id: Number(token.sub) })
 			.first();
 
 		const dbAddress = await Address
 			.query()
-			.where({ user_id: result.user.id })
+			.where({ user_id: Number(token.sub) })
 			.first();
 
 		expect(dbuser).to.exist;
@@ -92,17 +91,17 @@ describe('addressSignup mutation', () => {
 		// mock the addressLoginStart
 		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
-		loginResult = await addressLogin(undefined, { address, signature }, fakectx);
+		const result = await addressLogin(undefined, { address, signature }, fakectx);
 
-		fakectx.req.headers.authorization = `Bearer ${loginResult.token}`;
+		fakectx.req.headers.authorization = `Bearer ${result.token}`;
 
-		expect(loginResult.user.id).to.exist;
-		expect(loginResult.token).to.be.a('string');
+		expect(result.token).to.be.a('string');
 
-		const token: any = jwt.decode(loginResult.token);
-		expect(token.sub).to.equals(`${loginResult.user.id}`);
+		const token: any = jwt.decode(result.token);
+
+		loginResultUserId = Number(token.sub);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(`${loginResult.user.id}`);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(token.sub);
 	});
 
 	it('should not be able to unlink the default address', async () => {
@@ -128,7 +127,6 @@ describe('addressSignup mutation', () => {
 		expect(result.token).to.be.a('string');
 
 		const token: any = jwt.decode(result.token);
-		expect(token.sub).to.equals(`${loginResult.user.id}`);
 		expect(token.email).to.equals(email);
 		expect(token.username).to.equals(username);
 	});

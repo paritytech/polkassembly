@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { Dispatch, SetStateAction } from 'react';
 
 import { network, tokenSymbol } from './global/networkConstants';
@@ -133,3 +134,16 @@ export enum VoteThresholdEnum {
 }
 
 export type VoteThreshold = keyof typeof VoteThresholdEnum;
+
+export interface ReactionMapFields {
+	count: number
+	userNames: string[]
+}
+
+export interface AccountsDetails {
+    accounts: InjectedAccountWithMeta[];
+    showAccounts: boolean;
+    showOnlyUnlink: boolean;
+    title: string;
+}
+

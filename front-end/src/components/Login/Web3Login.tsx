@@ -123,7 +123,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 				}
 			});
 
-			if (loginResult?.addressLogin?.token && loginResult?.addressLogin?.user) {
+			if (loginResult?.addressLogin?.token) {
 				handleTokenChange(loginResult.addressLogin.token, currentUser);
 				history.push('/');
 			} else {
