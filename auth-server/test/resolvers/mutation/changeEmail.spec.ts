@@ -5,7 +5,6 @@ import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-serv
 import { expect } from 'chai';
 import 'mocha';
 
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import UndoEmailChangeToken from '../../../src/model/UndoEmailChangeToken';
 import User from '../../../src/model/User';
 import changeEmail from '../../../src/resolvers/mutation/changeEmail';
@@ -33,11 +32,6 @@ describe('changeEmail mutation', () => {
 			.where({ id: signupUserId })
 			.del();
 
-		await EmailVerificationToken
-			.query()
-			.where({ user_id: signupUserId })
-			.del();
-
 		await UndoEmailChangeToken
 			.query()
 			.where( { user_id: signupUserId })
@@ -49,16 +43,9 @@ describe('changeEmail mutation', () => {
 
 		await changeEmail(undefined, { email, password }, fakectx);
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where({ user_id: signupUserId, valid: true });
-
 		const undoToken = await UndoEmailChangeToken
 			.query()
 			.where({ user_id: signupUserId, valid: true });
-
-		expect(verifyToken.length).to.eq(1);
-		expect(verifyToken[0].token).to.not.be.empty;
 
 		expect(undoToken.length).to.eq(1);
 		expect(undoToken[0].token).to.not.be.empty;
