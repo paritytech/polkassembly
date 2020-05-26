@@ -10,7 +10,6 @@ interface Props {
 	className?: string
 	ayeSignals: number
 	naySignals: number
-	councilSize?: number
 }
 
 const OffChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
