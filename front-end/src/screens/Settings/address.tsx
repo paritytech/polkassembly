@@ -7,15 +7,15 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
-import { Grid, Icon } from 'semantic-ui-react';
-import HelperTooltip from 'src/ui-components/HelperTooltip';
+import { Grid, Icon, Popup } from 'semantic-ui-react';
+import getNetwork from 'src/util/getNetwork';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation, useSetDefaultAddressMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
-import { AccountsDetails, NotificationStatus } from '../../types';
+import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -28,7 +28,7 @@ interface Props{
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+const NETWORK = getNetwork();
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -176,19 +176,47 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-	const addressList = (accountsDetails: AccountsDetails) => {
-		const { accounts, showAccounts, showOnlyUnlink, title } = accountsDetails;
+	const UnlinkButton = ({ address } : {address: string}) => {
 
-		return (
-			<>
-				<Form.Group>
-					<Form.Field width={16}>
-						<label className='header'>{title}</label>
-						<div className='ui list'>
-							{accounts.map(account => {
-								const address = getEncodedAddress(account.address);
+		const StyledUnlinkButton = ({ withClickHandler = false }: {withClickHandler?: boolean}) =>
+			<Button
+				className={'social'}
+				disabled={withClickHandler ? false : true}
+				negative
+				onClick={() => withClickHandler ? handleUnlink(address) : null }
+			>
+				{unlinkIcon}
+			</Button>;
 
-								return address &&
+		return currentUser.defaultAddress === address
+			? <Popup
+				trigger={<span><StyledUnlinkButton/></span>}
+				content={"You can't unlink your default address"}
+				hoverable={true}
+				position="top center"
+			/>
+			: <StyledUnlinkButton withClickHandler/>;
+	};
+
+ interface AccountsDetails {
+	accounts: InjectedAccountWithMeta[];
+	showAccounts: boolean;
+	title: string;
+}
+
+ const addressList = ({ accounts, showAccounts, title }: AccountsDetails) => {
+
+ 	return (
+ 		<>
+ 			<Form.Group>
+ 				<Form.Field width={16}>
+ 					<label className='header'>{title}</label>
+ 					<div className='ui list'>
+ 						{accounts.map(account => {
+ 							const address = getEncodedAddress(account.address);
+ 							const isLinked = address && currentUser.addresses?.includes(address);
+
+ 							return address &&
 									<Grid key={address}>
 										<Grid.Column width={7}>
 											<div className='item'>
@@ -197,79 +225,77 @@ const Address = ({ className }: Props): JSX.Element => {
 										</Grid.Column>
 										<Grid.Column width={3}>
 											<div className='button-container'>
-												<Button
-													className={'social'}
-													disabled={currentUser.defaultAddress === address}
-													negative={showOnlyUnlink ? true : currentUser.addresses?.includes(address) ? true : false}
-													onClick={() => showOnlyUnlink ? handleUnlink(address) : currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
-												>
-													{showOnlyUnlink ? unlinkIcon : currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
-												</Button>
-												{currentUser.defaultAddress === address &&
-													<HelperTooltip
-														content='You can&apos;t unlink your default address.'
-													/>
+												{ isLinked
+													? <UnlinkButton address={address}/>
+													:
+													<Button
+														className={'social'}
+														onClick={() => handleLink(address, account) }
+													>
+														{linkIcon}
+													</Button>
+
 												}
 											</div>
 										</Grid.Column>
 										<Grid.Column width={6} >
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address &&
-												<div className='button-container default-button'>
-													<Button
-														className={'social'}
-														onClick={() => handleDefault(address)}
-													>
+											{isLinked
+												? currentUser.defaultAddress !== address
+													?
+													<div className='button-container default-button'>
+														<Button
+															className={'social'}
+															onClick={() => handleDefault(address)}
+														>
 														Set default
-													</Button>
-												</div>
-											}
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address &&
-												<div className='default-label'>
-													<Icon name='check'/> Default address
-												</div>
+														</Button>
+													</div>
+													:
+													<div className='default-label'>
+														<Icon name='check'/> Default address
+													</div>
+												: null
 											}
 										</Grid.Column>
 									</Grid>
-								;}
-							)}
-						</div>
-					</Form.Field>
-				</Form.Group>
-				{showAccounts && <Form.Group>
-					<Form.Field width={16}>
-						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
-						<div className='link-button-container'>
-							<Button primary onClick={handleDetect}>
-								Show Available Accounts
-							</Button>
-						</div>
-					</Form.Field>
-				</Form.Group>}
-			</>
-		);
-	};
+ 							;}
+ 						)}
+ 					</div>
+ 				</Form.Field>
+ 			</Form.Group>
+ 			{showAccounts && <Form.Group>
+ 				<Form.Field width={16}>
+ 					<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+ 					<div className='link-button-container'>
+ 						<Button primary onClick={handleDetect}>
+Show Available Accounts
+ 						</Button>
+ 					</div>
+ 				</Form.Field>
+ 			</Form.Group>}
+ 		</>
+ 	);
+ };
 
-	return (
-		<Form className={className} standalone={false}>
-			{accounts.length
-				? addressList({
-					accounts,
-					showAccounts: false,
-					showOnlyUnlink: false,
-					title: 'Available addresses'
-				})
-				: addressList({
-					accounts: currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
-						address: address,
-						meta: { source: '' }
-					})) || [],
-					showAccounts: true,
-					showOnlyUnlink: true,
-					title: 'Linked addresses'
-				})
-			}
-		</Form>
-	);
+ return (
+ 	<Form className={className} standalone={false}>
+ 		{accounts.length
+ 			? addressList({
+ 				accounts,
+ 				showAccounts: false,
+ 				title: 'Available addresses'
+ 			})
+ 			: addressList({
+ 				accounts: currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
+ 					address: address,
+ 					meta: { source: '' }
+ 				})) || [],
+ 				showAccounts: true,
+ 				title: 'Linked addresses'
+ 			})
+ 		}
+ 	</Form>
+ );
 };
 
 export default styled(Address)`

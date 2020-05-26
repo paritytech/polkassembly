@@ -140,10 +140,3 @@ export interface ReactionMapFields {
 	userNames: string[]
 }
 
-export interface AccountsDetails {
-    accounts: InjectedAccountWithMeta[];
-    showAccounts: boolean;
-    showOnlyUnlink: boolean;
-    title: string;
-}
-
