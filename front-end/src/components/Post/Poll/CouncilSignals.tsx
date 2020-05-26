@@ -89,6 +89,7 @@ const CouncilSignals = ({ className, data }: Props) => {
 			<h3>Council Signals</h3>
 			<CouncilSignalBar
 				ayeSignals={ayes}
+				councilSize={memberSet.size}
 				naySignals={nays}
 			/>
 			<Grid className='council-votes'>
