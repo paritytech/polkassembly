@@ -5,7 +5,7 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useEffect,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import Loader from 'src/ui-components/Loader';
 
@@ -16,7 +16,10 @@ import Button from '../../../../ui-components/Button';
 import Card from '../../../../ui-components/Card';
 import { Form } from '../../../../ui-components/Form';
 
-interface Props {
+export interface ChainProps {
+	seconds: number
+}
+export interface SecondProposalProps {
 	accounts: InjectedAccountWithMeta[]
 	address: string
 	className?: string
@@ -25,33 +28,12 @@ interface Props {
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
+type Props = SecondProposalProps & ChainProps
+
+const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts, seconds }: Props) => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
-	const [seconds, setSeconds] = useState(0);
-
-	useEffect(() => {
-		if (!isApiReady) {
-			return;
-		}
-
-		let unsubscribe: () => void;
-
-		api.derive.democracy.proposals( proposals => {
-			proposals.forEach((proposal) => {
-				if (proposal.index.toNumber() === proposalId && proposal.balance) {
-					setSeconds(proposal.seconds.length);
-				}
-			});
-			setLoadingStatus({ isLoading: false, message: '' });
-		})
-			.then(unsub => {unsubscribe = unsub;})
-			.catch(e => console.error(e));
-
-		return () => unsubscribe && unsubscribe();
-
-	}, [api, isApiReady, proposalId]);
 
 	const secondProposal = async () => {
 		if (!proposalId && proposalId !== 0) {
