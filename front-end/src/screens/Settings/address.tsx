@@ -24,7 +24,7 @@ import getEncodedAddress from '../../util/getEncodedAddress';
 import getExtensionUrl from '../../util/getExtensionUrl';
 
 interface Props{
-	className?: string
+className?: string
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
@@ -198,117 +198,116 @@ const Address = ({ className }: Props): JSX.Element => {
 			: <StyledUnlinkButton withClickHandler/>;
 	};
 
- interface AccountsDetails {
-	accounts: InjectedAccountWithMeta[];
-	showAccounts: boolean;
-	title: string;
+interface AccountsDetails {
+accounts: InjectedAccountWithMeta[];
+showAccounts: boolean;
+title: string;
 }
 
- const addressList = ({ accounts, showAccounts, title }: AccountsDetails) => {
+const addressList = ({ accounts, showAccounts, title }: AccountsDetails) => {
 
- 	return (
- 		<>
- 			<Form.Group>
- 				<Form.Field width={16}>
- 					<label className='header'>{title}</label>
- 					<div className='ui list'>
- 						{accounts.map(account => {
- 							const address = getEncodedAddress(account.address);
- 							const isLinked = address && currentUser.addresses?.includes(address);
+	return (
+		<>
+			<Form.Group>
+				<Form.Field width={16}>
+					<label className='header'>{title}</label>
+					<div className='ui list'>
+						{accounts.map(account => {
+							const address = getEncodedAddress(account.address);
+							const isLinked = address && currentUser.addresses?.includes(address);
 
- 							return address &&
-									<Grid key={address}>
-										<Grid.Column width={7}>
-											<div className='item'>
-												<AddressComponent className='item' address={address} extensionName={account.meta.name} />
-											</div>
-										</Grid.Column>
-										<Grid.Column width={3}>
-											<div className='button-container'>
-												{ isLinked
-													? <UnlinkButton address={address}/>
-													:
+							return address &&
+								<Grid key={address}>
+									<Grid.Column width={7}>
+										<div className='item'>
+											<AddressComponent className='item' address={address} extensionName={account.meta.name} />
+										</div>
+									</Grid.Column>
+									<Grid.Column width={3}>
+										<div className='button-container'>
+											{ isLinked
+												? <UnlinkButton address={address}/>
+												:
+												<Button
+													className={'social'}
+													onClick={() => handleLink(address, account) }
+												>
+													{linkIcon}
+												</Button>
+
+											}
+										</div>
+									</Grid.Column>
+									<Grid.Column width={6} >
+										{isLinked
+											? currentUser.defaultAddress !== address
+												?
+												<div className='button-container default-button'>
 													<Button
 														className={'social'}
-														onClick={() => handleLink(address, account) }
+														onClick={() => handleDefault(address)}
 													>
-														{linkIcon}
-													</Button>
-
-												}
-											</div>
-										</Grid.Column>
-										<Grid.Column width={6} >
-											{isLinked
-												? currentUser.defaultAddress !== address
-													?
-													<div className='button-container default-button'>
-														<Button
-															className={'social'}
-															onClick={() => handleDefault(address)}
-														>
 														Set default
-														</Button>
-													</div>
-													:
-													<div className='default-label'>
-														<Icon name='check'/> Default address
-													</div>
-												: null
-											}
-										</Grid.Column>
-									</Grid>
- 							;}
- 						)}
- 					</div>
- 				</Form.Field>
- 			</Form.Group>
- 			{showAccounts && <Form.Group>
- 				<Form.Field width={16}>
- 					<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
- 					<div className='link-button-container'>
- 						<Button primary onClick={handleDetect}>
-Show Available Accounts
- 						</Button>
- 					</div>
- 				</Form.Field>
- 			</Form.Group>}
- 		</>
- 	);
- };
+													</Button>
+												</div>
+												:
+												<div className='default-label'>
+													<Icon name='check'/> Default address
+												</div>
+											: null
+										}
+									</Grid.Column>
+								</Grid>;
+						})}
+					</div>
+				</Form.Field>
+			</Form.Group>
+			{showAccounts && <Form.Group>
+				<Form.Field width={16}>
+					<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+					<div className='link-button-container'>
+						<Button primary onClick={handleDetect}>
+							Show Available Accounts
+						</Button>
+					</div>
+				</Form.Field>
+			</Form.Group>}
+		</>
+	);
+};
 
- return (
- 	<Form className={className} standalone={false}>
- 		{accounts.length
- 			? addressList({
- 				accounts,
- 				showAccounts: false,
- 				title: 'Available addresses'
- 			})
- 			: addressList({
- 				accounts: currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
- 					address: address,
- 					meta: { source: '' }
- 				})) || [],
- 				showAccounts: true,
- 				title: 'Linked addresses'
- 			})
- 		}
- 	</Form>
- );
+return (
+	<Form className={className} standalone={false}>
+		{accounts.length
+			? addressList({
+				accounts,
+				showAccounts: false,
+				title: 'Available addresses'
+			})
+			: addressList({
+				accounts: currentUser?.addresses?.sort().map((address): InjectedAccountWithMeta => ({
+					address: address,
+					meta: { source: '' }
+				})) || [],
+				showAccounts: true,
+				title: 'Linked addresses'
+			})
+		}
+	</Form>
+);
 };
 
 export default styled(Address)`
-	.button-container {
-		position: absolute;
-		top: 50%;
-		margin-top: -1.8rem;
-	}
+.button-container {
+position: absolute;
+top: 50%;
+margin-top: -1.8rem;
+}
 
-	.default-label {
-		font-weight: 500;
-		color: green_primary;
-		padding: 0.5rem 0;
-		line-height: 1.6rem;
-	}
+.default-label {
+font-weight: 500;
+color: green_primary;
+padding: 0.5rem 0;
+line-height: 1.6rem;
+}
 `;
