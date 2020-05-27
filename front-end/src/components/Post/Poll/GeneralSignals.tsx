@@ -73,7 +73,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 
 	return (
 		<Card className={className}>
-			<h3>Poll Signaling <HelperTooltip content='This represent the offchain votes of Polkassembly users including council members' /></h3>
+			<h3>Poll Signals <HelperTooltip content='This represents the off-chain votes of Polkassembly users including council members' /></h3>
 			<GeneralChainSignalBar
 				ayeSignals={ayes}
 				naySignals={nays}
