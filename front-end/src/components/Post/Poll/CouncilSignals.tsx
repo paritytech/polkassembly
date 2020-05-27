@@ -60,9 +60,9 @@ const CouncilSignals = ({ className, data }: Props) => {
 		const councilVotes: OffchainVote[]  = [];
 
 		data?.post_votes?.forEach(({ vote, voter }) => {
-			const defaultAddress = voter?.[defaultAddressField] || '';
+			const defaultAddress = voter?.[defaultAddressField];
 
-			if (memberSet.has(defaultAddress)) {
+			if (defaultAddress && memberSet.has(defaultAddress)) {
 				const address = getEncodedAddress(defaultAddress);
 				if (address) {
 					councilVotes.push({
