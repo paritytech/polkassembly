@@ -39,8 +39,10 @@ const CouncilSignals = ({ className, data }: Props) => {
 			const memberSet = new Set<string>();
 
 			info?.members.map(([accountId]) => {
-				const address = getEncodedAddress(accountId.toString()) || '';
-				memberSet.add(address);
+				const address = getEncodedAddress(accountId.toString());
+				if (address) {
+					memberSet.add(address);
+				}
 			});
 
 			setMemberSet(memberSet);
