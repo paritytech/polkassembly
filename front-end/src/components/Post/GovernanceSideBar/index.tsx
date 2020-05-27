@@ -14,8 +14,7 @@ import { VoteThreshold } from 'src/types';
 import { Form } from 'src/ui-components/Form';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
-import SecondProposal from './Proposals/SecondProposal';
+import ProposalDisplay from './Proposals';
 import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
 import VoteMotion from './VoteMotion';
@@ -115,16 +114,14 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						/>
 						}
 						{isProposal &&
-							<>
-								{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
-								{canVote && <SecondProposal
-									accounts={accounts}
-									address={address}
-									getAccounts={getAccounts}
-									onAccountChange={onAccountChange}
-									proposalId={onchainId}
-								/>}
-							</>
+							<ProposalDisplay
+								accounts={accounts}
+								address={address}
+								canVote={canVote}
+								getAccounts={getAccounts}
+								onAccountChange={onAccountChange}
+								proposalId={onchainId}
+							/>
 						}
 						{isReferendum &&
 							<>
