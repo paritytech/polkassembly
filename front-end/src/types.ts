@@ -133,3 +133,9 @@ export enum VoteThresholdEnum {
 }
 
 export type VoteThreshold = keyof typeof VoteThresholdEnum;
+
+export interface ReactionMapFields {
+	count: number
+	userNames: string[]
+}
+
