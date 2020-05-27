@@ -34,6 +34,7 @@ const treasuryProposalPost = gql`
         content
         created_at
         has_poll
+        block_number
         id
         updated_at
         comments(order_by: {created_at: asc}) {

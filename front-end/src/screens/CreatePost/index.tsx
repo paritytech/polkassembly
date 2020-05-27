@@ -11,7 +11,7 @@ import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
+import { useCreatePostMutation, useGet_Current_Block_NumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -32,6 +32,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
 
+	const { data } = useGet_Current_Block_NumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -56,9 +57,11 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	};
 
 	const handleSend = () => {
+		const blockNumber = data?.blockNumbers?.[0]?.number;
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
+				blockNumber,
 				content,
 				hasPoll,
 				title,
@@ -111,7 +114,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						rules={{ required: true }}
 					/>
 
-					<Form.Group className="hidden">
+					<Form.Group>
 						<Form.Field>
 							<input type='checkbox' onChange={onPollChanged} /> <span className='text-muted'>Add a poll to this discussion</span>
 						</Form.Field>
@@ -146,9 +149,5 @@ export default styled(CreatePost)`
 		flex-direction: column;
 		justify-content: center;
 		margin-top: 3rem;
-	}
-
-	.hidden {
-		display: none;
 	}
 `;

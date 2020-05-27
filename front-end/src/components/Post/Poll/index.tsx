@@ -14,9 +14,10 @@ import GeneralSignals from './GeneralSignals';
 
 interface Props {
 	postId: number
+	blockNumber?: number
 }
 
-const Poll = ({ postId }: Props) => {
+const Poll = ({ postId, blockNumber }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const { data, error, refetch } = usePostVotesQuery({ variables: { postId } });
 	let ayes = 0;
@@ -46,7 +47,7 @@ const Poll = ({ postId }: Props) => {
 				postId={postId}
 				refetch={refetch}
 			/>
-			<CouncilSignals data={data} />
+			<CouncilSignals data={data} blockNumber={blockNumber} />
 		</>
 	);
 };

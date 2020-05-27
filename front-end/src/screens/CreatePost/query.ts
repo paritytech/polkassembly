@@ -5,14 +5,15 @@
 import gql from 'graphql-tag';
 
 export const CREATE_POST = gql`
-    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean) {
+    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean, $blockNumber: Int) {
         __typename
         insert_posts(objects: {
             author_id: $userId,
             content: $content,
             title: $title,
             topic_id: $topicId,
-            has_poll: $hasPoll
+            has_poll: $hasPoll,
+            block_number: $blockNumber
         }) {
             affected_rows
             returning {
@@ -38,3 +39,10 @@ export const GET_POST_TOPICS = gql`
     ${topic_fragment}
 `;
 
+export const GET_CURRENT_BLOCK_NUMBER = gql`
+    query Get_current_block_number {
+        blockNumbers(orderBy: number_DESC, first: 1) {
+            number
+        }
+    }
+`;

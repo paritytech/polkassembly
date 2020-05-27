@@ -2,13 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveElectionsInfo } from '@polkadot/api-derive/types';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
+import { chainProperties } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
-import { PostVotesQuery } from '../../../generated/graphql';
+import { PostVotesQuery, useCouncilAtBlockNumberQuery, useGet_Current_Block_NumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -19,39 +19,45 @@ import getEncodedAddress from '../../../util/getEncodedAddress';
 interface Props {
 	className?: string
 	data?: PostVotesQuery | undefined
+	blockNumber?: number
 }
 
-const CouncilSignals = ({ className, data }: Props) => {
+const CouncilSignals = ({ className, blockNumber, data }: Props) => {
+	const network = getNetwork();
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const currentBlockNumber = useGet_Current_Block_NumberQuery();
+	const councilAtPostBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: blockNumber || 0 } });
+	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0 } });
+	const TWO_WEEKS = chainProperties?.[network]?.twoWeeksBlocks;
 
 	useEffect(() => {
-		if (!isApiReady){
-			return;
-		}
+		const currentBlock = currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0;
+		const pollClosingBlockNumber = (blockNumber || 0) + TWO_WEEKS;
 
-		let unsubscribe: () => void;
+		const memberSet = new Set<string>();
 
-		api.derive.elections.info((info: DeriveElectionsInfo) => {
-			const memberSet = new Set<string>();
-
-			info?.members.map(([accountId]) => {
-				const address = getEncodedAddress(accountId.toString());
+		if (pollClosingBlockNumber > currentBlock) {
+			councilAtCurrentBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
+				const address = getEncodedAddress(member.address);
 				if (address) {
 					memberSet.add(address);
 				}
 			});
+		} else {
+			councilAtPostBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
+				const address = getEncodedAddress(member.address);
 
-			setMemberSet(memberSet);
-		})
-			.then(unsub => { unsubscribe = unsub; })
-			.catch(e => console.error(e));
+				if (address) {
+					memberSet.add(address);
+				}
+			});
+		}
 
-		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady]);
+		setMemberSet(memberSet);
+	}, [blockNumber, currentBlockNumber, councilAtPostBlockNumber, councilAtCurrentBlockNumber, TWO_WEEKS]);
 
 	useEffect(() => {
 		let ayes = 0;

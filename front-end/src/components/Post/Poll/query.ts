@@ -51,3 +51,14 @@ export const DELETE_VOTE = gql`
         }
     }
 `;
+
+export const COUNCIL_AT_BLOCK_NUMBER = gql`
+    query councilAtBlockNumber ($blockNumber: Int!) {
+        councils(where: {blockNumber: {number_lte: $blockNumber}}, orderBy: id_DESC, first: 1) {
+            members {
+                address
+            }
+        }
+    }
+
+`;
