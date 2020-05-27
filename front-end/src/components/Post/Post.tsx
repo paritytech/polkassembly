@@ -40,7 +40,7 @@ import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import GovenanceSideBar from './GovernanceSideBar';
-import Poll from './Poll';
+// import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
