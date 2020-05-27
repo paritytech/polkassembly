@@ -6,15 +6,16 @@ import { web3Accounts, web3Enable,web3FromSource } from '@polkadot/extension-dap
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
-import React, { useContext,useState } from 'react';
-import { Grid,Icon } from 'semantic-ui-react';
+import React, { useContext, useState } from 'react';
+import { Grid, Icon, Popup } from 'semantic-ui-react';
+import getNetwork from 'src/util/getNetwork';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useAddressLinkConfirmMutation, useAddressLinkStartMutation, useAddressUnlinkMutation, useSetDefaultAddressMutation } from '../../generated/graphql';
 import { handleTokenChange } from '../../services/auth.service';
-import { AccountsDetails, NotificationStatus } from '../../types';
+import { NotificationStatus } from '../../types';
 import AddressComponent from '../../ui-components/Address';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
@@ -27,7 +28,7 @@ interface Props{
 }
 
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+const NETWORK = getNetwork();
 
 const Address = ({ className }: Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
@@ -175,8 +176,50 @@ const Address = ({ className }: Props): JSX.Element => {
 		);
 	}
 
-	const addressList = (accountsDetails: AccountsDetails) => {
-		const { accounts, showAccounts, showOnlyUnlink, title } = accountsDetails;
+	const UnlinkButton = ({ address } : {address: string}) => {
+
+		const StyledUnlinkButton = ({ withClickHandler = false }: {withClickHandler?: boolean}) =>
+			<Button
+				className={'social'}
+				disabled={withClickHandler ? false : true}
+				negative
+				onClick={() => withClickHandler ? handleUnlink(address) : null }
+			>
+				{unlinkIcon}
+			</Button>;
+
+		return currentUser.defaultAddress === address
+			? <Popup
+				trigger={<span><StyledUnlinkButton/></span>}
+				content={"You can't unlink your default address"}
+				hoverable={true}
+				position="top center"
+			/>
+			: <StyledUnlinkButton withClickHandler/>;
+	};
+
+	const SetDefaultAddress = ({ address }: {address : string}) => {
+		return currentUser.defaultAddress !== address
+			? <div className='button-container default-button'>
+				<Button
+					className={'social'}
+					onClick={() => handleDefault(address)}
+				>
+					Set default
+				</Button>
+			</div>
+			: <div className='default-label'>
+				<Icon name='check'/> Default address
+			</div>;
+	};
+
+	interface AccountsDetails {
+		accounts: InjectedAccountWithMeta[];
+		showAccounts: boolean;
+		title: string;
+	}
+
+	const addressList = ({ accounts, showAccounts, title }: AccountsDetails) => {
 
 		return (
 			<>
@@ -186,6 +229,7 @@ const Address = ({ className }: Props): JSX.Element => {
 						<div className='ui list'>
 							{accounts.map(account => {
 								const address = getEncodedAddress(account.address);
+								const isLinked = address && currentUser.addresses?.includes(address);
 
 								return address &&
 									<Grid key={address}>
@@ -196,35 +240,23 @@ const Address = ({ className }: Props): JSX.Element => {
 										</Grid.Column>
 										<Grid.Column width={3}>
 											<div className='button-container'>
-												<Button
-													className={'social'}
-													negative={showOnlyUnlink ? true : currentUser.addresses?.includes(address) ? true : false}
-													onClick={() => showOnlyUnlink ? handleUnlink(address) : currentUser.addresses?.includes(address) ? handleUnlink(address) : handleLink(address, account)}
-												>
-													{showOnlyUnlink ? unlinkIcon : currentUser.addresses?.includes(address) ? unlinkIcon : linkIcon}
-												</Button>
+												{ isLinked
+													? <UnlinkButton address={address}/>
+													: <Button
+														className={'social'}
+														onClick={() => handleLink(address, account) }
+													>
+														{linkIcon}
+													</Button>
+
+												}
 											</div>
 										</Grid.Column>
 										<Grid.Column width={6} >
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress !== address &&
-												<div className='button-container default-button'>
-													<Button
-														className={'social'}
-														onClick={() => handleDefault(address)}
-													>
-														Set default
-													</Button>
-												</div>
-											}
-											{currentUser.addresses?.includes(address) && currentUser.defaultAddress === address &&
-												<div className='default-label'>
-													<Icon name='check'/> Default address
-												</div>
-											}
+											{isLinked && <SetDefaultAddress address={address}/>}
 										</Grid.Column>
-									</Grid>
-								;}
-							)}
+									</Grid>;
+							})}
 						</div>
 					</Form.Field>
 				</Form.Group>
@@ -248,7 +280,6 @@ const Address = ({ className }: Props): JSX.Element => {
 				? addressList({
 					accounts,
 					showAccounts: false,
-					showOnlyUnlink: false,
 					title: 'Available addresses'
 				})
 				: addressList({
@@ -257,7 +288,6 @@ const Address = ({ className }: Props): JSX.Element => {
 						meta: { source: '' }
 					})) || [],
 					showAccounts: true,
-					showOnlyUnlink: true,
 					title: 'Linked addresses'
 				})
 			}
