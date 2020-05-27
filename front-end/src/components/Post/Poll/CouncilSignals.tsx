@@ -89,7 +89,7 @@ const CouncilSignals = ({ className, data }: Props) => {
 
 	return (
 		<Card className={className}>
-			<h3>Council Signals <HelperTooltip content='This represent the offchain votes of council members' /></h3>
+			<h3>Council Signals <HelperTooltip content='This represents the off-chain votes of council members/></h3>
 			<CouncilSignalBar
 				ayeSignals={ayes}
 				councilSize={memberSet.size}
