@@ -51,6 +51,7 @@ const StyledForm = styled(SUIForm)`
 
 		a {
 			color: grey_primary;
+			cursor: pointer;
 			border-bottom-style: solid;
 			border-bottom-width: 1px;
 			border-bottom-color: grey_primary;

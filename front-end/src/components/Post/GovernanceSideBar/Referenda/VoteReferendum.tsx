@@ -141,7 +141,8 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						/>
 						<VoteLock/>
 						<AyeNayButtons
-							disabled={!isApiReady}
+							disabledAye={!isApiReady}
+							disabledNay={!isApiReady}
 							onClickAye={() => voteRefrendum(true)}
 							onClickNay={() => voteRefrendum(false)}
 						/>

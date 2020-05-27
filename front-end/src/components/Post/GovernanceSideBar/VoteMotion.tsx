@@ -131,7 +131,8 @@ const VoteMotion = ({
 							onAccountChange={onAccountChange}
 						/>
 						<AyeNayButtons
-							disabled={!isApiReady}
+							disabledAye={!isApiReady}
+							disabledNay={!isApiReady}
 							onClickAye={() => voteMotion(true)}
 							onClickNay={() => voteMotion(false)}
 						/>

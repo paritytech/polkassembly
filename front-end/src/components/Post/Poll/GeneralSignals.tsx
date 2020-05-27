@@ -11,7 +11,6 @@ import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
-import Button from '../../../ui-components/Button';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
@@ -82,26 +81,23 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
 			{id && (ownVote
-				? <>
-					<div className='info text-muted'>You voted {ownVote}.</div>
-					<Form standalone={false}>
-						<Form.Group>
-							<Form.Field>
-								<Button
-									fluid
-									basic
-									className='primary negative'
-									onClick={cancelVote}
-								>
-									Cancel Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</>
+				?
+				<Form standalone={false}>
+					<AyeNayButtons
+						className='signal-btns'
+						disabledAye={ownVote === 'NAY'}
+						disabledNay={ownVote === 'AYE'}
+						hasVoted={true}
+						onClickAye={() => {}}
+						onClickNay={() => {}}
+					/>
+					<div className='info text-muted'><a onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</a></div>
+				</Form>
 				: <Form standalone={false}>
 					<AyeNayButtons
-						disabled={false}
+						className='signal-btns'
+						disabledAye={false}
+						disabledNay={false}
 						onClickAye={() => castVote(Vote.AYE)}
 						onClickNay={() => castVote(Vote.NAY)}
 					/>
@@ -118,5 +114,9 @@ export default styled(CouncilSignals)`
 
 	.errorText {
 		color: red_secondary;
+	}
+
+	.signal-btns {
+		margin-top: 2rem !important;
 	}
 `;
