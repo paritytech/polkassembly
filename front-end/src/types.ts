@@ -143,3 +143,9 @@ export interface OffchainVote {
     address: string;
     vote: Vote;
 }
+
+export interface ReactionMapFields {
+	count: number
+	userNames: string[]
+}
+
