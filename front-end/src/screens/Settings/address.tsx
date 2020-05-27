@@ -200,8 +200,7 @@ const Address = ({ className }: Props): JSX.Element => {
 
 	const SetDefaultAddress = ({ address }: {address : string}) => {
 		return currentUser.defaultAddress !== address
-			?
-			<div className='button-container default-button'>
+			? <div className='button-container default-button'>
 				<Button
 					className={'social'}
 					onClick={() => handleDefault(address)}
@@ -209,8 +208,7 @@ const Address = ({ className }: Props): JSX.Element => {
 					Set default
 				</Button>
 			</div>
-			:
-			<div className='default-label'>
+			: <div className='default-label'>
 				<Icon name='check'/> Default address
 			</div>;
 	};
@@ -244,8 +242,7 @@ const Address = ({ className }: Props): JSX.Element => {
 											<div className='button-container'>
 												{ isLinked
 													? <UnlinkButton address={address}/>
-													:
-													<Button
+													: <Button
 														className={'social'}
 														onClick={() => handleLink(address, account) }
 													>
