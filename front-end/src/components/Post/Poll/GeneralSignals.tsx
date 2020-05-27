@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
@@ -72,11 +73,11 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 
 	return (
 		<Card className={className}>
+			<h3>Poll Signaling <HelperTooltip content='This represent the offchain votes of Polkassembly users including council members' /></h3>
 			<GeneralChainSignalBar
 				ayeSignals={ayes}
 				naySignals={nays}
 			/>
-			<div className='info text-muted'>Signals are off chain.</div>
 			<div>
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
