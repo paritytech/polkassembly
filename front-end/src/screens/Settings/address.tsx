@@ -198,6 +198,23 @@ const Address = ({ className }: Props): JSX.Element => {
 			: <StyledUnlinkButton withClickHandler/>;
 	};
 
+	const SetDefaultAddress = ({ address }: {address : string}) => {
+		return currentUser.defaultAddress !== address
+			?
+			<div className='button-container default-button'>
+				<Button
+					className={'social'}
+					onClick={() => handleDefault(address)}
+				>
+					Set default
+				</Button>
+			</div>
+			:
+			<div className='default-label'>
+				<Icon name='check'/> Default address
+			</div>;
+	};
+
 	interface AccountsDetails {
 		accounts: InjectedAccountWithMeta[];
 		showAccounts: boolean;
@@ -239,23 +256,7 @@ const Address = ({ className }: Props): JSX.Element => {
 											</div>
 										</Grid.Column>
 										<Grid.Column width={6} >
-											{isLinked
-												? currentUser.defaultAddress !== address
-													?
-													<div className='button-container default-button'>
-														<Button
-															className={'social'}
-															onClick={() => handleDefault(address)}
-														>
-															Set default
-														</Button>
-													</div>
-													:
-													<div className='default-label'>
-														<Icon name='check'/> Default address
-													</div>
-												: null
-											}
+											{isLinked && <SetDefaultAddress address={address}/>}
 										</Grid.Column>
 									</Grid>;
 							})}
