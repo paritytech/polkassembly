@@ -12,7 +12,7 @@ interface Props {
 	councilSize: number
 }
 
-const CouncilSignalBar = ({ ayeSignals, className, councilSize = 13, naySignals }: Props) => {
+const CouncilSignalBar = ({ ayeSignals, className, councilSize, naySignals }: Props) => {
 	const notSignaled = councilSize - ayeSignals - naySignals;
 
 	return (
