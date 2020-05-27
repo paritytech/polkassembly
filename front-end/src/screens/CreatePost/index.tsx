@@ -111,11 +111,11 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						rules={{ required: true }}
 					/>
 
-					<Form.Group>
+					{/*<Form.Group>
 						<Form.Field>
 							<input type='checkbox' onChange={onPollChanged} /> <span className='text-muted'>Add a poll to this discussion</span>
 						</Form.Field>
-					</Form.Group>
+					</Form.Group>*/}
 
 					<TopicsRadio
 						onTopicSelection={(id: number) => setSetlectedTopic(id)}
