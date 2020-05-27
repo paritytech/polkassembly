@@ -297,15 +297,18 @@ const Address = ({ className }: Props): JSX.Element => {
 
 export default styled(Address)`
 	.button-container {
-		position: absolute;
-		top: 50%;
-		margin-top: -1.8rem;
+		display: flex;
+		align-items: center;
+		height: 100%;
 	}
 
 	.default-label {
+		display: flex;
+		align-items: center;
+		height: 100%;
 		font-weight: 500;
 		color: green_primary;
-		padding: 0.5rem 0;
+		padding: 0.7rem;
 		line-height: 1.6rem;
 	}
 `;
