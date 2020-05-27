@@ -10,7 +10,7 @@ import { Vote } from '../../../types';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import CouncilSignals from './CouncilSignals';
-import OffChainSignals from './OffChainSignals';
+import GeneralSignals from './GeneralSignals';
 
 interface Props {
 	postId: number
@@ -39,7 +39,7 @@ const Poll = ({ postId }: Props) => {
 
 	return (
 		<>
-			<OffChainSignals
+			<GeneralSignals
 				ayes={ayes}
 				nays={nays}
 				ownVote={ownVote}

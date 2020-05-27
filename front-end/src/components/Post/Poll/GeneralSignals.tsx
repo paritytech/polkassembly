@@ -14,7 +14,7 @@ import Button from '../../../ui-components/Button';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
-import OffChainSignalBar from '../../../ui-components/OffChainSignalBar';
+import GeneralChainSignalBar from '../../../ui-components/GeneralChainSignalBar';
 
 interface Props {
 	ayes: number,
@@ -72,7 +72,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 
 	return (
 		<Card className={className}>
-			<OffChainSignalBar
+			<GeneralChainSignalBar
 				ayeSignals={ayes}
 				naySignals={nays}
 			/>

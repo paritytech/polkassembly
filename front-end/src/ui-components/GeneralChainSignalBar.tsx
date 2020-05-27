@@ -12,7 +12,7 @@ interface Props {
 	naySignals: number
 }
 
-const OffChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
+const GeneralChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
 	let percent = 0;
 	const total = ayeSignals + naySignals;
 	if (total > 0) {
@@ -31,7 +31,7 @@ const OffChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
 	);
 };
 
-export default styled(OffChainSignalBar)`
+export default styled(GeneralChainSignalBar)`
 	position: relative;
 	.signal-bar {
 		display: flex;
