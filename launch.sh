@@ -67,7 +67,7 @@ done
 printf "\n\n-- launching hasura docker\n"
 cd $DIR/hasura && docker-compose up -d;
 
-sleep 15
+sleep 10
 
 printf "\n\n-- hasura migration\n"
 cd $DIR/hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-secret ip7itpC5L6R3RbNE4vkdZfsN;
