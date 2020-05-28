@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nomidotwatcher-chain-tip
+  namespace: nodewatcher-staging
+  labels:
+    stage: staging
+    name: nomidotwatcher
+    app: nomidotwatcher
+    job-name: nomidotwatcher-chain-tip
+spec:
+  manualSelector: true
+  selector:
+    matchLabels:
+      stage: staging
+      name: nomidotwatcher
+      app: nomidotwatcher
+      job-name: nomidotwatcher-chain-tip
+  template:
+    metadata:
+      labels:
+        stage: staging
+        name: nomidotwatcher
+        app: nomidotwatcher
+        job-name: nomidotwatcher-chain-tip
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: nomidotwatcher
+          image: eu.gcr.io/test-installations-222013/nomidot_watcher@sha256:637d46b1b8e931e8936486574b5fc5891f30adb840f468bbcab89140999a95bd
+          imagePullPolicy: Always
+          env:
+            - name: PRISMA_ENDPOINT
+              value: http://nodewatcher.nodewatcher-staging:4466
+            - name: ARCHIVE_NODE_ENDPOINT
+              value: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
+            - name: START_FROM
+              value: '2504500'
+            - name: BLOCK_IDENTIFIER
+              value: 'chain-tip'
+            - name: MAX_LAG
+              value: '10'
+          command: ["yarn", "start"]
