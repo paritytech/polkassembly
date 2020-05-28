@@ -1,11 +1,11 @@
 {
-  "name": "@substrate/nomidot-server",
+  "name": "chain-db-open-server",
   "version": "0.5.1",
   "author": "Parity Technologies <admin@parity.io>",
-  "description": "Backend server for Nomidot",
+  "description": "Chain-db server for Polkassembly",
   "license": "Apache-2.0",
   "private": true,
-  "repository": "https://github.com/paritytech/Nomidot",
+  "repository": "https://github.com/paritytech/Polkassembly",
   "scripts": {
     "build": "tsc",
     "docker": "docker build -t nomidot-server:v0.6.2 . && docker tag nomidot-server:v0.6.2 eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2 && docker push eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2",

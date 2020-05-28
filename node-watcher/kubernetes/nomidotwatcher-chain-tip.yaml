@@ -27,7 +27,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: nomidotwatcher
-          image: eu.gcr.io/test-installations-222013/nomidot_watcher@sha256:637d46b1b8e931e8936486574b5fc5891f30adb840f468bbcab89140999a95bd
+          image: eu.gcr.io/test-installations-222013/nomidot_watcher@sha256:978a9aa24c1b1c892e29165b4c1d3d300bc32efd090efdc2ef4680782920bf32
           imagePullPolicy: Always
           env:
             - name: PRISMA_ENDPOINT

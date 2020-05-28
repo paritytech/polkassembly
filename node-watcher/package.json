@@ -1,5 +1,5 @@
 {
-  "name": "@substrate/node-watcher",
+  "name": "node-watcher",
   "version": "0.5.1",
   "author": "Parity Technologies <admin@parity.io>",
   "license": "Apache-2.0",
