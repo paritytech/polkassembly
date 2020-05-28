@@ -1,7 +1,6 @@
-# @substrate/node-watcher
+# Node-watcher
+This repo used to be hosted in [https://github.com/paritytech/Nomidot/tree/master/back/node_watcher](https://github.com/paritytech/Nomidot/tree/master/back/node_watcher)
 Long living script that reads from an archive node and loads select information to a Postgresql DB, a.k.a ETL.
-
-The tasks specific to Nomidot are in `src/tasks`
 
 The script itself lives in `nodeWatcher.ts`, and anyone can write their own `tasks` suited to their needs as long as they conform to the `Task` interface. It is agnostic of what server or db one decides to use.
 

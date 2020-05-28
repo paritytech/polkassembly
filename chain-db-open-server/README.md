@@ -1,6 +1,6 @@
-### Nomidot Server
-
-Provides a GraphQL API for querying the node_watcher and app DBs.
+### Prisma Server
+Provides a GraphQL API for querying safely the chain-db.
+This repo used to be hosted on [https://github.com/paritytech/Nomidot/tree/master/back/node_watcher](https://github.com/paritytech/Nomidot/tree/master/back/node_watcher)
 
 Access is limited to services within the same cluster.
 
