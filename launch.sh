@@ -76,4 +76,4 @@ cd $DIR/hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-
 # cd $DIR/hasura/hasura-migrations && hasura-dev metadata reload --admin-secret ip7itpC5L6R3RbNE4vkdZfsN;
 
 printf "\n\n-- launching front-end\n"
-cd $DIR/front-end && yarn &&  yarn start
+cd $DIR/front-end && yarn && yarn start
