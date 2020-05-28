@@ -1,0 +1,217 @@
+
+type BlockNumber {
+  id: ID! @id
+  number: Int! @unique
+  authoredBy: String!
+  startDateTime: DateTime!
+  hash: String! @unique
+}
+
+type Session {
+  id: ID! @id
+  index: Int! @unique
+  start: BlockNumber! @relation(name: "BlockNumberAtSessionStart", link: INLINE)
+}
+
+type HeartBeat {
+  id: ID! @id
+  sessionIndex: Session! @relation(name: "HeartbeatAtSession", link: INLINE)
+  authorityId: String!
+}
+
+type OfflineValidator {
+  id: ID! @id
+  sessionIndex: Session! @relation(name: "OfflineValidatorAtSession", link: INLINE)
+  validatorId: String!
+  total: String!
+  own: String!
+  others: [Json!]! @scalarList(strategy: RELATION)
+}
+
+type Era {
+  id: ID! @id
+  index: Int! @unique
+  eraStartSessionIndex: Session! @relation(name: "EraStartSessionIndex", link: INLINE)
+  totalPoints: String!
+  individualPoints: [String!]! @scalarList(strategy: RELATION)
+}
+
+type Slashing {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "SlashingAtBlockNumber", link: INLINE)
+  who: String! @unique
+  amount: String!
+}
+
+type Validator {
+  id: ID! @id
+  session: Session! @relation(name: "ValidatorsAtSession", link: INLINE)
+  controller: String!
+  stash: String!
+  preferences: String!
+}
+
+type TotalIssuance {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "TotalIssuanceAtBlockNumber", link: INLINE) @unique
+  amount: String!
+}
+
+type Reward {
+  id: ID! @id
+  authoredBlock: BlockNumber! @relation(name: "RewardsAtBlockNumber", link: INLINE)
+  sessionIndex: Session! @relation(name: "RewardsAtSession", link: INLINE)
+  treasuryReward: String!
+  validatorReward: String!
+}
+
+type Nomination {
+  id: ID! @id
+  validatorController: String!
+  validatorStash: String!
+  nominatorController: String!
+  nominatorStash: String!
+  session: Session! @relation(name: "NominationsAtSession", link: INLINE)
+  stakedAmount: String!
+}
+
+type Stake {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "StakeAtBlockNumber", link: INLINE)
+  totalStake: String!
+}
+
+type Council {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "CouncilFromBlockNumber", link: INLINE)
+  members: [CouncilMember]! @relation(name: "MembersCouncils")
+}
+
+type CouncilMember {
+  id: ID! @id
+  address: String! @unique
+  councils: [Council]! @relation(name: "MembersCouncils")
+}
+
+type Motion {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "MOTION_SEQUENCE" initialValue:1 allocationSize:1)
+  author: String!
+  memberCount: Int!
+  metaDescription: String!
+  method: String!
+  motionProposalArguments: [MotionProposalArgument]! @relation(name: "ArgumentForMotionProposal")
+  motionProposalHash: String!
+  motionProposalId: Int! @unique
+  motionStatus: [MotionStatus]! @relation(name: "MotionStatusFromMotion")
+  preimage: Preimage @relation(name: "PreimageForMotion")
+  preimageHash: String
+  treasurySpendProposal: TreasurySpendProposal @relation(name: "TreasurySpendProposalForMotion")
+  section: String!
+}
+
+type MotionProposalArgument {
+  id: ID! @id
+  name: String!
+  motion: Motion! @relation(name: "ArgumentForMotionProposal", link: INLINE)
+  value: String!
+}
+
+type MotionStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "MotionStatusAtBlockNumber", link: INLINE)
+  motion: Motion! @relation(name: "MotionStatusFromMotion", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
+
+type Proposal {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "PROPOSAL_SEQUENCE" initialValue:1 allocationSize:1)
+  author: String!
+  depositAmount: String!
+  preimage: Preimage @relation(name: "PreimageForProposal")
+  preimageHash: String!
+  proposalId: Int! @unique
+  proposalStatus: [ProposalStatus]! @relation(name: "ProposalStatusFromProposal")
+}
+
+type ProposalStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "ProposalStatusAtBlockNumber", link: INLINE)
+  proposal: Proposal! @relation(name: "ProposalStatusFromProposal", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
+
+type Preimage {
+  id: ID! @id
+  author: String!
+  depositAmount: String!
+  hash: String!
+  metaDescription: String!
+  method: String!
+  motion: Motion @relation(name: "PreimageForMotion", link: INLINE)
+  proposal: Proposal @relation(name: "PreimageForProposal", link: INLINE)
+  preimageArguments: [PreimageArgument]! @relation(name: "ArgumentForPreimage")
+  preimageStatus: [PreimageStatus]! @relation(name: "PreimageStatusFromPreimage")
+  referendum: Referendum @relation(name: "PreimageForReferendum", link: INLINE)
+  section: String!
+}
+
+type PreimageStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "PreimagStatusAtBlockNumber", link: INLINE)
+  preimage: Preimage! @relation(name: "PreimageStatusFromPreimage", link: INLINE)
+  status: String!
+}
+
+type PreimageArgument {
+  id: ID! @id
+  name: String!
+  preimage: Preimage! @relation(name: "ArgumentForPreimage", link: INLINE)
+  value: String!
+}
+
+type Referendum {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "REFERENDUM_SEQUENCE" initialValue:1 allocationSize:1)
+  delay: Int!
+  end: Int!
+  preimage: Preimage @relation(name: "PreimageForReferendum")
+  preimageHash: String!
+  referendumId: Int! @unique
+  referendumStatus: [ReferendumStatus]! @relation(name: "ReferendumStatusFromReferendum")
+  voteThreshold: String!
+}
+
+type ReferendumStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "ReferendumStatusAtBlockNumber", link: INLINE)
+  referendum: Referendum! @relation(name: "ReferendumStatusFromReferendum", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
+
+type BlockIndex {
+  id: ID! @id
+  identifier: String! @unique
+  startFrom: Int!
+  index: Int!
+}
+
+type TreasurySpendProposal {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "TREASURY_SPEND_PROPOSAL_SEQUENCE" initialValue:1 allocationSize:1)
+  proposer: String!
+  beneficiary: String!
+  value: String!
+  bond: String!
+  treasuryProposalId: Int! @unique
+  treasuryStatus: [TreasuryStatus]! @relation(name: "TreasuryStatusFromTreasurySpendProposal")
+  motion: Motion @relation(name: "TreasurySpendProposalForMotion", link: INLINE)
+}
+
+type TreasuryStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "TreasuryStatusAtBlockNumber", link: INLINE)
+  treasurySpendProposal: TreasurySpendProposal! @relation(name: "TreasuryStatusFromTreasurySpendProposal", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
