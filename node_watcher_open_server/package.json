@@ -1,0 +1,26 @@
+{
+  "name": "@substrate/nomidot-server",
+  "version": "0.5.1",
+  "author": "Parity Technologies <admin@parity.io>",
+  "description": "Backend server for Nomidot",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "https://github.com/paritytech/Nomidot",
+  "scripts": {
+    "build": "tsc",
+    "docker": "docker build -t nomidot-server:v0.6.2 . && docker tag nomidot-server:v0.6.2 eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2 && docker push eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2",
+    "start:local": "PRISMA_ENDPOINT=http://127.0.0.1:4466 ts-node src/index.ts",
+    "start": "ts-node src/index.ts",
+    "prisma:deploy": "PRISMA_ENDPOINT=http://0.0.0.0:4466 yarn prisma deploy",
+    "gql:get-schema": "PRISMA_ENDPOINT=http://0.0.0.0:4466 graphql get-schema -e dev --project prisma"
+  },
+  "dependencies": {
+    "graphql-yoga": "1.18.3",
+    "prisma-client-lib": "1.34.10"
+  },
+  "devDependencies": {
+    "prisma": "1.34.10",
+    "ts-node": "8.6.2",
+    "typescript": "3.8.3"
+  }
+}

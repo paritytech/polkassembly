@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nomidotwatcher-v1.5-last-50k
+  namespace: nodewatcher-staging
+  labels:
+    stage: staging
+    name: nomidotwatcher
+    app: nomidotwatcher
+    job-name: nomidotwatcher-v1.5-last-50k
+spec:
+  manualSelector: true
+  selector:
+    matchLabels:
+      stage: staging
+      name: nomidotwatcher
+      app: nomidotwatcher
+      job-name: nomidotwatcher-v1.5-last-50k
+  template:
+    metadata:
+      labels:
+        stage: staging
+        name: nomidotwatcher
+        app: nomidotwatcher
+        job-name: nomidotwatcher-v1.5-last-50k
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: nomidotwatcher
+          image: eu.gcr.io/test-installations-222013/nomidot_watcher@sha256:23dfc5a9638f00e5b3cac05abe46b59bf7f69f108f2974eb880a88e89bab66bb
+          imagePullPolicy: Always
+          env:
+            - name: PRISMA_ENDPOINT
+              value: http://nodewatcher-v1-5.nodewatcher-staging:4466
+            - name: ARCHIVE_NODE_ENDPOINT
+              value: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
+            - name: START_FROM
+              value: '1100000'
+            - name: BLOCK_IDENTIFIER
+              value: 'last-50k-1.5'
+            - name: MAX_LAG
+              value: '10'
+          command: ["yarn", "start"]

@@ -1,0 +1,49 @@
+{
+  "name": "@substrate/node-watcher",
+  "version": "0.5.1",
+  "author": "Parity Technologies <admin@parity.io>",
+  "license": "Apache-2.0",
+  "description": "Extract, Transform, Load Kusama/Polkadot history into a PostgreSQL DB",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "Prisma",
+    "Postgres",
+    "Polkadot"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "https://github.com/paritytech/Polkassembly",
+  "scripts": {
+    "build": "tsc",
+    "docker": "cp ../../yarn.lock . && docker build -t nomidot_watcher:v1.2.34 . && docker tag nomidot_watcher:v1.2.34 eu.gcr.io/test-installations-222013/nomidot_watcher:v1.2.34 && docker push eu.gcr.io/test-installations-222013/nomidot_watcher:v1.2.34 && rm yarn.lock",
+    "reset": "PRISMA_ENDPOINT=http://127.0.0.1:4466 yarn prisma1 reset",
+	"local": "PRISMA_ENDPOINT=http://127.0.0.1:4466 ARCHIVE_NODE_ENDPOINT=ws://127.0.0.1:9944 MAX_LAG=1 yarn start",
+	"local:reset": "yarn reset && yarn local",
+    "start": "node -r ts-node/register --max-old-space-size=8192 ./src/index.ts"
+  },
+  "dependencies": {
+    "@polkadot/api": "^1.16.1",
+    "p-retry": "^4.2.0",
+    "prisma-client-lib": "1.34.10"
+  },
+  "devDependencies": {
+    "@polkadot/dev": "^0.52.11",
+    "@types/bn.js": "^4.11.6",
+    "eslint-config-prettier": "^6.6.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.0",
+    "prettier": "1.19.1",
+    "prisma1": "^1.34.11",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2"
+  },
+  "resolutions": {
+    "kind-of": ">=6.0.3"
+  }
+}

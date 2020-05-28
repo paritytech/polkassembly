@@ -1,0 +1,3 @@
+import { ModulesWithCalls } from '@polkadot/types/types';
+declare const extrinsics: ModulesWithCalls;
+export default extrinsics;
