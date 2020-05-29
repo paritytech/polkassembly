@@ -80,29 +80,17 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 			<div>
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
-			{id && (ownVote
-				?
-				<Form standalone={false}>
-					<AyeNayButtons
-						className='signal-btns'
-						disabledAye={ownVote === 'NAY'}
-						disabledNay={ownVote === 'AYE'}
-						hasVoted={true}
-						onClickAye={() => {}}
-						onClickNay={() => {}}
-					/>
+			<Form standalone={false}>
+				<AyeNayButtons
+					className={`signal-btns ${ownVote}`}
+					disabled={!id || !!ownVote}
+					onClickAye={() => castVote(Vote.AYE)}
+					onClickNay={() => castVote(Vote.NAY)}
+				/>
+				{ownVote &&
 					<div className='info text-muted'><a onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</a></div>
-				</Form>
-				: <Form standalone={false}>
-					<AyeNayButtons
-						className='signal-btns'
-						disabledAye={false}
-						disabledNay={false}
-						onClickAye={() => castVote(Vote.AYE)}
-						onClickNay={() => castVote(Vote.NAY)}
-					/>
-				</Form>
-			)}
+				}
+			</Form>
 		</Card>
 	);
 };
@@ -118,5 +106,19 @@ export default styled(CouncilSignals)`
 
 	.signal-btns {
 		margin-top: 2rem !important;
+	}
+
+	.AYE {
+		.ui.button.ui.primary.positive.button {
+			background-color: green_secondary !important;
+			opacity: 1 !important;
+		}
+	}
+
+	.NAY {
+		.ui.button.ui.primary.negative.button{
+			background-color: red_secondary !important;
+			opacity: 1 !important;
+		}
 	}
 `;
