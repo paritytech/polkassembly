@@ -17,7 +17,7 @@ interface Props{
 }
 
 const AyeNayButton = ({ className, disabled, onClickAye, onClickNay } : Props) =>
-	<Form.Group className={className }>
+	<Form.Group className={className}>
 		<Form.Field className={'button-container'} width={8}>
 			<Button
 				fluid
