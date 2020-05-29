@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
@@ -88,7 +89,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
 				{ownVote &&
-					<div className='info text-muted'><a onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</a></div>
+					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
 				}
 			</Form>
 		</Card>
