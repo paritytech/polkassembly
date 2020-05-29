@@ -43,7 +43,7 @@ const VoteMotion = ({
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api } = useContext(ApiPromiseContext);
 
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
@@ -131,8 +131,6 @@ const VoteMotion = ({
 							onAccountChange={onAccountChange}
 						/>
 						<AyeNayButtons
-							disabledAye={!isApiReady}
-							disabledNay={!isApiReady}
 							onClickAye={() => voteMotion(true)}
 							onClickNay={() => voteMotion(false)}
 						/>
