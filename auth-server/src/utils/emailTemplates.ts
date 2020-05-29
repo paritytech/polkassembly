@@ -8,6 +8,7 @@ export const verificationEmailTemplate = `
         For security purposes, please confirm your email address here - <a target="_blank" href="<%= verifyUrl %>">verify your account</a><br/><br/>
 
         See you soon,<br/><br/>
+
         Polkassembly Team
     </p>
 `;
@@ -37,7 +38,7 @@ export const postSubscriptionMailTemplate = `
         <br />
         <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        comment: <%= content %><br />
+        comment: <%= content %><br /><br />
 
         Polkassembly Team
     </p>
@@ -66,7 +67,7 @@ export const ownProposalCreatedEmailTemplate = `
         You have submitted a <%= type %> on chain.<br />
         Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a>
+        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a><br /><br />
 
         Polkassembly Team
     </p>
@@ -79,7 +80,7 @@ export const newProposalCreatedEmailTemplate = `
         There is a new <%= type %> on chain.<br />
         Click on the following link to check it out: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a>
+        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a><br /><br />
 
         Polkassembly Team
     </p>
