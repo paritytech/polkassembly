@@ -17,8 +17,8 @@ const CouncilSignalBar = ({ ayeSignals, className, councilSize, naySignals }: Pr
 
 	return (
 		<div className={className}>
-			<div className='ayes'>{ayeSignals < 2 ? '1 Aye' : `${ayeSignals} Ayes`}</div>
-			<div className='nays'>{naySignals < 2 ? '1 Nay' : `${naySignals} Nays`}</div>
+			<div className='ayes'>{`${ayeSignals} ${ayeSignals < 2 ? 'Aye' : 'Ayes'}`}</div>
+			<div className='nays'>{`${naySignals} ${naySignals < 2 ? 'Nay' : 'Nays'}`}</div>
 			<div className='threshold'/>
 			<div className='signal-bar'>
 				{[...Array(ayeSignals)].map((e, i) => <div className='aye' key={i}/>)}
