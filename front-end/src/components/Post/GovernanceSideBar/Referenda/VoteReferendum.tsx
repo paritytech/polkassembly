@@ -32,7 +32,7 @@ interface Props {
 const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountChange, getAccounts }: Props) => {
 	const { queueNotification } = useContext(NotificationContext);
 	const [lockedBalance, setLockedBalance] = useState<BN | undefined>(undefined);
-	const { api } = useContext(ApiPromiseContext);
+	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message: '' });
 	const CONVICTIONS: [number, number][] = [1, 2, 4, 8, 16, 32].map((lock, index) => [index + 1, lock]);
 
@@ -141,6 +141,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 						/>
 						<VoteLock/>
 						<AyeNayButtons
+							disabled={!isApiReady}
 							onClickAye={() => voteRefrendum(true)}
 							onClickNay={() => voteRefrendum(false)}
 						/>
