@@ -81,6 +81,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 	const text = ejs.render(postSubscriptionMailTemplate, {
 		authorUsername: author.username,
 		content: comment.content,
+		domain: DOMAIN,
 		postUrl,
 		username: user.name || ''
 	});

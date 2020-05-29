@@ -1,7 +1,39 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-export const verificationEmailTemplate = `
+
+const container = (content: string): string => `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style type="text/css">
+                body, p, div {
+                    font-family: arial,helvetica,sans-serif;
+                    font-size: 14px;
+                    color: #000000;
+                }
+                body a {
+                    color: #1188E6;
+                    text-decoration: none;
+                }
+                p { margin: 0; padding: 0; }
+                .polk-container {
+                    margin: 0 auto;
+                    max-width: 600px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="polk-container">
+                ${content}
+            </div>
+        </body>
+    </html>
+`;
+
+export const verificationEmailTemplate = container(`
     <p>
         Welcome aboard <%= username %>!<br/><br/>
 
@@ -11,9 +43,9 @@ export const verificationEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const resetPasswordEmailTemplate = `
+export const resetPasswordEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
@@ -29,9 +61,9 @@ export const resetPasswordEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const postSubscriptionMailTemplate = `
+export const postSubscriptionMailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
@@ -40,13 +72,15 @@ export const postSubscriptionMailTemplate = `
 
         comment: <%= content %><br /><br />
 
+        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a><br /><br />
+
         Polkassembly Team
     </p>
-`;
+`);
 
-export const undoEmailChangeEmailTemplate = `
+export const undoEmailChangeEmailTemplate = container(`
     <p>
-        Hi  <%= username %>!<br/><br/>
+        Hi <%= username %>!<br/><br/>
 
         Your email on polkassembly.io was changed to <%= userEmail %>.<br />
         If you did the change, then everything is fine, you have nothing to do.<br /><br />
@@ -58,9 +92,9 @@ export const undoEmailChangeEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const ownProposalCreatedEmailTemplate = `
+export const ownProposalCreatedEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
@@ -71,9 +105,9 @@ export const ownProposalCreatedEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const newProposalCreatedEmailTemplate = `
+export const newProposalCreatedEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
@@ -84,9 +118,9 @@ export const newProposalCreatedEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const reportContentEmailTemplate = `
+export const reportContentEmailTemplate = container(`
     <p>
         Content Reported.<br />
         Reporter: <%= username %><br />
@@ -98,4 +132,4 @@ export const reportContentEmailTemplate = `
         Report type: <%= reportType %> <br />
         id: <%= contentId %> <br />
     </p>
-`;
+`);
