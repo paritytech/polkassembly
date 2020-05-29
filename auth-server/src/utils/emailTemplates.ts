@@ -70,7 +70,7 @@ export const postSubscriptionMailTemplate = container(`
         <br />
         <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        comment: <%= content %><br /><br />
+        comment: <%- content %><br /><br />
 
         You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a><br /><br />
 

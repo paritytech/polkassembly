@@ -4,6 +4,7 @@
 
 import sgMail from '@sendgrid/mail';
 import ejs from 'ejs';
+import MarkdownIt from 'markdown-it';
 
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
@@ -70,7 +71,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 
 export const sendPostSubscriptionMail = (user: User, author: User, comment: CommentCreationHookDataType, postUrl: string): void => {
 	if (!apiKey) {
-		console.warn('There is a new comment on the post you are subscribed to');
+		console.warn('Post Subscription Email not sent due to missing API key');
 		return;
 	}
 
@@ -78,9 +79,10 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 		return;
 	}
 
+	const md = new MarkdownIt();
 	const text = ejs.render(postSubscriptionMailTemplate, {
 		authorUsername: author.username,
-		content: comment.content,
+		content: md.render(comment.content),
 		domain: DOMAIN,
 		postUrl,
 		username: user.name || ''
