@@ -51,7 +51,7 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 				// don't show the threshold if it's not been calculated yet
 				thresholdPercent > 0 &&  <div
 					id='passingThreshold'
-					style={{ left: thresholdPercent + '%' }}
+					style={{ left: (thresholdPercent > 100 ? 100 : thresholdPercent) + '%' }}
 				>
 					<hr/>
 					<div
