@@ -5,13 +5,13 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
 import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
-import Button from '../../../ui-components/Button';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
 import { Form } from '../../../ui-components/Form';
@@ -81,32 +81,17 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 			<div>
 				{error?.message && <FilteredError className='info' text={error.message}/>}
 			</div>
-			{id && (ownVote
-				? <>
-					<div className='info text-muted'>You voted {ownVote}.</div>
-					<Form standalone={false}>
-						<Form.Group>
-							<Form.Field>
-								<Button
-									fluid
-									basic
-									className='primary negative'
-									onClick={cancelVote}
-								>
-									Cancel Vote
-								</Button>
-							</Form.Field>
-						</Form.Group>
-					</Form>
-				</>
-				: <Form standalone={false}>
-					<AyeNayButtons
-						disabled={false}
-						onClickAye={() => castVote(Vote.AYE)}
-						onClickNay={() => castVote(Vote.NAY)}
-					/>
-				</Form>
-			)}
+			<Form standalone={false}>
+				<AyeNayButtons
+					className={`signal-btns ${ownVote}`}
+					disabled={!id || !!ownVote}
+					onClickAye={() => castVote(Vote.AYE)}
+					onClickNay={() => castVote(Vote.NAY)}
+				/>
+				{ownVote &&
+					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
+				}
+			</Form>
 		</Card>
 	);
 };
@@ -118,5 +103,23 @@ export default styled(CouncilSignals)`
 
 	.errorText {
 		color: red_secondary;
+	}
+
+	.signal-btns {
+		margin-top: 2rem !important;
+	}
+
+	.AYE {
+		.ui.button.ui.primary.positive.button {
+			background-color: green_secondary !important;
+			opacity: 1 !important;
+		}
+	}
+
+	.NAY {
+		.ui.button.ui.primary.negative.button{
+			background-color: red_secondary !important;
+			opacity: 1 !important;
+		}
 	}
 `;

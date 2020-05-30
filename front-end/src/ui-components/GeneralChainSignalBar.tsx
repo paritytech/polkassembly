@@ -23,8 +23,8 @@ const GeneralChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => 
 
 	return (
 		<div className={className}>
-			<div className='ayes'>{ayeSignals} {ayeSignals < 2 ? 'Aye' : 'Ayes'} ({percentAye}%)</div>
-			<div className='nays'>{naySignals} {naySignals < 2 ? 'Nay' : 'Nays'} ({percentNay}%)</div>
+			<div className='ayes'>{ayeSignals} {ayeSignals < 2 ? 'Aye' : 'Ayes'} ({percentAye.toFixed(1)}%)</div>
+			<div className='nays'>{naySignals} {naySignals < 2 ? 'Nay' : 'Nays'} ({percentNay.toFixed(1)}%)</div>
 			<Progress
 				className={'passing'}
 				percent={percentAye}
