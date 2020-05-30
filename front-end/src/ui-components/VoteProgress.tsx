@@ -30,8 +30,8 @@ const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: P
 	const ayeVotesNumber = bnToIntBalance(ayeVotes);
 	const totalVotesNumber = bnToIntBalance(ayeVotes.add(nayVotes));
 	const totalVotesNumberDivider = isPassing 
-	? bnToIntBalance(nayVotes.add(threshold)) || 1
-	: bnToIntBalance(ayeVotes.add(threshold)) || 1;
+	? bnToIntBalance(ayeVotes.add(threshold))
+	: bnToIntBalance(nayVotes.add(threshold)) || 1;
 	const thresholdPercent = isPassing
 		? (1-thresholdNumber/totalVotesNumberDivider)*100
 		: thresholdNumber / totalVotesNumberDivider*100;
