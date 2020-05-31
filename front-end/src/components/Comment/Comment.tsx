@@ -48,7 +48,7 @@ export const Comment = ({ className, comment, last, refetch } : Props) => {
 	const { hash } = useLocation();
 
 	useEffect(() => {
-		if (hash === `#${id}`) {
+		if (hash === `#${id}` || hash === '#end') {
 			setTimeout(
 				() => {
 					const element = document.getElementById(id);
