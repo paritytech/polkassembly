@@ -28,6 +28,7 @@ import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import { Form } from '../../ui-components/Form';
 import Markdown from '../../ui-components/Markdown';
+import copyToClipboard from '../../util/copyToClipboard';
 import ContentForm from '../ContentForm';
 import CommentReactionBar from '../Reactionbar/CommentReactionBar';
 import ReportButton from '../ReportButton';
@@ -89,6 +90,17 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			})
 			.catch((e) => console.error('Error saving comment: ',e));
 	};
+	const copyLink = () => {
+		const url = `${window.location.href.split('#')[0]}#${commentId}`;
+
+		copyToClipboard(url);
+
+		queueNotification({
+			header: 'Copied!',
+			message: 'Comment link copied to clipboard.',
+			status: NotificationStatus.SUCCESS
+		});
+	};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
 	const [editCommentMutation, { error }] = useEditCommentMutation({
 		variables: {
@@ -127,6 +139,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 								{id && <div className='vl'/>}
 								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
+								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Link</Button>}
 							</div>
 						</>
 				}

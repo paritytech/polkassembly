@@ -26,6 +26,7 @@ import EditableCommentContent from './EditableCommentContent';
 
 interface Props{
 	className?: string,
+	anchor: string,
 	comment: CommentFieldsFragment,
 	refetch: (variables?:
 		ReferendumPostAndCommentsQueryVariables |
@@ -41,7 +42,7 @@ interface Props{
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-export const Comment = ({ className, comment, refetch } : Props) => {
+export const Comment = ({ className, comment, anchor, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
@@ -50,7 +51,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 	const defaultAddress = author[defaultAddressField];
 
 	return (
-		<div className={className}>
+		<div id={anchor} className={className}>
 			<Avatar
 				className='avatar'
 				username={author.username}

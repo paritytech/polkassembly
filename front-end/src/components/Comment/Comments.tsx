@@ -41,8 +41,9 @@ interface Props{
 const Comments = ({ className, comments, refetch }: Props) => {
 	return (
 		<div className={className}>
-			{comments.map((comment:CommentFieldsFragment) =>
+			{comments.map((comment:CommentFieldsFragment, index: number) =>
 				<Comment
+					anchor={index === comments.length - 1 ? 'end': comment.id}
 					comment={comment}
 					key={comment.id}
 					refetch={refetch}
