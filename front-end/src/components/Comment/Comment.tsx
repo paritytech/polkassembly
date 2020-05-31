@@ -4,7 +4,8 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
 import {
@@ -44,6 +45,20 @@ interface Props{
 
 export const Comment = ({ className, comment, last, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
+	const { hash } = useLocation();
+
+	useEffect(() => {
+		if (hash === `#${id}`) {
+			setTimeout(
+				() => {
+					const element = document.getElementById(id);
+					if (element) {
+						element.scrollIntoView();
+					}
+				}, 0
+			);
+		}
+	}, [hash, id]);
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
