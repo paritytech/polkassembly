@@ -10,6 +10,7 @@ import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
 import { CommentCreationHookDataType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import getPostCommentLink from '../utils/getPostCommentLink';
 import getPostId from '../utils/getPostId';
 import getPostLink from '../utils/getPostLink';
 import getPostType from '../utils/getPostType';
@@ -48,7 +49,7 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 
 			getUserFromUserId(subscription.user_id)
 				.then((user) => {
-					const url = getPostLink(PostTypeEnum.POST, data.post_id);
+					const url = getPostCommentLink(PostTypeEnum.POST, data);
 					sendPostSubscriptionMail(user, author, data, url);
 				})
 				.catch((error) => console.error(error));

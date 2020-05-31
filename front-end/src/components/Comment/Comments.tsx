@@ -43,9 +43,9 @@ const Comments = ({ className, comments, refetch }: Props) => {
 		<div className={className}>
 			{comments.map((comment:CommentFieldsFragment, index: number) =>
 				<Comment
-					anchor={index === comments.length - 1 ? 'end': comment.id}
 					comment={comment}
 					key={comment.id}
+					last={index === comments.length - 1}
 					refetch={refetch}
 				/>
 			)}
