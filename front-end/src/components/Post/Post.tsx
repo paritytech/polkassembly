@@ -124,6 +124,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isTreasuryProposer
 	);
 
+	const goToBottom = () => {
+		const end = document.getElementById('end');
+		if (end) {
+			end.scrollIntoView();
+		}
+	};
+
 	return (
 		<Grid className={className}>
 			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
@@ -142,6 +149,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+						{post.comments?.length > 1 && <Button className={'social'} onClick={goToBottom}><Icon name='angle down' className='icon'/>Go to bottom</Button>}
 					</div>
 				</div>
 				{ isMotion &&
