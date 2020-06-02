@@ -184,7 +184,7 @@ export const commentCreateHook = async (req: Request, res: Response): Promise<vo
 
 export const onchainLinksCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		console.error(`onchainlink create hook failed ${process.env.HASURA_EVENT_SECRET} != ${req.headers.hasura_event_secret}`);
+		console.error("onchainlink create hook failed, secret don't match");
 		res.status(403).json({ message: messages.UNAUTHORISED });
 		return;
 	}
