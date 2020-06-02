@@ -6,6 +6,7 @@ import styled from '@xstyled/styled-components';
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 import { chainProperties } from 'src/global/networkConstants';
+import HelperTooltip from 'src/ui-components/HelperTooltip';
 import getNetwork from 'src/util/getNetwork';
 
 import { PostVotesQuery, useCouncilAtBlockNumberQuery, useGet_Current_Block_NumberQuery } from '../../../generated/graphql';
@@ -94,7 +95,7 @@ const CouncilSignals = ({ className, blockNumber, data }: Props) => {
 
 	return (
 		<Card className={className}>
-			<h3>Council Signals</h3>
+			<h3>Council Signals <HelperTooltip content='This represents the off-chain votes of council members'/></h3>
 			<CouncilSignalBar
 				ayeSignals={ayes}
 				councilSize={memberSet.size}

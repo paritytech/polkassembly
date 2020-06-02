@@ -12116,7 +12116,7 @@ export type OnchainLinkMotionFragment = (
 
 export type MotionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12361,7 +12361,7 @@ export type OnchainLinkProposalFragment = (
 
 export type ProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12419,7 +12419,7 @@ export type OnchainLinkReferendumFragment = (
 
 export type ReferendumPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12644,7 +12644,7 @@ export type OnchainLinkTreasuryProposalFragment = (
 
 export type TreasuryProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12861,7 +12861,6 @@ export const MotionPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   block_number
   id
   updated_at
@@ -12918,7 +12917,6 @@ export const ProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   block_number
   id
   updated_at
@@ -12980,7 +12978,6 @@ export const ReferendumPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   block_number
   id
   updated_at
@@ -13028,7 +13025,6 @@ export const TreasuryProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   block_number
   id
   updated_at

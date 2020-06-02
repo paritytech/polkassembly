@@ -13,19 +13,21 @@ interface Props {
 }
 
 const GeneralChainSignalBar = ({ ayeSignals, className, naySignals }: Props) => {
-	let percent = 0;
+	let percentAye = 0;
+	let percentNay = 0;
 	const total = ayeSignals + naySignals;
 	if (total > 0) {
-		percent = ayeSignals/total*100;
+		percentAye = ayeSignals/total*100;
+		percentNay = naySignals/total*100;
 	}
 
 	return (
 		<div className={className}>
-			<div className='ayes'>{ayeSignals === 1 ? '1 Aye' : `${ayeSignals} Ayes`}</div>
-			<div className='nays'>{naySignals === 1 ? '1 Nay' : `${naySignals} Nays`}</div>
+			<div className='ayes'>{ayeSignals} {ayeSignals < 2 ? 'Aye' : 'Ayes'} ({percentAye.toFixed(1)}%)</div>
+			<div className='nays'>{naySignals} {naySignals < 2 ? 'Nay' : 'Nays'} ({percentNay.toFixed(1)}%)</div>
 			<Progress
 				className={'passing'}
-				percent={percent}
+				percent={percentAye}
 			/>
 		</div>
 	);

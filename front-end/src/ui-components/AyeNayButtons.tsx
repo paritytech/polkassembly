@@ -10,10 +10,10 @@ import Button from './Button';
 import { Form } from './Form';
 
 interface Props{
-    className?: string;
-    disabled: boolean;
-    onClickAye: () => void;
-    onClickNay: () => void;
+	className?: string;
+	disabled?: boolean;
+	onClickAye: () => void;
+	onClickNay: () => void;
 }
 
 const AyeNayButton = ({ className, disabled, onClickAye, onClickNay } : Props) =>
