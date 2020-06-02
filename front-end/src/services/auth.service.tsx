@@ -7,8 +7,9 @@ import jwt from 'jsonwebtoken';
 import { network } from '../global/networkConstants';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
+import getNetwork from "src/util/getNetwork";
 
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+const NETWORK = getNetwork();
 
 /**
  * Store the JWT token in localstorage
