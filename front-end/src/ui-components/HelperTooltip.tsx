@@ -19,6 +19,7 @@ const myIcon = ({ className }:{className?: string}) => <Icon className={classNam
 
 export const StyledIcon = styled(myIcon)`
 	color: grey_secondary;
+	font-size: 1.3rem !important;
 	margin-left: 0.2rem !important;
 `;
 
