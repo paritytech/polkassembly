@@ -176,7 +176,6 @@ export const commentCreateHook = async (req: Request, res: Response): Promise<vo
 
 	const comment = req.body?.event?.data?.new || {};
 
-	console.log(`Received new comment create hook: ${JSON.stringify(comment)}`);
 
 	const result = await sendPostCommentSubscription(comment);
 
