@@ -22,7 +22,8 @@
   "scripts": {
     "build": "tsc",
     "docker": "docker build -t nomidot_watcher:v1.3.1 . && docker tag nomidot_watcher:v1.3.1 eu.gcr.io/test-installations-222013/nomidot_watcher:v1.3.1 && docker push eu.gcr.io/test-installations-222013/nomidot_watcher:v1.3.1",
-    "reset": "PRISMA_ENDPOINT=http://127.0.0.1:4466 yarn prisma1 reset",
+	"reset": "PRISMA_ENDPOINT=http://127.0.0.1:4466 yarn prisma1 reset",
+	"prisma:deploy": "PRISMA_ENDPOINT=http://127.0.0.1:4466 yarn prisma1 deploy",
 	"local": "PRISMA_ENDPOINT=http://127.0.0.1:4466 ARCHIVE_NODE_ENDPOINT=ws://127.0.0.1:9944 MAX_LAG=1 yarn start",
 	"local:reset": "yarn reset && yarn local",
     "start": "node -r ts-node/register --max-old-space-size=8192 ./src/index.ts"
