@@ -45,7 +45,7 @@ const App = () => {
 
 	if (!WS_PROVIDER) {
 		console.error('REACT_APP_WS_PROVIDER not set');
-		return;
+		return null;
 	}
 
 	const provider = new WsProvider(WS_PROVIDER);
