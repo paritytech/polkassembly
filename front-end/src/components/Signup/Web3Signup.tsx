@@ -10,7 +10,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Divider, DropdownProps } from 'semantic-ui-react';
-import getNetwork from "src/util/getNetwork";
+import getNetwork from 'src/util/getNetwork';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { ModalContext } from '../../context/ModalContext';
@@ -29,7 +29,6 @@ interface Props {
 	className?: string
 	toggleWeb2Signup: () => void
 }
-
 
 const NETWORK = getNetwork();
 const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
