@@ -3,11 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import jwt from 'jsonwebtoken';
+import getNetwork from 'src/util/getNetwork';
 
 import { network } from '../global/networkConstants';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
-import getNetwork from "src/util/getNetwork";
 
 const NETWORK = getNetwork();
 

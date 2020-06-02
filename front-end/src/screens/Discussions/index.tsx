@@ -7,7 +7,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
-import getNetwork from "src/util/getNetwork";
+import getNetwork from 'src/util/getNetwork';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Button from '../../ui-components/Button';
