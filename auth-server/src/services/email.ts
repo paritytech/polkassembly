@@ -146,7 +146,6 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		to: user.email
 	};
 
-	console.log(`Sending own proposal created email: ${JSON.stringify(msg)}`);
 	sgMail.send(msg).catch(e =>
 		console.error('Proposal created email not sent', e));
 };
