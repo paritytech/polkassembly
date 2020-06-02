@@ -169,11 +169,14 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 
 export const commentCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
+		console.error(`comment create hook failed ${process.env.HASURA_EVENT_SECRET} != ${req.headers.hasura_event_secret}`);
 		res.status(403).json({ message: messages.UNAUTHORISED });
 		return;
 	}
 
 	const comment = req.body?.event?.data?.new || {};
+
+	console.log(`Received new comment create hook: ${JSON.stringify(comment)}`);
 
 	const result = await sendPostCommentSubscription(comment);
 
@@ -182,11 +185,14 @@ export const commentCreateHook = async (req: Request, res: Response): Promise<vo
 
 export const onchainLinksCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
+		console.error(`onchainlink create hook failed ${process.env.HASURA_EVENT_SECRET} != ${req.headers.hasura_event_secret}`);
 		res.status(403).json({ message: messages.UNAUTHORISED });
 		return;
 	}
 
 	const onchainLink = req.body?.event?.data?.new || {};
+
+	console.log(`Received new onchainlink create hook: ${JSON.stringify(onchainLink)}`);
 
 	const result = await sendOwnProposalCreated(onchainLink);
 
