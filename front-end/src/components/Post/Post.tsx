@@ -12,7 +12,7 @@ import {
 	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
 	DiscussionPostAndCommentsQueryVariables,
-	MotionPostAndCommentsQuery,
+	DiscussionPostFragment,	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryHookResult,
 	MotionPostAndCommentsQueryVariables,
 	MotionPostFragment,
@@ -40,7 +40,7 @@ import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import GovenanceSideBar from './GovernanceSideBar';
-// import Poll from './Poll';
+import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
@@ -84,6 +84,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let treasuryPost: TreasuryProposalPostFragment | undefined;
 	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
+	let hasPoll = false;
 
 	if (isReferendum){
 		referendumPost = post as ReferendumPostFragment;
@@ -112,6 +113,15 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 	}
+
+	const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
+		if (!isProposal && !isMotion && !isTreasuryProposal) {
+			// eslint-disable-next-line no-extra-parens
+			return (post as DiscussionPostFragment) !== undefined;
+		}
+
+		return false;
+	};
 
 	const isProposalProposer = isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address);
 	const isReferendumProposer = isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address);
@@ -183,7 +193,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
-				{/* post.has_poll && <Poll postId={post.id} /> */}
+				{isDiscussion(post) && post.has_poll && <Poll postId={post.id} />}
 			</Grid.Column>
 		</Grid>
 	);

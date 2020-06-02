@@ -627,34 +627,26 @@ export type Comment_Reactions_Insert_Input = {
 export type Comment_Reactions_Max_Fields = {
    __typename?: 'comment_reactions_max_fields',
   comment_id?: Maybe<Scalars['uuid']>,
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Max_Order_By = {
   comment_id?: Maybe<Order_By>,
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Comment_Reactions_Min_Fields = {
    __typename?: 'comment_reactions_min_fields',
   comment_id?: Maybe<Scalars['uuid']>,
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Comment_Reactions_Min_Order_By = {
   comment_id?: Maybe<Order_By>,
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -5378,35 +5370,27 @@ export type Post_Reactions_Insert_Input = {
 
 export type Post_Reactions_Max_Fields = {
    __typename?: 'post_reactions_max_fields',
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Reactions_Max_Order_By = {
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
 export type Post_Reactions_Min_Fields = {
    __typename?: 'post_reactions_min_fields',
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Reactions_Min_Order_By = {
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
-  updated_at?: Maybe<Order_By>,
   user_id?: Maybe<Order_By>,
 };
 
@@ -6029,7 +6013,7 @@ export type Post_Votes = {
   id: Scalars['Int'],
   post: Posts,
   post_id: Scalars['Int'],
-  updated_at: Scalars['timestamp'],
+  updated_at?: Maybe<Scalars['timestamptz']>,
   user_id: Scalars['Int'],
   vote: Scalars['bpchar'],
   voter?: Maybe<User>,
@@ -6102,7 +6086,7 @@ export type Post_Votes_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>,
   post?: Maybe<Posts_Bool_Exp>,
   post_id?: Maybe<Int_Comparison_Exp>,
-  updated_at?: Maybe<Timestamp_Comparison_Exp>,
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>,
   user_id?: Maybe<Int_Comparison_Exp>,
   vote?: Maybe<Bpchar_Comparison_Exp>,
 };
@@ -6122,22 +6106,20 @@ export type Post_Votes_Insert_Input = {
   id?: Maybe<Scalars['Int']>,
   post?: Maybe<Posts_Obj_Rel_Insert_Input>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
   user_id?: Maybe<Scalars['Int']>,
   vote?: Maybe<Scalars['bpchar']>,
 };
 
 export type Post_Votes_Max_Fields = {
    __typename?: 'post_votes_max_fields',
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Votes_Max_Order_By = {
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
@@ -6146,15 +6128,13 @@ export type Post_Votes_Max_Order_By = {
 
 export type Post_Votes_Min_Fields = {
    __typename?: 'post_votes_min_fields',
-  created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
   user_id?: Maybe<Scalars['Int']>,
 };
 
 export type Post_Votes_Min_Order_By = {
-  created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   post_id?: Maybe<Order_By>,
   updated_at?: Maybe<Order_By>,
@@ -6205,7 +6185,7 @@ export type Post_Votes_Set_Input = {
   created_at?: Maybe<Scalars['timestamp']>,
   id?: Maybe<Scalars['Int']>,
   post_id?: Maybe<Scalars['Int']>,
-  updated_at?: Maybe<Scalars['timestamp']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
   user_id?: Maybe<Scalars['Int']>,
   vote?: Maybe<Scalars['bpchar']>,
 };
@@ -8172,7 +8152,6 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
-  notification?: Maybe<NotificationPreferences>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -8227,7 +8206,6 @@ export type Query_Root = {
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
   nominationsConnection: NominationConnection,
-  notification?: Maybe<NotificationPreferences>,
   offlineValidator?: Maybe<OfflineValidator>,
   offlineValidators: Array<Maybe<OfflineValidator>>,
   offlineValidatorsConnection: OfflineValidatorConnection,
@@ -10268,23 +10246,12 @@ export type Subscription = {
 
 export type Subscription_Root = {
    __typename?: 'subscription_root',
-  blockIndex?: Maybe<BlockIndexSubscriptionPayload>,
-  blockNumber?: Maybe<BlockNumberSubscriptionPayload>,
   comment_reactions: Array<Comment_Reactions>,
   comment_reactions_aggregate: Comment_Reactions_Aggregate,
   comment_reactions_by_pk?: Maybe<Comment_Reactions>,
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   comments_by_pk?: Maybe<Comments>,
-  council?: Maybe<CouncilSubscriptionPayload>,
-  councilMember?: Maybe<CouncilMemberSubscriptionPayload>,
-  era?: Maybe<EraSubscriptionPayload>,
-  heartBeat?: Maybe<HeartBeatSubscriptionPayload>,
-  motion?: Maybe<MotionSubscriptionPayload>,
-  motionProposalArgument?: Maybe<MotionProposalArgumentSubscriptionPayload>,
-  motionStatus?: Maybe<MotionStatusSubscriptionPayload>,
-  nomination?: Maybe<NominationSubscriptionPayload>,
-  offlineValidator?: Maybe<OfflineValidatorSubscriptionPayload>,
   onchain_links: Array<Onchain_Links>,
   onchain_links_aggregate: Onchain_Links_Aggregate,
   onchain_links_by_pk?: Maybe<Onchain_Links>,
@@ -10303,32 +10270,6 @@ export type Subscription_Root = {
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
-  preimage?: Maybe<PreimageSubscriptionPayload>,
-  preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>,
-  preimageStatus?: Maybe<PreimageStatusSubscriptionPayload>,
-  proposal?: Maybe<ProposalSubscriptionPayload>,
-  proposalStatus?: Maybe<ProposalStatusSubscriptionPayload>,
-  referendum?: Maybe<ReferendumSubscriptionPayload>,
-  referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>,
-  reward?: Maybe<RewardSubscriptionPayload>,
-  session?: Maybe<SessionSubscriptionPayload>,
-  slashing?: Maybe<SlashingSubscriptionPayload>,
-  stake?: Maybe<StakeSubscriptionPayload>,
-  subscribed?: Maybe<Scalars['Boolean']>,
-  totalIssuance?: Maybe<TotalIssuanceSubscriptionPayload>,
-  treasurySpendProposal?: Maybe<TreasurySpendProposalSubscriptionPayload>,
-  treasuryStatus?: Maybe<TreasuryStatusSubscriptionPayload>,
-  validator?: Maybe<ValidatorSubscriptionPayload>,
-};
-
-
-export type Subscription_RootBlockIndexArgs = {
-  where?: Maybe<BlockIndexSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootBlockNumberArgs = {
-  where?: Maybe<BlockNumberSubscriptionWhereInput>
 };
 
 
@@ -10375,51 +10316,6 @@ export type Subscription_RootComments_AggregateArgs = {
 
 export type Subscription_RootComments_By_PkArgs = {
   id: Scalars['uuid']
-};
-
-
-export type Subscription_RootCouncilArgs = {
-  where?: Maybe<CouncilSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootCouncilMemberArgs = {
-  where?: Maybe<CouncilMemberSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootEraArgs = {
-  where?: Maybe<EraSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootHeartBeatArgs = {
-  where?: Maybe<HeartBeatSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootMotionArgs = {
-  where?: Maybe<MotionSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootMotionProposalArgumentArgs = {
-  where?: Maybe<MotionProposalArgumentSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootMotionStatusArgs = {
-  where?: Maybe<MotionStatusSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootNominationArgs = {
-  where?: Maybe<NominationSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootOfflineValidatorArgs = {
-  where?: Maybe<OfflineValidatorSubscriptionWhereInput>
 };
 
 
@@ -10558,81 +10454,6 @@ export type Subscription_RootPosts_AggregateArgs = {
 
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int']
-};
-
-
-export type Subscription_RootPreimageArgs = {
-  where?: Maybe<PreimageSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootPreimageArgumentArgs = {
-  where?: Maybe<PreimageArgumentSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootPreimageStatusArgs = {
-  where?: Maybe<PreimageStatusSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootProposalArgs = {
-  where?: Maybe<ProposalSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootProposalStatusArgs = {
-  where?: Maybe<ProposalStatusSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootReferendumArgs = {
-  where?: Maybe<ReferendumSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootReferendumStatusArgs = {
-  where?: Maybe<ReferendumStatusSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootRewardArgs = {
-  where?: Maybe<RewardSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootSessionArgs = {
-  where?: Maybe<SessionSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootSlashingArgs = {
-  where?: Maybe<SlashingSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootStakeArgs = {
-  where?: Maybe<StakeSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootTotalIssuanceArgs = {
-  where?: Maybe<TotalIssuanceSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootTreasurySpendProposalArgs = {
-  where?: Maybe<TreasurySpendProposalSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootTreasuryStatusArgs = {
-  where?: Maybe<TreasuryStatusSubscriptionWhereInput>
-};
-
-
-export type Subscription_RootValidatorArgs = {
-  where?: Maybe<ValidatorSubscriptionWhereInput>
 };
 
 
@@ -12062,7 +11883,7 @@ export type OnchainLinkMotionFragment = (
 
 export type MotionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12307,7 +12128,7 @@ export type OnchainLinkProposalFragment = (
 
 export type ProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12365,7 +12186,7 @@ export type OnchainLinkReferendumFragment = (
 
 export type ReferendumPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12590,7 +12411,7 @@ export type OnchainLinkTreasuryProposalFragment = (
 
 export type TreasuryProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12806,7 +12627,6 @@ export const MotionPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12862,7 +12682,6 @@ export const ProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12923,7 +12742,6 @@ export const ReferendumPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12970,7 +12788,6 @@ export const TreasuryProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
