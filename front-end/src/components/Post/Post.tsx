@@ -41,7 +41,7 @@ import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import GovenanceSideBar from './GovernanceSideBar';
-import Poll from './Poll';
+// import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
@@ -116,7 +116,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	}
 
 	// const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
-	// if (!isProposal && !isMotion && !isTreasuryProposal) {
+	// if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal) {
 	// // eslint-disable-next-line no-extra-parens
 	// return (post as DiscussionPostFragment) !== undefined;
 	// }
@@ -194,7 +194,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
-				{/* {isDiscussion(post) && post.has_poll && <Poll postId={post.id} />} */}
+				{/* {isDiscussion(post) && post.has_poll && <Poll postId={post.id} blockNumber={post.blockNumber} />} */}
 			</Grid.Column>
 		</Grid>
 	);
