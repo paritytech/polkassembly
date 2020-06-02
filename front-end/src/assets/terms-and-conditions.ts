@@ -2,7 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+import getNetwork from "src/util/getNetwork";
+
+const NETWORK = getNetwork();
 
 export default `Polkassembly end user agreement
 ====================

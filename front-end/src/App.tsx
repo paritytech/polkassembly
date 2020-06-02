@@ -41,7 +41,13 @@ import { GlobalStyle } from './ui-components/GlobalStyle';
 
 const App = () => {
 
-	const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER || 'wss://kusama-rpc.polkadot.io';
+	const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER;
+
+	if (!WS_PROVIDER) {
+		console.error('REACT_APP_WS_PROVIDER not set');
+		return;
+	}
+
 	const provider = new WsProvider(WS_PROVIDER);
 
 	return (
