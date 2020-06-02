@@ -1,7 +1,6 @@
 # Stage 1 - the build process
 FROM node:12 as build-deps
 
-ENV REACT_APP_ENV="dev"
 ARG REACT_APP_HASURA_GRAPHQL_URL
 ARG REACT_APP_JWT_PUBLIC_KEY
 ARG REACT_APP_APPNAME="polkassembly"
