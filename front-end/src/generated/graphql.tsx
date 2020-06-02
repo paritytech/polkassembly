@@ -487,6 +487,18 @@ export type BlockNumberWhereUniqueInput = {
   number?: Maybe<Scalars['Int']>,
 };
 
+export type Boolean_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Boolean']>,
+  _gt?: Maybe<Scalars['Boolean']>,
+  _gte?: Maybe<Scalars['Boolean']>,
+  _in?: Maybe<Array<Scalars['Boolean']>>,
+  _is_null?: Maybe<Scalars['Boolean']>,
+  _lt?: Maybe<Scalars['Boolean']>,
+  _lte?: Maybe<Scalars['Boolean']>,
+  _neq?: Maybe<Scalars['Boolean']>,
+  _nin?: Maybe<Array<Scalars['Boolean']>>,
+};
+
 
 export type Bpchar_Comparison_Exp = {
   _eq?: Maybe<Scalars['bpchar']>,
@@ -3000,6 +3012,8 @@ export type Mutation_Root = {
   delete_post_topics_by_pk?: Maybe<Post_Topics>,
   delete_post_types?: Maybe<Post_Types_Mutation_Response>,
   delete_post_types_by_pk?: Maybe<Post_Types>,
+  delete_post_votes?: Maybe<Post_Votes_Mutation_Response>,
+  delete_post_votes_by_pk?: Maybe<Post_Votes>,
   delete_posts?: Maybe<Posts_Mutation_Response>,
   delete_posts_by_pk?: Maybe<Posts>,
   executeRaw: Scalars['Json'],
@@ -3015,6 +3029,8 @@ export type Mutation_Root = {
   insert_post_topics_one?: Maybe<Post_Topics>,
   insert_post_types?: Maybe<Post_Types_Mutation_Response>,
   insert_post_types_one?: Maybe<Post_Types>,
+  insert_post_votes?: Maybe<Post_Votes_Mutation_Response>,
+  insert_post_votes_one?: Maybe<Post_Votes>,
   insert_posts?: Maybe<Posts_Mutation_Response>,
   insert_posts_one?: Maybe<Posts>,
   login?: Maybe<LoginResponse>,
@@ -3093,6 +3109,8 @@ export type Mutation_Root = {
   update_post_topics_by_pk?: Maybe<Post_Topics>,
   update_post_types?: Maybe<Post_Types_Mutation_Response>,
   update_post_types_by_pk?: Maybe<Post_Types>,
+  update_post_votes?: Maybe<Post_Votes_Mutation_Response>,
+  update_post_votes_by_pk?: Maybe<Post_Votes>,
   update_posts?: Maybe<Posts_Mutation_Response>,
   update_posts_by_pk?: Maybe<Posts>,
   upsertBlockIndex: BlockIndex,
@@ -3643,6 +3661,16 @@ export type Mutation_RootDelete_Post_Types_By_PkArgs = {
 };
 
 
+export type Mutation_RootDelete_Post_VotesArgs = {
+  where: Post_Votes_Bool_Exp
+};
+
+
+export type Mutation_RootDelete_Post_Votes_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp
 };
@@ -3728,6 +3756,18 @@ export type Mutation_RootInsert_Post_TypesArgs = {
 export type Mutation_RootInsert_Post_Types_OneArgs = {
   object: Post_Types_Insert_Input,
   on_conflict?: Maybe<Post_Types_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_VotesArgs = {
+  objects: Array<Post_Votes_Insert_Input>,
+  on_conflict?: Maybe<Post_Votes_On_Conflict>
+};
+
+
+export type Mutation_RootInsert_Post_Votes_OneArgs = {
+  object: Post_Votes_Insert_Input,
+  on_conflict?: Maybe<Post_Votes_On_Conflict>
 };
 
 
@@ -4199,6 +4239,20 @@ export type Mutation_RootUpdate_Post_Types_By_PkArgs = {
   _inc?: Maybe<Post_Types_Inc_Input>,
   _set?: Maybe<Post_Types_Set_Input>,
   pk_columns: Post_Types_Pk_Columns_Input
+};
+
+
+export type Mutation_RootUpdate_Post_VotesArgs = {
+  _inc?: Maybe<Post_Votes_Inc_Input>,
+  _set?: Maybe<Post_Votes_Set_Input>,
+  where: Post_Votes_Bool_Exp
+};
+
+
+export type Mutation_RootUpdate_Post_Votes_By_PkArgs = {
+  _inc?: Maybe<Post_Votes_Inc_Input>,
+  _set?: Maybe<Post_Votes_Set_Input>,
+  pk_columns: Post_Votes_Pk_Columns_Input
 };
 
 
@@ -5953,6 +6007,289 @@ export type Post_Types_Variance_Order_By = {
   id?: Maybe<Order_By>,
 };
 
+export type Post_Votes = {
+   __typename?: 'post_votes',
+  created_at: Scalars['timestamp'],
+  id: Scalars['Int'],
+  post: Posts,
+  post_id: Scalars['Int'],
+  updated_at?: Maybe<Scalars['timestamptz']>,
+  user_id: Scalars['Int'],
+  vote: Scalars['bpchar'],
+  voter?: Maybe<User>,
+};
+
+export type Post_Votes_Aggregate = {
+   __typename?: 'post_votes_aggregate',
+  aggregate?: Maybe<Post_Votes_Aggregate_Fields>,
+  nodes: Array<Post_Votes>,
+};
+
+export type Post_Votes_Aggregate_Fields = {
+   __typename?: 'post_votes_aggregate_fields',
+  avg?: Maybe<Post_Votes_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Post_Votes_Max_Fields>,
+  min?: Maybe<Post_Votes_Min_Fields>,
+  stddev?: Maybe<Post_Votes_Stddev_Fields>,
+  stddev_pop?: Maybe<Post_Votes_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Post_Votes_Stddev_Samp_Fields>,
+  sum?: Maybe<Post_Votes_Sum_Fields>,
+  var_pop?: Maybe<Post_Votes_Var_Pop_Fields>,
+  var_samp?: Maybe<Post_Votes_Var_Samp_Fields>,
+  variance?: Maybe<Post_Votes_Variance_Fields>,
+};
+
+
+export type Post_Votes_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Votes_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+export type Post_Votes_Aggregate_Order_By = {
+  avg?: Maybe<Post_Votes_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Post_Votes_Max_Order_By>,
+  min?: Maybe<Post_Votes_Min_Order_By>,
+  stddev?: Maybe<Post_Votes_Stddev_Order_By>,
+  stddev_pop?: Maybe<Post_Votes_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Post_Votes_Stddev_Samp_Order_By>,
+  sum?: Maybe<Post_Votes_Sum_Order_By>,
+  var_pop?: Maybe<Post_Votes_Var_Pop_Order_By>,
+  var_samp?: Maybe<Post_Votes_Var_Samp_Order_By>,
+  variance?: Maybe<Post_Votes_Variance_Order_By>,
+};
+
+export type Post_Votes_Arr_Rel_Insert_Input = {
+  data: Array<Post_Votes_Insert_Input>,
+  on_conflict?: Maybe<Post_Votes_On_Conflict>,
+};
+
+export type Post_Votes_Avg_Fields = {
+   __typename?: 'post_votes_avg_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Avg_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Votes_Bool_Exp>>>,
+  _not?: Maybe<Post_Votes_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Post_Votes_Bool_Exp>>>,
+  created_at?: Maybe<Timestamp_Comparison_Exp>,
+  id?: Maybe<Int_Comparison_Exp>,
+  post?: Maybe<Posts_Bool_Exp>,
+  post_id?: Maybe<Int_Comparison_Exp>,
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>,
+  user_id?: Maybe<Int_Comparison_Exp>,
+  vote?: Maybe<Bpchar_Comparison_Exp>,
+};
+
+export enum Post_Votes_Constraint {
+  PostVotesPkey = 'post_votes_pkey'
+}
+
+export type Post_Votes_Inc_Input = {
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Votes_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  post?: Maybe<Posts_Obj_Rel_Insert_Input>,
+  post_id?: Maybe<Scalars['Int']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
+  user_id?: Maybe<Scalars['Int']>,
+  vote?: Maybe<Scalars['bpchar']>,
+};
+
+export type Post_Votes_Max_Fields = {
+   __typename?: 'post_votes_max_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Votes_Max_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  updated_at?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Min_Fields = {
+   __typename?: 'post_votes_min_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Votes_Min_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  updated_at?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Mutation_Response = {
+   __typename?: 'post_votes_mutation_response',
+  affected_rows: Scalars['Int'],
+  returning: Array<Post_Votes>,
+};
+
+export type Post_Votes_Obj_Rel_Insert_Input = {
+  data: Post_Votes_Insert_Input,
+  on_conflict?: Maybe<Post_Votes_On_Conflict>,
+};
+
+export type Post_Votes_On_Conflict = {
+  constraint: Post_Votes_Constraint,
+  update_columns: Array<Post_Votes_Update_Column>,
+  where?: Maybe<Post_Votes_Bool_Exp>,
+};
+
+export type Post_Votes_Order_By = {
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  post?: Maybe<Posts_Order_By>,
+  post_id?: Maybe<Order_By>,
+  updated_at?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+  vote?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Pk_Columns_Input = {
+  id: Scalars['Int'],
+};
+
+export enum Post_Votes_Select_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id',
+  Vote = 'vote'
+}
+
+export type Post_Votes_Set_Input = {
+  created_at?: Maybe<Scalars['timestamp']>,
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  updated_at?: Maybe<Scalars['timestamptz']>,
+  user_id?: Maybe<Scalars['Int']>,
+  vote?: Maybe<Scalars['bpchar']>,
+};
+
+export type Post_Votes_Stddev_Fields = {
+   __typename?: 'post_votes_stddev_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Stddev_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Stddev_Pop_Fields = {
+   __typename?: 'post_votes_stddev_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Stddev_Samp_Fields = {
+   __typename?: 'post_votes_stddev_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Sum_Fields = {
+   __typename?: 'post_votes_sum_fields',
+  id?: Maybe<Scalars['Int']>,
+  post_id?: Maybe<Scalars['Int']>,
+  user_id?: Maybe<Scalars['Int']>,
+};
+
+export type Post_Votes_Sum_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export enum Post_Votes_Update_Column {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  PostId = 'post_id',
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id',
+  Vote = 'vote'
+}
+
+export type Post_Votes_Var_Pop_Fields = {
+   __typename?: 'post_votes_var_pop_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Var_Samp_Fields = {
+   __typename?: 'post_votes_var_samp_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
+export type Post_Votes_Variance_Fields = {
+   __typename?: 'post_votes_variance_fields',
+  id?: Maybe<Scalars['Float']>,
+  post_id?: Maybe<Scalars['Float']>,
+  user_id?: Maybe<Scalars['Float']>,
+};
+
+export type Post_Votes_Variance_Order_By = {
+  id?: Maybe<Order_By>,
+  post_id?: Maybe<Order_By>,
+  user_id?: Maybe<Order_By>,
+};
+
 export type Posts = {
    __typename?: 'posts',
   author?: Maybe<User>,
@@ -5961,10 +6298,13 @@ export type Posts = {
   comments_aggregate: Comments_Aggregate,
   content?: Maybe<Scalars['String']>,
   created_at: Scalars['timestamptz'],
+  has_poll: Scalars['Boolean'],
   id: Scalars['Int'],
   onchain_link?: Maybe<Onchain_Links>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
+  post_votes: Array<Post_Votes>,
+  post_votes_aggregate: Post_Votes_Aggregate,
   title?: Maybe<Scalars['String']>,
   topic: Post_Topics,
   topic_id: Scalars['Int'],
@@ -6007,6 +6347,24 @@ export type PostsPost_Reactions_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Post_Reactions_Order_By>>,
   where?: Maybe<Post_Reactions_Bool_Exp>
+};
+
+
+export type PostsPost_VotesArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
+};
+
+
+export type PostsPost_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
 };
 
 export type Posts_Aggregate = {
@@ -6078,9 +6436,11 @@ export type Posts_Bool_Exp = {
   comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
+  has_poll?: Maybe<Boolean_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
+  post_votes?: Maybe<Post_Votes_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
   topic?: Maybe<Post_Topics_Bool_Exp>,
   topic_id?: Maybe<Int_Comparison_Exp>,
@@ -6105,9 +6465,11 @@ export type Posts_Insert_Input = {
   comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
+  post_votes?: Maybe<Post_Votes_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
   topic?: Maybe<Post_Topics_Obj_Rel_Insert_Input>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -6184,9 +6546,11 @@ export type Posts_Order_By = {
   comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
+  has_poll?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
+  post_votes_aggregate?: Maybe<Post_Votes_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
   topic?: Maybe<Post_Topics_Order_By>,
   topic_id?: Maybe<Order_By>,
@@ -6203,6 +6567,7 @@ export enum Posts_Select_Column {
   AuthorId = 'author_id',
   Content = 'content',
   CreatedAt = 'created_at',
+  HasPoll = 'has_poll',
   Id = 'id',
   Title = 'title',
   TopicId = 'topic_id',
@@ -6214,6 +6579,7 @@ export type Posts_Set_Input = {
   author_id?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
+  has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   topic_id?: Maybe<Scalars['Int']>,
@@ -6285,6 +6651,7 @@ export enum Posts_Update_Column {
   AuthorId = 'author_id',
   Content = 'content',
   CreatedAt = 'created_at',
+  HasPoll = 'has_poll',
   Id = 'id',
   Title = 'title',
   TopicId = 'topic_id',
@@ -7785,7 +8152,6 @@ export type PublicUser = {
 
 export type Query = {
    __typename?: 'Query',
-  notification?: Maybe<NotificationPreferences>,
   subscription?: Maybe<Subscription>,
   token?: Maybe<Token>,
   user?: Maybe<User>,
@@ -7840,7 +8206,6 @@ export type Query_Root = {
   nomination?: Maybe<Nomination>,
   nominations: Array<Maybe<Nomination>>,
   nominationsConnection: NominationConnection,
-  notification?: Maybe<NotificationPreferences>,
   offlineValidator?: Maybe<OfflineValidator>,
   offlineValidators: Array<Maybe<OfflineValidator>>,
   offlineValidatorsConnection: OfflineValidatorConnection,
@@ -7856,6 +8221,9 @@ export type Query_Root = {
   post_types: Array<Post_Types>,
   post_types_aggregate: Post_Types_Aggregate,
   post_types_by_pk?: Maybe<Post_Types>,
+  post_votes: Array<Post_Votes>,
+  post_votes_aggregate: Post_Votes_Aggregate,
+  post_votes_by_pk?: Maybe<Post_Votes>,
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
@@ -8346,6 +8714,29 @@ export type Query_RootPost_Types_AggregateArgs = {
 
 
 export type Query_RootPost_Types_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+export type Query_RootPost_VotesArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
+};
+
+
+export type Query_RootPost_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
+};
+
+
+export type Query_RootPost_Votes_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -9873,6 +10264,9 @@ export type Subscription_Root = {
   post_types: Array<Post_Types>,
   post_types_aggregate: Post_Types_Aggregate,
   post_types_by_pk?: Maybe<Post_Types>,
+  post_votes: Array<Post_Votes>,
+  post_votes_aggregate: Post_Votes_Aggregate,
+  post_votes_by_pk?: Maybe<Post_Votes>,
   posts: Array<Posts>,
   posts_aggregate: Posts_Aggregate,
   posts_by_pk?: Maybe<Posts>,
@@ -10013,6 +10407,29 @@ export type Subscription_RootPost_Types_AggregateArgs = {
 
 
 export type Subscription_RootPost_Types_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+export type Subscription_RootPost_VotesArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
+};
+
+
+export type Subscription_RootPost_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Votes_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Post_Votes_Order_By>>,
+  where?: Maybe<Post_Votes_Bool_Exp>
+};
+
+
+export type Subscription_RootPost_Votes_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -11016,6 +11433,57 @@ export type GetCouncilMembersQuery = (
   )>> }
 );
 
+export type PostVotesFieldsFragment = (
+  { __typename?: 'post_votes' }
+  & Pick<Post_Votes, 'id' | 'vote' | 'created_at' | 'updated_at'>
+  & { voter: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username' | 'kusama_default_address' | 'polkadot_default_address'>
+  )> }
+);
+
+export type PostVotesQueryVariables = {
+  postId: Scalars['Int']
+};
+
+
+export type PostVotesQuery = (
+  { __typename?: 'query_root' }
+  & { post_votes: Array<(
+    { __typename?: 'post_votes' }
+    & PostVotesFieldsFragment
+  )> }
+);
+
+export type AddPostVoteMutationVariables = {
+  postId: Scalars['Int'],
+  userId: Scalars['Int'],
+  vote: Scalars['bpchar']
+};
+
+
+export type AddPostVoteMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_post_votes_one: Maybe<(
+    { __typename?: 'post_votes' }
+    & Pick<Post_Votes, 'id'>
+  )> }
+);
+
+export type DeleteVoteMutationVariables = {
+  postId: Scalars['Int'],
+  userId: Scalars['Int']
+};
+
+
+export type DeleteVoteMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_post_votes: Maybe<(
+    { __typename?: 'post_votes_mutation_response' }
+    & Pick<Post_Votes_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type EditPostMutationVariables = {
   id: Scalars['Int'],
   content: Scalars['String'],
@@ -11279,7 +11747,8 @@ export type CreatePostMutationVariables = {
   userId: Scalars['Int'],
   content: Scalars['String'],
   topicId: Scalars['Int'],
-  title: Scalars['String']
+  title: Scalars['String'],
+  hasPoll?: Maybe<Scalars['Boolean']>
 };
 
 
@@ -11318,7 +11787,7 @@ export type OnchainLinkDiscussionFragment = (
 
 export type DiscussionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12000,6 +12469,20 @@ export type VerifyEmailMutation = (
   )> }
 );
 
+export const PostVotesFieldsFragmentDoc = gql`
+    fragment postVotesFields on post_votes {
+  id
+  voter {
+    id
+    username
+    kusama_default_address
+    polkadot_default_address
+  }
+  vote
+  created_at
+  updated_at
+}
+    `;
 export const PostReactionFieldsFragmentDoc = gql`
     fragment postReactionFields on post_reactions {
   id
@@ -12066,6 +12549,7 @@ export const DiscussionPostFragmentDoc = gql`
   }
   content
   created_at
+  has_poll
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12523,6 +13007,107 @@ export function useGetCouncilMembersLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type GetCouncilMembersQueryHookResult = ReturnType<typeof useGetCouncilMembersQuery>;
 export type GetCouncilMembersLazyQueryHookResult = ReturnType<typeof useGetCouncilMembersLazyQuery>;
 export type GetCouncilMembersQueryResult = ApolloReactCommon.QueryResult<GetCouncilMembersQuery, GetCouncilMembersQueryVariables>;
+export const PostVotesDocument = gql`
+    query PostVotes($postId: Int!) {
+  post_votes(where: {post_id: {_eq: $postId}}) {
+    ...postVotesFields
+  }
+}
+    ${PostVotesFieldsFragmentDoc}`;
+
+/**
+ * __usePostVotesQuery__
+ *
+ * To run a query within a React component, call `usePostVotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostVotesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostVotesQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostVotesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PostVotesQuery, PostVotesQueryVariables>) {
+        return ApolloReactHooks.useQuery<PostVotesQuery, PostVotesQueryVariables>(PostVotesDocument, baseOptions);
+      }
+export function usePostVotesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PostVotesQuery, PostVotesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PostVotesQuery, PostVotesQueryVariables>(PostVotesDocument, baseOptions);
+        }
+export type PostVotesQueryHookResult = ReturnType<typeof usePostVotesQuery>;
+export type PostVotesLazyQueryHookResult = ReturnType<typeof usePostVotesLazyQuery>;
+export type PostVotesQueryResult = ApolloReactCommon.QueryResult<PostVotesQuery, PostVotesQueryVariables>;
+export const AddPostVoteDocument = gql`
+    mutation AddPostVote($postId: Int!, $userId: Int!, $vote: bpchar!) {
+  __typename
+  insert_post_votes_one(object: {post_id: $postId, user_id: $userId, vote: $vote}) {
+    id
+  }
+}
+    `;
+export type AddPostVoteMutationFn = ApolloReactCommon.MutationFunction<AddPostVoteMutation, AddPostVoteMutationVariables>;
+
+/**
+ * __useAddPostVoteMutation__
+ *
+ * To run a mutation, you first call `useAddPostVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostVoteMutation, { data, loading, error }] = useAddPostVoteMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *      vote: // value for 'vote'
+ *   },
+ * });
+ */
+export function useAddPostVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostVoteMutation, AddPostVoteMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddPostVoteMutation, AddPostVoteMutationVariables>(AddPostVoteDocument, baseOptions);
+      }
+export type AddPostVoteMutationHookResult = ReturnType<typeof useAddPostVoteMutation>;
+export type AddPostVoteMutationResult = ApolloReactCommon.MutationResult<AddPostVoteMutation>;
+export type AddPostVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostVoteMutation, AddPostVoteMutationVariables>;
+export const DeleteVoteDocument = gql`
+    mutation DeleteVote($postId: Int!, $userId: Int!) {
+  delete_post_votes(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}]}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteVoteMutationFn = ApolloReactCommon.MutationFunction<DeleteVoteMutation, DeleteVoteMutationVariables>;
+
+/**
+ * __useDeleteVoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteVoteMutation, { data, loading, error }] = useDeleteVoteMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useDeleteVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteVoteMutation, DeleteVoteMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteVoteMutation, DeleteVoteMutationVariables>(DeleteVoteDocument, baseOptions);
+      }
+export type DeleteVoteMutationHookResult = ReturnType<typeof useDeleteVoteMutation>;
+export type DeleteVoteMutationResult = ApolloReactCommon.MutationResult<DeleteVoteMutation>;
+export type DeleteVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteVoteMutation, DeleteVoteMutationVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {
@@ -13064,9 +13649,9 @@ export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
 export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!, $hasPoll: Boolean) {
   __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId, has_poll: $hasPoll}) {
     affected_rows
     returning {
       id
@@ -13093,6 +13678,7 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePost
  *      content: // value for 'content'
  *      topicId: // value for 'topicId'
  *      title: // value for 'title'
+ *      hasPoll: // value for 'hasPoll'
  *   },
  * });
  */

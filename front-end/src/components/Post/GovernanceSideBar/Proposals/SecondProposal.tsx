@@ -79,15 +79,17 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 	};
 
 	const GetAccountsButton = () =>
-		<Form.Field className='button-container'>
-			<Button
-				primary
-				onClick={getAccounts}
-				size={'large'}
-			>
-				Second
-			</Button>
-		</Form.Field>;
+		<Form.Group>
+			<Form.Field className='button-container'>
+				<Button
+					primary
+					onClick={getAccounts}
+					size={'large'}
+				>
+					Second
+				</Button>
+			</Form.Field>
+		</Form.Group>;
 
 	const noAccount = accounts.length === 0;
 

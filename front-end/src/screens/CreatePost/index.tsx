@@ -3,9 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
-import { Grid } from 'semantic-ui-react';
+import { /* Checkbox, CheckboxProps,*/ Grid } from 'semantic-ui-react';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
@@ -26,6 +26,7 @@ interface Props {
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	// const [hasPoll, setHasPoll] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
@@ -59,6 +60,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			setIsSending(true);
 			createPostMutation({ variables: {
 				content,
+				// hasPoll,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id
@@ -83,6 +85,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
+	// const onPollChanged = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => { setHasPoll(data.checked || false);};
 
 	return (
 		<Grid>
@@ -107,6 +110,12 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						onChange={onContentChange}
 						rules={{ required: true }}
 					/>
+
+					{/* <Form.Group>
+						<Form.Field>
+							<Checkbox label='Add a poll to this discussion' checked={false} toggle onChange={onPollChanged} />
+						</Form.Field>
+					</Form.Group> */}
 
 					<TopicsRadio
 						onTopicSelection={(id: number) => setSetlectedTopic(id)}
@@ -137,5 +146,9 @@ export default styled(CreatePost)`
 		flex-direction: column;
 		justify-content: center;
 		margin-top: 3rem;
+	}
+
+	.hidden {
+		display: none;
 	}
 `;

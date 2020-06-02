@@ -101,15 +101,17 @@ const VoteMotion = ({
 	};
 
 	const GetAccountsButton = () =>
-		<Form.Field className='button-container'>
-			<div>Only council members can vote on motions.</div><br/>
-			<Button
-				primary
-				onClick={getAccounts}
-			>
-				Vote
-			</Button>
-		</Form.Field>;
+		<Form.Group>
+			<Form.Field className='button-container'>
+				<div>Only council members can vote on motions.</div><br/>
+				<Button
+					primary
+					onClick={getAccounts}
+				>
+					Vote
+				</Button>
+			</Form.Field>
+		</Form.Group>;
 
 	const noAccount = accounts.length === 0;
 
