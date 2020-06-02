@@ -14,7 +14,6 @@ This app relies on a database for users, posts, etc. Those need to be in place b
 
 Create a `.env` file with the following environmen variable
 ```
-REACT_APP_ENV="dev"
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
 REACT_APP_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIIBI...wIDAQAB\n-----END PUBLIC KEY-----"
 REACT_APP_APPNAME="polkassembly"
