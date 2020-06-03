@@ -6,6 +6,8 @@ chainName: kusama
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
+  config:
+    PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL: "https://kusama.polkassembly.io/v1/graphql"
   ingress:
     enabled: true
     annotations:
