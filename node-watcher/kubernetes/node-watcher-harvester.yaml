@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: nomidotwatcher-chain-tip
+  name: node-watcher-harvester
   namespace: nodewatcher-staging
   labels:
     stage: staging
     name: nomidotwatcher
     app: nomidotwatcher
-    job-name: nomidotwatcher-chain-tip
+    job-name: node-watcher-harvester
 spec:
   manualSelector: true
   selector:
@@ -15,14 +15,14 @@ spec:
       stage: staging
       name: nomidotwatcher
       app: nomidotwatcher
-      job-name: nomidotwatcher-chain-tip
+      job-name: node-watcher-harvester
   template:
     metadata:
       labels:
         stage: staging
         name: nomidotwatcher
         app: nomidotwatcher
-        job-name: nomidotwatcher-chain-tip
+        job-name: node-watcher-harvester
     spec:
       restartPolicy: Never
       containers:
