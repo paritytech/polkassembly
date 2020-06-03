@@ -6,8 +6,6 @@ chainName: kusama
 nodeSelector: {}
 
 frontend:
-  config:
-    STAGING_REACT_APP_HASURA_GRAPHQL_URL: "https://test.polkassembly.io/v1/graphql"
   ingress:
     enabled: true 
     annotations:
