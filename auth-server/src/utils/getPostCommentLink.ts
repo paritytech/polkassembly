@@ -8,7 +8,11 @@ import { CommentCreationHookDataType, PostType } from '../types';
  * Get Post link type from an event
  */
 export default (type: PostType, data: CommentCreationHookDataType): string => {
-	const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
+	if (!process.env.DOMAIN_NAME || !process.env.DOMAIN_PROTOCOL) {
+		console.error('Domain name and protocol not set');
+		return '';
+	}
+	const DOMAIN = `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}`;
 
 	return `${DOMAIN}/${type}/${data.post_id}#${data.id}`;
 };
