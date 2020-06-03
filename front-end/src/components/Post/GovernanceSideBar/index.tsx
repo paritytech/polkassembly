@@ -9,6 +9,7 @@ import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { APPNAME } from 'src/global/appName';
 import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
 import { VoteThreshold } from 'src/types';
 import { Form } from 'src/ui-components/Form';
@@ -29,8 +30,6 @@ interface Props {
 	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment
 	status?: string
 }
-
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
