@@ -139,7 +139,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 								{id && <div className='vl'/>}
 								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
-								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy Link</Button>}
+								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>
 						</>
 				}
