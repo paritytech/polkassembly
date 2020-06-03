@@ -116,8 +116,8 @@ dockerize:staging-front-end:
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$STAGING_REACT_APP_HASURA_GRAPHQL_URL\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
+  only:
+    - master
   <<: *build_and_push
 
 dockerize:production-front-end:
@@ -127,40 +127,35 @@ dockerize:production-front-end:
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
-  rules:
-    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-auth-server:
   stage: dockerize
   environment:
     name: parity-build
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  only:
+    - master
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
   stage: dockerize
   environment:
     name: parity-build
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  only:
+    - master
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 dockerize-health-monitor:
   stage: dockerize
   environment:
     name: parity-build
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
-
-dockerize-node-watcher:
-  stage: dockerize
-  environment:
-    name: parity-build
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  only:
+    - master
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
 
 #### stage:                        deploy
