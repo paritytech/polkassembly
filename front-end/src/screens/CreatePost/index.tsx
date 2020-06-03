@@ -60,7 +60,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			setIsSending(true);
 			createPostMutation({ variables: {
 				content,
-				// hasPoll,
+				hasPoll: false,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id
