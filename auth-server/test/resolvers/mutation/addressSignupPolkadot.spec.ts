@@ -19,7 +19,7 @@ import messages from '../../../src/utils/messages';
 import { redisSetex, redisGet, redisDel } from '../../../src/redis';
 import { getSetCredentialsKey, getAddressSignupKey, ADDRESS_LOGIN_TTL, getAddressLoginKey } from '../../../src/services/auth';
 
-describe('addressSignup mutation', () => {
+describe('addressSignup mutation on Polkadot', () => {
 	const fakectx: Context = {
 		req: {
 			headers: {}
@@ -28,10 +28,10 @@ describe('addressSignup mutation', () => {
 			cookie: () => {}
 		}
 	} as any;
-	const network = NetworkEnum.KUSAMA;
-	const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
-	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-	const signature = '0x048ffa02dd58557ab7f7ffb316ac75fa942d2bdb83f4480a6698a1f39d6fa1184dd85d95480bfab59f516de578b102a2b01b81ca0e69134f90e0cd08ada7ca88';
+	const network = NetworkEnum.POLKADOT;
+	const address = '15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5'; //Alice
+	const signMessage = 'db204645-4daf-43b6-b023-6c6ce99ee888';
+	const signature = '0x76dc17a59f98939b311637b6a7b76c4c2797c7251a8f03022c48c51f2312dc1c59b981f916898dd8fbacd60b426815807ed0d3e9b67bedcf5290035c3887c58e';
 	let loginResultUserId = 0;
 
 	after(async () => {
@@ -64,7 +64,7 @@ describe('addressSignup mutation', () => {
 
 		const token: any = jwt.decode(result.token);
 
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-polkadot-default']).to.equals(address);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(token.sub);
 
 		const dbuser = await User
@@ -100,7 +100,7 @@ describe('addressSignup mutation', () => {
 		const token: any = jwt.decode(result.token);
 
 		loginResultUserId = Number(token.sub);
-		expect(token['https://hasura.io/jwt/claims']['x-hasura-kusama-default']).to.equals(address);
+		expect(token['https://hasura.io/jwt/claims']['x-hasura-polkadot-default']).to.equals(address);
 		expect(token['https://hasura.io/jwt/claims']['x-hasura-user-id']).to.equals(token.sub);
 	});
 

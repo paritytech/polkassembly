@@ -1,0 +1,6 @@
+- args:
+    name: voter
+    table:
+      name: post_votes
+      schema: public
+  type: delete_remote_relationship

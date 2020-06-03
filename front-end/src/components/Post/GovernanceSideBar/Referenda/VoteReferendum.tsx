@@ -88,15 +88,17 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	};
 
 	const GetAccountsButton = () =>
-		<Form.Field className='button-container'>
-			<Button
-				primary
-				onClick={getAccounts}
-				size={'large'}
-			>
-				Vote
-			</Button>
-		</Form.Field>;
+		<Form.Group>
+			<Form.Field className='button-container'>
+				<Button
+					primary
+					onClick={getAccounts}
+					size={'large'}
+				>
+					Vote
+				</Button>
+			</Form.Field>
+		</Form.Group>;
 
 	const noAccount = accounts.length === 0;
 
