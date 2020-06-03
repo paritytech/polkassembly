@@ -114,7 +114,7 @@ dockerize:staging-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$STAGING_REACT_APP_HASURA_GRAPHQL_URL\")"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=https://test.polkassembly.io/v1/graphql"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
     - master
@@ -125,7 +125,7 @@ dockerize:production-front-end:
   environment:
     name: parity-build
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=https://kusama.polkassembly.io/v1/graphql"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
