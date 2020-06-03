@@ -14,7 +14,7 @@ import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
 
-describe('addressLinkStart mutation', () => {
+describe('addressLinkStart mutation on Kusama', () => {
 	let signupUserId = -1;
 	let fakectx: Context;
 	let dbAddressId: any;
@@ -41,7 +41,7 @@ describe('addressLinkStart mutation', () => {
 			.del();
 	});
 
-	it('should be able to start linking address', async () => {
+	it('should be able to start linking address on Kusama', async () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		const res = await addressLinkStart(undefined, { network, address }, fakectx);
@@ -63,7 +63,7 @@ describe('addressLinkStart mutation', () => {
 		dbAddressId = dbAddress?.id;
 	});
 
-	it('should not be able to start linking address if it already exists in db', async () => {
+	it('should not be able to start linking address if it already exists in db on Kusama', async () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const dbAddress = await Address
@@ -91,7 +91,7 @@ describe('addressLinkStart mutation', () => {
 			.del();
 	});
 
-	it('should not be able to start linking address with wrong jwt', async () => {
+	it('should not be able to start linking address with wrong jwt on Kusama', async () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
 		fakectx.req.headers.authorization = 'Bearer wrong';
