@@ -3,7 +3,6 @@ FROM node:12 as build-deps
 
 ARG REACT_APP_HASURA_GRAPHQL_URL
 ARG REACT_APP_JWT_PUBLIC_KEY
-ARG REACT_APP_APPNAME="polkassembly"
 ARG REACT_APP_NETWORK="kusama"
 ARG REACT_APP_WS_PROVIDER="wss://kusama-rpc.polkadot.io"
 
