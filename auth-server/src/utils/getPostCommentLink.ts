@@ -9,11 +9,10 @@ import { CommentCreationHookDataType, PostType } from '../types';
  */
 export default (type: PostType, data: CommentCreationHookDataType): string => {
 	if (!process.env.DOMAIN_NAME || !process.env.DOMAIN_PROTOCOL) {
-		console.error('Domain name and protocol not set');
+		console.error('Environment variables DOMAIN_NAME or DOMAIN_PROTOCOL not set');
 		return '';
 	}
 	const DOMAIN = `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}`;
 
 	return `${DOMAIN}/${type}/${data.post_id}#${data.id}`;
 };
-
