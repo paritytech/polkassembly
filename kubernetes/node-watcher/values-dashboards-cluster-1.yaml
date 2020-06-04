@@ -7,7 +7,7 @@ cloudsql:
   commandline:
     args: "-instances=test-installations-222013:us-central1:governance-auth=tcp:5432"
 
-node-watcher:
+nodeWatcher:
   dbName: "chain-db"
   dbUser: "chain-db"
   dbPassword: from-gitlab-vars
