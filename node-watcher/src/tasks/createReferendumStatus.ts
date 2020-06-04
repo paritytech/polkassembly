@@ -7,7 +7,7 @@ import { BlockNumber, Hash } from '@polkadot/types/interfaces';
 import { logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
-import { referendumStatus } from '../util/statuses';
+import { referendumStatus, proposalStatus } from '../util/statuses';
 import {
   Cached,
   NomidotReferendumRawEvent,
@@ -113,6 +113,18 @@ const createReferendumStatus: Task<NomidotReferendumStatusUpdate[]> = {
             status,
             uniqueStatus: `${referendumId}_${status}`,
           });
+
+          // if the referendum got executed
+          // and if this is calling a democracy.clearPublicProps
+          // Then clear any previous proposal with status "Proposed"
+
+          if (status === referendumStatus.EXECUTED){
+            const method = await prisma.referendum({referendumId: referendumId}).preimage.arguments.method
+            if (method === 'clearPublicProps'){
+              const proposedProposals = await prisma.proposals({where: {proposalStatus_some: {status: proposalStatus.PROPOSED}}})
+            }
+          }
+
         })
       );
     }
