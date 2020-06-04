@@ -216,14 +216,14 @@ dockerize-node-watcher:
       --dry-run
       --install
       --namespace ${KUBE_NAMESPACE}
-      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
     # install/upgrade node-watcher
     - helm upgrade node-watcher kubernetes/node-watcher
       --install
       --namespace ${KUBE_NAMESPACE}
-      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+      --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
 deploy-staging:
