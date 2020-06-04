@@ -82,7 +82,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 				<Menu className={className} inverted widths={2} id='menubar'>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					<Menu.Menu position="right">
-						<NetworkDropdown isMobile/>
+						{/* <NetworkDropdown isMobile/> */}
 						<Menu.Item onClick={handleToggle} id='rightmenu'>
 							{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
 						</Menu.Item>
@@ -131,7 +131,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 								{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} className='user_items' key={index} {...item} />)}
 							</>
 						}
-						<NetworkDropdown />
+						{/* <NetworkDropdown /> */}
 					</Menu.Menu>
 				</Menu>
 			</Responsive>
