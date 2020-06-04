@@ -7,7 +7,9 @@ import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import { Dropdown, DropdownItemProps,Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import { network } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -27,6 +29,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const [logoutMutation] = useLogoutMutation();
 	const { history } = useRouter();
 	const { setUserDetailsContextState, username } = currentUser;
+	const NETWORK = getNetwork();
 
 	const handleLogout = async () => {
 		try {
@@ -54,6 +57,19 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content:'Settings', icon:'cog', to:'/settings' },
 		{ content: 'Logout', icon:'sign-out', onClick: handleLogout, to:'/' }
 	];
+
+	let NetworkOptions: DropdownItemProps[] = [
+		{
+			children: <div>{network.KUSAMA}</div>,
+			value: network.KUSAMA
+		},
+		{
+			children: <div>{network.POLKADOT}</div>,
+			value: network.POLKADOT
+		}
+	];
+
+	const switchNetwork = <div>{NETWORK === network.KUSAMA ? network.KUSAMA : network.POLKADOT  }</div>;
 
 	const userMenu = currentUser.web3signup && currentUser.defaultAddress
 		? <><AddressComponent address={currentUser.defaultAddress} /></>
@@ -114,6 +130,14 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
 					<Menu.Menu position="right">
+						<Dropdown
+							className={className}
+							pointing='top'
+							// onChange={}
+							options={NetworkOptions}
+							trigger={switchNetwork}
+							value={NETWORK}
+						/>
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
