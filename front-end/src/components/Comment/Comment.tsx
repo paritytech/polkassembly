@@ -4,7 +4,8 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
 import {
@@ -27,6 +28,7 @@ import EditableCommentContent from './EditableCommentContent';
 interface Props{
 	className?: string,
 	comment: CommentFieldsFragment,
+	last: boolean,
 	refetch: (variables?:
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
@@ -41,8 +43,20 @@ interface Props{
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-export const Comment = ({ className, comment, refetch } : Props) => {
+export const Comment = ({ className, comment, last, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
+	const { hash } = useLocation();
+	const commentRef = useRef<HTMLDivElement>(null);
+	const endRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (hash === `#${id}`) {
+			window.scrollTo(0, commentRef.current?.offsetTop || 0);
+		}
+		if (hash === '#end') {
+			window.scrollTo(0, endRef.current?.offsetTop || 0);
+		}
+	}, [hash, id]);
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
@@ -50,13 +64,13 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 	const defaultAddress = author[defaultAddressField];
 
 	return (
-		<div className={className}>
+		<div id={id} ref={commentRef} className={className}>
 			<Avatar
 				className='avatar'
 				username={author.username}
 				size={'lg'}
 			/>
-			<div className='comment-box'>
+			<div id={last ? 'end' : undefined} ref={endRef} className='comment-box'>
 				<CreationLabel
 					className='creation-label'
 					created_at={created_at}
