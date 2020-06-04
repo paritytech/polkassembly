@@ -7,9 +7,8 @@ import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, DropdownItemProps,Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
-import { network } from 'src/global/networkConstants';
-import getNetwork from 'src/util/getNetwork';
+import { Dropdown,Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -29,7 +28,6 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const [logoutMutation] = useLogoutMutation();
 	const { history } = useRouter();
 	const { setUserDetailsContextState, username } = currentUser;
-	const NETWORK = getNetwork();
 
 	const handleLogout = async () => {
 		try {
@@ -58,19 +56,6 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content: 'Logout', icon:'sign-out', onClick: handleLogout, to:'/' }
 	];
 
-	let NetworkOptions: DropdownItemProps[] = [
-		{
-			children: <div>{network.KUSAMA}</div>,
-			value: network.KUSAMA
-		},
-		{
-			children: <div>{network.POLKADOT}</div>,
-			value: network.POLKADOT
-		}
-	];
-
-	const switchNetwork = <div>{NETWORK === network.KUSAMA ? network.KUSAMA : network.POLKADOT  }</div>;
-
 	const userMenu = currentUser.web3signup && currentUser.defaultAddress
 		? <><AddressComponent address={currentUser.defaultAddress} /></>
 		: <><Icon name='user circle' inverted />{username}</>;
@@ -96,9 +81,13 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={className} inverted widths={2} id='menubar'>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
-					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
-					</Menu.Item>
+					<Menu.Menu position="right">
+						<NetworkDropdown isMobile/>
+						<Menu.Item onClick={handleToggle} id='rightmenu'>
+							{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
+						</Menu.Item>
+					</Menu.Menu>
+
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
 					<Sidebar
@@ -130,14 +119,6 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
 					<Menu.Menu position="right">
-						<Dropdown
-							className={className}
-							pointing='top'
-							// onChange={}
-							options={NetworkOptions}
-							trigger={switchNetwork}
-							value={NETWORK}
-						/>
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
@@ -150,6 +131,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 								{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} className='user_items' key={index} {...item} />)}
 							</>
 						}
+						<NetworkDropdown />
 					</Menu.Menu>
 				</Menu>
 			</Responsive>
@@ -209,7 +191,7 @@ export default styled(MenuBar)`
 			border-bottom-color: grey_primary;
 			margin: 0rem!important;
 
-			.desktop_items, #title, #rightmenu {
+			.desktop_items, #title {
 				position: absolute;
 			}
 
@@ -224,9 +206,10 @@ export default styled(MenuBar)`
 			}
 
 			#rightmenu {
-				right: 2rem;
 				font-size: 1.8rem;
 				max-width: 2rem;
+				margin-right: 2rem !important;
+				margin-left: 2rem !important;
 			}
 
 			.item {
