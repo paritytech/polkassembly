@@ -72,4 +72,7 @@ export default styled(NetworkDropdown)`
     color: grey_secondary;
     display: flex !important;
     align-items: center;
+    &:hover {
+		color: white;
+	}
 `;
