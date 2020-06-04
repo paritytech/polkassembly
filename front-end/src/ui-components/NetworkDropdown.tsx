@@ -45,10 +45,9 @@ let NetworkOptions: DropdownItemProps[] = [
 
 interface Props {
     className?: string
-    isMobile?: boolean
 }
 
-const NetworkDropdown = ({ className, isMobile = false }: Props) =>  {
+const NetworkDropdown = ({ className }: Props) =>  {
 
 	const navigate = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		if (data.value === NETWORK){
@@ -60,7 +59,7 @@ const NetworkDropdown = ({ className, isMobile = false }: Props) =>  {
 	};
 
 	return <Dropdown
-		className={`${className} ${isMobile ? 'mobile' : ''}`}
+		className={className}
 		pointing='top'
 		onChange={navigate}
 		options={NetworkOptions}
@@ -73,12 +72,4 @@ export default styled(NetworkDropdown)`
     color: grey_secondary;
     display: flex !important;
     align-items: center;
-    border: solid white;
-    padding: 0 1rem;
-    border-radius: button_radius;
-    border-width: 1px;
-
-    &.mobile {
-        border: none;
-    }
 `;
