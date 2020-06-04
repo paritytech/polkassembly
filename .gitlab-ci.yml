@@ -120,7 +120,7 @@ dockerize:staging-front-end:
     name: parity-build
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${STAGING_REACT_APP_HASURA_GRAPHQL_URL}\")
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf \"${STAGING_REACT_APP_JWT_PUBLIC_KEY}\")
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${STAGING_REACT_APP_JWT_PUBLIC_KEY}"\')"
   only:
     - master
   <<: *build_and_push
@@ -131,7 +131,7 @@ dockerize:production-front-end:
     name: parity-build
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL}\")
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf \"${PRODUCTION_REACT_APP_JWT_PUBLIC_KEY}\")
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${PRODUCTION_REACT_APP_JWT_PUBLIC_KEY}"\')"
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<: *build_and_push
