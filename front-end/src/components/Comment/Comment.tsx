@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
@@ -46,17 +46,15 @@ interface Props{
 export const Comment = ({ className, comment, last, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
 	const { hash } = useLocation();
+	const commentRef = useRef<HTMLDivElement>(null);
+	const endRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (hash === `#${id}` || hash === '#end') {
-			setTimeout(
-				() => {
-					const element = document.getElementById(id);
-					if (element) {
-						element.scrollIntoView();
-					}
-				}, 0
-			);
+		if (hash === `#${id}`) {
+			window.scrollTo(0, commentRef.current?.offsetTop || 0);
+		}
+		if (hash === '#end') {
+			window.scrollTo(0, endRef.current?.offsetTop || 0);
 		}
 	}, [hash, id]);
 
@@ -66,13 +64,13 @@ export const Comment = ({ className, comment, last, refetch } : Props) => {
 	const defaultAddress = author[defaultAddressField];
 
 	return (
-		<div id={id} className={className}>
+		<div id={id} ref={commentRef} className={className}>
 			<Avatar
 				className='avatar'
 				username={author.username}
 				size={'lg'}
 			/>
-			<div id={last ? 'end' : undefined} className='comment-box'>
+			<div id={last ? 'end' : undefined} ref={endRef} className='comment-box'>
 				<CreationLabel
 					className='creation-label'
 					created_at={created_at}

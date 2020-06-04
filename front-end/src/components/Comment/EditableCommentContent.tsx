@@ -4,10 +4,12 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useEffect,useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { GoCheck, GoX } from 'react-icons/go';
+import { useLocation } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import getNetwork from 'src/util/getNetwork';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -60,7 +62,8 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 	const [newContent, setNewContent] = useState(content || '');
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const { queueNotification } = useContext(NotificationContext);
-	const {  control, errors, handleSubmit, setValue } = useForm();
+	const { control, errors, handleSubmit, setValue } = useForm();
+	const { pathname } = useLocation();
 
 	useEffect(() => {
 		isEditing && setValue('content',content);
@@ -91,7 +94,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 			.catch((e) => console.error('Error saving comment: ',e));
 	};
 	const copyLink = () => {
-		const url = `${window.location.href.split('#')[0]}#${commentId}`;
+		const url = `https://${getNetwork()}.polkassembly.io${pathname}#${commentId}`;
 
 		copyToClipboard(url);
 
