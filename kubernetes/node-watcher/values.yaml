@@ -12,7 +12,7 @@ cloudsql:
     args: "-instances=<copy-from-gcp-sql-overview>=tcp:5432"
   instanceCredentials: from-gitlab-vars
 
-nodewatcher:
+nodeWatcher:
   name: node-watcher
   replicaCount: 1
 

@@ -2,64 +2,64 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "nodewatcher.name" -}}
+{{- define "node-watcher.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
-Create unified labels for nodewatcher components
+Create unified labels for node-watcher components
 */}}
-{{- define "nodewatcher.common.matchLabels" -}}
-app: {{ template "nodewatcher.name" . }}
+{{- define "node-watcher.common.matchLabels" -}}
+app: {{ template "node-watcher.name" . }}
 release: {{ .Release.Name }}
 chain: {{ .Values.chainName }}
 {{- end -}}
 
-{{- define "nodewatcher.common.metaLabels" -}}
+{{- define "node-watcher.common.metaLabels" -}}
 chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 heritage: {{ .Release.Service }}
 {{- end -}}
 
-{{- define "nodewatcher.server.labels" -}}
-{{ include "nodewatcher.server.matchLabels" . }}
-{{ include "nodewatcher.common.metaLabels" . }}
+{{- define "node-watcher.server.labels" -}}
+{{ include "node-watcher.server.matchLabels" . }}
+{{ include "node-watcher.common.metaLabels" . }}
 {{- end -}}
 
-{{- define "nodewatcher.server.matchLabels" -}}
-{{ include "nodewatcher.common.matchLabels" . }}
+{{- define "node-watcher.server.matchLabels" -}}
+{{ include "node-watcher.common.matchLabels" . }}
 {{- end -}}
 
-{{- define "nodewatcher.server.selectorLabels" -}}
+{{- define "node-watcher.server.selectorLabels" -}}
 component: {{ .Values.server.name }}
 {{- end -}}
 
-{{- define "nodewatcher.nodewatcher.labels" -}}
-{{ include "nodewatcher.nodewatcher.matchLabels" . }}
-{{ include "nodewatcher.common.metaLabels" . }}
+{{- define "node-watcher.nodeWatcher.labels" -}}
+{{ include "node-watcher.nodeWatcher.matchLabels" . }}
+{{ include "node-watcher.common.metaLabels" . }}
 {{- end -}}
 
-{{- define "nodewatcher.nodewatcher.matchLabels" -}}
-component: {{ .Values.nodewatcher.name }}
-{{ include "nodewatcher.common.matchLabels" . }}
+{{- define "node-watcher.nodeWatcher.matchLabels" -}}
+component: {{ .Values.nodeWatcher.name }}
+{{ include "node-watcher.common.matchLabels" . }}
 {{- end -}}
 
-{{- define "nodewatcher.nodewatcher.selectorLabels" -}}
-component: {{ .Values.nodewatcher.name }}
+{{- define "node-watcher.nodeWatcher.selectorLabels" -}}
+component: {{ .Values.nodeWatcher.name }}
 {{- end -}}
 
 {{/*  
 Config for Prisma
 */}}
 
-{{- define "nodewatcher.prisma-config" -}}
+{{- define "node-watcher.prisma-config" -}}
 port: 4466
 databases:
-  {{ .Values.nodewatcher.dbName }}:
+  {{ .Values.nodeWatcher.dbName }}:
     connector: postgres
     host: 127.0.0.1
     port: 5432
-    user: {{ .Values.nodewatcher.dbUser }}
-    password: {{ .Values.nodewatcher.dbPassword }}
+    user: {{ .Values.nodeWatcher.dbUser }}
+    password: {{ .Values.nodeWatcher.dbPassword }}
     migrations: true
     connectionLimit: 5
     rawAccess: true

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.nodewatcher.name }}
+  name: {{ .Values.nodeWatcher.name }}
   labels:
-    {{- include "nodewatcher.nodewatcher.labels" . | nindent 4 }}
+    {{- include "node-watcher.nodeWatcher.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.nodewatcher.replicaCount }}
+  replicas: {{ .Values.nodeWatcher.replicaCount }}
   selector:
     matchLabels:
-      {{- include "nodewatcher.nodewatcher.selectorLabels" . | nindent 6 }}
+      {{- include "node-watcher.nodeWatcher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "nodewatcher.nodewatcher.matchLabels" . | nindent 8 }}
+        {{- include "node-watcher.nodeWatcher.matchLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Values.nodewatcher.name }}-graphql-engine
-          image: "{{ .Values.nodewatcher.image.repository }}"
-          imagePullPolicy: {{ .Values.nodewatcher.image.pullPolicy }}
+        - name: {{ .Values.nodeWatcher.name }}-graphql-engine
+          image: "{{ .Values.nodeWatcher.image.repository }}"
+          imagePullPolicy: {{ .Values.nodeWatcher.image.pullPolicy }}
           env:
             - name: PRISMA_CONFIG
               valueFrom:
@@ -25,11 +25,11 @@ spec:
                   key: prisma-config
                   name: prisma-config
           ports:
-            - name: {{ .Values.nodewatcher.name }}
-              containerPort: {{ .Values.nodewatcher.service.port }}
+            - name: {{ .Values.nodeWatcher.name }}
+              containerPort: {{ .Values.nodeWatcher.service.port }}
               protocol: TCP
           resources:
-            {{- toYaml .Values.nodewatcher.resources | nindent 12 }}
+            {{- toYaml .Values.nodeWatcher.resources | nindent 12 }}
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.14
           command:
