@@ -115,9 +115,10 @@ export interface ChallengeMessage extends MessageType {
 }
 
 export interface CommentCreationHookDataType {
-    post_id: number;
     author_id: number;
     content: string;
+    id: string;
+    post_id: number;
 }
 
 export interface OnchainLinkType {

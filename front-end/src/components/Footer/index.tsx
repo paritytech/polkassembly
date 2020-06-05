@@ -30,8 +30,13 @@ const Footer = ({ className }:Props ): JSX.Element => {
 					Privacy Policy
 				</Menu.Item>
 				<Menu.Item>
-					<a className='item' href='https://github.com/paritytech/polkassembly/issues' target='blank'>
+					<a href='https://github.com/paritytech/polkassembly/issues' target='blank'>
 						Report an Issue
+					</a>
+				</Menu.Item>
+				<Menu.Item>
+					<a href='#page-container'>
+						Back to top
 					</a>
 				</Menu.Item>
 			</Menu>
@@ -51,6 +56,13 @@ export default styled(Footer)`
 		padding: 1rem 3rem;
 		border-radius: 0rem;
 		height: 100%;
+
+		a {
+			color: grey_secondary;
+			&:hover {
+				color: white;
+			}
+		}
 
 		.item {
 			color: grey_secondary;
