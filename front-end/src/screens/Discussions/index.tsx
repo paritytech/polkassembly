@@ -7,11 +7,14 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
+import getNetwork from 'src/util/getNetwork';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Button from '../../ui-components/Button';
 import InfoBox from '../../ui-components/InfoBox';
 import DiscussionsContainer from './Discussions';
+
+const NETWORK = getNetwork();
 
 const Discussions = ({ className } : {className?: string}) => {
 	const history = useHistory();
@@ -34,7 +37,7 @@ const Discussions = ({ className } : {className?: string}) => {
 						</div>}
 					<InfoBox
 						dismissable={true}
-						content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
+						content={`This is the place to discuss all things ${NETWORK}. Anyone can start a new discussion.`}
 						name='discussionsInfo'
 						title='About Discussions'
 					/>

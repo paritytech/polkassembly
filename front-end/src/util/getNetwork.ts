@@ -10,7 +10,7 @@ import { Network } from '../types';
  */
 
 export default function (): Network {
-	const network = process.env.REACT_APP_NETWORK || 'kusama';
+	const network = process.env.REACT_APP_NETWORK;
 
 	if (!network) {
 		throw Error('Please set the REACT_APP_NETWORK environment variable');

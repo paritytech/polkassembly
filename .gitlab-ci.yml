@@ -123,8 +123,8 @@ dockerize:staging-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
-  only:
-    - master
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   <<: *build_and_push
 
 dockerize:production-front-end:
@@ -141,35 +141,40 @@ dockerize:production-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
-  only:
-    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
 dockerize-auth-server:
   stage: dockerize
   environment:
     name: parity-build
-  only:
-    - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
 dockerize-chain-db-watcher:
   stage: dockerize
   environment:
     name: parity-build
-  only:
-    - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
 dockerize-health-monitor:
   stage: dockerize
   environment:
     name: parity-build
-  only:
-    - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
+
+dockerize-node-watcher:
+  stage: dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
 #### stage:                        deploy
