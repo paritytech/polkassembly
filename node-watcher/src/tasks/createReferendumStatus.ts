@@ -121,10 +121,47 @@ const createReferendumStatus: Task<NomidotReferendumStatusUpdate[]> = {
           if (status === referendumStatus.EXECUTED){
             const method = await prisma.referendum({referendumId: referendumId}).preimage.arguments.method
             if (method === 'clearPublicProps'){
-              const proposedProposals = await prisma.proposals({where: {proposalStatus_some: {status: proposalStatus.PROPOSED}}})
+              // get all the proposal that are not tabled and not cleared
+              // and that where proposed before the current block number
+              const proposedProposals = await prisma.proposals({
+                where: {
+                  AND: [
+                    { proposalStatus_none: { status: proposalStatus.TABLED }},
+                    { proposalStatus_none: { status: proposalStatus.CLEARED }},
+                    {
+                      proposalStatus_some: {
+                        AND: [
+                          { status: proposalStatus.PROPOSED },
+                          { blockNumber: { number_lte: blockNumber.toNumber() }}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              });
+
+              console.log('Found the following to clear', JSON.stringify(proposedProposals, null, 2));
+              proposedProposals.map(async (proposal) => {
+                const { proposalId } = proposal;
+                const status = proposalStatus.CLEARED;
+
+                await prisma.createProposalStatus({
+                  blockNumber: {
+                    connect: {
+                      number: blockNumber.toNumber(),
+                    },
+                  },
+                  proposal: {
+                    connect: {
+                      proposalId,
+                    },
+                  },
+                  status,
+                  uniqueStatus: `${proposalId}_${status}`,
+                });
+              })
             }
           }
-
         })
       );
     }
