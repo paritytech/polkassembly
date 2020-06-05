@@ -154,6 +154,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+						{post.comments?.length > 1 && <a href='#end' className='social'><Icon name='angle down' className='icon'/>Go to bottom</a>}
 					</div>
 				</div>
 				{ isMotion &&
@@ -243,6 +244,16 @@ export default styled(Post)`
 	@media only screen and (max-width: 991px) {
 		.democracy_card {
 			visibility: hidden;
+		}
+	}
+
+	a.social {
+		color: grey_primary;
+		font-size: 1.3rem;
+		font-weight: 500;
+
+		i {
+			font-size: 1.5rem;
 		}
 	}
 `;

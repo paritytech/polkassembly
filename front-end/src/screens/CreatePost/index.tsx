@@ -63,7 +63,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			createPostMutation({ variables: {
 				blockNumber,
 				content,
-				// hasPoll,
+				hasPoll: false,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id

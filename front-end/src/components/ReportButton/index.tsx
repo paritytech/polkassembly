@@ -4,6 +4,7 @@
 
 import React, { useContext,useState } from 'react';
 import { Dropdown, DropdownProps, Icon, TextArea, TextAreaProps } from 'semantic-ui-react';
+import getNetwork from 'src/util/getNetwork';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useReportContentMutation } from '../../generated/graphql';
@@ -25,7 +26,8 @@ const reasons = [
 	'other (please let us know in the field below)'
 ];
 const reasonOptions = reasons.map(reason => ({ key: reason, text: reason, value: reason }));
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+
+const NETWORK = getNetwork();
 
 const ReportButton = function ({ type, contentId }:DiscussionProps) {
 	const [showModal, setShowModal] = useState(false);
