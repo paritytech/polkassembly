@@ -7,6 +7,7 @@ import { BlockNumber, Hash } from '@polkadot/types/interfaces';
 import { logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
+import newProposalStatus from '../util/newProposalStatus';
 import { referendumStatus, proposalStatus } from '../util/statuses';
 import {
   Cached,
@@ -117,10 +118,9 @@ const createReferendumStatus: Task<NomidotReferendumStatusUpdate[]> = {
           // if the referendum got executed
           // and if this is calling a democracy.clearPublicProps
           // Then clear any previous proposal with status "Proposed"
-
           if (status === referendumStatus.EXECUTED){
-            const method = await prisma.referendum({referendumId: referendumId}).preimage.arguments.method
-            if (method === 'clearPublicProps'){
+            const method = await prisma.referendum({referendumId: referendumId})?.preimage()?.method()
+            if (method === 'clearPublicProposals'){
               // get all the proposal that are not tabled and not cleared
               // and that where proposed before the current block number
               const proposedProposals = await prisma.proposals({
@@ -140,25 +140,11 @@ const createReferendumStatus: Task<NomidotReferendumStatusUpdate[]> = {
                 }
               });
 
-              console.log('Found the following to clear', JSON.stringify(proposedProposals, null, 2));
+              // mark these proposals as cleared
               proposedProposals.map(async (proposal) => {
                 const { proposalId } = proposal;
                 const status = proposalStatus.CLEARED;
-
-                await prisma.createProposalStatus({
-                  blockNumber: {
-                    connect: {
-                      number: blockNumber.toNumber(),
-                    },
-                  },
-                  proposal: {
-                    connect: {
-                      proposalId,
-                    },
-                  },
-                  status,
-                  uniqueStatus: `${proposalId}_${status}`,
-                });
+                await newProposalStatus({blockNumber, proposalId, status});
               })
             }
           }
