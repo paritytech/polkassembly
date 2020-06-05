@@ -36,17 +36,17 @@ cache:
 #### stage:                        dockerize
 
 .test_function:                   &test_function
-variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_HOST: tcp://localhost:2375
-tags:
-  - kubernetes-parity-build
-image: docker:18-git
-services:
-  - docker:18-dind
-script:
-  - echo "This is a test"
-  - echo "$BUILD_ARGS"
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://localhost:2375
+  tags:
+    - kubernetes-parity-build
+  image: docker:18-git
+  services:
+    - docker:18-dind
+  script:
+    - echo "This is a test"
+    - echo "$BUILD_ARGS"
 
 
 #### stage:                        test
