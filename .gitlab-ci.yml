@@ -33,6 +33,22 @@ cache:
     - node_modules/
     - packages/*/node_modules/
 
+#### stage:                        dockerize
+
+.test_function:                   &test_function
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+tags:
+  - kubernetes-parity-build
+image: docker:18-git
+services:
+  - docker:18-dind
+script:
+  - echo "This is a test"
+  - echo "$BUILD_ARGS"
+
+
 #### stage:                        test
 
 lint-front-end:
@@ -43,6 +59,8 @@ lint-front-end:
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - echo "how is it?"
+    - echo "$BUILD_ARGS"
   image: node:12
   interruptible:                   true
   dependencies:                    []
@@ -59,6 +77,7 @@ lint-front-end:
       - "front-end/**/*"
   tags:
     - linux-docker
+  <<: *test_function
 
 lint-back-end:
   stage: test
