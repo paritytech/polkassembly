@@ -99,7 +99,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
-		console.log('postStatus',postStatus);
 	}
 
 	if (isMotion) {
