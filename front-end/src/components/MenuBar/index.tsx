@@ -7,8 +7,9 @@ import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import { Dropdown,Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 
+// import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/graphql';
@@ -80,9 +81,13 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={className} inverted widths={2} id='menubar'>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
-					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
-					</Menu.Item>
+					<Menu.Menu position="right">
+						{/* <NetworkDropdown /> */}
+						<Menu.Item onClick={handleToggle} id='rightmenu'>
+							{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
+						</Menu.Item>
+					</Menu.Menu>
+
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
 					<Sidebar
@@ -114,6 +119,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
 					<Menu.Menu position="right">
+						{/* <NetworkDropdown /> */}
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
@@ -185,7 +191,7 @@ export default styled(MenuBar)`
 			border-bottom-color: grey_primary;
 			margin: 0rem!important;
 
-			.desktop_items, #title, #rightmenu {
+			.desktop_items, #title {
 				position: absolute;
 			}
 
@@ -200,9 +206,10 @@ export default styled(MenuBar)`
 			}
 
 			#rightmenu {
-				right: 2rem;
-				font-size: 1.8rem;
+				font-size: lg;
 				max-width: 2rem;
+				margin-right: 2rem !important;
+				margin-left: 2rem !important;
 			}
 
 			.item {
