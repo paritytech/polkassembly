@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
     text-transform: capitalize;
 
     img {
-        width: 4rem;
+        width: 3rem;
         border-radius: 50%;
         margin-right: 0.5rem;
     }
@@ -72,4 +72,7 @@ export default styled(NetworkDropdown)`
     color: grey_secondary;
     display: flex !important;
     align-items: center;
+    &:hover {
+		color: white;
+	}
 `;

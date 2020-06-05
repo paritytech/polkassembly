@@ -206,7 +206,7 @@ export default styled(MenuBar)`
 			}
 
 			#rightmenu {
-				font-size: 1.8rem;
+				font-size: lg;
 				max-width: 2rem;
 				margin-right: 2rem !important;
 				margin-left: 2rem !important;
