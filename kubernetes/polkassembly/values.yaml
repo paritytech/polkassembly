@@ -54,12 +54,12 @@ hasura:
     HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
     HASURA_GRAPHQL_ENABLED_LOG_TYPES: "startup, http-log, webhook-log, websocket-log, query-log"
     HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
-    HASURA_POST_SUBSCRIPTION_HOOK: "http://auth-server-service:8010/auth/graphql"
+    HASURA_POST_SUBSCRIPTION_HOOK: http://auth-server-service:8010/auth/graphql
     HASURA_POST_SUBSCRIPTION_SECRET: "from-gitlab-vars"
-    HASURA_COMMENT_CREATE_EVENT_HOOK: "http://auth-server-service:8010/auth/event/comment/create"
+    HASURA_COMMENT_CREATE_EVENT_HOOK: http://auth-server-service:8010/auth/event/comment/create
     HASURA_EVENT_SECRET: "from-gitlab-vars"
-    HASURA_AUTH_SERVER_REMOTE_SCHEMA: "http://auth-server-service:8010/auth/graphql"
-    HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://35.189.196.74:4000"
+    HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
+    HASURA_CHAIN_DB_REMOTE_SCHEMA: "from-gitlab-vars"
     HASURA_ONCHAIN_LINK_CREATE_HOOK: "http://auth-server-service:8010/auth/event/onchain_link/create"
 
   secret:
@@ -84,12 +84,13 @@ hasura:
   affinity: {}
 
 authServer:
+  #name: authServer
   name: auth-server
   replicaCount: 1
 
   config:
     DOMAIN_NAME: test.polkassembly.io
-    NODE_ENV: production
+    NODE_ENV: development
     DOMAIN_PROTOCOL: https://
     PORT: "8010"
     DATABASE_URL: from-gtilab-vars
