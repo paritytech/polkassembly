@@ -75,4 +75,5 @@ export default styled(NetworkDropdown)`
     &:hover {
 		color: white;
 	}
+	margin: 0 1.2rem;
 `;
