@@ -113,9 +113,16 @@ dockerize:staging-front-end:
   stage: dockerize
   environment:
     name: parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://test.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohj4C7n/5PzCANMukmXF\nwE/wGK9vBRnaWZCODu5zg9mcVrgiuFlubONSoVg9DSCxSlPmaKjAZUy1xARNKPgL\ncaEkxteT6d5p50iiL0iMTtz85Y5yefoQAWFNjgN+VbiVEycWvw5uKYOrQkUIuxYm\njcI5xsmDU48UTha1HFgC6r+It9ViZrsfTAwj4z9lvOcPphVLh9TFaON8LnWPisly\nF4r6uPY6nLdDVvbDRlWoAEeg7mXaxBFWZidi9pKBMFavxyHhH3iyg4dCvxKzEH+X\nRA9i6Zw1c02Jgyd6viBAkB963SrGTAF+TNzepidoK5B/sIZD62OseoMX8fBXEu5e\nmQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK: "kusama"
+    REACT_APP_WS_PROVIDER: "wss://kusama-rpc.polkadot.io"
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$STAGING_REACT_APP_HASURA_GRAPHQL_URL\")"
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
   <<: *build_and_push
@@ -124,9 +131,16 @@ dockerize:production-front-end:
   stage: dockerize
   environment:
     name: parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:      "https://kusama.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:          "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:                "kusama"
+    REACT_APP_WS_PROVIDER:            "wss://kusama-rpc.polkadot.io"
   before_script:
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$PRODUCTION_REACT_APP_HASURA_GRAPHQL_URL\")"
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$PRODUCTION_REACT_APP_JWT_PUBLIC_KEY"\')"
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
