@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Markdown = ({ className, isPreview=false, md }: Props) => {
-	return <ReactMarkdown className={isPreview ? `${className} mde-preview-content` : className} source={md}/>;
+	return <ReactMarkdown className={isPreview ? `${className} mde-preview-content` : className} source={md} linkTarget='_blank' />;
 };
 
 export default styled(Markdown)`
@@ -31,8 +31,8 @@ export default styled(Markdown)`
 		h1 {
 			font-size: 3rem;
 			margin-bottom: 3rem;
-		} 
-		
+		}
+
 		h2 {
 			font-size: 2.4rem;
 			margin: 3rem 0 2rem 0;
@@ -98,7 +98,7 @@ export default styled(Markdown)`
 			}
 		}
 	}
-	
+
 	&.mde-preview-content {
 
 		h1, h2, h3, h4 {
