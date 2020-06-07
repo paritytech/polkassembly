@@ -34,6 +34,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import ScrollToTopButton from '../../ui-components/ScrollToTopButton';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
@@ -154,7 +155,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
-						{post.comments?.length > 1 && <a href='#end' className='social'><Icon name='angle down' className='icon'/>Go to bottom</a>}
 					</div>
 				</div>
 				{ isMotion &&
@@ -196,6 +196,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					status={postStatus}
 				/>
 				{/* {isDiscussion(post) && post.has_poll && <Poll postId={post.id} />} */}
+				<ScrollToTopButton />
 			</Grid.Column>
 		</Grid>
 	);
