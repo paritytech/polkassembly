@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as React from 'react';
+import React from 'react';
 
 import {
 	CommentFieldsFragment,
@@ -41,10 +41,11 @@ interface Props{
 const Comments = ({ className, comments, refetch }: Props) => {
 	return (
 		<div className={className}>
-			{comments.map((comment:CommentFieldsFragment) =>
+			{comments.map((comment:CommentFieldsFragment, index: number) =>
 				<Comment
 					comment={comment}
 					key={comment.id}
+					last={index === comments.length - 1}
 					refetch={refetch}
 				/>
 			)}
