@@ -10,6 +10,9 @@ variables:
   SCAN_KUBERNETES_MANIFESTS:       "true"
   ANALYZER_TARGET_DIR:             "auth-server/"
   DS_DISABLE_DIND:                 "true"
+  # Variables for build_and_push without overriding any job variable
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
 
 # Enable Gitlab's security scanning
 include:
@@ -92,9 +95,6 @@ lint-chain-db-watcher:
 #### stage:                        dockerize
 
 .build_and_push:                   &build_and_push
-  variables:
-    DOCKER_DRIVER: overlay2
-    DOCKER_HOST: tcp://localhost:2375
   tags:
     - kubernetes-parity-build
   image: docker:18-git
