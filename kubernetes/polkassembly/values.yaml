@@ -89,7 +89,7 @@ authServer:
 
   config:
     DOMAIN_NAME: test.polkassembly.io
-    NODE_ENV: production
+    NODE_ENV: development
     DOMAIN_PROTOCOL: https://
     PORT: "8010"
     DATABASE_URL: from-gtilab-vars
