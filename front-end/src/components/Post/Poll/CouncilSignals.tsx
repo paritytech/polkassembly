@@ -6,9 +6,7 @@ import { QueryResult } from '@apollo/react-common';
 import styled from '@xstyled/styled-components';
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
-import getNetwork from 'src/util/getNetwork';
 
 import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables,PostVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
@@ -21,19 +19,17 @@ import getEncodedAddress from '../../../util/getEncodedAddress';
 interface Props {
 	className?: string
 	data?: PostVotesQuery | undefined
-	blockNumber?: number
+	pollBlockNumberEnd?: number | null | undefined
 }
 
-const CouncilSignals = ({ className, blockNumber, data }: Props) => {
-	const network = getNetwork();
+const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
 	const currentBlockNumber = useGetCurrentBlockNumberQuery();
-	const councilAtPostBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: blockNumber || 0 } });
+	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: pollBlockNumberEnd || 0 } });
 	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0 } });
-	const TWO_WEEKS = chainProperties?.[network]?.twoWeeksBlocks;
 
 	const getCouncilMembers = (councilAtBlockNumber: QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>): Set<string> => {
 		const memberSet = new Set<string>();
@@ -48,17 +44,17 @@ const CouncilSignals = ({ className, blockNumber, data }: Props) => {
 
 	useEffect(() => {
 		const currentBlock = currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0;
-		const pollClosingBlockNumber = (blockNumber || 0) + TWO_WEEKS;
+		const pollClosingBlockNumber = pollBlockNumberEnd || 0;
 		let memberSet = new Set<string>();
 
 		if (pollClosingBlockNumber > currentBlock) {
 			memberSet = getCouncilMembers(councilAtCurrentBlockNumber);
 		} else {
-			memberSet = getCouncilMembers(councilAtPostBlockNumber);
+			memberSet = getCouncilMembers(councilAtPollEndBlockNumber);
 		}
 
 		setMemberSet(memberSet);
-	}, [blockNumber, currentBlockNumber, councilAtPostBlockNumber, councilAtCurrentBlockNumber, TWO_WEEKS]);
+	}, [pollBlockNumberEnd, currentBlockNumber, councilAtPollEndBlockNumber, councilAtCurrentBlockNumber]);
 
 	useEffect(() => {
 		let ayes = 0;
