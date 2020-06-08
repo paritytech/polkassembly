@@ -108,7 +108,8 @@ describe('addressLinkConfirm mutation', () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const fakeSignature = '0xaaaaaaaaaacc2e357ec98af1cde7d446b6458483c33c23a3da16e9a7bd5ec56ffeec92d0da02c53e71d164f6e8b69a29b58f47ab4ffb11db429f65b479b65189';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -132,7 +133,7 @@ describe('addressLinkConfirm mutation', () => {
 		const network = NetworkEnum.POLKADOT;
 		const address = '14E5nqKAp3oAJcmzgZhUD2RcptBeUBScxKHgJKU4HPNcKVf3'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const fakeSignature = '0xaaaaaaaaaacc2e357ec98af1cde7d446b6458483c33c23a3da16e9a7bd5ec56ffeec92d0da02c53e71d164f6e8b69a29b58f47ab4ffb11db429f65b479b65189';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
