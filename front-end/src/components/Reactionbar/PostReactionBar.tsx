@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import styled from '@xstyled/styled-components';
 import React from 'react';
 
 import { usePostReactionsQuery } from '../../generated/graphql';
@@ -67,11 +66,4 @@ const PostReactionBar = function ({ className, postId }: Props) {
 	);
 };
 
-export default styled(PostReactionBar)`
-	background-color: white;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
-	margin-bottom: 1rem;
-	padding: 5px;
-`;
+export default PostReactionBar;
