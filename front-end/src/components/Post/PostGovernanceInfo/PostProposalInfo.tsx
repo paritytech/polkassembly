@@ -53,8 +53,11 @@ const PostProposalInfo = ({ onchainLink }: Props) => {
 							? <>
 								<h6>Arguments</h6>
 								{preimageArguments.map((element, index) => {
-									return <div className={'methodArguments'} key={index}>
-										<span key={index}>{element.name}: {element.value}</span>
+									return <div className={element.name !== 'account' ? 'methodArguments' : ''} key={index}>
+										{element.name === 'account'
+											? <AddressComponent address={element.value} key={index}/>
+											: <span key={index}>{element.name}: {element.value}</span>
+										}
 									</div>;
 								})}
 							</>
