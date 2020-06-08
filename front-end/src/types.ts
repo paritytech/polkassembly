@@ -149,3 +149,6 @@ export interface ReactionMapFields {
 	userNames: string[]
 }
 
+export interface BlockTimeContextType {
+    blocktime: number
+}

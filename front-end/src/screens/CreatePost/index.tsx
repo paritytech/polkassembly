@@ -2,16 +2,14 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
-import getNetwork from 'src/util/getNetwork';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
+import { BlockTimeContext } from '../../context/BlockTimeContext';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
@@ -36,25 +34,13 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
-	const network = getNetwork();
-	const { api, isApiReady } = useContext(ApiPromiseContext);
-	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
-	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
+	const { blocktime } = useContext(BlockTimeContext);
 
 	const { data } = useGetCurrentBlockNumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
-
-	useEffect(() => {
-
-		if (!isApiReady) {
-			return;
-		}
-
-		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
-	}, [api, isApiReady]);
 
 	const createSubscription = (postId: number) => {
 		if (!currentUser?.notification?.postCreated) {

@@ -7,9 +7,8 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
+import { BlockTimeContext } from 'src/context/BlockTimeContext';
 import blockToTime from 'src/util/blockToTime';
-import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	className?: string
@@ -22,13 +21,11 @@ const DivContent = styled.div`
 `;
 
 const BlockCountdown = ({ className, endBlock }:Props ) => {
-	const network = getNetwork();
 	const ZERO = new BN(0);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [currentBlock, setCurrentBlock] = useState(ZERO);
 	const blocksRemaining = endBlock - currentBlock.toNumber();
-	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
-	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
+	const { blocktime } = useContext(BlockTimeContext);
 
 	useEffect(() => {
 		if (!isApiReady) {
@@ -36,8 +33,6 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 		}
 
 		let unsubscribe: () => void;
-
-		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
 
 		api.derive.chain.bestNumber((number) => {
 			setCurrentBlock(number);

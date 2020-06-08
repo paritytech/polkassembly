@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import MenuBar from './components/MenuBar';
 import Modal from './components/Modal';
 import Notifications from './components/Notifications';
+import { BlockTimeProvider } from './context/BlockTimeContext';
 import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
@@ -57,84 +58,86 @@ const App = () => {
 					<NotificationProvider>
 						<ModalProvider>
 							<UserDetailsProvider>
-								<Apollo>
-									<GlobalStyle />
-									<Notifications/>
-									<Modal/>
-									<ApiPromiseContextProvider provider={provider}>
-										<div id='page-container'>
-											<MenuBar />
-											<Container>
-												<Switch>
-													<Route exact path="/">
-														<Home/>
-													</Route>
-													<Route path="/discussions">
-														<Discussions/>
-													</Route>
-													<Route path="/login">
-														<LoginForm/>
-													</Route>
-													<Route path="/post/create" >
-														<CreatePost/>
-													</Route>
-													<Route exact path="/motion/:id" >
-														<PostMotion/>
-													</Route>
-													<Route exact path="/proposal/:id" >
-														<PostProposal/>
-													</Route>
-													<Route exact path="/referendum/:id" >
-														<PostReferendum/>
-													</Route>
-													<Route exact path="/treasury/:id">
-														<PostTreasury/>
-													</Route>
-													<Route exact path="/post/:id" >
-														<PostDiscussion/>
-													</Route>
-													<Route path="/onchain" >
-														<OnChain/>
-													</Route>
-													<Route path="/request-reset-password">
-														<RequestResetPassword/>
-													</Route>
-													<Route path="/reset-password">
-														<ResetPassword/>
-													</Route>
-													<Route path="/signup">
-														<SignupForm/>
-													</Route>
-													<Route path="/verify-email/:token">
-														<VerifyEmail/>
-													</Route>
-													<Route path="/undo-email-change/:token">
-														<UndoEmailChange/>
-													</Route>
-													<Route path="/settings">
-														<Settings/>
-													</Route>
-													<Route path="/notification-settings">
-														<NotificationSettings/>
-													</Route>
-													<Route path="/terms-and-conditions">
-														<TermsAndConditions/>
-													</Route>
-													<Route path="/terms-of-website">
-														<TermsOfWebsite/>
-													</Route>
-													<Route path="/privacy">
-														<PrivacyPolicy/>
-													</Route>
-													<Route path="*">
-														<NotFound/>
-													</Route>
-												</Switch>
-											</Container>
-											<Footer />
-										</div>
-									</ApiPromiseContextProvider>
-								</Apollo>
+								<BlockTimeProvider>
+									<Apollo>
+										<GlobalStyle />
+										<Notifications/>
+										<Modal/>
+										<ApiPromiseContextProvider provider={provider}>
+											<div id='page-container'>
+												<MenuBar />
+												<Container>
+													<Switch>
+														<Route exact path="/">
+															<Home/>
+														</Route>
+														<Route path="/discussions">
+															<Discussions/>
+														</Route>
+														<Route path="/login">
+															<LoginForm/>
+														</Route>
+														<Route path="/post/create" >
+															<CreatePost/>
+														</Route>
+														<Route exact path="/motion/:id" >
+															<PostMotion/>
+														</Route>
+														<Route exact path="/proposal/:id" >
+															<PostProposal/>
+														</Route>
+														<Route exact path="/referendum/:id" >
+															<PostReferendum/>
+														</Route>
+														<Route exact path="/treasury/:id">
+															<PostTreasury/>
+														</Route>
+														<Route exact path="/post/:id" >
+															<PostDiscussion/>
+														</Route>
+														<Route path="/onchain" >
+															<OnChain/>
+														</Route>
+														<Route path="/request-reset-password">
+															<RequestResetPassword/>
+														</Route>
+														<Route path="/reset-password">
+															<ResetPassword/>
+														</Route>
+														<Route path="/signup">
+															<SignupForm/>
+														</Route>
+														<Route path="/verify-email/:token">
+															<VerifyEmail/>
+														</Route>
+														<Route path="/undo-email-change/:token">
+															<UndoEmailChange/>
+														</Route>
+														<Route path="/settings">
+															<Settings/>
+														</Route>
+														<Route path="/notification-settings">
+															<NotificationSettings/>
+														</Route>
+														<Route path="/terms-and-conditions">
+															<TermsAndConditions/>
+														</Route>
+														<Route path="/terms-of-website">
+															<TermsOfWebsite/>
+														</Route>
+														<Route path="/privacy">
+															<PrivacyPolicy/>
+														</Route>
+														<Route path="*">
+															<NotFound/>
+														</Route>
+													</Switch>
+												</Container>
+												<Footer />
+											</div>
+										</ApiPromiseContextProvider>
+									</Apollo>
+								</BlockTimeProvider>
 							</UserDetailsProvider>
 						</ModalProvider>
 					</NotificationProvider>
