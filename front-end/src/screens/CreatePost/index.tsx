@@ -59,15 +59,19 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			.catch((e) => console.error('Error subscribing to post',e));
 	};
 
-	const getEndBlockNumber = (currentBlock: number | undefined): number => {
-		const endBlock = Math.floor(TWO_WEEKS / blocktime);
-
-		return (currentBlock || 0) + endBlock;
-	};
-
 	const handleSend = () => {
 		const blockNumber = data?.blockNumbers?.[0]?.number;
-		const pollBlockNumberEnd = getEndBlockNumber(blockNumber);
+
+		if (!blockNumber) {
+			return queueNotification({
+				header: 'Failed to get current block number!',
+				message: 'Failed',
+				status: NotificationStatus.ERROR
+			});
+		}
+
+		const pollBlockNumberEnd = blockNumber + Math.floor(TWO_WEEKS / blocktime);
+
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
