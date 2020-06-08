@@ -141,7 +141,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Add a poll to this discussion' checked={false} toggle onChange={onPollChanged} />
+							<Checkbox label='Add a poll to this discussion' checked={hasPoll} toggle onChange={onPollChanged} />
 						</Form.Field>
 					</Form.Group>
 
