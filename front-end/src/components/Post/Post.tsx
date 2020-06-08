@@ -34,7 +34,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
-import ScrollToTopButton from '../../ui-components/ScrollToTopButton';
+import ScrollToTop from '../../ui-components/ScrollToTop';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
@@ -196,7 +196,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					status={postStatus}
 				/>
 				{/* {isDiscussion(post) && post.has_poll && <Poll postId={post.id} />} */}
-				<ScrollToTopButton />
+				<ScrollToTop/>
 			</Grid.Column>
 		</Grid>
 	);
