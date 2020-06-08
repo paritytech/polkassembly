@@ -2,6 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { QueryResult } from '@apollo/react-common';
 import styled from '@xstyled/styled-components';
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
@@ -9,7 +10,7 @@ import { chainProperties } from 'src/global/networkConstants';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import getNetwork from 'src/util/getNetwork';
 
-import { PostVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
+import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables,PostVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -34,27 +35,26 @@ const CouncilSignals = ({ className, blockNumber, data }: Props) => {
 	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0 } });
 	const TWO_WEEKS = chainProperties?.[network]?.twoWeeksBlocks;
 
+	const getCouncilMembers = (councilAtBlockNumber: QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>): Set<string> => {
+		const memberSet = new Set<string>();
+		councilAtBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
+			const address = getEncodedAddress(member.address);
+			if (address) {
+				memberSet.add(address);
+			}
+		});
+		return memberSet;
+	};
+
 	useEffect(() => {
 		const currentBlock = currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0;
 		const pollClosingBlockNumber = (blockNumber || 0) + TWO_WEEKS;
-
-		const memberSet = new Set<string>();
+		let memberSet = new Set<string>();
 
 		if (pollClosingBlockNumber > currentBlock) {
-			councilAtCurrentBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
-				const address = getEncodedAddress(member.address);
-				if (address) {
-					memberSet.add(address);
-				}
-			});
+			memberSet = getCouncilMembers(councilAtCurrentBlockNumber);
 		} else {
-			councilAtPostBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
-				const address = getEncodedAddress(member.address);
-
-				if (address) {
-					memberSet.add(address);
-				}
-			});
+			memberSet = getCouncilMembers(councilAtPostBlockNumber);
 		}
 
 		setMemberSet(memberSet);
