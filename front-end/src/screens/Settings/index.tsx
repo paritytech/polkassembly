@@ -42,9 +42,8 @@ const Settings = ({ className }:Props): JSX.Element => {
 export default styled(Settings)`
 	background-color: white;
 	padding: 2rem 3rem 3rem 3rem!important;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_light;
+	border-radius: 0.3rem;
+	box-shadow: box_shadow_card;
 
 	.ui.divider, .ui.divider:not(.vertical):not(.horizontal) {
 		margin: 3rem 0 2rem 0;
