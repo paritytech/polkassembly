@@ -47,7 +47,6 @@ const referendumPost = gql`
         }
         content
         created_at
-        block_number
         id
         updated_at
         comments(order_by: {created_at: asc}) {

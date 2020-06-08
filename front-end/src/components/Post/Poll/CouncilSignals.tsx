@@ -9,7 +9,7 @@ import { chainProperties } from 'src/global/networkConstants';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 import getNetwork from 'src/util/getNetwork';
 
-import { PostVotesQuery, useCouncilAtBlockNumberQuery, useGet_Current_Block_NumberQuery } from '../../../generated/graphql';
+import { PostVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -29,7 +29,7 @@ const CouncilSignals = ({ className, blockNumber, data }: Props) => {
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
-	const currentBlockNumber = useGet_Current_Block_NumberQuery();
+	const currentBlockNumber = useGetCurrentBlockNumberQuery();
 	const councilAtPostBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: blockNumber || 0 } });
 	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0 } });
 	const TWO_WEEKS = chainProperties?.[network]?.twoWeeksBlocks;

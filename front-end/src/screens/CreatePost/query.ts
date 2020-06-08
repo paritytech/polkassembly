@@ -5,7 +5,7 @@
 import gql from 'graphql-tag';
 
 export const CREATE_POST = gql`
-    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean, $blockNumber: Int) {
+    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean, $pollBlockNumberEnd: Int) {
         __typename
         insert_posts(objects: {
             author_id: $userId,
@@ -13,7 +13,7 @@ export const CREATE_POST = gql`
             title: $title,
             topic_id: $topicId,
             has_poll: $hasPoll,
-            block_number: $blockNumber
+            poll_block_number_end: $pollBlockNumberEnd
         }) {
             affected_rows
             returning {
@@ -40,7 +40,7 @@ export const GET_POST_TOPICS = gql`
 `;
 
 export const GET_CURRENT_BLOCK_NUMBER = gql`
-    query Get_current_block_number {
+    query getCurrentBlockNumber {
         blockNumbers(orderBy: number_DESC, first: 1) {
             number
         }

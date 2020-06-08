@@ -11,7 +11,7 @@ import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation, useGet_Current_Block_NumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
+import { useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
 import { useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -32,7 +32,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
 
-	const { data } = useGet_Current_Block_NumberQuery();
+	const { data } = useGetCurrentBlockNumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
@@ -58,12 +58,13 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const handleSend = () => {
 		const blockNumber = data?.blockNumbers?.[0]?.number;
+		const pollBlockNumberEnd = blockNumber;
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
-				blockNumber,
 				content,
 				hasPoll: false,
+				pollBlockNumberEnd,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id

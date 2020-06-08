@@ -6314,7 +6314,6 @@ export type Posts = {
    __typename?: 'posts',
   author?: Maybe<User>,
   author_id: Scalars['Int'],
-  block_number?: Maybe<Scalars['Int']>,
   comments: Array<Comments>,
   comments_aggregate: Comments_Aggregate,
   content?: Maybe<Scalars['String']>,
@@ -6322,6 +6321,7 @@ export type Posts = {
   has_poll: Scalars['Boolean'],
   id: Scalars['Int'],
   onchain_link?: Maybe<Onchain_Links>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   post_reactions: Array<Post_Reactions>,
   post_reactions_aggregate: Post_Reactions_Aggregate,
   post_votes: Array<Post_Votes>,
@@ -6437,16 +6437,16 @@ export type Posts_Arr_Rel_Insert_Input = {
 export type Posts_Avg_Fields = {
    __typename?: 'posts_avg_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Avg_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6456,13 +6456,13 @@ export type Posts_Bool_Exp = {
   _not?: Maybe<Posts_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Posts_Bool_Exp>>>,
   author_id?: Maybe<Int_Comparison_Exp>,
-  block_number?: Maybe<Int_Comparison_Exp>,
   comments?: Maybe<Comments_Bool_Exp>,
   content?: Maybe<String_Comparison_Exp>,
   created_at?: Maybe<Timestamptz_Comparison_Exp>,
   has_poll?: Maybe<Boolean_Comparison_Exp>,
   id?: Maybe<Int_Comparison_Exp>,
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>,
+  poll_block_number_end?: Maybe<Int_Comparison_Exp>,
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>,
   post_votes?: Maybe<Post_Votes_Bool_Exp>,
   title?: Maybe<String_Comparison_Exp>,
@@ -6479,21 +6479,21 @@ export enum Posts_Constraint {
 
 export type Posts_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   topic_id?: Maybe<Scalars['Int']>,
   type_id?: Maybe<Scalars['Int']>,
 };
 
 export type Posts_Insert_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   comments?: Maybe<Comments_Arr_Rel_Insert_Input>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>,
   post_votes?: Maybe<Post_Votes_Arr_Rel_Insert_Input>,
   title?: Maybe<Scalars['String']>,
@@ -6507,10 +6507,10 @@ export type Posts_Insert_Input = {
 export type Posts_Max_Fields = {
    __typename?: 'posts_max_fields',
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   topic_id?: Maybe<Scalars['Int']>,
   type_id?: Maybe<Scalars['Int']>,
@@ -6519,10 +6519,10 @@ export type Posts_Max_Fields = {
 
 export type Posts_Max_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   title?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
@@ -6532,10 +6532,10 @@ export type Posts_Max_Order_By = {
 export type Posts_Min_Fields = {
    __typename?: 'posts_min_fields',
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   id?: Maybe<Scalars['Int']>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   topic_id?: Maybe<Scalars['Int']>,
   type_id?: Maybe<Scalars['Int']>,
@@ -6544,10 +6544,10 @@ export type Posts_Min_Fields = {
 
 export type Posts_Min_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   title?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
@@ -6573,13 +6573,13 @@ export type Posts_On_Conflict = {
 
 export type Posts_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   comments_aggregate?: Maybe<Comments_Aggregate_Order_By>,
   content?: Maybe<Order_By>,
   created_at?: Maybe<Order_By>,
   has_poll?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   onchain_link?: Maybe<Onchain_Links_Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>,
   post_votes_aggregate?: Maybe<Post_Votes_Aggregate_Order_By>,
   title?: Maybe<Order_By>,
@@ -6596,11 +6596,11 @@ export type Posts_Pk_Columns_Input = {
 
 export enum Posts_Select_Column {
   AuthorId = 'author_id',
-  BlockNumber = 'block_number',
   Content = 'content',
   CreatedAt = 'created_at',
   HasPoll = 'has_poll',
   Id = 'id',
+  PollBlockNumberEnd = 'poll_block_number_end',
   Title = 'title',
   TopicId = 'topic_id',
   TypeId = 'type_id',
@@ -6609,11 +6609,11 @@ export enum Posts_Select_Column {
 
 export type Posts_Set_Input = {
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   content?: Maybe<Scalars['String']>,
   created_at?: Maybe<Scalars['timestamptz']>,
   has_poll?: Maybe<Scalars['Boolean']>,
   id?: Maybe<Scalars['Int']>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   topic_id?: Maybe<Scalars['Int']>,
   type_id?: Maybe<Scalars['Int']>,
@@ -6623,16 +6623,16 @@ export type Posts_Set_Input = {
 export type Posts_Stddev_Fields = {
    __typename?: 'posts_stddev_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Stddev_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6640,16 +6640,16 @@ export type Posts_Stddev_Order_By = {
 export type Posts_Stddev_Pop_Fields = {
    __typename?: 'posts_stddev_pop_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Stddev_Pop_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6657,16 +6657,16 @@ export type Posts_Stddev_Pop_Order_By = {
 export type Posts_Stddev_Samp_Fields = {
    __typename?: 'posts_stddev_samp_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Stddev_Samp_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6674,27 +6674,27 @@ export type Posts_Stddev_Samp_Order_By = {
 export type Posts_Sum_Fields = {
    __typename?: 'posts_sum_fields',
   author_id?: Maybe<Scalars['Int']>,
-  block_number?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
+  poll_block_number_end?: Maybe<Scalars['Int']>,
   topic_id?: Maybe<Scalars['Int']>,
   type_id?: Maybe<Scalars['Int']>,
 };
 
 export type Posts_Sum_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
 
 export enum Posts_Update_Column {
   AuthorId = 'author_id',
-  BlockNumber = 'block_number',
   Content = 'content',
   CreatedAt = 'created_at',
   HasPoll = 'has_poll',
   Id = 'id',
+  PollBlockNumberEnd = 'poll_block_number_end',
   Title = 'title',
   TopicId = 'topic_id',
   TypeId = 'type_id',
@@ -6704,16 +6704,16 @@ export enum Posts_Update_Column {
 export type Posts_Var_Pop_Fields = {
    __typename?: 'posts_var_pop_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Var_Pop_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6721,16 +6721,16 @@ export type Posts_Var_Pop_Order_By = {
 export type Posts_Var_Samp_Fields = {
    __typename?: 'posts_var_samp_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Var_Samp_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -6738,16 +6738,16 @@ export type Posts_Var_Samp_Order_By = {
 export type Posts_Variance_Fields = {
    __typename?: 'posts_variance_fields',
   author_id?: Maybe<Scalars['Float']>,
-  block_number?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
+  poll_block_number_end?: Maybe<Scalars['Float']>,
   topic_id?: Maybe<Scalars['Float']>,
   type_id?: Maybe<Scalars['Float']>,
 };
 
 export type Posts_Variance_Order_By = {
   author_id?: Maybe<Order_By>,
-  block_number?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
+  poll_block_number_end?: Maybe<Order_By>,
   topic_id?: Maybe<Order_By>,
   type_id?: Maybe<Order_By>,
 };
@@ -11970,7 +11970,7 @@ export type CreatePostMutationVariables = {
   topicId: Scalars['Int'],
   title: Scalars['String'],
   hasPoll?: Maybe<Scalars['Boolean']>,
-  blockNumber?: Maybe<Scalars['Int']>
+  pollBlockNumberEnd?: Maybe<Scalars['Int']>
 };
 
 
@@ -12002,10 +12002,10 @@ export type Post_TopicsQuery = (
   )> }
 );
 
-export type Get_Current_Block_NumberQueryVariables = {};
+export type GetCurrentBlockNumberQueryVariables = {};
 
 
-export type Get_Current_Block_NumberQuery = (
+export type GetCurrentBlockNumberQuery = (
   { __typename?: 'query_root' }
   & { blockNumbers: Array<Maybe<(
     { __typename?: 'BlockNumber' }
@@ -12020,7 +12020,7 @@ export type OnchainLinkDiscussionFragment = (
 
 export type DiscussionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'has_poll' | 'poll_block_number_end' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12116,7 +12116,7 @@ export type OnchainLinkMotionFragment = (
 
 export type MotionPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12361,7 +12361,7 @@ export type OnchainLinkProposalFragment = (
 
 export type ProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12419,7 +12419,7 @@ export type OnchainLinkReferendumFragment = (
 
 export type ReferendumPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12644,7 +12644,7 @@ export type OnchainLinkTreasuryProposalFragment = (
 
 export type TreasuryProposalPostFragment = (
   { __typename?: 'posts' }
-  & Pick<Posts, 'content' | 'created_at' | 'block_number' | 'id' | 'updated_at' | 'title'>
+  & Pick<Posts, 'content' | 'created_at' | 'id' | 'updated_at' | 'title'>
   & { author: Maybe<(
     { __typename?: 'User' }
     & AuthorFieldsFragment
@@ -12783,7 +12783,7 @@ export const DiscussionPostFragmentDoc = gql`
   content
   created_at
   has_poll
-  block_number
+  poll_block_number_end
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12861,7 +12861,6 @@ export const MotionPostFragmentDoc = gql`
   }
   content
   created_at
-  block_number
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12917,7 +12916,6 @@ export const ProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  block_number
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -12978,7 +12976,6 @@ export const ReferendumPostFragmentDoc = gql`
   }
   content
   created_at
-  block_number
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -13025,7 +13022,6 @@ export const TreasuryProposalPostFragmentDoc = gql`
   }
   content
   created_at
-  block_number
   id
   updated_at
   comments(order_by: {created_at: asc}) {
@@ -13922,9 +13918,9 @@ export type Get_Refresh_TokenQueryHookResult = ReturnType<typeof useGet_Refresh_
 export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refresh_TokenLazyQuery>;
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
 export const CreatePostDocument = gql`
-    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!, $hasPoll: Boolean, $blockNumber: Int) {
+    mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!, $hasPoll: Boolean, $pollBlockNumberEnd: Int) {
   __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId, has_poll: $hasPoll, block_number: $blockNumber}) {
+  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId, has_poll: $hasPoll, poll_block_number_end: $pollBlockNumberEnd}) {
     affected_rows
     returning {
       id
@@ -13952,7 +13948,7 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<CreatePost
  *      topicId: // value for 'topicId'
  *      title: // value for 'title'
  *      hasPoll: // value for 'hasPoll'
- *      blockNumber: // value for 'blockNumber'
+ *      pollBlockNumberEnd: // value for 'pollBlockNumberEnd'
  *   },
  * });
  */
@@ -13994,8 +13990,8 @@ export function usePost_TopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type Post_TopicsQueryHookResult = ReturnType<typeof usePost_TopicsQuery>;
 export type Post_TopicsLazyQueryHookResult = ReturnType<typeof usePost_TopicsLazyQuery>;
 export type Post_TopicsQueryResult = ApolloReactCommon.QueryResult<Post_TopicsQuery, Post_TopicsQueryVariables>;
-export const Get_Current_Block_NumberDocument = gql`
-    query Get_current_block_number {
+export const GetCurrentBlockNumberDocument = gql`
+    query getCurrentBlockNumber {
   blockNumbers(orderBy: number_DESC, first: 1) {
     number
   }
@@ -14003,29 +13999,29 @@ export const Get_Current_Block_NumberDocument = gql`
     `;
 
 /**
- * __useGet_Current_Block_NumberQuery__
+ * __useGetCurrentBlockNumberQuery__
  *
- * To run a query within a React component, call `useGet_Current_Block_NumberQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Current_Block_NumberQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useGetCurrentBlockNumberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentBlockNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGet_Current_Block_NumberQuery({
+ * const { data, loading, error } = useGetCurrentBlockNumberQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGet_Current_Block_NumberQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Current_Block_NumberQuery, Get_Current_Block_NumberQueryVariables>) {
-        return ApolloReactHooks.useQuery<Get_Current_Block_NumberQuery, Get_Current_Block_NumberQueryVariables>(Get_Current_Block_NumberDocument, baseOptions);
+export function useGetCurrentBlockNumberQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentBlockNumberQuery, GetCurrentBlockNumberQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCurrentBlockNumberQuery, GetCurrentBlockNumberQueryVariables>(GetCurrentBlockNumberDocument, baseOptions);
       }
-export function useGet_Current_Block_NumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Current_Block_NumberQuery, Get_Current_Block_NumberQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Get_Current_Block_NumberQuery, Get_Current_Block_NumberQueryVariables>(Get_Current_Block_NumberDocument, baseOptions);
+export function useGetCurrentBlockNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentBlockNumberQuery, GetCurrentBlockNumberQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCurrentBlockNumberQuery, GetCurrentBlockNumberQueryVariables>(GetCurrentBlockNumberDocument, baseOptions);
         }
-export type Get_Current_Block_NumberQueryHookResult = ReturnType<typeof useGet_Current_Block_NumberQuery>;
-export type Get_Current_Block_NumberLazyQueryHookResult = ReturnType<typeof useGet_Current_Block_NumberLazyQuery>;
-export type Get_Current_Block_NumberQueryResult = ApolloReactCommon.QueryResult<Get_Current_Block_NumberQuery, Get_Current_Block_NumberQueryVariables>;
+export type GetCurrentBlockNumberQueryHookResult = ReturnType<typeof useGetCurrentBlockNumberQuery>;
+export type GetCurrentBlockNumberLazyQueryHookResult = ReturnType<typeof useGetCurrentBlockNumberLazyQuery>;
+export type GetCurrentBlockNumberQueryResult = ApolloReactCommon.QueryResult<GetCurrentBlockNumberQuery, GetCurrentBlockNumberQueryVariables>;
 export const DiscussionPostAndCommentsDocument = gql`
     query DiscussionPostAndComments($id: Int!) {
   posts(where: {id: {_eq: $id}}) {
