@@ -224,4 +224,26 @@ async function main (): Promise<void> {
 	});
 }
 
+function verifyEnvVariables (): void {
+	// HEALTH_PORT and START_FROM are optional, therefor not mentionned here.
+	const envs = [
+		'REACT_APP_HASURA_GRAPHQL_URL',
+		'TREASURY_TOPIC_ID',
+		'DEMOCRACY_TOPIC_ID',
+		'HASURA_PROPOSAL_POST_TYPE_ID',
+		'PROPOSAL_BOT_USER_ID',
+		'PROPOSAL_BOT_USERNAME',
+		'PROPOSAL_BOT_PASSWORD',
+		'CHAIN_DB_GRAPHQL_URL',
+		'COUNCIL_TOPIC_ID'
+	];
+
+	envs.forEach(env => {
+		if (!process.env[env]) {
+			console.error(chalk.red(`✖︎ Environment variable ${env} not set.`));
+		}
+	});
+}
+
+verifyEnvVariables();
 main().catch(error => console.error(chalk.red(error)));
