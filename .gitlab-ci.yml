@@ -202,7 +202,6 @@ dockerize-node-watcher:
       --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
       --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
       --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
-      --set chainDbWatcher.config.PROPOSAL_BOT_USERNAME=${PROPOSAL_BOT_USERNAME}
       --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
 
     # test, update/deploy redis server using helm
