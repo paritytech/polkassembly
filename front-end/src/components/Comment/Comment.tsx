@@ -96,10 +96,8 @@ export default styled(Comment)`
 
 	.comment-box {
 		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_card;
 		margin-bottom: 1rem;
 		width: 100%;
 		word-break: break-word;

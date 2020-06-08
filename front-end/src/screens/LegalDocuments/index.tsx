@@ -30,9 +30,8 @@ const StyledMdScreen = styled(MdScreen)`
     .md_box {
         background-color: white;
         padding: 3rem!important;
-        border-width: 1px;
-        border-style: solid;
-        border-color: grey_light;
+		border-radius: 0.3rem;
+		box-shadow: box_shadow_card;
     }
 `;
 
