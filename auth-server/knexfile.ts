@@ -8,20 +8,12 @@ dotenv.config();
 
 // e.g. 'postgres://postgres:postgres@localhost:5431/governance-auth'
 const devConnectionUrl = process.env.DATABASE_URL;
-const prodConnectionUrl = process.env.DATABASE_URL;
 const testConnectionUrl = process.env.TEST_DATABASE_URL;
 
 const config: Config = {
 	development: {
 		client: 'postgresql',
 		connection: devConnectionUrl,
-		migrations: {
-			directory: `${__dirname}/migrations`
-		}
-	},
-	production: {
-		client: 'postgresql',
-		connection: prodConnectionUrl,
 		migrations: {
 			directory: `${__dirname}/migrations`
 		}
