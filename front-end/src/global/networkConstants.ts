@@ -19,14 +19,12 @@ export const chainProperties: ChainPropType = {
 		blockTime: 6000,
 		ss58Format: 2,
 		tokenDecimals: 12,
-		tokenSymbol: tokenSymbol.KSM,
-		twoWeeksBlocks: 201600
+		tokenSymbol: tokenSymbol.KSM
 	},
 	[network.POLKADOT]: {
 		blockTime: 6000,
 		ss58Format: 1,
 		tokenDecimals: 18,
-		tokenSymbol: tokenSymbol.DOT,
-		twoWeeksBlocks: 201600 // TODO: change for polkadot
+		tokenSymbol: tokenSymbol.DOT
 	}
 };

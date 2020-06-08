@@ -114,7 +114,6 @@ export interface ChainProps {
 	'ss58Format': number;
 	'tokenDecimals': number;
     'tokenSymbol': TokenSymbol;
-    'twoWeeksBlocks': number;
 }
 
 export interface LoadingStatusType {
