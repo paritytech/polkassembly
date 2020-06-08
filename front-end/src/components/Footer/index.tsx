@@ -34,11 +34,6 @@ const Footer = ({ className }:Props ): JSX.Element => {
 						Report an Issue
 					</a>
 				</Menu.Item>
-				<Menu.Item>
-					<a href='#page-container'>
-						Back to top
-					</a>
-				</Menu.Item>
 			</Menu>
 		</footer>
 	);
