@@ -2,10 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
+import { chainProperties } from 'src/global/networkConstants';
+import getNetwork from 'src/util/getNetwork';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
@@ -23,6 +26,8 @@ interface Props {
 	className?: string
 }
 
+const TWO_WEEKS = 2 * 7 * 24 * 60 * 60 * 1000;
+
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
@@ -31,12 +36,25 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
+	const network = getNetwork();
+	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
+	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
 
 	const { data } = useGetCurrentBlockNumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
+
+	useEffect(() => {
+
+		if (!isApiReady) {
+			return;
+		}
+
+		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
+	}, [api, isApiReady]);
 
 	const createSubscription = (postId: number) => {
 		if (!currentUser?.notification?.postCreated) {
@@ -56,9 +74,15 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			.catch((e) => console.error('Error subscribing to post',e));
 	};
 
+	const getEndBlockNumber = (currentBlock: number | undefined): number => {
+		const endBlock = Math.floor(TWO_WEEKS/blocktime);
+
+		return (currentBlock || 0) + endBlock;
+	};
+
 	const handleSend = () => {
 		const blockNumber = data?.blockNumbers?.[0]?.number;
-		const pollBlockNumberEnd = blockNumber;
+		const pollBlockNumberEnd = getEndBlockNumber(blockNumber);
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
