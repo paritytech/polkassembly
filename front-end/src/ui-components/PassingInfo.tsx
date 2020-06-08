@@ -40,6 +40,7 @@ export default styled(PassingInfo)`
 	color: white;
 	text-align: center;
 	transition-duration: 1s;
+	box-shadow: box_shadow_card;
 
 	&.passing {
 		background-color: green_primary;

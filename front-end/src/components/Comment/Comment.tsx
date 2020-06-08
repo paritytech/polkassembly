@@ -28,7 +28,6 @@ import EditableCommentContent from './EditableCommentContent';
 interface Props{
 	className?: string,
 	comment: CommentFieldsFragment,
-	last: boolean,
 	refetch: (variables?:
 		ReferendumPostAndCommentsQueryVariables |
 		DiscussionPostAndCommentsQueryVariables |
@@ -43,18 +42,14 @@ interface Props{
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-export const Comment = ({ className, comment, last, refetch } : Props) => {
+export const Comment = ({ className, comment, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
 	const { hash } = useLocation();
 	const commentRef = useRef<HTMLDivElement>(null);
-	const endRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (hash === `#${id}`) {
 			window.scrollTo(0, commentRef.current?.offsetTop || 0);
-		}
-		if (hash === '#end') {
-			window.scrollTo(0, endRef.current?.offsetTop || 0);
 		}
 	}, [hash, id]);
 
@@ -70,7 +65,7 @@ export const Comment = ({ className, comment, last, refetch } : Props) => {
 				username={author.username}
 				size={'lg'}
 			/>
-			<div id={last ? 'end' : undefined} ref={endRef} className='comment-box'>
+			<div className='comment-box'>
 				<CreationLabel
 					className='creation-label'
 					created_at={created_at}
@@ -110,10 +105,8 @@ export default styled(Comment)`
 
 	.comment-box {
 		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_card;
 		margin-bottom: 1rem;
 		width: 100%;
 		word-break: break-word;
