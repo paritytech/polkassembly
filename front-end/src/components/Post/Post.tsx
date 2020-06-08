@@ -194,7 +194,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
-				{isDiscussion(post) && post.has_poll && <Poll postId={post.id} pollBlockNumberEnd={post.poll_block_number_end} />}
+				{isDiscussion(post) && post.has_poll && post.poll_block_number_end && <Poll postId={post.id} pollBlockNumberEnd={post.poll_block_number_end} />}
 				<ScrollToTop/>
 			</Grid.Column>
 		</Grid>

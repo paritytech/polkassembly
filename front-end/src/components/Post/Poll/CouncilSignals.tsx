@@ -19,7 +19,7 @@ import getEncodedAddress from '../../../util/getEncodedAddress';
 interface Props {
 	className?: string
 	data?: PostVotesQuery | undefined
-	pollBlockNumberEnd?: number | null | undefined
+	pollBlockNumberEnd: number
 }
 
 const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
@@ -27,9 +27,11 @@ const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
-	const currentBlockNumber = useGetCurrentBlockNumberQuery();
-	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: pollBlockNumberEnd || 0 } });
-	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0 } });
+	const currentBlockNumberResult = useGetCurrentBlockNumberQuery();
+	const currentBlockNumber = currentBlockNumberResult?.data?.blockNumbers?.[0]?.number || pollBlockNumberEnd;
+
+	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: pollBlockNumberEnd } });
+	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber } });
 
 	const getCouncilMembers = (councilAtBlockNumber: QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>): Set<string> => {
 		const memberSet = new Set<string>();
@@ -43,11 +45,10 @@ const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 	};
 
 	useEffect(() => {
-		const currentBlock = currentBlockNumber?.data?.blockNumbers?.[0]?.number || 0;
-		const pollClosingBlockNumber = pollBlockNumberEnd || 0;
+		const pollClosingBlockNumber = pollBlockNumberEnd;
 		let memberSet = new Set<string>();
 
-		if (pollClosingBlockNumber > currentBlock) {
+		if (pollClosingBlockNumber > currentBlockNumber) {
 			memberSet = getCouncilMembers(councilAtCurrentBlockNumber);
 		} else {
 			memberSet = getCouncilMembers(councilAtPollEndBlockNumber);

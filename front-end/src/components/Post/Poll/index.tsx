@@ -14,7 +14,7 @@ import GeneralSignals from './GeneralSignals';
 
 interface Props {
 	postId: number
-	pollBlockNumberEnd?: number | null | undefined
+	pollBlockNumberEnd: number
 }
 
 const Poll = ({ postId, pollBlockNumberEnd }: Props) => {
