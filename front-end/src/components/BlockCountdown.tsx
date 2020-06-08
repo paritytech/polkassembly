@@ -7,7 +7,7 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
-import { BlockTimeContext } from 'src/context/BlockTimeContext';
+import { useBlockTime } from 'src/hooks';
 import blockToTime from 'src/util/blockToTime';
 
 interface Props {
@@ -25,7 +25,7 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [currentBlock, setCurrentBlock] = useState(ZERO);
 	const blocksRemaining = endBlock - currentBlock.toNumber();
-	const { blocktime } = useContext(BlockTimeContext);
+	const { blocktime } = useBlockTime();
 
 	useEffect(() => {
 		if (!isApiReady) {

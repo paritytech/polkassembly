@@ -148,7 +148,3 @@ export interface ReactionMapFields {
 	count: number
 	userNames: string[]
 }
-
-export interface BlockTimeContextType {
-    blocktime: number
-}

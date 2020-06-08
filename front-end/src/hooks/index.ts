@@ -4,3 +4,4 @@
 
 export { default as useRouter } from './useRouter';
 export { default as useRedirectGovernancePost } from './useRedirectGovernancePost';
+export { default as useBlockTime } from './useBlockTime';

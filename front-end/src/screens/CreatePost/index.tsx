@@ -9,11 +9,10 @@ import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
-import { BlockTimeContext } from '../../context/BlockTimeContext';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
-import { useRouter } from '../../hooks';
+import { useBlockTime, useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -34,7 +33,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
-	const { blocktime } = useContext(BlockTimeContext);
+	const { blocktime } = useBlockTime();
 
 	const { data } = useGetCurrentBlockNumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
@@ -61,7 +60,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	};
 
 	const getEndBlockNumber = (currentBlock: number | undefined): number => {
-		const endBlock = Math.floor(TWO_WEEKS/blocktime);
+		const endBlock = Math.floor(TWO_WEEKS / blocktime);
 
 		return (currentBlock || 0) + endBlock;
 	};

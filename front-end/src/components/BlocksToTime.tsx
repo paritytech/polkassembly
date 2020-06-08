@@ -4,9 +4,9 @@
 
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Popup } from 'semantic-ui-react';
-import { BlockTimeContext } from 'src/context/BlockTimeContext';
+import { useBlockTime } from 'src/hooks';
 import blockToTime from 'src/util/blockToTime';
 
 interface Props {
@@ -20,7 +20,7 @@ const DivContent = styled.div`
 `;
 
 const BlocksToTime = ({ blocks, className }:Props ) => {
-	const { blocktime } = useContext(BlockTimeContext);
+	const { blocktime } = useBlockTime();
 
 	return (
 		<Popup
