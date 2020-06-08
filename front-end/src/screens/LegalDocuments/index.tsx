@@ -11,8 +11,8 @@ import TAC from '../../assets/terms-and-conditions';
 import TOW from '../../assets/terms-of-website';
 import Markdown from '../../ui-components/Markdown';
 interface Props{
-    md: string
-    className?: string
+	md: string
+	className?: string
 }
 
 const MdScreen = ({ md, className } : Props) => {
@@ -27,12 +27,12 @@ const MdScreen = ({ md, className } : Props) => {
 };
 
 const StyledMdScreen = styled(MdScreen)`
-    .md_box {
-        background-color: white;
-        padding: 3rem!important;
+	.md_box {
+		background-color: white;
+		padding: 3rem!important;
 		border-radius: 0.3rem;
 		box-shadow: box_shadow_card;
-    }
+	}
 `;
 
 export const TermsAndConditions = () => <StyledMdScreen md={TAC}/>;
