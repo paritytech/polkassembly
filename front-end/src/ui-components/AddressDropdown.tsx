@@ -24,8 +24,8 @@ const AddressDropdown = ({ accounts, className, defaultAddress, filterAccounts, 
 			filterAccounts.includes(elem.address)
 		);
 
-	let dropdownList: {[index: string]: string} = {};
-	let addressOptions: DropdownItemProps[] = [];
+	const dropdownList: {[index: string]: string} = {};
+	const addressOptions: DropdownItemProps[] = [];
 
 	filteredAccounts.forEach(account => {
 		addressOptions.push({
