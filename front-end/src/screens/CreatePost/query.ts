@@ -5,20 +5,27 @@
 import gql from 'graphql-tag';
 
 export const CREATE_POST = gql`
-    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!, $hasPoll: Boolean, $pollBlockNumberEnd: Int) {
+    mutation createPost($userId: Int! $content: String! $topicId: Int! $title: String!) {
         __typename
         insert_posts(objects: {
             author_id: $userId,
             content: $content,
             title: $title,
             topic_id: $topicId,
-            has_poll: $hasPoll,
-            poll_block_number_end: $pollBlockNumberEnd
         }) {
             affected_rows
             returning {
                 id
             }
+        }
+    }
+`;
+
+export const CREATE_POLL = gql`
+    mutation createPoll($postId: Int! $blockEnd: Int!) {
+        __typename
+        insert_poll(objects: {post_id: $postId, block_end: $blockEnd}) {
+            affected_rows
         }
     }
 `;

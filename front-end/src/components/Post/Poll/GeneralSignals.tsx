@@ -9,7 +9,7 @@ import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
+import { PollVotesQuery, PollVotesQueryVariables, useAddPollVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
 import Card from '../../../ui-components/Card';
@@ -22,14 +22,14 @@ interface Props {
 	className?: string,
 	ownVote?: Vote | null,
 	nays: number,
-	postId: number
-	refetch: (variables?: PostVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PostVotesQuery>>
+	pollId: number
+	refetch: (variables?: PollVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PollVotesQuery>>
 }
 
-const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Props) => {
+const CouncilSignals = ({ className, ayes, ownVote, nays, pollId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [error, setErr] = useState<Error | null>(null);
-	const [addPostVoteMutation] = useAddPostVoteMutation();
+	const [addPollVoteMutation] = useAddPollVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
 
 	const cancelVote = useCallback(async () => {
@@ -40,7 +40,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		try {
 			await deleteVoteMutation({
 				variables: {
-					postId,
+					pollId,
 					userId: id
 				}
 			});
@@ -49,7 +49,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, deleteVoteMutation, postId, refetch]);
+	}, [id, deleteVoteMutation, pollId, refetch]);
 
 	const castVote = useCallback(async (vote: Vote) => {
 		if (!id) {
@@ -57,9 +57,9 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		}
 
 		try {
-			await addPostVoteMutation({
+			await addPollVoteMutation({
 				variables: {
-					postId,
+					pollId,
 					userId: id,
 					vote
 				}
@@ -69,7 +69,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, addPostVoteMutation, postId, refetch]);
+	}, [id, addPollVoteMutation, pollId, refetch]);
 
 	return (
 		<Card className={className}>

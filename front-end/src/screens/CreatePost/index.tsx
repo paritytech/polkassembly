@@ -11,7 +11,7 @@ import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
+import { useCreatePollMutation, useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
 import { useBlockTime, useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -37,6 +37,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 
 	const { data } = useGetCurrentBlockNumberQuery();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
+	const [createPollMutation] = useCreatePollMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
@@ -59,31 +60,44 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			.catch((e) => console.error('Error subscribing to post',e));
 	};
 
-	const handleSend = () => {
+	const createPoll = (postId: number) => {
+		if (!hasPoll) {
+			return;
+		}
+
 		const blockNumber = data?.blockNumbers?.[0]?.number;
 
 		if (!blockNumber) {
-			return queueNotification({
-				header: 'Failed to get current block number!',
+			queueNotification({
+				header: 'Failed to get current block number. Poll creation failed!',
 				message: 'Failed',
 				status: NotificationStatus.ERROR
 			});
+			return;
 		}
 
-		const pollBlockNumberEnd = blockNumber + Math.floor(TWO_WEEKS / blocktime);
+		const blockEnd = blockNumber + Math.floor(TWO_WEEKS / blocktime);
 
+		createPollMutation({
+			variables: {
+				blockEnd,
+				postId
+			}
+		})
+			.catch((e) => console.error('Error subscribing to post',e));
+	};
+
+	const handleSend = () => {
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
 			createPostMutation({ variables: {
 				content,
-				hasPoll,
-				pollBlockNumberEnd,
 				title,
 				topicId: selectedTopic,
 				userId: currentUser.id
 			} }).then(({ data }) => {
-				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0 && data.insert_posts.returning.length && data.insert_posts.returning[0].id) {
-					const postId = data.insert_posts.returning.length && data.insert_posts.returning[0].id;
+				if (data?.insert_posts?.affected_rows && data?.insert_posts?.affected_rows > 0 && data?.insert_posts?.returning?.length && data?.insert_posts?.returning?.[0]?.id) {
+					const postId = data?.insert_posts?.returning?.[0]?.id;
 					history.push(`/post/${postId}`);
 					queueNotification({
 						header: 'Thanks for sharing!',
@@ -91,12 +105,13 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						status: NotificationStatus.SUCCESS
 					});
 					createSubscription(postId);
+					createPoll(postId);
 				} else {
 					throw Error('Error in post creation');
 				}
 			}).catch( e => console.error(e));
 		} else {
-			console.error('Current userid, title, content or selected topic missing',currentUser.id,title, content, selectedTopic);
+			console.error('Current userid, title, content or selected topic missing',currentUser.id, title, content, selectedTopic);
 		}
 	};
 

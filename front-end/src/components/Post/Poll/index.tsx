@@ -2,54 +2,29 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import { usePostVotesQuery } from '../../../generated/graphql';
-import { Vote } from '../../../types';
+import { usePollQuery } from '../../../generated/graphql';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
-import CouncilSignals from './CouncilSignals';
-import GeneralSignals from './GeneralSignals';
+import Poll from './Poll';
 
 interface Props {
 	postId: number
-	pollBlockNumberEnd: number
 }
 
-const Poll = ({ postId, pollBlockNumberEnd }: Props) => {
-	const { id } = useContext(UserDetailsContext);
-	const { data, error, refetch } = usePostVotesQuery({ variables: { postId } });
-	let ayes = 0;
-	let nays = 0;
-	let ownVote: Vote | null = null;
-
-	data?.post_votes?.forEach(({ vote, voter }) => {
-		if (voter?.id === id) {
-			ownVote = vote;
-		}
-		if (vote === Vote.AYE) {
-			ayes++;
-		}
-		if (vote === Vote.NAY) {
-			nays++;
-		}
-	});
+export default ({ postId }: Props) => {
+	const { data, error } = usePollQuery({ variables: { postId } });
 
 	if (error?.message) return <Card><FilteredError text={error.message}/></Card>;
 
+	if (!data?.poll?.[0]?.id || !data?.poll?.[0]?.block_end) {
+		return null;
+	}
+
 	return (
 		<>
-			<GeneralSignals
-				ayes={ayes}
-				nays={nays}
-				ownVote={ownVote}
-				postId={postId}
-				refetch={refetch}
-			/>
-			<CouncilSignals data={data} pollBlockNumberEnd={pollBlockNumberEnd} />
+			<Poll pollId={data?.poll?.[0]?.id} endBlock={data?.poll?.[0]?.block_end} />
 		</>
 	);
 };
-
-export default Poll;

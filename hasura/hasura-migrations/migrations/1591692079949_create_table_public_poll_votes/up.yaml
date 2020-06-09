@@ -1,0 +1,13 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: CREATE TABLE "public"."poll_votes"("id" serial NOT NULL, "poll_id" integer
+      NOT NULL, "user_id" integer NOT NULL, "vote" bpchar NOT NULL, "created_at" timestamp
+      NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), PRIMARY
+      KEY ("id") , FOREIGN KEY ("poll_id") REFERENCES "public"."poll"("id") ON UPDATE
+      restrict ON DELETE restrict, UNIQUE ("id"));
+  type: run_sql
+- args:
+    name: poll_votes
+    schema: public
+  type: add_existing_table_or_view

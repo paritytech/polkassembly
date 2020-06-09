@@ -24,8 +24,6 @@ const discussionPost = gql`
         }
         content
         created_at
-        has_poll
-        poll_block_number_end
         id
         updated_at
         comments(order_by: {created_at: asc}) {

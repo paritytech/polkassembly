@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
-import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables,PostVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
+import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables, PollVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -18,19 +18,19 @@ import getEncodedAddress from '../../../util/getEncodedAddress';
 
 interface Props {
 	className?: string
-	data?: PostVotesQuery | undefined
-	pollBlockNumberEnd: number
+	data?: PollVotesQuery | undefined
+	endBlock: number
 }
 
-const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
+const CouncilSignals = ({ className, endBlock, data }: Props) => {
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
 	const currentBlockNumberResult = useGetCurrentBlockNumberQuery();
-	const currentBlockNumber = currentBlockNumberResult?.data?.blockNumbers?.[0]?.number || pollBlockNumberEnd;
+	const currentBlockNumber = currentBlockNumberResult?.data?.blockNumbers?.[0]?.number || endBlock;
 
-	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: pollBlockNumberEnd } });
+	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: endBlock } });
 	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber } });
 
 	const getCouncilMembers = (councilAtBlockNumber: QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>): Set<string> => {
@@ -45,7 +45,7 @@ const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 	};
 
 	useEffect(() => {
-		const pollClosingBlockNumber = pollBlockNumberEnd;
+		const pollClosingBlockNumber = endBlock;
 		let memberSet = new Set<string>();
 
 		if (pollClosingBlockNumber > currentBlockNumber) {
@@ -55,7 +55,7 @@ const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 		}
 
 		setMemberSet(memberSet);
-	}, [pollBlockNumberEnd, currentBlockNumber, councilAtPollEndBlockNumber, councilAtCurrentBlockNumber]);
+	}, [endBlock, currentBlockNumber, councilAtPollEndBlockNumber, councilAtCurrentBlockNumber]);
 
 	useEffect(() => {
 		let ayes = 0;
@@ -63,7 +63,7 @@ const CouncilSignals = ({ className, pollBlockNumberEnd, data }: Props) => {
 		const defaultAddressField = getDefaultAddressField();
 		const councilVotes: OffchainVote[]  = [];
 
-		data?.post_votes?.forEach(({ vote, voter }) => {
+		data?.poll_votes?.forEach(({ vote, voter }) => {
 			const defaultAddress = voter?.[defaultAddressField];
 
 			if (defaultAddress && memberSet.has(defaultAddress)) {
