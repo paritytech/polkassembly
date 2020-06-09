@@ -15,6 +15,7 @@ import {
   NomidotProposalStatusUpdate,
   Task,
 } from './types';
+import newProposalStatus from '../util/newProposalStatus';
 
 const l = logger('Task: Proposals Status Update');
 
@@ -96,22 +97,8 @@ const createProposal: Task<NomidotProposalStatusUpdate[]> = {
 
     await Promise.all(
       value.map(async prop => {
-        const { proposalId: pId, status } = prop;
-
-        await prisma.createProposalStatus({
-          blockNumber: {
-            connect: {
-              number: blockNumber.toNumber(),
-            },
-          },
-          proposal: {
-            connect: {
-              proposalId: pId,
-            },
-          },
-          status,
-          uniqueStatus: `${pId}_${status}`,
-        });
+        const {proposalId, status} = prop;
+        await newProposalStatus({blockNumber, proposalId, status})
       })
     );
   },
