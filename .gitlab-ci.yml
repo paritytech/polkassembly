@@ -192,7 +192,6 @@ dockerize-node-watcher:
       --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
       --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
       --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      --set hasura.config.HASURA_CHAIN_DB_REMOTE_SCHEMA=${HASURA_CHAIN_DB_REMOTE_SCHEMA}
       --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
       --set authServer.config.DATABASE_URL=${DATABASE_URL}
       --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
