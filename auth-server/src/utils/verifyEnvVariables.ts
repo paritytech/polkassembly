@@ -5,7 +5,7 @@
 import chalk from 'chalk';
 
 export default function verifyEnvVariables (): void {
-	// Don't log the follwing on purpose
+	// Don't log the following on purpose
 	// JWT_PRIVATE_KEY_TEST
 	// TEST_DATABASE_URL
 	// JWT_KEY_PASSPHRASE_TEST
@@ -19,7 +19,7 @@ export default function verifyEnvVariables (): void {
 		'DOMAIN_NAME'
 	];
 	const secrets = [
-		'JWT_PUBLIC_KEY', // seting it as a secret because it's printing too many lines otherwise
+		'JWT_PUBLIC_KEY', // setting it as a secret because it's spamming otherwise
 		'JWT_PRIVATE_KEY',
 		'JWT_KEY_PASSPHRASE',
 		'REDIS_URL',
