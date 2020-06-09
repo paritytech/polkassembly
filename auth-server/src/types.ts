@@ -75,6 +75,11 @@ export interface MessageType {
     message: string;
 }
 
+export interface HookResponseMessageType {
+    sendNewProposalCreatedMessage?: string;
+    sendOwnProposalCreatedMessage?: string;
+}
+
 export interface ChangeResponseType extends MessageType, TokenType {}
 
 export interface PublicUser {
