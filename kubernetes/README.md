@@ -55,4 +55,8 @@ to create the *secret* containing the required credentials in k8s.
 - Reload metadata
   - run `hasura-dev metadata reload --endpoint "http://localhost:7070" --admin-secret HASURA_GRAPHQL_ADMIN_SECRET`
 
+## How to set environment variabled
 
+1. The helm chart first takes all the variables from [values.yaml](./polkassembly/values.yaml).
+1. Then if the helm program is called with the `--values=` flag it takes all the variables from this file and applies it (possibly overwirting variables from the previous `values.yaml`).
+1. Finally, if helm is called the `--set` flags the individual variables in the `--set` will be applied to the chart. Example in `gitlab-ci.yml` [here](https://github.com/paritytech/polkassembly/blob/master/.gitlab-ci.yml#L189).
