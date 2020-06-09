@@ -153,14 +153,15 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType, responseMess
 			.findById(proposerAddress.user_id)
 		: undefined;
 
+	// cicle through all users that want to be notified about
+	// new on chain event. This may include the proposer
 	const promises = notifications.map(async notification => {
 		const user = await User
 			.query()
 			.findById(notification.user_id);
 
 		if (!user) {
-			// aborting for this user in the promise
-			// not logging anything to prevent spamming the logs
+			console.error('sendNewProposalCreated - Unexpected empty user in notifications table');
 			return;
 		}
 
