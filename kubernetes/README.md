@@ -63,4 +63,4 @@ to create the *secret* containing the required credentials in k8s.
 
 Ideally, any non secret variable should be set in [values.yaml](./polkassembly/values.yaml). If the variable differs between test/prod or kusama/polkadot, it can be set in [values-dashboards-cluster-1.yaml (for test)](./polkassembly/values-dashboards-cluster-1.yaml) or [values-parity-prod.yaml (for prod)](./polkassembly/values-parity-prod.yaml).
 
-Any secret variable should be mentioned these files as well, with the value "from-gitlab-vars", and then added using the helm `--set` flags in `gitlab-ci.yml` [like here](https://github.com/paritytech/polkassembly/blob/master/.gitlab-ci.yml#L189) where it will be replaced by the variable from Gitlab, at CI runtime.
+Any secret variable should be mentioned in a `values` files as well, with any fake value such as "from-gitlab-vars", and then added using the helm `--set` flags in `gitlab-ci.yml` [like here](https://github.com/paritytech/polkassembly/blob/master/.gitlab-ci.yml#L189) where it will be replaced by the secret variable from Gitlab, at CI runtime.
