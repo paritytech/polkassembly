@@ -70,18 +70,19 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 		api.derive.democracy.referendums((referendums) => {
 			const referendum = referendums.filter(re => re.index.toNumber() === referendumId)[0];
 
-			setIsPassing(referendum.isPassing);
-
-			const totalAye: BN = referendum.allAye.reduce((acc: BN, curr: DeriveReferendumVote) => {
-				return acc.add(new BN(curr.balance));
-			}, ZERO);
-			const totalNay: BN = referendum.allNay.reduce((acc: BN, curr: DeriveReferendumVote) => {
-				return acc.add(new BN(curr.balance));
-			}, ZERO);
-
-			setNayVotesWithoutConviction(totalNay);
-			setAyeVotesWithoutConviction(totalAye);
-
+			if (referendum) {
+				setIsPassing(referendum.isPassing);
+	
+				const totalAye: BN = referendum.allAye.reduce((acc: BN, curr: DeriveReferendumVote) => {
+					return acc.add(new BN(curr.balance));
+				}, ZERO);
+				const totalNay: BN = referendum.allNay.reduce((acc: BN, curr: DeriveReferendumVote) => {
+					return acc.add(new BN(curr.balance));
+				}, ZERO);
+	
+				setNayVotesWithoutConviction(totalNay);
+				setAyeVotesWithoutConviction(totalAye);
+			}
 		}).then( unsub => {unsubscribe = unsub;})
 			.catch(console.error);
 

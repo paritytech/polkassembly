@@ -62,10 +62,10 @@ describe('addressLogin mutation on Polkadot', () => {
 	});
 
 	it('should not be able to login with invalid signature', async () => {
-		const signature = '0xaaaa';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		try {
-			await addressLogin(undefined, { address, signature }, fakectx);
+			await addressLogin(undefined, { address, signature: fakeSignature }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

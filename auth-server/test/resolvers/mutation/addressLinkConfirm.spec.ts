@@ -108,7 +108,8 @@ describe('addressLinkConfirm mutation', () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const signature = 'fake';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -120,7 +121,7 @@ describe('addressLinkConfirm mutation', () => {
 			.findById(linkStartRes.address_id);
 
 		try {
-			await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
+			await addressLinkConfirm(undefined, { signature: fakeSignature, address_id: linkStartRes.address_id }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
@@ -132,7 +133,7 @@ describe('addressLinkConfirm mutation', () => {
 		const network = NetworkEnum.POLKADOT;
 		const address = '14E5nqKAp3oAJcmzgZhUD2RcptBeUBScxKHgJKU4HPNcKVf3'; // Bob
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const signature = 'fake';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -144,7 +145,7 @@ describe('addressLinkConfirm mutation', () => {
 			.findById(linkStartRes.address_id);
 
 		try {
-			await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
+			await addressLinkConfirm(undefined, { signature: fakeSignature, address_id: linkStartRes.address_id }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);
