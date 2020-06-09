@@ -58,7 +58,7 @@ to create the *secret* containing the required credentials in k8s.
 ## How to set environment variables
 
 1. The helm chart first takes all the variables from [values.yaml](./polkassembly/values.yaml).
-1. Then if the helm program is called with the `--values=` flag it takes all the variables from this file and applies it (possibly overwirting variables from the previous `values.yaml`).
+1. Then if the helm program is called with the `--values=` flag it takes all the variables from this file and applies it. In our case, it takes the files [values-dashboards-cluster-1.yaml (for test)](./polkassembly/values-dashboards-cluster-1.yaml) or [values-parity-prod.yaml (for prod)](./polkassembly/values-parity-prod.yaml). It may overwrites variables that were set in `values.yaml`.
 1. Finally, if helm is called the `--set` flags the individual variables in the `--set` will be applied to the chart. Example in `gitlab-ci.yml` [here](https://github.com/paritytech/polkassembly/blob/master/.gitlab-ci.yml#L189).
 
 Ideally, any non secret variable should be set in [values.yaml](./polkassembly/values.yaml). If the variable differs between test/prod or kusama/polkadot, it can be set in [values-dashboards-cluster-1.yaml (for test)](./polkassembly/values-dashboards-cluster-1.yaml) or [values-parity-prod.yaml (for prod)](./polkassembly/values-parity-prod.yaml).
