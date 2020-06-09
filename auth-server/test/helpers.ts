@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { Context, ContextUserId } from '../src/types';
 import signup from '../src/resolvers/mutation/signup';
 
-export const getNewUserCtx = async (email: string, password: string, username: string, name: string): Promise<ContextUserId> => {
+export const getNewUserCtx = async (email: string, password: string, username: string): Promise<ContextUserId> => {
     const ctx: Context = {
 		req: {
 			cookies: {},
@@ -23,7 +23,7 @@ export const getNewUserCtx = async (email: string, password: string, username: s
 			header: { refresh_token: '' } as any
 		}
 	} as any;
-    const result = await signup(undefined, { email, password, username, name }, ctx);
+    const result = await signup(undefined, { email, password, username }, ctx);
     const token: any = jwt.decode(result.token);
     const userId = Number(token.sub);
 

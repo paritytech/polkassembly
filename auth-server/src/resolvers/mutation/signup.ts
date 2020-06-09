@@ -9,23 +9,21 @@ import { Context, SignupArgs, TokenType } from '../../types';
 import messages from '../../utils/messages';
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
 import validateEmail from '../../utils/validateEmail';
-import validateName from '../../utils/validateName';
 import validateUsername from '../../utils/validateUsername';
 
-export default async (parent: void, { email, password, username, name }: SignupArgs, ctx: Context): Promise<TokenType> => {
+export default async (parent: void, { email, password, username }: SignupArgs, ctx: Context): Promise<TokenType> => {
 	if (email && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
 
 	validateUsername(username);
-	validateName(name);
 
 	if (password.length < 6) {
 		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
 	}
 
 	const authServiceInstance = new AuthService();
-	const { token, refreshToken } = await authServiceInstance.SignUp(email, password, username, name);
+	const { token, refreshToken } = await authServiceInstance.SignUp(email, password, username);
 	setRefreshTokenCookie(ctx.res, refreshToken);
 	return { token };
 };

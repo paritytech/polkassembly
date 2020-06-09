@@ -12,19 +12,17 @@ describe('user query', () => {
 	const password = 'testpass';
 	const salt = 'testsalt';
 	const username = 'testuser';
-	const name = 'test name';
 	const email_verified = false;
 
 	before(async () => {
 		dbUser = await User
 			.query()
-			.allowInsert('[email, password, username, name]')
+			.allowInsert('[email, password, username]')
 			.insert({
 				email,
 				password,
 				salt,
 				username,
-				name,
 				email_verified
 			})
 			.returning('*');
@@ -42,6 +40,5 @@ describe('user query', () => {
 		const result = await user(undefined, { id });
 		expect(result?.id).to.equal(id);
 		expect(result?.username).to.equal(username);
-		expect(result?.name).to.equal(name);
 	});
 });
