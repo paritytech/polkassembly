@@ -36,6 +36,8 @@ cache:
     - node_modules/
     - packages/*/node_modules/
 
+
+
 #### stage:                        test
 
 lint-front-end:
@@ -98,6 +100,13 @@ lint-chain-db-watcher:
   tags:
     - kubernetes-parity-build
   image: docker:18-git
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - unknown_failure
+      - api_failure
+  interruptible:                   true
   services:
     - docker:18-dind
   script:
