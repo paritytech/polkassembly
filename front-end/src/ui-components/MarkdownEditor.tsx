@@ -6,7 +6,7 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import ReactMde, { commands }  from 'react-mde';
+import ReactMde  from 'react-mde';
 
 import Markdown from './Markdown';
 
@@ -162,28 +162,28 @@ interface Props {
 }
 
 export function MarkdownEditor(props: Props): React.ReactElement {
-	const listCommands = [
-		{
-			commands: [
-				commands.boldCommand,
-				commands.italicCommand,
-				commands.headerCommand,
-				commands.linkCommand,
-				commands.quoteCommand,
-				commands.strikeThroughCommand,
-				commands.codeCommand,
-				commands.imageCommand,
-				commands.orderedListCommand,
-				commands.unorderedListCommand
-			]
-		}
-	];
+	// const listCommands = [
+	// 	{
+	// 		commands: [
+	// 			commands.boldCommand,
+	// 			commands.italicCommand,
+	// 			commands.headerCommand,
+	// 			commands.linkCommand,
+	// 			commands.quoteCommand,
+	// 			commands.strikeThroughCommand,
+	// 			commands.codeCommand,
+	// 			commands.imageCommand,
+	// 			commands.orderedListCommand,
+	// 			commands.unorderedListCommand
+	// 		]
+	// 	}
+	// ];
 	const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>('write');
 
 	return (
 		<StyledTextArea className="container">
 			<ReactMde
-				commands={listCommands}
+				// commands={listCommands}
 				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
 				minEditorHeight={props.height}
 				minPreviewHeight={props.height}
@@ -191,6 +191,7 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}
 				selectedTab={selectedTab}
+				toolbarCommands={[['bold', 'header', 'link', 'quote', 'strikethrough', 'code', 'image', 'ordered-list', 'unordered-list']]}
 				{...props}
 			/>
 		</StyledTextArea>
