@@ -162,28 +162,12 @@ interface Props {
 }
 
 export function MarkdownEditor(props: Props): React.ReactElement {
-	// const listCommands = [
-	// 	{
-	// 		commands: [
-	// 			commands.boldCommand,
-	// 			commands.italicCommand,
-	// 			commands.headerCommand,
-	// 			commands.linkCommand,
-	// 			commands.quoteCommand,
-	// 			commands.strikeThroughCommand,
-	// 			commands.codeCommand,
-	// 			commands.imageCommand,
-	// 			commands.orderedListCommand,
-	// 			commands.unorderedListCommand
-	// 		]
-	// 	}
-	// ];
+
 	const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>('write');
 
 	return (
 		<StyledTextArea className="container">
 			<ReactMde
-				// commands={listCommands}
 				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
 				minEditorHeight={props.height}
 				minPreviewHeight={props.height}
