@@ -62,7 +62,7 @@ describe('addressLogin mutation on Kusama', () => {
 	});
 
 	it('should not be able to login with invalid signature', async () => {
-		const signature = '0xaaaa';
+		const signature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		try {
 			await addressLogin(undefined, { address, signature }, fakectx);
