@@ -32,7 +32,7 @@ const StyledNetworkItem = ({ showNetwork }: {showNetwork: string}) => {
 	</StyledDiv>;
 };
 
-let NetworkOptions: DropdownItemProps[] = [
+const NetworkOptions: DropdownItemProps[] = [
 	{
 		children: <StyledNetworkItem showNetwork={network.KUSAMA}/>,
 		value: network.KUSAMA

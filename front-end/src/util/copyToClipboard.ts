@@ -5,7 +5,7 @@
 export default (data: string) => {
 	// creates a tiny temporary text area to copy text out of
 	// see https://stackoverflow.com/a/30810322/591374 for details
-	var textArea = document.createElement('textarea');
+	const textArea = document.createElement('textarea');
 	textArea.style.position = 'fixed';
 	textArea.style.top = '0';
 	textArea.style.left = '0';
