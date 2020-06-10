@@ -17,19 +17,17 @@ xdescribe('Email Service', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 	const salt = 'testsalt';
 
 	it('should send verification email', async () => {
 		const user = await User
 			.query()
-			.allowInsert('[email, password, username, name]')
+			.allowInsert('[email, password, username]')
 			.insert({
 				email,
 				password,
 				salt,
-				username,
-				name
+				username
 			})
 			.returning('*');
 		const token = 'test-token';
@@ -66,13 +64,12 @@ xdescribe('Email Service', () => {
 	it('should send password reset email', async () => {
 		const user = await User
 			.query()
-			.allowInsert('[email, password, username, name]')
+			.allowInsert('[email, password, username]')
 			.insert({
 				email,
 				password,
 				salt,
 				username,
-				name
 			})
 			.returning('*');
 		const token = uuid();

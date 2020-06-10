@@ -15,7 +15,6 @@ const initialUserDetailsContext : UserDetailsContextType = {
 	email: null,
 	email_verified: false,
 	id: null,
-	name: null,
 	notification: {
 		newProposal: false,
 		ownProposal: true,
@@ -37,7 +36,6 @@ try {
 	if (tokenPayload && tokenPayload.sub) {
 		const {
 			sub: id,
-			name,
 			username,
 			email,
 			email_verified,
@@ -51,9 +49,6 @@ try {
 		}
 		if (username) {
 			initialUserDetailsContext.username = username;
-		}
-		if (name) {
-			initialUserDetailsContext.name = name;
 		}
 		if (email) {
 			initialUserDetailsContext.email = email;

@@ -17,10 +17,9 @@ describe('changeUsername mutation', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		const result = await getNewUserCtx(email, password, username, name);
+		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 	});

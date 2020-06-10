@@ -22,7 +22,6 @@ export interface UserObjectType {
     id: number;
     email: string;
     username: string;
-    name: string;
     email_verified: boolean;
     web3signup: boolean;
 }
@@ -61,7 +60,6 @@ export interface HasuraClaimPayload {
 
 export interface JWTPayploadType {
     sub: string;
-    name: string;
     username: string;
     email: string;
     email_verified: boolean;
@@ -85,7 +83,6 @@ export interface ChangeResponseType extends MessageType, TokenType {}
 export interface PublicUser {
     id: number;
     kusama_default_address?: string;
-    name: string;
     polkadot_default_address?: string;
     username: string;
 }
@@ -179,10 +176,6 @@ export interface ChangeEmailArgs {
     password: string;
 }
 
-export interface ChangeNameArgs {
-	newName: string;
-}
-
 export interface ChangeNotificationPreferenceArgs {
 	notificationPreferences: NotificationPreferencesType;
 }
@@ -230,7 +223,6 @@ export interface ResetPasswordArgs {
 
 export interface SignupArgs {
 	email: string;
-	name: string;
 	password: string;
 	username: string;
 }
