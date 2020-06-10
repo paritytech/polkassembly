@@ -45,11 +45,3 @@ export const GET_POST_TOPICS = gql`
     }
     ${topic_fragment}
 `;
-
-export const GET_CURRENT_BLOCK_NUMBER = gql`
-    query getCurrentBlockNumber {
-        blockNumbers(orderBy: number_DESC, first: 1) {
-            number
-        }
-    }
-`;

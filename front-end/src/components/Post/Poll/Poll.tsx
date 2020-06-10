@@ -42,6 +42,7 @@ const Poll = ({ pollId, endBlock }: Props) => {
 		<>
 			<GeneralSignals
 				ayes={ayes}
+				endBlock={endBlock}
 				nays={nays}
 				ownVote={ownVote}
 				pollId={pollId}

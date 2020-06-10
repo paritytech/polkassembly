@@ -6,12 +6,13 @@ import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePollMutation, useCreatePostMutation, useGetCurrentBlockNumberQuery, usePostSubscribeMutation } from '../../generated/graphql';
+import { useCreatePollMutation, useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
 import { useBlockTime, useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -35,7 +36,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { control, errors, handleSubmit } = useForm();
 	const { blocktime } = useBlockTime();
 
-	const { data } = useGetCurrentBlockNumberQuery();
+	const currenBlockNumber = useCurrentBlock()?.toNumber();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [createPollMutation] = useCreatePollMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
@@ -65,9 +66,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			return;
 		}
 
-		const blockNumber = data?.blockNumbers?.[0]?.number;
-
-		if (!blockNumber) {
+		if (!currenBlockNumber) {
 			queueNotification({
 				header: 'Failed to get current block number. Poll creation failed!',
 				message: 'Failed',
@@ -76,7 +75,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			return;
 		}
 
-		const blockEnd = blockNumber + Math.floor(TWO_WEEKS / blocktime);
+		const blockEnd = currenBlockNumber + Math.floor(TWO_WEEKS / blocktime);
 
 		createPollMutation({
 			variables: {

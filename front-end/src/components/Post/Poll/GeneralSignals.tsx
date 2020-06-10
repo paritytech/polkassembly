@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
@@ -20,17 +21,20 @@ import GeneralChainSignalBar from '../../../ui-components/GeneralChainSignalBar'
 interface Props {
 	ayes: number,
 	className?: string,
-	ownVote?: Vote | null,
+	endBlock: number
 	nays: number,
+	ownVote?: Vote | null,
 	pollId: number
 	refetch: (variables?: PollVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PollVotesQuery>>
 }
 
-const CouncilSignals = ({ className, ayes, ownVote, nays, pollId, refetch }: Props) => {
+const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [error, setErr] = useState<Error | null>(null);
 	const [addPollVoteMutation] = useAddPollVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
+	const currentBlockNumber = useCurrentBlock()?.toNumber() || 0;
+	const canVote =  endBlock > currentBlockNumber;
 
 	const cancelVote = useCallback(async () => {
 		if (!id) {
@@ -84,11 +88,12 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, pollId, refetch }: Pro
 			<Form standalone={false}>
 				<AyeNayButtons
 					className={`signal-btns ${ownVote}`}
-					disabled={!id || !!ownVote}
+					disabled={!id || !!ownVote || !canVote}
 					onClickAye={() => castVote(Vote.AYE)}
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
-				{ownVote &&
+				{!canVote && <span>Poll finished</span>}
+				{ownVote && canVote &&
 					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
 				}
 			</Form>
