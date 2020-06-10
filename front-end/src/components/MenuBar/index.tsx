@@ -41,8 +41,15 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 	// Menu Items
 	const contentItems = [
-		{ content:'Discussions', icon:'comments', to:'/discussions' },
-		{ content: 'On chain', icon:'file alternate', to:'/onchain' }
+		{ content: 'Discussions', icon:'comments', to:'/discussions' }
+	];
+
+	const onchainItems = [
+		{ content: 'On chain', icon:'chain', to:'/onchain' },
+		{ content: 'Referenda', icon:'calendar check', to:'/referenda' },
+		{ content: 'Proposals', icon:'file alternate', to:'/proposals' },
+		{ content: 'Motions', icon:'building', to:'/motions' },
+		{ content: 'Treasury', icon:'gem', to:'/treasury' }
 	];
 
 	const loggedOutItems = [
@@ -100,6 +107,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						visible={menuVisible}
 					>
 						{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
+						{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 						{username
 							?
 							<>
@@ -118,6 +126,13 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 				<Menu className={className} stackable inverted borderless>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
+					<Menu.Item className='desktop_items'>
+						<Dropdown trigger={<>OnChain</>} icon={caretIcon} item={true}>
+							<Dropdown.Menu>
+								{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
+							</Dropdown.Menu>
+						</Dropdown>
+					</Menu.Item>
 					<Menu.Menu position="right">
 						{/* <NetworkDropdown /> */}
 						{username

@@ -4,20 +4,21 @@
 
 import React, { useEffect } from 'react';
 
-import MotionsListing from '../../../components/Listings/MotionsListing';
 import { useLatestMotionPostsQuery } from '../../../generated/graphql';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
+import MotionsListing from '../../Listings/MotionsListing';
 
 interface Props {
 	className?: string
+	limit: number
 }
 
-const MotionsContainer = ({ className }:Props) => {
+const MotionsContainer = ({ className, limit }:Props) => {
 
 	const { data, error, refetch } = useLatestMotionPostsQuery({ variables: {
-		limit: 5,
+		limit,
 		postType: post_type.ON_CHAIN
 	} });
 

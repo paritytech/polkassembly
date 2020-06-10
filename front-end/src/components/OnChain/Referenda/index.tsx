@@ -5,19 +5,20 @@
 import React, { useEffect } from 'react';
 import { post_type } from 'src/global/post_types';
 
-import Referenda from '../../../components/Listings/ReferendaListing';
 import { useLatestReferendaPostsQuery } from '../../../generated/graphql';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
+import Referenda from '../../Listings/ReferendaListing';
 
 interface Props {
 	className?: string
+	limit: number
 }
 
-const ReferendaContainer = ({ className }:Props) => {
+const ReferendaContainer = ({ className, limit }:Props) => {
 
 	const { data, error, refetch } = useLatestReferendaPostsQuery({ variables: {
-		limit: 5,
+		limit,
 		postType: post_type.ON_CHAIN
 	} });
 
