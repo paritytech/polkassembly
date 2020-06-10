@@ -1,0 +1,27 @@
+- args:
+    role: anonymous
+    table:
+      name: posts
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - author_id
+      - poll_block_number_end
+      - content
+      - created_at
+      - has_poll
+      - id
+      - title
+      - topic_id
+      - type_id
+      - updated_at
+      computed_fields: []
+      filter: {}
+    role: anonymous
+    table:
+      name: posts
+      schema: public
+  type: create_select_permission

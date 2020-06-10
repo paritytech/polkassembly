@@ -1,0 +1,19 @@
+- args:
+    permission:
+      allow_aggregations: true
+      backend_only: false
+      columns:
+      - vote
+      - id
+      - poll_id
+      - user_id
+      - created_at
+      - updated_at
+      computed_fields: []
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: poll_votes
+      schema: public
+  type: create_select_permission

@@ -1,0 +1,36 @@
+- args:
+    permission:
+      allow_upsert: true
+      backend_only: false
+      check:
+        posts:
+          author_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - block_end
+      filter:
+        posts:
+          author_id:
+            _eq: X-Hasura-User-Id
+      set: {}
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: create_update_permission
+- args:
+    permission:
+      allow_upsert: true
+      backend_only: false
+      check:
+        posts:
+          author_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - block_end
+      set: {}
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: create_insert_permission
