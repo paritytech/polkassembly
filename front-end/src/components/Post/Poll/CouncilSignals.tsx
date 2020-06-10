@@ -6,9 +6,10 @@ import { QueryResult } from '@apollo/react-common';
 import styled from '@xstyled/styled-components';
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
-import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables, PollVotesQuery, useCouncilAtBlockNumberQuery, useGetCurrentBlockNumberQuery } from '../../../generated/graphql';
+import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables, PollVotesQuery, useCouncilAtBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -27,8 +28,7 @@ const CouncilSignals = ({ className, endBlock, data }: Props) => {
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
-	const currentBlockNumberResult = useGetCurrentBlockNumberQuery();
-	const currentBlockNumber = currentBlockNumberResult?.data?.blockNumbers?.[0]?.number || endBlock;
+	const currentBlockNumber = useCurrentBlock()?.toNumber() || endBlock;
 
 	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: endBlock } });
 	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber } });
