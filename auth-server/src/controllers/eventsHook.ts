@@ -14,6 +14,7 @@ import getPostCommentLink from '../utils/getPostCommentLink';
 import getPostId from '../utils/getPostId';
 import getPostLink from '../utils/getPostLink';
 import getPostType from '../utils/getPostType';
+import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
@@ -66,6 +67,8 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Hoo
 	} = onchainLink;
 
 	if (!proposer_address) {
+		console.log('proposer_address', proposer_address);
+
 		return { sendOwnProposalCreatedMessage: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
 	}
 
@@ -76,7 +79,7 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Hoo
 	const address = await Address
 		.query()
 		.where({
-			address: proposer_address
+			public_key: getPublicKey(proposer_address)
 		})
 		.first();
 
@@ -134,6 +137,10 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType, responseMess
 		return { ...responseMessage, sendNewProposalCreatedMessage: messages.EVENT_POST_ID_NOT_FOUND };
 	}
 
+	if (!proposer_address) {
+		return { ...responseMessage, sendNewProposalCreatedMessage: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
+	}
+
 	const notifications = await Notification
 		.query()
 		.where({
@@ -143,7 +150,7 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType, responseMess
 	const proposerAddress = await Address
 		.query()
 		.where({
-			address: proposer_address
+			public_key: getPublicKey(proposer_address)
 		})
 		.first();
 
