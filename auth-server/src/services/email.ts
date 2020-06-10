@@ -35,7 +35,7 @@ export const sendVerificationEmail = (user: User, token: string): void => {
 	}
 
 	const verifyUrl = `${DOMAIN}/verify-email/${token}`;
-	const text = ejs.render(verificationEmailTemplate, { username: user.name || '', verifyUrl });
+	const text = ejs.render(verificationEmailTemplate, { username: user.username || '', verifyUrl });
 	const msg = {
 		from: FROM,
 		html: text,
@@ -55,7 +55,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 	}
 
 	const resetUrl = `${DOMAIN}/reset-password?token=${token}&userId=${user.id}`;
-	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.name || '' });
+	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.username || '' });
 
 	const msg = {
 		from: FROM,
@@ -85,7 +85,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 		content: md.render(comment.content),
 		domain: DOMAIN,
 		postUrl,
-		username: user.name || ''
+		username: user.username || ''
 	});
 
 	const msg = {
@@ -111,7 +111,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		undoEmail: undoToken.email,
 		undoUrl,
 		userEmail: user.email,
-		username: user.name || ''
+		username: user.username || ''
 	});
 	const msg = {
 		from: FROM,
@@ -139,7 +139,7 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		domain: DOMAIN,
 		postUrl: url,
 		type,
-		username: user.name || ''
+		username: user.username || ''
 	});
 	const msg = {
 		from: FROM,
@@ -167,7 +167,7 @@ export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: str
 		domain: DOMAIN,
 		postUrl: url,
 		type,
-		username: user.name || ''
+		username: user.username || ''
 	});
 
 	const msg = {

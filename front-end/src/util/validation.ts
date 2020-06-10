@@ -3,7 +3,6 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export const username = { maxLength:30, minLength:3, pattern: /^[A-Za-z0-9._-]*$/, required: true };
-export const fullname = { maxLength: 30, minLength: 3, required: false };
 export const email = {
 	pattern: /^[A-Z0-9_'%=+!`#~$*?^{}&|-]+([.][A-Z0-9_'%=+!`#~$*?^{}&|-]+)*@[A-Z0-9-]+(\.[A-Z0-9-]+)+$/i
 };

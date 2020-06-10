@@ -10,7 +10,6 @@ import addressSignupConfirm from './mutation/addressSignupConfirm';
 import addressSignupStart from './mutation/addressSignupStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeEmail from './mutation/changeEmail';
-import changeName from './mutation/changeName';
 import changeNotificationPreference from './mutation/changeNotificationPreference';
 import changePassword from './mutation/changePassword';
 import changeUsername from './mutation/changeUsername';
@@ -42,7 +41,6 @@ export default {
 		addressSignupStart,
 		addressUnlink,
 		changeEmail,
-		changeName,
 		changeNotificationPreference,
 		changePassword,
 		changeUsername,

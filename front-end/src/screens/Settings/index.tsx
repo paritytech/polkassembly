@@ -9,7 +9,6 @@ import { Divider,Grid } from 'semantic-ui-react';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Address from './address';
 import Email from './email';
-import Fullname from './fullname';
 import Password from  './password';
 import SetCredentials from './setCredentials';
 import Username from './username';
@@ -27,8 +26,6 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<h2>Settings</h2>
 				<Divider/>
 				{web3signup ? <SetCredentials /> : <Username/>}
-				<Divider/>
-				<Fullname/>
 				<Divider/>
 				{web3signup ? null : <><Email/><Divider/></>}
 				{web3signup ? null : <><Password/><Divider/></>}

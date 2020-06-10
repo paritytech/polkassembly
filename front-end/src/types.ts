@@ -9,7 +9,6 @@ import { network, tokenSymbol } from './global/networkConstants';
 export interface UserDetailsContextType {
     id?: number | null,
     picture?: string | null,
-    name?: string | null,
     username?: string | null,
     email?: string | null,
     email_verified?: boolean | null,
@@ -47,7 +46,6 @@ export interface HasuraClaimPayload {
 export interface JWTPayploadType {
     exp: number
     sub: string
-    name: string
     username: string
     email: string
     email_verified: boolean

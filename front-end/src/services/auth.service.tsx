@@ -48,7 +48,6 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 		if (tokenPayload && tokenPayload.sub) {
 			const {
 				sub: id,
-				name,
 				username,
 				email,
 				email_verified,
@@ -78,7 +77,6 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 					email,
 					email_verified,
 					id: Number(id),
-					name,
 					notification,
 					username,
 					web3signup
@@ -100,7 +98,6 @@ export const logout = (setUserDetailsContextState: UserDetailsContextType['setUs
 			email: null,
 			email_verified: false,
 			id: null,
-			name: null,
 			notification: null,
 			username: null,
 			web3signup: false

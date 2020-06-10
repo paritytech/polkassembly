@@ -20,11 +20,10 @@ describe('post subscribe mutation', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 	const post_id = 123;
 
 	before(async () => {
-		const result = await getNewUserCtx(email, password, username, name);
+		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 	});
