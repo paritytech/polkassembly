@@ -1,0 +1,7 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: |-
+      DROP TRIGGER IF EXISTS "set_public_poll_updated_at" ON "public"."poll";
+      ALTER TABLE "public"."poll" DROP COLUMN "updated_at";
+  type: run_sql

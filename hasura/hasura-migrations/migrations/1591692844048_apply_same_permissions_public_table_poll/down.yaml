@@ -1,0 +1,12 @@
+- args:
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: drop_insert_permission
+- args:
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: drop_update_permission

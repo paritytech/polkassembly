@@ -1,0 +1,12 @@
+- args:
+    name: posts
+    table:
+      name: poll
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: poll_id
+        table:
+          name: posts
+          schema: public
+  type: create_array_relationship

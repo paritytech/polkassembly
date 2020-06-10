@@ -5,11 +5,12 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import { PostVotesQuery, PostVotesQueryVariables, useAddPostVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
+import { PollVotesQuery, PollVotesQueryVariables, useAddPollVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
 import Card from '../../../ui-components/Card';
@@ -20,17 +21,20 @@ import GeneralChainSignalBar from '../../../ui-components/GeneralChainSignalBar'
 interface Props {
 	ayes: number,
 	className?: string,
-	ownVote?: Vote | null,
+	endBlock: number
 	nays: number,
-	postId: number
-	refetch: (variables?: PostVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PostVotesQuery>>
+	ownVote?: Vote | null,
+	pollId: number
+	refetch: (variables?: PollVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PollVotesQuery>>
 }
 
-const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Props) => {
+const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [error, setErr] = useState<Error | null>(null);
-	const [addPostVoteMutation] = useAddPostVoteMutation();
+	const [addPollVoteMutation] = useAddPollVoteMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
+	const currentBlockNumber = useCurrentBlock()?.toNumber() || 0;
+	const canVote =  endBlock > currentBlockNumber;
 
 	const cancelVote = useCallback(async () => {
 		if (!id) {
@@ -40,7 +44,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		try {
 			await deleteVoteMutation({
 				variables: {
-					postId,
+					pollId,
 					userId: id
 				}
 			});
@@ -49,7 +53,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, deleteVoteMutation, postId, refetch]);
+	}, [id, deleteVoteMutation, pollId, refetch]);
 
 	const castVote = useCallback(async (vote: Vote) => {
 		if (!id) {
@@ -57,9 +61,9 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		}
 
 		try {
-			await addPostVoteMutation({
+			await addPollVoteMutation({
 				variables: {
-					postId,
+					pollId,
 					userId: id,
 					vote
 				}
@@ -69,7 +73,7 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, addPostVoteMutation, postId, refetch]);
+	}, [id, addPollVoteMutation, pollId, refetch]);
 
 	return (
 		<Card className={className}>
@@ -84,11 +88,12 @@ const CouncilSignals = ({ className, ayes, ownVote, nays, postId, refetch }: Pro
 			<Form standalone={false}>
 				<AyeNayButtons
 					className={`signal-btns ${ownVote}`}
-					disabled={!id || !!ownVote}
+					disabled={!id || !!ownVote || !canVote}
 					onClickAye={() => castVote(Vote.AYE)}
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
-				{ownVote &&
+				{!canVote && <span>Poll finished</span>}
+				{ownVote && canVote &&
 					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
 				}
 			</Form>

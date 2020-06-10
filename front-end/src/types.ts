@@ -111,7 +111,7 @@ export interface ChainProps {
 	'blockTime': number;
 	'ss58Format': number;
 	'tokenDecimals': number;
-	'tokenSymbol': TokenSymbol;
+    'tokenSymbol': TokenSymbol;
 }
 
 export interface LoadingStatusType {
@@ -146,4 +146,3 @@ export interface ReactionMapFields {
 	count: number
 	userNames: string[]
 }
-
