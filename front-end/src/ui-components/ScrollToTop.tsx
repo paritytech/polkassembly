@@ -24,39 +24,48 @@ const ScrollToTop = ({ className }: Props) => {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0
+		});
+	};
+
 	if (!visible) return null;
 
 	return (
 		<div className={className}>
-			<a className='scroll-arrow' href='#page-container'><Icon name='angle up'/></a>
+			<button className='scroll-arrow' onClick={scrollToTop}><Icon name='angle up'/></button>
 		</div>
 	);
 };
 
 export default styled(ScrollToTop)`
 	position: sticky;
-	top: calc(100vh - 50px);
+	top: calc(100vh - 60px);
 
 	.scroll-arrow {
-		display: inline-flex;
+		display: flex;
 		border-radius: 50%;
-		width: 4rem;
-		height: 4rem;
-		background-color: pink_primary;
-		color: white;
+		width: 5rem;
+		height: 5rem;
+		background-color: white;
+		color: grey_primary;
 		font-size: xl;
 		text-align: center;
 		transition: all 0.2s ease;
+		border: none;
+		box-shadow: 0 0.2rem 0.4rem rgba(83, 89, 92, 0.25);
+		line-height: 2.4rem;
 		i.icon {
-			margin: 1rem auto auto auto;
+			margin: auto;
 			transition: all 0.2s ease;
 		}
 		&:hover {
 			cursor: pointer;
-			background-color: pink_secondary;
-			i.icon {
-				margin: 0.5rem auto auto auto;
-			}
+			background-color: grey_light;
+		}
+		&:focus {
+			outline: none;
 		}
 	}
 `;

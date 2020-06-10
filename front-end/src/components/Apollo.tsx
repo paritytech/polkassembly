@@ -58,7 +58,7 @@ const handleResponse = () => async (response:Response) => {
  * is expired. It returns true if the token isn't set.
  */
 const isTokenValidOrUndefined = (): boolean => {
-	let token = localStorage.getItem('Authorization') || null;
+	const token = localStorage.getItem('Authorization') || null;
 
 	if (token) {
 		const tokenPayload = jwt.decode(token) as JWTPayploadType | null;
@@ -121,8 +121,9 @@ const Apollo = ( { children }:Props ) => {
 		isTokenValidOrUndefined
 	});
 
+	// needs type casting because of https://github.com/apollographql/apollo-client/issues/6011
 	const link = ApolloLink.from([
-		tokenRefreshLink,
+		tokenRefreshLink as unknown as ApolloLink,
 		setAuthorizationLink,
 		httpLink
 	]);

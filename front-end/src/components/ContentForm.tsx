@@ -12,7 +12,7 @@ import messages from '../util/messages';
 
 interface Props {
 	className?: string
-	errorContent?: FieldError | NestDataObject<any> | NestDataObject<any>[] | FieldError[] | undefined
+	errorContent?: FieldError | NestDataObject<any, any> | NestDataObject<any, any>[] | FieldError[] | undefined
 	height?: number
 	onChange?: (content: string) => void
 	value?: string
