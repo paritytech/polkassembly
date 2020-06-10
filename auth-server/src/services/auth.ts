@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes, timingSafeEqual } from 'crypto';
@@ -20,6 +19,7 @@ import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, HashedPassword, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
 import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
+import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
@@ -91,7 +91,7 @@ export default class AuthService {
 				address,
 				default: defaultAddress,
 				network,
-				public_key: this.getPublicKey(address),
+				public_key: getPublicKey(address),
 				user_id,
 				verified: true
 			});
@@ -116,13 +116,6 @@ export default class AuthService {
 			password: hashedPassword,
 			salt: salt.toString('hex')
 		};
-	}
-
-	private getPublicKey (address: string): string {
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
-		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -465,7 +458,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: this.getPublicKey(dbAddress.address),
+				public_key: getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);

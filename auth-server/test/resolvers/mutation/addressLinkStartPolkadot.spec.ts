@@ -50,7 +50,6 @@ describe('addressLinkStart mutation on Polkadot', () => {
 			.where({ user_id: signupUserId })
 			.first();
 
-			console.log('network', JSON.stringify(dbAddress, null, 4))
 		expect(dbAddress?.network).to.be.equal(network);
 		expect(dbAddress?.address).to.be.equal(address);
 		expect(dbAddress?.sign_message).to.exist;
