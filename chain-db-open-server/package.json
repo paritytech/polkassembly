@@ -15,12 +15,19 @@
     "gql:get-schema": "PRISMA_ENDPOINT=http://0.0.0.0:4466 graphql get-schema -e dev --project prisma"
   },
   "dependencies": {
-    "graphql-yoga": "1.18.3",
-    "prisma-client-lib": "1.34.10"
+    "graphql-yoga": "^1.18.3",
+    "prisma-client-lib": "^1.34.10"
   },
   "devDependencies": {
     "prisma": "1.34.10",
-    "ts-node": "8.6.2",
-    "typescript": "3.8.3"
+    "ts-node": "8.10.2",
+    "typescript": "3.9.5"
+  },
+  "resolutions": {
+    "graphql-playground-html": "^1.6.22",
+    "apollo-server-core": "^2.14.2",
+    "apollo-server-express": "^2.14.2",
+    "apollo-server-lambda": "^2.14.2",
+    "marked": "^0.7.0"
   }
 }

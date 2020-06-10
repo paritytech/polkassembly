@@ -72,14 +72,14 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 
 			if (referendum) {
 				setIsPassing(referendum.isPassing);
-	
+
 				const totalAye: BN = referendum.allAye.reduce((acc: BN, curr: DeriveReferendumVote) => {
 					return acc.add(new BN(curr.balance));
 				}, ZERO);
 				const totalNay: BN = referendum.allNay.reduce((acc: BN, curr: DeriveReferendumVote) => {
 					return acc.add(new BN(curr.balance));
 				}, ZERO);
-	
+
 				setNayVotesWithoutConviction(totalNay);
 				setAyeVotesWithoutConviction(totalAye);
 			}
