@@ -1,4 +1,5 @@
-image: parity/kubetools:helm3
+image:                             paritytech/kubetools:helm3
+
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "paritytech"
@@ -22,7 +23,7 @@ include:
 
 kubesec-sast:
   variables:
-    ANALYZER_TARGET_DIR: "kubernetes/"
+    ANALYZER_TARGET_DIR:           "kubernetes/"
 
 stages:
   - test
@@ -41,8 +42,8 @@ cache:
 #### stage:                        test
 
 lint-front-end:
-  stage: test
-  image: node:12
+  stage:                           test
+  image:                           node:12
   interruptible:                   true
   dependencies:                    []
   script:
@@ -59,8 +60,8 @@ lint-front-end:
     - linux-docker
 
 lint-back-end:
-  stage: test
-  image: node:12
+  stage:                           test
+  image:                           node:12
   interruptible:                   true
   dependencies:                    []
   script:
@@ -77,8 +78,8 @@ lint-back-end:
     - linux-docker
 
 lint-chain-db-watcher:
-  stage: test
-  image: node:12
+  stage:                           test
+  image:                           node:12
   interruptible:                   true
   dependencies:                    []
   script:
@@ -99,34 +100,41 @@ lint-chain-db-watcher:
 .build_and_push:                   &build_and_push
   tags:
     - kubernetes-parity-build
-  image: docker:18-git
+  image:                           docker:18-git
   retry:
-    max: 2
+    max:                           2
     when:
       - runner_system_failure
       - unknown_failure
       - api_failure
   interruptible:                   true
   services:
-    - docker:18-dind
+    - docker:dind
   script:
+    # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
-    - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
-    - echo "$BUILD_ARGS"
+    # set 'BUILDKIT_INLINE_CACHE' so generated images can be used for caching subsequently
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg BUILDKIT_INLINE_CACHE=1"
+    # pull latest image used as cache to speed up the docker build process
+    - docker pull $DOCKER_IMAGE:latest || true
+    # login to the docker registry
     - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
-    - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
-    - docker push "$DOCKER_IMAGE_FULL_NAME"
+    # do: docker build
+    - eval "docker build --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
+    # do: docker push
+    - docker push "$DOCKER_IMAGE:latest"
+    - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:staging-front-end:
-  stage: dockerize
+  stage:                           dockerize
   environment:
-    name: parity-build
+    name:                          parity-build
   variables:
     REACT_APP_HASURA_GRAPHQL_URL:  "https://test.polkassembly.io/v1/graphql"
-    REACT_APP_JWT_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohj4C7n/5PzCANMukmXF\nwE/wGK9vBRnaWZCODu5zg9mcVrgiuFlubONSoVg9DSCxSlPmaKjAZUy1xARNKPgL\ncaEkxteT6d5p50iiL0iMTtz85Y5yefoQAWFNjgN+VbiVEycWvw5uKYOrQkUIuxYm\njcI5xsmDU48UTha1HFgC6r+It9ViZrsfTAwj4z9lvOcPphVLh9TFaON8LnWPisly\nF4r6uPY6nLdDVvbDRlWoAEeg7mXaxBFWZidi9pKBMFavxyHhH3iyg4dCvxKzEH+X\nRA9i6Zw1c02Jgyd6viBAkB963SrGTAF+TNzepidoK5B/sIZD62OseoMX8fBXEu5e\nmQIDAQAB\n-----END PUBLIC KEY-----"
-    REACT_APP_NETWORK: "kusama"
-    REACT_APP_WS_PROVIDER: "wss://kusama-rpc.polkadot.io"
+    REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohj4C7n/5PzCANMukmXF\nwE/wGK9vBRnaWZCODu5zg9mcVrgiuFlubONSoVg9DSCxSlPmaKjAZUy1xARNKPgL\ncaEkxteT6d5p50iiL0iMTtz85Y5yefoQAWFNjgN+VbiVEycWvw5uKYOrQkUIuxYm\njcI5xsmDU48UTha1HFgC6r+It9ViZrsfTAwj4z9lvOcPphVLh9TFaON8LnWPisly\nF4r6uPY6nLdDVvbDRlWoAEeg7mXaxBFWZidi9pKBMFavxyHhH3iyg4dCvxKzEH+X\nRA9i6Zw1c02Jgyd6viBAkB963SrGTAF+TNzepidoK5B/sIZD62OseoMX8fBXEu5e\nmQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:             "kusama"
+    REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
@@ -134,17 +142,17 @@ dockerize:staging-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 dockerize:production-front-end:
   stage: dockerize
   environment:
     name: parity-build
   variables:
-    REACT_APP_HASURA_GRAPHQL_URL:      "https://kusama.polkassembly.io/v1/graphql"
-    REACT_APP_JWT_PUBLIC_KEY:          "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----"
-    REACT_APP_NETWORK:                "kusama"
-    REACT_APP_WS_PROVIDER:            "wss://kusama-rpc.polkadot.io"
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://kusama.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:             "kusama"
+    REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
@@ -152,43 +160,43 @@ dockerize:production-front-end:
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 dockerize-auth-server:
-  stage: dockerize
+  stage:                           dockerize
   environment:
-    name: parity-build
+    name:                          parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 dockerize-chain-db-watcher:
-  stage: dockerize
+  stage:                           dockerize
   environment:
-    name: parity-build
+    name:                          parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 dockerize-health-monitor:
-  stage: dockerize
+  stage:                           dockerize
   environment:
-    name: parity-build
+    name:                          parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 dockerize-node-watcher:
-  stage: dockerize
+  stage:                           dockerize
   environment:
-    name: parity-build
+    name:                          parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<: *build_and_push
+  <<:                              *build_and_push
 
 #### stage:                        deploy
 
-.deploy-k8s:                   &deploy-k8s
+.deploy-k8s:                       &deploy-k8s
   script:
     - helm upgrade polkassembly kubernetes/polkassembly
       --install
@@ -233,30 +241,30 @@ dockerize-node-watcher:
       --set password=${REDIS_PASSWORD}
 
 deploy-staging:
-  stage: deploy
+  stage:                           deploy
   environment:
-    name: dashboards-cluster-1
+    name:                          dashboards-cluster-1
   tags:
     - kubernetes-parity-build
   only:
     - master
-  <<: *deploy-k8s
+  <<:                              *deploy-k8s
 
 deploy-production:
-  stage: deploy
+  stage:                           deploy
   environment:
-    name: parity-prod
+    name:                          parity-prod
   tags:
     - kubernetes-parity-build
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
-  <<: *deploy-k8s
+  <<:                              *deploy-k8s
 
 publish-draft-release:
-  stage: publish
+  stage:                           publish
   environment:
-    name: parity-prod
-  image: parity/tools:latest
+    name:                          parity-prod
+  image:                           paritytech/tools:latest
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   script:
