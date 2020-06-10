@@ -67,8 +67,6 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Hoo
 	} = onchainLink;
 
 	if (!proposer_address) {
-		console.log('proposer_address', proposer_address);
-
 		return { sendOwnProposalCreatedMessage: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
 	}
 
