@@ -108,15 +108,22 @@ lint-chain-db-watcher:
       - api_failure
   interruptible:                   true
   services:
-    - docker:18-dind
+    - docker:dind
   script:
+    # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
-    - export DOCKER_IMAGE_FULL_NAME=$DOCKER_IMAGE:$DOCKER_TAG
-    - echo "$BUILD_ARGS"
+    # set 'BUILDKIT_INLINE_CACHE' so generated images can be used for caching subsequently
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg BUILDKIT_INLINE_CACHE=1"
+    # pull latest image used as cache to speed up the docker build process
+    - docker pull $DOCKER_IMAGE:latest || true
+    # login to the docker registry
     - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
-    - eval "docker build -t" "$DOCKER_IMAGE_FULL_NAME" "$BUILD_ARGS" "$POD_NAME"
-    - docker push "$DOCKER_IMAGE_FULL_NAME"
+    # do: docker build
+    - eval "docker build --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
+    # do: docker push
+    - docker push "$DOCKER_IMAGE:latest"
+    - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:staging-front-end:
   stage: dockerize
