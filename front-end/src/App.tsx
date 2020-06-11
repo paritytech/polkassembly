@@ -109,7 +109,7 @@ const App = () => {
 													<Route path="/motions" >
 														<Motions/>
 													</Route>
-													<Route path="/treasury" >
+													<Route path="/treasury-proposals" >
 														<Treasury/>
 													</Route>
 													<Route path="/request-reset-password">

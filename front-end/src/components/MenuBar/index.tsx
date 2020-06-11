@@ -49,7 +49,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content: 'Referenda', icon:'calendar check', to:'/referenda' },
 		{ content: 'Proposals', icon:'file alternate', to:'/proposals' },
 		{ content: 'Motions', icon:'building', to:'/motions' },
-		{ content: 'Treasury', icon:'gem', to:'/treasury' }
+		{ content: 'Treasury', icon:'gem', to:'/treasury-proposals' }
 	];
 
 	const loggedOutItems = [
