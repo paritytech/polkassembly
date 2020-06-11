@@ -47,7 +47,6 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 			? [proposalId, seconds]
 			: [proposalId];
 
-		// eslint-disable-next-line no-extra-parens
 		const second = (api.tx.democracy as any).second(...params);
 
 		second.signAndSend(address, ({ status }: any) => {

@@ -27,7 +27,6 @@
         "comma-dangle": ["error", "never"],
         "header/header": [2, "../header.js"],
         "indent": ["error", "tab"],
-        "no-extra-parens": ["error", "all", { "returnAssign": false }],
         "no-multiple-empty-lines": ["error", {"max": 1}],
         "no-tabs": ["error", { "allowIndentationTabs": true }],
         "no-trailing-spaces": ["warn"],
