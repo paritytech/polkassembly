@@ -12988,10 +12988,10 @@ react-markdown@^4.3.1:
     unist-util-visit "^1.3.0"
     xtend "^4.0.1"
 
-react-mde@^10.0.3:
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/react-mde/-/react-mde-10.0.3.tgz#0dea122ee8ba8741eec929d7cabf53b1c27d16ca"
-  integrity sha512-t8c1h6jkXHoCQpHcZ3Ex2cq/sGmsonS+tsoQ/YGUrijO4CL6wnwdIUpcApn2qeFZnkyqr7tyLwZ5GMOfiy8L/w==
+react-mde@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/react-mde/-/react-mde-10.1.0.tgz#7771d1471027a02a40ff8d96de1df025f7c145de"
+  integrity sha512-hIBSziNgRxsFHxczHOblBt0DzaavhY/gcqHDPJZnbi7PWRUnBbOQj0HcWCV5zqX71+C05Dmu9hcSbnY9Z58leg==
 
 react-popper-tooltip@^2.8.3:
   version "2.11.1"
