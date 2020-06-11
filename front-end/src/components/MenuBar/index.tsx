@@ -45,7 +45,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	];
 
 	const onchainItems = [
-		{ content: 'On chain', icon:'chain', to:'/onchain' },
+		{ content: 'Overview', icon:'chain', to:'/onchain' },
 		{ content: 'Referenda', icon:'calendar check', to:'/referenda' },
 		{ content: 'Proposals', icon:'file alternate', to:'/proposals' },
 		{ content: 'Motions', icon:'building', to:'/motions' },
