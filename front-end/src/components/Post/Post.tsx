@@ -117,7 +117,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 
 	const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
 		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal) {
-			// eslint-disable-next-line no-extra-parens
 			return (post as DiscussionPostFragment) !== undefined;
 		}
 
