@@ -1,0 +1,5 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."posts" DROP COLUMN "poll_block_number_end" CASCADE;
+  type: run_sql

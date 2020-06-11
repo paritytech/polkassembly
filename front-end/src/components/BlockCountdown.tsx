@@ -2,14 +2,13 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { Popup } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
+import { useBlockTime } from 'src/hooks';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import blockToTime from 'src/util/blockToTime';
-import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	className?: string
@@ -22,31 +21,10 @@ const DivContent = styled.div`
 `;
 
 const BlockCountdown = ({ className, endBlock }:Props ) => {
-	const network = getNetwork();
 	const ZERO = new BN(0);
-	const { api, isApiReady } = useContext(ApiPromiseContext);
-	const [currentBlock, setCurrentBlock] = useState(ZERO);
+	const currentBlock = useCurrentBlock() || ZERO;
 	const blocksRemaining = endBlock - currentBlock.toNumber();
-	const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
-	const [blocktime, setBlocktime] = useState(DEFAULT_TIME);
-
-	useEffect(() => {
-		if (!isApiReady) {
-			return;
-		}
-
-		let unsubscribe: () => void;
-
-		setBlocktime(api.consts.babe?.expectedBlockTime.toNumber());
-
-		api.derive.chain.bestNumber((number) => {
-			setCurrentBlock(number);
-		})
-			.then(unsub => {unsubscribe = unsub;})
-			.catch(e => console.error(e));
-
-		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady]);
+	const { blocktime } = useBlockTime();
 
 	return (
 		<Popup
