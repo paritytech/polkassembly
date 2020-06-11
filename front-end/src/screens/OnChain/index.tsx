@@ -22,16 +22,16 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Referenda</h3>
 					<ReferendaContainer className='referendaContainer' limit={5} />
-					<Link className='onchain-link' to='referenda'><Icon name='arrow right'/>See all referenda</Link>
+					<Link className='full-listing-link' to='referenda'><Icon name='arrow right'/>See all referenda</Link>
 					<h3>Proposals</h3>
 					<ProposalContainer className='proposalContainer' limit={5} />
-					<Link className='onchain-link' to='proposals'><Icon name='arrow right'/>See all proposals</Link>
+					<Link className='full-listing-link' to='proposals'><Icon name='arrow right'/>See all proposals</Link>
 					<h3>Motions</h3>
 					<MotionContainer className='motionContainer' limit={5} />
-					<Link className='onchain-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
+					<Link className='full-listing-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
 					<h3>Treasury</h3>
 					<TreasuryContainer className='treasuryContainer' limit={5} />
-					<Link className='onchain-link' to='treasury'><Icon name='arrow right'/>See all treasury proposals</Link>
+					<Link className='full-listing-link' to='treasury'><Icon name='arrow right'/>See all treasury proposals</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -75,7 +75,7 @@ export default styled(OnchainPostsContainer)`
 		}
 	}
 
-	.onchain-link {
+	.full-listing-link {
 		display: flex;
 		color: black_text;
 		font-weight: 500;
