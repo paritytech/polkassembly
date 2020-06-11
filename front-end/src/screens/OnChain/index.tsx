@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Grid } from 'semantic-ui-react';
+import { Grid, Icon } from 'semantic-ui-react';
 
 import MotionContainer from '../../components/OnChain/Motions';
 import ProposalContainer from '../../components/OnChain/Proposals';
