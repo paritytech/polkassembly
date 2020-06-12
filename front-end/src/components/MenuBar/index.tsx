@@ -45,11 +45,11 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	];
 
 	const onchainItems = [
-		{ content: 'Overview', icon:'chain', to:'/onchain' },
-		{ content: 'Referenda', icon:'calendar check', to:'/referenda' },
-		{ content: 'Proposals', icon:'file alternate', to:'/proposals' },
-		{ content: 'Motions', icon:'building', to:'/motions' },
-		{ content: 'Treasury', icon:'gem', to:'/treasury-proposals' }
+		{ content: 'Overview', to:'/onchain' },
+		{ content: 'Referenda', to:'/referenda' },
+		{ content: 'Proposals', to:'/proposals' },
+		{ content: 'Motions', to:'/motions' },
+		{ content: 'Treasury', to:'/treasury-proposals' }
 	];
 
 	const loggedOutItems = [
