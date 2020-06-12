@@ -4,7 +4,8 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
 import {
@@ -43,6 +44,14 @@ interface Props{
 
 export const Comment = ({ className, comment, refetch } : Props) => {
 	const { author, content, created_at, id, updated_at } = comment;
+	const { hash } = useLocation();
+	const commentRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (hash === `#${id}`) {
+			window.scrollTo(0, commentRef.current?.offsetTop || 0);
+		}
+	}, [hash, id]);
 
 	if (!author || !author.id || !author.username || !content) return <div>Comment not available</div>;
 
@@ -50,7 +59,7 @@ export const Comment = ({ className, comment, refetch } : Props) => {
 	const defaultAddress = author[defaultAddressField];
 
 	return (
-		<div className={className}>
+		<div id={id} ref={commentRef} className={className}>
 			<Avatar
 				className='avatar'
 				username={author.username}
@@ -96,10 +105,8 @@ export default styled(Comment)`
 
 	.comment-box {
 		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_card;
 		margin-bottom: 1rem;
 		width: 100%;
 		word-break: break-word;

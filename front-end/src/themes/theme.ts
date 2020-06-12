@@ -11,7 +11,7 @@ export const theme = {
 		blue_secondary: '#EBF0F5',
 		green_primary: '#4DD18F',
 		green_secondary: '#399969',
-		grey_app_background: '#F5F7F8',
+		grey_app_background: '#F7F9FA',
 		grey_border: '#DDE4ED',
 		grey_light: '#EBF0F5',
 		grey_primary: '#777B80',
@@ -43,7 +43,9 @@ export const theme = {
 		input_border_radius: '0.3rem'
 	},
 	shadows: {
-		box_shadow_secondary_grey: '0 0 0 1px #706D6D inset',
-		box_shadow_secondary_red: '0 0 0 1px #D94C3D inset'
+		box_shadow_card: '0 0.2rem 0.4rem rgba(83, 89, 92, 0.15)',
+		box_shadow_card_hover: '0 0.4rem 1.6rem rgba(83, 89, 92, 0.2)',
+		box_shadow_sec_btn: '0 0 0 1px #706D6D inset',
+		box_shadow_sec_btn_neg: '0 0 0 1px #D94C3D inset'
 	}
 };

@@ -2,51 +2,24 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useEffect,useState } from 'react';
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { chainProperties } from 'src/global/networkConstants';
 import { LoadingStatusType } from 'src/types';
 import Card from 'src/ui-components/Card';
 import Loader from 'src/ui-components/Loader';
-import formatBnBalance from 'src/util/formatBnBalance';
 import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	className?: string
-	proposalId: number
+	deposit: string
+	loadingStatus: LoadingStatusType
+	seconds: number
 }
 
-const ProposalVoteInfo = ({ className, proposalId }:  Props) => {
-	const [seconds, setSeconds] = useState(0);
-	const [deposit, setDeposit] = useState('');
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+const ProposalVoteInfo = ({ className, deposit, loadingStatus, seconds }:  Props) => {
 	const currentNetwork = getNetwork();
-	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading proposal info' });
-
-	useEffect(() => {
-		if (!isApiReady) {
-			return;
-		}
-
-		let unsubscribe: () => void;
-
-		api.derive.democracy.proposals( proposals => {
-			proposals.forEach((proposal) => {
-				if (proposal.index.toNumber() === proposalId && proposal.balance) {
-					setSeconds(proposal.seconds.length);
-					setDeposit(formatBnBalance(proposal.balance, { numberAfterComma: 2, withUnit: true }));
-				}
-			});
-			setLoadingStatus({ isLoading: false, message: '' });
-		})
-			.then(unsub => {unsubscribe = unsub;})
-			.catch(e => console.error(e));
-
-		return () => unsubscribe && unsubscribe();
-
-	}, [api, isApiReady, proposalId]);
 
 	return (
 		<Card className={loadingStatus.isLoading ? `LoaderWrapper ${className}` : className}>

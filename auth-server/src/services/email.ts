@@ -4,8 +4,8 @@
 
 import sgMail from '@sendgrid/mail';
 import ejs from 'ejs';
+import MarkdownIt from 'markdown-it';
 
-import EmailVerificationToken from '../model/EmailVerificationToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { CommentCreationHookDataType, PostType } from '../types';
@@ -28,14 +28,14 @@ if (apiKey) {
 	sgMail.setApiKey(apiKey);
 }
 
-export const sendVerificationEmail = (user: User, token: EmailVerificationToken): void => {
+export const sendVerificationEmail = (user: User, token: string): void => {
 	if (!apiKey) {
 		console.warn('Verification Email not sent due to missing API key');
 		return;
 	}
 
-	const verifyUrl = `${DOMAIN}/verify-email/${token.token}`;
-	const text = ejs.render(verificationEmailTemplate, { username: user.name || '', verifyUrl });
+	const verifyUrl = `${DOMAIN}/verify-email/${token}`;
+	const text = ejs.render(verificationEmailTemplate, { username: user.username || '', verifyUrl });
 	const msg = {
 		from: FROM,
 		html: text,
@@ -55,7 +55,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 	}
 
 	const resetUrl = `${DOMAIN}/reset-password?token=${token}&userId=${user.id}`;
-	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.name || '' });
+	const text = ejs.render(resetPasswordEmailTemplate, { resetUrl, username: user.username || '' });
 
 	const msg = {
 		from: FROM,
@@ -71,7 +71,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 
 export const sendPostSubscriptionMail = (user: User, author: User, comment: CommentCreationHookDataType, postUrl: string): void => {
 	if (!apiKey) {
-		console.warn('There is a new comment on the post you are subscribed to');
+		console.warn('Post Subscription Email not sent due to missing API key');
 		return;
 	}
 
@@ -79,11 +79,13 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 		return;
 	}
 
+	const md = new MarkdownIt();
 	const text = ejs.render(postSubscriptionMailTemplate, {
 		authorUsername: author.username,
-		content: comment.content,
+		content: md.render(comment.content),
+		domain: DOMAIN,
 		postUrl,
-		username: user.name || ''
+		username: user.username || ''
 	});
 
 	const msg = {
@@ -109,7 +111,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		undoEmail: undoToken.email,
 		undoUrl,
 		userEmail: user.email,
-		username: user.name || ''
+		username: user.username || ''
 	});
 	const msg = {
 		from: FROM,
@@ -137,7 +139,7 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		domain: DOMAIN,
 		postUrl: url,
 		type,
-		username: user.name || ''
+		username: user.username || ''
 	});
 	const msg = {
 		from: FROM,
@@ -165,7 +167,7 @@ export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: str
 		domain: DOMAIN,
 		postUrl: url,
 		type,
-		username: user.name || ''
+		username: user.username || ''
 	});
 
 	const msg = {

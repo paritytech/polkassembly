@@ -42,7 +42,7 @@ create index "onchain_links_post_id_index" on "onchain_links" ("post_id");
 ```
 
 ### Remote schema
-We are using auth server from polkassembly as auth remote schema and node watcher from [Nomidot](https://github.com/paritytech/Nomidot) as another remote schema. Both should be running for hasura migrations to work.
+We are using auth server from Polkassembly as auth remote schema and chain-db as another remote schema. Both should be running for hasura migrations to work.
 
 They are configured as http://auth-server-service:8010/auth/graphql and http://nodewatcher.nodewatcher:4466 in hasura migrations yaml files. This is done for kubernetes to work.
 So add these entries in /etc/hosts
@@ -70,6 +70,24 @@ from there you can apply the migration:
 ```bash
 cd hasura-migrations
 hasura-dev migrate apply --admin-secret <your_admin_secret>
+```
+
+### Remote migration
+
+Forward ports from the usual hasura 8080 to 7070 (so that we know that 7070 isn't a local instance and we should be careful)
+```bash
+kubectl port-forward svc/hasura-service 7070:8080 -n polkassembly
+```
+
+Verify the state of the migration
+```bash
+cd /hasura/hasura-migrations
+hasura-dev migrate status --endpoint http://localhost:7070 --admin-secret <secret>
+```
+
+Apply the migration 
+```bash
+hasura-dev migrate apply --endpoint http://localhost:7070 --admin-secret <secret>
 ```
 
 ### Update the schema, relationships or permissions

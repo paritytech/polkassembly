@@ -22,7 +22,6 @@ export interface UserObjectType {
     id: number;
     email: string;
     username: string;
-    name: string;
     email_verified: boolean;
     web3signup: boolean;
 }
@@ -31,12 +30,7 @@ export interface TokenType {
     token: string;
 }
 
-export interface SignUpResultType extends TokenType {
-    user: UserObjectType;
-}
-
 export interface AuthObjectType extends TokenType {
-    user: UserObjectType;
     refreshToken: string;
 }
 
@@ -66,7 +60,6 @@ export interface HasuraClaimPayload {
 
 export interface JWTPayploadType {
     sub: string;
-    name: string;
     username: string;
     email: string;
     email_verified: boolean;
@@ -80,12 +73,16 @@ export interface MessageType {
     message: string;
 }
 
+export interface HookResponseMessageType {
+    sendNewProposalCreatedMessage?: string;
+    sendOwnProposalCreatedMessage?: string;
+}
+
 export interface ChangeResponseType extends MessageType, TokenType {}
 
 export interface PublicUser {
     id: number;
     kusama_default_address?: string;
-    name: string;
     polkadot_default_address?: string;
     username: string;
 }
@@ -120,9 +117,10 @@ export interface ChallengeMessage extends MessageType {
 }
 
 export interface CommentCreationHookDataType {
-    post_id: number;
     author_id: number;
     content: string;
+    id: string;
+    post_id: number;
 }
 
 export interface OnchainLinkType {
@@ -178,10 +176,6 @@ export interface ChangeEmailArgs {
     password: string;
 }
 
-export interface ChangeNameArgs {
-	newName: string;
-}
-
 export interface ChangeNotificationPreferenceArgs {
 	notificationPreferences: NotificationPreferencesType;
 }
@@ -229,7 +223,6 @@ export interface ResetPasswordArgs {
 
 export interface SignupArgs {
 	email: string;
-	name: string;
 	password: string;
 	username: string;
 }
@@ -287,4 +280,9 @@ export type NetworkUserAddressInfo = Record<Network, UserAddressInfo>;
 export interface HashedPassword {
     password: string;
     salt: string;
+}
+
+export interface ContextUserId {
+    ctx: Context;
+    userId: number;
 }

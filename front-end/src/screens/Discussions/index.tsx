@@ -6,11 +6,15 @@ import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
+import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
+import getNetwork from 'src/util/getNetwork';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Button from '../../ui-components/Button';
 import InfoBox from '../../ui-components/InfoBox';
 import DiscussionsContainer from './Discussions';
+
+const NETWORK = getNetwork();
 
 const Discussions = ({ className } : {className?: string}) => {
 	const history = useHistory();
@@ -28,15 +32,17 @@ const Discussions = ({ className } : {className?: string}) => {
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id &&
-					<div className='mainButtonContainer'>
-						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
-					</div>}
+						<div className='mainButtonContainer'>
+							<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+						</div>}
 					<InfoBox
 						dismissable={true}
-						content='This is the place to discuss all things Kusama. Anyone can start a new discussion.'
+						content={`This is the place to discuss all things ${NETWORK}. Anyone can start a new discussion.`}
 						name='discussionsInfo'
 						title='About Discussions'
 					/>
+					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
+						<DefaultAddressInfoBox />}
 				</Grid.Column>
 			</Grid>
 		</div>

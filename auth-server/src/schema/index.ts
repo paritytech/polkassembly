@@ -12,7 +12,6 @@ import addressSignupConfirm from './mutation/addressSignupConfirm';
 import addressSignupStart from './mutation/addressSignupStart';
 import addressUnlink from './mutation/addressUnlink';
 import changeEmailMutation from './mutation/changeEmail';
-import changeNameMutation from './mutation/changeName';
 import changeNotificationPreference from './mutation/changeNotificationPreference';
 import changePasswordMutation from './mutation/changePassword';
 import changeUsernameMutation from './mutation/changeUsername';
@@ -30,7 +29,6 @@ import setDefaultAddress from './mutation/setDefaultAddress';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
-import notification from './query/notification';
 import subscription from './query/subscription';
 import tokenQuery from './query/token';
 import userQuery from './query/user';
@@ -64,7 +62,6 @@ export default gql`
 	${userType}
 
 	type Query {
-		${notification}
 		${subscription}
 		${tokenQuery}
 		${userQuery}
@@ -82,7 +79,6 @@ export default gql`
 		${changeEmailMutation}
 		${changePasswordMutation}
 		${changeNotificationPreference}
-		${changeNameMutation}
 		${loginMutation}
 		${logoutMutation}
 		${postSubscribe}

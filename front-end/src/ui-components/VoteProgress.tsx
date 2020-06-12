@@ -6,15 +6,14 @@ import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React from 'react';
 import { Progress } from 'semantic-ui-react';
-import { chainProperties } from 'src/global/networkConstants';
 import formatBnBalance from 'src/util/formatBnBalance';
-import getNetwork from 'src/util/getNetwork';
 
 interface Props {
 	ayeVotes: BN,
 	className?: string,
+	isPassing: boolean,
 	nayVotes: BN,
-	passingThreshold: BN,
+	threshold: BN,
 }
 
 const bnToIntBalance = function (bn: BN): number{
@@ -25,45 +24,45 @@ const bnToStringBalanceDelimitor = function (bn: BN): string{
 	return  formatBnBalance(bn, { numberAfterComma: 2, withThousandDelimitor: true });
 };
 
-const VoteProgress = ({ ayeVotes, className, nayVotes, passingThreshold }: Props) => {
-	const network = getNetwork();
-	const tokenSymbol = chainProperties[network].tokenSymbol;
+const VoteProgress = ({ ayeVotes, className, isPassing, nayVotes, threshold }: Props) => {
 
-	const nayVotesNumber = bnToIntBalance(nayVotes);
-	const passingThresholdNumber = bnToIntBalance(passingThreshold);
-	const isPassing = passingThreshold.lt(ayeVotes);
+	const thresholdNumber = bnToIntBalance(threshold);
 	const ayeVotesNumber = bnToIntBalance(ayeVotes);
 	const totalVotesNumber = bnToIntBalance(ayeVotes.add(nayVotes));
-	const passingDivider = totalVotesNumber || 1;
-	const nonPassingDivider = passingThresholdNumber+nayVotesNumber || 1;
-	const passingThresholdPercent = isPassing
-		? passingThresholdNumber/passingDivider*100
-		: passingThresholdNumber/nonPassingDivider*100;
+	const totalVotesNumberDivider = isPassing
+		? bnToIntBalance(ayeVotes.add(threshold))
+		: bnToIntBalance(nayVotes.add(threshold)) || 1;
+	const thresholdPercent = isPassing
+		? (1-thresholdNumber/totalVotesNumberDivider)*100
+		: thresholdNumber / totalVotesNumberDivider*100;
 	const ayePercent = ayeVotesNumber/totalVotesNumber*100;
 
 	return (
 		<div className={className}>
-			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)} {tokenSymbol}</div>
+			<div className='voteNumbers'>Aye: {bnToStringBalanceDelimitor(ayeVotes)}</div>
 			<div
 				className='voteNumbers nay'
 			>
-				Nay: {bnToStringBalanceDelimitor(nayVotes)} {tokenSymbol}
+				Nay: {bnToStringBalanceDelimitor(nayVotes)}
 			</div>
 			<Progress
 				className={isPassing? 'passing': '' }
 				percent={ayePercent}
 			/>
-			<div
-				id='passingThreshold'
-				style={{ left: passingThresholdPercent + '%' }}
-			>
-				<hr/>
-				<div
-					className={ passingThresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
+			{
+				// don't show the threshold if it's not been calculated yet
+				thresholdPercent > 0 &&  <div
+					id='passingThreshold'
+					style={{ left: thresholdPercent + '%' }}
 				>
-					Threshold: {bnToStringBalanceDelimitor(passingThreshold)} {tokenSymbol}
+					<hr/>
+					<div
+						className={ thresholdPercent < 50 ? 'threshold-left' : 'threshold-right'}
+					>
+						{isPassing ? 'Failing' : 'Passing'} threshold: {bnToStringBalanceDelimitor(threshold)}
+					</div>
 				</div>
-			</div>
+			}
 		</div>
 	);
 };

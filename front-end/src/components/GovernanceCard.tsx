@@ -22,7 +22,7 @@ interface GovernanceProps {
 	topic: string
 }
 
-const GovernanceAction = function ({
+const GovernanceCard = function ({
 	address,
 	className,
 	comments,
@@ -73,18 +73,15 @@ const GovernanceAction = function ({
 	);
 };
 
-export default styled(GovernanceAction)`
+export default styled(GovernanceCard)`
 	padding: 2rem 3rem 1.5rem 3rem;
 	background-color: white;
-	border-style: solid;
-	border-width: 1px;
-	border-color: grey_border;
 	border-radius: 3px;
-	
+	box-shadow: box_shadow_card;
+	transition: box-shadow .1s ease-in-out;
+
 	&:hover {
-		background-color: white_transparent;
-		border-style: solid;
-		border-width: 1px;
+		box-shadow: box_shadow_card_hover;
 		text-decoration: none;
 	}
 	overflow-wrap: break-word;
@@ -112,7 +109,7 @@ export default styled(GovernanceAction)`
 		top: 0;
 		right: 0;
 	}
-	
+
 	.title-wrapper {
 		max-width: calc(100% - 10rem);
 
@@ -124,7 +121,7 @@ export default styled(GovernanceAction)`
 	h4, h5 {
 		font-family: font_default;
 		display: block;
-		margin-bottom: 0.6rem; 
+		margin-bottom: 0.6rem;
 	}
 
 	h4 {
@@ -158,12 +155,12 @@ export default styled(GovernanceAction)`
 			margin-right: 1.5rem;
 		}
 	}
-	
+
 	@media only screen and (max-width: 576px) {
 		& {
-			padding: 1.2rem 1.5rem;       
+			padding: 1.2rem 1.5rem;
 		}
-		
+
 		h4 {
 			font-size: md;
 		}

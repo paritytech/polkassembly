@@ -28,7 +28,8 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		icon = 'circle';
 	}
 
-	if ([referendumStatus.CANCELLED,
+	if ([proposalStatus.CLEARED,
+		referendumStatus.CANCELLED,
 		referendumStatus.NOTPASSED,
 		referendumStatus.VETOED,
 		motionStatus.DISAPPROVED
@@ -82,6 +83,7 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 			border-color: green_primary;
 			color: green_primary;
 		}
+		&.${proposalStatus.CLEARED},
 		&.${referendumStatus.CANCELLED},
 		&.${referendumStatus.NOTPASSED},
 		&.${referendumStatus.VETOED},

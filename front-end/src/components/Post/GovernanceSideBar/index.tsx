@@ -9,13 +9,13 @@ import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { APPNAME } from 'src/global/appName';
 import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
 import { VoteThreshold } from 'src/types';
 import { Form } from 'src/ui-components/Form';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
-import ProposalVoteInfo from './Proposals/ProposalVoteInfo';
-import SecondProposal from './Proposals/SecondProposal';
+import ProposalDisplay from './Proposals';
 import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
 import VoteMotion from './VoteMotion';
@@ -30,8 +30,6 @@ interface Props {
 	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment
 	status?: string
 }
-
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
@@ -115,23 +113,20 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 						/>
 						}
 						{isProposal &&
-							<>
-								{(onchainId || onchainId === 0) && <ProposalVoteInfo proposalId={onchainId}/>}
-								{canVote && <SecondProposal
-									accounts={accounts}
-									address={address}
-									getAccounts={getAccounts}
-									onAccountChange={onAccountChange}
-									proposalId={onchainId}
-								/>}
-							</>
+							<ProposalDisplay
+								accounts={accounts}
+								address={address}
+								canVote={canVote}
+								getAccounts={getAccounts}
+								onAccountChange={onAccountChange}
+								proposalId={onchainId}
+							/>
 						}
 						{isReferendum &&
 							<>
 								{(onchainId || onchainId === 0) &&
 									<ReferendumVoteInfo
 										referendumId={onchainId}
-										// eslint-disable-next-line no-extra-parens
 										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
 									/>
 								}

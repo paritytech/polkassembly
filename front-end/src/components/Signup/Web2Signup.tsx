@@ -34,19 +34,18 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 	const { setModal } = useContext(ModalContext);
 
 	const handleSubmitForm = (data:Record<string, any>):void => {
-		const { email, name, password, username } = data;
+		const { email, password, username } = data;
 
 		if (username && password){
 			signupMutation({
 				variables: {
 					email,
-					name,
 					password,
 					username
 				}
 			})
 				.then(({ data }) => {
-					if (data && data.signup && data.signup.token && data.signup.user) {
+					if (data && data.signup && data.signup.token) {
 						handleTokenChange(data.signup.token, currentUser);
 						if (email) {
 							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.', title: 'You\'ve got some mail' });
@@ -79,25 +78,6 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 					{(errors.username as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_MINLENGTH_ERROR}</span>}
 					{(errors.username as FieldError)?.type === 'pattern' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_PATTERN_ERROR}</span>}
 					{(errors.username as FieldError)?.type === 'required' && <span className={'errorText'}>{messages.VALIDATION_USERNAME_REQUIRED_ERROR}</span>}
-				</Form.Field>
-			</Form.Group>
-			<Form.Group>
-				<Form.Field width={16}>
-					<label>
-						Display Name
-						<HelperTooltip
-							content='This name is used as a more readable alternative to your username.'
-						/>
-					</label>
-					<input
-						className={errors.name ? 'error' : ''}
-						name='name'
-						placeholder='Firstname Lastname'
-						type='text'
-						ref={register(validation.fullname)}
-					/>
-					{(errors.name as FieldError)?.type === 'maxLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MAXLENGTH_ERROR}</span>}
-					{(errors.name as FieldError)?.type === 'minLength' && <span className={'errorText'}>{messages.VALIDATION_NAME_MINLENGTH_ERROR}</span>}
 				</Form.Field>
 			</Form.Group>
 			<Form.Group>

@@ -7,35 +7,28 @@ import 'mocha';
 
 import User from '../../../src/model/User';
 import login from '../../../src/resolvers/mutation/login';
-import signup from '../../../src/resolvers/mutation/signup';
 import changePassword from '../../../src/resolvers/mutation/changePassword';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('changePassword mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = -1;
+	let fakectx: Context;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
@@ -43,14 +36,14 @@ describe('changePassword mutation', () => {
 		const newPassword = 'newpass';
 		const oldDbUser = await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.first();
 
 		await changePassword(undefined, { oldPassword: password, newPassword }, fakectx);
 
 		const dbUser = await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.first();
 
 		expect(dbUser?.password).to.not.equal(oldDbUser?.password);
@@ -60,11 +53,7 @@ describe('changePassword mutation', () => {
 		const newPassword = 'newpass';
 
 		const result = await login(undefined, { password: newPassword, username }, fakectx);
-		expect(result.user.id).to.exist;
-		expect(result.user.id).to.a('number');
-		expect(result.user.email).to.equal(email);
-		expect(result.user.name).to.equal(name);
-		expect(result.user.username).to.equal(username);
+
 		expect(result.token).to.exist;
 		expect(result.token).to.be.a('string');
 	});

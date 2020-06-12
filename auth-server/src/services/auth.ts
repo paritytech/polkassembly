@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes, timingSafeEqual } from 'crypto';
@@ -12,7 +11,6 @@ import { uuid } from 'uuidv4';
 import validator from 'validator';
 
 import Address from '../model/Address';
-import EmailVerificationToken from '../model/EmailVerificationToken';
 import Notification from '../model/Notification';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
@@ -21,6 +19,7 @@ import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, HashedPassword, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
 import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
+import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
@@ -36,7 +35,7 @@ const jwtPublicKey = process.env.NODE_ENV === 'test' ? process.env.JWT_PUBLIC_KE
 const passphrase = process.env.NODE_ENV === 'test' ? process.env.JWT_KEY_PASSPHRASE_TEST : process.env.JWT_KEY_PASSPHRASE;
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000;
-const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
+export const ONE_DAY = 24 * 60 * 60; // (expressed in seconds)
 export const ADDRESS_LOGIN_TTL = 5 * 60; // 5 min (expressed in seconds)
 const NOTIFICATION_DEFAULTS = {
 	new_proposal: false,
@@ -49,6 +48,7 @@ export const getPwdResetTokenKey = (userId: number): string => `PRT-${userId}`;
 export const getAddressLoginKey = (address: string): string => `ALN-${address}`;
 export const getAddressSignupKey = (address: string): string => `ASU-${address}`;
 export const getSetCredentialsKey = (address: string): string => `SCR-${address}`;
+export const getEmailVerificationTokenKey = (token: string): string => `EVT-${token}`;
 
 export default class AuthService {
 	public async GetUser (token: string): Promise<User> {
@@ -57,16 +57,15 @@ export default class AuthService {
 		return getUserFromUserId(userId);
 	}
 
-	private async createUser (email: string, name: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
+	private async createUser (email: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
 		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		const user = await User
 			.query()
-			.allowInsert('[email, email_verified, name, password, salt, username, web3signup]')
+			.allowInsert('[email, email_verified, password, salt, username, web3signup]')
 			.insert({
 				email,
 				email_verified: false,
-				name,
 				password,
 				salt,
 				username: username.toLowerCase(),
@@ -92,22 +91,17 @@ export default class AuthService {
 				address,
 				default: defaultAddress,
 				network,
-				public_key: this.getPublicKey(address),
+				public_key: getPublicKey(address),
 				user_id,
 				verified: true
 			});
 	}
 
-	private async sendVerificationTokenMail (user: User): Promise<void> {
+	private async createAndSendEmailVerificationToken (user: User): Promise<void> {
 		if (user.email) {
-			const verifyToken = await EmailVerificationToken
-				.query()
-				.allowInsert('[token, user_id, valid]')
-				.insert({
-					token: uuid(),
-					user_id: user.id,
-					valid: true
-				});
+			const verifyToken = uuid();
+
+			await redisSetex(getEmailVerificationTokenKey(verifyToken), ONE_DAY, user.email);
 
 			// send verification email in background
 			sendVerificationEmail(user, verifyToken);
@@ -122,13 +116,6 @@ export default class AuthService {
 			password: hashedPassword,
 			salt: salt.toString('hex')
 		};
-	}
-
-	private getPublicKey (address: string): string {
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
-		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -148,15 +135,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -241,15 +220,7 @@ export default class AuthService {
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -295,23 +266,15 @@ export default class AuthService {
 		const username = uuid().split('-').join('').substring(0, 25);
 		const password = uuid();
 
-		const user = await this.createUser('', '', password, username, true);
+		const user = await this.createUser('', password, username, true);
 
 		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -341,7 +304,7 @@ export default class AuthService {
 			.where({ token: refreshToken });
 	}
 
-	public async SignUp (email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+	public async SignUp (email: string, password: string, username: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
 			.where('username', username.toLowerCase())
@@ -362,21 +325,13 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const user = await this.createUser(email, name, password, username, false);
+		const user = await this.createUser(email, password, username, false);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		return {
 			refreshToken: await this.getRefreshToken(user),
-			token: await this.getSignedToken(user),
-			user: {
-				email: user.email,
-				email_verified: user.email_verified || false,
-				id: user.id,
-				name: user.name,
-				username: user.username,
-				web3signup: user.web3signup || false
-			}
+			token: await this.getSignedToken(user)
 		};
 	}
 
@@ -489,10 +444,13 @@ export default class AuthService {
 		}
 
 		// If this linked address is the first address to be linked. Then set it as default.
-		// querying other addresses where id != address_id to check the same.
+		// querying other verified addresses of user to check the same.
 		const otherAddresses = await Address
 			.query()
-			.whereNot('id', address_id);
+			.where({
+				user_id: userId,
+				verified: true
+			});
 
 		const setAsDefault = otherAddresses.length === 0;
 
@@ -500,7 +458,7 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: this.getPublicKey(dbAddress.address),
+				public_key: getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);
@@ -508,44 +466,30 @@ export default class AuthService {
 		return this.getSignedToken(user);
 	}
 
-	public async ChangeName (token: string, newName: string): Promise<string> {
-		const userId = getUserIdFromJWT(token, jwtPublicKey);
-
-		await User
-			.query()
-			.patch({ name: newName })
-			.findById(userId);
-
-		const user = await getUserFromUserId(userId);
-
-		return this.getSignedToken(user);
-	}
-
 	public async VerifyEmail (token: string): Promise<string> {
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where('token', token)
-			.first();
+		const email = await redisGet(getEmailVerificationTokenKey(token));
 
-		if (!verifyToken) {
+		if (!email) {
 			throw new AuthenticationError(messages.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);
 		}
 
-		if (!verifyToken.valid) {
-			throw new AuthenticationError(messages.INVALID_EMAIL_VERIFICATION_TOKEN);
+		let user = await User
+			.query()
+			.where('email', email)
+			.first();
+
+		if (!user) {
+			throw new AuthenticationError(messages.EMAIL_VERIFICATION_USER_NOT_FOUND);
 		}
 
 		await User
 			.query()
 			.patch({ email_verified: true })
-			.findById(verifyToken.user_id);
+			.findById(user.id);
 
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.findById(verifyToken.id);
+		await redisDel(getEmailVerificationTokenKey(token));
 
-		const user = await getUserFromUserId(verifyToken.user_id);
+		user = await getUserFromUserId(user.id);
 
 		return this.getSignedToken(user);
 	}
@@ -591,13 +535,7 @@ export default class AuthService {
 			throw new UserInputError(messages.EMAIL_NOT_FOUND);
 		}
 
-		// Invalidate all email verification token for user
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId });
-
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 	}
 
 	public async SetCredentialsStart (address: string): Promise<string> {
@@ -676,7 +614,7 @@ export default class AuthService {
 
 		user = await getUserFromUserId(userId);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		await redisDel(getSetCredentialsKey(address));
 
@@ -772,15 +710,9 @@ export default class AuthService {
 			})
 			.findById(userId);
 
-		// Invalidate all email verification token for user
-		await EmailVerificationToken
-			.query()
-			.patch({ valid: false })
-			.where({ user_id: userId });
-
 		user = await getUserFromUserId(userId);
 
-		await this.sendVerificationTokenMail(user);
+		await this.createAndSendEmailVerificationToken(user);
 
 		// send undo token in background
 		sendUndoEmailChangeEmail(user, undoToken);
@@ -863,7 +795,7 @@ export default class AuthService {
 		return { email: user.email, updatedToken: await this.getSignedToken(user) };
 	}
 
-	private async getSignedToken ({ email, email_verified, id, name, username, web3signup }: User): Promise<string> {
+	private async getSignedToken ({ email, email_verified, id, username, web3signup }: User): Promise<string> {
 		if (!privateKey) {
 			const key = process.env.NODE_ENV === 'test' ? 'JWT_PRIVATE_KEY_TEST' : 'JWT_PRIVATE_KEY';
 			throw new ForbiddenError(`${key} not set. Aborting.`);
@@ -901,7 +833,6 @@ export default class AuthService {
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),
-			name,
 			notification,
 			sub: `${id}`,
 			username,

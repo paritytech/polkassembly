@@ -1,0 +1,15 @@
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - block_end
+      - id
+      - created_at
+      - updated_at
+      computed_fields: []
+      filter: {}
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: create_select_permission

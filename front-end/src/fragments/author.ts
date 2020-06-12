@@ -8,7 +8,6 @@ export const authorFields = gql`
     fragment authorFields on User {
         id
         kusama_default_address
-        name
         polkadot_default_address
         username
     }

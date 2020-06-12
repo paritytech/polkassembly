@@ -74,7 +74,7 @@ export default styled(Button)`
 			&:hover, &:focus {
 				color: black_text;
 				background-color: grey_light;
-				box-shadow: box_shadow_secondary_grey !important;
+				box-shadow: box_shadow_sec_btn !important;
 				outline: none;
 			}
 		}
@@ -85,7 +85,7 @@ export default styled(Button)`
 			&:hover, &:focus {
 				background-color: red_secondary;
 				color: white;
-				box-shadow: box_shadow_secondary_red;
+				box-shadow: box_shadow_sec_btn_neg;
 				outline: none;
 			}
 		}

@@ -1,18 +1,51 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-export const verificationEmailTemplate = `
+
+const container = (content: string): string => `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style type="text/css">
+                body, p, div {
+                    font-family: arial,helvetica,sans-serif;
+                    font-size: 14px;
+                    color: #000000;
+                }
+                body a {
+                    color: #1188E6;
+                    text-decoration: none;
+                }
+                p { margin: 0; padding: 0; }
+                .polk-container {
+                    margin: 0 auto;
+                    max-width: 600px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="polk-container">
+                ${content}
+            </div>
+        </body>
+    </html>
+`;
+
+export const verificationEmailTemplate = container(`
     <p>
         Welcome aboard <%= username %>!<br/><br/>
 
         For security purposes, please confirm your email address here - <a target="_blank" href="<%= verifyUrl %>">verify your account</a><br/><br/>
 
         See you soon,<br/><br/>
+
         Polkassembly Team
     </p>
-`;
+`);
 
-export const resetPasswordEmailTemplate = `
+export const resetPasswordEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
@@ -28,24 +61,26 @@ export const resetPasswordEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const postSubscriptionMailTemplate = `
+export const postSubscriptionMailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
         <br />
         <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        comment: <%= content %><br />
+        comment: <%- content %><br /><br />
+
+        You can deactivate this notification in your notification settings: <a href="<%= domain %>/notification-settings"><%= domain %>/notification-settings</a><br /><br />
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const undoEmailChangeEmailTemplate = `
+export const undoEmailChangeEmailTemplate = container(`
     <p>
-        Hi  <%= username %>!<br/><br/>
+        Hi <%= username %>!<br/><br/>
 
         Your email on polkassembly.io was changed to <%= userEmail %>.<br />
         If you did the change, then everything is fine, you have nothing to do.<br /><br />
@@ -57,35 +92,35 @@ export const undoEmailChangeEmailTemplate = `
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const ownProposalCreatedEmailTemplate = `
+export const ownProposalCreatedEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
         You have submitted a <%= type %> on chain.<br />
         Click on the following link to login to Polkassembly and edit the proposal/motion description and title: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a>
+        You can deactivate this notification in your notification settings: <a href="<%= domain %>/notification-settings"><%= domain %>/notification-settings</a><br /><br />
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const newProposalCreatedEmailTemplate = `
+export const newProposalCreatedEmailTemplate = container(`
     <p>
         Hi <%= username %>!<br/><br/>
 
         There is a new <%= type %> on chain.<br />
         Click on the following link to check it out: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
-        You can deactivate this notification in your notification control center: <a href="<%= domain %>/notifications"><%= domain %>/notifications</a>
+        You can deactivate this notification in your notification settings: <a href="<%= domain %>/notification-settings"><%= domain %>/notification-settings</a><br /><br />
 
         Polkassembly Team
     </p>
-`;
+`);
 
-export const reportContentEmailTemplate = `
+export const reportContentEmailTemplate = container(`
     <p>
         Content Reported.<br />
         Reporter: <%= username %><br />
@@ -97,4 +132,4 @@ export const reportContentEmailTemplate = `
         Report type: <%= reportType %> <br />
         id: <%= contentId %> <br />
     </p>
-`;
+`);

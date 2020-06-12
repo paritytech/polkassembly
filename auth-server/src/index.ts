@@ -15,6 +15,7 @@ import resolvers from './resolvers';
 import routes from './routes';
 import schema from './schema';
 import { Context } from './types';
+import verifyEnvVariables from './utils/verifyEnvVariables';
 
 dotenv.config();
 
@@ -72,6 +73,8 @@ app.use(expressValidator());
 server.applyMiddleware({ app, path: '/auth/graphql' });
 
 app.use(routes);
+
+verifyEnvVariables();
 
 /**
  * Start Express server.

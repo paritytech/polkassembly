@@ -11,38 +11,37 @@ import Address from '../../../src/model/Address';
 import User from '../../../src/model/User';
 import addressLinkConfirm from '../../../src/resolvers/mutation/addressLinkConfirm';
 import addressLinkStart from '../../../src/resolvers/mutation/addressLinkStart';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('addressLinkConfirm mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let signupUserId = -1;
+	let fakectx: Context;
+	let dbAddressId: any;
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
+			.del();
+
+		await Address
+			.query()
+			.where({ id: dbAddressId })
 			.del();
 	});
 
-	it('should be able to confirm address link', async () => {
+	it('should be able to confirm address link on Kusama', async () => {
 		const network = NetworkEnum.KUSAMA;
 		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; //Alice
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
@@ -61,20 +60,55 @@ describe('addressLinkConfirm mutation', () => {
 
 		const dbAddress = await Address
 			.query()
-			.where({ user_id: signupResult.user.id })
+			.where({ user_id: signupUserId })
 			.first();
 
 		expect(dbAddress?.public_key).to.exist;
 		expect(dbAddress?.verified).to.be.true;
+		expect(dbAddress?.default).to.be.true;
 
 		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
+
+		dbAddressId = dbAddress?.id;
 	});
 
-	it('should not be able to confirm address link with fake signature', async () => {
-		const network = NetworkEnum.KUSAMA;
-		const address = 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F'; // Alice
+	it('should be able to confirm address link on Polkadot', async () => {
+		const network = NetworkEnum.POLKADOT;
+		const address = '15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5'; //Alice
 		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
-		const signature = 'fake';
+		const signature = '0xd428aecda9a1e1767d017e55e44b8dc5231ce765309abb4cf74475f28bddf82e2397360833489430990ce7dc2cfe072d33624235e4c1e617f4fca473c50bc689';
+
+		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
+
+		await Address
+			.query()
+			.patch({
+				sign_message: signMessage
+			})
+			.findById(linkStartRes.address_id);
+
+		const linkConfirmRes = await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
+
+		const dbAddress = await Address
+			.query()
+			.where({ user_id: signupUserId })
+			.first();
+
+		expect(dbAddress?.public_key).to.exist;
+		expect(dbAddress?.verified).to.be.true;
+		expect(dbAddress?.default).to.be.true;
+
+		expect(linkConfirmRes.message).to.equal(messages.ADDRESS_LINKING_SUCCESSFUL);
+
+		dbAddressId = dbAddress?.id;
+	});
+
+	it('should not be able to confirm address link with fake signature on Kusama', async () => {
+		const network = NetworkEnum.KUSAMA;
+		const address = 'FoQJpPyadYccjavVdTWxpxU7rUEaYhfLCPwXgkfD6Zat9QP'; // Bob
+		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+
 
 		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
 
@@ -86,7 +120,31 @@ describe('addressLinkConfirm mutation', () => {
 			.findById(linkStartRes.address_id);
 
 		try {
-			await addressLinkConfirm(undefined, { signature, address_id: linkStartRes.address_id }, fakectx);
+			await addressLinkConfirm(undefined, { signature: fakeSignature, address_id: linkStartRes.address_id }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.ADDRESS_LINKING_FAILED);
+		}
+	});
+
+	it('should not be able to confirm address link with fake signature on Polkadot', async () => {
+		const network = NetworkEnum.POLKADOT;
+		const address = '14E5nqKAp3oAJcmzgZhUD2RcptBeUBScxKHgJKU4HPNcKVf3'; // Bob
+		const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+
+		const linkStartRes = await addressLinkStart(undefined, { network, address }, fakectx);
+
+		await Address
+			.query()
+			.patch({
+				sign_message: signMessage
+			})
+			.findById(linkStartRes.address_id);
+
+		try {
+			await addressLinkConfirm(undefined, { signature: fakeSignature, address_id: linkStartRes.address_id }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

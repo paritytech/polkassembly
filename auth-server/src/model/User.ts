@@ -16,7 +16,6 @@ export default class User extends Model {
 	email_verified: boolean | undefined
 	password!: string
 	salt!: string
-	name!: string
 	username!: string
 	web3signup!: boolean | undefined
 
@@ -34,7 +33,6 @@ export default class User extends Model {
 				email: { maxLength: 255, type: 'string' },
 				email_verified: { type: 'boolean' },
 				id: { type: 'integer' },
-				name: { maxLength: 512, type: 'string' },
 				username: { maxLength: 255, minLength: 1, type: 'string' },
 				web3signup: { type: 'boolean' }
 			},

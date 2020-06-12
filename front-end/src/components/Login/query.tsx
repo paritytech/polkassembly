@@ -7,14 +7,6 @@ import gql from 'graphql-tag';
 export const LOGIN = gql`
     mutation LOGIN($password: String!, $username: String!) {
         login(password: $password, username:$username){
-            user {
-                id
-                name
-                username
-                email
-                email_verified
-                web3signup
-            }
             token
         }
     }
@@ -32,14 +24,6 @@ export const ADDRESS_LOGIN_START = gql`
 export const ADDRESS_LOGIN = gql`
     mutation AddressLogin($address: String!, $signature: String!) {
         addressLogin(address: $address, signature:$signature){
-            user {
-                id
-                name
-                username
-                email
-                email_verified
-                web3signup
-            }
             token
         }
     }

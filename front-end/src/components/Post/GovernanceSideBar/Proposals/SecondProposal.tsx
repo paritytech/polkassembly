@@ -16,7 +16,10 @@ import Button from '../../../../ui-components/Button';
 import Card from '../../../../ui-components/Card';
 import { Form } from '../../../../ui-components/Form';
 
-interface Props {
+export interface ChainProps {
+	seconds: number
+}
+export interface SecondProposalProps {
 	accounts: InjectedAccountWithMeta[]
 	address: string
 	className?: string
@@ -25,7 +28,9 @@ interface Props {
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
 
-const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts }: Props) => {
+type Props = SecondProposalProps & ChainProps
+
+const SecondProposal = ({ className, proposalId, address, accounts, onAccountChange, getAccounts, seconds }: Props) => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
 	const { queueNotification } = useContext(NotificationContext);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
@@ -37,9 +42,10 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 		}
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
-		const second = api.tx.democracy.second(proposalId);
 
-		second.signAndSend(address, ({ status }) => {
+		const second = api.tx.democracy.second(proposalId, seconds);
+
+		second.signAndSend(address, ({ status }: any) => {
 			if (status.isInBlock) {
 				setLoadingStatus({ isLoading: false, message: '' });
 				queueNotification({
@@ -55,7 +61,7 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 				}
 				console.log(`Current status: ${status.type}`);
 			}
-		}).catch((error) => {
+		}).catch((error: any) => {
 			setLoadingStatus({ isLoading: false, message: '' });
 			console.log(':( transaction failed');
 			console.error('ERROR:', error);
@@ -68,15 +74,17 @@ const SecondProposal = ({ className, proposalId, address, accounts, onAccountCha
 	};
 
 	const GetAccountsButton = () =>
-		<Form.Field className='button-container'>
-			<Button
-				primary
-				onClick={getAccounts}
-				size={'large'}
-			>
-				Second
-			</Button>
-		</Form.Field>;
+		<Form.Group>
+			<Form.Field className='button-container'>
+				<Button
+					primary
+					onClick={getAccounts}
+					size={'large'}
+				>
+					Second
+				</Button>
+			</Form.Field>
+		</Form.Group>;
 
 	const noAccount = accounts.length === 0;
 

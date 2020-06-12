@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default {
+	ADDRESS_ALREADY_EXISTS: 'This address is already linked with another account. Please choose another address.',
 	ADDRESS_DEFAULT_SUCCESS: 'Address has been successfully set as default',
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
 	ADDRESS_LINKING_STARTED: 'Address Linking started. Please sign the message with your account to link address',
@@ -29,6 +30,7 @@ export default {
 	EMAIL_UNDO_TOKEN_NOT_FOUND: 'Email change undo token not found.',
 	EMAIL_VERIFICATION_SUCCESSFUL: 'Thank you for verifying your email.',
 	EMAIL_VERIFICATION_TOKEN_NOT_FOUND: 'Email verification token not found.',
+	EMAIL_VERIFICATION_USER_NOT_FOUND: 'User not found for this verification token.',
 	EVENT_ADDRESS_NOT_FOUND: 'Address not found.',
 	EVENT_ADDRESS_NOT_VERIFIED: 'Address not verified.',
 	EVENT_AUTHOR_ID_NOT_FOUND: 'Author id not found',
@@ -50,8 +52,6 @@ export default {
 	INVALID_USER_ID_IN_JWT: 'Invalid user id in token.',
 	JWT_REFRESH_TOKEN_USER_MISMATCH: 'User don\'t match between the JWT and the refresh-token.',
 	LOGOUT_SUCCESSFUL: 'Successfully logged out.',
-	NAME_CHANGED_SUCCESSFULLY: 'Name changed succefully.',
-	NAME_INVALID_ERROR: 'Display name must be between 3 and 30 characters long.',
 	NEW_PROPOSAL_CREATED_MAIL_SENT: 'New Proposal created mail sent.',
 	NOTIFICATION_PREFERENCE_CHANGE_SUCCESSFUL: 'Notification preference changed successfully.',
 	NO_CORRESPONDING_REFRESH_TOKEN: 'No corresponding refresh-token found.',

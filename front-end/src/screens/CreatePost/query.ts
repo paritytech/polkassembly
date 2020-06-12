@@ -11,12 +11,21 @@ export const CREATE_POST = gql`
             author_id: $userId,
             content: $content,
             title: $title,
-            topic_id: $topicId
+            topic_id: $topicId,
         }) {
             affected_rows
             returning {
                 id
             }
+        }
+    }
+`;
+
+export const CREATE_POLL = gql`
+    mutation createPoll($postId: Int! $blockEnd: Int!) {
+        __typename
+        insert_poll(objects: {post_id: $postId, block_end: $blockEnd}) {
+            affected_rows
         }
     }
 `;
@@ -36,4 +45,3 @@ export const GET_POST_TOPICS = gql`
     }
     ${topic_fragment}
 `;
-

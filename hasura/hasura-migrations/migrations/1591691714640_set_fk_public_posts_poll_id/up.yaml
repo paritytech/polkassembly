@@ -1,0 +1,10 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: |-
+      alter table "public"."posts"
+                 add constraint "posts_poll_id_fkey"
+                 foreign key ("poll_id")
+                 references "public"."poll"
+                 ("id") on update restrict on delete restrict;
+  type: run_sql

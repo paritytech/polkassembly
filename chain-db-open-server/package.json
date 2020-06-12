@@ -1,0 +1,33 @@
+{
+  "name": "chain-db-open-server",
+  "version": "0.5.1",
+  "author": "Parity Technologies <admin@parity.io>",
+  "description": "Chain-db server for Polkassembly",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "https://github.com/paritytech/Polkassembly",
+  "scripts": {
+    "build": "tsc",
+    "docker": "docker build -t nomidot-server:v0.6.2 . && docker tag nomidot-server:v0.6.2 eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2 && docker push eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2",
+    "start:local": "PRISMA_ENDPOINT=http://127.0.0.1:4466 ts-node src/index.ts",
+    "start": "ts-node src/index.ts",
+    "prisma:deploy": "PRISMA_ENDPOINT=http://0.0.0.0:4466 yarn prisma deploy",
+    "gql:get-schema": "PRISMA_ENDPOINT=http://0.0.0.0:4466 graphql get-schema -e dev --project prisma"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.18.3",
+    "prisma-client-lib": "^1.34.10"
+  },
+  "devDependencies": {
+    "prisma": "1.34.10",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.5"
+  },
+  "resolutions": {
+    "graphql-playground-html": "^1.6.22",
+    "apollo-server-core": "^2.14.2",
+    "apollo-server-express": "^2.14.2",
+    "apollo-server-lambda": "^2.14.2",
+    "marked": "^0.7.0"
+  }
+}

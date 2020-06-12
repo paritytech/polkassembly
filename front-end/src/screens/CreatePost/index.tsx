@@ -3,16 +3,17 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
-import { Grid } from 'semantic-ui-react';
+import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
-import { useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
-import { useRouter } from '../../hooks';
+import { useCreatePollMutation, useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
+import { useBlockTime, useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -23,15 +24,21 @@ interface Props {
 	className?: string
 }
 
+const TWO_WEEKS = 2 * 7 * 24 * 60 * 60 * 1000;
+
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [hasPoll, setHasPoll] = useState(false);
 	const { queueNotification } = useContext(NotificationContext);
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
+	const { blocktime } = useBlockTime();
 
+	const currenBlockNumber = useCurrentBlock()?.toNumber();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
+	const [createPollMutation] = useCreatePollMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [isSending, setIsSending] = useState(false);
 	const { history } = useRouter();
@@ -54,6 +61,31 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			.catch((e) => console.error('Error subscribing to post',e));
 	};
 
+	const createPoll = (postId: number) => {
+		if (!hasPoll) {
+			return;
+		}
+
+		if (!currenBlockNumber) {
+			queueNotification({
+				header: 'Failed to get current block number. Poll creation failed!',
+				message: 'Failed',
+				status: NotificationStatus.ERROR
+			});
+			return;
+		}
+
+		const blockEnd = currenBlockNumber + Math.floor(TWO_WEEKS / blocktime);
+
+		createPollMutation({
+			variables: {
+				blockEnd,
+				postId
+			}
+		})
+			.catch((e) => console.error('Error subscribing to post',e));
+	};
+
 	const handleSend = () => {
 		if (currentUser.id && title && content && selectedTopic){
 			setIsSending(true);
@@ -63,8 +95,8 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 				topicId: selectedTopic,
 				userId: currentUser.id
 			} }).then(({ data }) => {
-				if (data && data.insert_posts &&  data.insert_posts.affected_rows > 0 && data.insert_posts.returning.length && data.insert_posts.returning[0].id) {
-					const postId = data.insert_posts.returning.length && data.insert_posts.returning[0].id;
+				if (data?.insert_posts?.affected_rows && data?.insert_posts?.affected_rows > 0 && data?.insert_posts?.returning?.length && data?.insert_posts?.returning?.[0]?.id) {
+					const postId = data?.insert_posts?.returning?.[0]?.id;
 					history.push(`/post/${postId}`);
 					queueNotification({
 						header: 'Thanks for sharing!',
@@ -72,17 +104,19 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						status: NotificationStatus.SUCCESS
 					});
 					createSubscription(postId);
+					createPoll(postId);
 				} else {
 					throw Error('Error in post creation');
 				}
 			}).catch( e => console.error(e));
 		} else {
-			console.error('Current userid, title, content or selected topic missing',currentUser.id,title, content, selectedTopic);
+			console.error('Current userid, title, content or selected topic missing',currentUser.id, title, content, selectedTopic);
 		}
 	};
 
 	const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>[]) => {setTitle(event[0].currentTarget.value); return event[0].currentTarget.value;};
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
+	const onPollChanged = (event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => { setHasPoll(data.checked || false);};
 
 	return (
 		<Grid>
@@ -107,6 +141,12 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 						onChange={onContentChange}
 						rules={{ required: true }}
 					/>
+
+					<Form.Group>
+						<Form.Field>
+							<Checkbox label='Add a poll to this discussion' checked={hasPoll} toggle onChange={onPollChanged} />
+						</Form.Field>
+					</Form.Group>
 
 					<TopicsRadio
 						onTopicSelection={(id: number) => setSetlectedTopic(id)}

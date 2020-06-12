@@ -6,51 +6,37 @@ import { AuthenticationError } from 'apollo-server';
 import 'mocha';
 
 import User from '../../../src/model/User';
-import EmailVerificationToken from '../../../src/model/EmailVerificationToken';
 import resendVerifyEmailToken from '../../../src/resolvers/mutation/resendVerifyEmailToken';
-import signup from '../../../src/resolvers/mutation/signup';
 import { Context } from '../../../src/types';
 import messages from '../../../src/utils/messages';
+import { getNewUserCtx } from '../../helpers';
 
 describe('resendVerifyEmailToken mutation', () => {
-	let signupResult: any;
-	const fakectx: Context = {
-		req: {
-			headers: {}
-		},
-		res: {
-			cookie: () => {}
-		}
-	} as any;
+	let fakectx: Context;
+	let signupUserId = -1;
+
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		signupResult = await signup(undefined, { email, password, username, name }, fakectx);
-		fakectx.req.headers.authorization = `Bearer ${signupResult.token}` // eslint-disable-line
+		const result = await getNewUserCtx(email, password, username);
+		fakectx = result.ctx;
+		signupUserId = result.userId;
 	});
 
 	after(async () => {
 		await User
 			.query()
-			.where({ id: signupResult.user.id })
+			.where({ id: signupUserId })
 			.del();
 	});
 
 	it('should be able to resend verify email token', async () => {
-		await resendVerifyEmailToken(undefined, undefined, fakectx);
+		const result = await resendVerifyEmailToken(undefined, undefined, fakectx);
 
-		const verifyToken = await EmailVerificationToken
-			.query()
-			.where({ user_id: signupResult.user.id })
-			.orderBy('id', 'desc')
-			.first();
 
-		expect(verifyToken).to.exist;
-		expect(verifyToken?.valid).to.be.true;
-		expect(verifyToken?.token).to.be.a('string');
+		expect(result.message).to.equals(messages.RESEND_VERIFY_EMAIL_TOKEN_REQUEST_SUCCESSFUL);
 	});
 
 	it('should not be able to resend verify email token with wrong jwt', async () => {

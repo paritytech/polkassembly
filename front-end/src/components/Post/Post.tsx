@@ -13,6 +13,7 @@ import {
 	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
 	DiscussionPostAndCommentsQueryVariables,
+	DiscussionPostFragment,
 	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryHookResult,
 	MotionPostAndCommentsQueryVariables,
@@ -34,6 +35,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import ScrollToTop from '../../ui-components/ScrollToTop';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
@@ -41,6 +43,7 @@ import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import GovenanceSideBar from './GovernanceSideBar';
+import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
@@ -124,6 +127,14 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 	}
 
+	const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
+		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal) {
+			return (post as DiscussionPostFragment) !== undefined;
+		}
+
+		return false;
+	};
+
 	const isProposalProposer = isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address);
 	const isReferendumProposer = isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address);
 	const isMotionProposer = isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address);
@@ -194,6 +205,8 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					onchainLink={definedOnchainLink}
 					status={postStatus}
 				/>
+				{isDiscussion(post) && <Poll postId={post.id} />}
+				<ScrollToTop/>
 			</Grid.Column>
 		</Grid>
 	);
@@ -203,10 +216,8 @@ export default styled(Post)`
 
 	.post_content {
 		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_card;
 		padding: 3rem 3rem 0.8rem 3rem;
 		margin-bottom: 1rem;
 	}
@@ -242,6 +253,16 @@ export default styled(Post)`
 	@media only screen and (max-width: 991px) {
 		.democracy_card {
 			visibility: hidden;
+		}
+	}
+	
+	a.social {
+		color: grey_primary;
+		font-size: 1.3rem;
+		font-weight: 500;
+
+		i {
+			font-size: 1.5rem;
 		}
 	}
 `;

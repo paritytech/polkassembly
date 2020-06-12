@@ -7,6 +7,26 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
 
+const StyledPopup = styled.div`
+font-size: sm;
+color: black_text;
+list-style: none;
+padding: 1rem;
+
+li {
+	margin-bottom: 0.3rem;
+}
+
+.desc {
+	font-weight: 500;
+	margin-right: 0.3rem;
+}
+
+.judgments {
+	display: inline list-item;
+}
+`;
+
 const IdentityBadge = ({ className, identity }: {className?: string, identity: DeriveAccountRegistration}) => {
 	const judgements = identity.judgements.filter(([, judgement]): boolean => !judgement.isFeePaid);
 	const isGood = judgements.some(([, judgement]): boolean => judgement.isKnownGood || judgement.isReasonable);
@@ -17,34 +37,14 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 	const infoElem = <Icon name={iconName} color={color} />;
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
 
-	const StyledPopup = styled.div`
-		font-size: sm;
-		color: black_text;
-		list-style: none;
-		padding: 1rem;
-
-		li {
-			margin-bottom: 0.3rem;
-		}
-
-		.desc {
-			font-weight: 500;
-			margin-right: 0.3rem;
-		}
-
-		.judgments {
-			display: inline list-item;
-		}
-	`;
-
 	const popupContent = <StyledPopup>
-		{identity.legal && <li><span className='desc'>legal:</span>{identity.legal}</li>}
-		{identity.email && <li><span className='desc'>email:</span>{identity.email}</li>}
+		{identity?.legal && <li><span className='desc'>legal:</span>{identity.legal}</li>}
+		{identity?.email && <li><span className='desc'>email:</span>{identity.email}</li>}
 		{identity?.judgements?.length > 0 && <li><span className='desc'>judgements:</span><span className='judgments'>{displayJudgements}</span></li>}
-		{identity.pgp && <li><span className='desc'>pgp:</span>{identity.pgp}</li>}
-		{identity.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
-		{identity.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
-		{identity.web && <li><span className='desc'>web:</span>{identity.web}</li>}
+		{identity?.pgp && <li><span className='desc'>pgp:</span>{identity.pgp}</li>}
+		{identity?.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
+		{identity?.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
+		{identity?.web && <li><span className='desc'>web:</span>{identity.web}</li>}
 	</StyledPopup>;
 
 	return <div className={className}>

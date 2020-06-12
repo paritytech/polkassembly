@@ -27,10 +27,8 @@ const StyledForm = styled(SUIForm)`
 	&.standalone {
 		background-color: white;
 		padding: 2rem 3rem 3rem 3rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
+		box-shadow: box_shadow_card;
 	}
 
 	h3 {
@@ -51,6 +49,7 @@ const StyledForm = styled(SUIForm)`
 
 		a {
 			color: grey_primary;
+			cursor: pointer;
 			border-bottom-style: solid;
 			border-bottom-width: 1px;
 			border-bottom-color: grey_primary;
