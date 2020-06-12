@@ -17,7 +17,7 @@ harvester:
 
   image:
     repository: paritytech/polkassembly-node-watcher:latest
-    pullPolicy: Alleways
+    pullPolicy: Always
   
   config:
     PRISMA_ENDPOINT: http://node-watcher-service:4466

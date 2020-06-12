@@ -17,6 +17,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: {{ .Values.nodeWatcher.name }}-harvester
+          image: "{{ .Values.harvester.image.repository }}"
           imagePullPolicy: {{ .Values.harvester.image.pullPolicy }}
           env:
           {{- range $key, $val := .Values.harvester.config }}
