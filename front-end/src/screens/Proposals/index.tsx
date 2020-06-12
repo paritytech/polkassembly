@@ -16,7 +16,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 			<h1>Latest On Chain Proposals</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<ProposalContainer className='proposalContainer' limit={15} />
+					<ProposalContainer limit={15} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -35,10 +35,6 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 };
 
 export default styled(OnchainPostsContainer)`
-
-	.referendaContainer, .proposalContainer, .motionContainer {
-		margin-bottom: 3rem;
-	}
 
 	h1 {
 		@media only screen and (max-width: 576px) {

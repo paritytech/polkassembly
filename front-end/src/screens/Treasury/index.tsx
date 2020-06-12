@@ -9,14 +9,14 @@ import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 import InfoBox from '../../ui-components/InfoBox';
 import TreasuryContainer from './TreasuryContainer';
 
-const OnchainPostsContainer = ({ className } : {className?: string}) => {
+const TreasuryProposalContainer = ({ className } : {className?: string}) => {
 
 	return (
 		<div className={className}>
 			<h1>On-chain treasury proposals</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<TreasuryContainer className='treasuryContainer' limit={15} />
+					<TreasuryContainer limit={15} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -34,11 +34,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 };
 
-export default styled(OnchainPostsContainer)`
-
-	.referendaContainer, .proposalContainer, .motionContainer {
-		margin-bottom: 3rem;
-	}
+export default styled(TreasuryProposalContainer)`
 
 	h1 {
 		@media only screen and (max-width: 576px) {
