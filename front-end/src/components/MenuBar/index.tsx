@@ -287,6 +287,9 @@ export default styled(MenuBar)`
 			i.icon {
 				display: none;
 			}
+			i.icon.caret {
+				display: block;
+			}
 		}
 
 		.user_items {
