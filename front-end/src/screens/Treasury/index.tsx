@@ -21,11 +21,11 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
 						dismissable={true}
-						content='This is the place to discuss on-chain treasury motions.
+						content='This is the place to discuss on-chain treasury proposals.
 						On-chain posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
-						title='About On-chain Treasury motions'
+						title='About On-chain Treasury proposals'
 					/>
 				</Grid.Column>
 			</Grid>
