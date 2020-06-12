@@ -7,22 +7,26 @@ import { authorFields } from 'src/fragments/author';
 
 export const QUERY_LATEST_DISCUSSIONS = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
-        posts(order_by: {created_at: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
-            id
-            title
-            author {
-                ...authorFields
-            }
-            created_at
-            updated_at
-            comments_aggregate {
-                aggregate {
-                    count
-                }
-            }
-            type {
-                name
+        post_last_update(order_by: {last_update: desc}, limit: $limit, where: {post: {type: {id: {_eq: 1}}}}) {
+            last_update
+            post {
                 id
+                title
+                author {
+                    ...authorFields
+                }
+                last_update
+                created_at
+                updated_at
+                comments_aggregate {
+                    aggregate {
+                        count
+                    }
+                }
+                type {
+                    name
+                    id
+                }
             }
         }
     }

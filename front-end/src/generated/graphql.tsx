@@ -6002,7 +6002,7 @@ export enum Comment_Reactions_Constraint {
   CommentReactionsPkey = 'comment_reactions_pkey'
 }
 
-/** input type for incrementing integer columne in table "comment_reactions" */
+/** input type for incrementing integer column in table "comment_reactions" */
 export type Comment_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -6023,14 +6023,18 @@ export type Comment_Reactions_Insert_Input = {
 export type Comment_Reactions_Max_Fields = {
   __typename?: 'comment_reactions_max_fields';
   comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "comment_reactions" */
 export type Comment_Reactions_Max_Order_By = {
   comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -6038,14 +6042,18 @@ export type Comment_Reactions_Max_Order_By = {
 export type Comment_Reactions_Min_Fields = {
   __typename?: 'comment_reactions_min_fields';
   comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "comment_reactions" */
 export type Comment_Reactions_Min_Order_By = {
   comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -6344,7 +6352,7 @@ export enum Comments_Constraint {
   CommentsPkey = 'comments_pkey'
 }
 
-/** input type for incrementing integer columne in table "comments" */
+/** input type for incrementing integer column in table "comments" */
 export type Comments_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
@@ -7449,7 +7457,7 @@ export enum Onchain_Links_Constraint {
   ProposalsPostIdKey = 'proposals_post_id_key'
 }
 
-/** input type for incrementing integer columne in table "onchain_links" */
+/** input type for incrementing integer column in table "onchain_links" */
 export type Onchain_Links_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   onchain_motion_id?: Maybe<Scalars['Int']>;
@@ -7899,7 +7907,7 @@ export enum Poll_Constraint {
   PollPkey = 'poll_pkey'
 }
 
-/** input type for incrementing integer columne in table "poll" */
+/** input type for incrementing integer column in table "poll" */
 export type Poll_Inc_Input = {
   block_end?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -7921,6 +7929,7 @@ export type Poll_Insert_Input = {
 export type Poll_Max_Fields = {
   __typename?: 'poll_max_fields';
   block_end?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -7929,6 +7938,7 @@ export type Poll_Max_Fields = {
 /** order by max() on columns of table "poll" */
 export type Poll_Max_Order_By = {
   block_end?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -7938,6 +7948,7 @@ export type Poll_Max_Order_By = {
 export type Poll_Min_Fields = {
   __typename?: 'poll_min_fields';
   block_end?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -7946,6 +7957,7 @@ export type Poll_Min_Fields = {
 /** order by min() on columns of table "poll" */
 export type Poll_Min_Order_By = {
   block_end?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8232,7 +8244,7 @@ export enum Poll_Votes_Constraint {
   PollVotesPkey = 'poll_votes_pkey'
 }
 
-/** input type for incrementing integer columne in table "poll_votes" */
+/** input type for incrementing integer column in table "poll_votes" */
 export type Poll_Votes_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
@@ -8253,6 +8265,7 @@ export type Poll_Votes_Insert_Input = {
 /** aggregate max on columns */
 export type Poll_Votes_Max_Fields = {
   __typename?: 'poll_votes_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -8261,6 +8274,7 @@ export type Poll_Votes_Max_Fields = {
 
 /** order by max() on columns of table "poll_votes" */
 export type Poll_Votes_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   poll_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8270,6 +8284,7 @@ export type Poll_Votes_Max_Order_By = {
 /** aggregate min on columns */
 export type Poll_Votes_Min_Fields = {
   __typename?: 'poll_votes_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -8278,6 +8293,7 @@ export type Poll_Votes_Min_Fields = {
 
 /** order by min() on columns of table "poll_votes" */
 export type Poll_Votes_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   poll_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8469,6 +8485,208 @@ export type Poll_Votes_Variance_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
+/** columns and relationships of "post_last_update" */
+export type Post_Last_Update = {
+  __typename?: 'post_last_update';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  post?: Maybe<Posts>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregated selection of "post_last_update" */
+export type Post_Last_Update_Aggregate = {
+  __typename?: 'post_last_update_aggregate';
+  aggregate?: Maybe<Post_Last_Update_Aggregate_Fields>;
+  nodes: Array<Post_Last_Update>;
+};
+
+/** aggregate fields of "post_last_update" */
+export type Post_Last_Update_Aggregate_Fields = {
+  __typename?: 'post_last_update_aggregate_fields';
+  avg?: Maybe<Post_Last_Update_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Post_Last_Update_Max_Fields>;
+  min?: Maybe<Post_Last_Update_Min_Fields>;
+  stddev?: Maybe<Post_Last_Update_Stddev_Fields>;
+  stddev_pop?: Maybe<Post_Last_Update_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Post_Last_Update_Stddev_Samp_Fields>;
+  sum?: Maybe<Post_Last_Update_Sum_Fields>;
+  var_pop?: Maybe<Post_Last_Update_Var_Pop_Fields>;
+  var_samp?: Maybe<Post_Last_Update_Var_Samp_Fields>;
+  variance?: Maybe<Post_Last_Update_Variance_Fields>;
+};
+
+
+/** aggregate fields of "post_last_update" */
+export type Post_Last_Update_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "post_last_update" */
+export type Post_Last_Update_Aggregate_Order_By = {
+  avg?: Maybe<Post_Last_Update_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Post_Last_Update_Max_Order_By>;
+  min?: Maybe<Post_Last_Update_Min_Order_By>;
+  stddev?: Maybe<Post_Last_Update_Stddev_Order_By>;
+  stddev_pop?: Maybe<Post_Last_Update_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Post_Last_Update_Stddev_Samp_Order_By>;
+  sum?: Maybe<Post_Last_Update_Sum_Order_By>;
+  var_pop?: Maybe<Post_Last_Update_Var_Pop_Order_By>;
+  var_samp?: Maybe<Post_Last_Update_Var_Samp_Order_By>;
+  variance?: Maybe<Post_Last_Update_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Post_Last_Update_Avg_Fields = {
+  __typename?: 'post_last_update_avg_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "post_last_update" */
+export type Post_Last_Update_Avg_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "post_last_update". All fields are combined with a logical 'AND'. */
+export type Post_Last_Update_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Last_Update_Bool_Exp>>>;
+  _not?: Maybe<Post_Last_Update_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Post_Last_Update_Bool_Exp>>>;
+  comment_id?: Maybe<Uuid_Comparison_Exp>;
+  last_update?: Maybe<Timestamptz_Comparison_Exp>;
+  post?: Maybe<Posts_Bool_Exp>;
+  post_id?: Maybe<Int_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Post_Last_Update_Max_Fields = {
+  __typename?: 'post_last_update_max_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "post_last_update" */
+export type Post_Last_Update_Max_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Post_Last_Update_Min_Fields = {
+  __typename?: 'post_last_update_min_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "post_last_update" */
+export type Post_Last_Update_Min_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** ordering options when selecting data from "post_last_update" */
+export type Post_Last_Update_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post?: Maybe<Posts_Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** select columns of table "post_last_update" */
+export enum Post_Last_Update_Select_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  LastUpdate = 'last_update',
+  /** column name */
+  PostId = 'post_id'
+}
+
+/** aggregate stddev on columns */
+export type Post_Last_Update_Stddev_Fields = {
+  __typename?: 'post_last_update_stddev_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Post_Last_Update_Stddev_Pop_Fields = {
+  __typename?: 'post_last_update_stddev_pop_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Pop_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Post_Last_Update_Stddev_Samp_Fields = {
+  __typename?: 'post_last_update_stddev_samp_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Samp_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Post_Last_Update_Sum_Fields = {
+  __typename?: 'post_last_update_sum_fields';
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "post_last_update" */
+export type Post_Last_Update_Sum_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Post_Last_Update_Var_Pop_Fields = {
+  __typename?: 'post_last_update_var_pop_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "post_last_update" */
+export type Post_Last_Update_Var_Pop_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Post_Last_Update_Var_Samp_Fields = {
+  __typename?: 'post_last_update_var_samp_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "post_last_update" */
+export type Post_Last_Update_Var_Samp_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Post_Last_Update_Variance_Fields = {
+  __typename?: 'post_last_update_variance_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "post_last_update" */
+export type Post_Last_Update_Variance_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
 /** columns and relationships of "post_reactions" */
 export type Post_Reactions = {
   __typename?: 'post_reactions';
@@ -8570,7 +8788,7 @@ export enum Post_Reactions_Constraint {
   PostReactionsPkey = 'post_reactions_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_reactions" */
+/** input type for incrementing integer column in table "post_reactions" */
 export type Post_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
@@ -8591,30 +8809,38 @@ export type Post_Reactions_Insert_Input = {
 /** aggregate max on columns */
 export type Post_Reactions_Max_Fields = {
   __typename?: 'post_reactions_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "post_reactions" */
 export type Post_Reactions_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Post_Reactions_Min_Fields = {
   __typename?: 'post_reactions_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "post_reactions" */
 export type Post_Reactions_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -8914,7 +9140,7 @@ export enum Post_Topics_Constraint {
   CategoriesPkey = 'categories_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_topics" */
+/** input type for incrementing integer column in table "post_topics" */
 export type Post_Topics_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -9196,7 +9422,7 @@ export enum Post_Types_Constraint {
   PostTypesPkey = 'post_types_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_types" */
+/** input type for incrementing integer column in table "post_types" */
 export type Post_Types_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -9380,6 +9606,8 @@ export type Posts = {
   content?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   id: Scalars['Int'];
+  /** A computed field, executes function "last_update" */
+  last_update?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   onchain_link?: Maybe<Onchain_Links>;
   /** An array relationship */
@@ -9556,7 +9784,7 @@ export enum Posts_Constraint {
   MessagesPkey = 'messages_pkey'
 }
 
-/** input type for incrementing integer columne in table "posts" */
+/** input type for incrementing integer column in table "posts" */
 export type Posts_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -9915,6 +10143,10 @@ export type Query_Root = {
   poll_votes_aggregate: Poll_Votes_Aggregate;
   /** fetch data from the table: "poll_votes" using primary key columns */
   poll_votes_by_pk?: Maybe<Poll_Votes>;
+  /** fetch data from the table: "post_last_update" */
+  post_last_update: Array<Post_Last_Update>;
+  /** fetch aggregated fields from the table: "post_last_update" */
+  post_last_update_aggregate: Post_Last_Update_Aggregate;
   /** fetch data from the table: "post_reactions" */
   post_reactions: Array<Post_Reactions>;
   /** fetch aggregated fields from the table: "post_reactions" */
@@ -10453,6 +10685,26 @@ export type Query_RootPoll_Votes_AggregateArgs = {
 /** query root */
 export type Query_RootPoll_Votes_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootPost_Last_UpdateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootPost_Last_Update_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
 };
 
 
@@ -11024,6 +11276,8 @@ export type Query_RootValidatorsConnectionArgs = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  blockIndex?: Maybe<BlockIndexSubscriptionPayload>;
+  blockNumber?: Maybe<BlockNumberSubscriptionPayload>;
   /** fetch data from the table: "comment_reactions" */
   comment_reactions: Array<Comment_Reactions>;
   /** fetch aggregated fields from the table: "comment_reactions" */
@@ -11036,6 +11290,15 @@ export type Subscription_Root = {
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
+  council?: Maybe<CouncilSubscriptionPayload>;
+  councilMember?: Maybe<CouncilMemberSubscriptionPayload>;
+  era?: Maybe<EraSubscriptionPayload>;
+  heartBeat?: Maybe<HeartBeatSubscriptionPayload>;
+  motion?: Maybe<MotionSubscriptionPayload>;
+  motionProposalArgument?: Maybe<MotionProposalArgumentSubscriptionPayload>;
+  motionStatus?: Maybe<MotionStatusSubscriptionPayload>;
+  nomination?: Maybe<NominationSubscriptionPayload>;
+  offlineValidator?: Maybe<OfflineValidatorSubscriptionPayload>;
   /** fetch data from the table: "onchain_links" */
   onchain_links: Array<Onchain_Links>;
   /** fetch aggregated fields from the table: "onchain_links" */
@@ -11054,6 +11317,10 @@ export type Subscription_Root = {
   poll_votes_aggregate: Poll_Votes_Aggregate;
   /** fetch data from the table: "poll_votes" using primary key columns */
   poll_votes_by_pk?: Maybe<Poll_Votes>;
+  /** fetch data from the table: "post_last_update" */
+  post_last_update: Array<Post_Last_Update>;
+  /** fetch aggregated fields from the table: "post_last_update" */
+  post_last_update_aggregate: Post_Last_Update_Aggregate;
   /** fetch data from the table: "post_reactions" */
   post_reactions: Array<Post_Reactions>;
   /** fetch aggregated fields from the table: "post_reactions" */
@@ -11078,6 +11345,34 @@ export type Subscription_Root = {
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
+  preimage?: Maybe<PreimageSubscriptionPayload>;
+  preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>;
+  preimageStatus?: Maybe<PreimageStatusSubscriptionPayload>;
+  proposal?: Maybe<ProposalSubscriptionPayload>;
+  proposalStatus?: Maybe<ProposalStatusSubscriptionPayload>;
+  referendum?: Maybe<ReferendumSubscriptionPayload>;
+  referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>;
+  reward?: Maybe<RewardSubscriptionPayload>;
+  session?: Maybe<SessionSubscriptionPayload>;
+  slashing?: Maybe<SlashingSubscriptionPayload>;
+  stake?: Maybe<StakeSubscriptionPayload>;
+  subscribed?: Maybe<Scalars['Boolean']>;
+  totalIssuance?: Maybe<TotalIssuanceSubscriptionPayload>;
+  treasurySpendProposal?: Maybe<TreasurySpendProposalSubscriptionPayload>;
+  treasuryStatus?: Maybe<TreasuryStatusSubscriptionPayload>;
+  validator?: Maybe<ValidatorSubscriptionPayload>;
+};
+
+
+/** subscription root */
+export type Subscription_RootBlockIndexArgs = {
+  where?: Maybe<BlockIndexSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootBlockNumberArgs = {
+  where?: Maybe<BlockNumberSubscriptionWhereInput>;
 };
 
 
@@ -11130,6 +11425,60 @@ export type Subscription_RootComments_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootComments_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootCouncilArgs = {
+  where?: Maybe<CouncilSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootCouncilMemberArgs = {
+  where?: Maybe<CouncilMemberSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootEraArgs = {
+  where?: Maybe<EraSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootHeartBeatArgs = {
+  where?: Maybe<HeartBeatSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionArgs = {
+  where?: Maybe<MotionSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionProposalArgumentArgs = {
+  where?: Maybe<MotionProposalArgumentSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionStatusArgs = {
+  where?: Maybe<MotionStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootNominationArgs = {
+  where?: Maybe<NominationSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOfflineValidatorArgs = {
+  where?: Maybe<OfflineValidatorSubscriptionWhereInput>;
 };
 
 
@@ -11208,6 +11557,26 @@ export type Subscription_RootPoll_Votes_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootPoll_Votes_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootPost_Last_UpdateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPost_Last_Update_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
 };
 
 
@@ -11312,6 +11681,96 @@ export type Subscription_RootPosts_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageArgs = {
+  where?: Maybe<PreimageSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageArgumentArgs = {
+  where?: Maybe<PreimageArgumentSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageStatusArgs = {
+  where?: Maybe<PreimageStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootProposalArgs = {
+  where?: Maybe<ProposalSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootProposalStatusArgs = {
+  where?: Maybe<ProposalStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootReferendumArgs = {
+  where?: Maybe<ReferendumSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootReferendumStatusArgs = {
+  where?: Maybe<ReferendumStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootRewardArgs = {
+  where?: Maybe<RewardSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootSessionArgs = {
+  where?: Maybe<SessionSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootSlashingArgs = {
+  where?: Maybe<SlashingSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootStakeArgs = {
+  where?: Maybe<StakeSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTotalIssuanceArgs = {
+  where?: Maybe<TotalIssuanceSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTreasurySpendProposalArgs = {
+  where?: Maybe<TreasurySpendProposalSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTreasuryStatusArgs = {
+  where?: Maybe<TreasuryStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootValidatorArgs = {
+  where?: Maybe<ValidatorSubscriptionWhereInput>;
 };
 
 
@@ -11875,22 +12334,26 @@ export type LatestDiscussionPostsQueryVariables = {
 
 export type LatestDiscussionPostsQuery = (
   { __typename?: 'query_root' }
-  & { posts: Array<(
-    { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author?: Maybe<(
-      { __typename?: 'User' }
-      & AuthorFieldsFragment
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate?: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ), type: (
-      { __typename?: 'post_types' }
-      & Pick<Post_Types, 'name' | 'id'>
-    ) }
+  & { post_last_update: Array<(
+    { __typename?: 'post_last_update' }
+    & Pick<Post_Last_Update, 'last_update'>
+    & { post?: Maybe<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'id' | 'title' | 'last_update' | 'created_at' | 'updated_at'>
+      & { author?: Maybe<(
+        { __typename?: 'User' }
+        & AuthorFieldsFragment
+      )>, comments_aggregate: (
+        { __typename?: 'comments_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'comments_aggregate_fields' }
+          & Pick<Comments_Aggregate_Fields, 'count'>
+        )> }
+      ), type: (
+        { __typename?: 'post_types' }
+        & Pick<Post_Types, 'name' | 'id'>
+      ) }
+    )> }
   )> }
 );
 
@@ -13897,22 +14360,26 @@ export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof use
 export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const LatestDiscussionPostsDocument = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
-  posts(order_by: {created_at: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
-    id
-    title
-    author {
-      ...authorFields
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-    type {
-      name
+  post_last_update(order_by: {last_update: desc}, limit: $limit, where: {post: {type: {id: {_eq: 1}}}}) {
+    last_update
+    post {
       id
+      title
+      author {
+        ...authorFields
+      }
+      last_update
+      created_at
+      updated_at
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+      type {
+        name
+        id
+      }
     }
   }
 }

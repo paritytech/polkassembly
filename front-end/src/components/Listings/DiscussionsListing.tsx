@@ -16,16 +16,15 @@ interface Props {
 }
 
 const Discussions = ({ className, data }: Props) => {
-	if (!data.posts || !data.posts.length) return <div>No discussion found.</div>;
+	if (!data.post_last_update || !data.post_last_update.length) return <div>No discussion found.</div>;
 
 	const defaultAddressField = getDefaultAddressField();
 
 	return (
 		<ul className={`${className} discussions__list`}>
-			{!!data.posts &&
-				data.posts.map(
-					(post) => {
-
+			{!!data.post_last_update &&
+				data.post_last_update.map(
+					({ post }) => {
 						return !!post?.author?.username &&
 							<li key={post.id} className='discussions__item'>
 								{<Link to={`/post/${post.id}`}>
