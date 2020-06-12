@@ -136,13 +136,6 @@ dockerize:staging-front-end:
     REACT_APP_NETWORK:             "kusama"
     REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
   before_script:
-<<<<<<< HEAD
-    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"$STAGING_REACT_APP_HASURA_GRAPHQL_URL\")"
-    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"$STAGING_REACT_APP_JWT_PUBLIC_KEY"\')"
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
-  <<: *build_and_push
-=======
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
@@ -150,7 +143,6 @@ dockerize:staging-front-end:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
   <<:                              *build_and_push
->>>>>>> master
 
 dockerize:production-front-end:
   stage: dockerize
