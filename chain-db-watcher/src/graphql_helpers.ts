@@ -23,7 +23,7 @@ const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 const councilTopicId = process.env.COUNCIL_TOPIC_ID;
 
-const getDescription = (type: string, address: string): string => `This is a ${type} whose proposer address (${address}) is shown in on-chain info below. Only this user can edit this description and the title. If you own account, login and tell us more about your proposal.`;
+const getDescription = (type: string, address: string): string => `This is a ${type} whose proposer address (${address}) is shown in on-chain info below. Only this user can edit this description and the title. If you own this account, login and tell us more about your proposal.`;
 
 /**
  * Fetches the JWT from auth server for a "proposal_bot"
