@@ -4,15 +4,6 @@
 
 import gql from 'graphql-tag';
 
-export const MUTATION_CHANGE_NAME = gql`
-	mutation changeName($newName: String!){
-		changeName(newName: $newName){
-			message
-			token
-		}
-	}
-`;
-
 export const MUTATION_CHANGE_USERNAME = gql`
 	mutation changeUsername($username: String!, $password: String!){
 		changeUsername(username: $username, password: $password){

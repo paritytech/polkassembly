@@ -11,14 +11,11 @@ import CreationLabel from '../ui-components/CreationLabel';
 const DiscussionCard = styled.div`
     padding: 2rem 3rem 1.5rem 3rem;
     background-color: white;
-    border-style: solid;
-    border-width: 1px;
-    border-color: grey_border;
     border-radius: 3px;
+	box-shadow: box_shadow_card;
+	transition: box-shadow .1s ease-in-out;
     &:hover {
-        background-color: white_transparent;
-        border-style: solid;
-        border-width: 1px;
+		box-shadow: box_shadow_card_hover;
         text-decoration: none;
     }
     h4 {

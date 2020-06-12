@@ -7,7 +7,8 @@ import { BlockNumber, Hash } from '@polkadot/types/interfaces';
 import { logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
-import { referendumStatus } from '../util/statuses';
+import newProposalStatus from '../util/newProposalStatus';
+import { referendumStatus, proposalStatus } from '../util/statuses';
 import {
   Cached,
   NomidotReferendumRawEvent,
@@ -113,6 +114,40 @@ const createReferendumStatus: Task<NomidotReferendumStatusUpdate[]> = {
             status,
             uniqueStatus: `${referendumId}_${status}`,
           });
+
+          // if the referendum got executed
+          // and if this is calling a democracy.clearPublicProps
+          // Then clear any previous proposal with status "Proposed"
+          if (status === referendumStatus.EXECUTED){
+            const method = await prisma.referendum({referendumId: referendumId})?.preimage()?.method()
+            if (method === 'clearPublicProposals'){
+              // get all the proposal that are not tabled and not cleared
+              // and that where proposed before the current block number
+              const proposedProposals = await prisma.proposals({
+                where: {
+                  AND: [
+                    { proposalStatus_none: { status: proposalStatus.TABLED }},
+                    { proposalStatus_none: { status: proposalStatus.CLEARED }},
+                    {
+                      proposalStatus_some: {
+                        AND: [
+                          { status: proposalStatus.PROPOSED },
+                          { blockNumber: { number_lte: blockNumber.toNumber() }}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              });
+
+              // mark these proposals as cleared
+              proposedProposals.map(async (proposal) => {
+                const { proposalId } = proposal;
+                const status = proposalStatus.CLEARED;
+                await newProposalStatus({blockNumber, proposalId, status});
+              })
+            }
+          }
         })
       );
     }

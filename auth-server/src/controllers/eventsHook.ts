@@ -9,10 +9,12 @@ import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
-import { CommentCreationHookDataType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import { CommentCreationHookDataType, HookResponseMessageType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import getPostCommentLink from '../utils/getPostCommentLink';
 import getPostId from '../utils/getPostId';
 import getPostLink from '../utils/getPostLink';
 import getPostType from '../utils/getPostType';
+import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import messages from '../utils/messages';
 
@@ -48,7 +50,7 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 
 			getUserFromUserId(subscription.user_id)
 				.then((user) => {
-					const url = getPostLink(PostTypeEnum.POST, data.post_id);
+					const url = getPostCommentLink(PostTypeEnum.POST, data);
 					sendPostSubscriptionMail(user, author, data, url);
 				})
 				.catch((error) => console.error(error));
@@ -58,33 +60,33 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 	return { message: messages.EVENT_POST_SUBSCRIPTION_MAIL_SENT };
 };
 
-const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
+const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<HookResponseMessageType> => {
 	const {
 		proposer_address,
 		post_id
 	} = onchainLink;
 
 	if (!proposer_address) {
-		return { message: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
 	}
 
 	if (!post_id) {
-		return { message: messages.EVENT_POST_ID_NOT_FOUND };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_POST_ID_NOT_FOUND };
 	}
 
 	const address = await Address
 		.query()
 		.where({
-			address: proposer_address
+			public_key: getPublicKey(proposer_address)
 		})
 		.first();
 
 	if (!address) {
-		return { message: messages.EVENT_ADDRESS_NOT_FOUND };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_ADDRESS_NOT_FOUND };
 	}
 
 	if (!address.verified) {
-		return { message: messages.EVENT_ADDRESS_NOT_VERIFIED };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_ADDRESS_NOT_VERIFIED };
 	}
 
 	const user = await User
@@ -92,15 +94,15 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 		.findById(address.user_id);
 
 	if (!user) {
-		return { message: messages.EVENT_USER_NOT_FOUND };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_USER_NOT_FOUND };
 	}
 
 	if (!user.email) {
-		return { message: messages.EVENT_USER_EMAIL_NOT_FOUND };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_USER_EMAIL_NOT_FOUND };
 	}
 
 	if (!user.email_verified) {
-		return { message: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
 	}
 
 	const notification = await Notification
@@ -111,7 +113,7 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 		.first();
 
 	if (!notification || !notification.own_proposal) {
-		return { message: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE };
+		return { sendOwnProposalCreatedMessage: messages.EVENT_USER_NOTIFICATION_PREFERENCE_FALSE };
 	}
 
 	const type = getPostType(onchainLink);
@@ -120,16 +122,21 @@ const sendOwnProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 
 	sendOwnProposalCreatedEmail(user, type, url, id);
 
-	return { message: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
+	return { sendOwnProposalCreatedMessage: messages.EVENT_PROPOSAL_CREATED_MAIL_SENT };
 };
 
-const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<MessageType> => {
+const sendNewProposalCreated = async (onchainLink: OnchainLinkType, responseMessage: HookResponseMessageType): Promise<HookResponseMessageType> => {
 	const {
-		post_id
+		post_id,
+		proposer_address
 	} = onchainLink;
 
 	if (!post_id) {
-		return { message: messages.EVENT_POST_ID_NOT_FOUND };
+		return { ...responseMessage, sendNewProposalCreatedMessage: messages.EVENT_POST_ID_NOT_FOUND };
+	}
+
+	if (!proposer_address) {
+		return { ...responseMessage, sendNewProposalCreatedMessage: messages.EVENT_PROPOSER_ADDRESS_NOT_FOUND };
 	}
 
 	const notifications = await Notification
@@ -138,21 +145,49 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 			new_proposal: true
 		});
 
+	const proposerAddress = await Address
+		.query()
+		.where({
+			public_key: getPublicKey(proposer_address)
+		})
+		.first();
+
+	const proposerUser = proposerAddress
+		? await User
+			.query()
+			.findById(proposerAddress.user_id)
+		: undefined;
+
+	// cicle through all users that want to be notified about
+	// new on chain event. This may include the proposer
 	const promises = notifications.map(async notification => {
 		const user = await User
 			.query()
 			.findById(notification.user_id);
 
 		if (!user) {
-			return { message: messages.EVENT_USER_NOT_FOUND };
+			console.error('sendNewProposalCreated - Unexpected empty user in notifications table');
+			return;
+		}
+
+		// if the user is the proposer and they have received
+		// a "sendOwnProposalCreated" email already. Let's not spam them.
+		if (user.id === proposerUser?.id && notification.own_proposal === true) {
+			// aborting for this user in the promise
+			// not logging anything to prevent spamming the logs
+			return;
 		}
 
 		if (!user.email) {
-			return { message: messages.EVENT_USER_EMAIL_NOT_FOUND };
+			// aborting for this user in the promise
+			// not logging anything to prevent spamming the logs
+			return;
 		}
 
 		if (!user.email_verified) {
-			return { message: messages.EVENT_USER_EMAIL_NOT_VERIFIED };
+			// aborting for this user in the promise
+			// not logging anything to prevent spamming the logs
+			return;
 		}
 
 		const type = getPostType(onchainLink);
@@ -164,12 +199,12 @@ const sendNewProposalCreated = async (onchainLink: OnchainLinkType): Promise<Mes
 
 	await Promise.all(promises).catch(error => console.error(error));
 
-	return { message: messages.NEW_PROPOSAL_CREATED_MAIL_SENT };
+	return { ...responseMessage, sendNewProposalCreatedMessage: messages.NEW_PROPOSAL_CREATED_MAIL_SENT };
 };
 
 export const commentCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		console.error('comment create hook failed, secret do not match');
+		console.error("comment create hook failed, secrets don't match");
 		res.status(403).json({ message: messages.UNAUTHORISED });
 		return;
 	}
@@ -183,23 +218,21 @@ export const commentCreateHook = async (req: Request, res: Response): Promise<vo
 
 export const onchainLinksCreateHook = async (req: Request, res: Response): Promise<void> => {
 	if (process.env.HASURA_EVENT_SECRET !== req.headers.hasura_event_secret) {
-		console.error("onchainlink create hook failed, secret don't match");
+		console.error("onchainlink create hook failed, secrets don't match");
 		res.status(403).json({ message: messages.UNAUTHORISED });
 		return;
 	}
 
 	const onchainLink = req.body?.event?.data?.new || {};
+	let response = await sendOwnProposalCreated(onchainLink);
 
-	console.log(`Received new onchainlink create hook: ${JSON.stringify(onchainLink)}`);
+	// Doing this in background as several emails need to be sent
+	response = await sendNewProposalCreated(onchainLink, response);
 
-	const result = await sendOwnProposalCreated(onchainLink);
-
-	if (result.message === messages.EVENT_PROPOSAL_CREATED_MAIL_SENT) {
-		res.json(result);
-		return;
+	// this response goes to hasura
+	if (response.sendNewProposalCreatedMessage !== messages.NEW_PROPOSAL_CREATED_MAIL_SENT) {
+		res.status(400).json(response);
+	} else {
+		res.json(response);
 	}
-	// Doing this in background as several emails needs to be sent
-	sendNewProposalCreated(onchainLink);
-
-	res.json(result);
 };

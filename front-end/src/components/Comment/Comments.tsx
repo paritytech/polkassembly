@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as React from 'react';
+import React from 'react';
 
 import {
 	CommentFieldsFragment,

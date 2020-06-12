@@ -13,6 +13,7 @@ export const preimageStatus = {
 export const proposalStatus = {
   PROPOSED: 'Proposed',
   TABLED: 'Tabled',
+  CLEARED: 'Cleared',
 };
 
 export const referendumStatus = {

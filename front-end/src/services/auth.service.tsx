@@ -3,12 +3,13 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import jwt from 'jsonwebtoken';
+import getNetwork from 'src/util/getNetwork';
 
 import { network } from '../global/networkConstants';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
 
-const NETWORK = process.env.REACT_APP_NETWORK || 'kusama';
+const NETWORK = getNetwork();
 
 /**
  * Store the JWT token in localstorage
@@ -47,7 +48,6 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 		if (tokenPayload && tokenPayload.sub) {
 			const {
 				sub: id,
-				name,
 				username,
 				email,
 				email_verified,
@@ -77,7 +77,6 @@ export const handleTokenChange = (token: string, currentUser: UserDetailsContext
 					email,
 					email_verified,
 					id: Number(id),
-					name,
 					notification,
 					username,
 					web3signup
@@ -99,7 +98,6 @@ export const logout = (setUserDetailsContextState: UserDetailsContextType['setUs
 			email: null,
 			email_verified: false,
 			id: null,
-			name: null,
 			notification: null,
 			username: null,
 			web3signup: false

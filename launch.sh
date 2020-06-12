@@ -64,6 +64,8 @@ while getopts "fr" args; do
 	esac
 done
 
+sleep 15
+
 printf "\n\n-- launching hasura docker\n"
 cd $DIR/hasura && docker-compose up -d;
 

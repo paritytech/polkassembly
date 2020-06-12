@@ -2,14 +2,14 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveElectionsInfo } from '@polkadot/api-derive/types';
-import { ApiPromiseContext } from '@substrate/context';
+import { QueryResult } from '@apollo/react-common';
 import styled from '@xstyled/styled-components';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
-import { PostVotesQuery } from '../../../generated/graphql';
+import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables, PollVotesQuery, useCouncilAtBlockNumberQuery } from '../../../generated/graphql';
 import { OffchainVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
@@ -19,40 +19,43 @@ import getEncodedAddress from '../../../util/getEncodedAddress';
 
 interface Props {
 	className?: string
-	data?: PostVotesQuery | undefined
+	data?: PollVotesQuery | undefined
+	endBlock: number
 }
 
-const CouncilSignals = ({ className, data }: Props) => {
+const CouncilSignals = ({ className, endBlock, data }: Props) => {
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
 	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const currentBlockNumber = useCurrentBlock()?.toNumber() || endBlock;
+
+	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: endBlock } });
+	const councilAtCurrentBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: currentBlockNumber } });
+
+	const getCouncilMembers = (councilAtBlockNumber: QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>): Set<string> => {
+		const memberSet = new Set<string>();
+		councilAtBlockNumber?.data?.councils?.[0]?.members?.forEach((member) => {
+			const address = getEncodedAddress(member.address);
+			if (address) {
+				memberSet.add(address);
+			}
+		});
+		return memberSet;
+	};
 
 	useEffect(() => {
-		if (!isApiReady){
-			return;
+		const pollClosingBlockNumber = endBlock;
+		let memberSet = new Set<string>();
+
+		if (pollClosingBlockNumber > currentBlockNumber) {
+			memberSet = getCouncilMembers(councilAtCurrentBlockNumber);
+		} else {
+			memberSet = getCouncilMembers(councilAtPollEndBlockNumber);
 		}
 
-		let unsubscribe: () => void;
-
-		api.derive.elections.info((info: DeriveElectionsInfo) => {
-			const memberSet = new Set<string>();
-
-			info?.members.map(([accountId]) => {
-				const address = getEncodedAddress(accountId.toString());
-				if (address) {
-					memberSet.add(address);
-				}
-			});
-
-			setMemberSet(memberSet);
-		})
-			.then(unsub => { unsubscribe = unsub; })
-			.catch(e => console.error(e));
-
-		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady]);
+		setMemberSet(memberSet);
+	}, [endBlock, currentBlockNumber, councilAtPollEndBlockNumber, councilAtCurrentBlockNumber]);
 
 	useEffect(() => {
 		let ayes = 0;
@@ -60,7 +63,7 @@ const CouncilSignals = ({ className, data }: Props) => {
 		const defaultAddressField = getDefaultAddressField();
 		const councilVotes: OffchainVote[]  = [];
 
-		data?.post_votes?.forEach(({ vote, voter }) => {
+		data?.poll_votes?.forEach(({ vote, voter }) => {
 			const defaultAddress = voter?.[defaultAddressField];
 
 			if (defaultAddress && memberSet.has(defaultAddress)) {

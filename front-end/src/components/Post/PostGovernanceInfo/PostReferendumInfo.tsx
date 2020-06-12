@@ -76,8 +76,12 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 							? <>
 								<h6>Arguments</h6>
 								{preimageArguments.map((element, index) => {
-									return <div className={'methodArguments'} key={index}>
-										<span key={index}>{element.name}: {element.value}</span>
+									const isAccountArgument = element.name === 'account';
+									return <div className={isAccountArgument ? '' : 'methodArguments'} key={index}>
+										{isAccountArgument
+											? <AddressComponent address={element.value} key={index}/>
+											: <span key={index}>{element.name}: {element.value}</span>
+										}
 									</div>;
 								})}
 							</>

@@ -18,10 +18,9 @@ describe('login mutation', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		const result = await getNewUserCtx(email, password, username, name);
+		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 	});
@@ -43,7 +42,6 @@ describe('login mutation', () => {
 		const claims = 'https://hasura.io/jwt/claims';
 
 		expect(token.username).to.equal(username);
-		expect(token.name).to.equal(name);
 		expect(token.email).to.equals(email);
 		expect(token[claims]['x-hasura-default-role']).to.equals('user');
 		expect(token[claims]['x-hasura-user-email']).to.equals(email);

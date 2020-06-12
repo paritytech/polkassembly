@@ -23,14 +23,13 @@ describe('addressLogin mutation on Polkadot', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 	const network = NetworkEnum.POLKADOT;
 	const address = '15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5'; //Alice
 	const signMessage = 'da194645-4daf-43b6-b023-6c6ce99ee709';
 	const signature = '0x3663c24913e237f802e8388c2fda457528b4d311e701676c45dddc4c47ce355f46d89b34976a1948e851fadd0e31c238382a85d5fe86b6a6fea9893a5e35ea89';
 
 	before(async () => {
-		const result = await getNewUserCtx(email, password, username, name);
+		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 
@@ -62,10 +61,10 @@ describe('addressLogin mutation on Polkadot', () => {
 	});
 
 	it('should not be able to login with invalid signature', async () => {
-		const signature = '0xaaaa';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		try {
-			await addressLogin(undefined, { address, signature }, fakectx);
+			await addressLogin(undefined, { address, signature: fakeSignature }, fakectx);
 		} catch (error) {
 			expect(error).to.exist;
 			expect(error).to.be.an.instanceof(ForbiddenError);

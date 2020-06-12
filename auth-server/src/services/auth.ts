@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server';
 import * as argon2 from 'argon2';
 import { randomBytes, timingSafeEqual } from 'crypto';
@@ -20,6 +19,7 @@ import { redisDel, redisGet, redisSetex } from '../redis';
 import { AuthObjectType, HashedPassword, JWTPayploadType, Network, NotificationPreferencesType, Role } from '../types';
 import getNetworkUserAddressInfoFromUserId from '../utils/getNetworkUserAddressInfoFromUserId';
 import getNotificationPreferencesFromUserId from '../utils/getNotificationPreferencesFromUserId';
+import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
@@ -57,16 +57,15 @@ export default class AuthService {
 		return getUserFromUserId(userId);
 	}
 
-	private async createUser (email: string, name: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
+	private async createUser (email: string, newPassword: string, username: string, web3signup: boolean): Promise<User> {
 		const { password, salt } = await this.getSaltAndHashedPassword(newPassword);
 
 		const user = await User
 			.query()
-			.allowInsert('[email, email_verified, name, password, salt, username, web3signup]')
+			.allowInsert('[email, email_verified, password, salt, username, web3signup]')
 			.insert({
 				email,
 				email_verified: false,
-				name,
 				password,
 				salt,
 				username: username.toLowerCase(),
@@ -92,7 +91,7 @@ export default class AuthService {
 				address,
 				default: defaultAddress,
 				network,
-				public_key: this.getPublicKey(address),
+				public_key: getPublicKey(address),
 				user_id,
 				verified: true
 			});
@@ -117,13 +116,6 @@ export default class AuthService {
 			password: hashedPassword,
 			salt: salt.toString('hex')
 		};
-	}
-
-	private getPublicKey (address: string): string {
-		const keyring = new Keyring({ type: 'sr25519' });
-		const publicKey = keyring.decodeAddress(address);
-
-		return Buffer.from(publicKey).toString('hex');
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
@@ -274,7 +266,7 @@ export default class AuthService {
 		const username = uuid().split('-').join('').substring(0, 25);
 		const password = uuid();
 
-		const user = await this.createUser('', '', password, username, true);
+		const user = await this.createUser('', password, username, true);
 
 		await this.createAddress(network, address, true, user.id);
 		await redisDel(getAddressSignupKey(address));
@@ -312,7 +304,7 @@ export default class AuthService {
 			.where({ token: refreshToken });
 	}
 
-	public async SignUp (email: string, password: string, username: string, name: string): Promise<AuthObjectType> {
+	public async SignUp (email: string, password: string, username: string): Promise<AuthObjectType> {
 		let existing = await User
 			.query()
 			.where('username', username.toLowerCase())
@@ -333,7 +325,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USER_EMAIL_ALREADY_EXISTS);
 		}
 
-		const user = await this.createUser(email, name, password, username, false);
+		const user = await this.createUser(email, password, username, false);
 
 		await this.createAndSendEmailVerificationToken(user);
 
@@ -466,23 +458,10 @@ export default class AuthService {
 			.query()
 			.patch({
 				default: setAsDefault,
-				public_key: this.getPublicKey(dbAddress.address),
+				public_key: getPublicKey(dbAddress.address),
 				verified: true
 			})
 			.findById(address_id);
-
-		return this.getSignedToken(user);
-	}
-
-	public async ChangeName (token: string, newName: string): Promise<string> {
-		const userId = getUserIdFromJWT(token, jwtPublicKey);
-
-		await User
-			.query()
-			.patch({ name: newName })
-			.findById(userId);
-
-		const user = await getUserFromUserId(userId);
 
 		return this.getSignedToken(user);
 	}
@@ -816,7 +795,7 @@ export default class AuthService {
 		return { email: user.email, updatedToken: await this.getSignedToken(user) };
 	}
 
-	private async getSignedToken ({ email, email_verified, id, name, username, web3signup }: User): Promise<string> {
+	private async getSignedToken ({ email, email_verified, id, username, web3signup }: User): Promise<string> {
 		if (!privateKey) {
 			const key = process.env.NODE_ENV === 'test' ? 'JWT_PRIVATE_KEY_TEST' : 'JWT_PRIVATE_KEY';
 			throw new ForbiddenError(`${key} not set. Aborting.`);
@@ -854,7 +833,6 @@ export default class AuthService {
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),
-			name,
 			notification,
 			sub: `${id}`,
 			username,
