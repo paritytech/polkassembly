@@ -6,8 +6,8 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
-import ReferendaContainer from '../../components/OnChain/Referenda';
 import InfoBox from '../../ui-components/InfoBox';
+import ReferendaContainer from './Referenda';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

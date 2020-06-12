@@ -3,21 +3,21 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useEffect } from 'react';
+import { post_type } from 'src/global/post_types';
 
-import { useLatestMotionPostsQuery } from '../../../generated/graphql';
-import { post_type } from '../../../global/post_types';
+import Referenda from '../../../components/Listings/ReferendaListing';
+import { useAllReferendaPostsQuery } from '../../../generated/graphql';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
-import MotionsListing from '../../Listings/MotionsListing';
 
 interface Props {
 	className?: string
 	limit: number
 }
 
-const MotionsContainer = ({ className, limit }:Props) => {
+const ReferendaContainer = ({ className, limit }:Props) => {
 
-	const { data, error, refetch } = useLatestMotionPostsQuery({ variables: {
+	const { data, error, refetch } = useAllReferendaPostsQuery({ variables: {
 		limit,
 		postType: post_type.ON_CHAIN
 	} });
@@ -28,9 +28,9 @@ const MotionsContainer = ({ className, limit }:Props) => {
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 
-	if (data) return <MotionsListing className={className} data={data}/>;
+	if (data) return <Referenda className={className} data={data}/>;
 
 	return <Loader/>;
 };
 
-export default MotionsContainer;
+export default ReferendaContainer;

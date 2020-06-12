@@ -6,8 +6,8 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
-import ProposalContainer from '../../components/OnChain/Proposals';
 import InfoBox from '../../ui-components/InfoBox';
+import ProposalContainer from './Proposals';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

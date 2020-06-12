@@ -7,11 +7,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Icon } from 'semantic-ui-react';
 
-import MotionContainer from '../../components/OnChain/Motions';
-import ProposalContainer from '../../components/OnChain/Proposals';
-import ReferendaContainer from '../../components/OnChain/Referenda';
-import TreasuryContainer from '../../components/OnChain/Treasury';
 import InfoBox from '../../ui-components/InfoBox';
+import MotionContainer from './Motions';
+import ProposalContainer from './Proposals';
+import ReferendaContainer from './Referenda';
+import TreasuryContainer from './Treasury';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

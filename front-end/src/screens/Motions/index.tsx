@@ -6,8 +6,8 @@ import styled from '@xstyled/styled-components';
 import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
-import MotionContainer from '../../components/OnChain/Motions';
 import InfoBox from '../../ui-components/InfoBox';
+import MotionContainer from './Motions';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

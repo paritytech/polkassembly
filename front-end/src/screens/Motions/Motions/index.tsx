@@ -4,23 +4,21 @@
 
 import React, { useEffect } from 'react';
 
-import { useLatestDemocracyTreasuryProposalPostsQuery } from '../../../generated/graphql';
-import { post_topic } from '../../../global/post_topics';
+import MotionsListing from '../../../components/Listings/MotionsListing';
+import { useAllMotionPostsQuery } from '../../../generated/graphql';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
 import Loader from '../../../ui-components/Loader';
-import TreasuryListing from '../../Listings/TreasuryListing';
 
 interface Props {
 	className?: string
 	limit: number
 }
 
-const TreasuryProposalsContainer = ({ className, limit }:Props) => {
+const MotionsContainer = ({ className, limit }:Props) => {
 
-	const { data, error, refetch } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
+	const { data, error, refetch } = useAllMotionPostsQuery({ variables: {
 		limit,
-		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN
 	} });
 
@@ -30,9 +28,9 @@ const TreasuryProposalsContainer = ({ className, limit }:Props) => {
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 
-	if (data) return <TreasuryListing className={className} data={data}/>;
+	if (data) return <MotionsListing className={className} data={data}/>;
 
 	return <Loader/>;
 };
 
-export default TreasuryProposalsContainer;
+export default MotionsContainer;
