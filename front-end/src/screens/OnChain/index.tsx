@@ -16,7 +16,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 	return (
 		<div className={className}>
-			<h1>Latest on-chain Activity</h1>
+			<h1>Latest on-chain activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Referenda</h3>
@@ -35,7 +35,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 						On-chain posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
-						title='About On-chain Posts'
+						title='About on-chain posts'
 					/>
 				</Grid.Column>
 			</Grid>
