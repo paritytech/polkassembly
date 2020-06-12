@@ -86,16 +86,23 @@ export default styled(Markdown)`
 			margin: 2rem 0;
 		}
 
+		pre {
+			background-color: grey_light;
+		}
+
 		code {
 			padding: 0.4rem;
 			margin: 0;
 			font-size: sm;
-			background-color: rgba(0, 0, 0, 0.04);
 			border-radius: 3px;
 			color: black_text;
 			&::before, &::after {
 			letter-spacing: -0.2em;
 			}
+		}
+
+		pre>code {
+			white-space: pre-wrap;
 		}
 	}
 
