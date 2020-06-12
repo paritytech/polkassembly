@@ -20,6 +20,7 @@ chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 heritage: {{ .Release.Service }}
 {{- end -}}
 
+## Server
 {{- define "node-watcher.server.labels" -}}
 {{ include "node-watcher.server.matchLabels" . }}
 {{ include "node-watcher.common.metaLabels" . }}
@@ -33,6 +34,7 @@ heritage: {{ .Release.Service }}
 component: {{ .Values.server.name }}
 {{- end -}}
 
+## nodeWatcher
 {{- define "node-watcher.nodeWatcher.labels" -}}
 {{ include "node-watcher.nodeWatcher.matchLabels" . }}
 {{ include "node-watcher.common.metaLabels" . }}
@@ -46,6 +48,22 @@ component: {{ .Values.nodeWatcher.name }}
 {{- define "node-watcher.nodeWatcher.selectorLabels" -}}
 component: {{ .Values.nodeWatcher.name }}
 {{- end -}}
+
+## Harvester
+{{- define "node-watcher.harvester.labels" -}}
+{{ include "node-watcher.harvester.matchLabels" . }}
+{{ include "node-watcher.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "node-watcher.harvester.matchLabels" -}}
+component: {{ .Values.harvester.name }}
+{{ include "node-watcher.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "node-watcher.harvester.selectorLabels" -}}
+component: {{ .Values.harvester.name }}
+{{- end -}}
+
 
 {{/*  
 Config for Prisma

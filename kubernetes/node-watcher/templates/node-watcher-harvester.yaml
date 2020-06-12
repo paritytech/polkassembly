@@ -1,43 +1,33 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: node-watcher-harvester
-  namespace: nodewatcher-staging
+  name: {{ .Values.harvester.name }}
   labels:
-    stage: staging
-    name: nomidotwatcher
-    app: nomidotwatcher
-    job-name: node-watcher-harvester
+    {{- include "node-watcher.harvester.labels" . | nindent 4 }}
 spec:
-  manualSelector: true
+  replicas: {{ .Values.nodeWatcher.replicaCount }}
   selector:
     matchLabels:
-      stage: staging
-      name: nomidotwatcher
-      app: nomidotwatcher
-      job-name: node-watcher-harvester
+      {{- include "node-watcher.harvester.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        stage: staging
-        name: nomidotwatcher
-        app: nomidotwatcher
-        job-name: node-watcher-harvester
+        {{- include "node-watcher.harvester.matchLabels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       containers:
-        - name: nomidotwatcher
-          image: eu.gcr.io/test-installations-222013/nomidot_watcher@sha256:d70a7d03339ddf9d3e72df6082cfda8c7b90558ab7ae0e7d0860ec17a8b97d91
-          imagePullPolicy: Always
+        - name: {{ .Values.nodeWatcher.name }}-harvester
+          imagePullPolicy: {{ .Values.harvester.image.pullPolicy }}
           env:
-            - name: PRISMA_ENDPOINT
-              value: http://nodewatcher.nodewatcher-staging:4466
-            - name: ARCHIVE_NODE_ENDPOINT
-              value: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
-            - name: START_FROM
-              value: '2504500'
-            - name: BLOCK_IDENTIFIER
-              value: 'chain-tip'
-            - name: MAX_LAG
-              value: '10'
+          {{- range $key, $val := .Values.harvester.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $key }}
+                  name: harvester-config
+          {{- end }}
           command: ["yarn", "start"]
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
