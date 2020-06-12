@@ -31,7 +31,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<Link className='full-listing-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
 					<h3>Treasury</h3>
 					<TreasuryContainer className='treasuryContainer' limit={5} />
-					<Link className='full-listing-link' to='treasury'><Icon name='arrow right'/>See all treasury proposals</Link>
+					<Link className='full-listing-link' to='treasury-proposals'><Icon name='arrow right'/>See all treasury proposals</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
