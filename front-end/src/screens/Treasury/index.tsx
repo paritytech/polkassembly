@@ -7,7 +7,7 @@ import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
 import InfoBox from '../../ui-components/InfoBox';
-import TreasuryContainer from './Treasury';
+import TreasuryContainer from './TreasuryContainer';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 

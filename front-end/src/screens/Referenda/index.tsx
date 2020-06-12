@@ -7,7 +7,7 @@ import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
 import InfoBox from '../../ui-components/InfoBox';
-import ReferendaContainer from './Referenda';
+import ReferendaContainer from './ReferendaContainer';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
