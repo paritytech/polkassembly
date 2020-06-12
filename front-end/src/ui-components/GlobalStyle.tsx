@@ -27,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
         display: inline-block;
         max-width: 100%;
         white-space: pre-wrap;
+        background-color: grey_light;
     }
 
     code {
