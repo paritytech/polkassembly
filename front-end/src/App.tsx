@@ -93,7 +93,7 @@ const App = () => {
 													<Route exact path="/post/:id" >
 														<PostDiscussion/>
 													</Route>
-													<Route path="/onchain" >
+													<Route path="/on-chain" >
 														<OnChain/>
 													</Route>
 													<Route path="/request-reset-password">

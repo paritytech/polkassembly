@@ -42,7 +42,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Menu Items
 	const contentItems = [
 		{ content:'Discussions', icon:'comments', to:'/discussions' },
-		{ content: 'On chain', icon:'file alternate', to:'/onchain' }
+		{ content: 'On-chain', icon:'file alternate', to:'/on-chain' }
 	];
 
 	const loggedOutItems = [
@@ -158,10 +158,6 @@ export default styled(MenuBar)`
 			}
 		}
 
-		.desktop_items, #title {
-			text-transform: capitalize;
-		}
-
 		i.icon {
 			color: grey_secondary;
 		}
@@ -274,10 +270,6 @@ export default styled(MenuBar)`
 			}
 		}
 
-		.user_items {
-			text-transform: capitalize;
-
-		}
 	}
 
 	&.ui.inverted.menu a.item:hover, &.ui.inverted.menu .dropdown.item:hover {

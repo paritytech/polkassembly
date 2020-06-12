@@ -29,23 +29,23 @@ const Home = ({ className }: Props) => {
 
 	return (
 		<div className={className}>
-			<h1>Latest Activity</h1>
+			<h1>Latest activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<h3>Current Referenda</h3>
+					<h3>Current referenda</h3>
 					<ReferendaContainer className='referendumContainer'/>
-					<h3>Latest Proposals</h3>
+					<h3>Latest proposals</h3>
 					<ProposalContainer className='proposalContainer'/>
-					<h3>Latest Motions</h3>
+					<h3>Latest motions</h3>
 					<MotionsContainer className='motionContainer'/>
-					<h3>Latest Treasury Proposals</h3>
+					<h3>Latest treasury proposals</h3>
 					<TreasuryContainer className='treasuryContainer' />
-					<h3>Latest Discussions</h3>
+					<h3>Latest discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id && <div className='mainButtonContainer'>
-						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New post</Button>
 					</div>}
 					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
 						<DefaultAddressInfoBox />}

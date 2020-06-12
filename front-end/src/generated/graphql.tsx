@@ -7252,7 +7252,7 @@ export type Mutation_RootVerifyEmailArgs = {
 };
 
 /**
- * on chain proposal created automatically by chain-db-watcher
+ * on-chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7281,7 +7281,7 @@ export type Onchain_Links = {
 
 
 /**
- * on chain proposal created automatically by chain-db-watcher
+ * on-chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7298,7 +7298,7 @@ export type Onchain_LinksOnchain_MotionArgs = {
 
 
 /**
- * on chain proposal created automatically by chain-db-watcher
+ * on-chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7315,7 +7315,7 @@ export type Onchain_LinksOnchain_ProposalArgs = {
 
 
 /**
- * on chain proposal created automatically by chain-db-watcher
+ * on-chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7332,7 +7332,7 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
 
 
 /**
- * on chain proposal created automatically by chain-db-watcher
+ * on-chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
