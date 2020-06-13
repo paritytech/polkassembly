@@ -129,7 +129,7 @@ export default styled(PostCommentForm)`
 		padding: 1rem;
 		border-radius: 3px;
 		box-shadow: box_shadow_card;
-		width: 100%;
+		width: calc(100% - 60px);
 	}
 
 	.button-container {
