@@ -112,7 +112,7 @@ lint-chain-db-watcher:
     - docker:dind
   script:
     # create the docker image name
-    - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]:]+-//')
+    - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+://')
     - export DOCKER_IMAGE="${CI_REGISTRY}/${KUBE_NAMESPACE}-${POD_NAME}"
     # set 'BUILDKIT_INLINE_CACHE' so generated images can be used for caching subsequently
     - export BUILD_ARGS="$BUILD_ARGS --build-arg BUILDKIT_INLINE_CACHE=1"
@@ -126,7 +126,7 @@ lint-chain-db-watcher:
     - docker push "$DOCKER_IMAGE:latest"
     - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
 
-dockerize:staging-front-end:
+dockerize:kusama-staging-front-end:
   stage:                           dockerize
   environment:
     name:                          parity-build
@@ -144,7 +144,7 @@ dockerize:staging-front-end:
     - if: '$CI_COMMIT_REF_NAME == "master"'
   <<:                              *build_and_push
 
-dockerize:production-front-end:
+dockerize:kusama-production-front-end:
   stage: dockerize
   environment:
     name: parity-build
@@ -162,7 +162,25 @@ dockerize:production-front-end:
     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<:                              *build_and_push
 
-dockerize-auth-server:
+dockerize:polkadot-production-front-end:
+  stage: dockerize
+  environment:
+    name: parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://polkadot.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:      ""
+    REACT_APP_NETWORK:             "polkadot"
+    REACT_APP_WS_PROVIDER:         "wss://polkadot-rpc.polkadot.io"
+  before_script:
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<:                              *build_and_push
+
+dockerize:auth-server:
   stage:                           dockerize
   environment:
     name: parity-build
@@ -170,7 +188,7 @@ dockerize-auth-server:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
-dockerize-chain-db-watcher:
+dockerize:chain-db-watcher:
   stage:                           dockerize
   environment:
     name: parity-build
@@ -178,7 +196,7 @@ dockerize-chain-db-watcher:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
-dockerize-health-monitor:
+dockerize:health-monitor:
   stage:                           dockerize
   environment:
     name: parity-build
@@ -186,7 +204,7 @@ dockerize-health-monitor:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
-dockerize-node-watcher:
+dockerize:node-watcher:
   stage: dockerize
   environment:
     name: parity-build
@@ -256,7 +274,7 @@ dockerize-node-watcher:
       --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
-deploy-staging:
+deploy-kusama-staging:
   stage:                           deploy
   environment:
     name:                          dashboards-cluster-1
@@ -266,10 +284,22 @@ deploy-staging:
     - master
   <<:                              *deploy-k8s
 
-deploy-production:
+deploy-kusama-production:
   stage:                           deploy
   environment:
-    name:                          parity-prod
+    name:                          kusama-prod
+  tags:
+    - kubernetes-parity-build
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  <<:                              *deploy-k8s
+
+deploy-polkadot-production:
+  variables:
+    KUBE_NAMESPACE:                "polkadot-polkassembly"
+  stage:                           deploy
+  environment:
+    name:                          polkadot-prod
   tags:
     - kubernetes-parity-build
   only:
