@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-chainName: kusama
+chainName: polkadot
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
@@ -11,7 +11,7 @@ frontend:
     annotations:
       traefik.ingress.kubernetes.io/redirect-entry-point: https
     hosts:
-      - host: kusama.polkassembly.io
+      - host: polkadot.polkassembly.io
         path: /
       - host: polkassembly.io
         path: /
@@ -19,12 +19,12 @@ frontend:
 
 authServer:
   config:
-    DOMAIN_NAME: "kusama.polkassembly.io"
+    DOMAIN_NAME: "polkadot.polkassembly.io"
     PROPOSAL_BOT_USER_ID: "1"
 chainDbWatcher:
   config:
     PROPOSAL_BOT_USER_ID: "1"
-    CHAIN_DB_GRAPHQL_URL: "https://test.nodewatcher-server.polkassembly.io"
+    CHAIN_DB_GRAPHQL_URL: "http://nodewatcher-server:4000"
 
 healthMonitor:
   config:
@@ -37,10 +37,10 @@ healthMonitor:
     # polkassembly hasura chain-db service
     CHAIN_DB_WATCHER_SERVER: "http://chain-db-watcher-service:8019"
     # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
-    CHAIN_DB_SERVER: "https://test.nodewatcher-server.polkassembly.io"
+    CHAIN_DB_SERVER: "http://nodewatcher-server:4000"
     # nodewatcher server ( aka Prisma server )
-    CHAIN_DB: "http://nodedwatcher.nodewatcher-kusama:4466"
+    CHAIN_DB: "http://node-watcher-service:4466"
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.c.parity-prod.internal:9944"
+    ARCHIVE_NODE_ENDPOINT: "ws://polkadot-rpc-internal-0.c.parity-prod.internal:9944"

@@ -1,0 +1,15 @@
+# KUSAMA-PROD values for node-watcher.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+chainName: kusama
+nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
+
+cloudsql:
+  commandline:
+    args: "-instances=parity-prod:europe-west3:polkassembly11=tcp:5432"
+
+nodeWatcher:
+  dbName: "chain-db"
+  dbUser: "chain-db"
+  dbPassword: from-gitlab-vars
