@@ -42,7 +42,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Menu Items
 	const contentItems = [
 		{ content:'Discussions', icon:'comments', to:'/discussions' },
-		{ content: 'On-chain', icon:'file alternate', to:'/on-chain' }
+		{ content: 'On-chain', icon:'file alternate', to:'/onchain' }
 	];
 
 	const loggedOutItems = [
