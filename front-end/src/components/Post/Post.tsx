@@ -185,6 +185,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						onchainLink={definedOnchainLink}
 						status={postStatus}
 					/>
+					{isDiscussion(post) && <Poll postId={post.id} />}
 				</Responsive>
 				{ !!post.comments?.length &&
 					<Comments
