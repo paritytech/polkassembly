@@ -183,7 +183,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
 			</Grid.Column>
-			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6} largeScreen={6}>
+			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
 				<GovenanceSideBar
 					isMotion={isMotion}
 					isProposal={isProposal}
