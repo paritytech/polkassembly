@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useState } from 'react';
-import { Grid, Icon, Responsive } from 'semantic-ui-react';
+import { Grid, Icon } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
@@ -137,45 +137,47 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 
 	return (
 		<Grid className={className}>
-			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
-				<div className='post_content'>
-					<EditablePostContent
-						isEditing={isEditing}
-						onchainId={onchainId}
-						post={post}
-						postStatus={postStatus}
-						refetch={refetch}
-						toggleEdit={toggleEdit}
-					/>
-					<div className='actions-bar'>
-						<PostReactionBar className='reactions' postId={post.id} />
-						{id && <div className='vl'/>}
-						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
-						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
-						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+			<Grid.Row>
+				<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
+					<div className='post_content'>
+						<EditablePostContent
+							isEditing={isEditing}
+							onchainId={onchainId}
+							post={post}
+							postStatus={postStatus}
+							refetch={refetch}
+							toggleEdit={toggleEdit}
+						/>
+						<div className='actions-bar'>
+							<PostReactionBar className='reactions' postId={post.id} />
+							{id && <div className='vl'/>}
+							{id && !isEditing && <SubscriptionButton postId={post.id}/>}
+							{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+							{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+						</div>
 					</div>
-				</div>
-				{ isMotion &&
-					<PostMotionInfo
-						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
-					/>
-				}
-				{ isProposal &&
-					<PostProposalInfo
-						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-					/>
-				}
-				{ isReferendum &&
-					<PostReferendumInfo
-						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-					/>
-				}
-				{ isTreasuryProposal &&
-					<PostTreasuryInfo
-						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
-					/>
-				}
-				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+					{ isMotion &&
+						<PostMotionInfo
+							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+						/>
+					}
+					{ isProposal &&
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+					}
+					{ isReferendum &&
+						<PostReferendumInfo
+							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+						/>
+					}
+					{ isTreasuryProposal &&
+						<PostTreasuryInfo
+							onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
+						/>
+					}
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
 					<GovenanceSideBar
 						isMotion={isMotion}
 						isProposal={isProposal}
@@ -186,28 +188,20 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						status={postStatus}
 					/>
 					{isDiscussion(post) && <Poll postId={post.id} />}
-				</Responsive>
-				{ !!post.comments?.length &&
-					<Comments
-						comments={post.comments}
-						refetch={refetch}
-					/>
-				}
-				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
-			</Grid.Column>
+				</Grid.Column>
+			</Grid.Row>
+			<Grid.Row>
+				<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
+					{ !!post.comments?.length &&
+						<Comments
+							comments={post.comments}
+							refetch={refetch}
+						/>
+					}
+					{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
+				</Grid.Column>
+			</Grid.Row>
 			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
-				<Responsive minWidth={Responsive.onlyComputer.minWidth}>
-					<GovenanceSideBar
-						isMotion={isMotion}
-						isProposal={isProposal}
-						isReferendum={isReferendum}
-						isTreasuryProposal={isTreasuryProposal}
-						onchainId={onchainId}
-						onchainLink={definedOnchainLink}
-						status={postStatus}
-					/>
-					{isDiscussion(post) && <Poll postId={post.id} />}
-				</Responsive>
 				<ScrollToTop/>
 			</Grid.Column>
 		</Grid>
