@@ -12,7 +12,7 @@ const ExtensionNotDetected = () =>
 		<div className='text-muted'>Polkadot-js extension not detected.</div>
 		{getExtensionUrl() ?
 			<div className='text-muted'>
-				Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.
+				No web 3 account integration could be found. To be able to vote on-chain, visit this page on a computer with polkadot-js entension. Please reload this page after installing <a href={getExtensionUrl()}>Polkadot-js extension</a>.
 			</div>
 			:
 			<div className='text-muted'>
