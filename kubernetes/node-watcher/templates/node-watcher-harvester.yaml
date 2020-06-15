@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "node-watcher.harvester.labels" . | nindent 4 }}
 spec:
+  manualSelector: true
   selector:
     matchLabels:
       {{- include "node-watcher.harvester.selectorLabels" . | nindent 6 }}
