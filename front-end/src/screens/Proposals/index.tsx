@@ -13,7 +13,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 	return (
 		<div className={className}>
-			<h1>Latest On Chain Proposals</h1>
+			<h1>On-chain proposals</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<ProposalContainer limit={15} />
