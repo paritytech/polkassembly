@@ -14368,7 +14368,6 @@ export const LatestDiscussionPostsDocument = gql`
       author {
         ...authorFields
       }
-      last_update
       created_at
       updated_at
       comments_aggregate {
