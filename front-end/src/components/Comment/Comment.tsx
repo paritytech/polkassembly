@@ -108,7 +108,7 @@ export default styled(Comment)`
 		border-radius: 3px;
 		box-shadow: box_shadow_card;
 		margin-bottom: 1rem;
-		width: 100%;
+		width: calc(100% - 60px);
 		word-break: break-word;
 
 		@media only screen and (max-width: 576px) {

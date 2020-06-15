@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nodeWatcher.name }}
+  labels:
+    {{- include "node-watcher.nodeWatcher.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.nodeWatcher.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "node-watcher.nodeWatcher.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "node-watcher.nodeWatcher.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.nodeWatcher.name }}-graphql-engine
+          image: "{{ .Values.nodeWatcher.image.repository }}"
+          imagePullPolicy: {{ .Values.nodeWatcher.image.pullPolicy }}
+          env:
+            - name: PRISMA_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  key: prisma-config
+                  name: prisma-config
+          ports:
+            - name: {{ .Values.nodeWatcher.name }}
+              containerPort: {{ .Values.nodeWatcher.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.nodeWatcher.resources | nindent 12 }}
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.14
+          command:
+            - "/cloud_sql_proxy"
+            - "-credential_file=/secrets/cloudsql/credentials.json"
+            - {{ .Values.cloudsql.commandline.args | quote }}
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}

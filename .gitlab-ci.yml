@@ -165,34 +165,35 @@ dockerize:production-front-end:
 dockerize-auth-server:
   stage:                           dockerize
   environment:
-    name:                          parity-build
+    name: parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<:                              *build_and_push
+  <<: *build_and_push
 
 dockerize-chain-db-watcher:
   stage:                           dockerize
   environment:
-    name:                          parity-build
+    name: parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<:                              *build_and_push
+  <<: *build_and_push
 
 dockerize-health-monitor:
   stage:                           dockerize
   environment:
-    name:                          parity-build
+    name: parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<:                              *build_and_push
+  <<: *build_and_push
 
 dockerize-node-watcher:
-  stage:                           dockerize
+  stage: dockerize
   environment:
-    name:                          parity-build
+    name: parity-build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-  <<:                              *build_and_push
+  <<: *build_and_push
+
 
 #### stage:                        deploy
 
@@ -225,7 +226,7 @@ dockerize-node-watcher:
     - helm repo add bitnami https://charts.bitnami.com/bitnami
     - helm repo update
 
-    # test install/upgrade
+    # test install/upgrade redis server
     - helm upgrade redis bitnami/redis
       --dry-run
       --install
@@ -239,6 +240,21 @@ dockerize-node-watcher:
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
       --set password=${REDIS_PASSWORD}
+
+    # test install/upgrade node-watcher
+    - helm upgrade node-watcher kubernetes/node-watcher
+      --dry-run
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
+      --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
+
+    # install/upgrade node-watcher
+    - helm upgrade node-watcher kubernetes/node-watcher
+      --install
+      --namespace ${KUBE_NAMESPACE}
+      --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
+      --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
 deploy-staging:
   stage:                           deploy

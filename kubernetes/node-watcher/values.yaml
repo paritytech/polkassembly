@@ -1,0 +1,60 @@
+# Default values for polkassembly.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+chainName: kusamaOrPolkadot
+imagePullSecrets: ""
+nodeSelector: {}
+dockerTag: latest
+
+cloudsql:
+  commandline:
+    args: "-instances=<copy-from-gcp-sql-overview>=tcp:5432"
+  instanceCredentials: from-gitlab-vars
+
+harvester:
+  name: harvester
+
+  image:
+    repository: paritytech/polkassembly-node-watcher:latest
+    pullPolicy: Always
+  
+  config:
+    PRISMA_ENDPOINT: http://node-watcher-service:4466
+    ARCHIVE_NODE_ENDPOINT: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
+    START_FROM: '2504500'
+    BLOCK_IDENTIFIER: 'chain-tip'
+    MAX_LAG: '10'
+
+nodeWatcher:
+  name: node-watcher
+  replicaCount: 1
+
+  dbName: name
+  dbUser: user
+  dbPassword: from-gitlab-vars
+
+  image:
+    repository: prismagraphql/prisma:1.34
+    pullPolicy: IfNotPresent
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  podSecurityContext: {}
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 4466
+
+  resources:
+    requests:
+      memory: "1280Mi"
+      cpu: "250m"
+    limits:
+      memory: "2560Mi"
+      cpu: "500m"
+
+  tolerations: []
+  affinity: {}
