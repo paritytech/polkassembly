@@ -37,7 +37,8 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		icon = 'times';
 	}
 
-	if ([referendumStatus.EXECUTED,
+	if ([proposalStatus.TABLED,
+		referendumStatus.EXECUTED,
 		motionStatus.EXECUTED
 	].includes(status)){
 		icon = 'check';
@@ -77,6 +78,7 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 			border-color: blue_primary;
 			color: blue_primary;
 		}
+		&.${proposalStatus.TABLED},
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
 		&.${motionStatus.EXECUTED} {

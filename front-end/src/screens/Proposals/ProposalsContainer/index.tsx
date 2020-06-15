@@ -4,8 +4,8 @@
 
 import React, { useEffect } from 'react';
 
-import TreasuryListing from '../../../components/Listings/TreasuryListing';
-import { useLatestDemocracyTreasuryProposalPostsQuery } from '../../../generated/graphql';
+import ProposalsListing from '../../../components/Listings/ProposalsListing';
+import { useAllDemocracyProposalPostsQuery } from '../../../generated/graphql';
 import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
@@ -16,11 +16,11 @@ interface Props {
 	limit: number
 }
 
-const TreasuryProposalsContainer = ({ className, limit }:Props) => {
+const ProposalsContainer = ({ className, limit }:Props) => {
 
-	const { data, error, refetch } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
+	const { data, error, refetch } = useAllDemocracyProposalPostsQuery({ variables: {
 		limit,
-		postTopic: post_topic.TREASURY,
+		postTopic: post_topic.DEMOCRACY,
 		postType: post_type.ON_CHAIN
 	} });
 
@@ -30,9 +30,9 @@ const TreasuryProposalsContainer = ({ className, limit }:Props) => {
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 
-	if (data) return <TreasuryListing className={className} data={data}/>;
+	if (data) return <ProposalsListing className={className} data={data}/>;
 
 	return <Loader/>;
 };
 
-export default TreasuryProposalsContainer;
+export default ProposalsContainer;
