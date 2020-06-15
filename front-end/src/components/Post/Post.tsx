@@ -238,12 +238,6 @@ export default styled(Post)`
 		}
 	}
 
-	@media only screen and (max-width: 991px) {
-		.democracy_card {
-			visibility: hidden;
-		}
-	}
-
 	a.social {
 		color: grey_primary;
 		font-size: 1.3rem;

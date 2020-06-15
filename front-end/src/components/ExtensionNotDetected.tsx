@@ -3,11 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import * as React from 'react';
+import Card from 'src/ui-components/Card';
 
 import getExtensionUrl from '../util/getExtensionUrl';
 
 const ExtensionNotDetected = () =>
-	<>
+	<Card>
 		<div className='text-muted'>Polkadot-js extension not detected.</div>
 		{getExtensionUrl() ?
 			<div className='text-muted'>
@@ -18,7 +19,7 @@ const ExtensionNotDetected = () =>
 				Please install <a href='https://www.mozilla.org/en-US/firefox/'>Firefox</a> or <a href='https://www.google.com/chrome/'>Chrome</a> browser to use this feature.
 			</div>
 		}
-	</>
+	</Card>
 ;
 
 export default ExtensionNotDetected;
