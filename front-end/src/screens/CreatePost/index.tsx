@@ -122,7 +122,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 		<Grid>
 			<Grid.Column mobile={16} tablet={16} computer={12} largeScreen={10} widescreen={10}>
 				<Form className={className}>
-					<h3>New Post</h3>
+					<h3>New post</h3>
 					<Controller
 						as={<TitleForm
 							errorTitle={errors.title}

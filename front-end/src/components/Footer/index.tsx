@@ -21,17 +21,17 @@ const Footer = ({ className }:Props ): JSX.Element => {
 					&copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-and-conditions">
-					Terms &amp; Conditions
+					Terms &amp; conditions
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-of-website">
-					Terms of Website
+					Terms of website
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
-					Privacy Policy
+					Privacy policy
 				</Menu.Item>
 				<Menu.Item>
 					<a href='https://github.com/paritytech/polkassembly/issues' target='blank'>
-						Report an Issue
+						Report an issue
 					</a>
 				</Menu.Item>
 			</Menu>

@@ -75,6 +75,7 @@ databases:
   {{ .Values.nodeWatcher.dbName }}:
     connector: postgres
     host: 127.0.0.1
+    database: {{ .Values.nodeWatcher.dbName }}
     port: 5432
     user: {{ .Values.nodeWatcher.dbUser }}
     password: {{ .Values.nodeWatcher.dbPassword }}

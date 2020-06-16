@@ -127,7 +127,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
 					<Menu.Item className='desktop_items'>
-						<Dropdown trigger={<>OnChain</>} icon={caretIcon} item={true}>
+						<Dropdown trigger={<>On-chain</>} icon={caretIcon} item={true}>
 							<Dropdown.Menu>
 								{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
 							</Dropdown.Menu>
@@ -171,10 +171,6 @@ export default styled(MenuBar)`
 			&:hover {
 				color: white;
 			}
-		}
-
-		.desktop_items, #title {
-			text-transform: capitalize;
 		}
 
 		i.icon {
@@ -292,10 +288,6 @@ export default styled(MenuBar)`
 			}
 		}
 
-		.user_items {
-			text-transform: capitalize;
-
-		}
 	}
 
 	&.ui.inverted.menu a.item:hover, &.ui.inverted.menu .dropdown.item:hover {
