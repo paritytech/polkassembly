@@ -43,9 +43,9 @@ const Proposals = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
-									method={post.onchain_link.onchain_proposal?.[0]?.preimage?.method}
+									method={post.onchain_link.onchain_proposal[0]?.preimage?.method}
 									onchainId={onchainId}
-									status={post.onchain_link.onchain_proposal?.[0]?.proposalStatus?.[0].status}
+									status={post.onchain_link.onchain_proposal[0]?.proposalStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>
