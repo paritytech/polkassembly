@@ -7,6 +7,7 @@ import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
+import { APPNAME } from 'src/global/appName';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { NotificationContext } from '../../context/NotificationContext';
@@ -24,8 +25,6 @@ import Modal from '../../ui-components/Modal';
 import getEncodedAddress from '../../util/getEncodedAddress';
 import messages from '../../util/messages';
 import * as validation from '../../util/validation';
-
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);
@@ -196,7 +195,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 								<>
 									<Form.Group>
 										<Form.Field width={16}>
-											<label>Default Address</label>
+											<label>Default address</label>
 											<AddressComponent address={address} />
 										</Form.Field>
 									</Form.Group>

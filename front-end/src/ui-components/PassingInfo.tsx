@@ -16,13 +16,13 @@ const PassingInfo = ({ className, isPassing }:Props ) => {
 	const NO_INFO_TEXT = '-';
 
 	let text = '';
-	let iconName : 'check circle outline' | 'check circle outline' | null = null;
+	let iconName : 'check circle outline' | 'times circle outline' | null = null;
 
 	if (isPassing === null){
 		text = NO_INFO_TEXT;
 	} else {
 		text = isPassing ? 'Passing' : 'Failing';
-		iconName = isPassing ? 'check circle outline' : 'check circle outline';
+		iconName = isPassing ? 'check circle outline' : 'times circle outline';
 	}
 	return (
 		<div className={`${className} ${text === NO_INFO_TEXT ? null : text.toLowerCase()}`}>
@@ -40,6 +40,7 @@ export default styled(PassingInfo)`
 	color: white;
 	text-align: center;
 	transition-duration: 1s;
+	box-shadow: box_shadow_card;
 
 	&.passing {
 		background-color: green_primary;

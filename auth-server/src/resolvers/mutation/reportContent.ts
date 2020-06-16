@@ -41,7 +41,7 @@ export default async (parent: void, { network, type, content_id, reason, comment
 			user_id: user.id
 		});
 
-	sendReportContentEmail(user.name, network, type, content_id, reason, comments);
+	sendReportContentEmail(user.username, network, type, content_id, reason, comments);
 
 	return { message: messages.CONTENT_REPORT_SUCCESSFUL };
 };

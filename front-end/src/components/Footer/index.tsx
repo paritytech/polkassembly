@@ -21,17 +21,17 @@ const Footer = ({ className }:Props ): JSX.Element => {
 					&copy; {moment.utc().year()} Parity Technologies
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-and-conditions">
-					Terms &amp; Conditions
+					Terms &amp; conditions
 				</Menu.Item>
 				<Menu.Item as={Link} to="/terms-of-website">
-					Terms of Website
+					Terms of website
 				</Menu.Item>
 				<Menu.Item as={Link} to="/privacy">
-					Privacy Policy
+					Privacy policy
 				</Menu.Item>
 				<Menu.Item>
-					<a className='item' href='https://github.com/paritytech/polkassembly/issues' target='blank'>
-						Report an Issue
+					<a href='https://github.com/paritytech/polkassembly/issues' target='blank'>
+						Report an issue
 					</a>
 				</Menu.Item>
 			</Menu>
@@ -51,6 +51,13 @@ export default styled(Footer)`
 		padding: 1rem 3rem;
 		border-radius: 0rem;
 		height: 100%;
+
+		a {
+			color: grey_secondary;
+			&:hover {
+				color: white;
+			}
+		}
 
 		.item {
 			color: grey_secondary;

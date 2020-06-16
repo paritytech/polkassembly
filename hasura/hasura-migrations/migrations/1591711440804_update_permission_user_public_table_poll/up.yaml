@@ -1,0 +1,16 @@
+- args:
+    permission:
+      backend_only: false
+      columns:
+      - block_end
+      - post_id
+      filter:
+        post:
+          author_id:
+            _eq: X-Hasura-User-Id
+      set: {}
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: create_update_permission

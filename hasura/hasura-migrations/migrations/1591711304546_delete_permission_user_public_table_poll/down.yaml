@@ -1,0 +1,11 @@
+- args:
+    permission:
+      filter:
+        posts:
+          author_id:
+            _eq: X-Hasura-User-Id
+    role: user
+    table:
+      name: poll
+      schema: public
+  type: create_delete_permission

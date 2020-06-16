@@ -21,10 +21,9 @@ describe('addressLinkStart mutation on Polkadot', () => {
 	const email = 'test@email.com';
 	const password = 'testpass';
 	const username = 'testuser';
-	const name = 'test name';
 
 	before(async () => {
-		const result = await getNewUserCtx(email, password, username, name);
+		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 	});
@@ -51,7 +50,6 @@ describe('addressLinkStart mutation on Polkadot', () => {
 			.where({ user_id: signupUserId })
 			.first();
 
-			console.log('network', JSON.stringify(dbAddress, null, 4))
 		expect(dbAddress?.network).to.be.equal(network);
 		expect(dbAddress?.address).to.be.equal(address);
 		expect(dbAddress?.sign_message).to.exist;

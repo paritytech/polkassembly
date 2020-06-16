@@ -127,11 +127,9 @@ export default styled(PostCommentForm)`
 	.comment-box {
 		background-color: white;
 		padding: 1rem;
-		border-style: solid;
-		border-width: 1px;
-		border-color: grey_border;
 		border-radius: 3px;
-		width: 100%;
+		box-shadow: box_shadow_card;
+		width: calc(100% - 60px);
 	}
 
 	.button-container {

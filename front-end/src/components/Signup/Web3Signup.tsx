@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Divider, DropdownProps } from 'semantic-ui-react';
+import { APPNAME } from 'src/global/appName';
 import getNetwork from 'src/util/getNetwork';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
@@ -31,7 +32,6 @@ interface Props {
 }
 
 const NETWORK = getNetwork();
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);

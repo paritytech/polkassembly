@@ -12,6 +12,11 @@ import { Selectors } from './types';
 const resolvers = {
   Subscription,
   Query,
+  Node: {
+    __resolveType() {
+      return null;
+    }
+  },
   BlockNumber: {
     authoredBy(parent: any) {
       return prisma.blockNumber({ id: parent.id }).authoredBy();

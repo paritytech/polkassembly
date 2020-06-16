@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import getNetwork from 'src/util/getNetwork';
 
+// import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/graphql';
@@ -43,8 +44,15 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 
 	// Menu Items
 	const contentItems = [
-		{ content:'Discussions', icon:'comments', to:'/discussions' },
-		{ content: 'On chain', icon:'file alternate', to:'/onchain' }
+		{ content: 'Discussions', icon:'comments', to:'/discussions' }
+	];
+
+	const onchainItems = [
+		{ content: 'Overview', to:'/onchain' },
+		{ content: 'Referenda', to:'/referenda' },
+		{ content: 'Proposals', to:'/proposals' },
+		{ content: 'Motions', to:'/motions' },
+		{ content: 'Treasury proposals', to:'/treasury-proposals' }
 	];
 
 	const loggedOutItems = [
@@ -83,9 +91,13 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 			<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 				<Menu className={`${className} ${NETWORK}`} inverted widths={2} id='menubar'>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
-					<Menu.Item onClick={handleToggle} id='rightmenu'>
-						{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
-					</Menu.Item>
+					<Menu.Menu position="right">
+						{/* <NetworkDropdown /> */}
+						<Menu.Item onClick={handleToggle} id='rightmenu'>
+							{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
+						</Menu.Item>
+					</Menu.Menu>
+
 				</Menu>
 				<Sidebar.Pushable className={className} style={{ height:pushableHeight }}>
 					<Sidebar
@@ -98,6 +110,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						visible={menuVisible}
 					>
 						{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
+						{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 						{username
 							?
 							<>
@@ -116,7 +129,15 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 				<Menu className={`${className} ${NETWORK}`} stackable inverted borderless>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title'><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					{contentItems.map((item, index) => <Menu.Item as={NavLink} className='desktop_items' key={index} {...item} />)}
+					<Menu.Item className='desktop_items'>
+						<Dropdown trigger={<>On-chain</>} icon={caretIcon} item={true}>
+							<Dropdown.Menu>
+								{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
+							</Dropdown.Menu>
+						</Dropdown>
+					</Menu.Item>
 					<Menu.Menu position="right">
+						{/* <NetworkDropdown /> */}
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
@@ -160,10 +181,6 @@ export default styled(MenuBar)`
 			}
 		}
 
-		.desktop_items, #title {
-			text-transform: capitalize;
-		}
-
 		i.icon {
 			color: grey_secondary;
 		}
@@ -193,7 +210,7 @@ export default styled(MenuBar)`
 			border-bottom-color: grey_primary;
 			margin: 0rem!important;
 
-			.desktop_items, #title, #rightmenu {
+			.desktop_items, #title {
 				position: absolute;
 			}
 
@@ -208,9 +225,10 @@ export default styled(MenuBar)`
 			}
 
 			#rightmenu {
-				right: 2rem;
-				font-size: 1.8rem;
+				font-size: lg;
 				max-width: 2rem;
+				margin-right: 2rem !important;
+				margin-left: 2rem !important;
 			}
 
 			.item {
@@ -273,12 +291,11 @@ export default styled(MenuBar)`
 			i.icon {
 				display: none;
 			}
+			i.icon.caret {
+				display: block;
+			}
 		}
 
-		.user_items {
-			text-transform: capitalize;
-
-		}
 	}
 
 	&.ui.inverted.menu a.item:hover, &.ui.inverted.menu .dropdown.item:hover {

@@ -7,13 +7,13 @@ import getNetwork from 'src/util/getNetwork';
 
 function secondsToDhm(seconds: number) {
 	seconds = Number(seconds);
-	var d = Math.floor(seconds / (3600*24));
-	var h = Math.floor(seconds % (3600*24) / 3600);
-	var m = seconds < 60 ? 1 : Math.floor(seconds % 3600 / 60);
+	const d = Math.floor(seconds / (3600*24));
+	const h = Math.floor(seconds % (3600*24) / 3600);
+	const m = seconds < 60 ? 1 : Math.floor(seconds % 3600 / 60);
 
-	var dDisplay = d + 'd ';
-	var hDisplay = h + 'h ';
-	var mDisplay = m + 'm';
+	const dDisplay = d + 'd ';
+	const hDisplay = h + 'h ';
+	const mDisplay = m + 'm';
 
 	return dDisplay + hDisplay + mDisplay;
 }

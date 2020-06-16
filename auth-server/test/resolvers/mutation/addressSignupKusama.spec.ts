@@ -135,7 +135,7 @@ describe('addressSignup mutation on Kusama', () => {
 		// mock the addressSignupStart
 		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
-		const fakeSignature = '0xaaaa';
+		const fakeSignature = '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
 		try {
 			await addressSignupConfirm(undefined, { address, network, signature: fakeSignature }, fakectx);

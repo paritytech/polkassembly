@@ -2,7 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import dotenv from 'dotenv';
-
 import { Config } from 'src/types';
 
 dotenv.config();
@@ -12,14 +11,14 @@ const devConnectionUrl = process.env.DATABASE_URL;
 const testConnectionUrl = process.env.TEST_DATABASE_URL;
 
 const config: Config = {
-	'development': {
+	development: {
 		client: 'postgresql',
 		connection: devConnectionUrl,
 		migrations: {
 			directory: `${__dirname}/migrations`
 		}
 	},
-	'test': {
+	test: {
 		client: 'postgresql',
 		connection: testConnectionUrl,
 		migrations: {

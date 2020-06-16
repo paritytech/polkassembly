@@ -23,7 +23,7 @@ const proposalBotPassword = process.env.PROPOSAL_BOT_PASSWORD;
 const chainDBGraphqlUrl = process.env.CHAIN_DB_GRAPHQL_URL;
 const councilTopicId = process.env.COUNCIL_TOPIC_ID;
 
-const DEFAULT_DESCRIPTION = 'The title and description of this proposal can only be edited by the author to explain the rationale behind it. Anyone can comment.';
+const getDescription = (type: string, address: string): string => `This is a ${type} whose proposer address (${address}) is shown in on-chain info below. Only this user can edit this description and the title. If you own this account, login and tell us more about your proposal.`;
 
 /**
  * Fetches the JWT from auth server for a "proposal_bot"
@@ -256,7 +256,7 @@ export const addDiscussionPostAndProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		content: DEFAULT_DESCRIPTION,
+		content: getDescription('proposal', proposer),
 		onchainProposalId,
 		proposerAddress: proposer,
 		topicId: Number(democracyTopicId),
@@ -331,7 +331,7 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 
 	const proposalAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		content: DEFAULT_DESCRIPTION,
+		content: getDescription('treasury proposal', proposer),
 		onchainTreasuryProposalId,
 		proposerAddress: proposer,
 		topicId: Number(treasuryTopicId),
@@ -458,7 +458,7 @@ export const addDiscussionPostAndMotion = async ({
 
 	const motionAndPostVariables = {
 		authorId: Number(proposalBotUserId),
-		content: DEFAULT_DESCRIPTION,
+		content: getDescription('motion', proposer),
 		onchainMotionProposalId,
 		proposerAddress: proposer,
 		topicId: Number(councilTopicId),

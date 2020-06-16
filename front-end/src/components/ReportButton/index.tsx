@@ -4,7 +4,7 @@
 
 import React, { useContext,useState } from 'react';
 import { Dropdown, DropdownProps, Icon, TextArea, TextAreaProps } from 'semantic-ui-react';
-import getNetwork from "src/util/getNetwork";
+import getNetwork from 'src/util/getNetwork';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useReportContentMutation } from '../../generated/graphql';

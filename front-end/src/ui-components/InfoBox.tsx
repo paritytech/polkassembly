@@ -53,7 +53,7 @@ export default styled(InfoBox)`
 	color: black_text;
 	font-size: sm;
 	border-radius: 6px;
-	box-shadow: box_shadow_big;
+	box-shadow: box_shadow_card;
 	padding: 2rem 3rem;
 	position: relative;
 	margin-bottom: 2rem;

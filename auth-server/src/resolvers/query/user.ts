@@ -24,7 +24,6 @@ export default async (parent: void, { id }: UserArgs): Promise<PublicUser | null
 	return {
 		id: user.id,
 		kusama_default_address: networkUserAddressInfo.kusama.default,
-		name: user.name,
 		polkadot_default_address: networkUserAddressInfo.polkadot.default,
 		username: user.username
 	};

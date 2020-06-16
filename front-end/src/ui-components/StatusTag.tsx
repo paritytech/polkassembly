@@ -28,7 +28,8 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		icon = 'circle';
 	}
 
-	if ([referendumStatus.CANCELLED,
+	if ([proposalStatus.CLEARED,
+		referendumStatus.CANCELLED,
 		referendumStatus.NOTPASSED,
 		referendumStatus.VETOED,
 		motionStatus.DISAPPROVED
@@ -36,7 +37,8 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		icon = 'times';
 	}
 
-	if ([referendumStatus.EXECUTED,
+	if ([proposalStatus.TABLED,
+		referendumStatus.EXECUTED,
 		motionStatus.EXECUTED
 	].includes(status)){
 		icon = 'check';
@@ -76,12 +78,14 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 			border-color: blue_primary;
 			color: blue_primary;
 		}
+		&.${proposalStatus.TABLED},
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
 		&.${motionStatus.EXECUTED} {
 			border-color: green_primary;
 			color: green_primary;
 		}
+		&.${proposalStatus.CLEARED},
 		&.${referendumStatus.CANCELLED},
 		&.${referendumStatus.NOTPASSED},
 		&.${referendumStatus.VETOED},

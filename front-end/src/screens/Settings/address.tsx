@@ -8,6 +8,7 @@ import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { Grid, Icon, Popup } from 'semantic-ui-react';
+import { APPNAME } from 'src/global/appName';
 import getNetwork from 'src/util/getNetwork';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
@@ -27,7 +28,6 @@ interface Props{
 	className?: string
 }
 
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 const NETWORK = getNetwork();
 
 const Address = ({ className }: Props): JSX.Element => {
@@ -262,10 +262,10 @@ const Address = ({ className }: Props): JSX.Element => {
 				</Form.Group>
 				{showAccounts && <Form.Group>
 					<Form.Field width={16}>
-						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+						<div className='text-muted'>Associate your account with an on-chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
 							<Button primary onClick={handleDetect}>
-								Show Available Accounts
+								Show available accounts
 							</Button>
 						</div>
 					</Form.Field>

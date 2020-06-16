@@ -16,7 +16,8 @@ export default (res: Response, refreshToken: string): void => {
 		{
 			httpOnly: true,
 			maxAge: 6 * 30 * 24 * 60 * 60 * 1000, // 6 months
-			sameSite: 'strict'
+			sameSite: 'strict',
+			secure: true
 		}
 	);
 };

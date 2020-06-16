@@ -109,7 +109,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 						disabled={loading}
 						onClick={handleToggle}
 					>
-						Login With Web3 Address
+						Login with web3 address
 					</Button>
 				</div>
 			</Responsive>

@@ -8,6 +8,7 @@ import { stringToHex } from '@polkadot/util';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import { Divider, DropdownProps } from 'semantic-ui-react';
+import { APPNAME } from 'src/global/appName';
 
 import ExtensionNotDetected from '../../components/ExtensionNotDetected';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -25,8 +26,6 @@ interface Props {
 	className?: string
 	toggleWeb2Login: () => void
 }
-
-const APPNAME = process.env.REACT_APP_APPNAME || 'polkassembly';
 
 const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 	const [error, setErr] = useState<Error | null>(null);
@@ -187,7 +186,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					disabled={loading}
 					onClick={handleToggle}
 				>
-					Login With Username
+					Login with username
 				</Button>
 			</div>
 		</Form>
