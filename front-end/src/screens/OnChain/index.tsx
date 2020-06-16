@@ -15,22 +15,24 @@ import TreasuryContainer from './Treasury';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
+	const limit = 10;
+
 	return (
 		<div className={className}>
 			<h1>Latest on-chain activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Referenda</h3>
-					<ReferendaContainer className='referendaContainer' limit={5} />
+					<ReferendaContainer className='referendaContainer' limit={limit} />
 					<Link className='full-listing-link' to='referenda'><Icon name='arrow right'/>See all referenda</Link>
 					<h3>Proposals</h3>
-					<ProposalContainer className='proposalContainer' limit={5} />
+					<ProposalContainer className='proposalContainer' limit={limit} />
 					<Link className='full-listing-link' to='proposals'><Icon name='arrow right'/>See all proposals</Link>
 					<h3>Motions</h3>
-					<MotionContainer className='motionContainer' limit={5} />
+					<MotionContainer className='motionContainer' limit={limit} />
 					<Link className='full-listing-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
 					<h3>Treasury</h3>
-					<TreasuryContainer className='treasuryContainer' limit={5} />
+					<TreasuryContainer className='treasuryContainer' limit={limit} />
 					<Link className='full-listing-link' to='treasury-proposals'><Icon name='arrow right'/>See all treasury proposals</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
