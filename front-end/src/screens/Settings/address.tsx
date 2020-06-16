@@ -262,10 +262,10 @@ const Address = ({ className }: Props): JSX.Element => {
 				</Form.Group>
 				{showAccounts && <Form.Group>
 					<Form.Field width={16}>
-						<div className='text-muted'>Associate your account with an on chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
+						<div className='text-muted'>Associate your account with an on-chain address using the <a href={getExtensionUrl()}>Polkadot-js extension</a>.</div>
 						<div className='link-button-container'>
 							<Button primary onClick={handleDetect}>
-								Show Available Accounts
+								Show available accounts
 							</Button>
 						</div>
 					</Form.Field>

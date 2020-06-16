@@ -195,7 +195,7 @@ const SetCredentials = ({ className }: {className?: string}): JSX.Element => {
 								<>
 									<Form.Group>
 										<Form.Field width={16}>
-											<label>Default Address</label>
+											<label>Default address</label>
 											<AddressComponent address={address} />
 										</Form.Field>
 									</Form.Group>

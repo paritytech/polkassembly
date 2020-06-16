@@ -186,7 +186,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					disabled={loading}
 					onClick={handleToggle}
 				>
-					Login With Username
+					Login with username
 				</Button>
 			</div>
 		</Form>

@@ -30,7 +30,7 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 
 	return (
 		<OnchainInfoWrapper>
-			<h4>On-Chain Info</h4>
+			<h4>On-chain info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Proposer</h6>
