@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.chainDbOpenServer.name }}
+  labels:
+    {{- include "node-watcher.chainDbOpenServer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.chainDbOpenServer.replicaCount }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "node-watcher.chainDbOpenServer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "node-watcher.chainDbOpenServer.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.chainDbOpenServer.name }}
+          image: "{{ .Values.chainDbOpenServer.image.repository }}"
+          imagePullPolicy: {{ .Values.chainDbOpenServer.image.pullPolicy }}
+          env:
+            - name: PRISMA_ENDPOINT
+              value: "{{ .Values.harvester.config.PRISMA_ENDPOINT }}"
+          ports:
+            - name: chain-db-open-server-port
+              containerPort: {{ .Values.chainDbOpenServer.service.port }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
