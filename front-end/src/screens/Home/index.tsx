@@ -10,8 +10,8 @@ import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
-import MotionsContainer from '../OnChain/Motions';
 import DiscussionContainer from './LatestDiscussions';
+import MotionsContainer from './LatestMotions';
 import ProposalContainer from './LatestProposals';
 import ReferendaContainer from './LatestReferenda';
 import TreasuryContainer from './LatestTreasury';
@@ -33,11 +33,11 @@ const Home = ({ className }: Props) => {
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Current referenda</h3>
-					<ReferendaContainer className='referendumContainer'/>
+					<ReferendaContainer className='referendumContainer' />
 					<h3>Latest proposals</h3>
-					<ProposalContainer className='proposalContainer'/>
+					<ProposalContainer className='proposalContainer' />
 					<h3>Latest motions</h3>
-					<MotionsContainer className='motionContainer'/>
+					<MotionsContainer className='motionContainer' />
 					<h3>Latest treasury proposals</h3>
 					<TreasuryContainer className='treasuryContainer' />
 					<h3>Latest discussions</h3>
