@@ -50,7 +50,7 @@ export const QUERY_LATEST_MOTIONS = gql`
             onchain_link {
                 id
                 onchain_motion_id
-                onchain_motion(where: {}) {
+                onchain_motion(where: {NOT: {motionStatus_some: {OR: [{status: "Executed"}, {status: "Disapproved"}]}}}) {
                     id
                     motionStatus(last: 1) {
                         id

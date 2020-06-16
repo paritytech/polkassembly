@@ -17,7 +17,17 @@ interface Props {
 
 const Motions = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active motions.'/>;
+	const noPost = !data.posts || !data.posts.length;
+	const atLeastOneCurrentMotion = data.posts.some((post) => {
+		if(post.onchain_link?.onchain_motion.length){
+			// this breaks the loop as soon as
+			// we find a post that has a motion.
+			return true;
+		}
+		return false;
+	});
+
+	if (noPost || !atLeastOneCurrentMotion) return <NothingFoundCard className={className} text='There are currently no active motions.'/>;
 
 	return (
 		<ul className={`${className} motions__list`}>
@@ -25,7 +35,7 @@ const Motions = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_motion_id;
 
-					return !!post?.author?.username && post.onchain_link &&
+					return !!post?.author?.username && !!post.onchain_link?.onchain_motion.length &&
 						<li key={post.id} className='motions__item'>
 							{<Link to={`/motion/${onchainId}`}>
 								<GovernanceCard
