@@ -27,6 +27,7 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 {{- define "node-watcher.chainDbOpenServer.matchLabels" -}}
+component: {{ .Values.chainDbOpenServer.name }}
 {{ include "node-watcher.common.matchLabels" . }}
 {{- end -}}
 
