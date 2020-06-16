@@ -31,14 +31,14 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 
 	return (
 		<OnchainInfoWrapper>
-			<h4>On-Chain Info</h4>
+			<h4>On-chain info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Proposer</h6>
 					<AddressComponent address={proposerAddress}/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Member Count</h6>
+					<h6>Member count</h6>
 					{memberCount}
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={16}>
@@ -47,7 +47,7 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 				</Grid.Column>
 				<Grid.Row>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
-						<h6>Motion&apos;s Method</h6>
+						<h6>Motion&apos;s method</h6>
 						{method}
 					</Grid.Column>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
