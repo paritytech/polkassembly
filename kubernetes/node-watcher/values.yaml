@@ -59,12 +59,12 @@ nodeWatcher:
   tolerations: []
   affinity: {}
 
-nodeWatcherServer:
-  name: node-watcher-server
+chainDbOpenServer:
+  name: chain-db-open-server
   replicaCount: 2
 
   image:
-    repository: prismagraphql/prisma:1.34
+    repository: paritytech/polkassembly-chain-db-open-server:latest
     pullPolicy: IfNotPresent
 
   service:
