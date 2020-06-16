@@ -72,17 +72,18 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
-	const currentMeta = useContext(MetaContext);
+	const { description, setMetaContextState, title } = useContext(MetaContext);
 
 	useEffect(() => {
-		currentMeta.setMetaContextState((prevState) => {
+		console.log("title", title);
+		setMetaContextState((prevState) => {
 			return {
 				...prevState,
 				description: post?.content || prevState.description,
 				title: post?.title || prevState.title
 			};
 		});
-	}, [post, currentMeta]);
+	}, [post, setMetaContextState, title, description]);
 
 	if (!post) return <NoPostFound
 		isMotion={isMotion}
@@ -255,7 +256,7 @@ export default styled(Post)`
 			visibility: hidden;
 		}
 	}
-	
+
 	a.social {
 		color: grey_primary;
 		font-size: 1.3rem;
