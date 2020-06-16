@@ -17,7 +17,17 @@ interface Props {
 
 const Proposals = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active proposals.'/>;
+	const noPost = !data.posts || !data.posts.length;
+	const atLeastOneCurrentProposal = data.posts.some((post) => {
+		if(post.onchain_link?.onchain_proposal.length){
+			// this breaks the loop as soon as
+			// we find a post that has a proposal.
+			return true;
+		}
+		return false;
+	});
+
+	if (noPost || !atLeastOneCurrentProposal) return <NothingFoundCard className={className} text='There are currently no active proposals.'/>;
 
 	return (
 		<ul className={`${className} proposals__list`}>
@@ -25,7 +35,7 @@ const Proposals = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_proposal_id;
 
-					return !!post?.author?.username && post.onchain_link &&
+					return !!post?.author?.username && !!post.onchain_link?.onchain_proposal.length &&
 						<li key={post.id} className='proposals__item'>
 							{<Link to={`/proposal/${onchainId}`}>
 								<GovernanceCard

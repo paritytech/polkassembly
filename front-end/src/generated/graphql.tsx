@@ -14558,7 +14558,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
     onchain_link {
       id
       onchain_proposal_id
-      onchain_proposal(where: {}) {
+      onchain_proposal(where: {NOT: {proposalStatus_some: {OR: [{status: "Tabled"}, {status: "Cleared"}]}}}) {
         id
         proposalStatus(last: 1) {
           id
