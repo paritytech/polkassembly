@@ -24,8 +24,7 @@ spec:
             - name: PRISMA_ENDPOINT
               value: "{{ .Values.harvester.config.PRISMA_ENDPOINT }}"
           ports:
-            - name: chain-db-open-server-port
-              containerPort: {{ .Values.chainDbOpenServer.service.port }}
+            - containerPort: {{ .Values.chainDbOpenServer.service.port }}
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
