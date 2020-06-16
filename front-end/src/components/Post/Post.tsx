@@ -75,7 +75,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const { description, setMetaContextState, title } = useContext(MetaContext);
 
 	useEffect(() => {
-		console.log("title", title);
 		setMetaContextState((prevState) => {
 			return {
 				...prevState,
