@@ -58,3 +58,15 @@ nodeWatcher:
 
   tolerations: []
   affinity: {}
+
+chainDbOpenServer:
+  name: chain-db-open-server
+  replicaCount: 2
+
+  image:
+    repository: paritytech/polkassembly-chain-db-open-server:latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 4000

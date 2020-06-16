@@ -194,6 +194,13 @@ dockerize-node-watcher:
     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
   <<: *build_and_push
 
+dockerize-chain-db-open-server:
+  stage: dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
 #### stage:                        deploy
 
