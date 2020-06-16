@@ -5,7 +5,7 @@
 import React, { useEffect } from 'react';
 
 import TreasuryListing from '../../../components/Listings/TreasuryListing';
-import { useLatestDemocracyTreasuryProposalPostsQuery } from '../../../generated/graphql';
+import { useAllDemocracyTreasuryProposalPostsQuery } from '../../../generated/graphql';
 import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
@@ -18,7 +18,7 @@ interface Props {
 
 const TreasuryProposalsContainer = ({ className, limit }:Props) => {
 
-	const { data, error, refetch } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
+	const { data, error, refetch } = useAllDemocracyTreasuryProposalPostsQuery({ variables: {
 		limit,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN

@@ -12,12 +12,13 @@ import Loader from '../../../ui-components/Loader';
 
 interface Props {
 	className?: string
+	limit: number
 }
 
-const ReferendaContainer = ({ className }:Props) => {
+const ReferendaContainer = ({ className, limit }:Props) => {
 
 	const { data, error, refetch } = useLatestReferendaPostsQuery({ variables: {
-		limit: 5,
+		limit,
 		postType: post_type.ON_CHAIN
 	} });
 

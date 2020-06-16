@@ -26,15 +26,19 @@ import Home from './screens/Home';
 import { PrivacyPolicy, TermsAndConditions, TermsOfWebsite } from './screens/LegalDocuments';
 import LoginForm from './screens/LoginForm';
 import PostMotion from './screens/MotionPost';
+import Motions from './screens/Motions';
 import NotFound from './screens/NotFound';
 import NotificationSettings from './screens/NotificationSettings';
 import OnChain from './screens/OnChain';
 import PostProposal from './screens/ProposalPost';
+import Proposals from './screens/Proposals';
+import Referenda from './screens/Referenda';
 import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
+import Treasury from './screens/Treasury';
 import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
 import VerifyEmail from './screens/VerifyEmail';
@@ -99,6 +103,18 @@ const App = () => {
 														</Route>
 														<Route path="/onchain" >
 															<OnChain/>
+														</Route>
+														<Route path="/referenda" >
+															<Referenda/>
+														</Route>
+														<Route path="/proposals" >
+															<Proposals/>
+														</Route>
+														<Route path="/motions" >
+															<Motions/>
+														</Route>
+														<Route path="/treasury-proposals" >
+															<Treasury/>
 														</Route>
 														<Route path="/request-reset-password">
 															<RequestResetPassword/>
