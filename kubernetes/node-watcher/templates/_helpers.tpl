@@ -31,7 +31,7 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 {{- define "node-watcher.server.selectorLabels" -}}
-component: {{ .Values.server.name }}
+component: {{ .Values.nodeWatcherServer.name }}
 {{- end -}}
 
 ## nodeWatcher

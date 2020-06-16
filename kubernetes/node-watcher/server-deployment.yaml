@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nomidot-server
+  namespace: nomidot-staging
+  labels:
+    stage: staging
+    name: nomidot-server
+    app: nomidot-staging
+spec:
+  selector:
+    matchLabels:
+      app: nomidot-server
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        stage: staging
+        name: nomidot-server
+        app: nomidot-server
+    spec:
+      containers:
+        - name: nomidot-server
+          image: eu.gcr.io/test-installations-222013/nomidot-server@sha256:daee5c1ab59ed616a3b8d1f79dcb537736ddf496ad4e190451de388782c4a665
+          env:
+            - name: PRISMA_ENDPOINT
+              value: http://nodewatcher.nodewatcher-staging:4466
+          ports:
+            - name: nomidot-4000
+              containerPort: 4000

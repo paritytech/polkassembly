@@ -58,3 +58,15 @@ nodeWatcher:
 
   tolerations: []
   affinity: {}
+
+nodeWatcherServer:
+  name: node-watcher-server
+  replicaCount: 2
+
+  image:
+    repository: prismagraphql/prisma:1.34
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 4000

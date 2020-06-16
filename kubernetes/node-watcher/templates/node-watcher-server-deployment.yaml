@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nodeWatcherServer.name }}
+  labels:
+    {{- include "node-watcher.server.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.nodeWatcherServer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "node-watcher.server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "node-watcher.server.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.nodeWatcherServer.name }}
+          image: "{{ .Values.nodeWatcherServer.image.repository }}"
+          imagePullPolicy: {{ .Values.nodeWatcherServer.image.pullPolicy }}
+          env:
+            - name: PRISMA_ENDPOINT
+              value: "{{ .Values.harvester.config.PRISMA_ENDPOINT }}"
+          ports:
+            - name: node-watcher-server-port
+              containerPort: {{ .Values.nodeWatcherServer.service.port }}
