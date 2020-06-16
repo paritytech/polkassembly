@@ -8,7 +8,6 @@ import getNetwork from 'src/util/getNetwork';
 import { network } from '../global/networkConstants';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
-import getNetwork from "src/util/getNetwork";
 
 const NETWORK = getNetwork();
 

@@ -8,9 +8,9 @@ import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 import getNetwork from 'src/util/getNetwork';
 
-// import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 import logo from '../../assets/polkassembly-logo.png';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLogoutMutation } from '../../generated/graphql';
@@ -92,7 +92,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 				<Menu className={`${className} ${NETWORK}`} inverted widths={2} id='menubar'>
 					<Menu.Item as={NavLink} to="/" className='logo' id='title' onClick={handleClose}><img alt='Polkassembly Logo' src={logo} /></Menu.Item>
 					<Menu.Menu position="right">
-						{/* <NetworkDropdown /> */}
+						<NetworkDropdown />
 						<Menu.Item onClick={handleToggle} id='rightmenu'>
 							{!menuVisible ? <Icon name="sidebar" /> : <MdClose />}
 						</Menu.Item>
@@ -137,7 +137,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						</Dropdown>
 					</Menu.Item>
 					<Menu.Menu position="right">
-						{/* <NetworkDropdown /> */}
+						<NetworkDropdown />
 						{username
 							? <>
 								<Dropdown trigger={userMenu} icon={caretIcon} item={true}>
