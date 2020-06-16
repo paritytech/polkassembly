@@ -21,17 +21,17 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 ## Server
-{{- define "node-watcher.server.labels" -}}
-{{ include "node-watcher.server.matchLabels" . }}
+{{- define "node-watcher.chainDbOpenServer.labels" -}}
+{{ include "node-watcher.chainDbOpenServer.matchLabels" . }}
 {{ include "node-watcher.common.metaLabels" . }}
 {{- end -}}
 
-{{- define "node-watcher.server.matchLabels" -}}
+{{- define "node-watcher.chainDbOpenServer.matchLabels" -}}
 {{ include "node-watcher.common.matchLabels" . }}
 {{- end -}}
 
-{{- define "node-watcher.server.selectorLabels" -}}
-component: {{ .Values.server.name }}
+{{- define "node-watcher.chainDbOpenServer.selectorLabels" -}}
+component: {{ .Values.chainDbOpenServer.name }}
 {{- end -}}
 
 ## nodeWatcher
