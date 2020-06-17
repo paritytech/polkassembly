@@ -1,0 +1,6 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: alter table "public"."comment_reactions" add constraint "comment_reactions_comment_id_user_id_reaction_key"
+      unique ("comment_id", "user_id", "reaction");
+  type: run_sql
