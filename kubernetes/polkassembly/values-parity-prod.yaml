@@ -5,6 +5,10 @@
 chainName: kusama
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
+hasura:
+  config:
+    HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://35.189.196.74:4000"
+
 frontend:
   ingress:
     enabled: true
