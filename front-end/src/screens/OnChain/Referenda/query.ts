@@ -46,7 +46,7 @@ export const QUERY_LATEST_REFERENDA = gql`
             onchain_link {
                 id
                 onchain_referendum_id
-                onchain_referendum(where: {}) {
+                onchain_referendum(where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Canceled"}, {status: "Vetoed"}]}}}) {
                     id
                     referendumStatus(last: 1) {
                         id

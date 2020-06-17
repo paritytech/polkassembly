@@ -7260,7 +7260,7 @@ export type Mutation_RootVerifyEmailArgs = {
 };
 
 /**
- * on-chain proposal created automatically by chain-db-watcher
+ * on chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7289,7 +7289,7 @@ export type Onchain_Links = {
 
 
 /**
- * on-chain proposal created automatically by chain-db-watcher
+ * on chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7306,7 +7306,7 @@ export type Onchain_LinksOnchain_MotionArgs = {
 
 
 /**
- * on-chain proposal created automatically by chain-db-watcher
+ * on chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7323,7 +7323,7 @@ export type Onchain_LinksOnchain_ProposalArgs = {
 
 
 /**
- * on-chain proposal created automatically by chain-db-watcher
+ * on chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -7340,7 +7340,7 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
 
 
 /**
- * on-chain proposal created automatically by chain-db-watcher
+ * on chain proposal created automatically by chain-db-watcher
  * 
  * 
  * columns and relationships of "onchain_links"
@@ -14739,7 +14739,7 @@ export const LatestMotionPostsDocument = gql`
     onchain_link {
       id
       onchain_motion_id
-      onchain_motion(where: {}) {
+      onchain_motion(where: {NOT: {motionStatus_some: {OR: [{status: "Executed"}, {status: "Disapproved"}]}}}) {
         id
         motionStatus(last: 1) {
           id
@@ -14808,7 +14808,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
     onchain_link {
       id
       onchain_proposal_id
-      onchain_proposal(where: {}) {
+      onchain_proposal(where: {NOT: {proposalStatus_some: {OR: [{status: "Tabled"}, {status: "Cleared"}]}}}) {
         id
         proposalStatus(last: 1) {
           id
@@ -14878,7 +14878,7 @@ export const LatestReferendaPostsDocument = gql`
     onchain_link {
       id
       onchain_referendum_id
-      onchain_referendum(where: {}) {
+      onchain_referendum(where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Canceled"}, {status: "Vetoed"}]}}}) {
         id
         referendumStatus(last: 1) {
           id

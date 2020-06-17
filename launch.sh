@@ -38,7 +38,7 @@ sleep 5
 while getopts "fr" args; do
 	case $args in
 		f) 	printf "\n\n-- stoping node watcher docker\n"
-			docker stop node-watcher_postgres_1 node-watcher_prisma_1
+			docker stop node-watcher_postgres_1 node_watcher_postgres_1 node-watcher_prisma_1
 			
 			printf "\n\n-- launching chain-db-watcher"
 			cd $DIR/chain-db-watcher && yarn start &> chain-db-watcher.log &
