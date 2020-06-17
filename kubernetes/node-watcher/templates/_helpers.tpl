@@ -21,6 +21,7 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 ## Server
+<<<<<<< HEAD
 {{- define "node-watcher.server.labels" -}}
 {{ include "node-watcher.server.matchLabels" . }}
 {{ include "node-watcher.common.metaLabels" . }}
@@ -32,6 +33,20 @@ heritage: {{ .Release.Service }}
 
 {{- define "node-watcher.server.selectorLabels" -}}
 component: {{ .Values.server.name }}
+=======
+{{- define "node-watcher.chainDbOpenServer.labels" -}}
+{{ include "node-watcher.chainDbOpenServer.matchLabels" . }}
+{{ include "node-watcher.common.metaLabels" . }}
+{{- end -}}
+
+{{- define "node-watcher.chainDbOpenServer.matchLabels" -}}
+component: {{ .Values.chainDbOpenServer.name }}
+{{ include "node-watcher.common.matchLabels" . }}
+{{- end -}}
+
+{{- define "node-watcher.chainDbOpenServer.selectorLabels" -}}
+component: {{ .Values.chainDbOpenServer.name }}
+>>>>>>> master
 {{- end -}}
 
 ## nodeWatcher
@@ -75,6 +90,10 @@ databases:
   {{ .Values.nodeWatcher.dbName }}:
     connector: postgres
     host: 127.0.0.1
+<<<<<<< HEAD
+=======
+    database: {{ .Values.nodeWatcher.dbName }}
+>>>>>>> master
     port: 5432
     user: {{ .Values.nodeWatcher.dbUser }}
     password: {{ .Values.nodeWatcher.dbPassword }}

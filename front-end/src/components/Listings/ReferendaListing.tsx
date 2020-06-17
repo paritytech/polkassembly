@@ -16,7 +16,17 @@ interface Props {
 }
 
 const Referenda = ({ className, data }: Props) => {
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active referenda.'/>;
+	const noPost = !data.posts || !data.posts.length;
+	const atLeastOneCurrentReferendum = data.posts.some((post) => {
+		if(post.onchain_link?.onchain_referendum.length){
+			// this breaks the loop as soon as
+			// we find a post that has a referendum.
+			return true;
+		}
+		return false;
+	});
+
+	if (!atLeastOneCurrentReferendum || noPost) return <NothingFoundCard className={className} text='There are currently no active referenda.'/>;
 
 	return (
 		<ul className={`${className} referenda__list`}>
@@ -24,7 +34,7 @@ const Referenda = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_referendum_id;
 
-					return !!post?.author?.username && post.onchain_link &&
+					return !!post?.author?.username && !!post.onchain_link?.onchain_referendum.length &&
 						<li key={post.id} className='referenda__item'>
 							{<Link to={`/referendum/${onchainId}`}>
 								<GovernanceCard
@@ -32,9 +42,9 @@ const Referenda = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
-									method={post.onchain_link.onchain_referendum?.[0]?.preimage?.method}
+									method={post.onchain_link.onchain_referendum[0]?.preimage?.method}
 									onchainId={onchainId}
-									status={post.onchain_link.onchain_referendum?.[0]?.referendumStatus?.[0].status}
+									status={post.onchain_link.onchain_referendum[0]?.referendumStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>

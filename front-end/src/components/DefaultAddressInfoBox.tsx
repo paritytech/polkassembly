@@ -12,7 +12,7 @@ const DefaultAddressInfoBox = () => {
 			className='default-address-infobox'
 			dismissable={true}
 			name='defaultAddress'
-			title='Default Address is here!'
+			title='Default address is here!'
 		>
 			<p><Link to='/settings'>Visit your settings</Link> to set a default address and let other users see your on-chain identity.</p>
 			<p>If you don&apos;t have any on-chain identity yet,&nbsp;

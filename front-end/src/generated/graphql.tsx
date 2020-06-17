@@ -6002,7 +6002,7 @@ export enum Comment_Reactions_Constraint {
   CommentReactionsPkey = 'comment_reactions_pkey'
 }
 
-/** input type for incrementing integer columne in table "comment_reactions" */
+/** input type for incrementing integer column in table "comment_reactions" */
 export type Comment_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -6023,14 +6023,18 @@ export type Comment_Reactions_Insert_Input = {
 export type Comment_Reactions_Max_Fields = {
   __typename?: 'comment_reactions_max_fields';
   comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "comment_reactions" */
 export type Comment_Reactions_Max_Order_By = {
   comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -6038,14 +6042,18 @@ export type Comment_Reactions_Max_Order_By = {
 export type Comment_Reactions_Min_Fields = {
   __typename?: 'comment_reactions_min_fields';
   comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "comment_reactions" */
 export type Comment_Reactions_Min_Order_By = {
   comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -6344,7 +6352,7 @@ export enum Comments_Constraint {
   CommentsPkey = 'comments_pkey'
 }
 
-/** input type for incrementing integer columne in table "comments" */
+/** input type for incrementing integer column in table "comments" */
 export type Comments_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
@@ -7449,7 +7457,7 @@ export enum Onchain_Links_Constraint {
   ProposalsPostIdKey = 'proposals_post_id_key'
 }
 
-/** input type for incrementing integer columne in table "onchain_links" */
+/** input type for incrementing integer column in table "onchain_links" */
 export type Onchain_Links_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   onchain_motion_id?: Maybe<Scalars['Int']>;
@@ -7899,7 +7907,7 @@ export enum Poll_Constraint {
   PollPkey = 'poll_pkey'
 }
 
-/** input type for incrementing integer columne in table "poll" */
+/** input type for incrementing integer column in table "poll" */
 export type Poll_Inc_Input = {
   block_end?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -7921,6 +7929,7 @@ export type Poll_Insert_Input = {
 export type Poll_Max_Fields = {
   __typename?: 'poll_max_fields';
   block_end?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -7929,6 +7938,7 @@ export type Poll_Max_Fields = {
 /** order by max() on columns of table "poll" */
 export type Poll_Max_Order_By = {
   block_end?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -7938,6 +7948,7 @@ export type Poll_Max_Order_By = {
 export type Poll_Min_Fields = {
   __typename?: 'poll_min_fields';
   block_end?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -7946,6 +7957,7 @@ export type Poll_Min_Fields = {
 /** order by min() on columns of table "poll" */
 export type Poll_Min_Order_By = {
   block_end?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8232,7 +8244,7 @@ export enum Poll_Votes_Constraint {
   PollVotesPkey = 'poll_votes_pkey'
 }
 
-/** input type for incrementing integer columne in table "poll_votes" */
+/** input type for incrementing integer column in table "poll_votes" */
 export type Poll_Votes_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
@@ -8253,6 +8265,7 @@ export type Poll_Votes_Insert_Input = {
 /** aggregate max on columns */
 export type Poll_Votes_Max_Fields = {
   __typename?: 'poll_votes_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -8261,6 +8274,7 @@ export type Poll_Votes_Max_Fields = {
 
 /** order by max() on columns of table "poll_votes" */
 export type Poll_Votes_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   poll_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8270,6 +8284,7 @@ export type Poll_Votes_Max_Order_By = {
 /** aggregate min on columns */
 export type Poll_Votes_Min_Fields = {
   __typename?: 'poll_votes_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   poll_id?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -8278,6 +8293,7 @@ export type Poll_Votes_Min_Fields = {
 
 /** order by min() on columns of table "poll_votes" */
 export type Poll_Votes_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   poll_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -8469,6 +8485,204 @@ export type Poll_Votes_Variance_Order_By = {
   user_id?: Maybe<Order_By>;
 };
 
+/** columns and relationships of "post_last_update" */
+export type Post_Last_Update = {
+  __typename?: 'post_last_update';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregated selection of "post_last_update" */
+export type Post_Last_Update_Aggregate = {
+  __typename?: 'post_last_update_aggregate';
+  aggregate?: Maybe<Post_Last_Update_Aggregate_Fields>;
+  nodes: Array<Post_Last_Update>;
+};
+
+/** aggregate fields of "post_last_update" */
+export type Post_Last_Update_Aggregate_Fields = {
+  __typename?: 'post_last_update_aggregate_fields';
+  avg?: Maybe<Post_Last_Update_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Post_Last_Update_Max_Fields>;
+  min?: Maybe<Post_Last_Update_Min_Fields>;
+  stddev?: Maybe<Post_Last_Update_Stddev_Fields>;
+  stddev_pop?: Maybe<Post_Last_Update_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Post_Last_Update_Stddev_Samp_Fields>;
+  sum?: Maybe<Post_Last_Update_Sum_Fields>;
+  var_pop?: Maybe<Post_Last_Update_Var_Pop_Fields>;
+  var_samp?: Maybe<Post_Last_Update_Var_Samp_Fields>;
+  variance?: Maybe<Post_Last_Update_Variance_Fields>;
+};
+
+
+/** aggregate fields of "post_last_update" */
+export type Post_Last_Update_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "post_last_update" */
+export type Post_Last_Update_Aggregate_Order_By = {
+  avg?: Maybe<Post_Last_Update_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Post_Last_Update_Max_Order_By>;
+  min?: Maybe<Post_Last_Update_Min_Order_By>;
+  stddev?: Maybe<Post_Last_Update_Stddev_Order_By>;
+  stddev_pop?: Maybe<Post_Last_Update_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Post_Last_Update_Stddev_Samp_Order_By>;
+  sum?: Maybe<Post_Last_Update_Sum_Order_By>;
+  var_pop?: Maybe<Post_Last_Update_Var_Pop_Order_By>;
+  var_samp?: Maybe<Post_Last_Update_Var_Samp_Order_By>;
+  variance?: Maybe<Post_Last_Update_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Post_Last_Update_Avg_Fields = {
+  __typename?: 'post_last_update_avg_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "post_last_update" */
+export type Post_Last_Update_Avg_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "post_last_update". All fields are combined with a logical 'AND'. */
+export type Post_Last_Update_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Last_Update_Bool_Exp>>>;
+  _not?: Maybe<Post_Last_Update_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Post_Last_Update_Bool_Exp>>>;
+  comment_id?: Maybe<Uuid_Comparison_Exp>;
+  last_update?: Maybe<Timestamptz_Comparison_Exp>;
+  post_id?: Maybe<Int_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Post_Last_Update_Max_Fields = {
+  __typename?: 'post_last_update_max_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "post_last_update" */
+export type Post_Last_Update_Max_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Post_Last_Update_Min_Fields = {
+  __typename?: 'post_last_update_min_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  last_update?: Maybe<Scalars['timestamptz']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "post_last_update" */
+export type Post_Last_Update_Min_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** ordering options when selecting data from "post_last_update" */
+export type Post_Last_Update_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  last_update?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** select columns of table "post_last_update" */
+export enum Post_Last_Update_Select_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  LastUpdate = 'last_update',
+  /** column name */
+  PostId = 'post_id'
+}
+
+/** aggregate stddev on columns */
+export type Post_Last_Update_Stddev_Fields = {
+  __typename?: 'post_last_update_stddev_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Post_Last_Update_Stddev_Pop_Fields = {
+  __typename?: 'post_last_update_stddev_pop_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Pop_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Post_Last_Update_Stddev_Samp_Fields = {
+  __typename?: 'post_last_update_stddev_samp_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "post_last_update" */
+export type Post_Last_Update_Stddev_Samp_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Post_Last_Update_Sum_Fields = {
+  __typename?: 'post_last_update_sum_fields';
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "post_last_update" */
+export type Post_Last_Update_Sum_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Post_Last_Update_Var_Pop_Fields = {
+  __typename?: 'post_last_update_var_pop_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "post_last_update" */
+export type Post_Last_Update_Var_Pop_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Post_Last_Update_Var_Samp_Fields = {
+  __typename?: 'post_last_update_var_samp_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "post_last_update" */
+export type Post_Last_Update_Var_Samp_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Post_Last_Update_Variance_Fields = {
+  __typename?: 'post_last_update_variance_fields';
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "post_last_update" */
+export type Post_Last_Update_Variance_Order_By = {
+  post_id?: Maybe<Order_By>;
+};
+
 /** columns and relationships of "post_reactions" */
 export type Post_Reactions = {
   __typename?: 'post_reactions';
@@ -8570,7 +8784,7 @@ export enum Post_Reactions_Constraint {
   PostReactionsPkey = 'post_reactions_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_reactions" */
+/** input type for incrementing integer column in table "post_reactions" */
 export type Post_Reactions_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
@@ -8591,30 +8805,38 @@ export type Post_Reactions_Insert_Input = {
 /** aggregate max on columns */
 export type Post_Reactions_Max_Fields = {
   __typename?: 'post_reactions_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "post_reactions" */
 export type Post_Reactions_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Post_Reactions_Min_Fields = {
   __typename?: 'post_reactions_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamp']>;
   user_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "post_reactions" */
 export type Post_Reactions_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
@@ -8914,7 +9136,7 @@ export enum Post_Topics_Constraint {
   CategoriesPkey = 'categories_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_topics" */
+/** input type for incrementing integer column in table "post_topics" */
 export type Post_Topics_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -9196,7 +9418,7 @@ export enum Post_Types_Constraint {
   PostTypesPkey = 'post_types_pkey'
 }
 
-/** input type for incrementing integer columne in table "post_types" */
+/** input type for incrementing integer column in table "post_types" */
 export type Post_Types_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -9381,6 +9603,8 @@ export type Posts = {
   created_at: Scalars['timestamptz'];
   id: Scalars['Int'];
   /** An object relationship */
+  last_update?: Maybe<Post_Last_Update>;
+  /** An object relationship */
   onchain_link?: Maybe<Onchain_Links>;
   /** An array relationship */
   polls: Array<Poll>;
@@ -9539,6 +9763,7 @@ export type Posts_Bool_Exp = {
   content?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  last_update?: Maybe<Post_Last_Update_Bool_Exp>;
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>;
   polls?: Maybe<Poll_Bool_Exp>;
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>;
@@ -9556,7 +9781,7 @@ export enum Posts_Constraint {
   MessagesPkey = 'messages_pkey'
 }
 
-/** input type for incrementing integer columne in table "posts" */
+/** input type for incrementing integer column in table "posts" */
 export type Posts_Inc_Input = {
   author_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -9661,6 +9886,7 @@ export type Posts_Order_By = {
   content?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  last_update?: Maybe<Post_Last_Update_Order_By>;
   onchain_link?: Maybe<Onchain_Links_Order_By>;
   polls_aggregate?: Maybe<Poll_Aggregate_Order_By>;
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>;
@@ -9915,6 +10141,10 @@ export type Query_Root = {
   poll_votes_aggregate: Poll_Votes_Aggregate;
   /** fetch data from the table: "poll_votes" using primary key columns */
   poll_votes_by_pk?: Maybe<Poll_Votes>;
+  /** fetch data from the table: "post_last_update" */
+  post_last_update: Array<Post_Last_Update>;
+  /** fetch aggregated fields from the table: "post_last_update" */
+  post_last_update_aggregate: Post_Last_Update_Aggregate;
   /** fetch data from the table: "post_reactions" */
   post_reactions: Array<Post_Reactions>;
   /** fetch aggregated fields from the table: "post_reactions" */
@@ -10453,6 +10683,26 @@ export type Query_RootPoll_Votes_AggregateArgs = {
 /** query root */
 export type Query_RootPoll_Votes_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootPost_Last_UpdateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootPost_Last_Update_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
 };
 
 
@@ -11024,6 +11274,8 @@ export type Query_RootValidatorsConnectionArgs = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  blockIndex?: Maybe<BlockIndexSubscriptionPayload>;
+  blockNumber?: Maybe<BlockNumberSubscriptionPayload>;
   /** fetch data from the table: "comment_reactions" */
   comment_reactions: Array<Comment_Reactions>;
   /** fetch aggregated fields from the table: "comment_reactions" */
@@ -11036,6 +11288,15 @@ export type Subscription_Root = {
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
+  council?: Maybe<CouncilSubscriptionPayload>;
+  councilMember?: Maybe<CouncilMemberSubscriptionPayload>;
+  era?: Maybe<EraSubscriptionPayload>;
+  heartBeat?: Maybe<HeartBeatSubscriptionPayload>;
+  motion?: Maybe<MotionSubscriptionPayload>;
+  motionProposalArgument?: Maybe<MotionProposalArgumentSubscriptionPayload>;
+  motionStatus?: Maybe<MotionStatusSubscriptionPayload>;
+  nomination?: Maybe<NominationSubscriptionPayload>;
+  offlineValidator?: Maybe<OfflineValidatorSubscriptionPayload>;
   /** fetch data from the table: "onchain_links" */
   onchain_links: Array<Onchain_Links>;
   /** fetch aggregated fields from the table: "onchain_links" */
@@ -11054,6 +11315,10 @@ export type Subscription_Root = {
   poll_votes_aggregate: Poll_Votes_Aggregate;
   /** fetch data from the table: "poll_votes" using primary key columns */
   poll_votes_by_pk?: Maybe<Poll_Votes>;
+  /** fetch data from the table: "post_last_update" */
+  post_last_update: Array<Post_Last_Update>;
+  /** fetch aggregated fields from the table: "post_last_update" */
+  post_last_update_aggregate: Post_Last_Update_Aggregate;
   /** fetch data from the table: "post_reactions" */
   post_reactions: Array<Post_Reactions>;
   /** fetch aggregated fields from the table: "post_reactions" */
@@ -11078,6 +11343,34 @@ export type Subscription_Root = {
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
+  preimage?: Maybe<PreimageSubscriptionPayload>;
+  preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>;
+  preimageStatus?: Maybe<PreimageStatusSubscriptionPayload>;
+  proposal?: Maybe<ProposalSubscriptionPayload>;
+  proposalStatus?: Maybe<ProposalStatusSubscriptionPayload>;
+  referendum?: Maybe<ReferendumSubscriptionPayload>;
+  referendumStatus?: Maybe<ReferendumStatusSubscriptionPayload>;
+  reward?: Maybe<RewardSubscriptionPayload>;
+  session?: Maybe<SessionSubscriptionPayload>;
+  slashing?: Maybe<SlashingSubscriptionPayload>;
+  stake?: Maybe<StakeSubscriptionPayload>;
+  subscribed?: Maybe<Scalars['Boolean']>;
+  totalIssuance?: Maybe<TotalIssuanceSubscriptionPayload>;
+  treasurySpendProposal?: Maybe<TreasurySpendProposalSubscriptionPayload>;
+  treasuryStatus?: Maybe<TreasuryStatusSubscriptionPayload>;
+  validator?: Maybe<ValidatorSubscriptionPayload>;
+};
+
+
+/** subscription root */
+export type Subscription_RootBlockIndexArgs = {
+  where?: Maybe<BlockIndexSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootBlockNumberArgs = {
+  where?: Maybe<BlockNumberSubscriptionWhereInput>;
 };
 
 
@@ -11130,6 +11423,60 @@ export type Subscription_RootComments_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootComments_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootCouncilArgs = {
+  where?: Maybe<CouncilSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootCouncilMemberArgs = {
+  where?: Maybe<CouncilMemberSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootEraArgs = {
+  where?: Maybe<EraSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootHeartBeatArgs = {
+  where?: Maybe<HeartBeatSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionArgs = {
+  where?: Maybe<MotionSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionProposalArgumentArgs = {
+  where?: Maybe<MotionProposalArgumentSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMotionStatusArgs = {
+  where?: Maybe<MotionStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootNominationArgs = {
+  where?: Maybe<NominationSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOfflineValidatorArgs = {
+  where?: Maybe<OfflineValidatorSubscriptionWhereInput>;
 };
 
 
@@ -11208,6 +11555,26 @@ export type Subscription_RootPoll_Votes_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootPoll_Votes_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootPost_Last_UpdateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPost_Last_Update_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Last_Update_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Last_Update_Order_By>>;
+  where?: Maybe<Post_Last_Update_Bool_Exp>;
 };
 
 
@@ -11312,6 +11679,96 @@ export type Subscription_RootPosts_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootPosts_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageArgs = {
+  where?: Maybe<PreimageSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageArgumentArgs = {
+  where?: Maybe<PreimageArgumentSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPreimageStatusArgs = {
+  where?: Maybe<PreimageStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootProposalArgs = {
+  where?: Maybe<ProposalSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootProposalStatusArgs = {
+  where?: Maybe<ProposalStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootReferendumArgs = {
+  where?: Maybe<ReferendumSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootReferendumStatusArgs = {
+  where?: Maybe<ReferendumStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootRewardArgs = {
+  where?: Maybe<RewardSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootSessionArgs = {
+  where?: Maybe<SessionSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootSlashingArgs = {
+  where?: Maybe<SlashingSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootStakeArgs = {
+  where?: Maybe<StakeSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTotalIssuanceArgs = {
+  where?: Maybe<TotalIssuanceSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTreasurySpendProposalArgs = {
+  where?: Maybe<TreasurySpendProposalSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootTreasuryStatusArgs = {
+  where?: Maybe<TreasuryStatusSubscriptionWhereInput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootValidatorArgs = {
+  where?: Maybe<ValidatorSubscriptionWhereInput>;
 };
 
 
@@ -11964,6 +12421,50 @@ export type MotionPostAndCommentsQuery = (
   )> }
 );
 
+export type AllMotionPostsQueryVariables = {
+  postType: Scalars['Int'];
+  limit?: Scalars['Int'];
+};
+
+
+export type AllMotionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
+      & { onchain_motion: Array<Maybe<(
+        { __typename?: 'Motion' }
+        & Pick<Motion, 'id'>
+        & { motionStatus?: Maybe<Array<(
+          { __typename?: 'MotionStatus' }
+          & Pick<MotionStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type ChangeNotificationPreferenceMutationVariables = {
   postParticipated?: Maybe<Scalars['Boolean']>;
   postCreated?: Maybe<Scalars['Boolean']>;
@@ -12209,6 +12710,95 @@ export type ProposalPostAndCommentsQuery = (
   )> }
 );
 
+export type AllDemocracyProposalPostsQueryVariables = {
+  postType: Scalars['Int'];
+  postTopic: Scalars['Int'];
+  limit?: Scalars['Int'];
+};
+
+
+export type AllDemocracyProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'proposer_address'>
+      & { onchain_proposal: Array<Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus?: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type AllReferendaPostsQueryVariables = {
+  postType: Scalars['Int'];
+  limit?: Scalars['Int'];
+};
+
+
+export type AllReferendaPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
+      & { onchain_referendum: Array<Maybe<(
+        { __typename?: 'Referendum' }
+        & Pick<Referendum, 'id'>
+        & { referendumStatus?: Maybe<Array<(
+          { __typename?: 'ReferendumStatus' }
+          & Pick<ReferendumStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type OnchainLinkReferendumFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_referendum_id'>
@@ -12429,6 +13019,48 @@ export type SetCredentialsConfirmMutation = (
   & { setCredentialsConfirm?: Maybe<(
     { __typename?: 'ChangeResponse' }
     & Pick<ChangeResponse, 'message' | 'token'>
+  )> }
+);
+
+export type AllDemocracyTreasuryProposalPostsQueryVariables = {
+  postType: Scalars['Int'];
+  postTopic: Scalars['Int'];
+  limit?: Scalars['Int'];
+};
+
+
+export type AllDemocracyTreasuryProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
+      & { onchain_treasury_spend_proposal: Array<Maybe<(
+        { __typename?: 'TreasurySpendProposal' }
+        & Pick<TreasurySpendProposal, 'id'>
+        & { treasuryStatus?: Maybe<Array<(
+          { __typename?: 'TreasuryStatus' }
+          & Pick<TreasuryStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
   )> }
 );
 
@@ -13897,7 +14529,7 @@ export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof use
 export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const LatestDiscussionPostsDocument = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
-  posts(order_by: {created_at: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+  posts(order_by: {last_update: {last_update: desc}}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
     id
     title
     author {
@@ -13976,6 +14608,75 @@ export function useMotionPostAndCommentsLazyQuery(baseOptions?: ApolloReactHooks
 export type MotionPostAndCommentsQueryHookResult = ReturnType<typeof useMotionPostAndCommentsQuery>;
 export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMotionPostAndCommentsLazyQuery>;
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
+export const AllMotionPostsDocument = gql`
+    query AllMotionPosts($postType: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_motion_id
+      onchain_motion(where: {}) {
+        id
+        motionStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useAllMotionPostsQuery__
+ *
+ * To run a query within a React component, call `useAllMotionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllMotionPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useAllMotionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AllMotionPostsQuery, AllMotionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<AllMotionPostsQuery, AllMotionPostsQueryVariables>(AllMotionPostsDocument, baseOptions);
+      }
+export function useAllMotionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AllMotionPostsQuery, AllMotionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AllMotionPostsQuery, AllMotionPostsQueryVariables>(AllMotionPostsDocument, baseOptions);
+        }
+export type AllMotionPostsQueryHookResult = ReturnType<typeof useAllMotionPostsQuery>;
+export type AllMotionPostsLazyQueryHookResult = ReturnType<typeof useAllMotionPostsLazyQuery>;
+export type AllMotionPostsQueryResult = ApolloReactCommon.QueryResult<AllMotionPostsQuery, AllMotionPostsQueryVariables>;
 export const ChangeNotificationPreferenceDocument = gql`
     mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
   changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
@@ -14038,7 +14739,7 @@ export const LatestMotionPostsDocument = gql`
     onchain_link {
       id
       onchain_motion_id
-      onchain_motion(where: {}) {
+      onchain_motion(where: {NOT: {motionStatus_some: {OR: [{status: "Executed"}, {status: "Disapproved"}]}}}) {
         id
         motionStatus(last: 1) {
           id
@@ -14107,7 +14808,7 @@ export const LatestDemocracyProposalPostsDocument = gql`
     onchain_link {
       id
       onchain_proposal_id
-      onchain_proposal(where: {}) {
+      onchain_proposal(where: {NOT: {proposalStatus_some: {OR: [{status: "Tabled"}, {status: "Cleared"}]}}}) {
         id
         proposalStatus(last: 1) {
           id
@@ -14177,7 +14878,7 @@ export const LatestReferendaPostsDocument = gql`
     onchain_link {
       id
       onchain_referendum_id
-      onchain_referendum(where: {}) {
+      onchain_referendum(where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Canceled"}, {status: "Vetoed"}]}}}) {
         id
         referendumStatus(last: 1) {
           id
@@ -14319,6 +15020,145 @@ export function useProposalPostAndCommentsLazyQuery(baseOptions?: ApolloReactHoo
 export type ProposalPostAndCommentsQueryHookResult = ReturnType<typeof useProposalPostAndCommentsQuery>;
 export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof useProposalPostAndCommentsLazyQuery>;
 export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
+export const AllDemocracyProposalPostsDocument = gql`
+    query AllDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useAllDemocracyProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useAllDemocracyProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllDemocracyProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useAllDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>(AllDemocracyProposalPostsDocument, baseOptions);
+      }
+export function useAllDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>(AllDemocracyProposalPostsDocument, baseOptions);
+        }
+export type AllDemocracyProposalPostsQueryHookResult = ReturnType<typeof useAllDemocracyProposalPostsQuery>;
+export type AllDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useAllDemocracyProposalPostsLazyQuery>;
+export type AllDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>;
+export const AllReferendaPostsDocument = gql`
+    query AllReferendaPosts($postType: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        referendumStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useAllReferendaPostsQuery__
+ *
+ * To run a query within a React component, call `useAllReferendaPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllReferendaPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useAllReferendaPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AllReferendaPostsQuery, AllReferendaPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<AllReferendaPostsQuery, AllReferendaPostsQueryVariables>(AllReferendaPostsDocument, baseOptions);
+      }
+export function useAllReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AllReferendaPostsQuery, AllReferendaPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AllReferendaPostsQuery, AllReferendaPostsQueryVariables>(AllReferendaPostsDocument, baseOptions);
+        }
+export type AllReferendaPostsQueryHookResult = ReturnType<typeof useAllReferendaPostsQuery>;
+export type AllReferendaPostsLazyQueryHookResult = ReturnType<typeof useAllReferendaPostsLazyQuery>;
+export type AllReferendaPostsQueryResult = ApolloReactCommon.QueryResult<AllReferendaPostsQuery, AllReferendaPostsQueryVariables>;
 export const ReferendumPostAndCommentsDocument = gql`
     query ReferendumPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_referendum_id: {_eq: $id}}}) {
@@ -14755,6 +15595,72 @@ export function useSetCredentialsConfirmMutation(baseOptions?: ApolloReactHooks.
 export type SetCredentialsConfirmMutationHookResult = ReturnType<typeof useSetCredentialsConfirmMutation>;
 export type SetCredentialsConfirmMutationResult = ApolloReactCommon.MutationResult<SetCredentialsConfirmMutation>;
 export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
+export const AllDemocracyTreasuryProposalPostsDocument = gql`
+    query AllDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_treasury_proposal_id
+      onchain_treasury_spend_proposal(where: {}) {
+        id
+        treasuryStatus(last: 1) {
+          id
+          status
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useAllDemocracyTreasuryProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useAllDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllDemocracyTreasuryProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useAllDemocracyTreasuryProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AllDemocracyTreasuryProposalPostsQuery, AllDemocracyTreasuryProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<AllDemocracyTreasuryProposalPostsQuery, AllDemocracyTreasuryProposalPostsQueryVariables>(AllDemocracyTreasuryProposalPostsDocument, baseOptions);
+      }
+export function useAllDemocracyTreasuryProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AllDemocracyTreasuryProposalPostsQuery, AllDemocracyTreasuryProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AllDemocracyTreasuryProposalPostsQuery, AllDemocracyTreasuryProposalPostsQueryVariables>(AllDemocracyTreasuryProposalPostsDocument, baseOptions);
+        }
+export type AllDemocracyTreasuryProposalPostsQueryHookResult = ReturnType<typeof useAllDemocracyTreasuryProposalPostsQuery>;
+export type AllDemocracyTreasuryProposalPostsLazyQueryHookResult = ReturnType<typeof useAllDemocracyTreasuryProposalPostsLazyQuery>;
+export type AllDemocracyTreasuryProposalPostsQueryResult = ApolloReactCommon.QueryResult<AllDemocracyTreasuryProposalPostsQuery, AllDemocracyTreasuryProposalPostsQueryVariables>;
 export const TreasuryProposalPostAndCommentsDocument = gql`
     query TreasuryProposalPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_treasury_proposal_id: {_eq: $id}}}) {

@@ -13,12 +13,13 @@ import Loader from '../../../ui-components/Loader';
 
 interface Props {
 	className?: string
+	limit: number
 }
 
-const TreasuryProposalsContainer = ({ className }:Props) => {
+const TreasuryProposalsContainer = ({ className, limit }:Props) => {
 
 	const { data, error, refetch } = useLatestDemocracyTreasuryProposalPostsQuery({ variables: {
-		limit: 5,
+		limit,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN
 	} });

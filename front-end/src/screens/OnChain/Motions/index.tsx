@@ -12,12 +12,13 @@ import Loader from '../../../ui-components/Loader';
 
 interface Props {
 	className?: string
+	limit: number
 }
 
-const MotionsContainer = ({ className }:Props) => {
+const MotionsContainer = ({ className, limit }:Props) => {
 
 	const { data, error, refetch } = useLatestMotionPostsQuery({ variables: {
-		limit: 5,
+		limit,
 		postType: post_type.ON_CHAIN
 	} });
 

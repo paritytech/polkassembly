@@ -4,7 +4,8 @@
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import { Link } from 'react-router-dom';
+import { Grid, Icon } from 'semantic-ui-react';
 
 import InfoBox from '../../ui-components/InfoBox';
 import MotionContainer from './Motions';
@@ -14,19 +15,25 @@ import TreasuryContainer from './Treasury';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
+	const limit = 10;
+
 	return (
 		<div className={className}>
-			<h1>Latest On Chain Activity</h1>
+			<h1>Latest on-chain activity</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Referenda</h3>
-					<ReferendaContainer className='referendaContainer'/>
+					<ReferendaContainer className='referendaContainer' limit={limit} />
+					<Link className='full-listing-link' to='referenda'><Icon name='arrow right'/>See all referenda</Link>
 					<h3>Proposals</h3>
-					<ProposalContainer className='proposalContainer'/>
+					<ProposalContainer className='proposalContainer' limit={limit} />
+					<Link className='full-listing-link' to='proposals'><Icon name='arrow right'/>See all proposals</Link>
 					<h3>Motions</h3>
-					<MotionContainer className='motionContainer'/>
+					<MotionContainer className='motionContainer' limit={limit} />
+					<Link className='full-listing-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
 					<h3>Treasury</h3>
-					<TreasuryContainer className='treasuryContainer'/>
+					<TreasuryContainer className='treasuryContainer' limit={limit} />
+					<Link className='full-listing-link' to='treasury-proposals'><Icon name='arrow right'/>See all treasury proposals</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -35,7 +42,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 						On-chain posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
-						title='About On-chain Posts'
+						title='About on-chain posts'
 					/>
 				</Grid.Column>
 			</Grid>
@@ -46,8 +53,8 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 
-	.referendaContainer, .proposalContainer, .motionContainer {
-		margin-bottom: 3rem;
+	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer {
+		margin-bottom: 2rem;
 	}
 
 	h1 {
@@ -68,5 +75,12 @@ export default styled(OnchainPostsContainer)`
 		.ui[class*="tablet reversed"].grid {
 			flex-direction: column-reverse;
 		}
+	}
+
+	.full-listing-link {
+		display: flex;
+		color: black_text;
+		font-weight: 500;
+		margin-bottom: 4rem;
 	}
 `;

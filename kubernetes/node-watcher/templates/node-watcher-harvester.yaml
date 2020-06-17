@@ -5,7 +5,11 @@ metadata:
   labels:
     {{- include "node-watcher.harvester.labels" . | nindent 4 }}
 spec:
+<<<<<<< HEAD
   replicas: {{ .Values.nodeWatcher.replicaCount }}
+=======
+  manualSelector: true
+>>>>>>> master
   selector:
     matchLabels:
       {{- include "node-watcher.harvester.selectorLabels" . | nindent 6 }}
