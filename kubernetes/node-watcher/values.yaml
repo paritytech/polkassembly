@@ -36,11 +36,7 @@ nodeWatcher:
 
   image:
     repository: prismagraphql/prisma:1.34
-<<<<<<< HEAD
-    pullPolicy: IfNotPresent
-=======
     pullPolicy: Always
->>>>>>> master
 
   nameOverride: ""
   fullnameOverride: ""
@@ -62,8 +58,6 @@ nodeWatcher:
 
   tolerations: []
   affinity: {}
-<<<<<<< HEAD
-=======
 
 chainDbOpenServer:
   name: chain-db-open-server
@@ -76,4 +70,3 @@ chainDbOpenServer:
   service:
     type: ClusterIP
     port: 4000
->>>>>>> master
