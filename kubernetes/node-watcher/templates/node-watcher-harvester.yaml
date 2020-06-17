@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "node-watcher.harvester.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.nodeWatcher.replicaCount }}
+  manualSelector: true
   selector:
     matchLabels:
       {{- include "node-watcher.harvester.selectorLabels" . | nindent 6 }}

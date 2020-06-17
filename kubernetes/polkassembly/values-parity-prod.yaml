@@ -13,6 +13,8 @@ frontend:
     hosts:
       - host: kusama.polkassembly.io
         path: /
+      - host: polkassembly.io
+        path: /
     tls: []
 
 authServer:

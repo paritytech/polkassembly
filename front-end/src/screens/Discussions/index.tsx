@@ -25,7 +25,7 @@ const Discussions = ({ className } : {className?: string}) => {
 
 	return (
 		<div className={className}>
-			<h1>Latest Discussions</h1>
+			<h1>Latest discussions</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<DiscussionsContainer/>
@@ -33,13 +33,13 @@ const Discussions = ({ className } : {className?: string}) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id &&
 						<div className='mainButtonContainer'>
-							<Button primary className={'newPostButton'} onClick={handleCreatePost}>New Post</Button>
+							<Button primary className={'newPostButton'} onClick={handleCreatePost}>New post</Button>
 						</div>}
 					<InfoBox
 						dismissable={true}
 						content={`This is the place to discuss all things ${NETWORK}. Anyone can start a new discussion.`}
 						name='discussionsInfo'
-						title='About Discussions'
+						title='About discussions'
 					/>
 					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
 						<DefaultAddressInfoBox />}

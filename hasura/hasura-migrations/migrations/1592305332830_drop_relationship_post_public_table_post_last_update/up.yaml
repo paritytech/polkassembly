@@ -1,0 +1,6 @@
+- args:
+    relationship: post
+    table:
+      name: post_last_update
+      schema: public
+  type: drop_relationship

@@ -110,9 +110,9 @@
   integrity sha512-4kPlzbljFcsttWEq6aBW0OZe6BDajAmyvr2xknBG92tejQnvdGtT9+kXSZ580DqpxY9qG2xeQVF9Dq0ymUTo5Q==
 
 "@types/mongodb@^3.1.14":
-  version "3.5.20"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.20.tgz#4065afc55b6275d0dd8e831fa421018475d54d56"
-  integrity sha512-BN0wJn670DkivxiP7ZW0InX4qBtX01qITaucD+3A+sTgPQo4XUYay0Y+sGM4MJ9OyKDRlb3RQuVAlyeWzl/NoA==
+  version "3.5.22"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.22.tgz#860d97e92933f790b65842db06340672a06cecb1"
+  integrity sha512-5rfIExCN1hfyey8OEgpeRSwQyjLcMegtmO54Ag3KQLbRT41ydob3BYhb6uEIsTm7NbZqYPb2k+21Nw9sjON18w==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
@@ -125,14 +125,14 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "14.0.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.12.tgz#9c1d8ffb8084e8936603a6122a7649e40e68e04b"
-  integrity sha512-/sjzehvjkkpvLpYtN6/2dv5kg41otMGuHQUt9T2aiAuIfleCQRQHXXzF1eAw/qkZTj5Kcf4JSTf7EIizHocy6Q==
+  version "14.0.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
+  integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
 
 "@types/node@^10.12.0":
-  version "10.17.25"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.25.tgz#64f64cd3e8641e8163c81045e545d2825d300e37"
-  integrity sha512-EWPw3jDB0jip4HafDkoezNOwG00TtVZ1TOe74MaxIBWgpyM60UF/LXzFVx9+8AdSYNNOPgx7TuJoRmgnhHZ/7g==
+  version "10.17.26"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.26.tgz#a8a119960bff16b823be4c617da028570779bcfd"
+  integrity sha512-myMwkO2Cr82kirHY8uknNRHEVtn0wV3DTQfkrjx17jmkstDRZ24gNUdl8AHXVyVclTYI/bNjgTPTAWvWLqXqkw==
 
 "@types/prettier@^1.13.2":
   version "1.19.1"
@@ -2486,10 +2486,10 @@ marked-terminal@^3.1.1:
     node-emoji "^1.4.1"
     supports-hyperlinks "^1.0.1"
 
-marked@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.5.2.tgz#3efdb27b1fd0ecec4f5aba362bddcd18120e5ba9"
-  integrity sha512-fdZvBa7/vSQIZCi4uuwo2N3q+7jJURpMVCcbaX0S1Mg65WZ5ilXvC67MviJAsdjqqgD+CEq4RKo5AYGgINkVAA==
+marked@^0.5.1, marked@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
+  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
 
 md5@^2.2.1:
   version "2.2.1"
@@ -2594,9 +2594,9 @@ mkdirp@^0.5.1:
     minimist "^1.2.5"
 
 mongodb@^3.1.10:
-  version "3.5.8"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.5.8.tgz#34550856449b745d145873734bf922c12d6b9caa"
-  integrity sha512-jz7mR58z66JKL8Px4ZY+FXbgB7d0a0hEGCT7kw8iye46/gsqPrOEpZOswwJ2BQlfzsrCLKdsF9UcaUfGVN2HrQ==
+  version "3.5.9"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.5.9.tgz#799b72be8110b7e71a882bb7ce0d84d05429f772"
+  integrity sha512-vXHBY1CsGYcEPoVWhwgxIBeWqP3dSu9RuRDsoLRPTITrcrgm1f0Ubu1xqF9ozMwv53agmEiZm0YGo+7WL3Nbug==
   dependencies:
     bl "^2.2.0"
     bson "^1.1.4"

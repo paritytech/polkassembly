@@ -1,4 +1,4 @@
-# KUSAMA-PROD values for node-watcher.
+# DASHBOARDS-CLUSTER-1 values for node-watcher.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -13,3 +13,7 @@ nodeWatcher:
   dbName: "chain-db"
   dbUser: "chain-db"
   dbPassword: from-gitlab-vars
+
+harvester:
+  config:
+    ARCHIVE_NODE_ENDPOINT: ws://polkassembly-rpc-internal-0.c.parity-prod.internal:9944
