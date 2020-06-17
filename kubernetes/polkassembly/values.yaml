@@ -49,6 +49,7 @@ hasura:
   replicaCount: 1
 
   config:
+    HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://chain-db-open-server-service:4000"
     HASURA_GRAPHQL_ADMIN_SECRET: "from-gitlab-vars"
     HASURA_GRAPHQL_DATABASE_URL: "from-gitlab-vars"
     HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
@@ -163,10 +164,10 @@ healthMonitor:
     HASURA_SERVER: "http://hasura-service:8080"
     # polkassembly hasura chain-db service
     CHAIN_DB_WATCHER_SERVER: "http://chain-db-watcher-service:8019"
-    # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
-    CHAIN_DB_SERVER: "https://test.nodewatcher-server.polkassembly.io"
-    # nodewatcher server ( aka Prisma server )
-    CHAIN_DB: "http://nodedwatcher.nodewatcher-staging:4466"
+    # chain db open server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
+    CHAIN_DB_SERVER: "http://chain-db-open-server-service:4000"
+    # node-watcher server ( aka Prisma server )
+    CHAIN_DB: "http://node-watcher-service:4466"
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
