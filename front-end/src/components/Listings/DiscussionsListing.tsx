@@ -25,7 +25,6 @@ const Discussions = ({ className, data }: Props) => {
 			{!!data.posts &&
 				data.posts.map(
 					(post) => {
-
 						return !!post?.author?.username &&
 							<li key={post.id} className='discussions__item'>
 								{<Link to={`/post/${post.id}`}>

@@ -1,0 +1,22 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: |-
+      CREATE VIEW post_last_update AS
+      SELECT c1.id AS comment_id,
+          p.id AS post_id,
+          max(
+              CASE
+                  WHEN (c1.* IS NULL) THEN p.created_at
+                  ELSE c1.created_at
+              END) AS last_update
+         FROM ((posts p
+           LEFT JOIN comments c1 ON ((p.id = c1.post_id)))
+           LEFT JOIN comments c2 ON (((p.id = c2.post_id) AND ((c1.created_at < c2.created_at) OR ((c1.created_at = c2.created_at) AND (c1.id < c2.id))))))
+        WHERE (c2.id IS NULL)
+        GROUP BY p.id, c1.id;
+  type: run_sql
+- args:
+    name: post_last_update
+    schema: public
+  type: add_existing_table_or_view
