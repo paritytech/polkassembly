@@ -65,7 +65,7 @@ hasura:
     HASURA_GRAPHQL_JWT_SECRET: from-gitlab-vars
 
   image:
-    repository: hasura/graphql-engine:pull5013-88db45f4
+    repository: hasura/graphql-engine:v1.3.0-beta.2.cli-migrations
     pullPolicy: IfNotPresent
 
   nameOverride: ""
