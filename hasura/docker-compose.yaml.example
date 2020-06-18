@@ -36,7 +36,7 @@ services:
       HASURA_ONCHAIN_LINK_CREATE_HOOK: "http://localhost:8010/auth/event/onchain_link/create"
       HASURA_EVENT_SECRET: "<shared secret key with auth server>"
       HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
-      HASURA_CHAIN_DB_REMOTE_SCHEMA: http://nodewatcher.nodewatcher:4466
+      HASURA_CHAIN_DB_REMOTE_SCHEMA: http://chain-db-open-server-service:4000
       # Remote schemas on Mac OS workaround:
       # HASURA_AUTH_SERVER_REMOTE_SCHEMA: "http://host.docker.internal:8010/auth/graphql"
-      # HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://host.docker.internal:4466"
+      # HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://host.docker.internal:4000"
