@@ -170,7 +170,7 @@ dockerize:polkadot-production-front-end:
     REACT_APP_HASURA_GRAPHQL_URL:  "https://polkadot.polkassembly.io/v1/graphql"
     REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5/B3Rn4AwEgTwS143hz\n8yTNzsiS15fD84W5pH4AZMKLTrad9Kxqqc5ema/lA++GFbiuQmvW6lGdATRDuyQ8\nPoj8uzV8lWyrLu7X9WejRfymXlzYYK/CtLtk7gbvJPjH6Mqed4I3JvKTLg6PbhAN\nf+jawmvRNBhRLeWPQYWjD6pHEjQq7OSC2vZ4QSIcDEeH1WBxGzsrP6inWryqu61T\nZyGQsiKjrRnLjBi8m/fTXkKuTlvsYM0tUsyb1W4djFB8x8czTJjHNaJrV4kt6Lrw\n8IqSnvlPvvEszQ2P87eikBpHs1avwl8S+RrXSpaPZy3ppQF0fWq2JW+QJHyVxM8K\nbwIDAQAB\n-----END PUBLIC KEY-----"
     REACT_APP_NETWORK:             "polkadot"
-    REACT_APP_WS_PROVIDER:         "wss://polkadot-rpc.polkadot.io"
+    REACT_APP_WS_PROVIDER:         "wss://rpc.polkadot.io"
   before_script:
     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
