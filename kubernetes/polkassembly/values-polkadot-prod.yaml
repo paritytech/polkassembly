@@ -13,8 +13,6 @@ frontend:
     hosts:
       - host: polkadot.polkassembly.io
         path: /
-      - host: polkassembly.io
-        path: /
     tls: []
 
 authServer:
