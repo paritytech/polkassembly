@@ -12,3 +12,7 @@ nodeWatcher:
   dbName: "chain-db"
   dbUser: "chain-db"
   dbPassword: from-gitlab-vars
+
+harvester:
+  config:
+    ARCHIVE_NODE_ENDPOINT: wss://rpc.polkadot.io
