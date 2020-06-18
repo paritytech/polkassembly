@@ -2,6 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { UserInputError } from 'apollo-server';
+
 import PostSubscription from '../../model/PostSubscription';
 import AuthService from '../../services/auth';
 import { Context, MessageType, PostSubscribeArgs } from '../../types';
@@ -12,6 +14,10 @@ export default async (parent: void, { post_id }: PostSubscribeArgs, ctx: Context
 	const token = getTokenFromReq(ctx.req);
 	const authServiceInstance = new AuthService();
 	const user = await authServiceInstance.GetUser(token);
+
+	if (!user.email_verified) {
+		throw new UserInputError(messages.SUBSCRIPTION_EMAIL_UNVERIFIED);
+	}
 
 	const dbSubscription = await PostSubscription
 		.query()

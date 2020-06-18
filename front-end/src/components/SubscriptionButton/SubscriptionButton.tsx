@@ -9,6 +9,7 @@ import { NotificationContext } from '../../context/NotificationContext';
 import { usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
+import cleanError from '../../util/cleanError';
 
 interface DiscussionProps {
 	postId: number
@@ -50,7 +51,13 @@ const SubscriptionButton = function ({
 						setSubscribed(false);
 					}
 				})
-				.catch((e) => console.error('Error unsubscribing to post',e));
+				.catch((e) => {
+					queueNotification({
+						header: 'Failed!',
+						message: cleanError(e.message),
+						status: NotificationStatus.ERROR
+					});
+				});
 		} else {
 			postSubscribeMutation({
 				variables: {
@@ -67,7 +74,13 @@ const SubscriptionButton = function ({
 						setSubscribed(true);
 					}
 				})
-				.catch((e) => console.error('Error subscribing to post',e));
+				.catch((e) => {
+					queueNotification({
+						header: 'Failed!',
+						message: cleanError(e.message),
+						status: NotificationStatus.ERROR
+					});
+				});
 		}
 
 	};
