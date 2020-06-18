@@ -37,7 +37,7 @@ healthMonitor:
     # polkassembly hasura chain-db service
     CHAIN_DB_WATCHER_SERVER: "http://chain-db-watcher-service:8019"
     # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
-    CHAIN_DB_SERVER: "http://nodewatcher-server:4000"
+    CHAIN_DB_SERVER: "http://chain-db-open-server-service:4000"
     # nodewatcher server ( aka Prisma server )
     CHAIN_DB: "http://node-watcher-service:4466"
     # polkassembly frontend-service
