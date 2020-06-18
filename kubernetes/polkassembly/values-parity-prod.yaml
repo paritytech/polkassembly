@@ -40,7 +40,7 @@ healthMonitor:
     # nomidot backend server ( CHAIN_DB_SERVER == CHAIN_DB_GRAPHQL_URL )
     CHAIN_DB_SERVER: "http://chain-db-open-server-service:4000"
     # nodewatcher server ( aka Prisma server )
-    CHAIN_DB: "http://nodedwatcher.nodewatcher-kusama:4466"
+    CHAIN_DB: "http://node-watcher-service:4466"
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
