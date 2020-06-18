@@ -6,6 +6,10 @@ chainName: kusama
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
+  image:
+    repository: paritytech/polkassembly-kusama-production-front-end
+    pullPolicy: Always
+
   ingress:
     enabled: true
     annotations:
