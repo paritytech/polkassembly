@@ -224,6 +224,10 @@ dockerize:chain-db-open-server:
 
 .deploy-k8s:                       &deploy-k8s
   script:
+    - echo "------"
+    - echo ${KUBE_NAMESPACE}
+    - echo ${CI_ENVIRONMENT_NAME}
+    - echo "------"
     - helm upgrade polkassembly kubernetes/polkassembly
       --dry-run
       --install
