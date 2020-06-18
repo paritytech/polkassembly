@@ -6,8 +6,12 @@ chainName: kusama
 nodeSelector: {}
 
 frontend:
+  image:
+    repository: paritytech/polkassembly-kusama-staging-front-end
+    pullPolicy: Always
+
   ingress:
-    enabled: true 
+    enabled: true
     annotations:
       traefik.ingress.kubernetes.io/redirect-entry-point: https
 
