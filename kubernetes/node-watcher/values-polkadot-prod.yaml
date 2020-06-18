@@ -1,7 +1,7 @@
 # POLKADOT-PROD values for node-watcher.
 # Declare variables to be passed into your templates.
 
-chainName: kusama
+chainName: polkadot
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 cloudsql:
