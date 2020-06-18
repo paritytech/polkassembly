@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid, Icon, Responsive } from 'semantic-ui-react';
 
 import { MetaContext } from '../../context/MetaContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -187,6 +187,18 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
 					/>
 				}
+				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+					<GovenanceSideBar
+						isMotion={isMotion}
+						isProposal={isProposal}
+						isReferendum={isReferendum}
+						isTreasuryProposal={isTreasuryProposal}
+						onchainId={onchainId}
+						onchainLink={definedOnchainLink}
+						status={postStatus}
+					/>
+					{isDiscussion(post) && <Poll postId={post.id} />}
+				</Responsive>
 				{ !!post.comments?.length &&
 					<Comments
 						comments={post.comments}
@@ -195,17 +207,19 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				}
 				{ id && <CreatePostComment postId={post.id} refetch={refetch} /> }
 			</Grid.Column>
-			<Grid.Column className='democracy_card' mobile={16} tablet={16} computer={6} largeScreen={6}>
-				<GovenanceSideBar
-					isMotion={isMotion}
-					isProposal={isProposal}
-					isReferendum={isReferendum}
-					isTreasuryProposal={isTreasuryProposal}
-					onchainId={onchainId}
-					onchainLink={definedOnchainLink}
-					status={postStatus}
-				/>
-				{isDiscussion(post) && <Poll postId={post.id} />}
+			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
+				<Responsive minWidth={Responsive.onlyComputer.minWidth}>
+					<GovenanceSideBar
+						isMotion={isMotion}
+						isProposal={isProposal}
+						isReferendum={isReferendum}
+						isTreasuryProposal={isTreasuryProposal}
+						onchainId={onchainId}
+						onchainLink={definedOnchainLink}
+						status={postStatus}
+					/>
+					{isDiscussion(post) && <Poll postId={post.id} />}
+				</Responsive>
 				<ScrollToTop/>
 			</Grid.Column>
 		</Grid>
@@ -247,12 +261,6 @@ export default styled(Post)`
 		.post_content {
 			padding: 2rem;
 			border-radius: 0px;
-		}
-	}
-
-	@media only screen and (max-width: 991px) {
-		.democracy_card {
-			visibility: hidden;
 		}
 	}
 

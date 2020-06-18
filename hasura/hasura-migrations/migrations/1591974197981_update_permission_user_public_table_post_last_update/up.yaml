@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_aggregations: false
+      backend_only: false
+      columns:
+      - post_id
+      - last_update
+      - comment_id
+      computed_fields: []
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: post_last_update
+      schema: public
+  type: create_select_permission

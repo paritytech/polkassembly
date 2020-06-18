@@ -20,7 +20,8 @@ authServer:
   config:
     domainName: "test.polkassembly.io"
     PROPOSAL_BOT_USER_ID: "11"
+
 chainDbWatcher:
   config:
     PROPOSAL_BOT_USER_ID: "11"
-    CHAIN_DB_GRAPHQL_URL: "http://nomidot-server.nomidot-staging:4000"
+    CHAIN_DB_GRAPHQL_URL: "http://chain-db-open-server-service:4000"
