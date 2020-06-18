@@ -225,6 +225,7 @@ dockerize:chain-db-open-server:
 .deploy-k8s:                       &deploy-k8s
   script:
     - helm upgrade polkassembly kubernetes/polkassembly
+      --dry-run
       --install
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
@@ -259,12 +260,12 @@ dockerize:chain-db-open-server:
       --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
       --set password=${REDIS_PASSWORD}
 
-    # install/upgrade redis server
-    - helm upgrade redis bitnami/redis
-      --install
-      --namespace ${KUBE_NAMESPACE}
-      --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
-      --set password=${REDIS_PASSWORD}
+#     # install/upgrade redis server
+#     - helm upgrade redis bitnami/redis
+#       --install
+#       --namespace ${KUBE_NAMESPACE}
+#       --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
+#       --set password=${REDIS_PASSWORD}
 
     # test install/upgrade node-watcher
     - helm upgrade node-watcher kubernetes/node-watcher
@@ -274,32 +275,32 @@ dockerize:chain-db-open-server:
       --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
-    # install/upgrade node-watcher
-    - helm upgrade node-watcher kubernetes/node-watcher
-      --install
-      --namespace ${KUBE_NAMESPACE}
-      --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
-      --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
+#     # install/upgrade node-watcher
+#     - helm upgrade node-watcher kubernetes/node-watcher
+#       --install
+#       --namespace ${KUBE_NAMESPACE}
+#       --values kubernetes/node-watcher/values-${CI_ENVIRONMENT_NAME}.yaml
+#       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
-deploy-kusama-staging:
-  stage:                           deploy
-  environment:
-    name:                          dashboards-cluster-1
-  tags:
-    - kubernetes-parity-build
-  only:
-    - master
-  <<:                              *deploy-k8s
-
-deploy-kusama-production:
-  stage:                           deploy
-  environment:
-    name:                          parity-prod
-  tags:
-    - kubernetes-parity-build
-  only:
-    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
-  <<:                              *deploy-k8s
+# deploy-kusama-staging:
+#   stage:                           deploy
+#   environment:
+#     name:                          dashboards-cluster-1
+#   tags:
+#     - kubernetes-parity-build
+#   only:
+#     - master
+#   <<:                              *deploy-k8s
+#
+# deploy-kusama-production:
+#   stage:                           deploy
+#   environment:
+#     name:                          parity-prod
+#   tags:
+#     - kubernetes-parity-build
+#   only:
+#     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+#   <<:                              *deploy-k8s
 
 deploy-polkadot-production:
   variables:
