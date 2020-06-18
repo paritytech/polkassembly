@@ -27,6 +27,11 @@ describe('post unSubscribe mutation', () => {
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 
+		await User
+			.query()
+			.patch({ email_verified: true })
+			.findById(signupUserId);
+
 		await postSubscribe(undefined, { post_id }, fakectx);
 	});
 
