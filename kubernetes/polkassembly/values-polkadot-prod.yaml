@@ -24,7 +24,7 @@ authServer:
 chainDbWatcher:
   config:
     PROPOSAL_BOT_USER_ID: "1"
-    CHAIN_DB_GRAPHQL_URL: "http://nodewatcher-server:4000"
+    CHAIN_DB_GRAPHQL_URL: "http://chain-db-open-server-service:4000"
 
 healthMonitor:
   config:
