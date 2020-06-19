@@ -21,8 +21,6 @@ harvester:
   
   config:
     PRISMA_ENDPOINT: http://node-watcher-service:4466
-    ARCHIVE_NODE_ENDPOINT: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
-    START_FROM: '2504500'
     BLOCK_IDENTIFIER: 'chain-tip'
     MAX_LAG: '10'
 

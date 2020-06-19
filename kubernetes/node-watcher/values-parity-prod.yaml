@@ -17,3 +17,4 @@ nodeWatcher:
 harvester:
   config:
     ARCHIVE_NODE_ENDPOINT: ws://polkassembly-rpc-internal-0.c.parity-prod.internal:9944
+    START_FROM: '2504500'

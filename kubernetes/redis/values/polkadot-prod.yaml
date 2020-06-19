@@ -1,0 +1,7 @@
+cluster:
+  enabled: false
+
+usePassword: true
+
+metrics:
+  enabled: false
