@@ -27,7 +27,7 @@ kubesec-sast:
     ANALYZER_TARGET_DIR:           "kubernetes/"
 
 stages:
-  - test
+  # - test
   # - dockerize
   - deploy
   - publish
@@ -42,59 +42,59 @@ cache:
 
 #### stage:                        test
 
-lint-front-end:
-  stage:                           test
-  image:                           node:12
-  interruptible:                   true
-  dependencies:                    []
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - cd front-end
-    - yarn install
-    - yarn lint
-    - yarn build
-  rules:
-    - changes:
-      - "front-end/**/*"
-  tags:
-    - linux-docker
+# lint-front-end:
+#   stage:                           test
+#   image:                           node:12
+#   interruptible:                   true
+#   dependencies:                    []
+#   script:
+#     - curl -o- -L https://yarnpkg.com/install.sh | bash
+#     - export PATH=$HOME/.yarn/bin:$PATH
+#     - cd front-end
+#     - yarn install
+#     - yarn lint
+#     - yarn build
+#   rules:
+#     - changes:
+#       - "front-end/**/*"
+#   tags:
+#     - linux-docker
 
-lint-back-end:
-  stage:                           test
-  image:                           node:12
-  interruptible:                   true
-  dependencies:                    []
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - cd auth-server
-    - yarn install
-    - yarn lint
-    - yarn tsc
-  rules:
-    - changes:
-      - "auth-server/**/*"
-  tags:
-    - linux-docker
+# lint-back-end:
+#   stage:                           test
+#   image:                           node:12
+#   interruptible:                   true
+#   dependencies:                    []
+#   script:
+#     - curl -o- -L https://yarnpkg.com/install.sh | bash
+#     - export PATH=$HOME/.yarn/bin:$PATH
+#     - cd auth-server
+#     - yarn install
+#     - yarn lint
+#     - yarn tsc
+#   rules:
+#     - changes:
+#       - "auth-server/**/*"
+#   tags:
+#     - linux-docker
 
-lint-chain-db-watcher:
-  stage:                           test
-  image:                           node:12
-  interruptible:                   true
-  dependencies:                    []
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - cd chain-db-watcher
-    - yarn install
-    - yarn lint
-    - yarn tsc
-  rules:
-    - changes:
-      - "chain-db-watcher/**/*"
-  tags:
-    - linux-docker
+# lint-chain-db-watcher:
+#   stage:                           test
+#   image:                           node:12
+#   interruptible:                   true
+#   dependencies:                    []
+#   script:
+#     - curl -o- -L https://yarnpkg.com/install.sh | bash
+#     - export PATH=$HOME/.yarn/bin:$PATH
+#     - cd chain-db-watcher
+#     - yarn install
+#     - yarn lint
+#     - yarn tsc
+#   rules:
+#     - changes:
+#       - "chain-db-watcher/**/*"
+#   tags:
+#     - linux-docker
 
 #### stage:                        dockerize
 
@@ -271,8 +271,8 @@ lint-chain-db-watcher:
       --set dockerTag=${DOCKER_TAG}
       --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
       --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
-      --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
-      --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
+      # --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      # --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
       # --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
       # --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
       # --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
