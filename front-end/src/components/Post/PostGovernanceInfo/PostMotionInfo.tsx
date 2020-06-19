@@ -81,7 +81,7 @@ const ProposalInfo = ({ preimage } : {preimage?: OnchainLinkMotionPreimageFragme
 	return (
 		<Grid.Row className='motion-sub-info'>
 			{preimageMethod &&
-				<Grid.Row>
+				<>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<h6>Method</h6>
 						{preimageMethod}
@@ -102,7 +102,8 @@ const ProposalInfo = ({ preimage } : {preimage?: OnchainLinkMotionPreimageFragme
 							</>
 							: null}
 					</Grid.Column>
-				</Grid.Row>}
+				</>
+			}
 			<Grid.Column mobile={16} tablet={16} computer={16}>
 				{ metaDescription &&
 					<>
