@@ -23,8 +23,8 @@ export const chainProperties: ChainPropType = {
 	},
 	[network.POLKADOT]: {
 		blockTime: 6000,
-		ss58Format: 1,
-		tokenDecimals: 18,
+		ss58Format: 0,
+		tokenDecimals: 12,
 		tokenSymbol: tokenSymbol.DOT
 	}
 };
