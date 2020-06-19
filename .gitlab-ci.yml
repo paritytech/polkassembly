@@ -27,7 +27,7 @@ kubesec-sast:
     ANALYZER_TARGET_DIR:           "kubernetes/"
 
 stages:
-  # - test
+  - test
   # - dockerize
   - deploy
   - publish
