@@ -2,12 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-chainName: kusama
+chainName: polkadot
 nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
   image:
-    repository: paritytech/polkassembly-kusama-production-front-end
+    repository: paritytech/polkassembly-polkadot-production-front-end
     pullPolicy: Always
 
   ingress:
@@ -15,17 +15,14 @@ frontend:
     annotations:
       traefik.ingress.kubernetes.io/redirect-entry-point: https
     hosts:
-      - host: kusama.polkassembly.io
-        path: /
-      - host: polkassembly.io
+      - host: polkadot.polkassembly.io
         path: /
     tls: []
 
 authServer:
   config:
-    DOMAIN_NAME: "kusama.polkassembly.io"
+    DOMAIN_NAME: "polkadot.polkassembly.io"
     PROPOSAL_BOT_USER_ID: "1"
-
 chainDbWatcher:
   config:
     PROPOSAL_BOT_USER_ID: "1"
@@ -48,4 +45,4 @@ healthMonitor:
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.c.parity-prod.internal:9944"
+    ARCHIVE_NODE_ENDPOINT: "wss://rpc.polkadot.io"

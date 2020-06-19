@@ -1,0 +1,18 @@
+# POLKADOT-PROD values for node-watcher.
+# Declare variables to be passed into your templates.
+
+chainName: polkadot
+nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
+
+cloudsql:
+  commandline:
+    args: "-instances=parity-prod:europe-west3:polkadot-polkassembly=tcp:5432"
+
+nodeWatcher:
+  dbName: "chain-db"
+  dbUser: "chain-db"
+  dbPassword: from-gitlab-vars
+
+harvester:
+  config:
+    ARCHIVE_NODE_ENDPOINT: wss://rpc.polkadot.io
