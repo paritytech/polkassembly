@@ -15,8 +15,7 @@ services:
     - /var/polkassembly/hasura/data:/var/lib/postgresql/data
   graphql-engine:
     network_mode: "host"
-    # image: hasura/graphql-engine:v1.0.0-rc.1.cli-migrations
-    image: hasura/graphql-engine:pull5013-88db45f4
+    image: hasura/graphql-engine:v1.3.0-beta.2.cli-migrations
     volumes:
     # migration data
     - ./hasura-migrations/migrations:/hasura-migrations
@@ -36,7 +35,7 @@ services:
       HASURA_ONCHAIN_LINK_CREATE_HOOK: "http://localhost:8010/auth/event/onchain_link/create"
       HASURA_EVENT_SECRET: "<shared secret key with auth server>"
       HASURA_AUTH_SERVER_REMOTE_SCHEMA: http://auth-server-service:8010/auth/graphql
-      HASURA_CHAIN_DB_REMOTE_SCHEMA: http://nodewatcher.nodewatcher:4466
+      HASURA_CHAIN_DB_REMOTE_SCHEMA: http://chain-db-open-server-service:4000
       # Remote schemas on Mac OS workaround:
       # HASURA_AUTH_SERVER_REMOTE_SCHEMA: "http://host.docker.internal:8010/auth/graphql"
-      # HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://host.docker.internal:4466"
+      # HASURA_CHAIN_DB_REMOTE_SCHEMA: "http://host.docker.internal:4000"

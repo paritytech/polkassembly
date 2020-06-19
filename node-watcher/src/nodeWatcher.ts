@@ -10,10 +10,13 @@ import { logger } from '@polkadot/util';
 import { prisma } from './generated/prisma-client';
 import { nomidotTasks } from './tasks';
 import { Cached } from './tasks/types';
+import getEnvVars from './util/getEnvVars';
 
-const ARCHIVE_NODE_ENDPOINT =
-  process.env.ARCHIVE_NODE_ENDPOINT || 'wss://kusama-rpc.polkadot.io/';
-const MAX_LAG = process.env.MAX_LAG || 0;
+const envVars = getEnvVars();
+const ARCHIVE_NODE_ENDPOINT = envVars.ARCHIVE_NODE_ENDPOINT;
+const MAX_LAG = envVars.MAX_LAG;
+const BLOCK_IDENTIFIER = envVars.BLOCK_IDENTIFIER;
+const START_FROM = envVars.START_FROM;
 
 const l = logger('node-watcher');
 
@@ -38,7 +41,7 @@ function reachedLimitLag(
   blockIndex: number,
   lastKnownBestBlock: number
 ): boolean {
-  return MAX_LAG ? lastKnownBestBlock - blockIndex > parseInt(MAX_LAG) : false;
+  return MAX_LAG ? lastKnownBestBlock - blockIndex > MAX_LAG : false;
 }
 
 function waitLagLimit(
@@ -77,9 +80,8 @@ export async function nodeWatcher(): Promise<unknown> {
           reject(new Error(`Api disconnected: ${e}`));
         });
 
-        const blockIdentifier = process.env.BLOCK_IDENTIFIER || 'IDENTIFIER';
         let blockIndexId = '';
-        let blockIndex = parseInt(process.env.START_FROM || '0');
+        let blockIndex = START_FROM;
         let currentSpecVersion = api.createType('u32', -1);
         const lastKnownBestFinalized = (
           await api.derive.chain.bestNumberFinalized()
@@ -90,13 +92,13 @@ export async function nodeWatcher(): Promise<unknown> {
 
         const existingBlockIndex = await prisma.blockIndexes({
           where: {
-            identifier: blockIdentifier,
+            identifier: BLOCK_IDENTIFIER,
           },
         });
 
         if (existingBlockIndex.length === 0) {
           const result = await prisma.createBlockIndex({
-            identifier: blockIdentifier,
+            identifier: BLOCK_IDENTIFIER,
             startFrom: blockIndex,
             index: blockIndex,
           });
