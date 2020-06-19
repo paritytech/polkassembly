@@ -3,8 +3,7 @@ image:                             paritytech/kubetools:helm3
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
   CI_REGISTRY:                     "paritytech"
-  # DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
-  DOCKER_TAG:                      "latest"
+  DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       100
   # Variables required by Gitlab scanning
@@ -27,8 +26,8 @@ kubesec-sast:
     ANALYZER_TARGET_DIR:           "kubernetes/"
 
 stages:
-  # - test
-  # - dockerize
+  - test
+  - dockerize
   - deploy
   - publish
 
@@ -42,59 +41,59 @@ cache:
 
 #### stage:                        test
 
-# lint-front-end:
-#   stage:                           test
-#   image:                           node:12
-#   interruptible:                   true
-#   dependencies:                    []
-#   script:
-#     - curl -o- -L https://yarnpkg.com/install.sh | bash
-#     - export PATH=$HOME/.yarn/bin:$PATH
-#     - cd front-end
-#     - yarn install
-#     - yarn lint
-#     - yarn build
-#   rules:
-#     - changes:
-#       - "front-end/**/*"
-#   tags:
-#     - linux-docker
+lint-front-end:
+  stage:                           test
+  image:                           node:12
+  interruptible:                   true
+  dependencies:                    []
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd front-end
+    - yarn install
+    - yarn lint
+    - yarn build
+  rules:
+    - changes:
+      - "front-end/**/*"
+  tags:
+    - linux-docker
 
-# lint-back-end:
-#   stage:                           test
-#   image:                           node:12
-#   interruptible:                   true
-#   dependencies:                    []
-#   script:
-#     - curl -o- -L https://yarnpkg.com/install.sh | bash
-#     - export PATH=$HOME/.yarn/bin:$PATH
-#     - cd auth-server
-#     - yarn install
-#     - yarn lint
-#     - yarn tsc
-#   rules:
-#     - changes:
-#       - "auth-server/**/*"
-#   tags:
-#     - linux-docker
+lint-back-end:
+  stage:                           test
+  image:                           node:12
+  interruptible:                   true
+  dependencies:                    []
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd auth-server
+    - yarn install
+    - yarn lint
+    - yarn tsc
+  rules:
+    - changes:
+      - "auth-server/**/*"
+  tags:
+    - linux-docker
 
-# lint-chain-db-watcher:
-#   stage:                           test
-#   image:                           node:12
-#   interruptible:                   true
-#   dependencies:                    []
-#   script:
-#     - curl -o- -L https://yarnpkg.com/install.sh | bash
-#     - export PATH=$HOME/.yarn/bin:$PATH
-#     - cd chain-db-watcher
-#     - yarn install
-#     - yarn lint
-#     - yarn tsc
-#   rules:
-#     - changes:
-#       - "chain-db-watcher/**/*"
-#   tags:
-#     - linux-docker
+lint-chain-db-watcher:
+  stage:                           test
+  image:                           node:12
+  interruptible:                   true
+  dependencies:                    []
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - cd chain-db-watcher
+    - yarn install
+    - yarn lint
+    - yarn tsc
+  rules:
+    - changes:
+      - "chain-db-watcher/**/*"
+  tags:
+    - linux-docker
 
 #### stage:                        dockerize
 
@@ -127,99 +126,99 @@ cache:
     - docker push "$DOCKER_IMAGE:latest"
     - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
 
-# dockerize:kusama-staging-front-end:
-#   stage:                           dockerize
-#   environment:
-#     name:                          parity-build
-#   variables:
-#     REACT_APP_HASURA_GRAPHQL_URL:  "https://test.polkassembly.io/v1/graphql"
-#     REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohj4C7n/5PzCANMukmXF\nwE/wGK9vBRnaWZCODu5zg9mcVrgiuFlubONSoVg9DSCxSlPmaKjAZUy1xARNKPgL\ncaEkxteT6d5p50iiL0iMTtz85Y5yefoQAWFNjgN+VbiVEycWvw5uKYOrQkUIuxYm\njcI5xsmDU48UTha1HFgC6r+It9ViZrsfTAwj4z9lvOcPphVLh9TFaON8LnWPisly\nF4r6uPY6nLdDVvbDRlWoAEeg7mXaxBFWZidi9pKBMFavxyHhH3iyg4dCvxKzEH+X\nRA9i6Zw1c02Jgyd6viBAkB963SrGTAF+TNzepidoK5B/sIZD62OseoMX8fBXEu5e\nmQIDAQAB\n-----END PUBLIC KEY-----"
-#     REACT_APP_NETWORK:             "kusama"
-#     REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
-#   before_script:
-#     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master"'
-#   <<:                              *build_and_push
+dockerize:kusama-staging-front-end:
+  stage:                           dockerize
+  environment:
+    name:                          parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://test.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohj4C7n/5PzCANMukmXF\nwE/wGK9vBRnaWZCODu5zg9mcVrgiuFlubONSoVg9DSCxSlPmaKjAZUy1xARNKPgL\ncaEkxteT6d5p50iiL0iMTtz85Y5yefoQAWFNjgN+VbiVEycWvw5uKYOrQkUIuxYm\njcI5xsmDU48UTha1HFgC6r+It9ViZrsfTAwj4z9lvOcPphVLh9TFaON8LnWPisly\nF4r6uPY6nLdDVvbDRlWoAEeg7mXaxBFWZidi9pKBMFavxyHhH3iyg4dCvxKzEH+X\nRA9i6Zw1c02Jgyd6viBAkB963SrGTAF+TNzepidoK5B/sIZD62OseoMX8fBXEu5e\nmQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:             "kusama"
+    REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
+  before_script:
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+  <<:                              *build_and_push
 
-# dockerize:kusama-production-front-end:
-#   stage: dockerize
-#   environment:
-#     name: parity-build
-#   variables:
-#     REACT_APP_HASURA_GRAPHQL_URL:  "https://kusama.polkassembly.io/v1/graphql"
-#     REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----"
-#     REACT_APP_NETWORK:             "kusama"
-#     REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
-#   before_script:
-#     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
-#   rules:
-#     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<:                              *build_and_push
+dockerize:kusama-production-front-end:
+  stage: dockerize
+  environment:
+    name: parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://kusama.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:             "kusama"
+    REACT_APP_WS_PROVIDER:         "wss://kusama-rpc.polkadot.io"
+  before_script:
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<:                              *build_and_push
 
-# dockerize:polkadot-production-front-end:
-#   stage: dockerize
-#   environment:
-#     name: parity-build
-#   variables:
-#     REACT_APP_HASURA_GRAPHQL_URL:  "https://polkadot.polkassembly.io/v1/graphql"
-#     REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5/B3Rn4AwEgTwS143hz\n8yTNzsiS15fD84W5pH4AZMKLTrad9Kxqqc5ema/lA++GFbiuQmvW6lGdATRDuyQ8\nPoj8uzV8lWyrLu7X9WejRfymXlzYYK/CtLtk7gbvJPjH6Mqed4I3JvKTLg6PbhAN\nf+jawmvRNBhRLeWPQYWjD6pHEjQq7OSC2vZ4QSIcDEeH1WBxGzsrP6inWryqu61T\nZyGQsiKjrRnLjBi8m/fTXkKuTlvsYM0tUsyb1W4djFB8x8czTJjHNaJrV4kt6Lrw\n8IqSnvlPvvEszQ2P87eikBpHs1avwl8S+RrXSpaPZy3ppQF0fWq2JW+QJHyVxM8K\nbwIDAQAB\n-----END PUBLIC KEY-----"
-#     REACT_APP_NETWORK:             "polkadot"
-#     REACT_APP_WS_PROVIDER:         "wss://rpc.polkadot.io"
-#   before_script:
-#     - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
-#     - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<: *build_and_push
+dockerize:polkadot-production-front-end:
+  stage: dockerize
+  environment:
+    name: parity-build
+  variables:
+    REACT_APP_HASURA_GRAPHQL_URL:  "https://polkadot.polkassembly.io/v1/graphql"
+    REACT_APP_JWT_PUBLIC_KEY:      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5/B3Rn4AwEgTwS143hz\n8yTNzsiS15fD84W5pH4AZMKLTrad9Kxqqc5ema/lA++GFbiuQmvW6lGdATRDuyQ8\nPoj8uzV8lWyrLu7X9WejRfymXlzYYK/CtLtk7gbvJPjH6Mqed4I3JvKTLg6PbhAN\nf+jawmvRNBhRLeWPQYWjD6pHEjQq7OSC2vZ4QSIcDEeH1WBxGzsrP6inWryqu61T\nZyGQsiKjrRnLjBi8m/fTXkKuTlvsYM0tUsyb1W4djFB8x8czTJjHNaJrV4kt6Lrw\n8IqSnvlPvvEszQ2P87eikBpHs1avwl8S+RrXSpaPZy3ppQF0fWq2JW+QJHyVxM8K\nbwIDAQAB\n-----END PUBLIC KEY-----"
+    REACT_APP_NETWORK:             "polkadot"
+    REACT_APP_WS_PROVIDER:         "wss://rpc.polkadot.io"
+  before_script:
+    - export BUILD_ARGS="--build-arg REACT_APP_HASURA_GRAPHQL_URL=$(printf \"${REACT_APP_HASURA_GRAPHQL_URL}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_JWT_PUBLIC_KEY=$(printf "%s" \'"${REACT_APP_JWT_PUBLIC_KEY}"\')"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_NETWORK=$(printf \"${REACT_APP_NETWORK}\")"
+    - export BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_WS_PROVIDER=$(printf \"${REACT_APP_WS_PROVIDER}\")"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
-# dockerize:auth-server:
-#   stage:                           dockerize
-#   environment:
-#     name: parity-build
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<: *build_and_push
+dockerize:auth-server:
+  stage:                           dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
-# dockerize:chain-db-watcher:
-#   stage:                           dockerize
-#   environment:
-#     name: parity-build
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<: *build_and_push
+dockerize:chain-db-watcher:
+  stage:                           dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
-# dockerize:health-monitor:
-#   stage:                           dockerize
-#   environment:
-#     name: parity-build
-#   rules:
-#     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<:                              *build_and_push
+dockerize:health-monitor:
+  stage:                           dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<:                              *build_and_push
 
-# dockerize:node-watcher:
-#   stage: dockerize
-#   environment:
-#     name: parity-build
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<: *build_and_push
+dockerize:node-watcher:
+  stage: dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
-# dockerize:chain-db-open-server:
-#   stage: dockerize
-#   environment:
-#     name: parity-build
-#   rules:
-#     - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
-#   <<: *build_and_push
+dockerize:chain-db-open-server:
+  stage: dockerize
+  environment:
+    name: parity-build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+.*$/'
+  <<: *build_and_push
 
 #### stage:                        deploy
 
@@ -264,47 +263,46 @@ cache:
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
     - helm upgrade polkassembly kubernetes/polkassembly
-      --dry-run
       --install
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
       --set dockerTag=${DOCKER_TAG}
       --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
       --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
-      # --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
-      # --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
-      # --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      # --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      # --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
-      # --set authServer.config.DATABASE_URL=${DATABASE_URL}
-      # --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      # --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      # --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
-      # --set authServer.config.REDIS_URL=${REDIS_URL}
-      # --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      # --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
-      # --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
-      # --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
+      --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
+      --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      --set authServer.config.DATABASE_URL=${DATABASE_URL}
+      --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
+      --set authServer.config.REDIS_URL=${REDIS_URL}
+      --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
+      --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
+      --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
 
-# deploy-kusama-staging:
-#   stage:                           deploy
-#   environment:
-#     name:                          dashboards-cluster-1
-#   tags:
-#     - kubernetes-parity-build
-#   only:
-#     - master
-#   <<:                              *deploy-k8s
-#
-# deploy-kusama-production:
-#   stage:                           deploy
-#   environment:
-#     name:                          parity-prod
-#   tags:
-#     - kubernetes-parity-build
-#   only:
-#     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
-#   <<:                              *deploy-k8s
+deploy-kusama-staging:
+  stage:                           deploy
+  environment:
+    name:                          dashboards-cluster-1
+  tags:
+    - kubernetes-parity-build
+  only:
+    - master
+  <<:                              *deploy-k8s
+
+deploy-kusama-production:
+  stage:                           deploy
+  environment:
+    name:                          parity-prod
+  tags:
+    - kubernetes-parity-build
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  <<:                              *deploy-k8s
 
 deploy-polkadot-production:
   variables:
