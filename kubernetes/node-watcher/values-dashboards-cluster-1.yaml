@@ -11,3 +11,8 @@ nodeWatcher:
   dbName: "chain-db"
   dbUser: "chain-db"
   dbPassword: from-gitlab-vars
+
+harvester:
+  config:
+    ARCHIVE_NODE_ENDPOINT: ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944
+    START_FROM: '2504500'
