@@ -263,7 +263,6 @@ dockerize:chain-db-open-server:
       --set nodeWatcher.dbPassword=${CHAIN_DB_PASSWORD}
 
     - helm upgrade polkassembly kubernetes/polkassembly
-      --dry-run
       --install
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
