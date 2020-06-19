@@ -16,13 +16,18 @@ import getNetwork from 'src/util/getNetwork';
 export default function (address: string): string|null {
 	const network = getNetwork();
 	const ss58Format = chainProperties?.[network]?.ss58Format;
-	if (!network || !ss58Format) {
+
+	if (!network || ss58Format === undefined) {
 		return null;
 	}
 
-	const keyring = new Keyring({ type: 'sr25519' });
+	try{
+		const keyring = new Keyring({ ss58Format, type: 'sr25519' });
+		const addressEncoded = keyring.encodeAddress(address, ss58Format);
 
-	return keyring.encodeAddress(
-		keyring.decodeAddress(address),
-		chainProperties[network].ss58Format);
+		return addressEncoded;
+	} catch(e) {
+		console.error('getEncodedAddress error', e);
+		return null;
+	}
 }
