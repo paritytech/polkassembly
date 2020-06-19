@@ -268,15 +268,15 @@ lint-chain-db-watcher:
       --install
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/polkassembly/values-${CI_ENVIRONMENT_NAME}.yaml
-      # --set dockerTag=${DOCKER_TAG}
-      # --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
-      # --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
-      # --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
-      # --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
-      # --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      # --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      # --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
-      # --set authServer.config.DATABASE_URL=${DATABASE_URL}
+      --set dockerTag=${DOCKER_TAG}
+      --set cloudsql.instanceCredentials=${CLOUDSQL_INSTANCE_CREDENTIALS}
+      --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
+      --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
+      --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      --set authServer.config.DATABASE_URL=${DATABASE_URL}
       # --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
       # --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
       # --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
