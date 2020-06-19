@@ -4,9 +4,10 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon, Responsive } from 'semantic-ui-react';
 
+import { MetaContext } from '../../context/MetaContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
 	DiscussionPostAndCommentsQuery,
@@ -71,15 +72,10 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
-
-	if (!post) return <NoPostFound
-		isMotion={isMotion}
-		isProposal={isProposal}
-		isReferendum={isReferendum}
-		isTreasuryProposal={isTreasuryProposal}
-	/>;
+	const { setMetaContextState } = useContext(MetaContext);
 
 	let onchainId: number | null | undefined;
+	let metaTitle = post?.id ? 'Post #'+post?.id : '';
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
 	let motionPost: MotionPostFragment | undefined;
@@ -92,6 +88,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = referendumPost.onchain_link as OnchainLinkReferendumFragment;
 		onchainId = definedOnchainLink.onchain_referendum_id;
 		postStatus = referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.[0].status;
+		metaTitle = `Referendum #${onchainId}`;
 	}
 
 	if (isProposal) {
@@ -99,6 +96,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
+		metaTitle = `Proposal #${onchainId}`;
 	}
 
 	if (isMotion) {
@@ -106,6 +104,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = motionPost.onchain_link as OnchainLinkMotionFragment;
 		onchainId = definedOnchainLink.onchain_motion_id;
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
+		metaTitle = `Motion #${onchainId}`;
 	}
 
 	if (isTreasuryProposal) {
@@ -113,7 +112,20 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = treasuryPost.onchain_link as OnchainLinkTreasuryProposalFragment;
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
+		metaTitle = `Treasury #${onchainId}`;
 	}
+
+	metaTitle = `${metaTitle} | ${post?.title ? post?.title : 'Polkassembly' }`;
+
+	useEffect(() => {
+		setMetaContextState((prevState) => {
+			return {
+				...prevState,
+				description: post?.content || prevState.description,
+				title: metaTitle
+			};
+		});
+	}, [post, setMetaContextState, metaTitle]);
 
 	const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
 		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal) {
@@ -122,6 +134,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 
 		return false;
 	};
+
+	if (!post) return <NoPostFound
+		isMotion={isMotion}
+		isProposal={isProposal}
+		isReferendum={isReferendum}
+		isTreasuryProposal={isTreasuryProposal}
+	/>;
 
 	const isProposalProposer = isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address);
 	const isReferendumProposer = isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address);
