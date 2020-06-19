@@ -273,18 +273,18 @@ lint-chain-db-watcher:
       --set cloudsql.commandline.args="-instances=${CLOUDSQL_INSTANCE_CONNECTION_NAME}=tcp:5432"
       --set hasura.config.HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
       --set hasura.config.HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
-      --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
-      --set authServer.config.DATABASE_URL=${DATABASE_URL}
-      --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
-      --set authServer.config.REDIS_URL=${REDIS_URL}
-      --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
-      --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
-      --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
+      # --set hasura.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      # --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      # --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
+      # --set authServer.config.DATABASE_URL=${DATABASE_URL}
+      # --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      # --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      # --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
+      # --set authServer.config.REDIS_URL=${REDIS_URL}
+      # --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      # --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
+      # --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
+      # --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
 
 # deploy-kusama-staging:
 #   stage:                           deploy
