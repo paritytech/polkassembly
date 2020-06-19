@@ -277,14 +277,14 @@ lint-chain-db-watcher:
       --set hasura.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
       --set hasura.secret.HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
       --set authServer.config.DATABASE_URL=${DATABASE_URL}
-      # --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
-      # --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
-      # --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
-      # --set authServer.config.REDIS_URL=${REDIS_URL}
-      # --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      # --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
-      # --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
-      # --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
+      --set authServer.config.HASURA_EVENT_SECRET=${HASURA_EVENT_SECRET}
+      --set authServer.config.HASURA_POST_SUBSCRIPTION_SECRET=${HASURA_POST_SUBSCRIPTION_SECRET}
+      --set authServer.config.JWT_KEY_PASSPHRASE=${JWT_KEY_PASSPHRASE}
+      --set authServer.config.REDIS_URL=${REDIS_URL}
+      --set authServer.config.SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      --set authServer.secret.JWT_PRIVATE_KEY=${AUTH_SERVER_JWT_PRIVATE_KEY}
+      --set authServer.secret.JWT_PUBLIC_KEY=${AUTH_SERVER_JWT_PUBLIC_KEY}
+      --set chainDbWatcher.config.PROPOSAL_BOT_PASSWORD=${PROPOSAL_BOT_PASSWORD}
 
 # deploy-kusama-staging:
 #   stage:                           deploy
