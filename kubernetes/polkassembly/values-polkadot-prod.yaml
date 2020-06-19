@@ -23,10 +23,12 @@ authServer:
   config:
     DOMAIN_NAME: "polkadot.polkassembly.io"
     PROPOSAL_BOT_USER_ID: "1"
+
 chainDbWatcher:
   config:
     PROPOSAL_BOT_USER_ID: "1"
     CHAIN_DB_GRAPHQL_URL: "http://chain-db-open-server-service:4000"
+    START_FROM: "0"
 
 healthMonitor:
   config:
