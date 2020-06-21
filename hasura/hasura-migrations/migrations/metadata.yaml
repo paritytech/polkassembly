@@ -1,0 +1,798 @@
+version: 2
+tables:
+- table:
+    schema: public
+    name: campaign
+  object_relationships:
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $user_id
+      hasura_fields:
+      - user_id
+      remote_schema: auth
+    name: user
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _ne: X-Hasura-User-Id
+      columns:
+      - category_id
+      - content
+      - goal
+      - title
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - title
+      - content
+      - goal
+      - user_id
+      - category_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - category_id
+      - goal
+      - id
+      - user_id
+      - content
+      - title
+      - created_at
+      - updated_at
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - category_id
+      - content
+      - goal
+      - title
+      - user_id
+      filter:
+        user_id:
+          _ne: X-Hasura-User-Id
+      check:
+        user_id:
+          _ne: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _ne: X-Hasura-User-Id
+- table:
+    schema: public
+    name: category
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - name
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+- table:
+    schema: public
+    name: comment_reactions
+  object_relationships:
+  - name: comment
+    using:
+      foreign_key_constraint_on: comment_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $user_id
+      hasura_fields:
+      - user_id
+      remote_schema: auth
+    name: reacting_user
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - comment_id
+      - reaction
+      - user_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - comment_id
+      - created_at
+      - id
+      - reaction
+      - updated_at
+      - user_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - comment_id
+      - created_at
+      - id
+      - reaction
+      - updated_at
+      - user_id
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - comment_id
+      - reaction
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: comments
+  object_relationships:
+  - name: post
+    using:
+      foreign_key_constraint_on: post_id
+  array_relationships:
+  - name: comment_reactions
+    using:
+      foreign_key_constraint_on:
+        column: comment_id
+        table:
+          schema: public
+          name: comment_reactions
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $author_id
+      hasura_fields:
+      - author_id
+      remote_schema: auth
+    name: author
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - author_id
+      - content
+      - post_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - author_id
+      - content
+      - created_at
+      - id
+      - post_id
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - author_id
+      - content
+      - created_at
+      - id
+      - post_id
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - content
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  event_triggers:
+  - name: comment_create
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: HASURA_COMMENT_CREATE_EVENT_HOOK
+    headers:
+    - name: HASURA_EVENT_SECRET
+      value_from_env: HASURA_EVENT_SECRET
+- table:
+    schema: public
+    name: onchain_links
+  object_relationships:
+  - name: post
+    using:
+      foreign_key_constraint_on: post_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        motions:
+          arguments:
+            where:
+              motionProposalId: $onchain_motion_id
+      hasura_fields:
+      - onchain_motion_id
+      remote_schema: chain-db
+    name: onchain_motion
+  - definition:
+      remote_field:
+        proposals:
+          arguments:
+            where:
+              proposalId: $onchain_proposal_id
+      hasura_fields:
+      - onchain_proposal_id
+      remote_schema: chain-db
+    name: onchain_proposal
+  - definition:
+      remote_field:
+        referendums:
+          arguments:
+            where:
+              referendumId: $onchain_referendum_id
+      hasura_fields:
+      - onchain_referendum_id
+      remote_schema: chain-db
+    name: onchain_referendum
+  - definition:
+      remote_field:
+        treasurySpendProposals:
+          arguments:
+            where:
+              treasuryProposalId: $onchain_treasury_proposal_id
+      hasura_fields:
+      - onchain_treasury_proposal_id
+      remote_schema: chain-db
+    name: onchain_treasury_spend_proposal
+  - definition:
+      remote_field:
+        tips:
+          arguments:
+            where:
+              id: $onchain_tip_id
+      hasura_fields:
+      - onchain_tip_id
+      remote_schema: chain-db
+    name: onchain_tip
+  insert_permissions:
+  - role: proposal_bot
+    permission:
+      check: {}
+      columns:
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - created_at
+      - id
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+      filter: {}
+      allow_aggregations: true
+  - role: proposal_bot
+    permission:
+      columns:
+      - created_at
+      - id
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - id
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: proposal_bot
+    permission:
+      columns:
+      - onchain_motion_id
+      - onchain_referendum_id
+      filter: {}
+      check: null
+  event_triggers:
+  - name: onchain_link_create
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+        - id
+        - onchain_motion_id
+        - onchain_proposal_id
+        - onchain_referendum_id
+        - onchain_treasury_proposal_id
+        - post_id
+        - proposer_address
+        - created_at
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: HASURA_ONCHAIN_LINK_CREATE_HOOK
+    headers:
+    - name: HASURA_EVENT_SECRET
+      value_from_env: HASURA_EVENT_SECRET
+- table:
+    schema: public
+    name: poll
+  object_relationships:
+  - name: post
+    using:
+      foreign_key_constraint_on: post_id
+  array_relationships:
+  - name: poll_votes
+    using:
+      foreign_key_constraint_on:
+        column: poll_id
+        table:
+          schema: public
+          name: poll_votes
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        post:
+          author_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - block_end
+      - post_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - block_end
+      - created_at
+      - post_id
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - block_end
+      - id
+      - post_id
+      - created_at
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - block_end
+      filter:
+        post:
+          author_id:
+            _eq: X-Hasura-User-Id
+      check: null
+- table:
+    schema: public
+    name: poll_votes
+  object_relationships:
+  - name: poll
+    using:
+      foreign_key_constraint_on: poll_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $user_id
+      hasura_fields:
+      - user_id
+      remote_schema: auth
+    name: voter
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - poll_id
+      - user_id
+      - vote
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - poll_id
+      - user_id
+      - vote
+      - created_at
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - vote
+      - id
+      - poll_id
+      - user_id
+      - created_at
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - poll_id
+      - user_id
+      - vote
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: post_last_update
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - comment_id
+      - post_id
+      - last_update
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - post_id
+      - last_update
+      - comment_id
+      filter: {}
+- table:
+    schema: public
+    name: post_reactions
+  object_relationships:
+  - name: post
+    using:
+      foreign_key_constraint_on: post_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $user_id
+      hasura_fields:
+      - user_id
+      remote_schema: auth
+    name: reacting_user
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - post_id
+      - reaction
+      - user_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - created_at
+      - id
+      - post_id
+      - reaction
+      - updated_at
+      - user_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - id
+      - post_id
+      - reaction
+      - updated_at
+      - user_id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - post_id
+      - reaction
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: post_topics
+  array_relationships:
+  - name: posts
+    using:
+      foreign_key_constraint_on:
+        column: topic_id
+        table:
+          schema: public
+          name: posts
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+- table:
+    schema: public
+    name: post_types
+  array_relationships:
+  - name: posts
+    using:
+      foreign_key_constraint_on:
+        column: type_id
+        table:
+          schema: public
+          name: posts
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+- table:
+    schema: public
+    name: posts
+  object_relationships:
+  - name: last_update
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: post_last_update
+        column_mapping:
+          id: post_id
+  - name: onchain_link
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: onchain_links
+        column_mapping:
+          id: post_id
+  - name: topic
+    using:
+      foreign_key_constraint_on: topic_id
+  - name: type
+    using:
+      foreign_key_constraint_on: type_id
+  array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          schema: public
+          name: comments
+  - name: polls
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          schema: public
+          name: poll
+  - name: post_reactions
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          schema: public
+          name: post_reactions
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $author_id
+      hasura_fields:
+      - author_id
+      remote_schema: auth
+    name: author
+  insert_permissions:
+  - role: proposal_bot
+    permission:
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - author_id
+      - content
+      - title
+      - topic_id
+      - type_id
+  - role: user
+    permission:
+      check:
+        _and:
+        - author_id:
+            _eq: X-Hasura-User-Id
+        - type_id:
+            _eq: 1
+      columns:
+      - author_id
+      - content
+      - title
+      - topic_id
+      - type_id
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - author_id
+      - content
+      - created_at
+      - id
+      - title
+      - topic_id
+      - type_id
+      - updated_at
+      filter: {}
+  - role: proposal_bot
+    permission:
+      columns:
+      - author_id
+      - content
+      - created_at
+      - id
+      - title
+      - topic_id
+      - type_id
+      - updated_at
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - author_id
+      - content
+      - created_at
+      - id
+      - title
+      - topic_id
+      - type_id
+      - updated_at
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - content
+      - title
+      - topic_id
+      filter:
+        _or:
+        - author_id:
+            _eq: X-Hasura-User-Id
+        - onchain_link:
+            proposer_address:
+              _in: X-Hasura-Kusama
+      check: null
+remote_schemas:
+- name: auth
+  definition:
+    url_from_env: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+    timeout_seconds: 60
+    forward_client_headers: true
+- name: chain-db
+  definition:
+    url_from_env: HASURA_CHAIN_DB_REMOTE_SCHEMA
+    timeout_seconds: 60
+    forward_client_headers: true

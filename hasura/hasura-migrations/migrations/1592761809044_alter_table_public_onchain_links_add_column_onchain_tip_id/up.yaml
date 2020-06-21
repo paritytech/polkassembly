@@ -1,0 +1,6 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."onchain_links" ADD COLUMN "onchain_tip_id" integer
+      NULL UNIQUE;
+  type: run_sql

@@ -143,9 +143,11 @@ export interface NomidotTip {
   hash: string
   reason: Hash
   who: AccountId
+  closes?: number
   finder?: AccountId
   finderFee?: Balance
-  closes?: number
+  tipper?: AccountId
+  value?: Balance
   status: string
 }
 

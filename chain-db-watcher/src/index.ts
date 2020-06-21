@@ -76,6 +76,31 @@ async function main (): Promise<void> {
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
 	execute(link, {
+		query: tipSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
+			console.log('Treasury data received', JSON.stringify(data, null, 2));
+
+			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
+				const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
+				treasuryProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndTreasuryProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
+					} else {
+						console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		error: error => { throw new Error(`Subscription (treasury) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (treasury) completed');
+			process.exit(1);
+		}
+	});
+
+	execute(link, {
 		query: treasurySpendProposalSubscription,
 		variables: { startBlock }
 	}).subscribe({

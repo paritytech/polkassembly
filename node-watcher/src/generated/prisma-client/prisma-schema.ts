@@ -753,6 +753,7 @@ type Endorsement {
   id: ID!
   tipper: String!
   value: String!
+  tip: Tip!
 }
 
 type EndorsementConnection {
@@ -765,11 +766,18 @@ input EndorsementCreateInput {
   id: ID
   tipper: String!
   value: String!
+  tip: TipCreateOneWithoutTipsInput!
 }
 
-input EndorsementCreateManyInput {
-  create: [EndorsementCreateInput!]
+input EndorsementCreateManyWithoutTipInput {
+  create: [EndorsementCreateWithoutTipInput!]
   connect: [EndorsementWhereUniqueInput!]
+}
+
+input EndorsementCreateWithoutTipInput {
+  id: ID
+  tipper: String!
+  value: String!
 }
 
 type EndorsementEdge {
@@ -858,14 +866,10 @@ input EndorsementSubscriptionWhereInput {
   NOT: [EndorsementSubscriptionWhereInput!]
 }
 
-input EndorsementUpdateDataInput {
-  tipper: String
-  value: String
-}
-
 input EndorsementUpdateInput {
   tipper: String
   value: String
+  tip: TipUpdateOneRequiredWithoutTipsInput
 }
 
 input EndorsementUpdateManyDataInput {
@@ -873,21 +877,21 @@ input EndorsementUpdateManyDataInput {
   value: String
 }
 
-input EndorsementUpdateManyInput {
-  create: [EndorsementCreateInput!]
-  update: [EndorsementUpdateWithWhereUniqueNestedInput!]
-  upsert: [EndorsementUpsertWithWhereUniqueNestedInput!]
+input EndorsementUpdateManyMutationInput {
+  tipper: String
+  value: String
+}
+
+input EndorsementUpdateManyWithoutTipInput {
+  create: [EndorsementCreateWithoutTipInput!]
   delete: [EndorsementWhereUniqueInput!]
   connect: [EndorsementWhereUniqueInput!]
   set: [EndorsementWhereUniqueInput!]
   disconnect: [EndorsementWhereUniqueInput!]
+  update: [EndorsementUpdateWithWhereUniqueWithoutTipInput!]
+  upsert: [EndorsementUpsertWithWhereUniqueWithoutTipInput!]
   deleteMany: [EndorsementScalarWhereInput!]
   updateMany: [EndorsementUpdateManyWithWhereNestedInput!]
-}
-
-input EndorsementUpdateManyMutationInput {
-  tipper: String
-  value: String
 }
 
 input EndorsementUpdateManyWithWhereNestedInput {
@@ -895,15 +899,20 @@ input EndorsementUpdateManyWithWhereNestedInput {
   data: EndorsementUpdateManyDataInput!
 }
 
-input EndorsementUpdateWithWhereUniqueNestedInput {
-  where: EndorsementWhereUniqueInput!
-  data: EndorsementUpdateDataInput!
+input EndorsementUpdateWithoutTipDataInput {
+  tipper: String
+  value: String
 }
 
-input EndorsementUpsertWithWhereUniqueNestedInput {
+input EndorsementUpdateWithWhereUniqueWithoutTipInput {
   where: EndorsementWhereUniqueInput!
-  update: EndorsementUpdateDataInput!
-  create: EndorsementCreateInput!
+  data: EndorsementUpdateWithoutTipDataInput!
+}
+
+input EndorsementUpsertWithWhereUniqueWithoutTipInput {
+  where: EndorsementWhereUniqueInput!
+  update: EndorsementUpdateWithoutTipDataInput!
+  create: EndorsementCreateWithoutTipInput!
 }
 
 input EndorsementWhereInput {
@@ -949,6 +958,7 @@ input EndorsementWhereInput {
   value_not_starts_with: String
   value_ends_with: String
   value_not_ends_with: String
+  tip: TipWhereInput
   AND: [EndorsementWhereInput!]
   OR: [EndorsementWhereInput!]
   NOT: [EndorsementWhereInput!]
@@ -4977,7 +4987,7 @@ type Tip {
   finderFee: String
   closes: Int
   tipStatus(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus!]
-  Endorsements(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Endorsement!]
+  tips(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Endorsement!]
 }
 
 type TipConnection {
@@ -4994,12 +5004,27 @@ input TipCreateInput {
   finderFee: String
   closes: Int
   tipStatus: TipStatusCreateManyWithoutTipInput
-  Endorsements: EndorsementCreateManyInput
+  tips: EndorsementCreateManyWithoutTipInput
+}
+
+input TipCreateOneWithoutTipsInput {
+  create: TipCreateWithoutTipsInput
+  connect: TipWhereUniqueInput
 }
 
 input TipCreateOneWithoutTipStatusInput {
   create: TipCreateWithoutTipStatusInput
   connect: TipWhereUniqueInput
+}
+
+input TipCreateWithoutTipsInput {
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusCreateManyWithoutTipInput
 }
 
 input TipCreateWithoutTipStatusInput {
@@ -5009,7 +5034,7 @@ input TipCreateWithoutTipStatusInput {
   finder: String
   finderFee: String
   closes: Int
-  Endorsements: EndorsementCreateManyInput
+  tips: EndorsementCreateManyWithoutTipInput
 }
 
 type TipEdge {
@@ -5296,7 +5321,7 @@ input TipUpdateInput {
   finderFee: String
   closes: Int
   tipStatus: TipStatusUpdateManyWithoutTipInput
-  Endorsements: EndorsementUpdateManyInput
+  tips: EndorsementUpdateManyWithoutTipInput
 }
 
 input TipUpdateManyMutationInput {
@@ -5308,11 +5333,28 @@ input TipUpdateManyMutationInput {
   closes: Int
 }
 
+input TipUpdateOneRequiredWithoutTipsInput {
+  create: TipCreateWithoutTipsInput
+  update: TipUpdateWithoutTipsDataInput
+  upsert: TipUpsertWithoutTipsInput
+  connect: TipWhereUniqueInput
+}
+
 input TipUpdateOneRequiredWithoutTipStatusInput {
   create: TipCreateWithoutTipStatusInput
   update: TipUpdateWithoutTipStatusDataInput
   upsert: TipUpsertWithoutTipStatusInput
   connect: TipWhereUniqueInput
+}
+
+input TipUpdateWithoutTipsDataInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusUpdateManyWithoutTipInput
 }
 
 input TipUpdateWithoutTipStatusDataInput {
@@ -5322,7 +5364,12 @@ input TipUpdateWithoutTipStatusDataInput {
   finder: String
   finderFee: String
   closes: Int
-  Endorsements: EndorsementUpdateManyInput
+  tips: EndorsementUpdateManyWithoutTipInput
+}
+
+input TipUpsertWithoutTipsInput {
+  update: TipUpdateWithoutTipsDataInput!
+  create: TipCreateWithoutTipsInput!
 }
 
 input TipUpsertWithoutTipStatusInput {
@@ -5420,9 +5467,9 @@ input TipWhereInput {
   tipStatus_every: TipStatusWhereInput
   tipStatus_some: TipStatusWhereInput
   tipStatus_none: TipStatusWhereInput
-  Endorsements_every: EndorsementWhereInput
-  Endorsements_some: EndorsementWhereInput
-  Endorsements_none: EndorsementWhereInput
+  tips_every: EndorsementWhereInput
+  tips_some: EndorsementWhereInput
+  tips_none: EndorsementWhereInput
   AND: [TipWhereInput!]
   OR: [TipWhereInput!]
   NOT: [TipWhereInput!]

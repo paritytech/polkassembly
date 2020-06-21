@@ -58,6 +58,33 @@ export const addPostAndTreasurySpendProposalMutation = gql`
     }
 `;
 
+export const addPostAndTipMutation = gql`
+    mutation addPostAndTipMutation (
+        $onchainTipId:Int!,
+        $authorId: Int!,
+        $proposerAddress: String!,
+        $content: String!,
+        $topicId: Int!,
+        $typeId: Int!
+        ){
+        __typename
+        insert_onchain_links(objects: {
+            onchain_tip_id: $onchainTipId,
+            proposer_address: $proposerAddress,
+            post: {data: {
+                author_id: $authorId,
+                content: $content,
+                topic_id: $topicId,
+                type_id: $typeId
+            }
+        }}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
 export const addPostAndMotionMutation = gql`
     mutation addPostAndMotionMutation (
         $onchainMotionProposalId:Int!,
@@ -179,6 +206,14 @@ export const getDiscussionMotionProposalById = gql`
 export const getDiscussionTreasurySpendProposalById = gql`
     query getDiscussionTreasurySpendProposalById($onchainTreasuryProposalId: Int!) {
         onchain_links(where: {onchain_treasury_proposal_id: {_eq: $onchainTreasuryProposalId}}) {
+            id
+        }
+    }
+`;
+
+export const getDiscussionTipById = gql`
+    query getDiscussionTipById($onchainTipId: Int!) {
+        onchain_links(where: {onchain_tip_id: {_eq: $onchainTipId}}) {
             id
         }
     }

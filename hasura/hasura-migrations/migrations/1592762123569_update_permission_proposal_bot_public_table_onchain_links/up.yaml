@@ -1,0 +1,23 @@
+- args:
+    role: proposal_bot
+    table:
+      name: onchain_links
+      schema: public
+  type: drop_insert_permission
+- args:
+    permission:
+      check: {}
+      columns:
+      - onchain_motion_id
+      - onchain_proposal_id
+      - onchain_referendum_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
+      set: {}
+    role: proposal_bot
+    table:
+      name: onchain_links
+      schema: public
+  type: create_insert_permission

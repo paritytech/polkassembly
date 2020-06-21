@@ -95,6 +95,12 @@ const createTreasury: Task<NomidotTip[]> = {
           result.finderFee = Balance;
         }
 
+        if (tip.tips.length) {
+          const [AccountId, Balance] = tip.tips[0];
+          result.tipper = AccountId;
+          result.value = Balance;
+        }
+
         l.log(`Nomidot Tip: ${JSON.stringify(result)}`);
 
         results.push(result);
@@ -110,9 +116,11 @@ const createTreasury: Task<NomidotTip[]> = {
           hash,
           reason,
           who,
+          closes,
           finder,
           finderFee,
-          closes,
+          tipper,
+          value,
           status,
         } = prop;
 
@@ -133,6 +141,14 @@ const createTreasury: Task<NomidotTip[]> = {
               status,
               uniqueStatus: `${hash}_${status}`,
             },
+          },
+          tips: {
+            create: tipper && value
+              ? [{
+                tipper: tipper.toString(),
+                value: value.toString(),
+              }]
+              : []
           },
         });
       })
