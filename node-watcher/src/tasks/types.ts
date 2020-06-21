@@ -118,7 +118,8 @@ export type Nomidot =
   | NomidotSlashing[]
   | NomidotStake
   | NomidotTotalIssuance
-  | NomidotTreasury[];
+  | NomidotTreasury[]
+  | NomidotTip[];
 
 export type NomidotTask = Task<Nomidot>;
 
@@ -136,6 +137,20 @@ export interface NomidotProposalEvent {
 export interface NomidotProposalRawEvent {
   PropIndex?: number;
   Balance?: Balance;
+}
+
+export interface NomidotTip {
+  hash: string
+  reason: Hash
+  who: AccountId
+  finder?: AccountId
+  finderFee?: Balance
+  closes?: number
+  status: string
+}
+
+export interface TipRawEvent {
+  Hash?: string
 }
 
 export interface NomidotTreasury {

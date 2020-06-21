@@ -1503,6 +1503,14 @@ export type StakeOrderByInput =
   | "totalStake_ASC"
   | "totalStake_DESC";
 
+export type TipStatusOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "uniqueStatus_ASC"
+  | "uniqueStatus_DESC";
+
 export type TipOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1512,22 +1520,12 @@ export type TipOrderByInput =
   | "reason_DESC"
   | "who_ASC"
   | "who_DESC"
-  | "value_ASC"
-  | "value_DESC"
   | "finder_ASC"
   | "finder_DESC"
   | "finderFee_ASC"
   | "finderFee_DESC"
   | "closes_ASC"
   | "closes_DESC";
-
-export type TipStatusOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "status_ASC"
-  | "status_DESC"
-  | "uniqueStatus_ASC"
-  | "uniqueStatus_DESC";
 
 export type TotalIssuanceOrderByInput =
   | "id_ASC"
@@ -3089,6 +3087,56 @@ export type TipWhereUniqueInput = AtLeastOne<{
   id: Maybe<Int>;
 }>;
 
+export interface TipStatusWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  blockNumber?: Maybe<BlockNumberWhereInput>;
+  tip?: Maybe<TipWhereInput>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
+  OR?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
+  NOT?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
+}
+
 export interface TipWhereInput {
   id?: Maybe<Int>;
   id_not?: Maybe<Int>;
@@ -3140,20 +3188,6 @@ export interface TipWhereInput {
   who_not_starts_with?: Maybe<String>;
   who_ends_with?: Maybe<String>;
   who_not_ends_with?: Maybe<String>;
-  value?: Maybe<String>;
-  value_not?: Maybe<String>;
-  value_in?: Maybe<String[] | String>;
-  value_not_in?: Maybe<String[] | String>;
-  value_lt?: Maybe<String>;
-  value_lte?: Maybe<String>;
-  value_gt?: Maybe<String>;
-  value_gte?: Maybe<String>;
-  value_contains?: Maybe<String>;
-  value_not_contains?: Maybe<String>;
-  value_starts_with?: Maybe<String>;
-  value_not_starts_with?: Maybe<String>;
-  value_ends_with?: Maybe<String>;
-  value_not_ends_with?: Maybe<String>;
   finder?: Maybe<String>;
   finder_not?: Maybe<String>;
   finder_in?: Maybe<String[] | String>;
@@ -3190,6 +3224,9 @@ export interface TipWhereInput {
   closes_lte?: Maybe<Int>;
   closes_gt?: Maybe<Int>;
   closes_gte?: Maybe<Int>;
+  tipStatus_every?: Maybe<TipStatusWhereInput>;
+  tipStatus_some?: Maybe<TipStatusWhereInput>;
+  tipStatus_none?: Maybe<TipStatusWhereInput>;
   Endorsements_every?: Maybe<EndorsementWhereInput>;
   Endorsements_some?: Maybe<EndorsementWhereInput>;
   Endorsements_none?: Maybe<EndorsementWhereInput>;
@@ -3202,56 +3239,6 @@ export type TipStatusWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   uniqueStatus?: Maybe<String>;
 }>;
-
-export interface TipStatusWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  blockNumber?: Maybe<BlockNumberWhereInput>;
-  tip?: Maybe<TipWhereInput>;
-  status?: Maybe<String>;
-  status_not?: Maybe<String>;
-  status_in?: Maybe<String[] | String>;
-  status_not_in?: Maybe<String[] | String>;
-  status_lt?: Maybe<String>;
-  status_lte?: Maybe<String>;
-  status_gt?: Maybe<String>;
-  status_gte?: Maybe<String>;
-  status_contains?: Maybe<String>;
-  status_not_contains?: Maybe<String>;
-  status_starts_with?: Maybe<String>;
-  status_not_starts_with?: Maybe<String>;
-  status_ends_with?: Maybe<String>;
-  status_not_ends_with?: Maybe<String>;
-  uniqueStatus?: Maybe<String>;
-  uniqueStatus_not?: Maybe<String>;
-  uniqueStatus_in?: Maybe<String[] | String>;
-  uniqueStatus_not_in?: Maybe<String[] | String>;
-  uniqueStatus_lt?: Maybe<String>;
-  uniqueStatus_lte?: Maybe<String>;
-  uniqueStatus_gt?: Maybe<String>;
-  uniqueStatus_gte?: Maybe<String>;
-  uniqueStatus_contains?: Maybe<String>;
-  uniqueStatus_not_contains?: Maybe<String>;
-  uniqueStatus_starts_with?: Maybe<String>;
-  uniqueStatus_not_starts_with?: Maybe<String>;
-  uniqueStatus_ends_with?: Maybe<String>;
-  uniqueStatus_not_ends_with?: Maybe<String>;
-  AND?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
-  OR?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
-  NOT?: Maybe<TipStatusWhereInput[] | TipStatusWhereInput>;
-}
 
 export type TotalIssuanceWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -5557,11 +5544,25 @@ export interface TipCreateInput {
   hash: String;
   reason: String;
   who: String;
-  value: String;
   finder?: Maybe<String>;
   finderFee?: Maybe<String>;
   closes?: Maybe<Int>;
+  tipStatus?: Maybe<TipStatusCreateManyWithoutTipInput>;
   Endorsements?: Maybe<EndorsementCreateManyInput>;
+}
+
+export interface TipStatusCreateManyWithoutTipInput {
+  create?: Maybe<
+    TipStatusCreateWithoutTipInput[] | TipStatusCreateWithoutTipInput
+  >;
+  connect?: Maybe<TipStatusWhereUniqueInput[] | TipStatusWhereUniqueInput>;
+}
+
+export interface TipStatusCreateWithoutTipInput {
+  id?: Maybe<ID_Input>;
+  blockNumber: BlockNumberCreateOneInput;
+  status: String;
+  uniqueStatus: String;
 }
 
 export interface EndorsementCreateManyInput {
@@ -5573,11 +5574,109 @@ export interface TipUpdateInput {
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
-  value?: Maybe<String>;
   finder?: Maybe<String>;
   finderFee?: Maybe<String>;
   closes?: Maybe<Int>;
+  tipStatus?: Maybe<TipStatusUpdateManyWithoutTipInput>;
   Endorsements?: Maybe<EndorsementUpdateManyInput>;
+}
+
+export interface TipStatusUpdateManyWithoutTipInput {
+  create?: Maybe<
+    TipStatusCreateWithoutTipInput[] | TipStatusCreateWithoutTipInput
+  >;
+  delete?: Maybe<TipStatusWhereUniqueInput[] | TipStatusWhereUniqueInput>;
+  connect?: Maybe<TipStatusWhereUniqueInput[] | TipStatusWhereUniqueInput>;
+  set?: Maybe<TipStatusWhereUniqueInput[] | TipStatusWhereUniqueInput>;
+  disconnect?: Maybe<TipStatusWhereUniqueInput[] | TipStatusWhereUniqueInput>;
+  update?: Maybe<
+    | TipStatusUpdateWithWhereUniqueWithoutTipInput[]
+    | TipStatusUpdateWithWhereUniqueWithoutTipInput
+  >;
+  upsert?: Maybe<
+    | TipStatusUpsertWithWhereUniqueWithoutTipInput[]
+    | TipStatusUpsertWithWhereUniqueWithoutTipInput
+  >;
+  deleteMany?: Maybe<TipStatusScalarWhereInput[] | TipStatusScalarWhereInput>;
+  updateMany?: Maybe<
+    | TipStatusUpdateManyWithWhereNestedInput[]
+    | TipStatusUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TipStatusUpdateWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput;
+  data: TipStatusUpdateWithoutTipDataInput;
+}
+
+export interface TipStatusUpdateWithoutTipDataInput {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface TipStatusUpsertWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput;
+  update: TipStatusUpdateWithoutTipDataInput;
+  create: TipStatusCreateWithoutTipInput;
+}
+
+export interface TipStatusScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TipStatusScalarWhereInput[] | TipStatusScalarWhereInput>;
+  OR?: Maybe<TipStatusScalarWhereInput[] | TipStatusScalarWhereInput>;
+  NOT?: Maybe<TipStatusScalarWhereInput[] | TipStatusScalarWhereInput>;
+}
+
+export interface TipStatusUpdateManyWithWhereNestedInput {
+  where: TipStatusScalarWhereInput;
+  data: TipStatusUpdateManyDataInput;
+}
+
+export interface TipStatusUpdateManyDataInput {
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
 }
 
 export interface EndorsementUpdateManyInput {
@@ -5683,7 +5782,6 @@ export interface TipUpdateManyMutationInput {
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
-  value?: Maybe<String>;
   finder?: Maybe<String>;
   finderFee?: Maybe<String>;
   closes?: Maybe<Int>;
@@ -5692,44 +5790,53 @@ export interface TipUpdateManyMutationInput {
 export interface TipStatusCreateInput {
   id?: Maybe<ID_Input>;
   blockNumber: BlockNumberCreateOneInput;
-  tip: TipCreateOneInput;
+  tip: TipCreateOneWithoutTipStatusInput;
   status: String;
   uniqueStatus: String;
 }
 
-export interface TipCreateOneInput {
-  create?: Maybe<TipCreateInput>;
+export interface TipCreateOneWithoutTipStatusInput {
+  create?: Maybe<TipCreateWithoutTipStatusInput>;
   connect?: Maybe<TipWhereUniqueInput>;
+}
+
+export interface TipCreateWithoutTipStatusInput {
+  hash: String;
+  reason: String;
+  who: String;
+  finder?: Maybe<String>;
+  finderFee?: Maybe<String>;
+  closes?: Maybe<Int>;
+  Endorsements?: Maybe<EndorsementCreateManyInput>;
 }
 
 export interface TipStatusUpdateInput {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  tip?: Maybe<TipUpdateOneRequiredInput>;
+  tip?: Maybe<TipUpdateOneRequiredWithoutTipStatusInput>;
   status?: Maybe<String>;
   uniqueStatus?: Maybe<String>;
 }
 
-export interface TipUpdateOneRequiredInput {
-  create?: Maybe<TipCreateInput>;
-  update?: Maybe<TipUpdateDataInput>;
-  upsert?: Maybe<TipUpsertNestedInput>;
+export interface TipUpdateOneRequiredWithoutTipStatusInput {
+  create?: Maybe<TipCreateWithoutTipStatusInput>;
+  update?: Maybe<TipUpdateWithoutTipStatusDataInput>;
+  upsert?: Maybe<TipUpsertWithoutTipStatusInput>;
   connect?: Maybe<TipWhereUniqueInput>;
 }
 
-export interface TipUpdateDataInput {
+export interface TipUpdateWithoutTipStatusDataInput {
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
-  value?: Maybe<String>;
   finder?: Maybe<String>;
   finderFee?: Maybe<String>;
   closes?: Maybe<Int>;
   Endorsements?: Maybe<EndorsementUpdateManyInput>;
 }
 
-export interface TipUpsertNestedInput {
-  update: TipUpdateDataInput;
-  create: TipCreateInput;
+export interface TipUpsertWithoutTipStatusInput {
+  update: TipUpdateWithoutTipStatusDataInput;
+  create: TipCreateWithoutTipStatusInput;
 }
 
 export interface TipStatusUpdateManyMutationInput {
@@ -8839,7 +8946,6 @@ export interface Tip {
   hash: String;
   reason: String;
   who: String;
-  value: String;
   finder?: String;
   finderFee?: String;
   closes?: Int;
@@ -8850,10 +8956,18 @@ export interface TipPromise extends Promise<Tip>, Fragmentable {
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
-  value: () => Promise<String>;
   finder: () => Promise<String>;
   finderFee: () => Promise<String>;
   closes: () => Promise<Int>;
+  tipStatus: <T = FragmentableArray<TipStatus>>(args?: {
+    where?: TipStatusWhereInput;
+    orderBy?: TipStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   Endorsements: <T = FragmentableArray<Endorsement>>(args?: {
     where?: EndorsementWhereInput;
     orderBy?: EndorsementOrderByInput;
@@ -8872,10 +8986,18 @@ export interface TipSubscription
   hash: () => Promise<AsyncIterator<String>>;
   reason: () => Promise<AsyncIterator<String>>;
   who: () => Promise<AsyncIterator<String>>;
-  value: () => Promise<AsyncIterator<String>>;
   finder: () => Promise<AsyncIterator<String>>;
   finderFee: () => Promise<AsyncIterator<String>>;
   closes: () => Promise<AsyncIterator<Int>>;
+  tipStatus: <T = Promise<AsyncIterator<TipStatusSubscription>>>(args?: {
+    where?: TipStatusWhereInput;
+    orderBy?: TipStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   Endorsements: <T = Promise<AsyncIterator<EndorsementSubscription>>>(args?: {
     where?: EndorsementWhereInput;
     orderBy?: EndorsementOrderByInput;
@@ -8892,10 +9014,18 @@ export interface TipNullablePromise extends Promise<Tip | null>, Fragmentable {
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
-  value: () => Promise<String>;
   finder: () => Promise<String>;
   finderFee: () => Promise<String>;
   closes: () => Promise<Int>;
+  tipStatus: <T = FragmentableArray<TipStatus>>(args?: {
+    where?: TipStatusWhereInput;
+    orderBy?: TipStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   Endorsements: <T = FragmentableArray<Endorsement>>(args?: {
     where?: EndorsementWhereInput;
     orderBy?: EndorsementOrderByInput;
@@ -8905,6 +9035,40 @@ export interface TipNullablePromise extends Promise<Tip | null>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+}
+
+export interface TipStatus {
+  id: ID_Output;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface TipStatusPromise extends Promise<TipStatus>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  tip: <T = TipPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface TipStatusSubscription
+  extends Promise<AsyncIterator<TipStatus>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  blockNumber: <T = BlockNumberSubscription>() => T;
+  tip: <T = TipSubscription>() => T;
+  status: () => Promise<AsyncIterator<String>>;
+  uniqueStatus: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TipStatusNullablePromise
+  extends Promise<TipStatus | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  tip: <T = TipPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
 }
 
 export interface TipConnection {
@@ -8959,40 +9123,6 @@ export interface AggregateTipSubscription
   extends Promise<AsyncIterator<AggregateTip>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TipStatus {
-  id: ID_Output;
-  status: String;
-  uniqueStatus: String;
-}
-
-export interface TipStatusPromise extends Promise<TipStatus>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  blockNumber: <T = BlockNumberPromise>() => T;
-  tip: <T = TipPromise>() => T;
-  status: () => Promise<String>;
-  uniqueStatus: () => Promise<String>;
-}
-
-export interface TipStatusSubscription
-  extends Promise<AsyncIterator<TipStatus>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  blockNumber: <T = BlockNumberSubscription>() => T;
-  tip: <T = TipSubscription>() => T;
-  status: () => Promise<AsyncIterator<String>>;
-  uniqueStatus: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TipStatusNullablePromise
-  extends Promise<TipStatus | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  blockNumber: <T = BlockNumberPromise>() => T;
-  tip: <T = TipPromise>() => T;
-  status: () => Promise<String>;
-  uniqueStatus: () => Promise<String>;
 }
 
 export interface TipStatusConnection {
@@ -10519,7 +10649,6 @@ export interface TipPreviousValues {
   hash: String;
   reason: String;
   who: String;
-  value: String;
   finder?: String;
   finderFee?: String;
   closes?: Int;
@@ -10532,7 +10661,6 @@ export interface TipPreviousValuesPromise
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
-  value: () => Promise<String>;
   finder: () => Promise<String>;
   finderFee: () => Promise<String>;
   closes: () => Promise<Int>;
@@ -10545,7 +10673,6 @@ export interface TipPreviousValuesSubscription
   hash: () => Promise<AsyncIterator<String>>;
   reason: () => Promise<AsyncIterator<String>>;
   who: () => Promise<AsyncIterator<String>>;
-  value: () => Promise<AsyncIterator<String>>;
   finder: () => Promise<AsyncIterator<String>>;
   finderFee: () => Promise<AsyncIterator<String>>;
   closes: () => Promise<AsyncIterator<Int>>;

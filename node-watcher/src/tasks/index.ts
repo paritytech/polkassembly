@@ -19,6 +19,7 @@ import createReferendumStatus from './createReferendumStatus';
 // import createSlashing from './createSlashing';
 // import createStake from './createStake';
 // import createTotalIssuance from './createTotalIssuance';
+import createTip from './createTip';
 import createTreasury from './createTreasury';
 import { NomidotTask } from './types';
 
@@ -42,4 +43,5 @@ export const nomidotTasks: NomidotTask[] = [
   createMotion,
   createMotionStatus,
   createTreasury,
+  createTip
 ];

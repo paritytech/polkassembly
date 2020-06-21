@@ -4973,10 +4973,10 @@ type Tip {
   hash: String!
   reason: String!
   who: String!
-  value: String!
   finder: String
   finderFee: String
   closes: Int
+  tipStatus(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus!]
   Endorsements(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Endorsement!]
 }
 
@@ -4990,16 +4990,26 @@ input TipCreateInput {
   hash: String!
   reason: String!
   who: String!
-  value: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusCreateManyWithoutTipInput
+  Endorsements: EndorsementCreateManyInput
+}
+
+input TipCreateOneWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  connect: TipWhereUniqueInput
+}
+
+input TipCreateWithoutTipStatusInput {
+  hash: String!
+  reason: String!
+  who: String!
   finder: String
   finderFee: String
   closes: Int
   Endorsements: EndorsementCreateManyInput
-}
-
-input TipCreateOneInput {
-  create: TipCreateInput
-  connect: TipWhereUniqueInput
 }
 
 type TipEdge {
@@ -5016,8 +5026,6 @@ enum TipOrderByInput {
   reason_DESC
   who_ASC
   who_DESC
-  value_ASC
-  value_DESC
   finder_ASC
   finder_DESC
   finderFee_ASC
@@ -5031,7 +5039,6 @@ type TipPreviousValues {
   hash: String!
   reason: String!
   who: String!
-  value: String!
   finder: String
   finderFee: String
   closes: Int
@@ -5054,7 +5061,19 @@ type TipStatusConnection {
 input TipStatusCreateInput {
   id: ID
   blockNumber: BlockNumberCreateOneInput!
-  tip: TipCreateOneInput!
+  tip: TipCreateOneWithoutTipStatusInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TipStatusCreateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  connect: [TipStatusWhereUniqueInput!]
+}
+
+input TipStatusCreateWithoutTipInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
   status: String!
   uniqueStatus: String!
 }
@@ -5079,6 +5098,54 @@ type TipStatusPreviousValues {
   uniqueStatus: String!
 }
 
+input TipStatusScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [TipStatusScalarWhereInput!]
+  OR: [TipStatusScalarWhereInput!]
+  NOT: [TipStatusScalarWhereInput!]
+}
+
 type TipStatusSubscriptionPayload {
   mutation: MutationType!
   node: TipStatus
@@ -5099,7 +5166,12 @@ input TipStatusSubscriptionWhereInput {
 
 input TipStatusUpdateInput {
   blockNumber: BlockNumberUpdateOneRequiredInput
-  tip: TipUpdateOneRequiredInput
+  tip: TipUpdateOneRequiredWithoutTipStatusInput
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyDataInput {
   status: String
   uniqueStatus: String
 }
@@ -5107,6 +5179,40 @@ input TipStatusUpdateInput {
 input TipStatusUpdateManyMutationInput {
   status: String
   uniqueStatus: String
+}
+
+input TipStatusUpdateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  delete: [TipStatusWhereUniqueInput!]
+  connect: [TipStatusWhereUniqueInput!]
+  set: [TipStatusWhereUniqueInput!]
+  disconnect: [TipStatusWhereUniqueInput!]
+  update: [TipStatusUpdateWithWhereUniqueWithoutTipInput!]
+  upsert: [TipStatusUpsertWithWhereUniqueWithoutTipInput!]
+  deleteMany: [TipStatusScalarWhereInput!]
+  updateMany: [TipStatusUpdateManyWithWhereNestedInput!]
+}
+
+input TipStatusUpdateManyWithWhereNestedInput {
+  where: TipStatusScalarWhereInput!
+  data: TipStatusUpdateManyDataInput!
+}
+
+input TipStatusUpdateWithoutTipDataInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  data: TipStatusUpdateWithoutTipDataInput!
+}
+
+input TipStatusUpsertWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  update: TipStatusUpdateWithoutTipDataInput!
+  create: TipStatusCreateWithoutTipInput!
 }
 
 input TipStatusWhereInput {
@@ -5182,25 +5288,14 @@ input TipSubscriptionWhereInput {
   NOT: [TipSubscriptionWhereInput!]
 }
 
-input TipUpdateDataInput {
-  hash: String
-  reason: String
-  who: String
-  value: String
-  finder: String
-  finderFee: String
-  closes: Int
-  Endorsements: EndorsementUpdateManyInput
-}
-
 input TipUpdateInput {
   hash: String
   reason: String
   who: String
-  value: String
   finder: String
   finderFee: String
   closes: Int
+  tipStatus: TipStatusUpdateManyWithoutTipInput
   Endorsements: EndorsementUpdateManyInput
 }
 
@@ -5208,22 +5303,31 @@ input TipUpdateManyMutationInput {
   hash: String
   reason: String
   who: String
-  value: String
   finder: String
   finderFee: String
   closes: Int
 }
 
-input TipUpdateOneRequiredInput {
-  create: TipCreateInput
-  update: TipUpdateDataInput
-  upsert: TipUpsertNestedInput
+input TipUpdateOneRequiredWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  update: TipUpdateWithoutTipStatusDataInput
+  upsert: TipUpsertWithoutTipStatusInput
   connect: TipWhereUniqueInput
 }
 
-input TipUpsertNestedInput {
-  update: TipUpdateDataInput!
-  create: TipCreateInput!
+input TipUpdateWithoutTipStatusDataInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+  Endorsements: EndorsementUpdateManyInput
+}
+
+input TipUpsertWithoutTipStatusInput {
+  update: TipUpdateWithoutTipStatusDataInput!
+  create: TipCreateWithoutTipStatusInput!
 }
 
 input TipWhereInput {
@@ -5277,20 +5381,6 @@ input TipWhereInput {
   who_not_starts_with: String
   who_ends_with: String
   who_not_ends_with: String
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
   finder: String
   finder_not: String
   finder_in: [String!]
@@ -5327,6 +5417,9 @@ input TipWhereInput {
   closes_lte: Int
   closes_gt: Int
   closes_gte: Int
+  tipStatus_every: TipStatusWhereInput
+  tipStatus_some: TipStatusWhereInput
+  tipStatus_none: TipStatusWhereInput
   Endorsements_every: EndorsementWhereInput
   Endorsements_some: EndorsementWhereInput
   Endorsements_none: EndorsementWhereInput

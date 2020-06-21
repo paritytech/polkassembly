@@ -221,10 +221,10 @@ type Tip {
   hash: String!
   reason: String!
   who: String!
-  value: String!
   finder: String
   finderFee: String
   closes: Int
+  tipStatus: [TipStatus]! @relation(name: "TipStatusFromTip")
   Endorsements: [Endorsement]! @relation(name: "TipEndorsements")
 }
 
