@@ -61,7 +61,7 @@ const tipPost = gql`
 export const QUERY_TIP_POST_AND_COMMENTS = gql`
     query TipPostAndComments ($id:Int!) {
         posts(where: {onchain_link: {onchain_tip_id: {_eq: $id}}}) {
-            ...treasuryProposalPost
+            ...tipPost
         }
     }
     ${tipPost}

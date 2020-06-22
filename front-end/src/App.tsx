@@ -38,6 +38,8 @@ import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/ResetPassword';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
+import PostTip from './screens/TipPost';
+import Tips from './screens/Tips';
 import Treasury from './screens/Treasury';
 import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
@@ -83,38 +85,44 @@ const App = () => {
 														<Route path="/login">
 															<LoginForm/>
 														</Route>
-														<Route path="/post/create" >
+														<Route path="/post/create">
 															<CreatePost/>
 														</Route>
-														<Route exact path="/motion/:id" >
+														<Route exact path="/motion/:id">
 															<PostMotion/>
 														</Route>
-														<Route exact path="/proposal/:id" >
+														<Route exact path="/proposal/:id">
 															<PostProposal/>
 														</Route>
-														<Route exact path="/referendum/:id" >
+														<Route exact path="/referendum/:id">
 															<PostReferendum/>
 														</Route>
 														<Route exact path="/treasury/:id">
 															<PostTreasury/>
 														</Route>
-														<Route exact path="/post/:id" >
+														<Route exact path="/tip/:id">
+															<PostTip/>
+														</Route>
+														<Route exact path="/post/:id">
 															<PostDiscussion/>
 														</Route>
-														<Route path="/onchain" >
+														<Route path="/onchain">
 															<OnChain/>
 														</Route>
-														<Route path="/referenda" >
+														<Route path="/referenda">
 															<Referenda/>
 														</Route>
-														<Route path="/proposals" >
+														<Route path="/proposals">
 															<Proposals/>
 														</Route>
-														<Route path="/motions" >
+														<Route path="/motions">
 															<Motions/>
 														</Route>
-														<Route path="/treasury-proposals" >
+														<Route path="/treasury-proposals">
 															<Treasury/>
+														</Route>
+														<Route path="/tips">
+															<Tips/>
 														</Route>
 														<Route path="/request-reset-password">
 															<RequestResetPassword/>

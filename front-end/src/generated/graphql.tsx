@@ -19065,7 +19065,7 @@ export type TipPostAndCommentsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & TreasuryProposalPostFragment
+    & TipPostFragment
   )> }
 );
 
@@ -21735,10 +21735,10 @@ export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutatio
 export const TipPostAndCommentsDocument = gql`
     query TipPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_tip_id: {_eq: $id}}}) {
-    ...treasuryProposalPost
+    ...tipPost
   }
 }
-    ${TreasuryProposalPostFragmentDoc}`;
+    ${TipPostFragmentDoc}`;
 
 /**
  * __useTipPostAndCommentsQuery__

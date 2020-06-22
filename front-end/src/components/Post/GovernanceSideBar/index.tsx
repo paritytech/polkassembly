@@ -26,12 +26,13 @@ interface Props {
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
+	isTipProposal?: boolean
 	onchainId?: number | null
 	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment
 	status?: string
 }
 
-const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
+const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
@@ -149,7 +150,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 };
 
 export default styled(GovenanceSideBar)`
-	
+
 	@media only screen and (max-width: 768px) {
 		.ui.form {
 			padding: 0rem;
