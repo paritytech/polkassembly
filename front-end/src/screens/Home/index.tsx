@@ -14,6 +14,7 @@ import DiscussionContainer from './LatestDiscussions';
 import MotionsContainer from './LatestMotions';
 import ProposalContainer from './LatestProposals';
 import ReferendaContainer from './LatestReferenda';
+import TipContainer from './LatestTips';
 import TreasuryContainer from './LatestTreasury';
 
 interface Props {
@@ -40,6 +41,8 @@ const Home = ({ className }: Props) => {
 					<MotionsContainer className='motionContainer' />
 					<h3>Latest treasury proposals</h3>
 					<TreasuryContainer className='treasuryContainer' />
+					<h3>Latest tips</h3>
+					<TipContainer className='tipContainer' />
 					<h3>Latest discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
@@ -57,7 +60,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer, .tipContainer {
 		margin-bottom: 3rem;
 	}
 

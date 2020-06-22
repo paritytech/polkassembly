@@ -11,6 +11,7 @@ import InfoBox from '../../ui-components/InfoBox';
 import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
+import TipContainer from './Tips';
 import TreasuryContainer from './Treasury';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
@@ -31,14 +32,17 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<h3>Motions</h3>
 					<MotionContainer className='motionContainer' limit={limit} />
 					<Link className='full-listing-link' to='motions'><Icon name='arrow right'/>See all motions</Link>
-					<h3>Treasury</h3>
+					<h3>Treasury proposals</h3>
 					<TreasuryContainer className='treasuryContainer' limit={limit} />
 					<Link className='full-listing-link' to='treasury-proposals'><Icon name='arrow right'/>See all treasury proposals</Link>
+					<h3>Tips</h3>
+					<TipContainer className='tipContainer' limit={limit} />
+					<Link className='full-listing-link' to='tips'><Icon name='arrow right'/>See all tips</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
 						dismissable={true}
-						content='This is the place to discuss on-chain proposals, motions and referenda.
+						content='This is the place to discuss on-chain proposals, referenda, motions and treasury.
 						On-chain posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
@@ -53,7 +57,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 
-	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer {
+	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer, .tipContainer {
 		margin-bottom: 2rem;
 	}
 

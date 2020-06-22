@@ -7,34 +7,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NothingFoundCard from 'src/ui-components/NothingFoundCard';
 
-import { LatestTipProposalPostsQuery } from '../../generated/graphql';
+import { LatestTipPostsQuery } from '../../generated/graphql';
 import GovernanceCard from '../GovernanceCard';
 
 interface Props {
   className?: string
-  data: LatestTipProposalPostsQuery
+  data: LatestTipPostsQuery
 }
 
 const TipProposals = ({ className, data }: Props) => {
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active treasury proposals.'/>;
+	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active tip proposals.'/>;
 
 	return (
 		<ul className={`${className} proposals__list`}>
 			{data.posts.map(
 				(post) => {
-					const onchainId = post.onchain_link?.onchain_treasury_proposal_id;
+					const onchainId = post.onchain_link?.onchain_tip_id;
 
 					return !!post?.author?.username && post.onchain_link &&
 						<li key={post.id} className='proposals__item'>
-							{<Link to={`/treasury/${onchainId}`}>
+							{<Link to={`/tip/${onchainId}`}>
 								<GovernanceCard
 									address={post.onchain_link.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
 									onchainId={onchainId}
-									status={post.onchain_link.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status}
+									status={post.onchain_link.onchain_tip?.[0]?.tipStatus?.[0].status}
 									title={post.title}
 									topic={post.topic.name}
 								/>

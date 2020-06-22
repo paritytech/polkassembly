@@ -18614,6 +18614,48 @@ export type LatestReferendaPostsQuery = (
   )> }
 );
 
+export type LatestTipPostsQueryVariables = {
+  postType: Scalars['Int'];
+  postTopic: Scalars['Int'];
+  limit?: Scalars['Int'];
+};
+
+
+export type LatestTipPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_tip_id' | 'proposer_address'>
+      & { onchain_tip: Array<Maybe<(
+        { __typename?: 'Tip' }
+        & Pick<Tip, 'id'>
+        & { tipStatus?: Maybe<Array<(
+          { __typename?: 'TipStatus' }
+          & Pick<TipStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type LatestDemocracyTreasuryProposalPostsQueryVariables = {
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
@@ -21058,6 +21100,72 @@ export function useLatestReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.
 export type LatestReferendaPostsQueryHookResult = ReturnType<typeof useLatestReferendaPostsQuery>;
 export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLatestReferendaPostsLazyQuery>;
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
+export const LatestTipPostsDocument = gql`
+    query LatestTipPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_tip_id: desc}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_tip_id
+      onchain_tip(where: {}) {
+        id
+        tipStatus(last: 1) {
+          id
+          status
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useLatestTipPostsQuery__
+ *
+ * To run a query within a React component, call `useLatestTipPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLatestTipPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLatestTipPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      postTopic: // value for 'postTopic'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useLatestTipPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LatestTipPostsQuery, LatestTipPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<LatestTipPostsQuery, LatestTipPostsQueryVariables>(LatestTipPostsDocument, baseOptions);
+      }
+export function useLatestTipPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LatestTipPostsQuery, LatestTipPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LatestTipPostsQuery, LatestTipPostsQueryVariables>(LatestTipPostsDocument, baseOptions);
+        }
+export type LatestTipPostsQueryHookResult = ReturnType<typeof useLatestTipPostsQuery>;
+export type LatestTipPostsLazyQueryHookResult = ReturnType<typeof useLatestTipPostsLazyQuery>;
+export type LatestTipPostsQueryResult = ApolloReactCommon.QueryResult<LatestTipPostsQuery, LatestTipPostsQueryVariables>;
 export const LatestDemocracyTreasuryProposalPostsDocument = gql`
     query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_motion_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
