@@ -297,7 +297,7 @@ deploy-kusama-staging:
 deploy-kusama-production:
   stage:                           deploy
   environment:
-    name:                          kusama-prod
+    name:                          parity-prod
   tags:
     - kubernetes-parity-build
   only:
