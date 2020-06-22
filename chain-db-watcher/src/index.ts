@@ -13,14 +13,16 @@ import ws from 'ws';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
 	motionDiscussionExists,
 	proposalDiscussionExists,
+	tipDiscussionExists,
 	treasuryProposalDiscussionExists,
 	updateTreasuryProposalWithMotion
 } from './graphql_helpers';
-import { motionSubscription, proposalSubscription, referendumSubscription, treasurySpendProposalSubscription } from './queries';
+import { motionSubscription, proposalSubscription, referendumSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
 import { getMotionTreasuryProposalId } from './sync/utils';
 
@@ -80,22 +82,22 @@ async function main (): Promise<void> {
 		variables: { startBlock }
 	}).subscribe({
 		next: ({ data }): void => {
-			console.log('Treasury data received', JSON.stringify(data, null, 2));
+			console.log('Tip data received', JSON.stringify(data, null, 2));
 
-			if (data?.treasurySpendProposal.mutation === subscriptionMutation.Created) {
-				const { treasuryProposalId, proposer } = data.treasurySpendProposal.node;
-				treasuryProposalDiscussionExists(treasuryProposalId).then(alreadyExist => {
+			if (data?.tip.mutation === subscriptionMutation.Created) {
+				const { id, finder } = data.tip.node;
+				tipDiscussionExists(id).then(alreadyExist => {
 					if (!alreadyExist) {
-						addDiscussionPostAndTreasuryProposal({ onchainTreasuryProposalId: Number(treasuryProposalId), proposer });
+						addDiscussionPostAndTip({ onchainTipId: Number(id), proposer: finder });
 					} else {
-						console.error(chalk.red(`✖︎ Treasury Proposal id ${treasuryProposalId.toString()} already exists in the discsussion db. Not inserted.`));
+						console.error(chalk.red(`✖︎ Tip id ${id.toString()} already exists in the discsussion db. Not inserted.`));
 					}
 				}).catch(error => console.error(chalk.red(error)));
 			}
 		},
-		error: error => { throw new Error(`Subscription (treasury) error: ${error}`); },
+		error: error => { throw new Error(`Subscription (tip) error: ${error}`); },
 		complete: () => {
-			console.log('Subscription (treasury) completed');
+			console.log('Subscription (tip) completed');
 			process.exit(1);
 		}
 	});

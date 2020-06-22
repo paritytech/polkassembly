@@ -7,6 +7,7 @@ import chalk from 'chalk';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
 	updateTreasuryProposalWithMotion
@@ -16,10 +17,12 @@ import {
 	getDiscussionMotions,
 	getDiscussionProposals,
 	getDiscussionReferenda,
+	getDiscussionTips,
 	getDiscussionTreasuryProposals,
 	getOnChainMotions,
 	getOnChainProposals,
 	getOnchainReferenda,
+	getOnChainTips,
 	getOnChainTreasuryProposals
 } from './getter';
 import { getMaps } from './utils';
@@ -30,29 +33,42 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 		const discussionProposals = await getDiscussionProposals();
 		const discussionReferenda = await getDiscussionReferenda();
 		const discussionTreasuryProposals = await getDiscussionTreasuryProposals();
+		const discussionTips = await getDiscussionTips();
 
 		const onChainMotions = await getOnChainMotions();
 		const onChainProposals = await getOnChainProposals();
 		const onchainReferenda = await getOnchainReferenda();
 		const onChainTreasuryProposals = await getOnChainTreasuryProposals();
+		const onChainTips = await getOnChainTips();
 
 		return {
 			discussion: {
 				motions: discussionMotions,
 				proposals: discussionProposals,
 				referenda: discussionReferenda,
+				tips: discussionTips,
 				treasuryProposals: discussionTreasuryProposals
 			},
 			onchain: {
 				motions: onChainMotions,
 				proposals: onChainProposals,
 				referenda: onchainReferenda,
+				tips: onChainTips,
 				treasuryProposals: onChainTreasuryProposals
 			}
 		};
 	} catch (err) {
 		console.error(chalk.red('getSyncData execution error'), err);
 	}
+};
+
+const syncTips = async (onChainTips: ObjectMap, discussionTips: ObjectMap): Promise<void[]> => {
+	return Promise.all(Object.entries(onChainTips).map(async ([key, author]) => {
+		// if this treasuryproposal doesn't exist in the discussion DB
+		if (!discussionTips[key]) {
+			await addDiscussionPostAndTip({ onchainTipId: Number(key), proposer: author });
+		}
+	}));
 };
 
 const syncTreasuryProposals = async (onchainTreasuryProposals: ObjectMap, discussionTreasuryProposals: ObjectMap): Promise<void[]> => {
@@ -151,6 +167,10 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.onchain?.treasuryProposals &&
 		syncMaps?.discussion?.treasuryProposals &&
 		await syncTreasuryProposals(syncMaps.onchain.treasuryProposals, syncMaps.discussion.treasuryProposals);
+
+		syncMaps?.onchain?.tips &&
+		syncMaps?.discussion?.tips &&
+		await syncTips(syncMaps.onchain.tips, syncMaps.discussion.tips);
 
 		if (syncMaps?.onchain?.motions && syncMaps?.discussion?.motions) {
 			const treasuryDeduplicatedMotionsMap = getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);

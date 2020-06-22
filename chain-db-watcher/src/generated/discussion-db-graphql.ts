@@ -17858,6 +17858,27 @@ export type AddPostAndTreasurySpendProposalMutationMutation = (
   )> }
 );
 
+export type AddPostAndTipMutationMutationVariables = {
+  onchainTipId: Scalars['Int'];
+  authorId: Scalars['Int'];
+  proposerAddress: Scalars['String'];
+  content: Scalars['String'];
+  topicId: Scalars['Int'];
+  typeId: Scalars['Int'];
+};
+
+
+export type AddPostAndTipMutationMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_onchain_links?: Maybe<(
+    { __typename?: 'onchain_links_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id'>
+    )> }
+  )> }
+);
+
 export type AddPostAndMotionMutationMutationVariables = {
   onchainMotionProposalId: Scalars['Int'];
   authorId: Scalars['Int'];
@@ -18000,6 +18021,19 @@ export type GetDiscussionTreasurySpendProposalByIdQuery = (
   )> }
 );
 
+export type GetDiscussionTipByIdQueryVariables = {
+  onchainTipId: Scalars['Int'];
+};
+
+
+export type GetDiscussionTipByIdQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & Pick<Onchain_Links, 'id'>
+  )> }
+);
+
 export type GetDiscussionMotionsQueryVariables = {};
 
 
@@ -18064,6 +18098,22 @@ export type DiscussionTreasuryProposalFragment = (
   & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
 );
 
+export type GetDiscussionTipsQueryVariables = {};
+
+
+export type GetDiscussionTipsQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & DiscussionTipFragment
+  )> }
+);
+
+export type DiscussionTipFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_tip_id' | 'proposer_address'>
+);
+
 export const DiscussionMotionFragmentDoc = gql`
     fragment discussionMotion on onchain_links {
   id
@@ -18091,6 +18141,13 @@ export const DiscussionTreasuryProposalFragmentDoc = gql`
   proposer_address
 }
     `;
+export const DiscussionTipFragmentDoc = gql`
+    fragment discussionTip on onchain_links {
+  id
+  onchain_tip_id
+  proposer_address
+}
+    `;
 export const AddPostAndProposalMutationDocument = gql`
     mutation addPostAndProposalMutation($onchainProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
   __typename
@@ -18105,6 +18162,16 @@ export const AddPostAndTreasurySpendProposalMutationDocument = gql`
     mutation addPostAndTreasurySpendProposalMutation($onchainTreasuryProposalId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
   __typename
   insert_onchain_links(objects: {onchain_treasury_proposal_id: $onchainTreasuryProposalId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, topic_id: $topicId, type_id: $typeId}}}) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+export const AddPostAndTipMutationDocument = gql`
+    mutation addPostAndTipMutation($onchainTipId: Int!, $authorId: Int!, $proposerAddress: String!, $content: String!, $topicId: Int!, $typeId: Int!) {
+  __typename
+  insert_onchain_links(objects: {onchain_tip_id: $onchainTipId, proposer_address: $proposerAddress, post: {data: {author_id: $authorId, content: $content, topic_id: $topicId, type_id: $typeId}}}) {
     returning {
       id
     }
@@ -18184,6 +18251,13 @@ export const GetDiscussionTreasurySpendProposalByIdDocument = gql`
   }
 }
     `;
+export const GetDiscussionTipByIdDocument = gql`
+    query getDiscussionTipById($onchainTipId: Int!) {
+  onchain_links(where: {onchain_tip_id: {_eq: $onchainTipId}}) {
+    id
+  }
+}
+    `;
 export const GetDiscussionMotionsDocument = gql`
     query getDiscussionMotions {
   onchain_links(where: {onchain_motion_id: {_is_null: false}}) {
@@ -18212,6 +18286,13 @@ export const GetDiscussionTreasuryProposalsDocument = gql`
   }
 }
     ${DiscussionTreasuryProposalFragmentDoc}`;
+export const GetDiscussionTipsDocument = gql`
+    query getDiscussionTips {
+  onchain_links(where: {onchain_tip_id: {_is_null: false}}) {
+    ...discussionTip
+  }
+}
+    ${DiscussionTipFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -18224,6 +18305,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     addPostAndTreasurySpendProposalMutation(variables: AddPostAndTreasurySpendProposalMutationMutationVariables): Promise<AddPostAndTreasurySpendProposalMutationMutation> {
       return withWrapper(() => client.request<AddPostAndTreasurySpendProposalMutationMutation>(print(AddPostAndTreasurySpendProposalMutationDocument), variables));
+    },
+    addPostAndTipMutation(variables: AddPostAndTipMutationMutationVariables): Promise<AddPostAndTipMutationMutation> {
+      return withWrapper(() => client.request<AddPostAndTipMutationMutation>(print(AddPostAndTipMutationDocument), variables));
     },
     addPostAndMotionMutation(variables: AddPostAndMotionMutationMutationVariables): Promise<AddPostAndMotionMutationMutation> {
       return withWrapper(() => client.request<AddPostAndMotionMutationMutation>(print(AddPostAndMotionMutationDocument), variables));
@@ -18255,6 +18339,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getDiscussionTreasurySpendProposalById(variables: GetDiscussionTreasurySpendProposalByIdQueryVariables): Promise<GetDiscussionTreasurySpendProposalByIdQuery> {
       return withWrapper(() => client.request<GetDiscussionTreasurySpendProposalByIdQuery>(print(GetDiscussionTreasurySpendProposalByIdDocument), variables));
     },
+    getDiscussionTipById(variables: GetDiscussionTipByIdQueryVariables): Promise<GetDiscussionTipByIdQuery> {
+      return withWrapper(() => client.request<GetDiscussionTipByIdQuery>(print(GetDiscussionTipByIdDocument), variables));
+    },
     getDiscussionMotions(variables?: GetDiscussionMotionsQueryVariables): Promise<GetDiscussionMotionsQuery> {
       return withWrapper(() => client.request<GetDiscussionMotionsQuery>(print(GetDiscussionMotionsDocument), variables));
     },
@@ -18266,6 +18353,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getDiscussionTreasuryProposals(variables?: GetDiscussionTreasuryProposalsQueryVariables): Promise<GetDiscussionTreasuryProposalsQuery> {
       return withWrapper(() => client.request<GetDiscussionTreasuryProposalsQuery>(print(GetDiscussionTreasuryProposalsDocument), variables));
+    },
+    getDiscussionTips(variables?: GetDiscussionTipsQueryVariables): Promise<GetDiscussionTipsQuery> {
+      return withWrapper(() => client.request<GetDiscussionTipsQuery>(print(GetDiscussionTipsDocument), variables));
     }
   };
 }

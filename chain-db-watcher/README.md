@@ -1,10 +1,10 @@
 # Chain DB watcher
 
-This service is listening to a graphQL based chain DB and creates new proposal posts on Polkassembly.io as soon as an on-chain proposal is created.
+This service is listening to a graphQL based chain DB and creates new onchain posts on Polkassembly.io as soon as an on-chain proposal is created.
 
 ## .env variable
 ```bash
-# auth credentials for this user to create proposals
+# auth credentials for this user to create onchain posts
 PROPOSAL_BOT_USERNAME=bot
 PROPOSAL_BOT_PASSWORD=<create a password>
 PROPOSAL_BOT_USER_ID=6

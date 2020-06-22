@@ -124,8 +124,8 @@ export const getOnchainTips = gql`
         }
     }
     fragment onchainTip on Tip {
-        proposer
+        finder
         id
-        tipId
+        hash
     }
 `;

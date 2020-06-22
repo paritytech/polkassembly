@@ -134,6 +134,39 @@ export const treasuryProposalDiscussionExists = async (
 };
 
 /**
+ * Tells if there is already a tip in the discussion DB matching the
+ * onchain tip id passed as argument
+ *
+ * @param onchainTipId the prisma db id of tip
+ */
+export const tipDiscussionExists = async (
+	onchainTipId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionTipById({ onchainTipId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`tipDiscussionExists execution error with id: ${onchainTipId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
  * Tells if there is already a motion in the discussion DB matching the
  * onchain motion proposal id passed as argument
  *
@@ -367,6 +400,81 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndTreasuryProposal execution error, treasury proposal id ${onchainTreasuryProposalId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Creates a generic post and the linked treasury spend proposal in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal
+ * @param onchainTreasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndTip = async ({
+	proposer,
+	onchainTipId
+}: {
+	proposer: string;
+	onchainTipId: number;
+}): Promise<void> => {
+	if (!treasuryTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the TREASURY_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
+		);
+	}
+
+	const tipAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		content: getDescription('tip', proposer),
+		onchainTipId,
+		proposerAddress: proposer,
+		topicId: Number(treasuryTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndTipMutation(tipAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Tip ${onchainTipId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addPostAndTipMutation execution error, tip id ${onchainTipId}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&

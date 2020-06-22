@@ -10725,6 +10725,24 @@ export type OnchainTreasuryProposalFragment = (
   & Pick<TreasurySpendProposal, 'proposer' | 'id' | 'treasuryProposalId'>
 );
 
+export type GetOnchainTipsQueryVariables = {
+  startBlock: Scalars['Int'];
+};
+
+
+export type GetOnchainTipsQuery = (
+  { __typename?: 'Query' }
+  & { tips: Array<Maybe<(
+    { __typename?: 'Tip' }
+    & OnchainTipFragment
+  )>> }
+);
+
+export type OnchainTipFragment = (
+  { __typename?: 'Tip' }
+  & Pick<Tip, 'finder' | 'id' | 'hash'>
+);
+
 export const OnchainReferendumFragmentDoc = gql`
     fragment onchainReferendum on Referendum {
   preimageHash
@@ -10764,6 +10782,13 @@ export const OnchainTreasuryProposalFragmentDoc = gql`
   proposer
   id
   treasuryProposalId
+}
+    `;
+export const OnchainTipFragmentDoc = gql`
+    fragment onchainTip on Tip {
+  finder
+  id
+  hash
 }
     `;
 export const GetExecutedMotionsWithPreimageHashDocument = gql`
@@ -10811,6 +10836,13 @@ export const GetOnchainTreasuryProposalsDocument = gql`
   }
 }
     ${OnchainTreasuryProposalFragmentDoc}`;
+export const GetOnchainTipsDocument = gql`
+    query getOnchainTips($startBlock: Int!) {
+  tips(where: {tipStatus_some: {AND: [{status: "Opened"}, {blockNumber: {number_gte: $startBlock}}]}}) {
+    ...onchainTip
+  }
+}
+    ${OnchainTipFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -10835,6 +10867,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getOnchainTreasuryProposals(variables: GetOnchainTreasuryProposalsQueryVariables): Promise<GetOnchainTreasuryProposalsQuery> {
       return withWrapper(() => client.request<GetOnchainTreasuryProposalsQuery>(print(GetOnchainTreasuryProposalsDocument), variables));
+    },
+    getOnchainTips(variables: GetOnchainTipsQueryVariables): Promise<GetOnchainTipsQuery> {
+      return withWrapper(() => client.request<GetOnchainTipsQuery>(print(GetOnchainTipsDocument), variables));
     }
   };
 }
