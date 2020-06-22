@@ -99,6 +99,9 @@ const createTreasury: Task<NomidotTip[]> = {
           const [AccountId, Balance] = tip.tips[0];
           result.tipper = AccountId;
           result.value = Balance;
+          if (!result.finder) {
+            result.finder = AccountId;
+          }
         }
 
         l.log(`Nomidot Tip: ${JSON.stringify(result)}`);
