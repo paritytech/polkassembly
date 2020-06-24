@@ -5,6 +5,8 @@
 import {
   BlockNumberSubscription,
   EraSubscription,
+  EndorsementSubscriptionPayloadSubscription,
+  EndorsementSubscriptionWhereInput,
   HeartBeatSubscription,
   MotionSubscriptionPayloadSubscription,
   MotionSubscriptionWhereInput,
@@ -18,6 +20,8 @@ import {
   SessionSubscription,
   SlashingSubscription,
   StakeSubscription,
+  TipSubscriptionPayloadSubscription,
+  TipSubscriptionWhereInput,
   TreasurySpendProposalSubscriptionPayloadSubscription,
   TreasurySpendProposalSubscriptionWhereInput,
   ValidatorSubscription,
@@ -266,9 +270,36 @@ const treasurySpendProposal = {
   },
 };
 
+const tip = {
+  subscribe: (
+    parent: any,
+    { where }: { where: TipSubscriptionWhereInput },
+    context: Context
+  ): TipSubscriptionPayloadSubscription => {
+    return context.prisma.$subscribe.tip(where);
+  },
+  resolve: (payload: any) => {
+    return payload;
+  },
+};
+
+const endorsement = {
+  subscribe: (
+    parent: any,
+    { where }: { where: EndorsementSubscriptionWhereInput },
+    context: Context
+  ): EndorsementSubscriptionPayloadSubscription => {
+    return context.prisma.$subscribe.endorsement(where);
+  },
+  resolve: (payload: any) => {
+    return payload;
+  },
+};
+
 export const Subscription = {
   blockNumber,
   era,
+  endorsement,
   heartBeat,
   nomination,
   offlineValidator,
@@ -279,6 +310,7 @@ export const Subscription = {
   validator,
   motion,
   proposal,
+  tip,
   treasurySpendProposal,
   referendum,
 };

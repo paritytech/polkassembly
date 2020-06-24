@@ -215,3 +215,30 @@ type TreasuryStatus {
   status: String!
   uniqueStatus: String! @unique
 }
+
+type Tip {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "TIP_SEQUENCE" initialValue:1 allocationSize:1)
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: [TipStatus]! @relation(name: "TipStatusFromTip")
+  tips: [Endorsement]! @relation(name: "TipsForTip")
+}
+
+type Endorsement {
+  id: ID! @id
+  tipper: String!
+  value: String!
+  tip: Tip! @relation(name: "EndorsementForTip", link: INLINE)
+}
+
+type TipStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "TipStatusAtBlockNumber", link: INLINE)
+  tip: Tip! @relation(name: "TipStatusFromTip", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
