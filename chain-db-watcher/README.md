@@ -4,7 +4,7 @@ This service is listening to a graphQL based chain DB and creates new on-chain p
 
 ## .env variable
 ```bash
-# auth credentials for this user to create onchain posts
+# auth credentials for this user to create on-chain posts
 PROPOSAL_BOT_USERNAME=bot
 PROPOSAL_BOT_PASSWORD=<create a password>
 PROPOSAL_BOT_USER_ID=6
