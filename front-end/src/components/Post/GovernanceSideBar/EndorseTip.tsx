@@ -5,13 +5,14 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
+import BN from 'bn.js';
 import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import { LoadingStatusType, NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
-import AyeNayButtons from 'src/ui-components/AyeNayButtons';
+import BalanceInput from 'src/ui-components/BalanceInput';
 import Button from 'src/ui-components/Button';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import Card from 'src/ui-components/Card';
@@ -37,10 +38,12 @@ const EndorseTip = ({
 	tipHash,
 	onAccountChange
 }: Props) => {
+	const ZERO = new BN(0);
 	const { queueNotification } = useContext(NotificationContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message:'' });
+	const [endorseValue, setEndorseValue] = useState<BN>(ZERO);
 	const [isCouncil, setIsCouncil] = useState(false);
-	const [forceVote, setForceVote] = useState(false);
+	const [forceEndorse, setForceEndorse] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
 	const { api, isApiReady } = useContext(ApiPromiseContext);
@@ -59,32 +62,34 @@ const EndorseTip = ({
 		});
 	}, [accounts, currentCouncil]);
 
-	const voteMotion = async (aye: boolean) => {
+	const onValueChange = (balance: BN) => setEndorseValue(balance);
+
+	const handleEndorse = async () => {
 		if (!tipId && tipId !== 0) {
 			console.error('tipId not set');
 			return;
 		}
 
 		if (!tipHash) {
-			console.error('motionProposalHash not set');
+			console.error('tipHash not set');
 			return;
 		}
 
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
-		const vote = api.tx.council.vote(tipHash, tipId, aye);
+		const endorse = api.tx.treasury.tip(tipHash, endorseValue);
 
-		vote.signAndSend(address, ({ status }) => {
+		endorse.signAndSend(address, ({ status }) => {
 			if (status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
-					message: `Vote on motion #${tipId} successful.`,
+					message: `Endorse tip #${tipId} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
 				setLoadingStatus({ isLoading: false, message: '' });
 				console.log(`Completed at block hash #${status.asInBlock.toString()}`);
 			} else {
 				if (status.isBroadcast){
-					setLoadingStatus({ isLoading: true, message: 'Broadcasting the vote' });
+					setLoadingStatus({ isLoading: true, message: 'Broadcasting the endorsement' });
 				}
 				console.log(`Current status: ${status.type}`);
 			}
@@ -103,19 +108,19 @@ const EndorseTip = ({
 	const GetAccountsButton = () =>
 		<Form.Group>
 			<Form.Field className='button-container'>
-				<div>Only council members can vote on motions.</div><br/>
+				<div>Only council members can endorse tips.</div><br/>
 				<Button
 					primary
 					onClick={getAccounts}
 				>
-					Vote
+					Endorse
 				</Button>
 			</Form.Field>
 		</Form.Group>;
 
 	const noAccount = accounts.length === 0;
 
-	const VotingForm = () =>
+	const EndorseForm = () =>
 		<>
 			{ noAccount
 				? <GetAccountsButton />
@@ -125,16 +130,25 @@ const EndorseTip = ({
 					</Card>
 					: <Card>
 						<AccountSelectionForm
-							title='Second with account'
+							title='Endorse with account'
 							accounts={accounts}
 							address={address}
 							onAccountChange={onAccountChange}
+							withBalance
 						/>
-						<AyeNayButtons
+						<BalanceInput
+							label={'Value'}
+							helpText={'Allocate a suggested tip amount. With enough endorsements, the suggested values are averaged and sent to the beneficiary.'}
+							placeholder={'123'}
+							onChange={onValueChange}
+						/>
+						<Button
+							primary
 							disabled={!isApiReady}
-							onClickAye={() => voteMotion(true)}
-							onClickNay={() => voteMotion(false)}
-						/>
+							onClick={handleEndorse}
+						>
+							Endorse
+						</Button>
 					</Card>
 			}
 		</>;
@@ -142,13 +156,13 @@ const EndorseTip = ({
 	const NotCouncil = () =>
 		<>
 			<div>No account found from the council :(</div>
-			<ButtonLink onClick={() => setForceVote(true)}>Let me try still.</ButtonLink>
+			<ButtonLink onClick={() => setForceEndorse(true)}>Let me try still.</ButtonLink>
 		</>;
 
 	return (
 		<div className={className}>
-			{isCouncil || forceVote
-				? <VotingForm/>
+			{isCouncil || forceEndorse
+				? <EndorseForm/>
 				: <NotCouncil/>
 			}
 		</div>

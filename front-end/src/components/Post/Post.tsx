@@ -188,6 +188,20 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isTipProposer
 	);
 
+	const sidebar = <>
+		<GovenanceSideBar
+			isMotion={isMotion}
+			isProposal={isProposal}
+			isReferendum={isReferendum}
+			isTipProposal={isTipProposal}
+			isTreasuryProposal={isTreasuryProposal}
+			onchainId={onchainId}
+			onchainLink={definedOnchainLink}
+			status={postStatus}
+		/>
+		{isDiscussion(post) && <Poll postId={post.id} />}
+	</>;
+
 	return (
 		<Grid className={className}>
 			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
@@ -234,17 +248,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					/>
 				}
 				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-					<GovenanceSideBar
-						isMotion={isMotion}
-						isProposal={isProposal}
-						isReferendum={isReferendum}
-						isTreasuryProposal={isTreasuryProposal}
-						isTipProposal={isTipProposal}
-						onchainId={onchainId}
-						onchainLink={definedOnchainLink}
-						status={postStatus}
-					/>
-					{isDiscussion(post) && <Poll postId={post.id} />}
+					{sidebar}
 				</Responsive>
 				{ !!post.comments?.length &&
 					<Comments
@@ -256,16 +260,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
 				<Responsive minWidth={Responsive.onlyComputer.minWidth}>
-					<GovenanceSideBar
-						isMotion={isMotion}
-						isProposal={isProposal}
-						isReferendum={isReferendum}
-						isTreasuryProposal={isTreasuryProposal}
-						onchainId={onchainId}
-						onchainLink={definedOnchainLink}
-						status={postStatus}
-					/>
-					{isDiscussion(post) && <Poll postId={post.id} />}
+					{sidebar}
 				</Responsive>
 				<ScrollToTop/>
 			</Grid.Column>
