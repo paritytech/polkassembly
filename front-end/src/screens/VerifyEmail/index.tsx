@@ -47,7 +47,8 @@ const VerifyEmail = ({ className }:Props): JSX.Element => {
 		}).catch((e) => {
 			console.error('Email verification error', e);
 		});
-	},[currentUser, queueNotification, router.history, verifyEmailMutation]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [] /* dependencied are empty as mutation needs to fired only once */);
 
 	return (
 		<>
