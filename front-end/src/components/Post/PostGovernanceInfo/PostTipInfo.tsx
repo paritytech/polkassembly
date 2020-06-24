@@ -55,11 +55,6 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 					<h6>Who</h6>
 					<AddressComponent address={who}/>
 				</Grid.Column>}
-				{who &&
-				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Who</h6>
-					<AddressComponent address={who}/>
-				</Grid.Column>}
 				{finder &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Finder</h6>
