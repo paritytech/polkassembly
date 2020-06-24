@@ -1,6 +1,6 @@
 # Chain DB watcher
 
-This service is listening to a graphQL based chain DB and creates new onchain posts on Polkassembly.io as soon as an on-chain proposal is created.
+This service is listening to a graphQL based chain DB and creates new on-chain posts on Polkassembly.io as soon as an on-chain proposal is created.
 
 ## .env variable
 ```bash
