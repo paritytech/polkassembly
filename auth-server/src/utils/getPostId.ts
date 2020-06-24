@@ -13,6 +13,7 @@ export default (type: PostType, onchainLink: OnchainLinkType): number => {
 		onchain_motion_id,
 		onchain_proposal_id,
 		onchain_referendum_id,
+		onchain_tip_id,
 		onchain_treasury_proposal_id
 	} = onchainLink;
 
@@ -30,6 +31,9 @@ export default (type: PostType, onchainLink: OnchainLinkType): number => {
 		break;
 	case PostTypeEnum.REFERENDUM:
 		id = onchain_referendum_id;
+		break;
+	case PostTypeEnum.TIP:
+		id = onchain_tip_id;
 		break;
 	default:
 		break;
