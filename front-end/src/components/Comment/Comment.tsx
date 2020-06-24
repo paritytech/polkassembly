@@ -18,6 +18,8 @@ import {
 	ProposalPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryVariables,
+	TipPostAndCommentsQuery,
+	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables } from '../../generated/graphql';
 import Avatar from '../../ui-components/Avatar';
@@ -33,8 +35,10 @@ interface Props{
 		DiscussionPostAndCommentsQueryVariables |
 		ProposalPostAndCommentsQueryVariables |
 		MotionPostAndCommentsQueryVariables |
+		TipPostAndCommentsQueryVariables |
 		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined) =>
+		Promise<ApolloQueryResult<TipPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |

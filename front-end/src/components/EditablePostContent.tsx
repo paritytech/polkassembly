@@ -21,6 +21,9 @@ import { DiscussionPostAndCommentsQuery,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryVariables,
 	ReferendumPostFragment,
+	TipPostAndCommentsQuery,
+	TipPostAndCommentsQueryVariables,
+	TipPostFragment,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment,
@@ -38,18 +41,20 @@ interface Props {
 	className?: string
 	isEditing: boolean
 	onchainId?: number | null
-	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment| TreasuryProposalPostFragment| MotionPostFragment
+	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment | TipPostFragment | TreasuryProposalPostFragment| MotionPostFragment
 	postStatus?: string
 	refetch: (
 		variables?: ReferendumPostAndCommentsQueryVariables
 		| DiscussionPostAndCommentsQueryVariables
 		| ProposalPostAndCommentsQueryVariables
 		| MotionPostAndCommentsQueryVariables
+		| TipPostAndCommentsQueryVariables
 		| TreasuryProposalPostAndCommentsQueryVariables
 		| undefined
 	) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>>
+		| Promise<ApolloQueryResult<TipPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 	toggleEdit: () => void
