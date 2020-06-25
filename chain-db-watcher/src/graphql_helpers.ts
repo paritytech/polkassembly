@@ -408,10 +408,10 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 };
 
 /**
- * Creates a generic post and the linked treasury spend proposal in hasura discussion DB
+ * Creates a generic post and the linked tip in hasura discussion DB
  *
- * @param proposer address of the proposer of the proposal
- * @param onchainTreasuryProposalId the proposal id that is on chain (not the Prisma db id)
+ * @param proposer address of the proposer of the tip
+ * @param onchainTreasuryProposalId the tip id that is the Prisma db id
  */
 
 export const addDiscussionPostAndTip = async ({
