@@ -51,6 +51,7 @@ export const QUERY_LATEST_TREASURY_PROPOSALS = gql`
             onchain_link {
                 id
                 onchain_tip_id
+                onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "Closed"}, {status: "Closing"}, {status: "Retracted"}]}}}) {
                 onchain_tip(where: {}) {
                     id
                     tipStatus(last: 1) {
