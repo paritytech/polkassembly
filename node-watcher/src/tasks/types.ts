@@ -141,7 +141,7 @@ export interface NomidotProposalRawEvent {
 
 export interface NomidotTip {
   hash: string
-  reason: Hash
+  reason: string
   who: AccountId
   closes?: number
   finder?: AccountId

@@ -9,7 +9,7 @@ import {
   Hash,
   OpenTip,
 } from '@polkadot/types/interfaces';
-import { logger } from '@polkadot/util';
+import { hexToString, logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
 import { filterEvents } from '../util/filterEvents';
@@ -77,9 +77,16 @@ const createTip: Task<NomidotTip[]> = {
 
         const tip = tipInfoRaw.unwrap();
 
+        const reason = await api.query.treasury.reasons.at(
+          blockHash,
+          tip.reason
+        )
+
+        const reasonText = reason.isSome ? hexToString(reason.unwrap().toHex()) : '';
+
         const result: NomidotTip = {
           hash: tipRawEvent.Hash,
-          reason: tip.reason,
+          reason: reasonText,
           who: tip.who,
           status: tipStatus.OPENED,
         };
@@ -125,7 +132,7 @@ const createTip: Task<NomidotTip[]> = {
 
         await prisma.createTip({
           hash: hash,
-          reason: reason.toString(),
+          reason,
           who: who.toString(),
           finder: finder?.toString(),
           finderFee: finderFee?.toString(),
