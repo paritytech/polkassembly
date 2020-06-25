@@ -559,7 +559,7 @@ const Query = {
     { TipWhereUniqueInput }: Selectors,
     { prisma }: Context
   ) {
-    return prisma.treasurySpendProposal(TipWhereUniqueInput);
+    return prisma.tip(TipWhereUniqueInput);
   },
   tipStatuses(
     _parent: any,
@@ -581,7 +581,7 @@ const Query = {
     { TipStatusWhereUniqueInput }: Selectors,
     { prisma }: Context
   ) {
-    return prisma.treasuryStatus(TipStatusWhereUniqueInput);
+    return prisma.tipStatus(TipStatusWhereUniqueInput);
   },
 };
 
