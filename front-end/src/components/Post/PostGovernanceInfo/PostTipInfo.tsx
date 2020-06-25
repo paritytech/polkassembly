@@ -67,7 +67,7 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 				</Grid.Column>}
 				{closes &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Closes</h6>
+					<h6>Time to block</h6>
 					{closes}
 				</Grid.Column>}
 			</Grid>
