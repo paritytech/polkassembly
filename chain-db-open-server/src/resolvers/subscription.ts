@@ -5,8 +5,6 @@
 import {
   BlockNumberSubscription,
   EraSubscription,
-  EndorsementSubscriptionPayloadSubscription,
-  EndorsementSubscriptionWhereInput,
   HeartBeatSubscription,
   MotionSubscriptionPayloadSubscription,
   MotionSubscriptionWhereInput,
@@ -283,23 +281,9 @@ const tip = {
   },
 };
 
-const endorsement = {
-  subscribe: (
-    parent: any,
-    { where }: { where: EndorsementSubscriptionWhereInput },
-    context: Context
-  ): EndorsementSubscriptionPayloadSubscription => {
-    return context.prisma.$subscribe.endorsement(where);
-  },
-  resolve: (payload: any) => {
-    return payload;
-  },
-};
-
 export const Subscription = {
   blockNumber,
   era,
-  endorsement,
   heartBeat,
   nomination,
   offlineValidator,

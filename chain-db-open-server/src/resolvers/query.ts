@@ -583,28 +583,6 @@ const Query = {
   ) {
     return prisma.treasuryStatus(TipStatusWhereUniqueInput);
   },
-  endorsements(
-    _parent: any,
-    { where, orderBy, skip, after, before, first, last }: Selectors,
-    { prisma }: Context
-  ) {
-    return prisma.endorsements({
-      where,
-      orderBy,
-      skip,
-      after,
-      before,
-      first,
-      last,
-    });
-  },
-  endorsement(
-    _parent: any,
-    { EndorsementWhereUniqueInput }: Selectors,
-    { prisma }: Context
-  ) {
-    return prisma.treasuryStatus(EndorsementWhereUniqueInput);
-  },
 };
 
 export { Query };
