@@ -18,10 +18,6 @@ type AggregateCouncilMember {
   count: Int!
 }
 
-type AggregateEndorsement {
-  count: Int!
-}
-
 type AggregateEra {
   count: Int!
 }
@@ -748,225 +744,6 @@ input CouncilWhereUniqueInput {
 }
 
 scalar DateTime
-
-type Endorsement {
-  id: ID!
-  tipper: String!
-  value: String!
-  tip: Tip!
-}
-
-type EndorsementConnection {
-  pageInfo: PageInfo!
-  edges: [EndorsementEdge]!
-  aggregate: AggregateEndorsement!
-}
-
-input EndorsementCreateInput {
-  id: ID
-  tipper: String!
-  value: String!
-  tip: TipCreateOneWithoutTipsInput!
-}
-
-input EndorsementCreateManyWithoutTipInput {
-  create: [EndorsementCreateWithoutTipInput!]
-  connect: [EndorsementWhereUniqueInput!]
-}
-
-input EndorsementCreateWithoutTipInput {
-  id: ID
-  tipper: String!
-  value: String!
-}
-
-type EndorsementEdge {
-  node: Endorsement!
-  cursor: String!
-}
-
-enum EndorsementOrderByInput {
-  id_ASC
-  id_DESC
-  tipper_ASC
-  tipper_DESC
-  value_ASC
-  value_DESC
-}
-
-type EndorsementPreviousValues {
-  id: ID!
-  tipper: String!
-  value: String!
-}
-
-input EndorsementScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  tipper: String
-  tipper_not: String
-  tipper_in: [String!]
-  tipper_not_in: [String!]
-  tipper_lt: String
-  tipper_lte: String
-  tipper_gt: String
-  tipper_gte: String
-  tipper_contains: String
-  tipper_not_contains: String
-  tipper_starts_with: String
-  tipper_not_starts_with: String
-  tipper_ends_with: String
-  tipper_not_ends_with: String
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
-  AND: [EndorsementScalarWhereInput!]
-  OR: [EndorsementScalarWhereInput!]
-  NOT: [EndorsementScalarWhereInput!]
-}
-
-type EndorsementSubscriptionPayload {
-  mutation: MutationType!
-  node: Endorsement
-  updatedFields: [String!]
-  previousValues: EndorsementPreviousValues
-}
-
-input EndorsementSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: EndorsementWhereInput
-  AND: [EndorsementSubscriptionWhereInput!]
-  OR: [EndorsementSubscriptionWhereInput!]
-  NOT: [EndorsementSubscriptionWhereInput!]
-}
-
-input EndorsementUpdateInput {
-  tipper: String
-  value: String
-  tip: TipUpdateOneRequiredWithoutTipsInput
-}
-
-input EndorsementUpdateManyDataInput {
-  tipper: String
-  value: String
-}
-
-input EndorsementUpdateManyMutationInput {
-  tipper: String
-  value: String
-}
-
-input EndorsementUpdateManyWithoutTipInput {
-  create: [EndorsementCreateWithoutTipInput!]
-  delete: [EndorsementWhereUniqueInput!]
-  connect: [EndorsementWhereUniqueInput!]
-  set: [EndorsementWhereUniqueInput!]
-  disconnect: [EndorsementWhereUniqueInput!]
-  update: [EndorsementUpdateWithWhereUniqueWithoutTipInput!]
-  upsert: [EndorsementUpsertWithWhereUniqueWithoutTipInput!]
-  deleteMany: [EndorsementScalarWhereInput!]
-  updateMany: [EndorsementUpdateManyWithWhereNestedInput!]
-}
-
-input EndorsementUpdateManyWithWhereNestedInput {
-  where: EndorsementScalarWhereInput!
-  data: EndorsementUpdateManyDataInput!
-}
-
-input EndorsementUpdateWithoutTipDataInput {
-  tipper: String
-  value: String
-}
-
-input EndorsementUpdateWithWhereUniqueWithoutTipInput {
-  where: EndorsementWhereUniqueInput!
-  data: EndorsementUpdateWithoutTipDataInput!
-}
-
-input EndorsementUpsertWithWhereUniqueWithoutTipInput {
-  where: EndorsementWhereUniqueInput!
-  update: EndorsementUpdateWithoutTipDataInput!
-  create: EndorsementCreateWithoutTipInput!
-}
-
-input EndorsementWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  tipper: String
-  tipper_not: String
-  tipper_in: [String!]
-  tipper_not_in: [String!]
-  tipper_lt: String
-  tipper_lte: String
-  tipper_gt: String
-  tipper_gte: String
-  tipper_contains: String
-  tipper_not_contains: String
-  tipper_starts_with: String
-  tipper_not_starts_with: String
-  tipper_ends_with: String
-  tipper_not_ends_with: String
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
-  tip: TipWhereInput
-  AND: [EndorsementWhereInput!]
-  OR: [EndorsementWhereInput!]
-  NOT: [EndorsementWhereInput!]
-}
-
-input EndorsementWhereUniqueInput {
-  id: ID
-}
 
 type Era {
   id: ID!
@@ -2102,12 +1879,6 @@ type Mutation {
   upsertCouncilMember(where: CouncilMemberWhereUniqueInput!, create: CouncilMemberCreateInput!, update: CouncilMemberUpdateInput!): CouncilMember!
   deleteCouncilMember(where: CouncilMemberWhereUniqueInput!): CouncilMember
   deleteManyCouncilMembers(where: CouncilMemberWhereInput): BatchPayload!
-  createEndorsement(data: EndorsementCreateInput!): Endorsement!
-  updateEndorsement(data: EndorsementUpdateInput!, where: EndorsementWhereUniqueInput!): Endorsement
-  updateManyEndorsements(data: EndorsementUpdateManyMutationInput!, where: EndorsementWhereInput): BatchPayload!
-  upsertEndorsement(where: EndorsementWhereUniqueInput!, create: EndorsementCreateInput!, update: EndorsementUpdateInput!): Endorsement!
-  deleteEndorsement(where: EndorsementWhereUniqueInput!): Endorsement
-  deleteManyEndorsements(where: EndorsementWhereInput): BatchPayload!
   createEra(data: EraCreateInput!): Era!
   updateEra(data: EraUpdateInput!, where: EraWhereUniqueInput!): Era
   updateManyEras(data: EraUpdateManyMutationInput!, where: EraWhereInput): BatchPayload!
@@ -3935,9 +3706,6 @@ type Query {
   councilMember(where: CouncilMemberWhereUniqueInput!): CouncilMember
   councilMembers(where: CouncilMemberWhereInput, orderBy: CouncilMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CouncilMember]!
   councilMembersConnection(where: CouncilMemberWhereInput, orderBy: CouncilMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CouncilMemberConnection!
-  endorsement(where: EndorsementWhereUniqueInput!): Endorsement
-  endorsements(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Endorsement]!
-  endorsementsConnection(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EndorsementConnection!
   era(where: EraWhereUniqueInput!): Era
   eras(where: EraWhereInput, orderBy: EraOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Era]!
   erasConnection(where: EraWhereInput, orderBy: EraOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EraConnection!
@@ -4951,7 +4719,6 @@ type Subscription {
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
   council(where: CouncilSubscriptionWhereInput): CouncilSubscriptionPayload
   councilMember(where: CouncilMemberSubscriptionWhereInput): CouncilMemberSubscriptionPayload
-  endorsement(where: EndorsementSubscriptionWhereInput): EndorsementSubscriptionPayload
   era(where: EraSubscriptionWhereInput): EraSubscriptionPayload
   heartBeat(where: HeartBeatSubscriptionWhereInput): HeartBeatSubscriptionPayload
   motion(where: MotionSubscriptionWhereInput): MotionSubscriptionPayload
@@ -4987,7 +4754,6 @@ type Tip {
   finderFee: String
   closes: Int
   tipStatus(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus!]
-  tips(where: EndorsementWhereInput, orderBy: EndorsementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Endorsement!]
 }
 
 type TipConnection {
@@ -5004,27 +4770,11 @@ input TipCreateInput {
   finderFee: String
   closes: Int
   tipStatus: TipStatusCreateManyWithoutTipInput
-  tips: EndorsementCreateManyWithoutTipInput
-}
-
-input TipCreateOneWithoutTipsInput {
-  create: TipCreateWithoutTipsInput
-  connect: TipWhereUniqueInput
 }
 
 input TipCreateOneWithoutTipStatusInput {
   create: TipCreateWithoutTipStatusInput
   connect: TipWhereUniqueInput
-}
-
-input TipCreateWithoutTipsInput {
-  hash: String!
-  reason: String!
-  who: String!
-  finder: String
-  finderFee: String
-  closes: Int
-  tipStatus: TipStatusCreateManyWithoutTipInput
 }
 
 input TipCreateWithoutTipStatusInput {
@@ -5034,7 +4784,6 @@ input TipCreateWithoutTipStatusInput {
   finder: String
   finderFee: String
   closes: Int
-  tips: EndorsementCreateManyWithoutTipInput
 }
 
 type TipEdge {
@@ -5321,7 +5070,6 @@ input TipUpdateInput {
   finderFee: String
   closes: Int
   tipStatus: TipStatusUpdateManyWithoutTipInput
-  tips: EndorsementUpdateManyWithoutTipInput
 }
 
 input TipUpdateManyMutationInput {
@@ -5333,28 +5081,11 @@ input TipUpdateManyMutationInput {
   closes: Int
 }
 
-input TipUpdateOneRequiredWithoutTipsInput {
-  create: TipCreateWithoutTipsInput
-  update: TipUpdateWithoutTipsDataInput
-  upsert: TipUpsertWithoutTipsInput
-  connect: TipWhereUniqueInput
-}
-
 input TipUpdateOneRequiredWithoutTipStatusInput {
   create: TipCreateWithoutTipStatusInput
   update: TipUpdateWithoutTipStatusDataInput
   upsert: TipUpsertWithoutTipStatusInput
   connect: TipWhereUniqueInput
-}
-
-input TipUpdateWithoutTipsDataInput {
-  hash: String
-  reason: String
-  who: String
-  finder: String
-  finderFee: String
-  closes: Int
-  tipStatus: TipStatusUpdateManyWithoutTipInput
 }
 
 input TipUpdateWithoutTipStatusDataInput {
@@ -5364,12 +5095,6 @@ input TipUpdateWithoutTipStatusDataInput {
   finder: String
   finderFee: String
   closes: Int
-  tips: EndorsementUpdateManyWithoutTipInput
-}
-
-input TipUpsertWithoutTipsInput {
-  update: TipUpdateWithoutTipsDataInput!
-  create: TipCreateWithoutTipsInput!
 }
 
 input TipUpsertWithoutTipStatusInput {
@@ -5467,9 +5192,6 @@ input TipWhereInput {
   tipStatus_every: TipStatusWhereInput
   tipStatus_some: TipStatusWhereInput
   tipStatus_none: TipStatusWhereInput
-  tips_every: EndorsementWhereInput
-  tips_some: EndorsementWhereInput
-  tips_none: EndorsementWhereInput
   AND: [TipWhereInput!]
   OR: [TipWhereInput!]
   NOT: [TipWhereInput!]
