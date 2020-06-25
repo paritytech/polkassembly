@@ -225,14 +225,6 @@ type Tip {
   finderFee: String
   closes: Int
   tipStatus: [TipStatus]! @relation(name: "TipStatusFromTip")
-  tips: [Endorsement]! @relation(name: "TipsForTip")
-}
-
-type Endorsement {
-  id: ID! @id
-  tipper: String!
-  value: String!
-  tip: Tip! @relation(name: "EndorsementForTip", link: INLINE)
 }
 
 type TipStatus {

@@ -17,7 +17,6 @@ import { tipStatus } from '../util/statuses';
 import {
   Cached,
   NomidotTip,
-  NomidotTreasuryRawEvent,
   Task,
   TipRawEvent,
 } from './types';
@@ -27,7 +26,7 @@ const l = logger('Task: Tip');
 /*
  *  ======= Table (Tip) ======
  */
-const createTreasury: Task<NomidotTip[]> = {
+const createTip: Task<NomidotTip[]> = {
   name: 'createTip',
   read: async (
     blockHash: Hash,
@@ -95,10 +94,9 @@ const createTreasury: Task<NomidotTip[]> = {
           result.finderFee = Balance;
         }
 
+        // finder is council member/tipper when tip submitted by council member
         if (tip.tips.length) {
-          const [AccountId, Balance] = tip.tips[0];
-          result.tipper = AccountId;
-          result.value = Balance;
+          const [AccountId] = tip.tips[0];
           if (!result.finder) {
             result.finder = AccountId;
           }
@@ -122,8 +120,6 @@ const createTreasury: Task<NomidotTip[]> = {
           closes,
           finder,
           finderFee,
-          tipper,
-          value,
           status,
         } = prop;
 
@@ -145,18 +141,10 @@ const createTreasury: Task<NomidotTip[]> = {
               uniqueStatus: `${hash}_${status}`,
             },
           },
-          tips: {
-            create: tipper && value
-              ? [{
-                tipper: tipper.toString(),
-                value: value.toString(),
-              }]
-              : []
-          },
         });
       })
     );
   },
 };
 
-export default createTreasury;
+export default createTip;

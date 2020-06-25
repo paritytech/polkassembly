@@ -146,8 +146,6 @@ export interface NomidotTip {
   closes?: number
   finder?: AccountId
   finderFee?: Balance
-  tipper?: AccountId
-  value?: Balance
   status: string
 }
 
