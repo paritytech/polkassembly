@@ -120,38 +120,34 @@ const EndorseTip = ({
 
 	const noAccount = accounts.length === 0;
 
-	const EndorseForm = () =>
-		<>
-			{ noAccount
-				? <GetAccountsButton />
-				: loadingStatus.isLoading
-					? <Card className={'LoaderWrapper'}>
-						<Loader text={loadingStatus.message}/>
-					</Card>
-					: <Card>
-						<AccountSelectionForm
-							title='Endorse with account'
-							accounts={accounts}
-							address={address}
-							onAccountChange={onAccountChange}
-							withBalance
-						/>
-						<BalanceInput
-							label={'Value'}
-							helpText={'Allocate a suggested tip amount. With enough endorsements, the suggested values are averaged and sent to the beneficiary.'}
-							placeholder={'123'}
-							onChange={onValueChange}
-						/>
-						<Button
-							primary
-							disabled={!isApiReady}
-							onClick={handleEndorse}
-						>
-							Endorse
-						</Button>
-					</Card>
-			}
-		</>;
+	const endorse = noAccount
+		? <GetAccountsButton/>
+		: loadingStatus.isLoading
+			? <Card className={'LoaderWrapper'}>
+				<Loader text={loadingStatus.message}/>
+			</Card>
+			: <Card>
+				<AccountSelectionForm
+					title='Endorse with account'
+					accounts={accounts}
+					address={address}
+					onAccountChange={onAccountChange}
+					withBalance
+				/>
+				<BalanceInput
+					label={'Value'}
+					helpText={'Allocate a suggested tip amount. With enough endorsements, the suggested values are averaged and sent to the beneficiary.'}
+					placeholder={'123'}
+					onChange={onValueChange}
+				/>
+				<Button
+					primary
+					disabled={!isApiReady}
+					onClick={handleEndorse}
+				>
+					Endorse
+				</Button>
+			</Card>;
 
 	const NotCouncil = () =>
 		<>
@@ -162,7 +158,7 @@ const EndorseTip = ({
 	return (
 		<div className={className}>
 			{isCouncil || forceEndorse
-				? <EndorseForm/>
+				? endorse
 				: <NotCouncil/>
 			}
 		</div>
