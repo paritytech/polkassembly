@@ -188,7 +188,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isTipProposer
 	);
 
-	const sidebar = <>
+	const Sidebar = () => <>
 		<GovenanceSideBar
 			isMotion={isMotion}
 			isProposal={isProposal}
@@ -248,7 +248,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 					/>
 				}
 				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-					{sidebar}
+					<Sidebar />
 				</Responsive>
 				{ !!post.comments?.length &&
 					<Comments
@@ -260,7 +260,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
 				<Responsive minWidth={Responsive.onlyComputer.minWidth}>
-					{sidebar}
+					<Sidebar />
 				</Responsive>
 				<ScrollToTop/>
 			</Grid.Column>
