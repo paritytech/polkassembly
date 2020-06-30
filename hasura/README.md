@@ -55,21 +55,11 @@ So add these entries in /etc/hosts
 As Docker only supports host networking on Linux, Mac users need to replace the host names in the hasura migrations yaml files with `http://host.docker.internal`.
 
 ### Migration
-
-We are using a [preview of hasura](https://github.com/hasura/graphql-engine/pull/2395#issuecomment-547378585), migration must therefore be applied manually with the `hasura-dev` cli.
-
-In a separate directory, clone the hasura cli and copy it in a directory in your PATH.
-
-```bash
-git clone https://github.com/hasura/preview-remote-joins.git
-mv cli/cli-hasura-<arch> /usr/local/bin/hasura-dev
-chmod +x /usr/local/bin/hasura-dev
-```
-
-from there you can apply the migration:
+Migration must therefore be applied manually with the `hasura` cli.
 ```bash
 cd hasura-migrations
-hasura-dev migrate apply --admin-secret <your_admin_secret>
+hasura migrate apply --admin-secret <your_admin_secret>
+hasura metadata apply --admin-secret <your_admin_secret>
 ```
 
 ### Remote migration
@@ -82,12 +72,12 @@ kubectl port-forward svc/hasura-service 7070:8080 -n polkassembly
 Verify the state of the migration
 ```bash
 cd /hasura/hasura-migrations
-hasura-dev migrate status --endpoint http://localhost:7070 --admin-secret <secret>
+hasura migrate status --endpoint http://localhost:7070 --admin-secret <secret>
 ```
 
 Apply the migration 
 ```bash
-hasura-dev migrate apply --endpoint http://localhost:7070 --admin-secret <secret>
+hasura migrate apply --endpoint http://localhost:7070 --admin-secret <secret>
 ```
 
 ### Update the schema, relationships or permissions
