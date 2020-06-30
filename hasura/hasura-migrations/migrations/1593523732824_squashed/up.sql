@@ -27,8 +27,6 @@ CREATE TABLE public.posts (
     id integer NOT NULL,
     author_id integer NOT NULL,
     content text,
-    creation_date timestamp without time zone DEFAULT now() NOT NULL,
-    modification_date time without time zone DEFAULT now() NOT NULL,
     title text DEFAULT 'no title'::text NOT NULL,
     category_id integer DEFAULT 2 NOT NULL
 );
@@ -138,12 +136,6 @@ FOR EACH ROW
 EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 COMMENT ON TRIGGER "set_public_posts_updated_at" ON "public"."posts" 
 IS 'trigger to set value of column "updated_at" to current timestamp on row update';
-
-
-ALTER TABLE posts
-DROP COLUMN creation_date;
-ALTER TABLE posts
-DROP COLUMN modification_date;
 
 alter table "public"."topics" rename to "post_topics";
 

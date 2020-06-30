@@ -193,11 +193,6 @@ COMMENT ON COLUMN "public"."comments"."parent_message" IS E'null'
 DROP TABLE comments;
 
 alter table "public"."post_topics" rename to "topics";
-ALTER TABLE posts
-ADD COLUMN modification_date time without time zone DEFAULT now() NOT NULL;
-
-ALTER TABLE posts
-ADD COLUMN creation_date timestamp without time zone DEFAULT now() NOT NULL;
 
 DROP TRIGGER IF EXISTS "set_public_posts_updated_at" ON "public"."posts";
 ALTER TABLE "public"."posts" DROP COLUMN "updated_at";
