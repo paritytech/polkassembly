@@ -13,16 +13,8 @@ DELETE VIEW post_last_update
 DROP TRIGGER IF EXISTS "set_public_poll_votes_updated_at" ON "public"."poll_votes";
 ALTER TABLE "public"."poll_votes" DROP COLUMN "updated_at";
 
-ALTER TABLE "public"."poll_votes" ADD COLUMN "updated_at" timestamp;
-ALTER TABLE "public"."poll_votes" ALTER COLUMN "updated_at" DROP NOT NULL;
-ALTER TABLE "public"."poll_votes" ALTER COLUMN "updated_at" SET DEFAULT now();
-
 DROP TRIGGER IF EXISTS "set_public_poll_updated_at" ON "public"."poll";
 ALTER TABLE "public"."poll" DROP COLUMN "updated_at";
-
-ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamp;
-ALTER TABLE "public"."poll" ALTER COLUMN "updated_at" DROP NOT NULL;
-ALTER TABLE "public"."poll" ALTER COLUMN "updated_at" SET DEFAULT now();
 
 alter table "public"."poll" drop constraint "poll_post_id_fkey";
 

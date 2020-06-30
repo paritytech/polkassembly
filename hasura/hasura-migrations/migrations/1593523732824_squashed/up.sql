@@ -250,19 +250,9 @@ alter table "public"."posts" rename column "block_number" to "poll_block_number_
 
 CREATE TABLE "public"."poll"("id" serial NOT NULL, "block_end" integer NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"));
 
-ALTER TABLE "public"."posts" ADD COLUMN "poll_id" integer NULL;
-
-alter table "public"."posts"
-           add constraint "posts_poll_id_fkey"
-           foreign key ("poll_id")
-           references "public"."poll"
-           ("id") on update restrict on delete restrict;
-
-CREATE TABLE "public"."poll_votes"("id" serial NOT NULL, "poll_id" integer NOT NULL, "user_id" integer NOT NULL, "vote" bpchar NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("poll_id") REFERENCES "public"."poll"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));
+CREATE TABLE "public"."poll_votes"("id" serial NOT NULL, "poll_id" integer NOT NULL, "user_id" integer NOT NULL, "vote" bpchar NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("poll_id") REFERENCES "public"."poll"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));
 
 ALTER TABLE "public"."poll" ADD COLUMN "created_at" timestamp NOT NULL DEFAULT now();
-
-ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamp NOT NULL DEFAULT now();
 
 ALTER TABLE "public"."posts" DROP COLUMN "poll_block_number_end" CASCADE;
 
@@ -273,10 +263,6 @@ alter table "public"."poll"
            foreign key ("post_id")
            references "public"."posts"
            ("id") on update restrict on delete restrict;
-
-ALTER TABLE "public"."posts" DROP COLUMN "poll_id" CASCADE;
-
-ALTER TABLE "public"."poll" DROP COLUMN "updated_at" CASCADE;
 
 ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamptz NULL DEFAULT now();
 
@@ -296,8 +282,6 @@ FOR EACH ROW
 EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 COMMENT ON TRIGGER "set_public_poll_updated_at" ON "public"."poll" 
 IS 'trigger to set value of column "updated_at" to current timestamp on row update';
-
-ALTER TABLE "public"."poll_votes" DROP COLUMN "updated_at" CASCADE;
 
 ALTER TABLE "public"."poll_votes" ADD COLUMN "updated_at" timestamptz NULL DEFAULT now();
 
