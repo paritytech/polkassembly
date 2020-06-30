@@ -50,41 +50,17 @@ CREATE SEQUENCE public.messages_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.messages_id_seq OWNED BY public.posts.id;
-CREATE TABLE public.replies (
-    id integer NOT NULL,
-    author_id integer,
-    content text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    post_id integer
-);
-COMMENT ON TABLE public.replies IS 'The replies to any post';
-CREATE SEQUENCE public.replies_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER SEQUENCE public.replies_id_seq OWNED BY public.replies.id;
+
 ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
 ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
-ALTER TABLE ONLY public.replies ALTER COLUMN id SET DEFAULT nextval('public.replies_id_seq'::regclass);
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_name_key UNIQUE (name);
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.replies
-    ADD CONSTRAINT replies_pkey PRIMARY KEY (id);
-CREATE TRIGGER set_public_replies_updated_at BEFORE UPDATE ON public.replies FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
-COMMENT ON TRIGGER set_public_replies_updated_at ON public.replies IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT posts_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-ALTER TABLE ONLY public.replies
-    ADD CONSTRAINT replies_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
 
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
 RETURNS TRIGGER AS $$
@@ -183,30 +159,17 @@ alter table "public"."comments" rename column "parent_message" to "parent_commen
            references "public"."posts"
            ("id") on update restrict on delete restrict;
       
-
-drop table replies;
-
 COMMENT ON COLUMN "public"."comments"."parent_comment" IS E''
 alter table "public"."comments" rename column "parent_comment" to "parent_comment_id";
-
-alter table "public"."comments" rename to "replies";
-
-COMMENT ON COLUMN "public"."replies"."parent_comment_id" IS E''
-alter table "public"."replies" rename column "parent_comment_id" to "parent_reply_id";
-
-alter table "public"."replies" rename to "comments";
-
-COMMENT ON COLUMN "public"."comments"."parent_reply_id" IS E''
-alter table "public"."comments" rename column "parent_reply_id" to "parent_comment_id";
 
 CREATE TABLE "public"."proposals"("id" serial NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "post_id" integer NOT NULL, "chain_db_id" uuid NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("post_id"), UNIQUE ("chain_db_id")); COMMENT ON TABLE "public"."proposals" IS E'on chain proposal created automatically by chain-db-watcher';
 
 
-           alter table "public"."proposals"
-           add constraint "proposals_post_id_fkey" 
-           foreign key ("post_id") 
-           references "public"."posts"
-           ("id") on update restrict on delete restrict;
+alter table "public"."proposals"
+add constraint "proposals_post_id_fkey" 
+foreign key ("post_id") 
+references "public"."posts"
+("id") on update restrict on delete restrict;
       
 
 alter table "public"."proposals" rename to "onchain_proposals";

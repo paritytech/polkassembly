@@ -151,26 +151,8 @@ alter table "public"."onchain_proposals" rename to "proposals";
 
 DROP TABLE "public"."proposals"
 
-COMMENT ON COLUMN "public"."comments"."parent_reply_id" IS E'null'
-alter table "public"."comments" rename column "parent_comment_id" to "parent_reply_id";
-
-alter table "public"."comments" rename to "replies";
-
-COMMENT ON COLUMN "public"."replies"."parent_comment_id" IS E'null'
-alter table "public"."replies" rename column "parent_reply_id" to "parent_comment_id";
-
-alter table "public"."replies" rename to "comments";
-
 COMMENT ON COLUMN "public"."comments"."parent_comment" IS E'null'
 alter table "public"."comments" rename column "parent_comment_id" to "parent_comment";
-CREATE TABLE public.replies (
-    id integer NOT NULL,
-    author_id integer,
-    content text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    post_id integer
-);
 
 
 alter table "public"."comments" drop constraint "comments_post_id_fkey"
@@ -220,5 +202,3 @@ DROP TABLE public.posts;
 DROP TABLE public.categ;
 DROP SEQUENCE public.categories_id_seq;
 DROP SEQUENCE public.messages_id_seq;
-DROP TABLE public.replies;
-DROP SEQUENCE public.replies_id_seq;
