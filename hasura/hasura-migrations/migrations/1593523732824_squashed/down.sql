@@ -87,8 +87,6 @@ COMMENT ON COLUMN "public"."comment_reactions"."reaction" IS E'null'
 
 ALTER TABLE "public"."comment_reactions" DROP COLUMN "reaction";
 
-CREATE TABLE "public"."reactions"("id" serial NOT NULL, "reaction" char NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("reaction"));
-
 alter table "public"."comment_reactions" add foreign key ("reaction_id") references "public"."reactions"("id") on update cascade on delete cascade;
 
 alter table "public"."post_reactions" add foreign key ("reaction_id") references "public"."reactions"("id") on update cascade on delete cascade;
@@ -96,8 +94,6 @@ alter table "public"."post_reactions" add foreign key ("reaction_id") references
 DROP TABLE "public"."comment_reactions"
 
 DROP TABLE "public"."post_reactions"
-
-DROP TABLE "public"."reactions"
 
 ALTER TABLE "public"."onchain_links" ALTER COLUMN "onchain_treasury_proposal_id" TYPE integer;
 ALTER TABLE "public"."onchain_links" ADD CONSTRAINT "onchain_links_onchain_treasury_proposal_id_key" UNIQUE ("onchain_treasury_proposal_id")

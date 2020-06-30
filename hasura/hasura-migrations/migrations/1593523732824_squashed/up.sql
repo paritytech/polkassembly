@@ -215,8 +215,6 @@ ALTER TABLE "public"."onchain_links" ALTER COLUMN "onchain_treasury_proposal_id"
 ALTER TABLE "public"."onchain_links" DROP CONSTRAINT "onchain_links_onchain_treasury_proposal_id_key"
 COMMENT ON COLUMN "public"."onchain_links"."onchain_treasury_proposal_id" IS E''
 
-CREATE TABLE "public"."reactions"("id" serial NOT NULL, "reaction" char NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("reaction"));
-
 CREATE TABLE "public"."post_reactions"("id" serial NOT NULL, "post_id" integer NOT NULL, "user_id" integer NOT NULL, "reaction_id" integer NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON UPDATE cascade ON DELETE cascade, FOREIGN KEY ("reaction_id") REFERENCES "public"."reactions"("id") ON UPDATE cascade ON DELETE cascade, UNIQUE ("id"));
 
 CREATE TABLE "public"."comment_reactions"("id" serial NOT NULL, "comment_id" uuid NOT NULL, "user_id" integer NOT NULL, "reaction_id" integer NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("comment_id") REFERENCES "public"."comments"("id") ON UPDATE cascade ON DELETE cascade, FOREIGN KEY ("reaction_id") REFERENCES "public"."reactions"("id") ON UPDATE cascade ON DELETE cascade, UNIQUE ("id"));
@@ -224,8 +222,6 @@ CREATE TABLE "public"."comment_reactions"("id" serial NOT NULL, "comment_id" uui
 alter table "public"."post_reactions" drop constraint "post_reactions_reaction_id_fkey";
 
 alter table "public"."comment_reactions" drop constraint "comment_reactions_reaction_id_fkey";
-
-DROP TABLE "public"."reactions"
 
 ALTER TABLE "public"."comment_reactions" ADD COLUMN "reaction" bpchar NULL;
 
