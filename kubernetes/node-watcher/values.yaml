@@ -59,7 +59,7 @@ nodeWatcher:
 
 chainDbOpenServer:
   name: chain-db-open-server
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: paritytech/polkassembly-chain-db-open-server:latest
