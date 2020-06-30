@@ -115,7 +115,7 @@ ALTER TABLE "public"."onchain_proposals" ADD CONSTRAINT proposals_chain_db_id_ke
 alter table "public"."onchain_proposals" rename to "proposals";
 
 
-          alter table "public"."proposals" drop constraint "proposals_post_id_fkey"
+alter table "public"."proposals" drop constraint "proposals_post_id_fkey"
       
 
 DROP TABLE "public"."proposals"
