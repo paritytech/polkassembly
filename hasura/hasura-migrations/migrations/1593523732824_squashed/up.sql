@@ -244,8 +244,6 @@ COMMENT ON COLUMN "public"."comment_reactions"."reaction" IS E''
 ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP DEFAULT;
 ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP NOT NULL;
 
-ALTER TABLE "public"."posts" ADD COLUMN "has_poll" boolean NOT NULL DEFAULT false;
-
 ALTER TABLE "public"."posts" ADD COLUMN "block_number" integer NULL;
 
 alter table "public"."posts" rename column "block_number" to "poll_block_number_end";
@@ -265,8 +263,6 @@ CREATE TABLE "public"."poll_votes"("id" serial NOT NULL, "poll_id" integer NOT N
 ALTER TABLE "public"."poll" ADD COLUMN "created_at" timestamp NOT NULL DEFAULT now();
 
 ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamp NOT NULL DEFAULT now();
-
-ALTER TABLE "public"."posts" DROP COLUMN "has_poll" CASCADE;
 
 ALTER TABLE "public"."posts" DROP COLUMN "poll_block_number_end" CASCADE;
 

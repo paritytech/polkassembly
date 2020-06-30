@@ -24,10 +24,6 @@ ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamp;
 ALTER TABLE "public"."poll" ALTER COLUMN "updated_at" DROP NOT NULL;
 ALTER TABLE "public"."poll" ALTER COLUMN "updated_at" SET DEFAULT now();
 
-ALTER TABLE "public"."posts" ADD COLUMN "poll_id" int4;
-ALTER TABLE "public"."posts" ALTER COLUMN "poll_id" DROP NOT NULL;
-ALTER TABLE "public"."posts" ADD CONSTRAINT posts_poll_id_fkey FOREIGN KEY (poll_id) REFERENCES "public"."poll" (id) ON DELETE restrict ON UPDATE restrict;
-
 alter table "public"."poll" drop constraint "poll_post_id_fkey";
 
 ALTER TABLE "public"."poll" DROP COLUMN "post_id";
@@ -37,27 +33,17 @@ DROP TABLE "public"."poll_votes";
 ALTER TABLE "public"."posts" ADD COLUMN "poll_block_number_end" int4;
 ALTER TABLE "public"."posts" ALTER COLUMN "poll_block_number_end" DROP NOT NULL;
 
-ALTER TABLE "public"."posts" ADD COLUMN "has_poll" bool;
-ALTER TABLE "public"."posts" ALTER COLUMN "has_poll" DROP NOT NULL;
-ALTER TABLE "public"."posts" ALTER COLUMN "has_poll" SET DEFAULT false;
-
 ALTER TABLE "public"."poll" DROP COLUMN "updated_at";
 
 ALTER TABLE "public"."poll" DROP COLUMN "created_at";
 
 DROP TABLE "public"."poll_votes";
 
-alter table "public"."posts" drop constraint "posts_poll_id_fkey";
-
-ALTER TABLE "public"."posts" DROP COLUMN "poll_id";
-
 DROP TABLE "public"."poll";
 
 alter table "public"."posts" rename column "poll_block_number_end" to "block_number";
 
 ALTER TABLE "public"."posts" DROP COLUMN "block_number";
-
-ALTER TABLE "public"."posts" DROP COLUMN "has_poll";
 
 ALTER TABLE ONLY "public"."posts" ALTER COLUMN "title" SET DEFAULT ''no title'::text';
 ALTER TABLE "public"."posts" ALTER COLUMN "title" SET NOT NULL;
