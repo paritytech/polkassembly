@@ -32,13 +32,6 @@ CREATE TABLE public.posts (
     title text DEFAULT 'no title'::text NOT NULL,
     category_id integer DEFAULT 2 NOT NULL
 );
-CREATE TABLE public.users (
-    id integer NOT NULL,
-    username text NOT NULL,
-    email text,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    picture text
-);
 CREATE TABLE public.categories (
     id integer NOT NULL,
     name text NOT NULL
@@ -87,16 +80,10 @@ ALTER TABLE ONLY public.posts
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.replies
     ADD CONSTRAINT replies_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey1 PRIMARY KEY (id);
 CREATE TRIGGER set_public_replies_updated_at BEFORE UPDATE ON public.replies FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
 COMMENT ON TRIGGER set_public_replies_updated_at ON public.replies IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT messages_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
-ALTER TABLE ONLY public.posts
     ADD CONSTRAINT posts_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-ALTER TABLE ONLY public.replies
-    ADD CONSTRAINT replies_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.replies
     ADD CONSTRAINT replies_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
@@ -126,8 +113,6 @@ ALTER TABLE "public"."posts" DROP COLUMN "proposal_id" CASCADE
 
 ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE float8;
 COMMENT ON COLUMN "public"."proposals"."deposit" IS E''
-
-drop table users cascade;
 
 alter table "public"."categories" rename to "topics";
 

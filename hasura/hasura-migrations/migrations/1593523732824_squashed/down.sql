@@ -173,7 +173,7 @@ CREATE TABLE public.replies (
 );
 
 
-          alter table "public"."comments" drop constraint "comments_post_id_fkey"
+alter table "public"."comments" drop constraint "comments_post_id_fkey"
       
 
 COMMENT ON COLUMN "public"."comments"."parent_message" IS E'null'
@@ -205,7 +205,7 @@ ALTER TABLE "public"."posts" DROP COLUMN "updated_at";
 ALTER TABLE "public"."posts" DROP COLUMN "created_at";
 
 
-          alter table "public"."posts" drop constraint "posts_type_id_fkey"
+alter table "public"."posts" drop constraint "posts_type_id_fkey"
       
 
 ALTER TABLE "public"."posts" DROP COLUMN "type_id";
@@ -219,13 +219,6 @@ COMMENT ON COLUMN "public"."posts"."category_id" IS E'null'
 alter table "public"."posts" rename column "topic_id" to "category_id";
 
 alter table "public"."topics" rename to "categories";
-CREATE TABLE public.users (
-    id integer NOT NULL,
-    username text NOT NULL,
-    email text,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    picture text
-);
 
 ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE integer;
 COMMENT ON COLUMN "public"."proposals"."deposit" IS E'null'
@@ -240,7 +233,6 @@ DROP TABLE "public"."proposals"
 DELETE FUNCTION public.set_current_timestamp_updated_at;
 DELETE FUNCTION public.truncate_tables;
 DROP TABLE public.posts;
-DROP TABLE public.users;
 DROP TABLE public.categ;
 DROP SEQUENCE public.categories_id_seq;
 DROP SEQUENCE public.messages_id_seq;
