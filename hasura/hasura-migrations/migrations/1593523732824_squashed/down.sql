@@ -55,14 +55,9 @@ DROP TABLE "public"."poll";
 
 alter table "public"."posts" rename column "poll_block_number_end" to "block_number";
 
-DROP TRIGGER IF EXISTS "set_public_post_votes_updated_at" ON "public"."post_votes";
-ALTER TABLE "public"."post_votes" DROP COLUMN "updated_at";
-
 ALTER TABLE "public"."posts" DROP COLUMN "block_number";
 
 ALTER TABLE "public"."posts" DROP COLUMN "has_poll";
-
-DROP TABLE "public"."post_votes";
 
 ALTER TABLE ONLY "public"."posts" ALTER COLUMN "title" SET DEFAULT ''no title'::text';
 ALTER TABLE "public"."posts" ALTER COLUMN "title" SET NOT NULL;

@@ -244,30 +244,9 @@ COMMENT ON COLUMN "public"."comment_reactions"."reaction" IS E''
 ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP DEFAULT;
 ALTER TABLE "public"."posts" ALTER COLUMN "title" DROP NOT NULL;
 
-CREATE TABLE "public"."post_votes"("id" serial NOT NULL, "post_id" integer NOT NULL, "user_id" integer NOT NULL, "vote" bpchar NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));
-
 ALTER TABLE "public"."posts" ADD COLUMN "has_poll" boolean NOT NULL DEFAULT false;
 
 ALTER TABLE "public"."posts" ADD COLUMN "block_number" integer NULL;
-
-ALTER TABLE "public"."post_votes" ADD COLUMN "updated_at" timestamptz NULL DEFAULT now();
-
-CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
-RETURNS TRIGGER AS $$
-DECLARE
-  _new record;
-BEGIN
-  _new := NEW;
-  _new."updated_at" = NOW();
-  RETURN _new;
-END;
-$$ LANGUAGE plpgsql;
-CREATE TRIGGER "set_public_post_votes_updated_at"
-BEFORE UPDATE ON "public"."post_votes"
-FOR EACH ROW
-EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
-COMMENT ON TRIGGER "set_public_post_votes_updated_at" ON "public"."post_votes" 
-IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 
 alter table "public"."posts" rename column "block_number" to "poll_block_number_end";
 
@@ -290,8 +269,6 @@ ALTER TABLE "public"."poll" ADD COLUMN "updated_at" timestamp NOT NULL DEFAULT n
 ALTER TABLE "public"."posts" DROP COLUMN "has_poll" CASCADE;
 
 ALTER TABLE "public"."posts" DROP COLUMN "poll_block_number_end" CASCADE;
-
-DROP TABLE "public"."post_votes";
 
 ALTER TABLE "public"."poll" ADD COLUMN "post_id" integer NOT NULL;
 
