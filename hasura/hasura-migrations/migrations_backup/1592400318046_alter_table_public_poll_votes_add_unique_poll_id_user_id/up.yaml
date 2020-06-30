@@ -1,6 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: alter table "public"."poll_votes" add constraint "poll_votes_poll_id_user_id_key"
-      unique ("poll_id", "user_id");
-  type: run_sql

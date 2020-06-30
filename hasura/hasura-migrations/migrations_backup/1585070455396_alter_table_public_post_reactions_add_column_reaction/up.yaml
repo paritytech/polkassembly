@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."post_reactions" ADD COLUMN "reaction" bpchar NOT NULL;
-  type: run_sql

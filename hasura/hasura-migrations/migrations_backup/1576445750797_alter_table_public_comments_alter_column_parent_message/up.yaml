@@ -1,3 +1,0 @@
-- args:
-    sql: COMMENT ON COLUMN "public"."comments"."parent_message" IS E''
-  type: run_sql

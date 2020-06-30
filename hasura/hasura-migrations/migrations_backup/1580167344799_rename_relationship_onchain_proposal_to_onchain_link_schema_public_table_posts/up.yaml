@@ -1,7 +1,0 @@
-- args:
-    name: onchain_proposal
-    new_name: onchain_link
-    table:
-      name: posts
-      schema: public
-  type: rename_relationship

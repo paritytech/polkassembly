@@ -1,6 +1,0 @@
-- args:
-    relationship: post_type
-    table:
-      name: posts
-      schema: public
-  type: drop_relationship

@@ -1,6 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."posts" ALTER COLUMN "topic_id" TYPE integer;
-  type: run_sql
-- args:
-    sql: ALTER TABLE "public"."posts" ALTER COLUMN "topic_id" DROP NOT NULL;
-  type: run_sql

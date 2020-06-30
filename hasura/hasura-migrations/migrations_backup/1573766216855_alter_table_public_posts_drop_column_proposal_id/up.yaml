@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."posts" DROP COLUMN "proposal_id" CASCADE
-  type: run_sql

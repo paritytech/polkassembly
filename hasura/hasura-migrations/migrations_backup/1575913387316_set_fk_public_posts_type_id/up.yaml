@@ -1,6 +1,0 @@
-- args:
-    sql: "\n           alter table \"public\".\"posts\"\n           add constraint
-      \"posts_type_id_fkey\" \n           foreign key (\"type_id\") \n           references
-      \"public\".\"post_types\"\n           (\"id\") on update restrict on delete
-      restrict;\n      "
-  type: run_sql

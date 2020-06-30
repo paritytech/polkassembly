@@ -1,7 +1,0 @@
-- args:
-    name: topic
-    new_name: category
-    table:
-      name: posts
-      schema: public
-  type: rename_relationship

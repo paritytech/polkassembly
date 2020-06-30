@@ -1,6 +1,0 @@
-- args:
-    relationship: reaction
-    table:
-      name: comment_reactions
-      schema: public
-  type: drop_relationship
