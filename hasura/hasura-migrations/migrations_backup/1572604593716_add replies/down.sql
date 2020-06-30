@@ -1,0 +1,9 @@
+DELETE FUNCTION public.set_current_timestamp_updated_at;
+DELETE FUNCTION public.truncate_tables;
+DROP TABLE public.posts;
+DROP TABLE public.users;
+DROP TABLE public.categ;
+DROP SEQUENCE public.categories_id_seq;
+DROP SEQUENCE public.messages_id_seq;
+DROP TABLE public.replies;
+DROP SEQUENCE public.replies_id_seq;
