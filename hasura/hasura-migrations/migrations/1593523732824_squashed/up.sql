@@ -175,7 +175,7 @@ ALTER TABLE "public"."onchain_proposals" DROP COLUMN "chain_db_id" CASCADE;
 
 ALTER TABLE "public"."onchain_proposals" ADD COLUMN "chain_db_id" integer NOT NULL UNIQUE;
 
-ALTER TABLE "public"."onchain_proposals" ADD COLUMN "proposer_ADDress" text NOT NULL;
+ALTER TABLE "public"."onchain_proposals" ADD COLUMN "proposer_address" text NOT NULL;
 
 ALTER TABLE "public"."onchain_proposals" ALTER COLUMN "chain_db_id" TYPE int4;
 COMMENT ON COLUMN "public"."onchain_proposals"."chain_db_id" IS E'';
