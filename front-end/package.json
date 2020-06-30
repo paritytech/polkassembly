@@ -70,7 +70,8 @@
     "lint": "npx eslint ./src/ --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npx eslint ./src/ --ext .js,.jsx,.ts,.tsx --fix",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "api:bump": "yarn add @polkadot/api @polkadot/extension-dapp @polkadot/extension-inject @polkadot/react-identicon @polkadot/ui-settings @polkadot/util @polkadot/util-crypto"
   },
   "eslintConfig": {
     "extends": "react-app"
