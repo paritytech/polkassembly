@@ -99,10 +99,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-ALTER TABLE "public"."posts" ADD COLUMN "proposal_id" integer NULL UNIQUE;
-
-ALTER TABLE "public"."posts" DROP COLUMN "proposal_id" CASCADE
-
 alter table "public"."categories" rename to "topics";
 
 ALTER TABLE "public"."posts" ALTER COLUMN "category_id" TYPE int4;

@@ -219,13 +219,6 @@ alter table "public"."posts" rename column "topic_id" to "category_id";
 
 alter table "public"."topics" rename to "categories";
 
-
-ALTER TABLE "public"."posts" ADD COLUMN "proposal_id" int4
-ALTER TABLE "public"."posts" ALTER COLUMN "proposal_id" DROP NOT NULL
-ALTER TABLE "public"."posts" ADD CONSTRAINT posts_proposal_id_key UNIQUE (proposal_id)
-
-ALTER TABLE "public"."posts" DROP COLUMN "proposal_id";
-
 DELETE FUNCTION public.set_current_timestamp_updated_at;
 DELETE FUNCTION public.truncate_tables;
 DROP TABLE public.posts;
