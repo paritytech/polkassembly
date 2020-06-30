@@ -88,7 +88,6 @@ ALTER TABLE ONLY public.replies
     ADD CONSTRAINT replies_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
-CREATE TABLE "public"."proposals"("id" serial NOT NULL, "onchain_id" integer NOT NULL, "post_id" integer NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "updated_at" timestamptz NOT NULL DEFAULT now(), "method_name" text NOT NULL, "method_arguments" text, "deposit" integer NOT NULL, "referendum" boolean NOT NULL DEFAULT false, PRIMARY KEY ("id") , FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"), UNIQUE ("onchain_id"), UNIQUE ("post_id")); COMMENT ON TABLE "public"."proposals" IS E'on chain proposal or referendum';
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -99,20 +98,10 @@ BEGIN
   RETURN _new;
 END;
 $$ LANGUAGE plpgsql;
-CREATE TRIGGER "set_public_proposals_updated_at"
-BEFORE UPDATE ON "public"."proposals"
-FOR EACH ROW
-EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
-COMMENT ON TRIGGER "set_public_proposals_updated_at" ON "public"."proposals" 
-IS 'trigger to set value of column "updated_at" to current timestamp on row update';
-
 
 ALTER TABLE "public"."posts" ADD COLUMN "proposal_id" integer NULL UNIQUE;
 
 ALTER TABLE "public"."posts" DROP COLUMN "proposal_id" CASCADE
-
-ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE float8;
-COMMENT ON COLUMN "public"."proposals"."deposit" IS E''
 
 alter table "public"."categories" rename to "topics";
 
@@ -120,8 +109,6 @@ ALTER TABLE "public"."posts" ALTER COLUMN "category_id" TYPE int4;
 ALTER TABLE "public"."posts" ALTER COLUMN "category_id" DROP NOT NULL;
 COMMENT ON COLUMN "public"."posts"."category_id" IS E'Define the main suject of the post'
 alter table "public"."posts" rename column "category_id" to "topic_id";
-
-drop table proposals;
 
 CREATE TABLE "public"."post_types"("id" serial NOT NULL, "name" text NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("name"));
 

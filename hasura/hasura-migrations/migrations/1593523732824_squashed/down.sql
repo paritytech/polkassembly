@@ -211,7 +211,6 @@ alter table "public"."posts" drop constraint "posts_type_id_fkey"
 ALTER TABLE "public"."posts" DROP COLUMN "type_id";
 
 DROP TABLE "public"."post_types"
-CREATE TABLE "public"."proposals"("id" serial NOT NULL, "onchain_id" integer NOT NULL, "post_id" integer NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "updated_at" timestamptz NOT NULL DEFAULT now(), "method_name" text NOT NULL, "method_arguments" text, "deposit" integer NOT NULL, "referendum" boolean NOT NULL DEFAULT false, PRIMARY KEY ("id") , FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"), UNIQUE ("onchain_id"), UNIQUE ("post_id")); COMMENT ON TABLE "public"."proposals" IS E'on chain proposal or referendum';
 
 ALTER TABLE "public"."posts" ALTER COLUMN "category_id" TYPE integer;
 ALTER TABLE "public"."posts" ALTER COLUMN "category_id" SET NOT NULL;
@@ -220,8 +219,6 @@ alter table "public"."posts" rename column "topic_id" to "category_id";
 
 alter table "public"."topics" rename to "categories";
 
-ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE integer;
-COMMENT ON COLUMN "public"."proposals"."deposit" IS E'null'
 
 ALTER TABLE "public"."posts" ADD COLUMN "proposal_id" int4
 ALTER TABLE "public"."posts" ALTER COLUMN "proposal_id" DROP NOT NULL
@@ -229,7 +226,6 @@ ALTER TABLE "public"."posts" ADD CONSTRAINT posts_proposal_id_key UNIQUE (propos
 
 ALTER TABLE "public"."posts" DROP COLUMN "proposal_id";
 
-DROP TABLE "public"."proposals"
 DELETE FUNCTION public.set_current_timestamp_updated_at;
 DELETE FUNCTION public.truncate_tables;
 DROP TABLE public.posts;
