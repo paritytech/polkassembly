@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import BlockCountdown from 'src/components/BlockCountdown';
 import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
@@ -92,7 +93,10 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 					onClickAye={() => castVote(Vote.AYE)}
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
-				{!canVote && <span>Poll finished</span>}
+				{canVote
+					? <div>Poll ends in <BlockCountdown endBlock={endBlock}/></div>
+					: <span>Poll ended.</span>
+				}
 				{ownVote && canVote &&
 					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
 				}
@@ -102,6 +106,10 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 };
 
 export default styled(CouncilSignals)`
+	.blockCountdown {
+		display: inline;
+	}
+
 	.info {
 		margin: 1em 0;
 	}
