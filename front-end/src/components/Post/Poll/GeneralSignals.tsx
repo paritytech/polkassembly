@@ -97,7 +97,7 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 					{ownVote && canVote &&
 						<>
 							<ButtonLink className='info text-muted cancelVoteLink' onClick={cancelVote}>
-							Cancel {ownVote.toLowerCase()} vote
+								Cancel {ownVote.toLowerCase()} vote
 							</ButtonLink>
 							•
 						</>
