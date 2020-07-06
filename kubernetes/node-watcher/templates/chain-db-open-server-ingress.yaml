@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.chainDbOpenServer.name }}-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce-internal"
+  labels:
+    {{- include "node-watcher.chainDbOpenServer.labels" . | nindent 4 }}
+spec:
+  backend:
+    serviceName: {{ .Values.chainDbOpenServer.name }}-service
+    servicePort: {{ .Values.chainDbOpenServer.service.port }}

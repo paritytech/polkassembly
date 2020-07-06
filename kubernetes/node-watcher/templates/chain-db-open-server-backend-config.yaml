@@ -1,0 +1,12 @@
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  name: {{ .Values.chainDbOpenServer.name }}-backend-config
+  labels:
+    {{- include "node-watcher.chainDbOpenServer.labels" . | nindent 4 }}
+spec:
+  sessionAffinity:
+    affinityType: "CLIENT_IP"
+  timeoutSec: 300
+  connectionDraining:
+    drainingTimeoutSec: 600

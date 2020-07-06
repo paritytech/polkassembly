@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.chainDbOpenServer.name }}-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+    beta.cloud.google.com/backend-config: '{"ports": {"{{ .Values.chainDbOpenServer.service.port }}":"{{ .Values.chainDbOpenServer.name }}-backend-config"}}'
   labels:
     {{- include "node-watcher.chainDbOpenServer.labels" . | nindent 4 }}
 spec:
