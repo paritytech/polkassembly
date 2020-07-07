@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
+import BlockCountdown from 'src/components/BlockCountdown';
 import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
@@ -92,16 +93,36 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 					onClickAye={() => castVote(Vote.AYE)}
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
-				{!canVote && <span>Poll finished</span>}
-				{ownVote && canVote &&
-					<ButtonLink className='info text-muted' onClick={cancelVote}>Cancel {ownVote.toLowerCase()} vote</ButtonLink>
-				}
+				<div>
+					{ownVote && canVote &&
+						<>
+							<ButtonLink className='info text-muted cancelVoteLink' onClick={cancelVote}>
+								Cancel {ownVote.toLowerCase()} vote
+							</ButtonLink>
+							<span className='separator'>•</span>
+						</>
+					}
+					{canVote
+						? <span>Poll ends in <BlockCountdown endBlock={endBlock}/></span>
+						: <span>Poll ended.</span>
+					}
+				</div>
 			</Form>
 		</Card>
 	);
 };
 
 export default styled(CouncilSignals)`
+	.separator {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
+
+	.blockCountdown {
+		display: inline;
+		font-weight: 500;
+	}
+
 	.info {
 		margin: 1em 0;
 	}
