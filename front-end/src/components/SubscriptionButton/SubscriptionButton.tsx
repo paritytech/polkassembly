@@ -3,9 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext,useEffect, useState } from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Popup } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { usePostSubscribeMutation, usePostUnsubscribeMutation, useSubscriptionQuery } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -19,6 +20,7 @@ const SubscriptionButton = function ({
 	postId
 }:DiscussionProps) {
 
+	const { email_verified } = useContext(UserDetailsContext);
 	const [subscribed, setSubscribed] = useState(false);
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 	const [postUnsubscribeMutation] = usePostUnsubscribeMutation();
@@ -85,14 +87,23 @@ const SubscriptionButton = function ({
 
 	};
 
-	return (
-		<Button
-			className={'social' + (subscribed ? ' negative' : '')}
-			onClick={handleSubscribe}
-		>
-			<Icon name='remove bookmark'/>{subscribed ? 'Unsubscribe' : 'Subscribe'}
-		</Button>
-	);
+	const SubscribeButton = () => <Button
+		className={'social' + (subscribed ? ' negative' : '')}
+		disabled={email_verified ? false : true}
+		onClick={handleSubscribe}
+	>
+		<Icon name='remove bookmark'/>{subscribed ? 'Unsubscribe' : 'Subscribe'}
+	</Button>;
+
+	return email_verified
+		?  <SubscribeButton />
+		: <Popup
+			trigger={<span><SubscribeButton/></span>}
+			content={'Verify email to subscribe'}
+			hoverable={true}
+			position='top center'
+		/>;
+
 };
 
 export default SubscriptionButton;
