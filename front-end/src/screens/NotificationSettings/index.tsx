@@ -96,22 +96,22 @@ const Settings = ({ className }:Props): JSX.Element => {
 				<Form standalone={false}>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Subscribe to post you participate in' checked={postParticipated} toggle onChange={handlePostParticipatedChange} />
+							<Checkbox label='Subscribe to post you participate in' disabled={!email_verified} checked={!!email_verified && postParticipated} toggle onChange={handlePostParticipatedChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Subscribe to post you created' checked={postCreated} toggle onChange={handlePostCreatedChange} />
+							<Checkbox label='Subscribe to post you created' disabled={!email_verified} checked={!!email_verified && postCreated} toggle onChange={handlePostCreatedChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Notified for new proposal in council/motion/referendum' checked={newProposal} toggle onChange={handleNewProposalChange} />
+							<Checkbox label='Notified for new proposal in council/motion/referendum' disabled={!email_verified} checked={!!email_verified && newProposal} toggle onChange={handleNewProposalChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Notified for your own proposals' checked={ownProposal} toggle onChange={handleOwnProposalChange} />
+							<Checkbox label='Notified for your own proposals' disabled={!email_verified} checked={!!email_verified && ownProposal} toggle onChange={handleOwnProposalChange} />
 						</Form.Field>
 					</Form.Group>
 					{changed ?
