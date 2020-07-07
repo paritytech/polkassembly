@@ -77,7 +77,7 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
         switch(method) {
           case 'TipClosed':
-            status = tipStatus.CLOSING;
+            status = tipStatus.CLOSED;
             break;
           case 'TipClosing':
             status = tipStatus.CLOSING;
