@@ -93,17 +93,17 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 					onClickAye={() => castVote(Vote.AYE)}
 					onClickNay={() => castVote(Vote.NAY)}
 				/>
-				<div className='cancelEnd'>
+				<div>
 					{ownVote && canVote &&
 						<>
 							<ButtonLink className='info text-muted cancelVoteLink' onClick={cancelVote}>
 								Cancel {ownVote.toLowerCase()} vote
 							</ButtonLink>
-							•
+							<span className='separator'>•</span>
 						</>
 					}
 					{canVote
-						? <span className='pollEndTime'>Poll ends in <BlockCountdown endBlock={endBlock}/></span>
+						? <span>Poll ends in <BlockCountdown endBlock={endBlock}/></span>
 						: <span>Poll ended.</span>
 					}
 				</div>
@@ -113,13 +113,9 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 };
 
 export default styled(CouncilSignals)`
-	.cancelEnd{
-		.cancelVoteLink {
-			margin-right: 1rem;
-		}
-		.pollEndTime {
-			margin-left: 1rem;
-		}
+	.separator {
+		margin-left: 1rem;
+		margin-right: 1rem;
 	}
 
 	.blockCountdown {
