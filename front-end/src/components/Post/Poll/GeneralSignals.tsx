@@ -120,7 +120,7 @@ export default styled(CouncilSignals)`
 
 	.blockCountdown {
 		display: inline;
-		font-weight: bold;
+		font-weight: 500;
 	}
 
 	.info {
