@@ -89,16 +89,12 @@ const createTip: Task<NomidotTip[]> = {
           reason: reasonText,
           who: tip.who,
           status: tipStatus.OPENED,
+          finder: tip.finder,
+          finderFee: tip.findersFee ? tip.deposit : undefined
         };
 
         if (tip.closes.isSome) {
           result.closes = tip.closes.unwrap().toNumber();
-        }
-
-        if (tip.finder.isSome) {
-          const [AccountId, Balance] = tip.finder.unwrap();
-          result.finder = AccountId;
-          result.finderFee = Balance;
         }
 
         // finder is council member/tipper when tip submitted by council member
