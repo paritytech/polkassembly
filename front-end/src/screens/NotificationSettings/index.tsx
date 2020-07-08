@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Checkbox, CheckboxProps,Grid } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -28,7 +29,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 	const [ownProposal, setOwnProposal] = useState<boolean>(false);
 	const [changeNotificationPreferenceMutation, { error }] = useChangeNotificationPreferenceMutation();
 	const { queueNotification } = useContext(NotificationContext);
-	const { notification } = currentUser;
+	const { notification, email_verified } = currentUser;
 
 	useEffect(() => {
 		setPostParticipated(notification?.postParticipated || false);
@@ -92,25 +93,26 @@ const Settings = ({ className }:Props): JSX.Element => {
 		<Grid>
 			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
 				<h2>Notification Preferences</h2>
+				{!email_verified && <div className='errorText'>Please set and verify an email <Link to="/settings">in your settings</Link> to receive be able to set notifications.</div>}
 				<Form standalone={false}>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Subscribe to post you participate in' checked={postParticipated} toggle onChange={handlePostParticipatedChange} />
+							<Checkbox label='Subscribe to post you participate in' disabled={!email_verified} checked={!!email_verified && postParticipated} toggle onChange={handlePostParticipatedChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Subscribe to post you created' checked={postCreated} toggle onChange={handlePostCreatedChange} />
+							<Checkbox label='Subscribe to post you created' disabled={!email_verified} checked={!!email_verified && postCreated} toggle onChange={handlePostCreatedChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Notified for new proposal in council/motion/referendum' checked={newProposal} toggle onChange={handleNewProposalChange} />
+							<Checkbox label='Notified for new proposal in council/motion/referendum' disabled={!email_verified} checked={!!email_verified && newProposal} toggle onChange={handleNewProposalChange} />
 						</Form.Field>
 					</Form.Group>
 					<Form.Group>
 						<Form.Field>
-							<Checkbox label='Notified for your own proposals' checked={ownProposal} toggle onChange={handleOwnProposalChange} />
+							<Checkbox label='Notified for your own proposals' disabled={!email_verified} checked={!!email_verified && ownProposal} toggle onChange={handleOwnProposalChange} />
 						</Form.Field>
 					</Form.Group>
 					{changed ?
@@ -179,6 +181,18 @@ export default styled(Settings)`
 		button {
 			padding: 0.8rem 1rem;
 			border-radius: 0.5rem;
+		}
+	}
+
+	.errorText {
+		color: red_secondary;
+		a {
+			color: grey_primary;
+			text-decoration: underline;
+			&:hover {
+				color: grey_secondary;
+				text-decoration: none;
+			}
 		}
 	}
 `;
