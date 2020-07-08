@@ -1,6 +1,0 @@
-- args:
-    relationship: polls
-    table:
-      name: posts
-      schema: public
-  type: drop_relationship

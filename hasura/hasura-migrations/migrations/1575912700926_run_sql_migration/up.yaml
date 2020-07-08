@@ -1,4 +1,0 @@
-- args:
-    cascade: true
-    sql: drop table proposals;
-  type: run_sql

@@ -1,9 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."posts" ALTER COLUMN "created_at" TYPE timestamptz;
-  type: run_sql
-- args:
-    sql: ALTER TABLE "public"."posts" ALTER COLUMN "created_at" SET NOT NULL;
-  type: run_sql
-- args:
-    sql: COMMENT ON COLUMN "public"."posts"."created_at" IS E''
-  type: run_sql

@@ -1,5 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: alter table "public"."posts" drop constraint "posts_poll_id_fkey";
-  type: run_sql

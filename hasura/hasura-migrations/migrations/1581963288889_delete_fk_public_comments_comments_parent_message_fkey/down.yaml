@@ -1,4 +1,0 @@
-- args:
-    sql: alter table "public"."comments" add foreign key ("parent_comment_id") references
-      "public"."comments"("id") on update no action on delete no action;
-  type: run_sql

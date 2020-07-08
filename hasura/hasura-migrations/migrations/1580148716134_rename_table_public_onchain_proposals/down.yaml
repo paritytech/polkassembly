@@ -1,3 +1,0 @@
-- args:
-    sql: alter table "public"."onchain_links" rename to "onchain_proposals";
-  type: run_sql

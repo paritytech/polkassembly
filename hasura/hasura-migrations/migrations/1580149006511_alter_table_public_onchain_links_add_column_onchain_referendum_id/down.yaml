@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."onchain_links" DROP COLUMN "onchain_referendum_id";
-  type: run_sql

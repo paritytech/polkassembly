@@ -1,6 +1,0 @@
-- args:
-    role: anonymous
-    table:
-      name: comments
-      schema: public
-  type: drop_select_permission

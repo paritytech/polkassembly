@@ -1,6 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: alter table "public"."post_reactions" add constraint "post_reactions_post_id_user_id_reaction_key"
-      unique ("post_id", "user_id", "reaction");
-  type: run_sql

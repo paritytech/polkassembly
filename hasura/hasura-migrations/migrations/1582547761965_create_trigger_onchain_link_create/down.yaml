@@ -1,3 +1,0 @@
-- args:
-    name: onchain_link_create
-  type: delete_event_trigger

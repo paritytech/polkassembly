@@ -1,0 +1,10 @@
+- name: auth
+  definition:
+    url_from_env: HASURA_AUTH_SERVER_REMOTE_SCHEMA
+    timeout_seconds: 60
+    forward_client_headers: true
+- name: chain-db
+  definition:
+    url_from_env: HASURA_CHAIN_DB_REMOTE_SCHEMA
+    timeout_seconds: 60
+    forward_client_headers: true

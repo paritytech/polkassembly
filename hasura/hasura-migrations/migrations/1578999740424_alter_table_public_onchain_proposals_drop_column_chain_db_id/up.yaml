@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."onchain_proposals" DROP COLUMN "chain_db_id" CASCADE
-  type: run_sql

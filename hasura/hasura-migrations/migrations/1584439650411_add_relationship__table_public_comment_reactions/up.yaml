@@ -1,8 +1,0 @@
-- args:
-    name: reaction
-    table:
-      name: comment_reactions
-      schema: public
-    using:
-      foreign_key_constraint_on: reaction_id
-  type: create_object_relationship

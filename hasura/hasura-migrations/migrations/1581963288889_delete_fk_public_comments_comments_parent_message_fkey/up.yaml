@@ -1,3 +1,0 @@
-- args:
-    sql: alter table "public"."comments" drop constraint "comments_parent_message_fkey";
-  type: run_sql
