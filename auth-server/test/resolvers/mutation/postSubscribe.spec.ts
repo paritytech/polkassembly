@@ -26,6 +26,11 @@ describe('post subscribe mutation', () => {
 		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
+
+		await User
+			.query()
+			.patch({ email_verified: true })
+			.findById(signupUserId);
 	});
 
 	after(async () => {

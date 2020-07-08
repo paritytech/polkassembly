@@ -3,7 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { ApiPromise } from '@polkadot/api';
-import { BlockNumber, Hash } from '@polkadot/types/interfaces';
+import { BlockNumber, Hash, OpenTip } from '@polkadot/types/interfaces';
+import { Option } from '@polkadot/types';
 import { logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
@@ -23,9 +24,9 @@ const l = logger('Task: Tip Status Update');
 const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
   name: 'createTipStatusUpdate',
   read: async (
-    _blockHash: Hash,
+    blockHash: Hash,
     cached: Cached,
-    _api: ApiPromise
+    api: ApiPromise
   ): Promise<NomidotTipStatusUpdate[]> => {
   const { events } = cached;
 
@@ -77,7 +78,7 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
         switch(method) {
           case 'TipClosed':
-            status = tipStatus.CLOSING;
+            status = tipStatus.CLOSED;
             break;
           case 'TipClosing':
             status = tipStatus.CLOSING;
@@ -89,9 +90,21 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
             return;
         }
 
+        const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips(
+          tipRawEvent.Hash
+        );
+
+        if (tipInfoRaw.isNone) {
+          l.error(`No tip data found for Hash: ${tipRawEvent.Hash}`);
+          return null;
+        }
+
+        const tip = tipInfoRaw.unwrap();
+
         const result: NomidotTipStatusUpdate = {
           tipId: tips[0].id,
           status,
+          closes: tip.closes.unwrap().toNumber()
         };
         l.log(`Nomidot Tip Status Update: ${JSON.stringify(result)}`);
         results.push(result);
@@ -107,7 +120,16 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
     if (value && value.length) {
       await Promise.all(
         value.map(async ref => {
-          const { tipId, status } = ref;
+          const { tipId, status, closes } = ref;
+
+          await prisma.updateTip({
+            data: {
+              closes,
+            },
+            where: {
+              id: tipId,
+            },
+          });
 
           await prisma.createTipStatus({
             blockNumber: {

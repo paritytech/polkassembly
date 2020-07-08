@@ -257,5 +257,6 @@ export type NomidotCouncil = AccountId[];
 
 export interface NomidotTipStatusUpdate {
   tipId: number;
-  status: string
+  status: string;
+  closes?: number;
 }

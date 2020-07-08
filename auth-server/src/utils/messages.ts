@@ -73,6 +73,7 @@ export default {
 	SET_CREDENTIALS_SIGN_MESSAGE_EXPIRED: 'Session expired, please try again.',
 	SUBSCRIPTION_ALREADY_EXISTS: 'You are already subscribed to this post.',
 	SUBSCRIPTION_DOES_NOT_EXIST: 'Subscription doesn\'t exit.',
+	SUBSCRIPTION_EMAIL_UNVERIFIED: 'Please verify your email to receive subscription emails.',
 	SUBSCRIPTION_REMOVE_SUCCESSFUL: 'You have been unsubscribed successfuly.',
 	SUBSCRIPTION_SUCCESSFUL: 'You successfully subscribed to new comments.',
 	SUCCESS: 'Success.',
