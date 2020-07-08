@@ -44,6 +44,10 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const { history } = useRouter();
 
 	const createSubscription = (postId: number) => {
+		if (!currentUser.email_verified) {
+			return;
+		}
+
 		if (!currentUser?.notification?.postCreated) {
 			return;
 		}
