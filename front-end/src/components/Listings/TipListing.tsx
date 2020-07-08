@@ -25,7 +25,7 @@ const TipProposals = ({ className, data }: Props) => {
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_tip_id;
 
-					return !!post?.author?.username && post.onchain_link &&
+					return !!post?.author?.username && !!post?.onchain_link?.onchain_tip.length &&
 						<li key={post.id} className='proposals__item'>
 							{<Link to={`/tip/${onchainId}`}>
 								<GovernanceCard
