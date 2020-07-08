@@ -84,13 +84,22 @@ const createTip: Task<NomidotTip[]> = {
 
         const reasonText = reason.isSome ? hexToString(reason.unwrap().toHex()) : '';
 
+        let finder = tip.finder.toString();
+        // Hack to check if finder is of old ITuple type [AccountId, Balance]
+        if (finder.includes(',')) {
+          try {
+            finder = JSON.parse(finder)[0];
+          } catch (error) {
+            l.error('Error while parsing finder', error);
+          }
+        }
+
         const result: NomidotTip = {
           hash: tipRawEvent.Hash,
           reason: reasonText,
           who: tip.who,
           status: tipStatus.OPENED,
-          finder: tip.finder,
-          finderFee: tip.findersFee ? tip.deposit : undefined
+          finder,
         };
 
         if (tip.closes.isSome) {
@@ -101,7 +110,7 @@ const createTip: Task<NomidotTip[]> = {
         if (tip.tips.length) {
           const [AccountId] = tip.tips[0];
           if (!result.finder) {
-            result.finder = AccountId;
+            result.finder = AccountId.toString();
           }
         }
 
@@ -122,7 +131,6 @@ const createTip: Task<NomidotTip[]> = {
           who,
           closes,
           finder,
-          finderFee,
           status,
         } = prop;
 
@@ -130,8 +138,7 @@ const createTip: Task<NomidotTip[]> = {
           hash: hash,
           reason,
           who: who.toString(),
-          finder: finder?.toString(),
-          finderFee: finderFee?.toString(),
+          finder,
           closes: closes,
           tipStatus: {
             create: {

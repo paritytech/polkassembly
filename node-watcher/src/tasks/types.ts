@@ -145,8 +145,7 @@ export interface NomidotTip {
   reason: string
   who: AccountId
   closes?: number
-  finder?: AccountId
-  finderFee?: Balance
+  finder?: string
   status: string
 }
 

@@ -6,16 +6,12 @@ import * as React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import { OnchainLinkTipFragment } from '../../../generated/graphql';
-import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
-import getNetwork from '../../../util/getNetwork';
 
 interface Props{
 	onchainLink: OnchainLinkTipFragment
 }
-
-const currentNetwork = getNetwork();
 
 const PostTipInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
@@ -29,7 +25,6 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 	const reason = onchainTipProposal?.[0]?.reason;
 	const who = onchainTipProposal?.[0]?.who;
 	const finder = onchainTipProposal?.[0]?.finder;
-	const finderFee = onchainTipProposal?.[0]?.finderFee;
 	const closes = onchainTipProposal?.[0]?.closes;
 
 	return (
@@ -59,11 +54,6 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 				<Grid.Column mobile={16} tablet={8} computer={8}>
 					<h6>Finder</h6>
 					<AddressComponent address={finder}/>
-				</Grid.Column>}
-				{finderFee && currentNetwork &&
-				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Finder Fee</h6>
-					{parseInt(finderFee) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
 				{closes &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
