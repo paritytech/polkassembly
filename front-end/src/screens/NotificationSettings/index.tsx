@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Checkbox, CheckboxProps,Grid } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
@@ -92,7 +93,7 @@ const Settings = ({ className }:Props): JSX.Element => {
 		<Grid>
 			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>
 				<h2>Notification Preferences</h2>
-				{!email_verified && <div className='errorText'>Please verify your email to receive email notifications</div>}
+				{!email_verified && <div className='errorText'>Please set and verify an email <Link to="/settings">in your settings</Link> to receive be able to set notifications.</div>}
 				<Form standalone={false}>
 					<Form.Group>
 						<Form.Field>
@@ -185,5 +186,13 @@ export default styled(Settings)`
 
 	.errorText {
 		color: red_secondary;
+		a {
+			color: grey_primary;
+			text-decoration: underline;
+			&:hover {
+				color: grey_secondary;
+				text-decoration: none;
+			}
+		}
 	}
 `;
