@@ -25,7 +25,7 @@ const OnchainTipContainer = ({ className } : {className?: string}) => {
 						On-chain tip posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
-						title='About On-chain tip proposals'
+						title='About On-chain tips'
 					/>
 				</Grid.Column>
 			</Grid>
