@@ -24,6 +24,10 @@ describe('post subscription query', () => {
 		const result = await getNewUserCtx(email, password, username);
 		fakectx = result.ctx;
 		signupUserId = result.userId;
+		await User
+			.query()
+			.where({ id: signupUserId })
+			.patch({ email_verified: true })
 	});
 
 	after(async () => {
