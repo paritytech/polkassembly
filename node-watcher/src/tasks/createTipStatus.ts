@@ -90,21 +90,26 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
             return;
         }
 
-        const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips(
-          tipRawEvent.Hash
-        );
+        let closes: number | undefined;
 
-        if (tipInfoRaw.isNone) {
-          l.error(`No tip data found for Hash: ${tipRawEvent.Hash}`);
-          return null;
+        if (method === tipStatus.CLOSING) {
+          const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips(
+            tipRawEvent.Hash
+          );
+
+          if (tipInfoRaw.isNone) {
+            l.error(`No tip data found for Hash: ${tipRawEvent.Hash}`);
+            return null;
+          }
+
+          const tip = tipInfoRaw.unwrap();
+          closes = tip.closes.unwrap().toNumber()
         }
-
-        const tip = tipInfoRaw.unwrap();
 
         const result: NomidotTipStatusUpdate = {
           tipId: tips[0].id,
           status,
-          closes: tip.closes.unwrap().toNumber()
+          closes
         };
         l.log(`Nomidot Tip Status Update: ${JSON.stringify(result)}`);
         results.push(result);
@@ -122,14 +127,16 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
         value.map(async ref => {
           const { tipId, status, closes } = ref;
 
-          await prisma.updateTip({
-            data: {
-              closes,
-            },
-            where: {
-              id: tipId,
-            },
-          });
+          if (closes) {
+            await prisma.updateTip({
+              data: {
+                closes,
+              },
+              where: {
+                id: tipId,
+              },
+            });
+          }
 
           await prisma.createTipStatus({
             blockNumber: {
