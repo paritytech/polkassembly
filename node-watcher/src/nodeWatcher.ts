@@ -82,7 +82,7 @@ export async function nodeWatcher(): Promise<unknown> {
 
         let blockIndexId = '';
         let blockIndex = START_FROM;
-        let currentSpecVersion = api.createType('u32', -1);
+        let currentSpecVersion = api.createType('u32', 0);
         const lastKnownBestFinalized = (
           await api.derive.chain.bestNumberFinalized()
         ).toNumber();
