@@ -22,7 +22,7 @@ const OnchainTipContainer = ({ className } : {className?: string}) => {
 					<InfoBox
 						dismissable={true}
 						content='This is the place to discuss on-chain tip proposals.
-						On-chain tip posts are automatically generated as soon as they are created on the chain.
+						Tip posts are automatically generated as soon as they are created on-chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
 						title='About On-chain tips'
