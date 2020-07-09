@@ -19797,7 +19797,7 @@ export const LatestTipPostsDocument = gql`
     onchain_link {
       id
       onchain_tip_id
-      onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "Closed"}, {status: "Closing"}, {status: "Retracted"}]}}}) {
+      onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "TipClosed"}, {status: "TipClosing"}, {status: "TipRetracted"}]}}}) {
         id
         tipStatus(last: 1) {
           id

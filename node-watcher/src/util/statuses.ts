@@ -40,7 +40,7 @@ export const treasuryProposalStatus = {
 
 export const tipStatus = {
   OPENED: 'Opened',
-  CLOSED: 'Closed',
-  CLOSING: 'Closing',
-  RETRACTED: 'Retracted'
+  CLOSED: 'TipClosed',
+  CLOSING: 'TipClosing',
+  RETRACTED: 'TipRetracted'
 };

@@ -29,8 +29,8 @@ export const motionStatus = {
 };
 
 export const tipStatus = {
-	CLOSED: 'Closed',
-	CLOSING: 'Closing',
+	CLOSED: 'TipClosed',
+	CLOSING: 'TipClosing',
 	OPENED: 'Opened',
-	RETRACTED: 'Retracted'
+	RETRACTED: 'TipRetracted'
 };

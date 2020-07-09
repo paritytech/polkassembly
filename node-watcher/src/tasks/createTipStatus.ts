@@ -33,12 +33,12 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
     const filteredEvents = events.filter(
     ({ event: { method, section } }) =>
       section === 'treasury' &&
-      ['TipClosed', 'TipClosing', 'TipRetracted'].includes(method)
+      [tipStatus.CLOSED, tipStatus.CLOSING, tipStatus.RETRACTED].includes(method)
     );
 
     const results: NomidotTipStatusUpdate[] = [];
 
-    if (!filteredEvents) {
+    if (!filteredEvents.length) {
       return results;
     }
 
@@ -74,25 +74,9 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
           return;
         }
 
-        let status = '';
-
-        switch(method) {
-          case 'TipClosed':
-            status = tipStatus.CLOSED;
-            break;
-          case 'TipClosing':
-            status = tipStatus.CLOSING;
-            break;
-          case 'TipRetracted':
-            status = tipStatus.RETRACTED;
-            break;
-          default:
-            return;
-        }
-
         let closes: number | undefined;
 
-        if (method === 'TipClosing') {
+        if (method === tipStatus.CLOSING) {
           const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips(
             tipRawEvent.Hash
           );
@@ -111,7 +95,7 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
         const result: NomidotTipStatusUpdate = {
           tipId: tips[0].id,
-          status,
+          status: method,
           closes
         };
         l.log(`Nomidot Tip Status Update: ${JSON.stringify(result)}`);
