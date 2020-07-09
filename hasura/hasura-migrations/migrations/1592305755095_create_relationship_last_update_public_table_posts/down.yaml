@@ -1,6 +1,0 @@
-- args:
-    relationship: last_update
-    table:
-      name: posts
-      schema: public
-  type: drop_relationship

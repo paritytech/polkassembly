@@ -1,5 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: alter table "public"."posts" rename column "block_number" to "poll_block_number_end";
-  type: run_sql

@@ -129,17 +129,44 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 						}
 					}, {});
 
+	const discussionTipMap = syncData?.discussion.tips?.reduce(
+					(prev, curr) => {
+						// edgecase those id can be 0
+						if ((curr?.onchain_tip_id || curr?.onchain_tip_id === 0) && (curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.onchain_tip_id]: curr.proposer_address
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
+	const onchainTipMap = syncData?.onchain.tips?.reduce(
+					(prev, curr) => {
+						if ((curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.id]: curr.finder
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
 	return {
 		discussion: {
 			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
 			referenda: discussionReferendaMap,
+			tips: discussionTipMap,
 			treasuryProposals: discussionTreasuryProposalMap
 		},
 		onchain: {
 			motions: onchainMotionMap,
 			proposals: onchainProposalMap,
 			referenda: onchainReferendaMap,
+			tips: onchainTipMap,
 			treasuryProposals: onchainTreasuryProposalMap
 		}
 	};

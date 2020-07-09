@@ -37,3 +37,10 @@ export const treasuryProposalStatus = {
   TABLED: 'Awarded',
   REJECTED: 'Rejected',
 };
+
+export const tipStatus = {
+  OPENED: 'TipOpened',
+  CLOSED: 'TipClosed',
+  CLOSING: 'TipClosing',
+  RETRACTED: 'TipRetracted'
+};

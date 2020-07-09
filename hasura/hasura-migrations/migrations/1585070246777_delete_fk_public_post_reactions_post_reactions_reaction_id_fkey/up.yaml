@@ -1,3 +1,0 @@
-- args:
-    sql: alter table "public"."post_reactions" drop constraint "post_reactions_reaction_id_fkey";
-  type: run_sql

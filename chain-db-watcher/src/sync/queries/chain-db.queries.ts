@@ -107,3 +107,25 @@ export const getOnchainTreasuryProposals = gql`
         treasuryProposalId
     }
 `;
+
+export const getOnchainTips = gql`
+    query getOnchainTips($startBlock: Int!) {
+        tips (
+            where: {
+                tipStatus_some: {
+                    AND: [
+                        { status: "TipOpened" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
+            ...onchainTip
+        }
+    }
+    fragment onchainTip on Tip {
+        finder
+        id
+        hash
+    }
+`;

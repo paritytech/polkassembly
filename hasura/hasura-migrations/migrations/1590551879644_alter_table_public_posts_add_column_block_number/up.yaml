@@ -1,5 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: ALTER TABLE "public"."posts" ADD COLUMN "block_number" integer NULL;
-  type: run_sql

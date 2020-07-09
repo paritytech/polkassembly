@@ -12,10 +12,15 @@ export default (onchainLink: OnchainLinkType): PostType => {
 		onchain_motion_id,
 		onchain_proposal_id,
 		onchain_referendum_id,
+		onchain_tip_id,
 		onchain_treasury_proposal_id
 	} = onchainLink;
 
 	let type = PostTypeEnum.POST;
+
+	if (onchain_tip_id === 0 || onchain_tip_id) {
+		type = PostTypeEnum.TIP;
+	}
 
 	if (onchain_proposal_id === 0 || onchain_proposal_id) {
 		type = PostTypeEnum.PROPOSAL;

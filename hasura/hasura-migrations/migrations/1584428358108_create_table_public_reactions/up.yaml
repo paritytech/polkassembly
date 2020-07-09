@@ -1,8 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."reactions"("id" serial NOT NULL, "reaction" char NOT
-      NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("reaction"));
-  type: run_sql
-- args:
-    name: reactions
-    schema: public
-  type: add_existing_table_or_view

@@ -8,9 +8,10 @@ interface Props{
     isMotion: boolean
     isProposal: boolean
     isReferendum: boolean
-    isTreasuryProposal: boolean
+	isTreasuryProposal: boolean
+	isTipProposal: boolean
 }
-const NoPostFound = ({ isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false }: Props) => {
+const NoPostFound = ({ isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, isTipProposal = false }: Props) => {
 	const postType =  isMotion
 		? 'motion'
 		: isProposal
@@ -19,7 +20,9 @@ const NoPostFound = ({ isMotion = false, isProposal = false, isReferendum = fals
 				? 'referendum'
 				: isTreasuryProposal
 					? 'treasury proposal'
-					: 'post';
+					: isTipProposal
+						? 'Tip proposal'
+						: 'post';
 	return <div> Sorry, we couldn&apos;t find any {postType} with this id</div>;
 };
 

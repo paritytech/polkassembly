@@ -1,5 +1,5 @@
 # source: http://127.0.0.1:4466
-# timestamp: Thu Apr 30 2020 18:02:36 GMT+0800 (Malaysia Time)
+# timestamp: Thu Jun 25 2020 14:09:51 GMT+0200 (Central European Summer Time)
 
 type AggregateBlockIndex {
   count: Int!
@@ -86,6 +86,14 @@ type AggregateSlashing {
 }
 
 type AggregateStake {
+  count: Int!
+}
+
+type AggregateTip {
+  count: Int!
+}
+
+type AggregateTipStatus {
   count: Int!
 }
 
@@ -3155,6 +3163,8 @@ type Mutation {
   createBlockIndex(data: BlockIndexCreateInput!): BlockIndex!
   createTreasurySpendProposal(data: TreasurySpendProposalCreateInput!): TreasurySpendProposal!
   createTreasuryStatus(data: TreasuryStatusCreateInput!): TreasuryStatus!
+  createTip(data: TipCreateInput!): Tip!
+  createTipStatus(data: TipStatusCreateInput!): TipStatus!
   createBlockNumber(data: BlockNumberCreateInput!): BlockNumber!
   createSession(data: SessionCreateInput!): Session!
   updateHeartBeat(data: HeartBeatUpdateInput!, where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -3181,6 +3191,8 @@ type Mutation {
   updateBlockIndex(data: BlockIndexUpdateInput!, where: BlockIndexWhereUniqueInput!): BlockIndex
   updateTreasurySpendProposal(data: TreasurySpendProposalUpdateInput!, where: TreasurySpendProposalWhereUniqueInput!): TreasurySpendProposal
   updateTreasuryStatus(data: TreasuryStatusUpdateInput!, where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
+  updateTip(data: TipUpdateInput!, where: TipWhereUniqueInput!): Tip
+  updateTipStatus(data: TipStatusUpdateInput!, where: TipStatusWhereUniqueInput!): TipStatus
   updateBlockNumber(data: BlockNumberUpdateInput!, where: BlockNumberWhereUniqueInput!): BlockNumber
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   deleteHeartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -3207,6 +3219,8 @@ type Mutation {
   deleteBlockIndex(where: BlockIndexWhereUniqueInput!): BlockIndex
   deleteTreasurySpendProposal(where: TreasurySpendProposalWhereUniqueInput!): TreasurySpendProposal
   deleteTreasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
+  deleteTip(where: TipWhereUniqueInput!): Tip
+  deleteTipStatus(where: TipStatusWhereUniqueInput!): TipStatus
   deleteBlockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   deleteSession(where: SessionWhereUniqueInput!): Session
   upsertHeartBeat(where: HeartBeatWhereUniqueInput!, create: HeartBeatCreateInput!, update: HeartBeatUpdateInput!): HeartBeat!
@@ -3233,6 +3247,8 @@ type Mutation {
   upsertBlockIndex(where: BlockIndexWhereUniqueInput!, create: BlockIndexCreateInput!, update: BlockIndexUpdateInput!): BlockIndex!
   upsertTreasurySpendProposal(where: TreasurySpendProposalWhereUniqueInput!, create: TreasurySpendProposalCreateInput!, update: TreasurySpendProposalUpdateInput!): TreasurySpendProposal!
   upsertTreasuryStatus(where: TreasuryStatusWhereUniqueInput!, create: TreasuryStatusCreateInput!, update: TreasuryStatusUpdateInput!): TreasuryStatus!
+  upsertTip(where: TipWhereUniqueInput!, create: TipCreateInput!, update: TipUpdateInput!): Tip!
+  upsertTipStatus(where: TipStatusWhereUniqueInput!, create: TipStatusCreateInput!, update: TipStatusUpdateInput!): TipStatus!
   upsertBlockNumber(where: BlockNumberWhereUniqueInput!, create: BlockNumberCreateInput!, update: BlockNumberUpdateInput!): BlockNumber!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
   updateManyHeartBeats(data: HeartBeatUpdateManyMutationInput!, where: HeartBeatWhereInput): BatchPayload!
@@ -3258,6 +3274,8 @@ type Mutation {
   updateManyBlockIndexes(data: BlockIndexUpdateManyMutationInput!, where: BlockIndexWhereInput): BatchPayload!
   updateManyTreasurySpendProposals(data: TreasurySpendProposalUpdateManyMutationInput!, where: TreasurySpendProposalWhereInput): BatchPayload!
   updateManyTreasuryStatuses(data: TreasuryStatusUpdateManyMutationInput!, where: TreasuryStatusWhereInput): BatchPayload!
+  updateManyTips(data: TipUpdateManyMutationInput!, where: TipWhereInput): BatchPayload!
+  updateManyTipStatuses(data: TipStatusUpdateManyMutationInput!, where: TipStatusWhereInput): BatchPayload!
   updateManyBlockNumbers(data: BlockNumberUpdateManyMutationInput!, where: BlockNumberWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   deleteManyHeartBeats(where: HeartBeatWhereInput): BatchPayload!
@@ -3284,6 +3302,8 @@ type Mutation {
   deleteManyBlockIndexes(where: BlockIndexWhereInput): BatchPayload!
   deleteManyTreasurySpendProposals(where: TreasurySpendProposalWhereInput): BatchPayload!
   deleteManyTreasuryStatuses(where: TreasuryStatusWhereInput): BatchPayload!
+  deleteManyTips(where: TipWhereInput): BatchPayload!
+  deleteManyTipStatuses(where: TipStatusWhereInput): BatchPayload!
   deleteManyBlockNumbers(where: BlockNumberWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
@@ -6199,6 +6219,8 @@ type Query {
   blockIndexes(where: BlockIndexWhereInput, orderBy: BlockIndexOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockIndex]!
   treasurySpendProposals(where: TreasurySpendProposalWhereInput, orderBy: TreasurySpendProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TreasurySpendProposal]!
   treasuryStatuses(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TreasuryStatus]!
+  tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
+  tipStatuses(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus]!
   blockNumbers(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockNumber]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
   heartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -6225,6 +6247,8 @@ type Query {
   blockIndex(where: BlockIndexWhereUniqueInput!): BlockIndex
   treasurySpendProposal(where: TreasurySpendProposalWhereUniqueInput!): TreasurySpendProposal
   treasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
+  tip(where: TipWhereUniqueInput!): Tip
+  tipStatus(where: TipStatusWhereUniqueInput!): TipStatus
   blockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   session(where: SessionWhereUniqueInput!): Session
   heartBeatsConnection(where: HeartBeatWhereInput, orderBy: HeartBeatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HeartBeatConnection!
@@ -6251,6 +6275,8 @@ type Query {
   blockIndexesConnection(where: BlockIndexWhereInput, orderBy: BlockIndexOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockIndexConnection!
   treasurySpendProposalsConnection(where: TreasurySpendProposalWhereInput, orderBy: TreasurySpendProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TreasurySpendProposalConnection!
   treasuryStatusesConnection(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TreasuryStatusConnection!
+  tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
+  tipStatusesConnection(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipStatusConnection!
   blockNumbersConnection(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockNumberConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
 
@@ -7928,8 +7954,849 @@ type Subscription {
   blockIndex(where: BlockIndexSubscriptionWhereInput): BlockIndexSubscriptionPayload
   treasurySpendProposal(where: TreasurySpendProposalSubscriptionWhereInput): TreasurySpendProposalSubscriptionPayload
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload
+  tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
+  tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
+}
+
+type Tip {
+  id: Int!
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus!]
+}
+
+"""A connection to a list of items."""
+type TipConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TipEdge]!
+  aggregate: AggregateTip!
+}
+
+input TipCreateInput {
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusCreateManyWithoutTipInput
+}
+
+input TipCreateOneWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  connect: TipWhereUniqueInput
+}
+
+input TipCreateWithoutTipStatusInput {
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+"""An edge in a connection."""
+type TipEdge {
+  """The item at the end of the edge."""
+  node: Tip!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TipOrderByInput {
+  id_ASC
+  id_DESC
+  hash_ASC
+  hash_DESC
+  reason_ASC
+  reason_DESC
+  who_ASC
+  who_DESC
+  finder_ASC
+  finder_DESC
+  finderFee_ASC
+  finderFee_DESC
+  closes_ASC
+  closes_DESC
+}
+
+type TipPreviousValues {
+  id: Int!
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+type TipStatus implements Node {
+  id: ID!
+  blockNumber: BlockNumber!
+  tip: Tip!
+  status: String!
+  uniqueStatus: String!
+}
+
+"""A connection to a list of items."""
+type TipStatusConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TipStatusEdge]!
+  aggregate: AggregateTipStatus!
+}
+
+input TipStatusCreateInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+  tip: TipCreateOneWithoutTipStatusInput!
+}
+
+input TipStatusCreateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  connect: [TipStatusWhereUniqueInput!]
+}
+
+input TipStatusCreateWithoutTipInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+}
+
+"""An edge in a connection."""
+type TipStatusEdge {
+  """The item at the end of the edge."""
+  node: TipStatus!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TipStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type TipStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TipStatusScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TipStatusScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TipStatusScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TipStatusScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+}
+
+type TipStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: TipStatus
+  updatedFields: [String!]
+  previousValues: TipStatusPreviousValues
+}
+
+input TipStatusSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TipStatusSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TipStatusSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TipStatusSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TipStatusWhereInput
+}
+
+input TipStatusUpdateInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  tip: TipUpdateOneRequiredWithoutTipStatusInput
+}
+
+input TipStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  connect: [TipStatusWhereUniqueInput!]
+  set: [TipStatusWhereUniqueInput!]
+  disconnect: [TipStatusWhereUniqueInput!]
+  delete: [TipStatusWhereUniqueInput!]
+  update: [TipStatusUpdateWithWhereUniqueWithoutTipInput!]
+  updateMany: [TipStatusUpdateManyWithWhereNestedInput!]
+  deleteMany: [TipStatusScalarWhereInput!]
+  upsert: [TipStatusUpsertWithWhereUniqueWithoutTipInput!]
+}
+
+input TipStatusUpdateManyWithWhereNestedInput {
+  where: TipStatusScalarWhereInput!
+  data: TipStatusUpdateManyDataInput!
+}
+
+input TipStatusUpdateWithoutTipDataInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+}
+
+input TipStatusUpdateWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  data: TipStatusUpdateWithoutTipDataInput!
+}
+
+input TipStatusUpsertWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  update: TipStatusUpdateWithoutTipDataInput!
+  create: TipStatusCreateWithoutTipInput!
+}
+
+input TipStatusWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TipStatusWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TipStatusWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TipStatusWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+  blockNumber: BlockNumberWhereInput
+  tip: TipWhereInput
+}
+
+input TipStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type TipSubscriptionPayload {
+  mutation: MutationType!
+  node: Tip
+  updatedFields: [String!]
+  previousValues: TipPreviousValues
+}
+
+input TipSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TipSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TipSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TipSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TipWhereInput
+}
+
+input TipUpdateInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusUpdateManyWithoutTipInput
+}
+
+input TipUpdateManyMutationInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+input TipUpdateOneRequiredWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  connect: TipWhereUniqueInput
+  update: TipUpdateWithoutTipStatusDataInput
+  upsert: TipUpsertWithoutTipStatusInput
+}
+
+input TipUpdateWithoutTipStatusDataInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+input TipUpsertWithoutTipStatusInput {
+  update: TipUpdateWithoutTipStatusDataInput!
+  create: TipCreateWithoutTipStatusInput!
+}
+
+input TipWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TipWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TipWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TipWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  hash: String
+
+  """All values that are not equal to given value."""
+  hash_not: String
+
+  """All values that are contained in given list."""
+  hash_in: [String!]
+
+  """All values that are not contained in given list."""
+  hash_not_in: [String!]
+
+  """All values less than the given value."""
+  hash_lt: String
+
+  """All values less than or equal the given value."""
+  hash_lte: String
+
+  """All values greater than the given value."""
+  hash_gt: String
+
+  """All values greater than or equal the given value."""
+  hash_gte: String
+
+  """All values containing the given string."""
+  hash_contains: String
+
+  """All values not containing the given string."""
+  hash_not_contains: String
+
+  """All values starting with the given string."""
+  hash_starts_with: String
+
+  """All values not starting with the given string."""
+  hash_not_starts_with: String
+
+  """All values ending with the given string."""
+  hash_ends_with: String
+
+  """All values not ending with the given string."""
+  hash_not_ends_with: String
+  reason: String
+
+  """All values that are not equal to given value."""
+  reason_not: String
+
+  """All values that are contained in given list."""
+  reason_in: [String!]
+
+  """All values that are not contained in given list."""
+  reason_not_in: [String!]
+
+  """All values less than the given value."""
+  reason_lt: String
+
+  """All values less than or equal the given value."""
+  reason_lte: String
+
+  """All values greater than the given value."""
+  reason_gt: String
+
+  """All values greater than or equal the given value."""
+  reason_gte: String
+
+  """All values containing the given string."""
+  reason_contains: String
+
+  """All values not containing the given string."""
+  reason_not_contains: String
+
+  """All values starting with the given string."""
+  reason_starts_with: String
+
+  """All values not starting with the given string."""
+  reason_not_starts_with: String
+
+  """All values ending with the given string."""
+  reason_ends_with: String
+
+  """All values not ending with the given string."""
+  reason_not_ends_with: String
+  who: String
+
+  """All values that are not equal to given value."""
+  who_not: String
+
+  """All values that are contained in given list."""
+  who_in: [String!]
+
+  """All values that are not contained in given list."""
+  who_not_in: [String!]
+
+  """All values less than the given value."""
+  who_lt: String
+
+  """All values less than or equal the given value."""
+  who_lte: String
+
+  """All values greater than the given value."""
+  who_gt: String
+
+  """All values greater than or equal the given value."""
+  who_gte: String
+
+  """All values containing the given string."""
+  who_contains: String
+
+  """All values not containing the given string."""
+  who_not_contains: String
+
+  """All values starting with the given string."""
+  who_starts_with: String
+
+  """All values not starting with the given string."""
+  who_not_starts_with: String
+
+  """All values ending with the given string."""
+  who_ends_with: String
+
+  """All values not ending with the given string."""
+  who_not_ends_with: String
+  finder: String
+
+  """All values that are not equal to given value."""
+  finder_not: String
+
+  """All values that are contained in given list."""
+  finder_in: [String!]
+
+  """All values that are not contained in given list."""
+  finder_not_in: [String!]
+
+  """All values less than the given value."""
+  finder_lt: String
+
+  """All values less than or equal the given value."""
+  finder_lte: String
+
+  """All values greater than the given value."""
+  finder_gt: String
+
+  """All values greater than or equal the given value."""
+  finder_gte: String
+
+  """All values containing the given string."""
+  finder_contains: String
+
+  """All values not containing the given string."""
+  finder_not_contains: String
+
+  """All values starting with the given string."""
+  finder_starts_with: String
+
+  """All values not starting with the given string."""
+  finder_not_starts_with: String
+
+  """All values ending with the given string."""
+  finder_ends_with: String
+
+  """All values not ending with the given string."""
+  finder_not_ends_with: String
+  finderFee: String
+
+  """All values that are not equal to given value."""
+  finderFee_not: String
+
+  """All values that are contained in given list."""
+  finderFee_in: [String!]
+
+  """All values that are not contained in given list."""
+  finderFee_not_in: [String!]
+
+  """All values less than the given value."""
+  finderFee_lt: String
+
+  """All values less than or equal the given value."""
+  finderFee_lte: String
+
+  """All values greater than the given value."""
+  finderFee_gt: String
+
+  """All values greater than or equal the given value."""
+  finderFee_gte: String
+
+  """All values containing the given string."""
+  finderFee_contains: String
+
+  """All values not containing the given string."""
+  finderFee_not_contains: String
+
+  """All values starting with the given string."""
+  finderFee_starts_with: String
+
+  """All values not starting with the given string."""
+  finderFee_not_starts_with: String
+
+  """All values ending with the given string."""
+  finderFee_ends_with: String
+
+  """All values not ending with the given string."""
+  finderFee_not_ends_with: String
+  closes: Int
+
+  """All values that are not equal to given value."""
+  closes_not: Int
+
+  """All values that are contained in given list."""
+  closes_in: [Int!]
+
+  """All values that are not contained in given list."""
+  closes_not_in: [Int!]
+
+  """All values less than the given value."""
+  closes_lt: Int
+
+  """All values less than or equal the given value."""
+  closes_lte: Int
+
+  """All values greater than the given value."""
+  closes_gt: Int
+
+  """All values greater than or equal the given value."""
+  closes_gte: Int
+  tipStatus_every: TipStatusWhereInput
+  tipStatus_some: TipStatusWhereInput
+  tipStatus_none: TipStatusWhereInput
+}
+
+input TipWhereUniqueInput {
+  id: Int
 }
 
 type TotalIssuance implements Node {

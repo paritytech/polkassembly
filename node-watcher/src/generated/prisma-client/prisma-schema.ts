@@ -90,6 +90,14 @@ type AggregateStake {
   count: Int!
 }
 
+type AggregateTip {
+  count: Int!
+}
+
+type AggregateTipStatus {
+  count: Int!
+}
+
 type AggregateTotalIssuance {
   count: Int!
 }
@@ -1979,6 +1987,18 @@ type Mutation {
   upsertStake(where: StakeWhereUniqueInput!, create: StakeCreateInput!, update: StakeUpdateInput!): Stake!
   deleteStake(where: StakeWhereUniqueInput!): Stake
   deleteManyStakes(where: StakeWhereInput): BatchPayload!
+  createTip(data: TipCreateInput!): Tip!
+  updateTip(data: TipUpdateInput!, where: TipWhereUniqueInput!): Tip
+  updateManyTips(data: TipUpdateManyMutationInput!, where: TipWhereInput): BatchPayload!
+  upsertTip(where: TipWhereUniqueInput!, create: TipCreateInput!, update: TipUpdateInput!): Tip!
+  deleteTip(where: TipWhereUniqueInput!): Tip
+  deleteManyTips(where: TipWhereInput): BatchPayload!
+  createTipStatus(data: TipStatusCreateInput!): TipStatus!
+  updateTipStatus(data: TipStatusUpdateInput!, where: TipStatusWhereUniqueInput!): TipStatus
+  updateManyTipStatuses(data: TipStatusUpdateManyMutationInput!, where: TipStatusWhereInput): BatchPayload!
+  upsertTipStatus(where: TipStatusWhereUniqueInput!, create: TipStatusCreateInput!, update: TipStatusUpdateInput!): TipStatus!
+  deleteTipStatus(where: TipStatusWhereUniqueInput!): TipStatus
+  deleteManyTipStatuses(where: TipStatusWhereInput): BatchPayload!
   createTotalIssuance(data: TotalIssuanceCreateInput!): TotalIssuance!
   updateTotalIssuance(data: TotalIssuanceUpdateInput!, where: TotalIssuanceWhereUniqueInput!): TotalIssuance
   updateManyTotalIssuances(data: TotalIssuanceUpdateManyMutationInput!, where: TotalIssuanceWhereInput): BatchPayload!
@@ -3740,6 +3760,12 @@ type Query {
   stake(where: StakeWhereUniqueInput!): Stake
   stakes(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stake]!
   stakesConnection(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StakeConnection!
+  tip(where: TipWhereUniqueInput!): Tip
+  tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
+  tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
+  tipStatus(where: TipStatusWhereUniqueInput!): TipStatus
+  tipStatuses(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus]!
+  tipStatusesConnection(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipStatusConnection!
   totalIssuance(where: TotalIssuanceWhereUniqueInput!): TotalIssuance
   totalIssuances(where: TotalIssuanceWhereInput, orderBy: TotalIssuanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TotalIssuance]!
   totalIssuancesConnection(where: TotalIssuanceWhereInput, orderBy: TotalIssuanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TotalIssuanceConnection!
@@ -4711,10 +4737,468 @@ type Subscription {
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   slashing(where: SlashingSubscriptionWhereInput): SlashingSubscriptionPayload
   stake(where: StakeSubscriptionWhereInput): StakeSubscriptionPayload
+  tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
+  tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   totalIssuance(where: TotalIssuanceSubscriptionWhereInput): TotalIssuanceSubscriptionPayload
   treasurySpendProposal(where: TreasurySpendProposalSubscriptionWhereInput): TreasurySpendProposalSubscriptionPayload
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload
   validator(where: ValidatorSubscriptionWhereInput): ValidatorSubscriptionPayload
+}
+
+type Tip {
+  id: Int!
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus!]
+}
+
+type TipConnection {
+  pageInfo: PageInfo!
+  edges: [TipEdge]!
+  aggregate: AggregateTip!
+}
+
+input TipCreateInput {
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusCreateManyWithoutTipInput
+}
+
+input TipCreateOneWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  connect: TipWhereUniqueInput
+}
+
+input TipCreateWithoutTipStatusInput {
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+type TipEdge {
+  node: Tip!
+  cursor: String!
+}
+
+enum TipOrderByInput {
+  id_ASC
+  id_DESC
+  hash_ASC
+  hash_DESC
+  reason_ASC
+  reason_DESC
+  who_ASC
+  who_DESC
+  finder_ASC
+  finder_DESC
+  finderFee_ASC
+  finderFee_DESC
+  closes_ASC
+  closes_DESC
+}
+
+type TipPreviousValues {
+  id: Int!
+  hash: String!
+  reason: String!
+  who: String!
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+type TipStatus {
+  id: ID!
+  blockNumber: BlockNumber!
+  tip: Tip!
+  status: String!
+  uniqueStatus: String!
+}
+
+type TipStatusConnection {
+  pageInfo: PageInfo!
+  edges: [TipStatusEdge]!
+  aggregate: AggregateTipStatus!
+}
+
+input TipStatusCreateInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  tip: TipCreateOneWithoutTipStatusInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TipStatusCreateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  connect: [TipStatusWhereUniqueInput!]
+}
+
+input TipStatusCreateWithoutTipInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+type TipStatusEdge {
+  node: TipStatus!
+  cursor: String!
+}
+
+enum TipStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type TipStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TipStatusScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [TipStatusScalarWhereInput!]
+  OR: [TipStatusScalarWhereInput!]
+  NOT: [TipStatusScalarWhereInput!]
+}
+
+type TipStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: TipStatus
+  updatedFields: [String!]
+  previousValues: TipStatusPreviousValues
+}
+
+input TipStatusSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TipStatusWhereInput
+  AND: [TipStatusSubscriptionWhereInput!]
+  OR: [TipStatusSubscriptionWhereInput!]
+  NOT: [TipStatusSubscriptionWhereInput!]
+}
+
+input TipStatusUpdateInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  tip: TipUpdateOneRequiredWithoutTipStatusInput
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateManyWithoutTipInput {
+  create: [TipStatusCreateWithoutTipInput!]
+  delete: [TipStatusWhereUniqueInput!]
+  connect: [TipStatusWhereUniqueInput!]
+  set: [TipStatusWhereUniqueInput!]
+  disconnect: [TipStatusWhereUniqueInput!]
+  update: [TipStatusUpdateWithWhereUniqueWithoutTipInput!]
+  upsert: [TipStatusUpsertWithWhereUniqueWithoutTipInput!]
+  deleteMany: [TipStatusScalarWhereInput!]
+  updateMany: [TipStatusUpdateManyWithWhereNestedInput!]
+}
+
+input TipStatusUpdateManyWithWhereNestedInput {
+  where: TipStatusScalarWhereInput!
+  data: TipStatusUpdateManyDataInput!
+}
+
+input TipStatusUpdateWithoutTipDataInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  status: String
+  uniqueStatus: String
+}
+
+input TipStatusUpdateWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  data: TipStatusUpdateWithoutTipDataInput!
+}
+
+input TipStatusUpsertWithWhereUniqueWithoutTipInput {
+  where: TipStatusWhereUniqueInput!
+  update: TipStatusUpdateWithoutTipDataInput!
+  create: TipStatusCreateWithoutTipInput!
+}
+
+input TipStatusWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  blockNumber: BlockNumberWhereInput
+  tip: TipWhereInput
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [TipStatusWhereInput!]
+  OR: [TipStatusWhereInput!]
+  NOT: [TipStatusWhereInput!]
+}
+
+input TipStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type TipSubscriptionPayload {
+  mutation: MutationType!
+  node: Tip
+  updatedFields: [String!]
+  previousValues: TipPreviousValues
+}
+
+input TipSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TipWhereInput
+  AND: [TipSubscriptionWhereInput!]
+  OR: [TipSubscriptionWhereInput!]
+  NOT: [TipSubscriptionWhereInput!]
+}
+
+input TipUpdateInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+  tipStatus: TipStatusUpdateManyWithoutTipInput
+}
+
+input TipUpdateManyMutationInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+input TipUpdateOneRequiredWithoutTipStatusInput {
+  create: TipCreateWithoutTipStatusInput
+  update: TipUpdateWithoutTipStatusDataInput
+  upsert: TipUpsertWithoutTipStatusInput
+  connect: TipWhereUniqueInput
+}
+
+input TipUpdateWithoutTipStatusDataInput {
+  hash: String
+  reason: String
+  who: String
+  finder: String
+  finderFee: String
+  closes: Int
+}
+
+input TipUpsertWithoutTipStatusInput {
+  update: TipUpdateWithoutTipStatusDataInput!
+  create: TipCreateWithoutTipStatusInput!
+}
+
+input TipWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  hash: String
+  hash_not: String
+  hash_in: [String!]
+  hash_not_in: [String!]
+  hash_lt: String
+  hash_lte: String
+  hash_gt: String
+  hash_gte: String
+  hash_contains: String
+  hash_not_contains: String
+  hash_starts_with: String
+  hash_not_starts_with: String
+  hash_ends_with: String
+  hash_not_ends_with: String
+  reason: String
+  reason_not: String
+  reason_in: [String!]
+  reason_not_in: [String!]
+  reason_lt: String
+  reason_lte: String
+  reason_gt: String
+  reason_gte: String
+  reason_contains: String
+  reason_not_contains: String
+  reason_starts_with: String
+  reason_not_starts_with: String
+  reason_ends_with: String
+  reason_not_ends_with: String
+  who: String
+  who_not: String
+  who_in: [String!]
+  who_not_in: [String!]
+  who_lt: String
+  who_lte: String
+  who_gt: String
+  who_gte: String
+  who_contains: String
+  who_not_contains: String
+  who_starts_with: String
+  who_not_starts_with: String
+  who_ends_with: String
+  who_not_ends_with: String
+  finder: String
+  finder_not: String
+  finder_in: [String!]
+  finder_not_in: [String!]
+  finder_lt: String
+  finder_lte: String
+  finder_gt: String
+  finder_gte: String
+  finder_contains: String
+  finder_not_contains: String
+  finder_starts_with: String
+  finder_not_starts_with: String
+  finder_ends_with: String
+  finder_not_ends_with: String
+  finderFee: String
+  finderFee_not: String
+  finderFee_in: [String!]
+  finderFee_not_in: [String!]
+  finderFee_lt: String
+  finderFee_lte: String
+  finderFee_gt: String
+  finderFee_gte: String
+  finderFee_contains: String
+  finderFee_not_contains: String
+  finderFee_starts_with: String
+  finderFee_not_starts_with: String
+  finderFee_ends_with: String
+  finderFee_not_ends_with: String
+  closes: Int
+  closes_not: Int
+  closes_in: [Int!]
+  closes_not_in: [Int!]
+  closes_lt: Int
+  closes_lte: Int
+  closes_gt: Int
+  closes_gte: Int
+  tipStatus_every: TipStatusWhereInput
+  tipStatus_some: TipStatusWhereInput
+  tipStatus_none: TipStatusWhereInput
+  AND: [TipWhereInput!]
+  OR: [TipWhereInput!]
+  NOT: [TipWhereInput!]
+}
+
+input TipWhereUniqueInput {
+  id: Int
 }
 
 type TotalIssuance {

@@ -8,13 +8,14 @@ import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTipFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
 import { APPNAME } from 'src/global/appName';
-import { motionStatus,proposalStatus, referendumStatus } from 'src/global/statuses';
+import { motionStatus, proposalStatus, referendumStatus, tipStatus } from 'src/global/statuses';
 import { VoteThreshold } from 'src/types';
 import { Form } from 'src/ui-components/Form';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
+import EndorseTip from './EndorseTip';
 import ProposalDisplay from './Proposals';
 import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
@@ -26,19 +27,20 @@ interface Props {
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
+	isTipProposal?: boolean
 	onchainId?: number | null
-	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment
+	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment | OnchainLinkTipFragment
 	status?: string
 }
 
-const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, onchainId, onchainLink, status }: Props) => {
+const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
 	const [accountsNotFound, setAccountsNotFound] = useState(false);
 	const { api } = useContext(ApiPromiseContext);
 
-	const canVote = !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED].includes(status);
+	const canVote = !!status && !![proposalStatus.PROPOSED, referendumStatus.STARTED, motionStatus.PROPOSED, tipStatus.OPENED].includes(status);
 
 	const onAccountChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
 		const addressValue = data.value as string;
@@ -103,14 +105,14 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 				? <div className={className}>
 					<Form standalone={false}>
 						{isMotion && canVote &&
-						<VoteMotion
-							accounts={accounts}
-							address={address}
-							getAccounts={getAccounts}
-							motionId={onchainId}
-							motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-							onAccountChange={onAccountChange}
-						/>
+							<VoteMotion
+								accounts={accounts}
+								address={address}
+								getAccounts={getAccounts}
+								motionId={onchainId}
+								motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+								onAccountChange={onAccountChange}
+							/>
 						}
 						{isProposal &&
 							<ProposalDisplay
@@ -140,6 +142,16 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 								}
 							</>
 						}
+						{isTipProposal && canVote &&
+							<EndorseTip
+								accounts={accounts}
+								address={address}
+								getAccounts={getAccounts}
+								tipId={onchainId}
+								tipHash={(onchainLink as OnchainLinkTipFragment)?.onchain_tip?.[0]?.hash}
+								onAccountChange={onAccountChange}
+							/>
+						}
 					</Form>
 				</div>
 				: null
@@ -149,7 +161,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, oncha
 };
 
 export default styled(GovenanceSideBar)`
-	
+
 	@media only screen and (max-width: 768px) {
 		.ui.form {
 			padding: 0rem;

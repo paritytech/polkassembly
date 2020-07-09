@@ -539,6 +539,50 @@ const Query = {
   ) {
     return prisma.referendumStatus(referendumStatusWhereUniqueInput);
   },
+  tips(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.tips({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  tip(
+    _parent: any,
+    { TipWhereUniqueInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.tip(TipWhereUniqueInput);
+  },
+  tipStatuses(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.tipStatuses({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  tipStatus(
+    _parent: any,
+    { TipStatusWhereUniqueInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.tipStatus(TipStatusWhereUniqueInput);
+  },
 };
 
 export { Query };

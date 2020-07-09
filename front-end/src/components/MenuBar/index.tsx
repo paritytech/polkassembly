@@ -52,7 +52,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		{ content: 'Referenda', to:'/referenda' },
 		{ content: 'Proposals', to:'/proposals' },
 		{ content: 'Motions', to:'/motions' },
-		{ content: 'Treasury proposals', to:'/treasury-proposals' }
+		{ content: 'Treasury proposals', to:'/treasury-proposals' },
+		{ content: 'Tips', to: '/tips' }
 	];
 
 	const loggedOutItems = [

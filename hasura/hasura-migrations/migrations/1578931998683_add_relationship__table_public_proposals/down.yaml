@@ -1,6 +1,0 @@
-- args:
-    relationship: post
-    table:
-      name: proposals
-      schema: public
-  type: drop_relationship

@@ -193,6 +193,21 @@ const resolvers = {
       return prisma.proposalStatus({ id: parent.id }).blockNumber();
     },
   },
+  Tip: {
+    tipStatus(
+      parent: any,
+      { where, orderBy, skip, after, before, first, last }: Selectors
+    ) {
+      return prisma
+        .tip({ id: parent.id })
+        .tipStatus({ where, orderBy, skip, after, before, first, last });
+    },
+  },
+  TipStatus: {
+    blockNumber(parent: any) {
+      return prisma.tipStatus({ id: parent.id }).blockNumber();
+    },
+  },
   TreasurySpendProposal: {
     treasuryStatus(
       parent: any,

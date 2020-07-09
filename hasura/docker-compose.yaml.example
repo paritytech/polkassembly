@@ -15,7 +15,7 @@ services:
     - /var/polkassembly/hasura/data:/var/lib/postgresql/data
   graphql-engine:
     network_mode: "host"
-    image: hasura/graphql-engine:v1.3.0-beta.2.cli-migrations
+    image: hasura/graphql-engine:v1.3.0-beta.2
     volumes:
     # migration data
     - ./hasura-migrations/migrations:/hasura-migrations

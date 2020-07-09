@@ -125,3 +125,37 @@ export const treasurySpendProposalSubscription = gql`
         }
     }
 `;
+
+export const tipSubscription = gql`
+	subscription tipSubscription($startBlock: Int!) {
+        tip (
+            where: {
+				node: {
+					tipStatus_some: {
+						AND: [
+							{ status: "TipOpened" },
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+            }
+        ){
+            mutation
+            node {
+                id
+                hash
+                reason
+                who
+                finder
+                finderFee
+                closes
+                tipStatus(orderBy: id_DESC) {
+                    blockNumber {
+                        number
+                    }
+                    status
+                }
+            }
+        }
+    }
+`;

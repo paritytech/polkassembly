@@ -129,6 +129,7 @@ export interface OnchainLinkType {
     onchain_motion_id?: number;
     onchain_proposal_id?: number;
     onchain_referendum_id?: number;
+    onchain_tip_id?: number;
     onchain_treasury_proposal_id?: number;
 }
 
@@ -238,6 +239,7 @@ export interface VerifyEmailArgs {
 export enum PostTypeEnum {
     POST = 'post',
     PROPOSAL = 'proposal',
+    TIP = 'tip',
     TREASURY = 'treasury',
     MOTION = 'motion',
     REFERENDUM = 'referendum',

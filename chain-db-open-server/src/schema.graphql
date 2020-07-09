@@ -68,6 +68,12 @@ type Query {
   stake(where: StakeWhereUniqueInput!): Stake
   stakes(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stake]!
   stakesConnection(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StakeConnection!
+  tip(where: TipWhereUniqueInput!): Tip
+  tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
+  tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
+  tipStatus(where: TipStatusWhereUniqueInput!): TipStatus
+  tipStatuses(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus]!
+  tipStatusesConnection(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipStatusConnection!
   totalIssuance(where: TotalIssuanceWhereUniqueInput!): TotalIssuance
   totalIssuances(where: TotalIssuanceWhereInput, orderBy: TotalIssuanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TotalIssuance]!
   totalIssuancesConnection(where: TotalIssuanceWhereInput, orderBy: TotalIssuanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TotalIssuanceConnection!
@@ -106,6 +112,8 @@ type Subscription {
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   slashing(where: SlashingSubscriptionWhereInput): SlashingSubscriptionPayload
   stake(where: StakeSubscriptionWhereInput): StakeSubscriptionPayload
+  tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
+  tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   totalIssuance(where: TotalIssuanceSubscriptionWhereInput): TotalIssuanceSubscriptionPayload
   treasurySpendProposal(where: TreasurySpendProposalSubscriptionWhereInput): TreasurySpendProposalSubscriptionPayload
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload

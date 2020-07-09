@@ -18,6 +18,8 @@ import {
 	ProposalPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryVariables,
+	TipPostAndCommentsQuery,
+	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
 	useAddPostCommentMutation,
@@ -30,7 +32,21 @@ import ContentForm from '../ContentForm';
 interface Props {
 	className?: string
 	postId: number
-	refetch: (variables?: DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | ReferendumPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | TreasuryProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	refetch: (variables?:
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		ReferendumPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		TipPostAndCommentsQueryVariables |
+		undefined
+	) =>
+		Promise<ApolloQueryResult<TipPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
 const PostCommentForm = ({ className, postId, refetch }: Props) => {

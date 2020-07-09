@@ -27,3 +27,10 @@ export const motionStatus = {
 	PROPOSED: 'Proposed',
 	VOTED: 'Voted'
 };
+
+export const tipStatus = {
+	CLOSED: 'TipClosed',
+	CLOSING: 'TipClosing',
+	OPENED: 'TipOpened',
+	RETRACTED: 'TipRetracted'
+};

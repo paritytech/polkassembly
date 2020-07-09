@@ -1,6 +1,0 @@
-- args:
-    name: reacting_user
-    table:
-      name: post_reactions
-      schema: public
-  type: delete_remote_relationship

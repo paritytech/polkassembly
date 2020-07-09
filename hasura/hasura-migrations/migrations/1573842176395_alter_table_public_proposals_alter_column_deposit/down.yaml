@@ -1,6 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."proposals" ALTER COLUMN "deposit" TYPE integer;
-  type: run_sql
-- args:
-    sql: COMMENT ON COLUMN "public"."proposals"."deposit" IS E'null'
-  type: run_sql

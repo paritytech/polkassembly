@@ -21,6 +21,7 @@ import {
 	OnchainLinkMotionFragment,
 	OnchainLinkProposalFragment,
 	OnchainLinkReferendumFragment,
+	OnchainLinkTipFragment,
 	OnchainLinkTreasuryProposalFragment,
 	ProposalPostAndCommentsQuery,
 	ProposalPostAndCommentsQueryHookResult,
@@ -30,6 +31,10 @@ import {
 	ReferendumPostAndCommentsQueryHookResult,
 	ReferendumPostAndCommentsQueryVariables,
 	ReferendumPostFragment,
+	TipPostAndCommentsQuery,
+	TipPostAndCommentsQueryHookResult,
+	TipPostAndCommentsQueryVariables,
+	TipPostFragment,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryHookResult,
 	TreasuryProposalPostAndCommentsQueryVariables,
@@ -48,6 +53,7 @@ import CreatePostComment from './PostCommentForm';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
+import PostTipInfo from './PostGovernanceInfo/PostTipInfo';
 import PostTreasuryInfo from './PostGovernanceInfo/PostTreasuryInfo';
 
 interface Props {
@@ -57,16 +63,32 @@ interface Props {
 		ProposalPostAndCommentsQueryHookResult['data'] |
 		ReferendumPostAndCommentsQueryHookResult['data'] |
 		MotionPostAndCommentsQueryHookResult['data'] |
-		TreasuryProposalPostAndCommentsQueryHookResult['data']
+		TreasuryProposalPostAndCommentsQueryHookResult['data'] |
+		TipPostAndCommentsQueryHookResult['data' ]
 	)
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
-	refetch: (variables?: ReferendumPostAndCommentsQueryVariables | DiscussionPostAndCommentsQueryVariables | ProposalPostAndCommentsQueryVariables | MotionPostAndCommentsQueryVariables | TreasuryProposalPostAndCommentsQueryVariables | undefined) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> | Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> | Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> | Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
+	isTipProposal?: boolean
+	refetch: (variables?:
+		ReferendumPostAndCommentsQueryVariables |
+		DiscussionPostAndCommentsQueryVariables |
+		ProposalPostAndCommentsQueryVariables |
+		MotionPostAndCommentsQueryVariables |
+		TreasuryProposalPostAndCommentsQueryVariables |
+		TipPostAndCommentsQueryVariables |
+		undefined
+	) =>
+		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<TipPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTreasuryProposal = false, refetch }: Props ) => {
+const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTipProposal = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post =  data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
 	const [isEditing, setIsEditing] = useState(false);
@@ -80,7 +102,8 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let proposalPost: ProposalPostFragment | undefined;
 	let motionPost: MotionPostFragment | undefined;
 	let treasuryPost: TreasuryProposalPostFragment | undefined;
-	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTreasuryProposalFragment | undefined;
+	let tipPost: TipPostFragment | undefined;
+	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
 
 	if (isReferendum){
@@ -115,6 +138,14 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		metaTitle = `Treasury #${onchainId}`;
 	}
 
+	if (isTipProposal) {
+		tipPost = post as TipPostFragment;
+		definedOnchainLink = tipPost.onchain_link as OnchainLinkTipFragment;
+		onchainId = definedOnchainLink.onchain_tip_id;
+		postStatus = tipPost?.onchain_link?.onchain_tip?.[0]?.tipStatus?.[0].status;
+		metaTitle = `Tip #${onchainId}`;
+	}
+
 	metaTitle = `${metaTitle} | ${post?.title ? post?.title : 'Polkassembly' }`;
 
 	useEffect(() => {
@@ -127,8 +158,8 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		});
 	}, [post, setMetaContextState, metaTitle]);
 
-	const isDiscussion = (post: TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
-		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal) {
+	const isDiscussion = (post: TipPostFragment | TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
+		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal && !isTipProposal) {
 			return (post as DiscussionPostFragment) !== undefined;
 		}
 
@@ -140,19 +171,36 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isProposal={isProposal}
 		isReferendum={isReferendum}
 		isTreasuryProposal={isTreasuryProposal}
+		isTipProposal={isTipProposal}
 	/>;
 
 	const isProposalProposer = isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address);
 	const isReferendumProposer = isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address);
 	const isMotionProposer = isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address);
 	const isTreasuryProposer = isTreasuryProposal && treasuryPost?.onchain_link?.proposer_address && addresses?.includes(treasuryPost.onchain_link.proposer_address);
+	const isTipProposer = isTipProposal && tipPost?.onchain_link?.proposer_address && addresses?.includes(tipPost.onchain_link.proposer_address);
 	const canEdit = !isEditing && (
 		post.author?.id === id ||
 		isProposalProposer ||
 		isReferendumProposer ||
 		isMotionProposer ||
-		isTreasuryProposer
+		isTreasuryProposer ||
+		isTipProposer
 	);
+
+	const Sidebar = () => <>
+		<GovenanceSideBar
+			isMotion={isMotion}
+			isProposal={isProposal}
+			isReferendum={isReferendum}
+			isTipProposal={isTipProposal}
+			isTreasuryProposal={isTreasuryProposal}
+			onchainId={onchainId}
+			onchainLink={definedOnchainLink}
+			status={postStatus}
+		/>
+		{isDiscussion(post) && <Poll postId={post.id} />}
+	</>;
 
 	return (
 		<Grid className={className}>
@@ -194,17 +242,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
 					/>
 				}
-				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-					<GovenanceSideBar
-						isMotion={isMotion}
-						isProposal={isProposal}
-						isReferendum={isReferendum}
-						isTreasuryProposal={isTreasuryProposal}
-						onchainId={onchainId}
-						onchainLink={definedOnchainLink}
-						status={postStatus}
+				{ isTipProposal &&
+					<PostTipInfo
+						onchainLink={definedOnchainLink as OnchainLinkTipFragment}
 					/>
-					{isDiscussion(post) && <Poll postId={post.id} />}
+				}
+				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
+					<Sidebar />
 				</Responsive>
 				{ !!post.comments?.length &&
 					<Comments
@@ -216,16 +260,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			</Grid.Column>
 			<Grid.Column mobile={16} tablet={16} computer={6} largeScreen={6}>
 				<Responsive minWidth={Responsive.onlyComputer.minWidth}>
-					<GovenanceSideBar
-						isMotion={isMotion}
-						isProposal={isProposal}
-						isReferendum={isReferendum}
-						isTreasuryProposal={isTreasuryProposal}
-						onchainId={onchainId}
-						onchainLink={definedOnchainLink}
-						status={postStatus}
-					/>
-					{isDiscussion(post) && <Poll postId={post.id} />}
+					<Sidebar />
 				</Responsive>
 				<ScrollToTop/>
 			</Grid.Column>

@@ -1,5 +1,0 @@
-- args:
-    cascade: false
-    read_only: false
-    sql: alter table "public"."comment_reactions" drop constraint "comment_reactions_comment_id_user_id_reaction_key";
-  type: run_sql

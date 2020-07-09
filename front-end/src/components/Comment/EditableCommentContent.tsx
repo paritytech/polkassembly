@@ -23,6 +23,8 @@ import {
 	ProposalPostAndCommentsQueryVariables,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryVariables,
+	TipPostAndCommentsQuery,
+	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
 	useEditCommentMutation } from '../../generated/graphql';
@@ -46,9 +48,11 @@ interface Props {
 		ProposalPostAndCommentsQueryVariables |
 		ReferendumPostAndCommentsQueryVariables |
 		MotionPostAndCommentsQueryVariables |
+		TipPostAndCommentsQueryVariables |
 		TreasuryProposalPostAndCommentsQueryVariables |
 		undefined
 	) =>
+		Promise<ApolloQueryResult<TipPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |

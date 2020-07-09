@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { ReactNode } from 'react';
 import { Label, SemanticICONS } from 'semantic-ui-react';
-import { motionStatus, proposalStatus, referendumStatus } from 'src/global/statuses';
+import { motionStatus, proposalStatus, referendumStatus, tipStatus } from 'src/global/statuses';
 
 interface Props{
 	children?: ReactNode,
@@ -23,7 +23,9 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		referendumStatus.STARTED,
 		proposalStatus.PROPOSED,
 		motionStatus.PROPOSED,
-		motionStatus.APPROVED
+		motionStatus.APPROVED,
+		tipStatus.OPENED,
+		tipStatus.CLOSING
 	].includes(status)){
 		icon = 'circle';
 	}
@@ -32,14 +34,16 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		referendumStatus.CANCELLED,
 		referendumStatus.NOTPASSED,
 		referendumStatus.VETOED,
-		motionStatus.DISAPPROVED
+		motionStatus.DISAPPROVED,
+		tipStatus.RETRACTED
 	].includes(status)){
 		icon = 'times';
 	}
 
 	if ([proposalStatus.TABLED,
 		referendumStatus.EXECUTED,
-		motionStatus.EXECUTED
+		motionStatus.EXECUTED,
+		tipStatus.CLOSED
 	].includes(status)){
 		icon = 'check';
 	}
@@ -74,14 +78,17 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		padding: 0.5rem 1rem;
 		&.${referendumStatus.STARTED},
 		&.${proposalStatus.PROPOSED},
-		&.${motionStatus.PROPOSED} {
+		&.${motionStatus.PROPOSED},
+		&.${tipStatus.OPENED},
+		&.${tipStatus.CLOSING} {
 			border-color: blue_primary;
 			color: blue_primary;
 		}
 		&.${proposalStatus.TABLED},
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
-		&.${motionStatus.EXECUTED} {
+		&.${motionStatus.EXECUTED},
+		&.${tipStatus.CLOSED} {
 			border-color: green_primary;
 			color: green_primary;
 		}
@@ -89,7 +96,8 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${referendumStatus.CANCELLED},
 		&.${referendumStatus.NOTPASSED},
 		&.${referendumStatus.VETOED},
-		&.${motionStatus.DISAPPROVED} {
+		&.${motionStatus.DISAPPROVED},
+		&.${tipStatus.RETRACTED} {
 			border-color: red_primary;
 			color: red_primary;
 		}

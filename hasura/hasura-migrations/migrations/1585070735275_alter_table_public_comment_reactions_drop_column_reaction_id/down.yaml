@@ -1,7 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."comment_reactions" ADD COLUMN "reaction_id" int4
-  type: run_sql
-- args:
-    sql: ALTER TABLE "public"."comment_reactions" ALTER COLUMN "reaction_id" DROP
-      NOT NULL
-  type: run_sql

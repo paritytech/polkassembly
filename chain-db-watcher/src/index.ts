@@ -13,14 +13,16 @@ import ws from 'ws';
 import {
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
 	motionDiscussionExists,
 	proposalDiscussionExists,
+	tipDiscussionExists,
 	treasuryProposalDiscussionExists,
 	updateTreasuryProposalWithMotion
 } from './graphql_helpers';
-import { motionSubscription, proposalSubscription, referendumSubscription, treasurySpendProposalSubscription } from './queries';
+import { motionSubscription, proposalSubscription, referendumSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
 import { getMotionTreasuryProposalId } from './sync/utils';
 
@@ -74,6 +76,31 @@ async function main (): Promise<void> {
 	const link = new WebSocketLink(client);
 
 	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
+
+	execute(link, {
+		query: tipSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
+			console.log('Tip data received', JSON.stringify(data, null, 2));
+
+			if (data?.tip.mutation === subscriptionMutation.Created) {
+				const { id, finder } = data.tip.node;
+				tipDiscussionExists(id).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndTip({ onchainTipId: Number(id), proposer: finder });
+					} else {
+						console.error(chalk.red(`✖︎ Tip id ${id.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		error: error => { throw new Error(`Subscription (tip) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (tip) completed');
+			process.exit(1);
+		}
+	});
 
 	execute(link, {
 		query: treasurySpendProposalSubscription,

@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."comments" ADD COLUMN "post_id" integer NOT NULL;
-  type: run_sql

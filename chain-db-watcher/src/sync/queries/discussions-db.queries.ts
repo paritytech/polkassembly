@@ -55,3 +55,16 @@ export const getDiscussionTreasuryProposals = gql`
     }
 `;
 
+export const getDiscussionTips = gql`
+    query getDiscussionTips {
+        onchain_links(where: {onchain_tip_id: {_is_null: false}}){
+            ...discussionTip
+        }
+    }
+    fragment discussionTip on onchain_links {
+        id
+        onchain_tip_id
+        proposer_address
+    }
+`;
+
