@@ -92,7 +92,7 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
         let closes: number | undefined;
 
-        if (method === tipStatus.CLOSING) {
+        if (method === 'TipClosing') {
           const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips(
             tipRawEvent.Hash
           );
