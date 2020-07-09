@@ -64,7 +64,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 
 const syncTips = async (onChainTips: ObjectMap, discussionTips: ObjectMap): Promise<void[]> => {
 	return Promise.all(Object.entries(onChainTips).map(async ([key, author]) => {
-		// if this treasuryproposal doesn't exist in the discussion DB
+		// if this tip doesn't exist in the discussion DB
 		if (!discussionTips[key]) {
 			await addDiscussionPostAndTip({ onchainTipId: Number(key), proposer: author });
 		}
