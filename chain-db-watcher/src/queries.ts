@@ -143,12 +143,12 @@ export const tipSubscription = gql`
             mutation
             node {
                 id
-				hash
-				reason
-				who
-				finder
-				finderFee
-				closes
+                hash
+                reason
+                who
+                finder
+                finderFee
+                closes
                 tipStatus(orderBy: id_DESC) {
                     blockNumber {
                         number
