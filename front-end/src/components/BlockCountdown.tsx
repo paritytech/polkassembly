@@ -27,13 +27,17 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 	const { blocktime } = useBlockTime();
 
 	return (
-		<Popup
-			className={className}
-			trigger={<div className='blockCountdown'>{blocksRemaining !== endBlock ? blockToTime(blocksRemaining, blocktime) : `#${endBlock}`}</div>}
-			content={<DivContent>{`#${endBlock}`}</DivContent>}
-			hoverable={true}
-			position='top left'
-		/>
+		blocksRemaining !== endBlock && blocksRemaining > 0
+			?(
+				<Popup
+					className={className}
+					trigger={<div className='blockCountdown'>{ blockToTime(blocksRemaining, blocktime)}</div>}
+					content={<DivContent>{`#${endBlock}`}</DivContent>}
+					hoverable={true}
+					position='top left'
+				/>
+			)
+			: <>#{endBlock}</>
 	);
 };
 
