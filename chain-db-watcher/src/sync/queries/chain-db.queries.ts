@@ -114,7 +114,7 @@ export const getOnchainTips = gql`
 			where: {
                 tipStatus_some: {
                     AND: [
-                        { status: "Opened" }
+                        { status: "TipOpened" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }

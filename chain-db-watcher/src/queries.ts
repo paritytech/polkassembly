@@ -133,7 +133,7 @@ export const tipSubscription = gql`
 				node: {
 					tipStatus_some: {
 						AND: [
-							{ status: "Opened" },
+							{ status: "TipOpened" },
 							{ blockNumber: { number_gte: $startBlock } }
 						]
 					}

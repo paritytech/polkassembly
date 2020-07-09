@@ -6659,7 +6659,7 @@ export const GetOnchainTreasuryProposalsDocument = gql`
     ${OnchainTreasuryProposalFragmentDoc}`;
 export const GetOnchainTipsDocument = gql`
     query getOnchainTips($startBlock: Int!) {
-  tips(where: {tipStatus_some: {AND: [{status: "Opened"}, {blockNumber: {number_gte: $startBlock}}]}}) {
+  tips(where: {tipStatus_some: {AND: [{status: "TipOpened"}, {blockNumber: {number_gte: $startBlock}}]}}) {
     ...onchainTip
   }
 }
