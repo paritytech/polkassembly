@@ -99,12 +99,13 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
           if (tipInfoRaw.isNone) {
             l.error(`No tip data found for Hash: ${tipRawEvent.Hash}`);
-          }
 
-          const tip = tipInfoRaw.unwrap();
+          } else {
+            const tip = tipInfoRaw.unwrap();
 
-          if (tip.closes.isSome) {
-            closes = tip.closes.unwrap().toNumber()
+            if (tip.closes.isSome) {
+              closes = tip.closes.unwrap().toNumber()
+            }
           }
         }
 
