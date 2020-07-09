@@ -2,8 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as React from 'react';
+import * as moment from 'moment';
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
+import BlockCountdown from 'src/components/BlockCountdown';
+import { tipStatus as tipStatuses } from 'src/global/statuses';
 
 import { OnchainLinkTipFragment } from '../../../generated/graphql';
 import AddressComponent from '../../../ui-components/Address';
@@ -21,11 +24,8 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 
-	const hash = onchainTipProposal?.[0]?.hash;
-	const reason = onchainTipProposal?.[0]?.reason;
-	const who = onchainTipProposal?.[0]?.who;
-	const finder = onchainTipProposal?.[0]?.finder;
-	const closes = onchainTipProposal?.[0]?.closes;
+	const { closes, finder, hash, reason, who, tipStatus  } = onchainTipProposal?.[0] || { };
+	const { blockNumber, status } = tipStatus?.[0] || {};
 
 	return (
 		<OnchainInfoWrapper>
@@ -57,8 +57,20 @@ const PostTipInfo = ({ onchainLink }: Props) => {
 				</Grid.Column>}
 				{closes &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Time to block</h6>
-					{closes}
+					{status === tipStatuses.CLOSING
+						?
+						<>
+							<h6>Closing</h6>
+							<BlockCountdown endBlock={closes}/>
+						</>
+						:  status === tipStatuses.CLOSED
+							?
+							<>
+								<h6>Closed</h6>
+								<div>{moment.utc(blockNumber?.startDateTime).format('DD MMM YYYY, HH:mm:ss')}</div>
+							</>
+							: <span>#{closes}</span>
+					}
 				</Grid.Column>}
 			</Grid>
 		</OnchainInfoWrapper>

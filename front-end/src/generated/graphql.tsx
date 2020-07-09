@@ -17736,6 +17736,10 @@ export type OnchainLinkTipFragment = (
     & { tipStatus?: Maybe<Array<(
       { __typename?: 'TipStatus' }
       & Pick<TipStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'startDateTime' | 'number'>
+      ) }
     )>> }
   )>> }
 );
@@ -18247,6 +18251,10 @@ export const OnchainLinkTipFragmentDoc = gql`
     tipStatus(last: 1) {
       id
       status
+      blockNumber {
+        startDateTime
+        number
+      }
     }
   }
 }

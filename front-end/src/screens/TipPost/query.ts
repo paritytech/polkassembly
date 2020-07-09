@@ -23,6 +23,10 @@ const onchainLinkTip = gql`
             tipStatus(last: 1) {
                 id
                 status
+                blockNumber {
+                    startDateTime
+                    number
+                }
             }
         }
     }
