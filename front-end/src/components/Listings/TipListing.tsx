@@ -16,8 +16,17 @@ interface Props {
 }
 
 const TipProposals = ({ className, data }: Props) => {
+	const noPost = !data.posts || !data.posts.length;
+	const atLeastOneCurrentTip = data.posts.some((post) => {
+		if(post.onchain_link?.onchain_tip.length){
+			// this breaks the loop as soon as
+			// we find a post that has a tip.
+			return true;
+		}
+		return false;
+	});
 
-	if (!data.posts || !data.posts.length) return <NothingFoundCard className={className} text='There are currently no active tips.'/>;
+	if (noPost || !atLeastOneCurrentTip) return <NothingFoundCard className={className} text='There are currently no active tips.'/>;
 
 	return (
 		<ul className={`${className} proposals__list`}>
