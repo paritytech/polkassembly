@@ -28,7 +28,7 @@ interface Props {
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
 	isTipProposal?: boolean
-	onchainId?: number | null
+	onchainId?: string | number | null
 	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment | OnchainLinkTipFragment
 	status?: string
 }
@@ -109,7 +109,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTip
 								accounts={accounts}
 								address={address}
 								getAccounts={getAccounts}
-								motionId={onchainId}
+								motionId={onchainId as number}
 								motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
 								onAccountChange={onAccountChange}
 							/>
@@ -121,14 +121,14 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTip
 								canVote={canVote}
 								getAccounts={getAccounts}
 								onAccountChange={onAccountChange}
-								proposalId={onchainId}
+								proposalId={onchainId  as number}
 							/>
 						}
 						{isReferendum &&
 							<>
 								{(onchainId || onchainId === 0) &&
 									<ReferendumVoteInfo
-										referendumId={onchainId}
+										referendumId={onchainId  as number}
 										threshold={((onchainLink as OnchainLinkReferendumFragment).onchain_referendum[0]?.voteThreshold) as VoteThreshold}
 									/>
 								}
@@ -137,7 +137,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTip
 									address={address}
 									getAccounts={getAccounts}
 									onAccountChange={onAccountChange}
-									referendumId={onchainId}
+									referendumId={onchainId  as number}
 								/>
 								}
 							</>
@@ -147,8 +147,7 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTip
 								accounts={accounts}
 								address={address}
 								getAccounts={getAccounts}
-								tipId={onchainId}
-								tipHash={(onchainLink as OnchainLinkTipFragment)?.onchain_tip?.[0]?.hash}
+								tipHash={onchainId as string}
 								onAccountChange={onAccountChange}
 							/>
 						}

@@ -15,8 +15,9 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
+	isTip?: boolean
 	method?: string
-	onchainId?: number | null
+	onchainId?: string | number | null
 	status?: string | null
 	title?: string | null
 	topic: string
@@ -26,6 +27,7 @@ const GovernanceCard = function ({
 	address,
 	className,
 	comments,
+	isTip = false,
 	method,
 	onchainId,
 	status,
@@ -38,9 +40,13 @@ const GovernanceCard = function ({
 	return (
 		<div className={className}>
 			<Segment.Group horizontal>
-				<Segment className='onchain_id'>
-					<h5>#{onchainId}</h5>
-				</Segment>
+				{
+					!isTip && (
+						<Segment className='onchain_id'>
+							<h5>#{onchainId}</h5>
+						</Segment>
+					)
+				}
 				<Segment>
 					<Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
 						<div className='title-wrapper'>

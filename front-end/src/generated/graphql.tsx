@@ -7807,7 +7807,6 @@ export type TipWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Tip = {
   finder_not_starts_with?: Maybe<Scalars['String']>;
   /** All values starting with the given string. */
   finder_starts_with?: Maybe<Scalars['String']>;
-  hash?: Maybe<Scalars['String']>;
   /** All values containing the given string. */
   hash_contains?: Maybe<Scalars['String']>;
   /** All values ending with the given string. */
@@ -7834,6 +7833,7 @@ export type TipWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Tip = {
   hash_not_starts_with?: Maybe<Scalars['String']>;
   /** All values starting with the given string. */
   hash_starts_with?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
   /** All values greater than the given value. */
   id_gt?: Maybe<Scalars['Int']>;
   /** All values greater than or equal the given value. */
@@ -11807,7 +11807,7 @@ export type Onchain_Links = {
   onchain_referendum_id?: Maybe<Scalars['Int']>;
   /** Remote relationship field */
   onchain_tip: Array<Maybe<Tip>>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
+  onchain_tip_id?: Maybe<Scalars['String']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   /** Remote relationship field */
   onchain_treasury_spend_proposal: Array<Maybe<TreasurySpendProposal>>;
@@ -11960,7 +11960,6 @@ export type Onchain_Links_Avg_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -11971,7 +11970,6 @@ export type Onchain_Links_Avg_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -11986,7 +11984,7 @@ export type Onchain_Links_Bool_Exp = {
   onchain_motion_id?: Maybe<Int_Comparison_Exp>;
   onchain_proposal_id?: Maybe<Int_Comparison_Exp>;
   onchain_referendum_id?: Maybe<Int_Comparison_Exp>;
-  onchain_tip_id?: Maybe<Int_Comparison_Exp>;
+  onchain_tip_id?: Maybe<String_Comparison_Exp>;
   onchain_treasury_proposal_id?: Maybe<Int_Comparison_Exp>;
   post?: Maybe<Posts_Bool_Exp>;
   post_id?: Maybe<Int_Comparison_Exp>;
@@ -12015,7 +12013,6 @@ export type Onchain_Links_Inc_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
 };
@@ -12027,7 +12024,7 @@ export type Onchain_Links_Insert_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
+  onchain_tip_id?: Maybe<Scalars['String']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post?: Maybe<Posts_Obj_Rel_Insert_Input>;
   post_id?: Maybe<Scalars['Int']>;
@@ -12042,7 +12039,7 @@ export type Onchain_Links_Max_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
+  onchain_tip_id?: Maybe<Scalars['String']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   proposer_address?: Maybe<Scalars['String']>;
@@ -12069,7 +12066,7 @@ export type Onchain_Links_Min_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
+  onchain_tip_id?: Maybe<Scalars['String']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   proposer_address?: Maybe<Scalars['String']>;
@@ -12158,7 +12155,7 @@ export type Onchain_Links_Set_Input = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
+  onchain_tip_id?: Maybe<Scalars['String']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
   proposer_address?: Maybe<Scalars['String']>;
@@ -12171,7 +12168,6 @@ export type Onchain_Links_Stddev_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12182,7 +12178,6 @@ export type Onchain_Links_Stddev_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12194,7 +12189,6 @@ export type Onchain_Links_Stddev_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12205,7 +12199,6 @@ export type Onchain_Links_Stddev_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12217,7 +12210,6 @@ export type Onchain_Links_Stddev_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12228,7 +12220,6 @@ export type Onchain_Links_Stddev_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12240,7 +12231,6 @@ export type Onchain_Links_Sum_Fields = {
   onchain_motion_id?: Maybe<Scalars['Int']>;
   onchain_proposal_id?: Maybe<Scalars['Int']>;
   onchain_referendum_id?: Maybe<Scalars['Int']>;
-  onchain_tip_id?: Maybe<Scalars['Int']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Int']>;
   post_id?: Maybe<Scalars['Int']>;
 };
@@ -12251,7 +12241,6 @@ export type Onchain_Links_Sum_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12285,7 +12274,6 @@ export type Onchain_Links_Var_Pop_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12296,7 +12284,6 @@ export type Onchain_Links_Var_Pop_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12308,7 +12295,6 @@ export type Onchain_Links_Var_Samp_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12319,7 +12305,6 @@ export type Onchain_Links_Var_Samp_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -12331,7 +12316,6 @@ export type Onchain_Links_Variance_Fields = {
   onchain_motion_id?: Maybe<Scalars['Float']>;
   onchain_proposal_id?: Maybe<Scalars['Float']>;
   onchain_referendum_id?: Maybe<Scalars['Float']>;
-  onchain_tip_id?: Maybe<Scalars['Float']>;
   onchain_treasury_proposal_id?: Maybe<Scalars['Float']>;
   post_id?: Maybe<Scalars['Float']>;
 };
@@ -12342,7 +12326,6 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_motion_id?: Maybe<Order_By>;
   onchain_proposal_id?: Maybe<Order_By>;
   onchain_referendum_id?: Maybe<Order_By>;
-  onchain_tip_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
 };
@@ -17766,7 +17749,7 @@ export type TipPostFragment = (
 );
 
 export type TipPostAndCommentsQueryVariables = {
-  id: Scalars['Int'];
+  hash: Scalars['String'];
 };
 
 
@@ -20512,8 +20495,8 @@ export type SetCredentialsConfirmMutationHookResult = ReturnType<typeof useSetCr
 export type SetCredentialsConfirmMutationResult = ApolloReactCommon.MutationResult<SetCredentialsConfirmMutation>;
 export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
 export const TipPostAndCommentsDocument = gql`
-    query TipPostAndComments($id: Int!) {
-  posts(where: {onchain_link: {onchain_tip_id: {_eq: $id}}}) {
+    query TipPostAndComments($hash: String!) {
+  posts(where: {onchain_link: {onchain_tip_id: {_eq: $hash}}}) {
     ...tipPost
   }
 }
@@ -20531,7 +20514,7 @@ export const TipPostAndCommentsDocument = gql`
  * @example
  * const { data, loading, error } = useTipPostAndCommentsQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      hash: // value for 'hash'
  *   },
  * });
  */

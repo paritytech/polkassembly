@@ -24,7 +24,6 @@ interface Props {
 	address: string
 	className?: string
 	getAccounts: () => Promise<undefined>
-	tipId?: number | null
 	tipHash?: string
 	onAccountChange: (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void
 }
@@ -34,7 +33,6 @@ const EndorseTip = ({
 	address,
 	className,
 	getAccounts,
-	tipId,
 	tipHash,
 	onAccountChange
 }: Props) => {
@@ -65,11 +63,6 @@ const EndorseTip = ({
 	const onValueChange = (balance: BN) => setEndorseValue(balance);
 
 	const handleEndorse = async () => {
-		if (!tipId && tipId !== 0) {
-			console.error('tipId not set');
-			return;
-		}
-
 		if (!tipHash) {
 			console.error('tipHash not set');
 			return;
@@ -82,7 +75,7 @@ const EndorseTip = ({
 			if (status.isInBlock) {
 				queueNotification({
 					header: 'Success!',
-					message: `Endorse tip #${tipId} successful.`,
+					message: `Endorse tip #${tipHash} successful.`,
 					status: NotificationStatus.SUCCESS
 				});
 				setLoadingStatus({ isLoading: false, message: '' });
