@@ -60,7 +60,7 @@ export const addPostAndTreasurySpendProposalMutation = gql`
 
 export const addPostAndTipMutation = gql`
     mutation addPostAndTipMutation (
-        $onchainTipId:Int!,
+        $onchainTipId:String!,
         $authorId: Int!,
         $proposerAddress: String!,
         $content: String!,
@@ -212,7 +212,7 @@ export const getDiscussionTreasurySpendProposalById = gql`
 `;
 
 export const getDiscussionTipById = gql`
-    query getDiscussionTipById($onchainTipId: Int!) {
+    query getDiscussionTipById($onchainTipId: String!) {
         onchain_links(where: {onchain_tip_id: {_eq: $onchainTipId}}) {
             id
         }
