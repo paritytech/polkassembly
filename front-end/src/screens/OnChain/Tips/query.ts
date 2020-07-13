@@ -53,6 +53,7 @@ export const QUERY_LATEST_TIP_PROPOSALS = gql`
                 onchain_tip_id
                 onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "TipClosed"}, {status: "TipClosing"}, {status: "TipRetracted"}]}}}) {
                     id
+                    reason
                     tipStatus(last: 1) {
                         id
                         status

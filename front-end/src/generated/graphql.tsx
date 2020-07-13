@@ -17292,7 +17292,7 @@ export type LatestTipPostsQuery = (
       & Pick<Onchain_Links, 'id' | 'onchain_tip_id' | 'proposer_address'>
       & { onchain_tip: Array<Maybe<(
         { __typename?: 'Tip' }
-        & Pick<Tip, 'id'>
+        & Pick<Tip, 'id' | 'reason'>
         & { tipStatus?: Maybe<Array<(
           { __typename?: 'TipStatus' }
           & Pick<TipStatus, 'id' | 'status'>
@@ -17793,7 +17793,7 @@ export type AllTipPostsQuery = (
       & Pick<Onchain_Links, 'id' | 'onchain_tip_id' | 'proposer_address'>
       & { onchain_tip: Array<Maybe<(
         { __typename?: 'Tip' }
-        & Pick<Tip, 'id'>
+        & Pick<Tip, 'id' | 'reason'>
         & { tipStatus?: Maybe<Array<(
           { __typename?: 'TipStatus' }
           & Pick<TipStatus, 'id' | 'status'>
@@ -19782,6 +19782,7 @@ export const LatestTipPostsDocument = gql`
       onchain_tip_id
       onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "TipClosed"}, {status: "TipClosing"}, {status: "TipRetracted"}]}}}) {
         id
+        reason
         tipStatus(last: 1) {
           id
           status
@@ -20555,6 +20556,7 @@ export const AllTipPostsDocument = gql`
       onchain_tip_id
       onchain_tip(where: {}) {
         id
+        reason
         tipStatus(last: 1) {
           id
           status

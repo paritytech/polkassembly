@@ -15,10 +15,10 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
-	isTip?: boolean
 	method?: string
 	onchainId?: string | number | null
 	status?: string | null
+	tipReason?: string
 	title?: string | null
 	topic: string
 }
@@ -27,21 +27,21 @@ const GovernanceCard = function ({
 	address,
 	className,
 	comments,
-	isTip = false,
 	method,
 	onchainId,
 	status,
+	tipReason,
 	title,
 	topic
 }:GovernanceProps) {
 
-	const mainTitle = <h4>{method || title || noTitle}</h4>;
-	const subTitle = title && method && <h5>{title}</h5>;
+	const mainTitle = <h4>{method || tipReason ||  title || noTitle}</h4>;
+	const subTitle = title && tipReason && method && <h5>{title}</h5>;
 	return (
 		<div className={className}>
 			<Segment.Group horizontal>
 				{
-					!isTip && (
+					!tipReason && (
 						<Segment className='onchain_id'>
 							<h5>#{onchainId}</h5>
 						</Segment>
