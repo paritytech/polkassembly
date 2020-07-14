@@ -11,7 +11,7 @@ const Button = (props : ButtonProps) => {
 };
 
 export default styled(Button)`
-	&.ui.button, &.active, &:active  {   
+	&.ui.button, &.active, &:active  {
 		font-family: font_default;
 		font-size: md;
 		font-weight: 500;
@@ -118,6 +118,14 @@ export default styled(Button)`
 			&:hover {
 				background-color: red_light;
 				border: none;
+			}
+		}
+		&.ui.external.button {
+			background-color: black_primary;
+			color: white;
+			&:hover, &:focus {
+				background-color: black_primary;
+				outline: none;
 			}
 		}
 	}
