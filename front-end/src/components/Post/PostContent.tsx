@@ -15,11 +15,12 @@ import UpdateLabel from '../../ui-components/UpdateLabel';
 
 interface Props {
 	className?: string,
-	onchainId?: number | null
+	isTipProposal: boolean,
+	onchainId?: string | number | null
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment| TreasuryProposalPostFragment| MotionPostFragment
 	postStatus?: string
 }
-const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
+const PostContent = ({ className, isTipProposal, onchainId, post, postStatus }:Props) => {
 	const { author, created_at, content, title, updated_at } = post;
 
 	if (!author || !author.username || !content) return <div>Post not available</div>;
@@ -30,7 +31,7 @@ const PostContent = ({ className, onchainId, post, postStatus }:Props) => {
 	return (
 		<div className={className}>
 			{postStatus && <StatusTag className='post_tags' status={postStatus}/>}
-			<h2 className={postStatus ? 'onchain-title' : ''}>{(onchainId || onchainId === 0) && `#${onchainId}`} {title || noTitle}</h2>
+			<h2 className={postStatus ? 'onchain-title' : ''}>{(onchainId || onchainId === 0) && !isTipProposal && `#${onchainId}`} {title || noTitle}</h2>
 			<div className='post_info'>
 				{onchainId || onchainId === 0 ?
 					null :

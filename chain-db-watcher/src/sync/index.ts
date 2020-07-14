@@ -66,7 +66,7 @@ const syncTips = async (onChainTips: ObjectMap, discussionTips: ObjectMap): Prom
 	return Promise.all(Object.entries(onChainTips).map(async ([key, author]) => {
 		// if this tip doesn't exist in the discussion DB
 		if (!discussionTips[key]) {
-			await addDiscussionPostAndTip({ onchainTipId: Number(key), proposer: author });
+			await addDiscussionPostAndTip({ onchainTipHash: key, proposer: author });
 		}
 	}));
 };

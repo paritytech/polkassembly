@@ -85,12 +85,12 @@ async function main (): Promise<void> {
 			console.log('Tip data received', JSON.stringify(data, null, 2));
 
 			if (data?.tip.mutation === subscriptionMutation.Created) {
-				const { id, finder } = data.tip.node;
-				tipDiscussionExists(id).then(alreadyExist => {
+				const { hash, finder } = data.tip.node;
+				tipDiscussionExists(hash).then(alreadyExist => {
 					if (!alreadyExist) {
-						addDiscussionPostAndTip({ onchainTipId: Number(id), proposer: finder });
+						addDiscussionPostAndTip({ onchainTipHash: hash, proposer: finder });
 					} else {
-						console.error(chalk.red(`✖︎ Tip id ${id.toString()} already exists in the discsussion db. Not inserted.`));
+						console.error(chalk.red(`✖︎ Tip id ${hash} already exists in the discsussion db. Not inserted.`));
 					}
 				}).catch(error => console.error(chalk.red(error)));
 			}

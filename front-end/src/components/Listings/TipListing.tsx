@@ -42,6 +42,7 @@ const TipProposals = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
+									tipReason={post.onchain_link.onchain_tip?.[0]?.reason}
 									onchainId={onchainId}
 									status={post.onchain_link.onchain_tip?.[0]?.tipStatus?.[0].status}
 									title={post.title}

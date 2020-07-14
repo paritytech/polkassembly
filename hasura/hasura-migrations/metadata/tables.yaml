@@ -199,7 +199,7 @@
         tips:
           arguments:
             where:
-              id: $onchain_tip_id
+              hash: $onchain_tip_id
       hasura_fields:
       - onchain_tip_id
       remote_schema: chain-db

@@ -53,6 +53,7 @@ export const QUERY_LATEST_TIP_PROPOSALS = gql`
                 onchain_tip_id
                 onchain_tip(where: {}) {
                     id
+                    reason
                     tipStatus(last: 1) {
                         id
                         status
