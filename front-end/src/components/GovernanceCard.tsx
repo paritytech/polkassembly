@@ -34,8 +34,7 @@ const GovernanceCard = function ({
 	title,
 	topic
 }:GovernanceProps) {
-
-	const mainTitle = <h4>{method || tipReason ||  title || noTitle}</h4>;
+	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
 	const subTitle = title && tipReason && method && <h5>{title}</h5>;
 	return (
 		<div className={className}>
@@ -118,10 +117,6 @@ export default styled(GovernanceCard)`
 
 	.title-wrapper {
 		max-width: calc(100% - 10rem);
-
-		@media only screen and (max-width: 576px) {
-			max-width: calc(100% - 9rem);
-		}
 	}
 
 	h4, h5 {
@@ -134,6 +129,17 @@ export default styled(GovernanceCard)`
 		font-size: lg;
 		display: inline-flex;
 		margin-right: 0.6rem;
+		line-height: 1.2;
+	}
+
+	h4.tipTitle {
+		max-width: 55%;
+		
+		& > div {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 
 	h5 {
@@ -171,6 +177,10 @@ export default styled(GovernanceCard)`
 			font-size: md;
 		}
 
+		h4.tipTitle {
+			max-width: 100%;
+		}
+
 		h5 {
 			font-size: sm;
 			line-height: 1.2;
@@ -179,6 +189,10 @@ export default styled(GovernanceCard)`
 		.statusTag {
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
+		}
+		
+		.title-wrapper {
+			max-width: calc(100% - 9rem);
 		}
 	}
 `;
