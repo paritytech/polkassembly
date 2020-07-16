@@ -11,7 +11,7 @@ interface Props {
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
-	onchainId?: number | null
+	onchainId?: string | number | null | undefined
 }
 
 const service = {
