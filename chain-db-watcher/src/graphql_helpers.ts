@@ -137,10 +137,10 @@ export const treasuryProposalDiscussionExists = async (
  * Tells if there is already a tip in the discussion DB matching the
  * onchain tip id passed as argument
  *
- * @param onchainTipId the prisma db id of tip
+ * @param onchainTipHash the prisma db id of tip
  */
 export const tipDiscussionExists = async (
-	onchainTipId: number
+	onchainTipHash: string
 ): Promise<boolean | void> => {
 	if (!discussionGraphqlUrl) {
 		throw new Error(
@@ -154,11 +154,11 @@ export const tipDiscussionExists = async (
 		});
 
 		const discussionSdk = getDiscussionSdk(client);
-		const data = await discussionSdk.getDiscussionTipById({ onchainTipId });
+		const data = await discussionSdk.getDiscussionTipById({ onchainTipId: onchainTipHash });
 
 		return !!data.onchain_links?.length;
 	} catch (err) {
-		console.error(chalk.red(`tipDiscussionExists execution error with id: ${onchainTipId}`), err);
+		console.error(chalk.red(`tipDiscussionExists execution error with tip hash: ${onchainTipHash}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -416,10 +416,10 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 
 export const addDiscussionPostAndTip = async ({
 	proposer,
-	onchainTipId
+	onchainTipHash
 }: {
 	proposer: string;
-	onchainTipId: number;
+	onchainTipHash: string;
 }): Promise<void> => {
 	if (!treasuryTopicId) {
 		throw new Error(
@@ -440,7 +440,7 @@ export const addDiscussionPostAndTip = async ({
 	const tipAndPostVariables = {
 		authorId: Number(proposalBotUserId),
 		content: getDescription('tip', proposer),
-		onchainTipId,
+		onchainTipId: onchainTipHash,
 		proposerAddress: proposer,
 		topicId: Number(treasuryTopicId),
 		typeId: Number(proposalPostTypeId)
@@ -471,10 +471,10 @@ export const addDiscussionPostAndTip = async ({
 		const addedId = data?.insert_onchain_links?.returning[0]?.id;
 
 		if (addedId || addedId === 0) {
-			console.log(`${chalk.green('✔︎')} Tip ${onchainTipId} added to the database.`);
+			console.log(`${chalk.green('✔︎')} Tip ${onchainTipHash} added to the database.`);
 		}
 	} catch (err) {
-		console.error(chalk.red(`addPostAndTipMutation execution error, tip id ${onchainTipId}\n`), err);
+		console.error(chalk.red(`addPostAndTipMutation execution error, tip id ${onchainTipHash}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&

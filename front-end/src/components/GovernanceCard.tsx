@@ -16,8 +16,9 @@ interface GovernanceProps {
 	comments?: string
 	created_at?: Date
 	method?: string
-	onchainId?: number | null
+	onchainId?: string | number | null
 	status?: string | null
+	tipReason?: string
 	title?: string | null
 	topic: string
 }
@@ -29,18 +30,22 @@ const GovernanceCard = function ({
 	method,
 	onchainId,
 	status,
+	tipReason,
 	title,
 	topic
 }:GovernanceProps) {
-
-	const mainTitle = <h4>{method || title || noTitle}</h4>;
-	const subTitle = title && method && <h5>{title}</h5>;
+	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
+	const subTitle = title && tipReason && method && <h5>{title}</h5>;
 	return (
 		<div className={className}>
 			<Segment.Group horizontal>
-				<Segment className='onchain_id'>
-					<h5>#{onchainId}</h5>
-				</Segment>
+				{
+					!tipReason && (
+						<Segment className='onchain_id'>
+							<h5>#{onchainId}</h5>
+						</Segment>
+					)
+				}
 				<Segment>
 					<Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
 						<div className='title-wrapper'>
@@ -112,10 +117,6 @@ export default styled(GovernanceCard)`
 
 	.title-wrapper {
 		max-width: calc(100% - 10rem);
-
-		@media only screen and (max-width: 576px) {
-			max-width: calc(100% - 9rem);
-		}
 	}
 
 	h4, h5 {
@@ -128,6 +129,17 @@ export default styled(GovernanceCard)`
 		font-size: lg;
 		display: inline-flex;
 		margin-right: 0.6rem;
+		line-height: 1.2;
+	}
+
+	h4.tipTitle {
+		max-width: 55%;
+		
+		& > div {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 
 	h5 {
@@ -165,6 +177,10 @@ export default styled(GovernanceCard)`
 			font-size: md;
 		}
 
+		h4.tipTitle {
+			max-width: 100%;
+		}
+
 		h5 {
 			font-size: sm;
 			line-height: 1.2;
@@ -173,6 +189,10 @@ export default styled(GovernanceCard)`
 		.statusTag {
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
+		}
+		
+		.title-wrapper {
+			max-width: calc(100% - 9rem);
 		}
 	}
 `;

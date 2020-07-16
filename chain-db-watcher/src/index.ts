@@ -38,44 +38,10 @@ const eventStatus = {
 const graphQLEndpoint = process.env.CHAIN_DB_GRAPHQL_URL;
 const startBlock = Number(process.env.START_FROM) || 0;
 
-async function main (): Promise<void> {
-	if (!graphQLEndpoint) {
-		console.error(
-			chalk.red('GraphQL endpoint not set in environment variables!')
-		);
-		return;
-	}
-
-	const syncMessage = `🔄 Syncing chain-db and discussion-db using ${graphQLEndpoint}, from block ${startBlock}...`;
-
-	console.log(syncMessage);
-	await syncDBs();
-
-	const client = new SubscriptionClient(
-		graphQLEndpoint,
-		{
-			connectionCallback: (error): void => { if (error) console.error('connectionCallback', error); },
-			reconnect: true,
-			timeout: 30000
-		},
-		ws);
-
-	client.onConnecting(() => { console.log('---> Connecting...'); });
-	client.onConnected(() => { console.log('---> Connected'); });
-	client.onError((error) => { console.error('---> WS Client error', error); });
-	client.onDisconnected(() => { console.log('---> Disconnected'); });
-	client.onReconnecting(() => { console.log('---> Reconnecting...'); });
-	client.onReconnected(() => {
-		console.log('---> Reconnected');
-		console.log(syncMessage);
-		syncDBs();
-	});
-
+const startSubscriptions = (client: SubscriptionClient): void => {
 	// leave next, error, complete in this order
 	/* eslint-disable sort-keys */
 	const link = new WebSocketLink(client);
-
-	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
 	execute(link, {
 		query: tipSubscription,
@@ -85,12 +51,12 @@ async function main (): Promise<void> {
 			console.log('Tip data received', JSON.stringify(data, null, 2));
 
 			if (data?.tip.mutation === subscriptionMutation.Created) {
-				const { id, finder } = data.tip.node;
-				tipDiscussionExists(id).then(alreadyExist => {
+				const { hash, finder } = data.tip.node;
+				tipDiscussionExists(hash).then(alreadyExist => {
 					if (!alreadyExist) {
-						addDiscussionPostAndTip({ onchainTipId: Number(id), proposer: finder });
+						addDiscussionPostAndTip({ onchainTipHash: hash, proposer: finder });
 					} else {
-						console.error(chalk.red(`✖︎ Tip id ${id.toString()} already exists in the discsussion db. Not inserted.`));
+						console.error(chalk.red(`✖︎ Tip id ${hash} already exists in the discsussion db. Not inserted.`));
 					}
 				}).catch(error => console.error(chalk.red(error)));
 			}
@@ -219,8 +185,6 @@ async function main (): Promise<void> {
 					throw new Error(`Unexpect referendumId, got ${referendumId}`);
 				}
 
-				// FIXME This only takes care of motion and democracy proposals
-				// it does not cater for tech committee proposals
 				addDiscussionReferendum({
 					preimageHash,
 					referendumCreationBlockNumber: referendumStatus?.[0]?.blockNumber?.number,
@@ -236,6 +200,54 @@ async function main (): Promise<void> {
 			process.exit(1);
 		}
 	});
+};
+async function main (): Promise<void> {
+	if (!graphQLEndpoint) {
+		console.error(
+			chalk.red('GraphQL endpoint not set in environment variables!')
+		);
+		return;
+	}
+
+	const syncMessage = `🔄 Syncing chain-db and discussion-db using ${graphQLEndpoint}, from block ${startBlock}...`;
+
+	console.log(syncMessage);
+	await syncDBs();
+
+	const client = new SubscriptionClient(
+		graphQLEndpoint,
+		{
+			connectionCallback: (error): void => { if (error) console.error('connectionCallback', error); },
+			reconnect: true,
+			timeout: 30000
+		},
+		ws);
+
+	client.onConnecting(() => { console.log('---> Connecting...'); });
+	client.onConnected(() => { console.log('---> Connected'); });
+	client.onError((error) => { console.error('---> WS Client error', error); });
+	client.onDisconnected(() => { console.log('---> Disconnected'); });
+	client.onReconnecting(() => { console.log('---> Reconnecting...'); });
+	client.onReconnected(() => {
+		console.log('---> Reconnected');
+		console.log(syncMessage);
+		syncDBs();
+	});
+
+	const resetTimeoutHours = 6; // in hours
+	const resetTimeourSeconds = resetTimeoutHours * 3600; // seconds
+	console.log(`⏰ Reset setup every ${resetTimeoutHours} hours`);
+	startSubscriptions(client);
+	setInterval(() => {
+		console.log('⏰ Planned connection reset.');
+		client.unsubscribeAll();
+		client.close();
+		console.log(syncMessage);
+		syncDBs();
+		startSubscriptions(client);
+	}, resetTimeourSeconds * 1000);
+
+	console.log(`🚀 Chain-db watcher listening to ${graphQLEndpoint} from block ${startBlock}`);
 
 	const hostname = '0.0.0.0';
 	const port = Number(process.env.HEALTH_PORT) || 8019;

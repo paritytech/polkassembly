@@ -100,7 +100,7 @@ const App = () => {
 														<Route exact path="/treasury/:id">
 															<PostTreasury/>
 														</Route>
-														<Route exact path="/tip/:id">
+														<Route exact path="/tip/:hash">
 															<PostTip/>
 														</Route>
 														<Route exact path="/post/:id">

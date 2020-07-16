@@ -11,9 +11,8 @@ import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
 export default () => {
-	const { id } = useParams();
-	const idNumber = Number(id) || 0;
-	const { data, error, refetch } = useTipPostAndCommentsQuery({ variables: { 'id': idNumber } });
+	const { hash } = useParams();
+	const { data, error, refetch } = useTipPostAndCommentsQuery({ variables: { hash } });
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

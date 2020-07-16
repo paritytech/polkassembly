@@ -12,11 +12,9 @@ import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
 	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
-	DiscussionPostAndCommentsQueryVariables,
 	DiscussionPostFragment,
 	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryHookResult,
-	MotionPostAndCommentsQueryVariables,
 	MotionPostFragment,
 	OnchainLinkMotionFragment,
 	OnchainLinkProposalFragment,
@@ -25,19 +23,15 @@ import {
 	OnchainLinkTreasuryProposalFragment,
 	ProposalPostAndCommentsQuery,
 	ProposalPostAndCommentsQueryHookResult,
-	ProposalPostAndCommentsQueryVariables,
 	ProposalPostFragment,
 	ReferendumPostAndCommentsQuery,
 	ReferendumPostAndCommentsQueryHookResult,
-	ReferendumPostAndCommentsQueryVariables,
 	ReferendumPostFragment,
 	TipPostAndCommentsQuery,
 	TipPostAndCommentsQueryHookResult,
-	TipPostAndCommentsQueryVariables,
 	TipPostFragment,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryHookResult,
-	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
 import ScrollToTop from '../../ui-components/ScrollToTop';
@@ -72,15 +66,7 @@ interface Props {
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
 	isTipProposal?: boolean
-	refetch: (variables?:
-		ReferendumPostAndCommentsQueryVariables |
-		DiscussionPostAndCommentsQueryVariables |
-		ProposalPostAndCommentsQueryVariables |
-		MotionPostAndCommentsQueryVariables |
-		TreasuryProposalPostAndCommentsQueryVariables |
-		TipPostAndCommentsQueryVariables |
-		undefined
-	) =>
+	refetch: (variables?:any) =>
 		Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
@@ -97,7 +83,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal;
 	const { setMetaContextState } = useContext(MetaContext);
 
-	let onchainId: number | null | undefined;
+	let onchainId: string | number | null | undefined;
 	let metaTitle = post?.id ? 'Post #'+post?.id : '';
 	let referendumPost: ReferendumPostFragment | undefined;
 	let proposalPost: ProposalPostFragment | undefined;
@@ -144,7 +130,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		definedOnchainLink = tipPost.onchain_link as OnchainLinkTipFragment;
 		onchainId = definedOnchainLink.onchain_tip_id;
 		postStatus = tipPost?.onchain_link?.onchain_tip?.[0]?.tipStatus?.[0].status;
-		metaTitle = `Tip #${onchainId}`;
+		metaTitle = 'Tip';
 	}
 
 	metaTitle = `${metaTitle} | ${post?.title ? post?.title : 'Polkassembly' }`;
@@ -215,6 +201,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 				<div className='post_content'>
 					<EditablePostContent
 						isEditing={isEditing}
+						isTipProposal={isTipProposal}
 						onchainId={onchainId}
 						post={post}
 						postStatus={postStatus}

@@ -10,22 +10,16 @@ import { GoCheck, GoX } from 'react-icons/go';
 
 import { NotificationContext } from '../context/NotificationContext';
 import { DiscussionPostAndCommentsQuery,
-	DiscussionPostAndCommentsQueryVariables,
 	DiscussionPostFragment,
 	MotionPostAndCommentsQuery,
-	MotionPostAndCommentsQueryVariables,
 	MotionPostFragment,
 	ProposalPostAndCommentsQuery,
-	ProposalPostAndCommentsQueryVariables,
 	ProposalPostFragment,
 	ReferendumPostAndCommentsQuery,
-	ReferendumPostAndCommentsQueryVariables,
 	ReferendumPostFragment,
 	TipPostAndCommentsQuery,
-	TipPostAndCommentsQueryVariables,
 	TipPostFragment,
 	TreasuryProposalPostAndCommentsQuery,
-	TreasuryProposalPostAndCommentsQueryVariables,
 	TreasuryProposalPostFragment,
 	useEditPostMutation
 } from '../generated/graphql';
@@ -40,18 +34,11 @@ import TitleForm from './TitleForm';
 interface Props {
 	className?: string
 	isEditing: boolean
-	onchainId?: number | null
+	isTipProposal: boolean
+	onchainId?: string | number | null
 	post: DiscussionPostFragment | ProposalPostFragment | ReferendumPostFragment | TipPostFragment | TreasuryProposalPostFragment| MotionPostFragment
 	postStatus?: string
-	refetch: (
-		variables?: ReferendumPostAndCommentsQueryVariables
-		| DiscussionPostAndCommentsQueryVariables
-		| ProposalPostAndCommentsQueryVariables
-		| MotionPostAndCommentsQueryVariables
-		| TipPostAndCommentsQueryVariables
-		| TreasuryProposalPostAndCommentsQueryVariables
-		| undefined
-	) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>>
+	refetch: (variables?: any) => Promise<ApolloQueryResult<ReferendumPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<ProposalPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<MotionPostAndCommentsQuery>>
 		| Promise<ApolloQueryResult<TipPostAndCommentsQuery>>
@@ -60,7 +47,7 @@ interface Props {
 	toggleEdit: () => void
 }
 
-const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus, refetch, toggleEdit }: Props) => {
+const EditablePostContent = ({ className, isEditing, isTipProposal, onchainId, post, postStatus, refetch, toggleEdit }: Props) => {
 	const { author, content, title } = post;
 	const [newContent, setNewContent] = useState(content || '');
 	const [newTitle, setNewTitle] = useState(title || '');
@@ -146,7 +133,7 @@ const EditablePostContent = ({ className, isEditing, onchainId, post, postStatus
 						</Form>
 						:
 						<>
-							<PostContent onchainId={onchainId} post={post} postStatus={postStatus}/>
+							<PostContent isTipProposal={isTipProposal} onchainId={onchainId} post={post} postStatus={postStatus}/>
 						</>
 				}
 			</div>

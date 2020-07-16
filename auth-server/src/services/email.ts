@@ -8,7 +8,7 @@ import MarkdownIt from 'markdown-it';
 
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
-import { CommentCreationHookDataType, PostType } from '../types';
+import { CommentCreationHookDataType, PostType, PostTypeEnum } from '../types';
 import {
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
@@ -18,6 +18,7 @@ import {
 	undoEmailChangeEmailTemplate,
 	verificationEmailTemplate
 } from '../utils/emailTemplates';
+import shortenHash from '../utils/shortenHash';
 
 const apiKey = process.env.SENDGRID_API_KEY;
 const FROM = 'noreply@polkassembly.io';
@@ -125,7 +126,7 @@ export const sendUndoEmailChangeEmail = (user: User, undoToken: UndoEmailChangeT
 		console.error('Email undo email not sent', e));
 };
 
-export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: string, id: number): void => {
+export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: string, id: number | string): void => {
 	if (!apiKey) {
 		console.warn('Own proposal created email not sent due to missing API key');
 		return;
@@ -141,10 +142,15 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		type,
 		username: user.username || ''
 	});
+
+	const subjectId = type === PostTypeEnum.TIP
+		? shortenHash(id as string)
+		: `#${id}`;
+
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: `You have submitted a new ${type} #${id} on chain`,
+		subject: `You have submitted a new ${type} ${subjectId} on chain`,
 		text,
 		to: user.email
 	};
@@ -153,7 +159,7 @@ export const sendOwnProposalCreatedEmail = (user: User, type: PostType, url: str
 		console.error('Proposal created email not sent', e));
 };
 
-export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: string, id: number): void => {
+export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: string, id: number | string): void => {
 	if (!apiKey) {
 		console.warn('New proposal created email not sent due to missing API key');
 		return;
@@ -170,10 +176,14 @@ export const sendNewProposalCreatedEmail = (user: User, type: PostType, url: str
 		username: user.username || ''
 	});
 
+	const subjectId = type === PostTypeEnum.TIP
+		? shortenHash(id as string)
+		: `#${id}`;
+
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: `New ${type} #${id} created on chain`,
+		subject: `New ${type} ${subjectId} created on chain`,
 		text,
 		to: user.email
 	};
