@@ -4,10 +4,8 @@
 
 import React from 'react';
 import Button from 'src/ui-components/Button';
-import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import getNetwork from 'src/util/getNetwork';
-import { network } from 'src/global/networkConstants';
 
 interface Props {
 	isMotion?: boolean
@@ -63,7 +61,9 @@ const ExternalLinks = ({
 			break;
 		}
 
-		window.open(url);
+		if (url) {
+			window.open(url);
+		}
 	};
 
 	return (
@@ -72,7 +72,7 @@ const ExternalLinks = ({
 				<Form.Field width={8}>
 					<Button
 						className='external'
-						onClick={navigateExternal(service.POLKASCAN)}
+						onClick={() => navigateExternal(service.POLKASCAN)}
 					>
 						<img alt={'polkascan'} height={20} src='/polkascan.png'/>
 					</Button>
@@ -80,7 +80,7 @@ const ExternalLinks = ({
 				<Form.Field width={8}>
 					<Button
 						className='external'
-						onClick={navigateExternal(service.SUBSCAN)}
+						onClick={() => navigateExternal(service.SUBSCAN)}
 					>
 						<img alt={'subscan'} width={100} height={20} src='/subscan.png'/>
 					</Button>

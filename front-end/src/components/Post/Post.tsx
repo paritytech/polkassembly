@@ -201,14 +201,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			status={postStatus}
 		/>
 		{isDiscussion(post) && <Poll postId={post.id} />}
-		<ExternalLinks
+		{(isMotion || isProposal || isReferendum) && <ExternalLinks
 			isMotion={isMotion}
 			isProposal={isProposal}
 			isReferendum={isReferendum}
-			isTipProposal={isTipProposal}
-			isTreasuryProposal={isTreasuryProposal}
 			onchainId={onchainId}
-		/>
+		/>}
 	</>;
 
 	return (
