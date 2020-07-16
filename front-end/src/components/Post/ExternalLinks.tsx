@@ -7,27 +7,63 @@ import Button from 'src/ui-components/Button';
 import Card from 'src/ui-components/Card';
 import { Form } from 'src/ui-components/Form';
 import getNetwork from 'src/util/getNetwork';
+import { network } from 'src/global/networkConstants';
 
 interface Props {
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
-	isTreasuryProposal?: boolean
-	isTipProposal?: boolean
 	onchainId?: number | null
 }
+
+const service = {
+	POLKASCAN: 'polkascan',
+	SUBSCAN: 'subscan'
+};
+
+const serviceMap = {
+	[service.POLKASCAN]: (network: string) => `https://polkascan.io/${network}`,
+	[service.SUBSCAN]: (network: string) => `https://${network}.subscan.io`
+};
 
 const ExternalLinks = ({
 	isMotion,
 	isProposal,
 	isReferendum,
-	isTreasuryProposal,
-	isTipProposal,
 	onchainId
 }: Props) => {
+	const network = getNetwork();
 
 	const navigateExternal = (service: string) => {
+		let url = '';
+		const host = serviceMap[service](network);
 
+		switch (service) {
+		case 'polkascan':
+			if (isReferendum) {
+				url = `${host}/democracy/referendum/${onchainId}`;
+			}
+			if (isProposal) {
+				url = `${host}/democracy/proposal/${onchainId}`;
+			}
+			if (isMotion) {
+				url = `${host}/council/motion/${onchainId}`;
+			}
+			break;
+		case 'subscan':
+			if (isReferendum) {
+				url = `${host}/referenda/${onchainId}`;
+			}
+			if (isProposal) {
+				url = `${host}/democracy_proposal/${onchainId}`;
+			}
+			if (isMotion) {
+				url = `${host}/council/${onchainId}`;
+			}
+			break;
+		}
+
+		window.open(url);
 	};
 
 	return (
@@ -36,17 +72,17 @@ const ExternalLinks = ({
 				<Form.Field width={8}>
 					<Button
 						className='external'
-						onClick={navigateExternal('subscan')}
+						onClick={navigateExternal(service.POLKASCAN)}
 					>
-						<img alt={'subscan'} width={100} height={20} src='/subscan.png'/>
+						<img alt={'polkascan'} height={20} src='/polkascan.png'/>
 					</Button>
 				</Form.Field>
 				<Form.Field width={8}>
 					<Button
 						className='external'
-						onClick={navigateExternal('polkascan')}
+						onClick={navigateExternal(service.SUBSCAN)}
 					>
-						<img alt={'polkascan'} height={20} src='/polkascan.png'/>
+						<img alt={'subscan'} width={100} height={20} src='/subscan.png'/>
 					</Button>
 				</Form.Field>
 			</Form.Group>
