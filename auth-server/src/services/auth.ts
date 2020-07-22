@@ -829,7 +829,7 @@ export default class AuthService {
 				'x-hasura-kusama-default': networkUserAddressInfo.kusama.default || '',
 				'x-hasura-polkadot': `{${networkUserAddressInfo.polkadot.addresses}}`,
 				'x-hasura-polkadot-default': networkUserAddressInfo.polkadot.default || '',
-				'x-hasura-user-email': email,
+				'x-hasura-user-email': email || '',
 				'x-hasura-user-id': `${id}`
 			},
 			iat: Math.floor(Date.now() / 1000),
