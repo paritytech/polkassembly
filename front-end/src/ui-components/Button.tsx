@@ -120,14 +120,6 @@ export default styled(Button)`
 				border: none;
 			}
 		}
-		&.ui.external.button {
-			background-color: black_primary;
-			color: white;
-			&:hover, &:focus {
-				background-color: black_primary;
-				outline: none;
-			}
-		}
 	}
 
 	&.ui.button>.icon:not(.button), &.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
