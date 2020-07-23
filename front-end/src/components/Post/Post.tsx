@@ -41,7 +41,6 @@ import NoPostFound from '../NoPostFound';
 import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
-import ExternalLinks from './ExternalLinks';
 import GovenanceSideBar from './GovernanceSideBar';
 import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
@@ -187,12 +186,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			status={postStatus}
 		/>
 		{isDiscussion(post) && <Poll postId={post.id} />}
-		{(isMotion || isProposal || isReferendum) && <ExternalLinks
-			isMotion={isMotion}
-			isProposal={isProposal}
-			isReferendum={isReferendum}
-			onchainId={onchainId}
-		/>}
 	</>;
 
 	return (

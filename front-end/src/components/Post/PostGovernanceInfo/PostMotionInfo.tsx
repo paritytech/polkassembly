@@ -10,6 +10,7 @@ import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import getNetwork from '../../../util/getNetwork';
+import ExternalLinks from '../../ExternalLinks';
 
 interface Props{
 	onchainLink: OnchainLinkMotionFragment
@@ -65,6 +66,9 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 				</Grid.Row>
 				<ProposalInfo preimage={preimage}/>
 				<TreasuryInfo treasurySpendProposal={treasurySpendProposal}/>
+				<Grid.Column mobile={16} tablet={16} computer={16}>
+					<ExternalLinks isMotion={true} onchainId={onchainLink.onchain_motion_id} />
+				</Grid.Column>
 			</Grid>
 		</OnchainInfoWrapper>
 	);

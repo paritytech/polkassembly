@@ -2,15 +2,16 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import React from 'react';
-import Button from 'src/ui-components/Button';
-import { Form } from 'src/ui-components/Form';
 import getNetwork from 'src/util/getNetwork';
 
 interface Props {
+	className?: string
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
+	isTreasuryProposal?: boolean
 	onchainId?: string | number | null | undefined
 }
 
@@ -19,25 +20,21 @@ const service = {
 	SUBSCAN: 'subscan'
 };
 
-const serviceMap = {
-	[service.POLKASCAN]: (network: string) => `https://polkascan.io/${network}`,
-	[service.SUBSCAN]: (network: string) => `https://${network}.subscan.io`
-};
-
 const ExternalLinks = ({
+	className,
 	isMotion,
 	isProposal,
 	isReferendum,
+	isTreasuryProposal,
 	onchainId
 }: Props) => {
 	const network = getNetwork();
 
-	const navigateExternal = (service: string) => {
-		let url = '';
-		const host = serviceMap[service](network);
+	const serviceMap = {
+		[service.POLKASCAN]: (network: string) => {
+			let url = '';
+			const host = `https://polkascan.io/${network}`;
 
-		switch (service) {
-		case 'polkascan':
 			if (isReferendum) {
 				url = `${host}/democracy/referendum/${onchainId}`;
 			}
@@ -47,8 +44,16 @@ const ExternalLinks = ({
 			if (isMotion) {
 				url = `${host}/council/motion/${onchainId}`;
 			}
-			break;
-		case 'subscan':
+			if (isTreasuryProposal) {
+				url = `${host}/treasury/proposal/${onchainId}`;
+			}
+
+			return url;
+		},
+		[service.SUBSCAN]: (network: string) => {
+			let url = '';
+			const host = `https://${network}.subscan.io`;
+
 			if (isReferendum) {
 				url = `${host}/referenda/${onchainId}`;
 			}
@@ -58,36 +63,33 @@ const ExternalLinks = ({
 			if (isMotion) {
 				url = `${host}/council/${onchainId}`;
 			}
-			break;
-		}
+			if (isTreasuryProposal) {
+				url = `${host}/treasury/${onchainId}`;
+			}
 
-		if (url) {
-			window.open(url);
+			return url;
 		}
 	};
 
+	const getLink = (service: string): string => {
+		return serviceMap[service](network);
+	};
+
 	return (
-		<Form>
-			<Form.Group>
-				<Form.Field width={8}>
-					<Button
-						className='external'
-						onClick={() => navigateExternal(service.POLKASCAN)}
-					>
-						<img alt={'polkascan'} height={20} src='/polkascan.png'/>
-					</Button>
-				</Form.Field>
-				<Form.Field width={8}>
-					<Button
-						className='external'
-						onClick={() => navigateExternal(service.SUBSCAN)}
-					>
-						<img alt={'subscan'} width={100} height={20} src='/subscan.png'/>
-					</Button>
-				</Form.Field>
-			</Form.Group>
-		</Form>
+		<div className={className}>
+			<div>
+				<a href={getLink(service.POLKASCAN)} rel="noopener noreferrer" target='_blank'>{'-> Show in Polkascan'}</a>
+			</div>
+			<div>
+				<a href={getLink(service.SUBSCAN)} rel="noopener noreferrer" target='_blank'>{'-> Show in Subscan'}</a>
+			</div>
+		</div>
 	);
 };
 
-export default ExternalLinks;
+export default styled(ExternalLinks)`
+	a {
+		color: black_primary;
+		font-weight: bold;
+	}
+`;

@@ -10,6 +10,7 @@ import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import getNetwork from '../../../util/getNetwork';
+import ExternalLinks from '../../ExternalLinks';
 
 interface Props{
 	onchainLink: OnchainLinkProposalFragment
@@ -71,6 +72,9 @@ const PostProposalInfo = ({ onchainLink }: Props) => {
 						<h6>Description</h6>
 						{metaDescription}
 					</>}
+				</Grid.Column>
+				<Grid.Column mobile={16} tablet={16} computer={16}>
+					<ExternalLinks isProposal={true} onchainId={onchainLink.onchain_proposal_id} />
 				</Grid.Column>
 			</Grid>
 		</OnchainInfoWrapper>
