@@ -10,6 +10,7 @@ import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import getNetwork from '../../../util/getNetwork';
+import ExternalLinks from '../../ExternalLinks';
 
 interface Props{
 	onchainLink: OnchainLinkTreasuryProposalFragment
@@ -51,6 +52,9 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 					<h6>Value</h6>
 					{parseInt(value) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
+				<Grid.Column mobile={16} tablet={16} computer={16}>
+					<ExternalLinks isTreasuryProposal={true} onchainId={onchainLink.onchain_treasury_proposal_id} />
+				</Grid.Column>
 			</Grid>
 		</OnchainInfoWrapper>
 	);
