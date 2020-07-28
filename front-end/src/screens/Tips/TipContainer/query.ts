@@ -25,7 +25,7 @@ export const QUERY_LATEST_TIP_PROPOSALS = gql`
             }
         }, order_by: {
             onchain_link: {
-                onchain_tip_id: desc
+                id: desc
             }
         }) {
             id

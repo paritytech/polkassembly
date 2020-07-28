@@ -11788,8 +11788,8 @@ export type Mutation_RootVerifyEmailArgs = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_Links = {
@@ -11820,8 +11820,8 @@ export type Onchain_Links = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_LinksOnchain_MotionArgs = {
@@ -11837,8 +11837,8 @@ export type Onchain_LinksOnchain_MotionArgs = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_LinksOnchain_ProposalArgs = {
@@ -11854,8 +11854,8 @@ export type Onchain_LinksOnchain_ProposalArgs = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_LinksOnchain_ReferendumArgs = {
@@ -11871,8 +11871,8 @@ export type Onchain_LinksOnchain_ReferendumArgs = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_LinksOnchain_TipArgs = {
@@ -11888,8 +11888,8 @@ export type Onchain_LinksOnchain_TipArgs = {
 
 /**
  * on chain proposal created automatically by chain-db-watcher
- * 
- * 
+ *
+ *
  * columns and relationships of "onchain_links"
  */
 export type Onchain_LinksOnchain_Treasury_Spend_ProposalArgs = {
@@ -19756,7 +19756,7 @@ export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLates
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
 export const LatestTipPostsDocument = gql`
     query LatestTipPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_tip_id: desc}}) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {id: desc}}) {
     id
     title
     author {
@@ -20530,7 +20530,7 @@ export type TipPostAndCommentsLazyQueryHookResult = ReturnType<typeof useTipPost
 export type TipPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<TipPostAndCommentsQuery, TipPostAndCommentsQueryVariables>;
 export const AllTipPostsDocument = gql`
     query AllTipPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_tip_id: desc}}) {
+  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {id: desc}}) {
     id
     title
     author {
