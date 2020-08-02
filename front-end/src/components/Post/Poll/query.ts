@@ -80,3 +80,11 @@ export const COUNCIL_AT_BLOCK_NUMBER = gql`
     }
 
 `;
+
+export const EDIT_POLL = gql`
+    mutation EditPoll ($id: Int!,  $blockEnd: Int!) {
+        update_poll(where: {id: {_eq: $id}}, _set: {block_end: $blockEnd}) {
+            affected_rows
+        }
+  }
+`;

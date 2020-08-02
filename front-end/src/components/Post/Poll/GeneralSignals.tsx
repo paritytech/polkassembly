@@ -7,11 +7,12 @@ import { ApolloQueryResult } from 'apollo-client';
 import React, { useCallback, useContext, useState } from 'react';
 import BlockCountdown from 'src/components/BlockCountdown';
 import useCurrentBlock from 'src/hooks/useCurrentBlock';
+import usePollEndBlock from 'src/hooks/usePollEndBlock';
 import ButtonLink from 'src/ui-components/ButtonLink';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import { PollVotesQuery, PollVotesQueryVariables, useAddPollVoteMutation, useDeleteVoteMutation } from '../../../generated/graphql';
+import { PollQuery, PollQueryVariables, PollVotesQuery, PollVotesQueryVariables, useAddPollVoteMutation, useDeleteVoteMutation, useEditPollMutation } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import AyeNayButtons from '../../../ui-components/AyeNayButtons';
 import Card from '../../../ui-components/Card';
@@ -20,21 +21,26 @@ import { Form } from '../../../ui-components/Form';
 import GeneralChainSignalBar from '../../../ui-components/GeneralChainSignalBar';
 
 interface Props {
-	ayes: number,
-	className?: string,
+	ayes: number
+	className?: string
 	endBlock: number
-	nays: number,
-	ownVote?: Vote | null,
+	nays: number
+	ownVote?: Vote | null
 	pollId: number
-	refetch: (variables?: PollVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PollVotesQuery>>
+	canEdit: boolean
+	pollRefetch: (variables?: PollQueryVariables | undefined) => Promise<ApolloQueryResult<PollQuery>>
+	votesRefetch: (variables?: PollVotesQueryVariables | undefined) => Promise<ApolloQueryResult<PollVotesQuery>>
 }
 
-const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refetch }: Props) => {
+const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, canEdit, pollRefetch, votesRefetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const [error, setErr] = useState<Error | null>(null);
 	const [addPollVoteMutation] = useAddPollVoteMutation();
+	const [editPollMutation] = useEditPollMutation();
 	const [deleteVoteMutation] = useDeleteVoteMutation();
+
 	const currentBlockNumber = useCurrentBlock()?.toNumber() || 0;
+	const pollEndBlock = usePollEndBlock();
 	const canVote =  endBlock > currentBlockNumber;
 
 	const cancelVote = useCallback(async () => {
@@ -50,11 +56,11 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 				}
 			});
 
-			refetch();
+			votesRefetch();
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, deleteVoteMutation, pollId, refetch]);
+	}, [id, deleteVoteMutation, pollId, votesRefetch]);
 
 	const castVote = useCallback(async (vote: Vote) => {
 		if (!id) {
@@ -70,11 +76,30 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 				}
 			}).catch(console.error);
 
-			refetch();
+			votesRefetch();
 		} catch (error) {
 			setErr(error);
 		}
-	}, [id, addPollVoteMutation, pollId, refetch]);
+	}, [id, addPollVoteMutation, pollId, votesRefetch]);
+
+	const extendsPoll = useCallback(async () => {
+		if (!id) {
+			return;
+		}
+
+		try {
+			await editPollMutation({
+				variables: {
+					blockEnd: pollEndBlock,
+					id: pollId
+				}
+			});
+
+			pollRefetch();
+		} catch (error) {
+			setErr(error);
+		}
+	}, [id, editPollMutation, pollEndBlock, pollId, pollRefetch]);
 
 	return (
 		<Card className={className}>
@@ -104,7 +129,10 @@ const CouncilSignals = ({ ayes, className, endBlock, nays, ownVote, pollId, refe
 					}
 					{canVote
 						? <span>Poll ends in <BlockCountdown endBlock={endBlock}/></span>
-						: <span>Poll ended.</span>
+						: <span>Poll ended. {canEdit
+							? <ButtonLink className='info' onClick={extendsPoll}>Extend Poll</ButtonLink>
+							: ''}
+						</span>
 					}
 				</div>
 			</Form>

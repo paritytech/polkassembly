@@ -6,14 +6,13 @@ import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
-import useCurrentBlock from 'src/hooks/useCurrentBlock';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
 import { NotificationContext } from '../../context/NotificationContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useCreatePollMutation, useCreatePostMutation, usePostSubscribeMutation } from '../../generated/graphql';
-import { useBlockTime, useRouter } from '../../hooks';
+import { usePollEndBlock, useRouter } from '../../hooks';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
 import FilteredError from '../../ui-components/FilteredError';
@@ -24,8 +23,6 @@ interface Props {
 	className?: string
 }
 
-const TWO_WEEKS = 2 * 7 * 24 * 60 * 60 * 1000;
-
 const CreatePost = ({ className }:Props): JSX.Element => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
@@ -34,9 +31,8 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 	const [selectedTopic, setSetlectedTopic] = useState(1);
 	const currentUser = useContext(UserDetailsContext);
 	const { control, errors, handleSubmit } = useForm();
-	const { blocktime } = useBlockTime();
 
-	const currenBlockNumber = useCurrentBlock()?.toNumber();
+	const pollEndBlock = usePollEndBlock();
 	const [createPostMutation, { loading, error }] = useCreatePostMutation();
 	const [createPollMutation] = useCreatePollMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
@@ -70,20 +66,18 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 			return;
 		}
 
-		if (!currenBlockNumber) {
+		if (!pollEndBlock) {
 			queueNotification({
-				header: 'Failed to get current block number. Poll creation failed!',
+				header: 'Failed to get end block number. Poll creation failed!',
 				message: 'Failed',
 				status: NotificationStatus.ERROR
 			});
 			return;
 		}
 
-		const blockEnd = currenBlockNumber + Math.floor(TWO_WEEKS / blocktime);
-
 		createPollMutation({
 			variables: {
-				blockEnd,
+				blockEnd: pollEndBlock,
 				postId
 			}
 		})
