@@ -183,3 +183,136 @@ jobs:
         # add_git_labels: # optional
         # Whether to push the image
         # push: # optional, default is true
+  build-chain-db-watcher:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build and push auth server
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
+        username: niklabh # optional
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }} # optional
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        # registry: # optional
+        # Docker repository to tag the image with
+        repository: niklabh/polkassembly-chain-db-watcher
+        # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+        tags: latest # optional
+        # Automatically tags the built image with the git reference as per the readme
+        tag_with_ref: true # optional
+        # Automatically tags the built image with the git short SHA as per the readme
+        tag_with_sha: true # optional
+        # Path to the build context
+        path: chain-db-watcher
+        # Path to the Dockerfile (Default is '{path}/Dockerfile')
+        # dockerfile: # optional
+        # Sets the target stage to build
+        # target: # optional
+        # Always attempt to pull a newer version of the image
+        always_pull: true # optional
+        # Comma-delimited list of build-time variables
+        # build_args: # optional
+        # Comma-delimited list of images to consider as cache sources
+        # cache_froms: # optional
+        # Comma-delimited list of labels to add to the built image
+        # labels: # optional
+        # Adds labels with git repository information to the built image
+        # add_git_labels: # optional
+        # Whether to push the image
+        # push: # optional, default is true
+  build-health-monitor:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build and push auth server
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
+        username: niklabh # optional
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }} # optional
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        # registry: # optional
+        # Docker repository to tag the image with
+        repository: niklabh/polkassembly-health-monitor
+        # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+        tags: latest # optional
+        # Automatically tags the built image with the git reference as per the readme
+        tag_with_ref: true # optional
+        # Automatically tags the built image with the git short SHA as per the readme
+        tag_with_sha: true # optional
+        # Path to the build context
+        path: health-monitor
+        # Path to the Dockerfile (Default is '{path}/Dockerfile')
+        # dockerfile: # optional
+        # Sets the target stage to build
+        # target: # optional
+        # Always attempt to pull a newer version of the image
+        always_pull: true # optional
+        # Comma-delimited list of build-time variables
+        # build_args: # optional
+        # Comma-delimited list of images to consider as cache sources
+        # cache_froms: # optional
+        # Comma-delimited list of labels to add to the built image
+        # labels: # optional
+        # Adds labels with git repository information to the built image
+        # add_git_labels: # optional
+        # Whether to push the image
+        # push: # optional, default is true
+  build-node-watcher:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build and push auth server
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
+        username: niklabh # optional
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }} # optional
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        # registry: # optional
+        # Docker repository to tag the image with
+        repository: niklabh/polkassembly-node-watcher
+        # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+        tags: latest # optional
+        # Automatically tags the built image with the git reference as per the readme
+        tag_with_ref: true # optional
+        # Automatically tags the built image with the git short SHA as per the readme
+        tag_with_sha: true # optional
+        # Path to the build context
+        path: node-watcher
+        # Path to the Dockerfile (Default is '{path}/Dockerfile')
+        # dockerfile: # optional
+        # Sets the target stage to build
+        # target: # optional
+        # Always attempt to pull a newer version of the image
+        always_pull: true # optional
+        # Comma-delimited list of build-time variables
+        # build_args: # optional
+        # Comma-delimited list of images to consider as cache sources
+        # cache_froms: # optional
+        # Comma-delimited list of labels to add to the built image
+        # labels: # optional
+        # Adds labels with git repository information to the built image
+        # add_git_labels: # optional
+        # Whether to push the image
+        # push: # optional, default is true
+  
