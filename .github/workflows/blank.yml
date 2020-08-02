@@ -12,8 +12,32 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  lint-auth-server:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.1
+      with:
+        # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+        node-version: 12 # optional
+
+    # Runs a set of commands using the runners shell
+    - name: Run a multi-line script
+      run: |
+        curl -o- -L https://yarnpkg.com/install.sh | bash
+        export PATH=$HOME/.yarn/bin:$PATH
+        cd auth-server
+        yarn install
+        yarn lint
+        yarn tsc
+ 
   build:
+    needs: [lint-auth-server]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
