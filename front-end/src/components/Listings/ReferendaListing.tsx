@@ -45,6 +45,7 @@ const Referenda = ({ className, data }: Props) => {
 									method={post.onchain_link.onchain_referendum[0]?.preimage?.method}
 									onchainId={onchainId}
 									status={post.onchain_link.onchain_referendum[0]?.referendumStatus?.[0].status}
+									end={post.onchain_link.onchain_referendum[0]?.end}
 									title={post.title}
 									topic={post.topic.name}
 								/>
@@ -60,7 +61,7 @@ const Referenda = ({ className, data }: Props) => {
 export default styled(Referenda)`
 	margin-block-start: 0;
 	margin-block-end: 0;
-	
+
 	li {
 		list-style-type: none;
 	}
