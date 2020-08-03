@@ -12728,6 +12728,20 @@ export type CouncilAtBlockNumberQuery = (
   )>> }
 );
 
+export type EditPollMutationVariables = {
+  id: Scalars['Int'];
+  blockEnd: Scalars['Int'];
+};
+
+
+export type EditPollMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_poll?: Maybe<(
+    { __typename?: 'poll_mutation_response' }
+    & Pick<Poll_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type EditPostMutationVariables = {
   id: Scalars['Int'];
   content: Scalars['String'];
@@ -14790,6 +14804,39 @@ export function useCouncilAtBlockNumberLazyQuery(baseOptions?: ApolloReactHooks.
 export type CouncilAtBlockNumberQueryHookResult = ReturnType<typeof useCouncilAtBlockNumberQuery>;
 export type CouncilAtBlockNumberLazyQueryHookResult = ReturnType<typeof useCouncilAtBlockNumberLazyQuery>;
 export type CouncilAtBlockNumberQueryResult = ApolloReactCommon.QueryResult<CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables>;
+export const EditPollDocument = gql`
+    mutation EditPoll($id: Int!, $blockEnd: Int!) {
+  update_poll(where: {id: {_eq: $id}}, _set: {block_end: $blockEnd}) {
+    affected_rows
+  }
+}
+    `;
+export type EditPollMutationFn = ApolloReactCommon.MutationFunction<EditPollMutation, EditPollMutationVariables>;
+
+/**
+ * __useEditPollMutation__
+ *
+ * To run a mutation, you first call `useEditPollMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPollMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPollMutation, { data, loading, error }] = useEditPollMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      blockEnd: // value for 'blockEnd'
+ *   },
+ * });
+ */
+export function useEditPollMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPollMutation, EditPollMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditPollMutation, EditPollMutationVariables>(EditPollDocument, baseOptions);
+      }
+export type EditPollMutationHookResult = ReturnType<typeof useEditPollMutation>;
+export type EditPollMutationResult = ApolloReactCommon.MutationResult<EditPollMutation>;
+export type EditPollMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPollMutation, EditPollMutationVariables>;
 export const EditPostDocument = gql`
     mutation EditPost($id: Int!, $content: String!, $title: String!) {
   update_posts(where: {id: {_eq: $id}}, _set: {content: $content, title: $title}) {

@@ -11,10 +11,11 @@ import Poll from './Poll';
 
 interface Props {
 	postId: number
+	canEdit: boolean
 }
 
-export default ({ postId }: Props) => {
-	const { data, error } = usePollQuery({ variables: { postId } });
+export default ({ postId, canEdit }: Props) => {
+	const { data, error, refetch } = usePollQuery({ variables: { postId } });
 
 	if (error?.message) return <Card><FilteredError text={error.message}/></Card>;
 
@@ -24,7 +25,7 @@ export default ({ postId }: Props) => {
 
 	return (
 		<>
-			<Poll pollId={data?.poll?.[0]?.id} endBlock={data?.poll?.[0]?.block_end} />
+			<Poll pollId={data?.poll?.[0]?.id} endBlock={data?.poll?.[0]?.block_end} canEdit={canEdit} pollRefetch={refetch} />
 		</>
 	);
 };
