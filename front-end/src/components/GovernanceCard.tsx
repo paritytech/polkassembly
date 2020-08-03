@@ -3,7 +3,6 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import BN from 'bn.js';
 import * as React from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
 import BlockCountdown from 'src/components/BlockCountdown';
