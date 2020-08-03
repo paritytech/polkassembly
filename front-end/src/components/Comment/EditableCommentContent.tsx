@@ -109,7 +109,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 		});
 	};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
-	const [editCommentMutation, { error }] = useEditCommentMutation({
+	const [editCommentMutation, { error, loading }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
 			id: commentId
@@ -144,7 +144,15 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 							<div className='actions-bar'>
 								<CommentReactionBar className='reactions' commentId={commentId} />
 								{id && <div className='vl'/>}
-								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+								{id === authorId &&
+									<Button className={'social'} disabled={loading} onClick={toggleEdit}>
+										{
+											loading
+												? <><Icon name='spinner' className='icon'/>Editing</>
+												: <><Icon name='edit' className='icon'/>Edit</>
+										}
+									</Button>
+								}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>
