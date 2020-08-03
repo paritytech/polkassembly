@@ -7,6 +7,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext,useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { GoReply } from 'react-icons/go';
+import { Icon } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
@@ -55,7 +56,7 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 	const { control, errors, handleSubmit, setValue } = useForm();
 
 	const onContentChange = (data: Array<string>) => {setContent(data[0]); return data[0].length ? data[0] : null;};
-	const [addPostCommentMutation, { error }] = useAddPostCommentMutation();
+	const [addPostCommentMutation, { loading, error }] = useAddPostCommentMutation();
 	const [postSubscribeMutation] = usePostSubscribeMutation();
 
 	if (!id) return <div>You must log in to comment.</div>;
@@ -120,7 +121,12 @@ const PostCommentForm = ({ className, postId, refetch }: Props) => {
 					rules={{ required: true }}
 				/>
 				<div className='button-container'>
-					<Button primary size='small' onClick={handleSubmit(handleSave)}><GoReply className='icon'/>Reply</Button>
+					<Button primary size='small' disabled={loading} onClick={handleSubmit(handleSave)}>
+						{loading
+							? <><Icon name='spinner'/>Replying</>
+							: <><GoReply className='icon'/>Reply</>
+						}
+					</Button>
 				</div>
 			</div>
 		</div>
