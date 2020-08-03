@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
+import BN from 'bn.js';
 import * as React from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
 import BlockCountdown from 'src/components/BlockCountdown';
@@ -30,7 +31,7 @@ const GovernanceCard = function ({
 	address,
 	className,
 	comments,
-	end,
+	end = 0,
 	method,
 	onchainId,
 	status,
@@ -40,8 +41,7 @@ const GovernanceCard = function ({
 }:GovernanceProps) {
 	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
 	const subTitle = title && tipReason && method && <h5>{title}</h5>;
-	const currentBlock = useCurrentBlock() || 0;
-	end = end || 0;
+	const currentBlock = useCurrentBlock()?.toNumber() || 0;
 
 	return (
 		<div className={className}>
@@ -77,8 +77,14 @@ const GovernanceCard = function ({
 						{subTitle}
 					</Responsive>
 					<ul>
-						{end > currentBlock && <li><Icon name='clock'/><BlockCountdown endBlock={end}/> remaining</li>}
-						<li><Icon name='comment' /> {comments} comments</li>
+						{!!currentBlock && <li><Icon name='clock'/>
+							{
+								end > currentBlock
+									? <span><BlockCountdown endBlock={end}/> remaining</span>
+									: <span>ended <BlockCountdown endBlock={end}/></span>
+							}
+						</li>}
+						<li><Icon name='comment' />{comments} comments</li>
 					</ul>
 				</Segment>
 			</Segment.Group>
