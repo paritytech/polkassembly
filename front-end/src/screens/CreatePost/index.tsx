@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
-import { Checkbox, CheckboxProps, Grid } from 'semantic-ui-react';
+import { Checkbox, CheckboxProps, Grid, Icon } from 'semantic-ui-react';
 
 import ContentForm from '../../components/ContentForm';
 import TitleForm from '../../components/TitleForm';
@@ -157,7 +157,7 @@ const CreatePost = ({ className }:Props): JSX.Element => {
 							disabled={isSending || loading}
 							type='submit'
 						>
-							{isSending || loading ? 'Creating...' : 'Create'}
+							{isSending || loading ? <><Icon name='spinner'/>Creating</> : 'Create'}
 						</Button>
 					</div>
 					{error?.message && <FilteredError text={error.message}/>}
