@@ -132,6 +132,12 @@
         author_id:
           _eq: X-Hasura-User-Id
       check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
   event_triggers:
   - name: comment_create
     definition:
@@ -199,7 +205,7 @@
         tips:
           arguments:
             where:
-              hash: $onchain_tip_id
+              id: $onchain_tip_id
       hasura_fields:
       - onchain_tip_id
       remote_schema: chain-db

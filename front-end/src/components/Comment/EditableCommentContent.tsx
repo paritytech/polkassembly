@@ -4,6 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
+import * as moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { GoCheck, GoX } from 'react-icons/go';
@@ -27,6 +28,7 @@ import {
 	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
+	useDeleteCommentMutation,
 	useEditCommentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -60,7 +62,9 @@ interface Props {
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
+const DELETE_ALLOWED_DURATION = 60;
+
+const EditableCommentContent = ({ authorId, className, comment, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
@@ -116,6 +120,44 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 		}
 	});
 
+	const [deleteCommentMutation] = useDeleteCommentMutation({
+		variables: {
+			id: commentId
+		}
+	});
+
+	const deleteComment = () => {
+		deleteCommentMutation( {
+			variables: {
+				id: commentId
+			} }
+		)
+			.then(({ data }) => {
+				if (data?.delete_comments?.affected_rows){
+					refetch();
+					queueNotification({
+						header: 'Success!',
+						message: 'Your comment was deleted.',
+						status: NotificationStatus.SUCCESS
+					});
+				}
+			})
+			.catch((e) => {
+				console.error('Error deleting comment: ', e);
+
+				queueNotification({
+					header: 'Error!',
+					message: e.message,
+					status: NotificationStatus.ERROR
+				});
+			});
+	};
+
+	const now = moment.utc();
+	const createdAt = moment.utc(comment.created_at, 'YYYY-MM-DDTHH:mm:ss.SSS');
+	const minutes = moment.duration(now.diff(createdAt)).asMinutes();
+	const showDelete = minutes < DELETE_ALLOWED_DURATION;
+
 	return (
 		<>
 			<div className={className}>
@@ -153,6 +195,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 										}
 									</Button>
 								}
+								{id === authorId && showDelete && <Button className={'social'} onClick={deleteComment}><Icon name='delete' className='icon'/>Delete</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>
