@@ -84,7 +84,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 
 					<div className='text-muted'>
-						<Link to='/request-reset-password'>Forgot your password?</Link>
+						<Link to='/request-reset-password'>Forgot your password or username?</Link>
 					</div>
 				</Form.Field>
 			</Form.Group>

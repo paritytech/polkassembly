@@ -8,15 +8,14 @@ import AuthService from '../../services/auth';
 import { ChangeResponseType, SetCredentialsConfirmArgs } from '../../types';
 import messages from '../../utils/messages';
 import validateEmail from '../../utils/validateEmail';
+import validatePassword from '../../utils/validatePassword';
 import validateUsername from '../../utils/validateUsername';
 
 export default async (parent: void, { address, email, password, signature, username }: SetCredentialsConfirmArgs): Promise<ChangeResponseType> => {
 	const authServiceInstance = new AuthService();
 
 	validateUsername(username);
-	if (password.length < 6) {
-		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
-	}
+	validatePassword(password);
 	if (email && !validateEmail(email)) {
 		throw new UserInputError(messages.INVALID_EMAIL);
 	}
