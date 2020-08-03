@@ -9,6 +9,7 @@ import { Context, SignupArgs, TokenType } from '../../types';
 import messages from '../../utils/messages';
 import setRefreshTokenCookie from '../../utils/setRefreshTokenCookie';
 import validateEmail from '../../utils/validateEmail';
+import validatePassword from '../../utils/validatePassword';
 import validateUsername from '../../utils/validateUsername';
 
 export default async (parent: void, { email, password, username }: SignupArgs, ctx: Context): Promise<TokenType> => {
@@ -17,10 +18,7 @@ export default async (parent: void, { email, password, username }: SignupArgs, c
 	}
 
 	validateUsername(username);
-
-	if (password.length < 6) {
-		throw new UserInputError(messages.PASSWORD_LENGTH_ERROR);
-	}
+	validatePassword(password);
 
 	const authServiceInstance = new AuthService();
 	const { token, refreshToken } = await authServiceInstance.SignUp(email, password, username);
