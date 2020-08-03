@@ -2,10 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext } from 'react';
 
 import { UserDetailsContext } from '../../../context/UserDetailsContext';
-import { usePollVotesQuery } from '../../../generated/graphql';
+import { PollQuery, PollQueryVariables, usePollVotesQuery } from '../../../generated/graphql';
 import { Vote } from '../../../types';
 import Card from '../../../ui-components/Card';
 import FilteredError from '../../../ui-components/FilteredError';
@@ -15,9 +16,11 @@ import GeneralSignals from './GeneralSignals';
 interface Props {
 	pollId: number
 	endBlock: number
+	canEdit: boolean
+	pollRefetch: (variables?: PollQueryVariables | undefined) => Promise<ApolloQueryResult<PollQuery>>
 }
 
-const Poll = ({ pollId, endBlock }: Props) => {
+const Poll = ({ pollId, endBlock, canEdit, pollRefetch }: Props) => {
 	const { id } = useContext(UserDetailsContext);
 	const { data, error, refetch } = usePollVotesQuery({ variables: { pollId } });
 	let ayes = 0;
@@ -46,7 +49,9 @@ const Poll = ({ pollId, endBlock }: Props) => {
 				nays={nays}
 				ownVote={ownVote}
 				pollId={pollId}
-				refetch={refetch}
+				canEdit={canEdit}
+				pollRefetch={pollRefetch}
+				votesRefetch={refetch}
 			/>
 			<CouncilSignals data={data} endBlock={endBlock} />
 		</>
