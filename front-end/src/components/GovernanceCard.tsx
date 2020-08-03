@@ -77,8 +77,8 @@ const GovernanceCard = function ({
 						{subTitle}
 					</Responsive>
 					<ul>
+						{end > currentBlock && <li><Icon name='clock'/><BlockCountdown endBlock={end}/> remaining</li>}
 						<li><Icon name='comment' /> {comments} comments</li>
-						{end > currentBlock && <li><BlockCountdown endBlock={end}/> remaining</li>}
 					</ul>
 				</Segment>
 			</Segment.Group>
