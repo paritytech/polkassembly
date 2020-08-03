@@ -13091,6 +13091,7 @@ export type DiscussionPostAndCommentsQuery = (
 
 export type LatestDiscussionPostsQueryVariables = {
   limit?: Scalars['Int'];
+  offset?: Scalars['Int'];
 };
 
 
@@ -15515,8 +15516,8 @@ export type DiscussionPostAndCommentsQueryHookResult = ReturnType<typeof useDisc
 export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useDiscussionPostAndCommentsLazyQuery>;
 export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const LatestDiscussionPostsDocument = gql`
-    query LatestDiscussionPosts($limit: Int! = 20) {
-  posts(order_by: {last_update: {last_update: desc}}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+    query LatestDiscussionPosts($limit: Int! = 20, $offset: Int! = 0) {
+  posts(order_by: {last_update: {last_update: desc}}, offset: $offset, limit: $limit, where: {type: {id: {_eq: 1}}}) {
     id
     title
     author {
@@ -15553,6 +15554,7 @@ export const LatestDiscussionPostsDocument = gql`
  * const { data, loading, error } = useLatestDiscussionPostsQuery({
  *   variables: {
  *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
