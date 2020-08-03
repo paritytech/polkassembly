@@ -47,17 +47,14 @@ export const verificationEmailTemplate = container(`
 
 export const resetPasswordEmailTemplate = container(`
     <p>
-        Hi <%= username %>!<br/><br/>
+        Hi!<br/><br/>
 
-        It looks like you need to reset your password.<br />
-        Your secret is safe with us, and this will be a breeze.<br /><br />
+        The username association with this email is <%= username %><br /><br />
 
-        Go ahead and follow the link to reset your password:<br /><br />
+        If you need to reset your password, go ahead and follow this link:<br /><br />
         <a href="<%= resetUrl %>">Reset Your Password</a><br /><br />
 
-        Your Username is <%= username %><br /><br />
-
-        Just a heads up, to make sure your information is safe and secure, the link will expire after 24 hours.<br /><br />
+        Just a heads up, to make sure your information is safe and secure, the above link will expire after 24 hours.<br /><br />
 
         If you didn't request a password change, then just ignore this message.<br /><br />
 
