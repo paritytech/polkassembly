@@ -55,6 +55,8 @@ export const resetPasswordEmailTemplate = container(`
         Go ahead and follow the link to reset your password:<br /><br />
         <a href="<%= resetUrl %>">Reset Your Password</a><br /><br />
 
+        Your Username is <%= username %><br /><br />
+
         Just a heads up, to make sure your information is safe and secure, the link will expire after 24 hours.<br /><br />
 
         If you didn't request a password change, then just ignore this message.<br /><br />
