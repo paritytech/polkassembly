@@ -61,7 +61,7 @@ export const sendResetPasswordEmail = (user: User, token: string): void => {
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: 'Reset Your Password',
+		subject: 'Username or password reset request',
 		text,
 		to: user.email
 	};
