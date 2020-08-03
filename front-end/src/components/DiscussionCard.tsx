@@ -69,7 +69,7 @@ export default function Discussion ({
 			/>
 			<ul>
 				<li><Icon name='comment' /> {comments} comments</li>
-				{last_update && <li><Icon name='reply' /> last comment {moment.utc(last_update, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</li>}
+				{comments !== 'no' && last_update && <li><Icon name='reply' />commented {moment.utc(last_update, 'YYYY-MM-DDTHH:mm:ss.SSS').fromNow()}</li>}
 			</ul>
 		</DiscussionCard>
 	);
