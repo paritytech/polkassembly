@@ -4,7 +4,6 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import * as moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { Controller,useForm } from 'react-hook-form';
 import { GoCheck, GoX } from 'react-icons/go';
@@ -62,9 +61,7 @@ interface Props {
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
-const DELETE_ALLOWED_DURATION = 60;
-
-const EditableCommentContent = ({ authorId, className, comment, content, commentId, refetch }: Props) => {
+const EditableCommentContent = ({ authorId, className, content, commentId, refetch }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { id } = useContext(UserDetailsContext);
 	const [newContent, setNewContent] = useState(content || '');
@@ -153,11 +150,6 @@ const EditableCommentContent = ({ authorId, className, comment, content, comment
 			});
 	};
 
-	const now = moment.utc();
-	const createdAt = moment.utc(comment.created_at, 'YYYY-MM-DDTHH:mm:ss.SSS');
-	const minutes = moment.duration(now.diff(createdAt)).asMinutes();
-	const showDelete = minutes < DELETE_ALLOWED_DURATION;
-
 	return (
 		<>
 			<div className={className}>
@@ -195,7 +187,7 @@ const EditableCommentContent = ({ authorId, className, comment, content, comment
 										}
 									</Button>
 								}
-								{id === authorId && showDelete && <Button className={'social'} onClick={deleteComment}><Icon name='delete' className='icon'/>Delete</Button>}
+								{id === authorId && <Button className={'social'} onClick={deleteComment}><Icon name='delete' className='icon'/>Delete</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>
