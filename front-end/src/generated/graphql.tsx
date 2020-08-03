@@ -13111,7 +13111,10 @@ export type LatestDiscussionPostsQuery = (
     ), type: (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
-    ) }
+    ), last_update?: Maybe<(
+      { __typename?: 'post_last_update' }
+      & Pick<Post_Last_Update, 'last_update'>
+    )> }
   )> }
 );
 
@@ -13365,7 +13368,7 @@ export type LatestReferendaPostsQuery = (
       & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
       & { onchain_referendum: Array<Maybe<(
         { __typename?: 'Referendum' }
-        & Pick<Referendum, 'id'>
+        & Pick<Referendum, 'id' | 'end'>
         & { referendumStatus?: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
@@ -13592,7 +13595,7 @@ export type AllReferendaPostsQuery = (
       & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
       & { onchain_referendum: Array<Maybe<(
         { __typename?: 'Referendum' }
-        & Pick<Referendum, 'id'>
+        & Pick<Referendum, 'id' | 'end'>
         & { referendumStatus?: Maybe<Array<(
           { __typename?: 'ReferendumStatus' }
           & Pick<ReferendumStatus, 'id' | 'status'>
@@ -15530,6 +15533,9 @@ export const LatestDiscussionPostsDocument = gql`
       name
       id
     }
+    last_update {
+      last_update
+    }
   }
 }
     ${AuthorFieldsFragmentDoc}`;
@@ -15864,6 +15870,7 @@ export const LatestReferendaPostsDocument = gql`
       onchain_referendum_id
       onchain_referendum(where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Canceled"}, {status: "Vetoed"}]}}}) {
         id
+        end
         referendumStatus(last: 1) {
           id
           status
@@ -16169,6 +16176,7 @@ export const AllReferendaPostsDocument = gql`
       onchain_referendum_id
       onchain_referendum(where: {}) {
         id
+        end
         referendumStatus(last: 1) {
           id
           status

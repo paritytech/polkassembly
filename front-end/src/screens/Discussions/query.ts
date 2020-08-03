@@ -24,6 +24,9 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
                 name
                 id
             }
+            last_update {
+                last_update
+            }
         }
     }
     ${authorFields}
