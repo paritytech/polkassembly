@@ -13111,7 +13111,10 @@ export type LatestDiscussionPostsQuery = (
     ), type: (
       { __typename?: 'post_types' }
       & Pick<Post_Types, 'name' | 'id'>
-    ) }
+    ), last_update?: Maybe<(
+      { __typename?: 'post_last_update' }
+      & Pick<Post_Last_Update, 'last_update'>
+    )> }
   )> }
 );
 
@@ -15529,6 +15532,9 @@ export const LatestDiscussionPostsDocument = gql`
     type {
       name
       id
+    }
+    last_update {
+      last_update
     }
   }
 }
