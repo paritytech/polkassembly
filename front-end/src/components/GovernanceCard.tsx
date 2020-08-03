@@ -5,7 +5,9 @@
 import styled from '@xstyled/styled-components';
 import * as React from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
+import BlockCountdown from 'src/components/BlockCountdown';
 import { noTitle } from 'src/global/noTitle';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 
 import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
@@ -15,6 +17,7 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
+	end?: number
 	method?: string
 	onchainId?: string | number | null
 	status?: string | null
@@ -27,6 +30,7 @@ const GovernanceCard = function ({
 	address,
 	className,
 	comments,
+	end = 0,
 	method,
 	onchainId,
 	status,
@@ -36,6 +40,8 @@ const GovernanceCard = function ({
 }:GovernanceProps) {
 	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
 	const subTitle = title && tipReason && method && <h5>{title}</h5>;
+	const currentBlock = useCurrentBlock()?.toNumber() || 0;
+
 	return (
 		<div className={className}>
 			<Segment.Group horizontal>
@@ -70,7 +76,14 @@ const GovernanceCard = function ({
 						{subTitle}
 					</Responsive>
 					<ul>
-						<li><Icon name='comment' /> {comments} comments</li>
+						{!!currentBlock && <li><Icon name='clock'/>
+							{
+								end > currentBlock
+									? <span><BlockCountdown endBlock={end}/> remaining</span>
+									: <span>ended <BlockCountdown endBlock={end}/></span>
+							}
+						</li>}
+						<li><Icon name='comment' />{comments} comments</li>
 					</ul>
 				</Segment>
 			</Segment.Group>
@@ -134,7 +147,7 @@ export default styled(GovernanceCard)`
 
 	h4.tipTitle {
 		max-width: 55%;
-		
+
 		& > div {
 			white-space: nowrap;
 			overflow: hidden;
@@ -190,7 +203,7 @@ export default styled(GovernanceCard)`
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
 		}
-		
+
 		.title-wrapper {
 			max-width: calc(100% - 9rem);
 		}

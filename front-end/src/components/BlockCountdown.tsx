@@ -15,7 +15,7 @@ interface Props {
 	endBlock: number;
 }
 
-const DivContent = styled.div`
+const SpanContent = styled.span`
 	font-size: xs;
 	color: black_text;
 `;
@@ -31,8 +31,8 @@ const BlockCountdown = ({ className, endBlock }:Props ) => {
 			?(
 				<Popup
 					className={className}
-					trigger={<div className='blockCountdown'>{ blockToTime(blocksRemaining, blocktime)}</div>}
-					content={<DivContent>{`#${endBlock}`}</DivContent>}
+					trigger={<span className='blockCountdown'>{ blockToTime(blocksRemaining, blocktime)}</span>}
+					content={<SpanContent>{`#${endBlock}`}</SpanContent>}
 					hoverable={true}
 					position='top left'
 				/>
