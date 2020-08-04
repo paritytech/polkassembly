@@ -80,7 +80,7 @@ const GovernanceCard = function ({
 							{
 								end > currentBlock
 									? <span><BlockCountdown endBlock={end}/> remaining</span>
-									: <span>ended</span>
+									: <span>ended <BlockCountdown endBlock={end}/></span>
 							}
 						</li>}
 						<li><Icon name='comment' />{comments} comments</li>
