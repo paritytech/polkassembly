@@ -76,7 +76,7 @@ const GovernanceCard = function ({
 						{subTitle}
 					</Responsive>
 					<ul>
-						{!!currentBlock && <li><Icon name='clock'/>
+						{!!end && !!currentBlock && <li><Icon name='clock'/>
 							{
 								end > currentBlock
 									? <span><BlockCountdown endBlock={end}/> remaining</span>
