@@ -6,8 +6,8 @@ import gql from 'graphql-tag';
 import { authorFields } from 'src/fragments/author';
 
 export const QUERY_LATEST_DISCUSSIONS = gql`
-    query LatestDiscussionPosts($limit: Int! = 20, $offset: Int! = 0) {
-        posts(order_by: {last_update: {last_update: desc}}, offset: $offset, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+    query LatestDiscussionPosts($limit: Int! = 20) {
+        posts(order_by: {last_update: {last_update: desc}}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
             id
             title
             author {
@@ -31,4 +31,3 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
     }
     ${authorFields}
 `;
-
