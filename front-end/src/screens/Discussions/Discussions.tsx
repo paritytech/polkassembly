@@ -10,7 +10,7 @@ import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 import LoadMore from '../../ui-components/LoadMore';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 const DiscussionsContainer = () => {
 	const [page, setPage] = useState(1);
