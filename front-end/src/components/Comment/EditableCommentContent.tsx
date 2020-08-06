@@ -27,6 +27,7 @@ import {
 	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
+	useDeleteCommentMutation,
 	useEditCommentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -116,6 +117,39 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 		}
 	});
 
+	const [deleteCommentMutation] = useDeleteCommentMutation({
+		variables: {
+			id: commentId
+		}
+	});
+
+	const deleteComment = () => {
+		deleteCommentMutation( {
+			variables: {
+				id: commentId
+			} }
+		)
+			.then(({ data }) => {
+				if (data?.delete_comments?.affected_rows){
+					refetch();
+					queueNotification({
+						header: 'Success!',
+						message: 'Your comment was deleted.',
+						status: NotificationStatus.SUCCESS
+					});
+				}
+			})
+			.catch((e) => {
+				console.error('Error deleting comment: ', e);
+
+				queueNotification({
+					header: 'Error!',
+					message: e.message,
+					status: NotificationStatus.ERROR
+				});
+			});
+	};
+
 	return (
 		<>
 			<div className={className}>
@@ -153,6 +187,7 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 										}
 									</Button>
 								}
+								{id === authorId && <Button className={'social'} onClick={deleteComment}><Icon name='delete' className='icon'/>Delete</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>

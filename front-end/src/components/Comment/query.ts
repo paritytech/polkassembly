@@ -9,5 +9,13 @@ export const EDIT_COMMENT= gql`
         update_comments(where: {id: {_eq: $id}}, _set: {content: $content}) {
             affected_rows
         }
-  }
+    }
+`;
+
+export const DELETE_COMMENT = gql`
+    mutation DeleteComment ($id: uuid!) {
+        delete_comments(where: {id: {_eq: $id}}) {
+            affected_rows
+        }
+    }
 `;
