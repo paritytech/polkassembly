@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 
 const LoadMoreCard = styled.div`
 	padding: 2rem 3rem 1.5rem 3rem;
@@ -40,7 +40,7 @@ type Props = {
 const LoadMore = ({ onClick, loading } :Props) => {
 	return (
 		<LoadMoreCard onClick={onClick}>
-			{loading ? <Icon name='spinner' className='icon'/> : 'LOAD MORE'}
+			{loading ? <Loader active inline /> : 'LOAD MORE'}
 		</LoadMoreCard>
 	);
 };
