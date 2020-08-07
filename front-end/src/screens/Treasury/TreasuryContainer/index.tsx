@@ -39,7 +39,7 @@ const TreasuryProposalsContainer = ({ className, limit }:Props) => {
 	if (data) return (
 		<>
 			<TreasuryListing className={className} data={data}/>
-			<LoadMore onClick={loadMore} loading={loading} />
+			{(loading || (data.posts.length === limit * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>
 	);
 

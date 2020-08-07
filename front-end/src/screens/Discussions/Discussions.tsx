@@ -32,7 +32,7 @@ const DiscussionsContainer = () => {
 	if (data) {
 		return <>
 			<DiscussionsListing data={data} />
-			<LoadMore onClick={loadMore} loading={loading} />
+			{(loading || (data.posts.length === LIMIT * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>;
 	}
 

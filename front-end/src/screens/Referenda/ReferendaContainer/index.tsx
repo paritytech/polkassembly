@@ -37,7 +37,7 @@ const ReferendaContainer = ({ className, limit }:Props) => {
 	if (data) return (
 		<>
 			<Referenda className={className} data={data}/>
-			<LoadMore onClick={loadMore} loading={loading} />
+			{(loading || (data.posts.length === limit * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>
 	);
 
