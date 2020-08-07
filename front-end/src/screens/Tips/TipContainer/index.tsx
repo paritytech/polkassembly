@@ -39,7 +39,7 @@ const TipContainer = ({ className, limit }:Props) => {
 	if (data) return (
 		<>
 			<TipListing className={className} data={data}/>
-			<LoadMore onClick={loadMore} loading={loading} />
+			{(loading || (data.posts.length === limit * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>
 	);
 
