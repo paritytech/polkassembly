@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveAccountRegistration } from '@polkadot/api-derive/types';
+import { DeriveAccountFlags, DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
@@ -27,7 +27,7 @@ li {
 }
 `;
 
-const IdentityBadge = ({ className, identity }: {className?: string, identity: DeriveAccountRegistration}) => {
+const IdentityBadge = ({ className, identity, flags }: {className?: string, identity: DeriveAccountRegistration, flags?: DeriveAccountFlags}) => {
 	const judgements = identity.judgements.filter(([, judgement]): boolean => !judgement.isFeePaid);
 	const isGood = judgements.some(([, judgement]): boolean => judgement.isKnownGood || judgement.isReasonable);
 	const isBad = judgements.some(([, judgement]): boolean => judgement.isErroneous || judgement.isLowQuality);
@@ -45,6 +45,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 		{identity?.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
 		{identity?.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
 		{identity?.web && <li><span className='desc'>web:</span>{identity.web}</li>}
+		{flags?.isCouncil && <li><span className='desc'>Council Member</span></li>}
 	</StyledPopup>;
 
 	return <div className={className}>

@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveAccountInfo, DeriveAccountRegistration } from '@polkadot/api-derive/types';
+import { DeriveAccountFlags, DeriveAccountInfo, DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
 import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
@@ -25,6 +25,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 	const [mainDisplay, setMainDisplay] = useState<string>('');
 	const [sub, setSub] = useState<string | null>(null);
 	const [identity, setIdentity] = useState<DeriveAccountRegistration | null>(null);
+	const [flags, setFlags] = useState<DeriveAccountFlags | undefined>(undefined);
 
 	useEffect(() => {
 
@@ -32,7 +33,8 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			return;
 		}
 
-		let unsubscribe: () => void;
+		let infoUnsubscribe: () => void;
+		let flagsUnsubscribe: () => void;
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
 			setIdentity(info.identity);
@@ -48,10 +50,20 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 				setMainDisplay(info.identity.displayParent || info.identity.display || info.nickname || '');
 			}
 		})
-			.then(unsub => { unsubscribe = unsub; })
+			.then(unsub => { infoUnsubscribe = unsub; })
 			.catch(e => console.error(e));
 
-		return () => unsubscribe && unsubscribe();
+		api.derive.accounts.flags(address, (result: DeriveAccountFlags) => {
+			console.log(result);
+			setFlags(result);
+		})
+			.then(unsub => { flagsUnsubscribe = unsub; })
+			.catch(e => console.error(e));
+
+		return () => {
+			infoUnsubscribe && infoUnsubscribe();
+			flagsUnsubscribe && flagsUnsubscribe();
+		};
 	}, [address, api, isApiReady]);
 
 	return (
@@ -67,7 +79,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 					// When inline disregard the extension name.
 					? popupContent
 						? <>
-							{identity && mainDisplay && <IdentityBadge identity={identity}/>}
+							{identity && mainDisplay && <IdentityBadge identity={identity} flags={flags} />}
 							<Popup
 								trigger={
 									<div className={'header inline identityName'}>
@@ -82,7 +94,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 						</>
 						: <>
 							<div className={'description inline'}>
-								{identity && mainDisplay && <IdentityBadge identity={identity}/>}
+								{identity && mainDisplay && <IdentityBadge identity={identity} flags={flags} />}
 								<span className='identityName'>
 									{ mainDisplay || shortenAddress(address)}
 									{sub && <span className='sub'>/{sub}</span>}
@@ -95,7 +107,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 								trigger={
 									<>
 										<div className={'header'}>
-											{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
+											{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity} flags={flags} />}
 											<span className='identityName'>
 												{extensionName || mainDisplay}
 												{!extensionName && sub && <span className='sub'>/{sub}</span>}
@@ -110,7 +122,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 							/>
 							: <>
 								<div className={'header'}>
-									{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity}/>}
+									{identity && mainDisplay && !extensionName && <IdentityBadge identity={identity} flags={flags} />}
 									<span className='identityName'>
 										{extensionName || mainDisplay}
 										{!extensionName && sub && <span className='sub'>/{sub}</span>}
@@ -158,7 +170,7 @@ export default styled(Address)`
 	.inline {
 		display: inline-flex !important;
 		font-size: sm !important;
-	
+
 	}
 
 	.sub {
