@@ -18,9 +18,10 @@ const DiscussionCard = styled.div`
 	transition: box-shadow .1s ease-in-out;
 
 	&.own-post {
-		border-width: 1px;
-		border-style: solid;
-		border-color: pink_primary;
+		border-left-width: 4px;
+		border-left-style: solid;
+		border-left-color: pink_primary;
+		padding: calc(2rem - 4px);
 	}
 	&:hover {
 		box-shadow: box_shadow_card_hover;
