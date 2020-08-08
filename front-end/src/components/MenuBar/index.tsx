@@ -7,7 +7,7 @@ import React from 'react';
 import { ReactNode, useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
+import { Accordion, Dropdown, Icon, Menu, Responsive, Sidebar, SidebarPusher } from 'semantic-ui-react';
 import NetworkDropdown from 'src/ui-components/NetworkDropdown';
 import getNetwork from 'src/util/getNetwork';
 
@@ -76,6 +76,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Mobile Sidebar
 	const [menuVisible, setMenuVisible] = useState(false);
 	const [pushableHeight, setPushableHeight] = useState('0rem');
+	const [accordianActive, setAccordianActive] = useState(false);
 
 	const handleToggle = () => {
 		menuVisible ? setMenuVisible(false) : setMenuVisible(true);
@@ -85,6 +86,10 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const handleClose = () => {
 		setMenuVisible(false);
 		setPushableHeight('0rem');
+	};
+
+	const handleAccordianClick = () => {
+		setAccordianActive(!accordianActive);
 	};
 
 	return (
@@ -110,18 +115,29 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						vertical
 						visible={menuVisible}
 					>
-						{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
-						{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
-						{username
-							?
-							<>
-								{loggedInItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
-							</>
-							:
-							<>
-								{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
-							</>
-						}
+						<Accordion>
+							{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
+							<Accordion.Title
+								active={accordianActive}
+								index={0}
+								onClick={handleAccordianClick}
+							>
+								<Menu.Item as={NavLink} content='On-chain' icon='chain' to='#' />
+							</Accordion.Title>
+							<Accordion.Content active={accordianActive}>
+								{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
+							</Accordion.Content>
+							{username
+								?
+								<>
+									{loggedInItems.map((item, index) => <Menu.Item as={NavLink} key={index} {...item}/>)}
+								</>
+								:
+								<>
+									{loggedOutItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
+								</>
+							}
+						</Accordion>
 					</Sidebar>
 					<SidebarPusher />
 				</Sidebar.Pushable>
