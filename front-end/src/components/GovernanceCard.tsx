@@ -43,7 +43,6 @@ const GovernanceCard = function ({
 	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
 	const subTitle = title && tipReason && method && <h5>{title}</h5>;
 	const currentBlock = useCurrentBlock()?.toNumber() || 0;
-
 	const ownProposal = currentUser?.addresses?.includes(address);
 
 	return (

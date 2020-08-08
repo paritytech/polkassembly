@@ -4,9 +4,10 @@
 
 import styled from '@xstyled/styled-components';
 import * as moment from 'moment';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 
+import { UserDetailsContext } from '../context/UserDetailsContext';
 import CreationLabel from '../ui-components/CreationLabel';
 
 const DiscussionCard = styled.div`
@@ -15,6 +16,12 @@ const DiscussionCard = styled.div`
 	border-radius: 3px;
 	box-shadow: box_shadow_card;
 	transition: box-shadow .1s ease-in-out;
+
+	&.own-post {
+		border-width: 1px;
+		border-style: solid;
+		border-color: pink_primary;
+	}
 	&:hover {
 		box-shadow: box_shadow_card_hover;
 		text-decoration: none;
@@ -59,8 +66,11 @@ export default function Discussion ({
 	username,
 	last_update
 }:DiscussionProps) {
+	const currentUser = useContext(UserDetailsContext);
+	const ownPost = currentUser.username === username;
+
 	return (
-		<DiscussionCard>
+		<DiscussionCard className={ownPost ? 'own-post' : ''}>
 			<h4>{title}</h4>
 			<CreationLabel
 				created_at={created_at}
