@@ -54,7 +54,6 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			.catch(e => console.error(e));
 
 		api.derive.accounts.flags(address, (result: DeriveAccountFlags) => {
-			console.log(result);
 			setFlags(result);
 		})
 			.then(unsub => { flagsUnsubscribe = unsub; })
