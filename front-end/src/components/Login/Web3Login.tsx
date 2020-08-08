@@ -124,7 +124,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 
 			if (loginResult?.addressLogin?.token) {
 				handleTokenChange(loginResult.addressLogin.token, currentUser);
-				history.push('/');
+				history.goBack();
 			} else {
 				throw new Error('Web3 Login failed');
 			}
