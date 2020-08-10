@@ -50,7 +50,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 						if (email) {
 							setModal({ content: 'We sent you an email to verify your address. Click on the link in the email.', title: 'You\'ve got some mail' });
 						}
-						history.push('/');
+						history.goBack();
 					}}
 
 				).catch((e) => {
