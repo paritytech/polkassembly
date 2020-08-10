@@ -76,7 +76,7 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	// Mobile Sidebar
 	const [menuVisible, setMenuVisible] = useState(false);
 	const [pushableHeight, setPushableHeight] = useState('0rem');
-	const [accordianActive, setAccordianActive] = useState(false);
+	const [accordionActive, setAccordionActive] = useState(false);
 
 	const handleToggle = () => {
 		menuVisible ? setMenuVisible(false) : setMenuVisible(true);
@@ -88,8 +88,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 		setPushableHeight('0rem');
 	};
 
-	const handleAccordianClick = () => {
-		setAccordianActive(!accordianActive);
+	const handleAccordionClick = () => {
+		setAccordionActive(!accordionActive);
 	};
 
 	return (
@@ -118,13 +118,13 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 						<Accordion>
 							{contentItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 							<Accordion.Title
-								active={accordianActive}
+								active={accordionActive}
 								index={0}
-								onClick={handleAccordianClick}
+								onClick={handleAccordionClick}
 							>
 								<Menu.Item as={NavLink} content='On-chain' icon='chain' to='#' />
 							</Accordion.Title>
-							<Accordion.Content active={accordianActive}>
+							<Accordion.Content active={accordionActive}>
 								{onchainItems.map((item, index) => <Menu.Item as={NavLink} key={index} onClick={handleClose} {...item} />)}
 							</Accordion.Content>
 							{username
