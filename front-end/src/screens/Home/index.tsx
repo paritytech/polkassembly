@@ -80,7 +80,7 @@ export default styled(Home)`
 
 	@media only screen and (max-width: 992px) {
 		.default-address-infobox {
-			visibility: hidden;
+			display: none;
 		}
 	}
 
