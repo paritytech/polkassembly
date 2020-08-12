@@ -37,7 +37,7 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 	let infoElem = <Icon name={iconName} color={color} />;
 
 	if (flags?.isCouncil) {
-		infoElem = <span role='img' aria-label='council member'>👑</span>;
+		infoElem = <span><Icon name={iconName} color={color} /><span role='img' aria-label='council member'>👑</span></span>;
 	}
 
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
