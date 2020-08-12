@@ -137,7 +137,7 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 					content: 'Add an email in settings if you want to be able to recover your account!',
 					title: 'Add optional email'
 				});
-				history.push('/');
+				history.goBack();
 			} else {
 				throw new Error('Web3 Login failed');
 			}

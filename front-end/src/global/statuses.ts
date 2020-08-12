@@ -34,3 +34,10 @@ export const tipStatus = {
 	OPENED: 'TipOpened',
 	RETRACTED: 'TipRetracted'
 };
+
+export const tipStatusMap = {
+	[tipStatus.OPENED]: 'Opened',
+	[tipStatus.CLOSING]: 'Closing',
+	[tipStatus.CLOSED]: 'Closed',
+	[tipStatus.RETRACTED]: 'Retracted'
+};

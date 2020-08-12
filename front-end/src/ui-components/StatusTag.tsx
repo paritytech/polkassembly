@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { ReactNode } from 'react';
 import { Label, SemanticICONS } from 'semantic-ui-react';
-import { motionStatus, proposalStatus, referendumStatus, tipStatus } from 'src/global/statuses';
+import { motionStatus, proposalStatus, referendumStatus, tipStatus, tipStatusMap } from 'src/global/statuses';
 
 interface Props{
 	children?: ReactNode,
@@ -46,6 +46,10 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		tipStatus.CLOSED
 	].includes(status)){
 		icon = 'check';
+	}
+
+	if (content && tipStatusMap[content]) {
+		content = tipStatusMap[content];
 	}
 
 	return (
