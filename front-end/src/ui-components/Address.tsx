@@ -33,8 +33,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			return;
 		}
 
-		let infoUnsubscribe: () => void;
-		let flagsUnsubscribe: () => void;
+		let unsubscribe: () => void;
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
 			setIdentity(info.identity);
@@ -50,19 +49,26 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 				setMainDisplay(info.identity.displayParent || info.identity.display || info.nickname || '');
 			}
 		})
-			.then(unsub => { infoUnsubscribe = unsub; })
+			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
+
+		return () => unsubscribe && unsubscribe();
+	}, [address, api, isApiReady]);
+
+	useEffect(() => {
+		if (!isApiReady){
+			return;
+		}
+
+		let unsubscribe: () => void;
 
 		api.derive.accounts.flags(address, (result: DeriveAccountFlags) => {
 			setFlags(result);
 		})
-			.then(unsub => { flagsUnsubscribe = unsub; })
+			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
 
-		return () => {
-			infoUnsubscribe && infoUnsubscribe();
-			flagsUnsubscribe && flagsUnsubscribe();
-		};
+		return () => unsubscribe && unsubscribe();
 	}, [address, api, isApiReady]);
 
 	return (

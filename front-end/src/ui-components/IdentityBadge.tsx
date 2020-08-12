@@ -34,7 +34,12 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 
 	const color: 'brown' | 'green' | 'grey' = isGood ? 'green' : isBad ? 'brown' : 'grey';
 	const iconName = isGood ? 'check circle' : 'minus circle';
-	const infoElem = <Icon name={iconName} color={color} />;
+	let infoElem = <Icon name={iconName} color={color} />;
+
+	if (flags?.isCouncil) {
+		infoElem = <span role='img' aria-label='council member'>👑</span>;
+	}
+
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
 
 	const popupContent = <StyledPopup>
