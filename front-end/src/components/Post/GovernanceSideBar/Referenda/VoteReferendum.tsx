@@ -7,7 +7,7 @@ import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useMemo,useState } from 'react';
-import { DropdownProps, Select } from 'semantic-ui-react';
+import { DropdownProps } from 'semantic-ui-react';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { LoadingStatusType,NotificationStatus } from 'src/types';
 import BalanceInput from 'src/ui-components/BalanceInput';
@@ -19,6 +19,7 @@ import Loader from 'src/ui-components/Loader';
 
 import AccountSelectionForm from '../../../../ui-components/AccountSelectionForm';
 import AyeNayButtons from '../../../../ui-components/AyeNayButtons';
+import Slider from '../../../../ui-components/Slider';
 
 interface Props {
 	className?: string
@@ -35,6 +36,7 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: false, message: '' });
 	const CONVICTIONS: [number, number][] = [1, 2, 4, 8, 16, 32].map((lock, index) => [index + 1, lock]);
+	const [sliderValue, setSliderValue] = useState(1);
 
 	const convictionOpts = useMemo(() => [
 		{ text: '0.1x voting balance, no lockup period', value: 0 },
@@ -45,8 +47,9 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 	],[CONVICTIONS]);
 	const [conviction, setConviction] = useState<number>(convictionOpts[1].value);
 
-	const onConvictionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-		setConviction(Number(data.value));
+	const onSliderChange = (value: number) => {
+		setSliderValue(value);
+		setConviction(Number(convictionOpts[value].value));
 	};
 
 	const onBalanceChange = (balance: BN) => setLockedBalance(balance);
@@ -109,12 +112,8 @@ const VoteRefrendum = ({ className, referendumId, address, accounts, onAccountCh
 					content='You can multiply your votes by locking your tokens for longer periods of time.'
 				/>
 			</label>
-			<Select
-				onChange={onConvictionChange}
-				options={convictionOpts}
-				pointing={'top'}
-				value={conviction}
-			/>
+			<Slider min={0} max={6} step={1} value={sliderValue} onChange={onSliderChange} />
+			<span className='text-muted'>{convictionOpts[sliderValue].text}</span>
 		</Form.Field>;
 
 	return (
