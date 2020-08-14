@@ -34,11 +34,10 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 
 	const color: 'brown' | 'green' | 'grey' = isGood ? 'green' : isBad ? 'brown' : 'grey';
 	const iconName = isGood ? 'check circle' : 'minus circle';
+	const CouncilEmoji = () => <span aria-label="council member" className='councilMember' role="img">👑</span>;
 	const infoElem = <span>
 		<Icon name={iconName} color={color} />
-		{flags?.isCouncil && (
-			<span className='councilMember'>👑</span>
-		)}
+		{flags?.isCouncil && <CouncilEmoji/>}
 	</span>;
 
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
@@ -51,7 +50,7 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 		{identity?.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
 		{identity?.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
 		{identity?.web && <li><span className='desc'>web:</span>{identity.web}</li>}
-		{flags?.isCouncil && <li><span className='desc'>Council member</span>👑</li>}
+		{flags?.isCouncil && <li><span className='desc'>Council member</span><CouncilEmoji/></li>}
 	</StyledPopup>;
 
 	return <div className={className}>
