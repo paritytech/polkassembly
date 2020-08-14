@@ -152,7 +152,7 @@ export default styled(Address)`
 	}
 
 	.identicon {
-		margin-right: 0.8rem;
+		margin-right: 0.25rem;
 	}
 
 	.identityName{

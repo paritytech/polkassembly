@@ -34,11 +34,12 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 
 	const color: 'brown' | 'green' | 'grey' = isGood ? 'green' : isBad ? 'brown' : 'grey';
 	const iconName = isGood ? 'check circle' : 'minus circle';
-	let infoElem = <Icon name={iconName} color={color} />;
-
-	if (flags?.isCouncil) {
-		infoElem = <span><Icon name={iconName} color={color} /><span role='img' aria-label='council member'>👑</span></span>;
-	}
+	const infoElem = <span>
+		<Icon name={iconName} color={color} />
+		{flags?.isCouncil && (
+			<span className='councilMember'>👑</span>
+		)}
+	</span>;
 
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
 
@@ -50,7 +51,7 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 		{identity?.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
 		{identity?.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
 		{identity?.web && <li><span className='desc'>web:</span>{identity.web}</li>}
-		{flags?.isCouncil && <li><span className='desc'>Council Member</span></li>}
+		{flags?.isCouncil && <li><span className='desc'>Council member</span>👑</li>}
 	</StyledPopup>;
 
 	return <div className={className}>
@@ -65,10 +66,16 @@ const IdentityBadge = ({ className, identity, flags }: {className?: string, iden
 
 export default styled(IdentityBadge)`
 	display: inline;
+
 	i.green.circle.icon {
 		color: green_primary !important;
 	}
+
 	i.grey.circle.icon {
 		color: grey_primary !important;
+	}
+
+	.councilMember {
+		margin-right: 0.25rem;
 	}
 `;
