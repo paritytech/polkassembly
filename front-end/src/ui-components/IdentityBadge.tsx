@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { DeriveAccountRegistration } from '@polkadot/api-derive/types';
+import { DeriveAccountFlags, DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import styled from '@xstyled/styled-components';
 import React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
@@ -27,14 +27,19 @@ li {
 }
 `;
 
-const IdentityBadge = ({ className, identity }: {className?: string, identity: DeriveAccountRegistration}) => {
+const IdentityBadge = ({ className, identity, flags }: {className?: string, identity: DeriveAccountRegistration, flags?: DeriveAccountFlags}) => {
 	const judgements = identity.judgements.filter(([, judgement]): boolean => !judgement.isFeePaid);
 	const isGood = judgements.some(([, judgement]): boolean => judgement.isKnownGood || judgement.isReasonable);
 	const isBad = judgements.some(([, judgement]): boolean => judgement.isErroneous || judgement.isLowQuality);
 
 	const color: 'brown' | 'green' | 'grey' = isGood ? 'green' : isBad ? 'brown' : 'grey';
 	const iconName = isGood ? 'check circle' : 'minus circle';
-	const infoElem = <Icon name={iconName} color={color} />;
+	const CouncilEmoji = () => <span aria-label="council member" className='councilMember' role="img">👑</span>;
+	const infoElem = <span>
+		<Icon name={iconName} color={color} />
+		{flags?.isCouncil && <CouncilEmoji/>}
+	</span>;
+
 	const displayJudgements = JSON.stringify(judgements.map(([,jud]) => jud.toString()));
 
 	const popupContent = <StyledPopup>
@@ -45,6 +50,7 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 		{identity?.riot && <li><span className='desc'>riot:</span>{identity.riot}</li>}
 		{identity?.twitter && <li><span className='desc'>twitter:</span>{identity.twitter}</li>}
 		{identity?.web && <li><span className='desc'>web:</span>{identity.web}</li>}
+		{flags?.isCouncil && <li><span className='desc'>Council member</span><CouncilEmoji/></li>}
 	</StyledPopup>;
 
 	return <div className={className}>
@@ -59,10 +65,16 @@ const IdentityBadge = ({ className, identity }: {className?: string, identity: D
 
 export default styled(IdentityBadge)`
 	display: inline;
+
 	i.green.circle.icon {
 		color: green_primary !important;
 	}
+
 	i.grey.circle.icon {
 		color: grey_primary !important;
+	}
+
+	.councilMember {
+		margin-right: 0.25rem;
 	}
 `;
