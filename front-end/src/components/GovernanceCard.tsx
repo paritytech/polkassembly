@@ -3,9 +3,12 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Icon, Responsive, Segment } from 'semantic-ui-react';
+import BlockCountdown from 'src/components/BlockCountdown';
+import { UserDetailsContext } from 'src/context/UserDetailsContext';
 import { noTitle } from 'src/global/noTitle';
+import useCurrentBlock from 'src/hooks/useCurrentBlock';
 
 import OnchainCreationLabel from '../ui-components/OnchainCreationLabel';
 import StatusTag from '../ui-components/StatusTag';
@@ -15,6 +18,7 @@ interface GovernanceProps {
 	className?: string
 	comments?: string
 	created_at?: Date
+	end?: number
 	method?: string
 	onchainId?: string | number | null
 	status?: string | null
@@ -27,6 +31,7 @@ const GovernanceCard = function ({
 	address,
 	className,
 	comments,
+	end = 0,
 	method,
 	onchainId,
 	status,
@@ -34,10 +39,14 @@ const GovernanceCard = function ({
 	title,
 	topic
 }:GovernanceProps) {
+	const currentUser = useContext(UserDetailsContext);
 	const mainTitle = <h4 className={tipReason ? 'tipTitle' : ''}><div>{method || tipReason ||  title || noTitle}</div></h4>;
 	const subTitle = title && tipReason && method && <h5>{title}</h5>;
+	const currentBlock = useCurrentBlock()?.toNumber() || 0;
+	const ownProposal = currentUser?.addresses?.includes(address);
+
 	return (
-		<div className={className}>
+		<div className={className + (ownProposal ? ' own-proposal' : '')}>
 			<Segment.Group horizontal>
 				{
 					!tipReason && (
@@ -70,7 +79,14 @@ const GovernanceCard = function ({
 						{subTitle}
 					</Responsive>
 					<ul>
-						<li><Icon name='comment' /> {comments} comments</li>
+						{!!end && !!currentBlock && <li><Icon name='clock'/>
+							{
+								end > currentBlock
+									? <span><BlockCountdown endBlock={end}/> remaining</span>
+									: <span>ended <BlockCountdown endBlock={end}/></span>
+							}
+						</li>}
+						<li><Icon name='comment' />{comments} comments</li>
 					</ul>
 				</Segment>
 			</Segment.Group>
@@ -84,6 +100,13 @@ export default styled(GovernanceCard)`
 	border-radius: 3px;
 	box-shadow: box_shadow_card;
 	transition: box-shadow .1s ease-in-out;
+
+	&.own-proposal {
+		border-left-width: 4px;
+		border-left-style: solid;
+		border-left-color: pink_primary;
+		padding: calc(2rem - 4px);
+	}
 
 	&:hover {
 		box-shadow: box_shadow_card_hover;
@@ -134,7 +157,7 @@ export default styled(GovernanceCard)`
 
 	h4.tipTitle {
 		max-width: 55%;
-		
+
 		& > div {
 			white-space: nowrap;
 			overflow: hidden;
@@ -190,7 +213,7 @@ export default styled(GovernanceCard)`
 			padding: 0.2rem 0.4rem !important;
 			font-size: 1rem!important;
 		}
-		
+
 		.title-wrapper {
 			max-width: calc(100% - 9rem);
 		}

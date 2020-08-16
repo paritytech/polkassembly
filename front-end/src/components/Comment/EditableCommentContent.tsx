@@ -27,6 +27,7 @@ import {
 	TipPostAndCommentsQueryVariables,
 	TreasuryProposalPostAndCommentsQuery,
 	TreasuryProposalPostAndCommentsQueryVariables,
+	useDeleteCommentMutation,
 	useEditCommentMutation } from '../../generated/graphql';
 import { NotificationStatus } from '../../types';
 import Button from '../../ui-components/Button';
@@ -109,12 +110,45 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 		});
 	};
 	const onContentChange = (data: Array<string>) => {setNewContent(data[0]); return data[0].length ? data[0] : null;};
-	const [editCommentMutation, { error }] = useEditCommentMutation({
+	const [editCommentMutation, { error, loading }] = useEditCommentMutation({
 		variables: {
 			content: newContent,
 			id: commentId
 		}
 	});
+
+	const [deleteCommentMutation] = useDeleteCommentMutation({
+		variables: {
+			id: commentId
+		}
+	});
+
+	const deleteComment = () => {
+		deleteCommentMutation( {
+			variables: {
+				id: commentId
+			} }
+		)
+			.then(({ data }) => {
+				if (data?.delete_comments?.affected_rows){
+					refetch();
+					queueNotification({
+						header: 'Success!',
+						message: 'Your comment was deleted.',
+						status: NotificationStatus.SUCCESS
+					});
+				}
+			})
+			.catch((e) => {
+				console.error('Error deleting comment: ', e);
+
+				queueNotification({
+					header: 'Error!',
+					message: e.message,
+					status: NotificationStatus.ERROR
+				});
+			});
+	};
 
 	return (
 		<>
@@ -144,7 +178,16 @@ const EditableCommentContent = ({ authorId, className, content, commentId, refet
 							<div className='actions-bar'>
 								<CommentReactionBar className='reactions' commentId={commentId} />
 								{id && <div className='vl'/>}
-								{id === authorId && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
+								{id === authorId &&
+									<Button className={'social'} disabled={loading} onClick={toggleEdit}>
+										{
+											loading
+												? <><Icon name='spinner' className='icon'/>Editing</>
+												: <><Icon name='edit' className='icon'/>Edit</>
+										}
+									</Button>
+								}
+								{id === authorId && <Button className={'social'} onClick={deleteComment}><Icon name='delete' className='icon'/>Delete</Button>}
 								{id && !isEditing && <ReportButton type='comment' contentId={commentId} />}
 								{<Button className={'social'} onClick={copyLink}><Icon name='chain' className='icon'/>Copy link</Button>}
 							</div>

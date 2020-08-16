@@ -16,7 +16,7 @@ const TreasuryProposalContainer = ({ className } : {className?: string}) => {
 			<h1>On-chain treasury proposals</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<TreasuryContainer limit={15} />
+					<TreasuryContainer limit={25} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox

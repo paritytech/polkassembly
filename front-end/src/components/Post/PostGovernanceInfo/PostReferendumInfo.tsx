@@ -11,6 +11,7 @@ import BlocksToTime from 'src/components/BlocksToTime';
 import { OnchainLinkReferendumFragment } from '../../../generated/graphql';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
+import ExternalLinks from '../../ExternalLinks';
 
 interface Props{
 	onchainLink: OnchainLinkReferendumFragment
@@ -93,6 +94,9 @@ const PostReferendumInfo = ({ onchainLink }: Props) => {
 					<h6>Description</h6>
 					{metaDescription}
 				</Grid.Column>}
+				<Grid.Column mobile={16} tablet={16} computer={16}>
+					<ExternalLinks isReferendum={true} onchainId={onchainLink.onchain_referendum_id} />
+				</Grid.Column>
 			</Grid>
 		</OnchainInfoWrapper>
 	);

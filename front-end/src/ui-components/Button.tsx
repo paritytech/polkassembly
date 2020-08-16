@@ -11,7 +11,7 @@ const Button = (props : ButtonProps) => {
 };
 
 export default styled(Button)`
-	&.ui.button, &.active, &:active  {   
+	&.ui.button, &.active, &:active  {
 		font-family: font_default;
 		font-size: md;
 		font-weight: 500;

@@ -132,6 +132,12 @@
         author_id:
           _eq: X-Hasura-User-Id
       check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
   event_triggers:
   - name: comment_create
     definition:

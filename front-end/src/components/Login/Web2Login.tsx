@@ -41,7 +41,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			}).then(({ data }) => {
 				if (data && data.login && data.login.token) {
 					handleTokenChange(data.login.token, currentUser);
-					history.push('/');
+					history.goBack();
 				}
 			}).catch((e) => {
 				console.error('Login error', e);
@@ -84,7 +84,7 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 					{errors.password && <span className={'errorText'}>{messages.VALIDATION_PASSWORD_ERROR}</span>}
 
 					<div className='text-muted'>
-						<Link to='/request-reset-password'>Forgot your password?</Link>
+						<Link to='/request-reset-password'>Forgot your password or username?</Link>
 					</div>
 				</Form.Field>
 			</Form.Group>

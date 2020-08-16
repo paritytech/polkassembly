@@ -16,7 +16,7 @@ const OnchainTipContainer = ({ className } : {className?: string}) => {
 			<h1>On-chain tip</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<TipContainer limit={15} />
+					<TipContainer limit={25} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
