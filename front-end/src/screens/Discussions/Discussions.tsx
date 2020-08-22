@@ -2,16 +2,20 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DiscussionsListing from '../../components/Listings/DiscussionsListing';
 import { useLatestDiscussionPostsQuery } from '../../generated/graphql';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
+import LoadMore from '../../ui-components/LoadMore';
+
+const LIMIT = 20;
 
 const DiscussionsContainer = () => {
+	const [page, setPage] = useState(1);
 
-	const { data, error, refetch } = useLatestDiscussionPostsQuery({ variables: { limit: 20 } });
+	const { data, error, loading, refetch } = useLatestDiscussionPostsQuery({ variables: { limit: LIMIT * page } });
 
 	useEffect(() => {
 		refetch();
@@ -21,7 +25,16 @@ const DiscussionsContainer = () => {
 		return <FilteredError text={error.message}/>;
 	}
 
-	if (data) return <DiscussionsListing data={data} />;
+	const loadMore = () => {
+		setPage(page + 1);
+	};
+
+	if (data) {
+		return <>
+			<DiscussionsListing data={data} />
+			{(loading || (data.posts.length === LIMIT * page)) && <LoadMore onClick={loadMore} loading={loading} />}
+		</>;
+	}
 
 	return <Loader/>;
 
