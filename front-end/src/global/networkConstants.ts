@@ -24,7 +24,7 @@ export const chainProperties: ChainPropType = {
 	[network.POLKADOT]: {
 		blockTime: 6000,
 		ss58Format: 0,
-		tokenDecimals: 12,
+		tokenDecimals: 10,
 		tokenSymbol: tokenSymbol.DOT
 	}
 };
