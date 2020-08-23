@@ -4,7 +4,7 @@
 
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
 	CommentFieldsFragment,
@@ -43,6 +43,16 @@ interface Props{
 }
 
 const Comments = ({ className, comments, refetch }: Props) => {
+	useEffect(() => {
+		const users: string[] = [];
+		comments.forEach(c => {
+			if (c.author?.username && !users.includes(c.author?.username)) {
+				users.push(c.author?.username);
+			}
+		});
+		global.window.localStorage.setItem('users', users.join(','));
+	}, [comments]);
+
 	return (
 		<div className={className}>
 			{comments.map((comment:CommentFieldsFragment) =>
