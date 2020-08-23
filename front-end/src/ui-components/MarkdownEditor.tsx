@@ -158,7 +158,7 @@ interface Props {
 	height?: number
 	name?: string
 	onChange:  ((value: string) => void) | undefined
-    value: string
+	value: string
 }
 
 export function MarkdownEditor(props: Props): React.ReactElement {
@@ -173,7 +173,7 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 
 				const suggestions: Suggestion[] = users.map(user => ({
 					preview: user,
-					value: `**@${user}**`
+					value: `@${user}`
 				})).filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
 
 				console.log(suggestions);
