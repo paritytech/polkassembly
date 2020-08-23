@@ -3,20 +3,22 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import NothingFoundCard from 'src/ui-components/NothingFoundCard';
 
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestDemocracyProposalPostsQuery } from '../../generated/graphql';
 import GovernanceCard from '../GovernanceCard';
 
 interface Props {
   className?: string
   data: LatestDemocracyProposalPostsQuery
+  showOwnProposals?: boolean
 }
 
-const Proposals = ({ className, data }: Props) => {
-
+const Proposals = ({ className, data, showOwnProposals }: Props) => {
+	const currentUser = useContext(UserDetailsContext);
 	const noPost = !data.posts || !data.posts.length;
 	const atLeastOneCurrentProposal = data.posts.some((post) => {
 		if(post.onchain_link?.onchain_proposal.length){
@@ -31,7 +33,7 @@ const Proposals = ({ className, data }: Props) => {
 
 	return (
 		<ul className={`${className} proposals__list`}>
-			{data.posts.map(
+			{data.posts.filter(post => showOwnProposals && currentUser && post.onchain_link ? currentUser?.addresses?.includes(post.onchain_link.proposer_address) : true).map(
 				(post) => {
 					const onchainId = post.onchain_link?.onchain_proposal_id;
 
@@ -61,7 +63,7 @@ const Proposals = ({ className, data }: Props) => {
 export default styled(Proposals)`
 	margin-block-start: 0;
 	margin-block-end: 0;
-	
+
 	li {
 		list-style-type: none;
 	}
