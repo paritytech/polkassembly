@@ -28,9 +28,9 @@
 	},
 	"homepage": "http://polkassembly.io/",
 	"dependencies": {
-		"@polkadot/api": "^1.28.1",
-		"@polkadot/util": "^3.1.1",
-		"@polkadot/util-crypto": "^3.1.1",
+		"@polkadot/api": "^1.29.1",
+		"@polkadot/util": "^3.2.1",
+		"@polkadot/util-crypto": "^3.2.1",
 		"@sendgrid/mail": "^6.5.5",
 		"apollo-server": "^2.14.2",
 		"apollo-server-express": "^2.14.2",
@@ -61,7 +61,7 @@
 		"validator": "^12.2.0"
 	},
 	"devDependencies": {
-		"@polkadot/types": "^1.28.1",
+		"@polkadot/types": "^1.29.1",
 		"@types/chai": "^4.2.11",
 		"@types/cookie-parser": "^1.4.2",
 		"@types/dotenv": "^8.2.0",
