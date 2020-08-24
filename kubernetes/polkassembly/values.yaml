@@ -171,7 +171,7 @@ healthMonitor:
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "wss://kusama-rpc.polkadot.io"
+    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944"
 
   image:
     repository: paritytech/polkassembly-health-monitor
