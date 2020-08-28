@@ -167,18 +167,15 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 
 	const loadSuggestions = async (text: string) => {
 		return new Promise<Suggestion[]>((accept) => {
-			setTimeout(() => {
-				const savedUsers = global.window.localStorage.getItem('users');
-				const users: string[] = savedUsers ? savedUsers.split(',') : [];
+			const savedUsers = global.window.localStorage.getItem('users');
+			const users: string[] = savedUsers ? savedUsers.split(',') : [];
 
-				const suggestions: Suggestion[] = users.map(user => ({
-					preview: user,
-					value: `@${user}`
-				})).filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
+			const suggestions: Suggestion[] = users.map(user => ({
+				preview: user,
+				value: `@${user}`
+			})).filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
 
-				console.log(suggestions);
-				accept(suggestions);
-			}, 1000);
+			accept(suggestions);
 		});
 	};
 

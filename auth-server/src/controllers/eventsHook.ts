@@ -19,6 +19,10 @@ import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserFromUsername from '../utils/getUserFromUsername';
 import messages from '../utils/messages';
 
+const onlyUnique = (value: string, index: number, self: string[]): boolean => {
+	return self.indexOf(value) === index;
+};
+
 const sendPostCommentSubscription = async (data: CommentCreationHookDataType): Promise<MessageType> => {
 	const { post_id, author_id } = data;
 
@@ -60,7 +64,7 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 
 	const mentions: string[] = data.content.split(' ').filter(w => w.startsWith('@'));
 
-	mentions.forEach(mention => {
+	mentions.filter(onlyUnique).forEach(mention => {
 		const username = mention.substring(1);
 
 		getUserFromUsername(username)
