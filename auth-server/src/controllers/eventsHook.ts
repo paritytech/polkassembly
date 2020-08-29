@@ -10,6 +10,7 @@ import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
 import { sendCommentMentionMail, sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
 import { CommentCreationHookDataType, HookResponseMessageType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
+import getMentions from '../utils/getMentions';
 import getPostCommentLink from '../utils/getPostCommentLink';
 import getPostId from '../utils/getPostId';
 import getPostLink from '../utils/getPostLink';
@@ -18,10 +19,6 @@ import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserFromUsername from '../utils/getUserFromUsername';
 import messages from '../utils/messages';
-
-const onlyUnique = (value: string, index: number, self: string[]): boolean => {
-	return self.indexOf(value) === index;
-};
 
 const sendPostCommentSubscription = async (data: CommentCreationHookDataType): Promise<MessageType> => {
 	const { post_id, author_id } = data;
@@ -62,12 +59,10 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 		});
 	}
 
-	const mentions: string[] = data.content.split(' ').filter(w => w.startsWith('@'));
+	const mentions = getMentions(data.content);
 
-	mentions.filter(onlyUnique).forEach(mention => {
-		const username = mention.substring(1);
-
-		getUserFromUsername(username)
+	mentions.forEach(mention => {
+		getUserFromUsername(mention)
 			.then((user) => {
 				if (!user) {
 					return;
