@@ -75,7 +75,7 @@ interface Props {
 }
 
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTipProposal = false, isTreasuryProposal = false, refetch }: Props ) => {
-	const post =  data && data.posts && data.posts[0];
+	const post = data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
 	const [isEditing, setIsEditing] = useState(false);
 	const toggleEdit = () => setIsEditing(!isEditing);
@@ -92,7 +92,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
 
-	if (isReferendum){
+	if (post && isReferendum) {
 		referendumPost = post as ReferendumPostFragment;
 		definedOnchainLink = referendumPost.onchain_link as OnchainLinkReferendumFragment;
 		onchainId = definedOnchainLink.onchain_referendum_id;
@@ -100,7 +100,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		metaTitle = `Referendum #${onchainId}`;
 	}
 
-	if (isProposal) {
+	if (post && isProposal) {
 		proposalPost = post as ProposalPostFragment;
 		definedOnchainLink = proposalPost.onchain_link as OnchainLinkProposalFragment;
 		onchainId = definedOnchainLink.onchain_proposal_id;
@@ -108,7 +108,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		metaTitle = `Proposal #${onchainId}`;
 	}
 
-	if (isMotion) {
+	if (post && isMotion) {
 		motionPost = post as MotionPostFragment;
 		definedOnchainLink = motionPost.onchain_link as OnchainLinkMotionFragment;
 		onchainId = definedOnchainLink.onchain_motion_id;
@@ -116,7 +116,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		metaTitle = `Motion #${onchainId}`;
 	}
 
-	if (isTreasuryProposal) {
+	if (post && isTreasuryProposal) {
 		treasuryPost = post as TreasuryProposalPostFragment;
 		definedOnchainLink = treasuryPost.onchain_link as OnchainLinkTreasuryProposalFragment;
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
@@ -124,7 +124,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		metaTitle = `Treasury #${onchainId}`;
 	}
 
-	if (isTipProposal) {
+	if (post && isTipProposal) {
 		tipPost = post as TipPostFragment;
 		definedOnchainLink = tipPost.onchain_link as OnchainLinkTipFragment;
 		onchainId = definedOnchainLink.onchain_tip_id;
@@ -143,6 +143,21 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 			};
 		});
 	}, [post, setMetaContextState, metaTitle]);
+
+	useEffect(() => {
+		const users: string[] = [];
+
+		if (post?.author?.username) {
+			users.push(post?.author?.username);
+		}
+
+		post?.comments.forEach(c => {
+			if (c.author?.username && !users.includes(c.author?.username)) {
+				users.push(c.author?.username);
+			}
+		});
+		global.window.localStorage.setItem('users', users.join(','));
+	}, [post]);
 
 	const isDiscussion = (post: TipPostFragment | TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
 		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal && !isTipProposal) {

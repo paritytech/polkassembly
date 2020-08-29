@@ -22,9 +22,9 @@ const ContentForm = ({ className, errorContent, height, onChange, value }: Props
 
 	return (
 		<div className={className}>
-			<Form.Group className={errorContent? 'error':''}>
+			<Form.Group className={errorContent? 'error': ''}>
 				<MarkdownEditor
-					className={ errorContent? 'error':''}
+					className={ errorContent? 'error': ''}
 					height={height}
 					name={'content'}
 					onChange={onChange}
