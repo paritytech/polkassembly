@@ -3838,9 +3838,15 @@ export type PublicUser = {
 
 export type Query = {
   __typename?: 'Query';
+  profile?: Maybe<User>;
   subscription?: Maybe<Subscription>;
   token?: Maybe<Token>;
   user?: Maybe<User>;
+};
+
+
+export type QueryProfileArgs = {
+  username: Scalars['String'];
 };
 
 
@@ -10848,6 +10854,7 @@ export type Query_Root = {
   preimageStatusesConnection: PreimageStatusConnection;
   preimages: Array<Maybe<Preimage>>;
   preimagesConnection: PreimageConnection;
+  profile?: Maybe<User>;
   proposal?: Maybe<Proposal>;
   proposalStatus?: Maybe<ProposalStatus>;
   proposalStatuses: Array<Maybe<ProposalStatus>>;
@@ -11573,6 +11580,12 @@ export type Query_RootPreimagesConnectionArgs = {
   orderBy?: Maybe<PreimageOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<PreimageWhereInput>;
+};
+
+
+/** query root */
+export type Query_RootProfileArgs = {
+  username: Scalars['String'];
 };
 
 
@@ -14036,6 +14049,19 @@ export type UndoEmailChangeMutation = (
   & { undoEmailChange?: Maybe<(
     { __typename?: 'UndoEmailChangeResponse' }
     & Pick<UndoEmailChangeResponse, 'message' | 'token' | 'email'>
+  )> }
+);
+
+export type ProfileQueryVariables = {
+  username: Scalars['String'];
+};
+
+
+export type ProfileQuery = (
+  { __typename?: 'query_root' }
+  & { profile?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username' | 'kusama_default_address' | 'polkadot_default_address'>
   )> }
 );
 
@@ -16932,6 +16958,42 @@ export function useUndoEmailChangeMutation(baseOptions?: ApolloReactHooks.Mutati
 export type UndoEmailChangeMutationHookResult = ReturnType<typeof useUndoEmailChangeMutation>;
 export type UndoEmailChangeMutationResult = ApolloReactCommon.MutationResult<UndoEmailChangeMutation>;
 export type UndoEmailChangeMutationOptions = ApolloReactCommon.BaseMutationOptions<UndoEmailChangeMutation, UndoEmailChangeMutationVariables>;
+export const ProfileDocument = gql`
+    query PROFILE($username: String!) {
+  profile(username: $username) {
+    id
+    username
+    kusama_default_address
+    polkadot_default_address
+  }
+}
+    `;
+
+/**
+ * __useProfileQuery__
+ *
+ * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, baseOptions);
+      }
+export function useProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, baseOptions);
+        }
+export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
+export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
+export type ProfileQueryResult = ApolloReactCommon.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($token: String!) {
   verifyEmail(token: $token) {
