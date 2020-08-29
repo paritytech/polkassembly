@@ -288,3 +288,7 @@ export interface ContextUserId {
     ctx: Context;
     userId: number;
 }
+
+export interface ProfileArgs {
+    username: string;
+}
