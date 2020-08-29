@@ -172,7 +172,7 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 
 			const suggestions: Suggestion[] = users.map(user => ({
 				preview: user,
-				value: `@${user}`
+				value: `[@${user}](${global.window.location.origin}/user/${user})`
 			})).filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
 
 			accept(suggestions);
