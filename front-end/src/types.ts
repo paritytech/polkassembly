@@ -146,7 +146,7 @@ export enum Vote {
 	NAY = 'NAY'
 }
 
-export interface OffchainVote {
+export interface CouncilVote {
 	address: string;
 	vote: Vote;
 }
