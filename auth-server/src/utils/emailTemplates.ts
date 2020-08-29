@@ -67,7 +67,7 @@ export const postSubscriptionMailTemplate = container(`
         Hi <%= username %>!<br/><br/>
 
         <br />
-        <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
+        <a href="<%= domain %>/user/<%= authorUsername %>"><%= authorUsername %></a> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
         comment: <%- content %><br /><br />
 
@@ -82,7 +82,7 @@ export const commentMentionEmailTemplate = container(`
         Hi <%= username %>!<br/><br/>
 
         <br />
-        <%= authorUsername %> has mentioned you in comment: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
+        <a href="<%= domain %>/user/<%= authorUsername %>"><%= authorUsername %></a> has mentioned you in comment: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
         comment: <%- content %><br /><br />
 
