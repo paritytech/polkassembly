@@ -8,7 +8,7 @@ import Address from '../model/Address';
 import Notification from '../model/Notification';
 import PostSubscription from '../model/PostSubscription';
 import User from '../model/User';
-import { sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
+import { sendCommentMentionMail, sendNewProposalCreatedEmail, sendOwnProposalCreatedEmail, sendPostSubscriptionMail } from '../services/email';
 import { CommentCreationHookDataType, HookResponseMessageType, MessageType, OnchainLinkType, PostTypeEnum } from '../types';
 import getPostCommentLink from '../utils/getPostCommentLink';
 import getPostId from '../utils/getPostId';
@@ -16,7 +16,12 @@ import getPostLink from '../utils/getPostLink';
 import getPostType from '../utils/getPostType';
 import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
+import getUserFromUsername from '../utils/getUserFromUsername';
 import messages from '../utils/messages';
+
+const onlyUnique = (value: string, index: number, self: string[]): boolean => {
+	return self.indexOf(value) === index;
+};
 
 const sendPostCommentSubscription = async (data: CommentCreationHookDataType): Promise<MessageType> => {
 	const { post_id, author_id } = data;
@@ -56,6 +61,23 @@ const sendPostCommentSubscription = async (data: CommentCreationHookDataType): P
 				.catch((error) => console.error(error));
 		});
 	}
+
+	const mentions: string[] = data.content.split(' ').filter(w => w.startsWith('@'));
+
+	mentions.filter(onlyUnique).forEach(mention => {
+		const username = mention.substring(1);
+
+		getUserFromUsername(username)
+			.then((user) => {
+				if (!user) {
+					return;
+				}
+
+				const url = getPostCommentLink(PostTypeEnum.POST, data);
+				sendCommentMentionMail(user, author, data, url);
+			})
+			.catch((error) => console.error(error));
+	});
 
 	return { message: messages.EVENT_POST_SUBSCRIPTION_MAIL_SENT };
 };

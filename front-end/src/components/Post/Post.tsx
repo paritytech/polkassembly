@@ -144,6 +144,21 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		});
 	}, [post, setMetaContextState, metaTitle]);
 
+	useEffect(() => {
+		const users: string[] = [];
+
+		if (post?.author?.username) {
+			users.push(post?.author?.username);
+		}
+
+		post?.comments.forEach(c => {
+			if (c.author?.username && !users.includes(c.author?.username)) {
+				users.push(c.author?.username);
+			}
+		});
+		global.window.localStorage.setItem('users', users.join(','));
+	}, [post]);
+
 	const isDiscussion = (post: TipPostFragment | TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
 		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal && !isTipProposal) {
 			return (post as DiscussionPostFragment) !== undefined;

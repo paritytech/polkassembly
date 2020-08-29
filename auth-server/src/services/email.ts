@@ -10,6 +10,7 @@ import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
 import { CommentCreationHookDataType, PostType, PostTypeEnum } from '../types';
 import {
+	commentMentionEmailTemplate,
 	newProposalCreatedEmailTemplate,
 	ownProposalCreatedEmailTemplate,
 	postSubscriptionMailTemplate,
@@ -93,6 +94,37 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 		from: FROM,
 		html: text,
 		subject: `Update on post #${comment.post_id} you are subscribed to`,
+		text,
+		to: user.email
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Post subscription email not sent', e));
+};
+
+export const sendCommentMentionMail = (user: User, author: User, comment: CommentCreationHookDataType, postUrl: string): void => {
+	if (!apiKey) {
+		console.warn('Comment Mention Email not sent due to missing API key');
+		return;
+	}
+
+	if (!user.email_verified) {
+		return;
+	}
+
+	const md = new MarkdownIt();
+	const text = ejs.render(commentMentionEmailTemplate, {
+		authorUsername: author.username,
+		content: md.render(comment.content),
+		domain: DOMAIN,
+		postUrl,
+		username: user.username || ''
+	});
+
+	const msg = {
+		from: FROM,
+		html: text,
+		subject: `You are mentioned in post #${comment.post_id} comment`,
 		text,
 		to: user.email
 	};
