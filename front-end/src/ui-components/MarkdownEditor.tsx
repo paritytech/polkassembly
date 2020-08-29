@@ -6,13 +6,13 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 
 import styled from '@xstyled/styled-components';
 import React from 'react';
-import ReactMde  from 'react-mde';
+import ReactMde, { Suggestion } from 'react-mde';
 
 import Markdown from './Markdown';
 
 const StyledTextArea = styled.div`
 
-    textarea {
+	textarea {
 		border-radius: 0rem;
 		border: none!important;
 		color: black_text !important;
@@ -60,7 +60,7 @@ const StyledTextArea = styled.div`
 			}
 		}
 	}
-	
+
 	.react-mde  {
 		border-color: grey_light;
 		font-size: 1.4rem;
@@ -158,15 +158,29 @@ interface Props {
 	height?: number
 	name?: string
 	onChange:  ((value: string) => void) | undefined
-    value: string
+	value: string
 }
 
 export function MarkdownEditor(props: Props): React.ReactElement {
 
 	const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>('write');
 
+	const loadSuggestions = async (text: string) => {
+		return new Promise<Suggestion[]>((accept) => {
+			const savedUsers = global.window.localStorage.getItem('users');
+			const users: string[] = savedUsers ? savedUsers.split(',') : [];
+
+			const suggestions: Suggestion[] = users.map(user => ({
+				preview: user,
+				value: `@${user}`
+			})).filter(i => i.preview.toLowerCase().includes(text.toLowerCase()));
+
+			accept(suggestions);
+		});
+	};
+
 	return (
-		<StyledTextArea className="container">
+		<StyledTextArea className='container'>
 			<ReactMde
 				generateMarkdownPreview={markdown => Promise.resolve(<Markdown isPreview={true} md={markdown} />) }
 				minEditorHeight={props.height}
@@ -175,6 +189,7 @@ export function MarkdownEditor(props: Props): React.ReactElement {
 				onChange={props.onChange}
 				onTabChange={setSelectedTab}
 				selectedTab={selectedTab}
+				loadSuggestions={loadSuggestions}
 				toolbarCommands={[['bold', 'header', 'link', 'quote', 'strikethrough', 'code', 'image', 'ordered-list', 'unordered-list']]}
 				{...props}
 			/>
