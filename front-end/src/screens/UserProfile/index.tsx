@@ -28,7 +28,6 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 	const router = useRouter();
 
 	const { api, isApiReady } = useContext(ApiPromiseContext);
-	const [mainDisplay, setMainDisplay] = useState<string>(router.query.username);
 	const [identity, setIdentity] = useState<DeriveAccountRegistration | null>(null);
 	const [flags, setFlags] = useState<DeriveAccountFlags | undefined>(undefined);
 	const { data, error } = useProfileQuery({ variables: { username: router.query.username } });
@@ -49,15 +48,6 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 
 		api.derive.accounts.info(address, (info: DeriveAccountInfo) => {
 			setIdentity(info.identity);
-
-			if (info.identity.displayParent && info.identity.display){
-				// when an identity is a sub identity `displayParent` is set
-				setMainDisplay(info.identity.displayParent);
-			} else {
-				// There should not be a `displayParent` without a `display`
-				// but we can't be too sure.
-				setMainDisplay(info.identity.displayParent || info.identity.display || info.nickname || '');
-			}
 		})
 			.then(unsub => { unsubscribe = unsub; })
 			.catch(e => console.error(e));
@@ -100,11 +90,10 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
 				<div className='info-box'>
 					<h2>{router.query.username}</h2>
-					{address && <>
+					{address ? <>
 						<div className="address-container">
 							<AddressComponent address={address}/>
 						</div>
-						<h3>{mainDisplay}</h3>
 						<Balance address={address} className='balance'/>
 						{identity && <Table basic='very' celled collapsing>
 							<Table.Body>
@@ -142,7 +131,7 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 								</Table.Row>}
 							</Table.Body>
 						</Table>}
-					</>}
+					</> : <p>No address attached to this account</p>}
 				</div>
 			</Grid.Column>
 		</Grid>
