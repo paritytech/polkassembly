@@ -29,6 +29,7 @@ import setDefaultAddress from './mutation/setDefaultAddress';
 import signupMutation from './mutation/signup';
 import undoEmailChange from './mutation/undoEmailChange';
 import verifyEmail from './mutation/verifyEmail';
+import profileQuery from './query/profile';
 import subscription from './query/subscription';
 import tokenQuery from './query/token';
 import userQuery from './query/user';
@@ -62,6 +63,7 @@ export default gql`
 	${userType}
 
 	type Query {
+		${profileQuery}
 		${subscription}
 		${tokenQuery}
 		${userQuery}
