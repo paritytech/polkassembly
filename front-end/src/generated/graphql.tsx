@@ -13144,6 +13144,35 @@ export type LatestDiscussionPostsQuery = (
   )> }
 );
 
+export type DiscussionPostsChronologicalQueryVariables = {
+  limit?: Scalars['Int'];
+};
+
+
+export type DiscussionPostsChronologicalQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), last_update?: Maybe<(
+      { __typename?: 'post_last_update' }
+      & Pick<Post_Last_Update, 'last_update'>
+    )> }
+  )> }
+);
+
 export type OnchainLinkMotionPreimageFragment = (
   { __typename?: 'Preimage' }
   & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -15636,6 +15665,57 @@ export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks
 export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
 export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
+export const DiscussionPostsChronologicalDocument = gql`
+    query DiscussionPostsChronological($limit: Int! = 20) {
+  posts(order_by: {id: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    last_update {
+      last_update
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useDiscussionPostsChronologicalQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostsChronologicalQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostsChronologicalQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostsChronologicalQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useDiscussionPostsChronologicalQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostsChronologicalQuery, DiscussionPostsChronologicalQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostsChronologicalQuery, DiscussionPostsChronologicalQueryVariables>(DiscussionPostsChronologicalDocument, baseOptions);
+      }
+export function useDiscussionPostsChronologicalLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostsChronologicalQuery, DiscussionPostsChronologicalQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostsChronologicalQuery, DiscussionPostsChronologicalQueryVariables>(DiscussionPostsChronologicalDocument, baseOptions);
+        }
+export type DiscussionPostsChronologicalQueryHookResult = ReturnType<typeof useDiscussionPostsChronologicalQuery>;
+export type DiscussionPostsChronologicalLazyQueryHookResult = ReturnType<typeof useDiscussionPostsChronologicalLazyQuery>;
+export type DiscussionPostsChronologicalQueryResult = ApolloReactCommon.QueryResult<DiscussionPostsChronologicalQuery, DiscussionPostsChronologicalQueryVariables>;
 export const MotionPostAndCommentsDocument = gql`
     query MotionPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {

@@ -31,3 +31,30 @@ export const QUERY_LATEST_DISCUSSIONS = gql`
     }
     ${authorFields}
 `;
+
+export const QUERY_DISCUSSIONS_CHRONOLOGICAL = gql`
+    query DiscussionPostsChronological($limit: Int! = 20) {
+        posts(order_by: {id: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+            id
+            title
+            author {
+                ...authorFields
+            }
+            created_at
+            updated_at
+            comments_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            type {
+                name
+                id
+            }
+            last_update {
+                last_update
+            }
+        }
+    }
+    ${authorFields}
+`;

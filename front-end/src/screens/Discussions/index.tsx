@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Grid } from 'semantic-ui-react';
+import { Dropdown, Grid } from 'semantic-ui-react';
 import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 import getNetwork from 'src/util/getNetwork';
 
@@ -28,6 +28,14 @@ const Discussions = ({ className } : {className?: string}) => {
 			<h1>Latest discussions</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
+					<div className='sortContainer'>
+						<Dropdown text='SORT BY' icon='sort'>
+							<Dropdown.Menu>
+								<Dropdown.Item text='Last Commented' />
+								<Dropdown.Item text='Date Added (oldest)' />
+							</Dropdown.Menu>
+						</Dropdown>
+					</div>
 					<DiscussionsContainer/>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
@@ -92,6 +100,10 @@ export default styled(Discussions)`
 				border-radius: 0.5rem;
 			}
 		}
+	}
+
+	.sortContainer {
+		margin: 2rem 0;
 	}
 
 	.mainButtonContainer {
