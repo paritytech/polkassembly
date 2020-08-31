@@ -43,6 +43,10 @@ const DiscussionsContainer = ({ sortBy }: Props) => {
 		setPage(page + 1);
 	};
 
+	if (loading) {
+		return <Loader/>;
+	}
+
 	if (data) {
 		return <>
 			<DiscussionsListing data={data} />
