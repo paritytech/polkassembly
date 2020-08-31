@@ -3,13 +3,14 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Dropdown, Grid } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, Grid } from 'semantic-ui-react';
 import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 import getNetwork from 'src/util/getNetwork';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
+import { sortOptions, sortValues } from '../../global/sortOptions';
 import Button from '../../ui-components/Button';
 import InfoBox from '../../ui-components/InfoBox';
 import DiscussionsContainer from './Discussions';
@@ -18,9 +19,14 @@ const NETWORK = getNetwork();
 
 const Discussions = ({ className } : {className?: string}) => {
 	const history = useHistory();
+	const [sortBy, setSortBy] = useState(sortValues.COMMENTED);
 	const currentUser = useContext(UserDetailsContext);
 	const handleCreatePost = () => {
 		history.push('/post/create');
+	};
+
+	const onSortChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		setSortBy(data.value as string);
 	};
 
 	return (
@@ -29,14 +35,9 @@ const Discussions = ({ className } : {className?: string}) => {
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<div className='sortContainer'>
-						<Dropdown text='SORT BY' icon='sort'>
-							<Dropdown.Menu>
-								<Dropdown.Item text='Last Commented' />
-								<Dropdown.Item text='Date Added (oldest)' />
-							</Dropdown.Menu>
-						</Dropdown>
+						<Dropdown text='SORT BY' icon='sort' onChange={onSortChange} options={sortOptions} />
 					</div>
-					<DiscussionsContainer/>
+					<DiscussionsContainer sortBy={sortBy} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id &&
