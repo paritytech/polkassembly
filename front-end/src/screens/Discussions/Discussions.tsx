@@ -19,7 +19,7 @@ interface Props {
 
 const DiscussionsContainer = ({ sortBy }: Props) => {
 	const [page, setPage] = useState(1);
-	let postsQuery: any;
+	let postsQuery: typeof useDiscussionPostsIdDescQuery | typeof useDiscussionPostsIdAscQuery | typeof useLatestDiscussionPostsQuery;
 
 	if (sortBy === sortValues.NEWEST)
 		postsQuery = useDiscussionPostsIdDescQuery;
