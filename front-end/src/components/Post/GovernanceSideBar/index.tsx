@@ -16,10 +16,11 @@ import { Form } from 'src/ui-components/Form';
 
 import ExtensionNotDetected from '../../ExtensionNotDetected';
 import EndorseTip from './EndorseTip';
+import MotionVoteInfo from './Motions/MotionVoteInfo';
+import VoteMotion from './Motions/VoteMotion';
 import ProposalDisplay from './Proposals';
 import ReferendumVoteInfo from './Referenda/ReferendumVoteInfo';
 import VoteReferendum from './Referenda/VoteReferendum';
-import VoteMotion from './VoteMotion';
 
 interface Props {
 	className?: string
@@ -104,16 +105,23 @@ const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTip
 			{ canVote
 				? <div className={className}>
 					<Form standalone={false}>
-						{isMotion && canVote &&
-							<VoteMotion
-								accounts={accounts}
-								address={address}
-								getAccounts={getAccounts}
-								motionId={onchainId as number}
-								motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
-								onAccountChange={onAccountChange}
-							/>
-						}
+						{isMotion && <>
+							{(onchainId || onchainId === 0) &&
+								<MotionVoteInfo
+									motionId={onchainId as number}
+								/>
+							}
+							{canVote &&
+								<VoteMotion
+									accounts={accounts}
+									address={address}
+									getAccounts={getAccounts}
+									motionId={onchainId as number}
+									motionProposalHash={(onchainLink as OnchainLinkMotionFragment)?.onchain_motion?.[0]?.motionProposalHash}
+									onAccountChange={onAccountChange}
+								/>
+							}
+						</>}
 						{isProposal &&
 							<ProposalDisplay
 								accounts={accounts}
