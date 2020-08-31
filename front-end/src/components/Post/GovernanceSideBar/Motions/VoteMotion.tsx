@@ -101,17 +101,20 @@ const VoteMotion = ({
 	};
 
 	const GetAccountsButton = () =>
-		<Form.Group>
-			<Form.Field className='button-container'>
-				<div>Only council members can vote on motions.</div><br/>
-				<Button
-					primary
-					onClick={getAccounts}
-				>
-					Vote
-				</Button>
-			</Form.Field>
-		</Form.Group>;
+		<Card>
+			<h3>Vote</h3>
+			<Form.Group>
+				<Form.Field className='button-container'>
+					<div>Only council members can vote on motions.</div><br/>
+					<Button
+						primary
+						onClick={getAccounts}
+					>
+						Vote
+					</Button>
+				</Form.Field>
+			</Form.Group>
+		</Card>;
 
 	const noAccount = accounts.length === 0;
 
@@ -124,6 +127,7 @@ const VoteMotion = ({
 						<Loader text={loadingStatus.message}/>
 					</Card>
 					: <Card>
+						<h3>Vote</h3>
 						<AccountSelectionForm
 							title='Second with account'
 							accounts={accounts}
@@ -140,10 +144,11 @@ const VoteMotion = ({
 		</>;
 
 	const NotCouncil = () =>
-		<>
+		<Card>
+			<h3>Vote</h3>
 			<div>No account found from the council :(</div>
 			<ButtonLink onClick={() => setForceVote(true)}>Let me try still.</ButtonLink>
-		</>;
+		</Card>;
 
 	return (
 		<div className={className}>

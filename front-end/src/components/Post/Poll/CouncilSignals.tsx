@@ -10,7 +10,7 @@ import useCurrentBlock from 'src/hooks/useCurrentBlock';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { CouncilAtBlockNumberQuery, CouncilAtBlockNumberQueryVariables, PollVotesQuery, useCouncilAtBlockNumberQuery } from '../../../generated/graphql';
-import { OffchainVote, Vote } from '../../../types';
+import { CouncilVote, Vote } from '../../../types';
 import Address from '../../../ui-components/Address';
 import Card from '../../../ui-components/Card';
 import CouncilSignalBar from '../../../ui-components/CouncilSignalBar';
@@ -27,7 +27,7 @@ const CouncilSignals = ({ className, endBlock, data }: Props) => {
 	const [ayes, setAyes] = useState(0);
 	const [nays, setNays] = useState(0);
 	const [memberSet, setMemberSet] = useState<Set<string>>(new Set<string>());
-	const [councilVotes, setCouncilVotes] = useState<OffchainVote[]>([]);
+	const [councilVotes, setCouncilVotes] = useState<CouncilVote[]>([]);
 	const currentBlockNumber = useCurrentBlock()?.toNumber() || endBlock;
 
 	const councilAtPollEndBlockNumber = useCouncilAtBlockNumberQuery({ variables: { blockNumber: endBlock } });
@@ -61,7 +61,7 @@ const CouncilSignals = ({ className, endBlock, data }: Props) => {
 		let ayes = 0;
 		let nays = 0;
 		const defaultAddressField = getDefaultAddressField();
-		const councilVotes: OffchainVote[]  = [];
+		const councilVotes: CouncilVote[]  = [];
 
 		data?.poll_votes?.forEach(({ vote, voter }) => {
 			const defaultAddress = voter?.[defaultAddressField];
