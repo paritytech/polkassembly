@@ -3,12 +3,13 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 import getNetwork from 'src/util/getNetwork';
 
+import Filters from '../../components/Filters';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Button from '../../ui-components/Button';
 import InfoBox from '../../ui-components/InfoBox';
@@ -19,6 +20,7 @@ const NETWORK = getNetwork();
 const Discussions = ({ className } : {className?: string}) => {
 	const history = useHistory();
 	const currentUser = useContext(UserDetailsContext);
+	const [showOwnProposals, setShowOwnProposal] = useState(false);
 	const handleCreatePost = () => {
 		history.push('/post/create');
 	};
@@ -28,7 +30,7 @@ const Discussions = ({ className } : {className?: string}) => {
 			<h1>Latest discussions</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<DiscussionsContainer/>
+					<DiscussionsContainer showOwnProposals={showOwnProposals} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					{currentUser.id &&
@@ -43,6 +45,7 @@ const Discussions = ({ className } : {className?: string}) => {
 					/>
 					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
 						<DefaultAddressInfoBox />}
+					{currentUser.id && <Filters showOwnProposals={showOwnProposals} onShowOwnProposalChange={(value) => { setShowOwnProposal(value); }} />}
 				</Grid.Column>
 			</Grid>
 		</div>

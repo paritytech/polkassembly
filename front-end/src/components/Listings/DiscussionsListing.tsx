@@ -3,19 +3,23 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import getDefaultAddressField from 'src/util/getDefaultAddressField';
 
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { LatestDiscussionPostsQuery } from '../../generated/graphql';
 import DiscussionCard from '../DiscussionCard';
 
 interface Props {
   className?: string
   data: LatestDiscussionPostsQuery
+  showOwnProposals?: boolean
 }
 
-const Discussions = ({ className, data }: Props) => {
+const Discussions = ({ className, data, showOwnProposals }: Props) => {
+	const currentUser = useContext(UserDetailsContext);
+
 	if (!data.posts || !data.posts.length) return <div>No discussion found.</div>;
 
 	const defaultAddressField = getDefaultAddressField();
@@ -23,7 +27,7 @@ const Discussions = ({ className, data }: Props) => {
 	return (
 		<ul className={`${className} discussions__list`}>
 			{!!data.posts &&
-				data.posts.map(
+				data.posts.filter(post => showOwnProposals && currentUser ? currentUser.username === post?.author?.username : true).map(
 					(post) => {
 						return !!post?.author?.username &&
 							<li key={post.id} className='discussions__item'>

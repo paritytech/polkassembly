@@ -3,20 +3,24 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import styled from '@xstyled/styled-components';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
+import Filters from '../../components/Filters';
+import { UserDetailsContext } from '../../context/UserDetailsContext';
 import InfoBox from '../../ui-components/InfoBox';
 import ProposalContainer from './ProposalsContainer';
 
 const OnchainPostsContainer = ({ className } : {className?: string}) => {
+	const currentUser = useContext(UserDetailsContext);
+	const [showOwnProposals, setShowOwnProposal] = useState(false);
 
 	return (
 		<div className={className}>
 			<h1>On-chain proposals</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<ProposalContainer limit={25} />
+					<ProposalContainer showOwnProposals={showOwnProposals} limit={25} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -27,6 +31,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 						name='onchainInfo'
 						title='About On-chain Proposals'
 					/>
+					{currentUser.id && <Filters showOwnProposals={showOwnProposals} onShowOwnProposalChange={(value) => { setShowOwnProposal(value); }} />}
 				</Grid.Column>
 			</Grid>
 		</div>

@@ -15,9 +15,10 @@ import LoadMore from '../../../ui-components/LoadMore';
 interface Props {
 	className?: string
 	limit: number
+	showOwnProposals: boolean
 }
 
-const ProposalsContainer = ({ className, limit }:Props) => {
+const ProposalsContainer = ({ className, limit, showOwnProposals }: Props) => {
 	const [page, setPage] = useState(1);
 
 	const { data, error, loading, refetch } = useAllDemocracyProposalPostsQuery({ variables: {
@@ -38,7 +39,7 @@ const ProposalsContainer = ({ className, limit }:Props) => {
 
 	if (data) return (
 		<>
-			<ProposalsListing className={className} data={data}/>
+			<ProposalsListing className={className} data={data} showOwnProposals={showOwnProposals} />
 			{(loading || (data.posts.length === limit * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>
 	);

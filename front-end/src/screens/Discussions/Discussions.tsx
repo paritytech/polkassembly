@@ -12,7 +12,11 @@ import LoadMore from '../../ui-components/LoadMore';
 
 const LIMIT = 20;
 
-const DiscussionsContainer = () => {
+interface Props {
+	showOwnProposals?: boolean
+}
+
+const DiscussionsContainer = ({ showOwnProposals }: Props) => {
 	const [page, setPage] = useState(1);
 
 	const { data, error, loading, refetch } = useLatestDiscussionPostsQuery({ variables: { limit: LIMIT * page } });
@@ -31,7 +35,7 @@ const DiscussionsContainer = () => {
 
 	if (data) {
 		return <>
-			<DiscussionsListing data={data} />
+			<DiscussionsListing data={data} showOwnProposals={showOwnProposals} />
 			{(loading || (data.posts.length === LIMIT * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>;
 	}
