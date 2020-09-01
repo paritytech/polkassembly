@@ -67,7 +67,22 @@ export const postSubscriptionMailTemplate = container(`
         Hi <%= username %>!<br/><br/>
 
         <br />
-        <%= authorUsername %> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
+        <a href="<%= domain %>/user/<%= authorUsername %>"><%= authorUsername %></a> has commented on a post you subscribed to: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
+
+        comment: <%- content %><br /><br />
+
+        You can deactivate this notification in your notification settings: <a href="<%= domain %>/notification-settings"><%= domain %>/notification-settings</a><br /><br />
+
+        Polkassembly Team
+    </p>
+`);
+
+export const commentMentionEmailTemplate = container(`
+    <p>
+        Hi <%= username %>!<br/><br/>
+
+        <br />
+        <a href="<%= domain %>/user/<%= authorUsername %>"><%= authorUsername %></a> has mentioned you in comment: <a href="<%= postUrl %>"><%= postUrl %></a>.<br /><br />
 
         comment: <%- content %><br /><br />
 

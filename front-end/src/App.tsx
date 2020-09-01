@@ -43,6 +43,7 @@ import Tips from './screens/Tips';
 import Treasury from './screens/Treasury';
 import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
+import UserProfile from './screens/UserProfile';
 import VerifyEmail from './screens/VerifyEmail';
 import { theme } from './themes/theme';
 import { GlobalStyle } from './ui-components/GlobalStyle';
@@ -153,6 +154,9 @@ const App = () => {
 														</Route>
 														<Route path="/privacy">
 															<PrivacyPolicy/>
+														</Route>
+														<Route path="/user/:username">
+															<UserProfile/>
 														</Route>
 														<Route path="*">
 															<NotFound/>
