@@ -13115,6 +13115,27 @@ export type DiscussionPostAndCommentsQuery = (
   )> }
 );
 
+export type PostFieldsFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+  & { author?: Maybe<(
+    { __typename?: 'User' }
+    & AuthorFieldsFragment
+  )>, comments_aggregate: (
+    { __typename?: 'comments_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'comments_aggregate_fields' }
+      & Pick<Comments_Aggregate_Fields, 'count'>
+    )> }
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'name' | 'id'>
+  ), last_update?: Maybe<(
+    { __typename?: 'post_last_update' }
+    & Pick<Post_Last_Update, 'last_update'>
+  )> }
+);
+
 export type LatestDiscussionPostsQueryVariables = {
   limit?: Scalars['Int'];
 };
@@ -13124,23 +13145,33 @@ export type LatestDiscussionPostsQuery = (
   { __typename?: 'query_root' }
   & { posts: Array<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
-    & { author?: Maybe<(
-      { __typename?: 'User' }
-      & AuthorFieldsFragment
-    )>, comments_aggregate: (
-      { __typename?: 'comments_aggregate' }
-      & { aggregate?: Maybe<(
-        { __typename?: 'comments_aggregate_fields' }
-        & Pick<Comments_Aggregate_Fields, 'count'>
-      )> }
-    ), type: (
-      { __typename?: 'post_types' }
-      & Pick<Post_Types, 'name' | 'id'>
-    ), last_update?: Maybe<(
-      { __typename?: 'post_last_update' }
-      & Pick<Post_Last_Update, 'last_update'>
-    )> }
+    & PostFieldsFragment
+  )> }
+);
+
+export type DiscussionPostsIdDescQueryVariables = {
+  limit?: Scalars['Int'];
+};
+
+
+export type DiscussionPostsIdDescQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & PostFieldsFragment
+  )> }
+);
+
+export type DiscussionPostsIdAscQueryVariables = {
+  limit?: Scalars['Int'];
+};
+
+
+export type DiscussionPostsIdAscQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & PostFieldsFragment
   )> }
 );
 
@@ -14186,6 +14217,29 @@ export const DiscussionPostFragmentDoc = gql`
     ${AuthorFieldsFragmentDoc}
 ${CommentFieldsFragmentDoc}
 ${OnchainLinkDiscussionFragmentDoc}`;
+export const PostFieldsFragmentDoc = gql`
+    fragment postFields on posts {
+  id
+  title
+  author {
+    ...authorFields
+  }
+  created_at
+  updated_at
+  comments_aggregate {
+    aggregate {
+      count
+    }
+  }
+  type {
+    name
+    id
+  }
+  last_update {
+    last_update
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
 export const OnchainLinkMotionPreimageFragmentDoc = gql`
     fragment onchainLinkMotionPreimage on Preimage {
   hash
@@ -15588,28 +15642,10 @@ export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult
 export const LatestDiscussionPostsDocument = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
   posts(order_by: {last_update: {last_update: desc}}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
-    id
-    title
-    author {
-      ...authorFields
-    }
-    created_at
-    updated_at
-    comments_aggregate {
-      aggregate {
-        count
-      }
-    }
-    type {
-      name
-      id
-    }
-    last_update {
-      last_update
-    }
+    ...postFields
   }
 }
-    ${AuthorFieldsFragmentDoc}`;
+    ${PostFieldsFragmentDoc}`;
 
 /**
  * __useLatestDiscussionPostsQuery__
@@ -15636,6 +15672,72 @@ export function useLatestDiscussionPostsLazyQuery(baseOptions?: ApolloReactHooks
 export type LatestDiscussionPostsQueryHookResult = ReturnType<typeof useLatestDiscussionPostsQuery>;
 export type LatestDiscussionPostsLazyQueryHookResult = ReturnType<typeof useLatestDiscussionPostsLazyQuery>;
 export type LatestDiscussionPostsQueryResult = ApolloReactCommon.QueryResult<LatestDiscussionPostsQuery, LatestDiscussionPostsQueryVariables>;
+export const DiscussionPostsIdDescDocument = gql`
+    query DiscussionPostsIdDesc($limit: Int! = 20) {
+  posts(order_by: {id: desc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+    ...postFields
+  }
+}
+    ${PostFieldsFragmentDoc}`;
+
+/**
+ * __useDiscussionPostsIdDescQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostsIdDescQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostsIdDescQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostsIdDescQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useDiscussionPostsIdDescQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostsIdDescQuery, DiscussionPostsIdDescQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostsIdDescQuery, DiscussionPostsIdDescQueryVariables>(DiscussionPostsIdDescDocument, baseOptions);
+      }
+export function useDiscussionPostsIdDescLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostsIdDescQuery, DiscussionPostsIdDescQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostsIdDescQuery, DiscussionPostsIdDescQueryVariables>(DiscussionPostsIdDescDocument, baseOptions);
+        }
+export type DiscussionPostsIdDescQueryHookResult = ReturnType<typeof useDiscussionPostsIdDescQuery>;
+export type DiscussionPostsIdDescLazyQueryHookResult = ReturnType<typeof useDiscussionPostsIdDescLazyQuery>;
+export type DiscussionPostsIdDescQueryResult = ApolloReactCommon.QueryResult<DiscussionPostsIdDescQuery, DiscussionPostsIdDescQueryVariables>;
+export const DiscussionPostsIdAscDocument = gql`
+    query DiscussionPostsIdAsc($limit: Int! = 20) {
+  posts(order_by: {id: asc}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+    ...postFields
+  }
+}
+    ${PostFieldsFragmentDoc}`;
+
+/**
+ * __useDiscussionPostsIdAscQuery__
+ *
+ * To run a query within a React component, call `useDiscussionPostsIdAscQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscussionPostsIdAscQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscussionPostsIdAscQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useDiscussionPostsIdAscQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DiscussionPostsIdAscQuery, DiscussionPostsIdAscQueryVariables>) {
+        return ApolloReactHooks.useQuery<DiscussionPostsIdAscQuery, DiscussionPostsIdAscQueryVariables>(DiscussionPostsIdAscDocument, baseOptions);
+      }
+export function useDiscussionPostsIdAscLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DiscussionPostsIdAscQuery, DiscussionPostsIdAscQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<DiscussionPostsIdAscQuery, DiscussionPostsIdAscQueryVariables>(DiscussionPostsIdAscDocument, baseOptions);
+        }
+export type DiscussionPostsIdAscQueryHookResult = ReturnType<typeof useDiscussionPostsIdAscQuery>;
+export type DiscussionPostsIdAscLazyQueryHookResult = ReturnType<typeof useDiscussionPostsIdAscLazyQuery>;
+export type DiscussionPostsIdAscQueryResult = ApolloReactCommon.QueryResult<DiscussionPostsIdAscQuery, DiscussionPostsIdAscQueryVariables>;
 export const MotionPostAndCommentsDocument = gql`
     query MotionPostAndComments($id: Int!) {
   posts(where: {onchain_link: {onchain_motion_id: {_eq: $id}}}) {

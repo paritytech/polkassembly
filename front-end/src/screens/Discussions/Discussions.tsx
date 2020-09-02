@@ -5,17 +5,31 @@
 import React, { useEffect, useState } from 'react';
 
 import DiscussionsListing from '../../components/Listings/DiscussionsListing';
-import { useLatestDiscussionPostsQuery } from '../../generated/graphql';
+import { useDiscussionPostsIdAscQuery, useDiscussionPostsIdDescQuery, useLatestDiscussionPostsQuery } from '../../generated/graphql';
+import { sortValues } from '../../global/sortOptions';
 import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 import LoadMore from '../../ui-components/LoadMore';
 
 const LIMIT = 20;
 
-const DiscussionsContainer = () => {
-	const [page, setPage] = useState(1);
+interface Props {
+	sortBy?: string
+}
 
-	const { data, error, loading, refetch } = useLatestDiscussionPostsQuery({ variables: { limit: LIMIT * page } });
+const DiscussionsContainer = ({ sortBy }: Props) => {
+	const [page, setPage] = useState(1);
+	let postsQuery: typeof useDiscussionPostsIdDescQuery | typeof useDiscussionPostsIdAscQuery | typeof useLatestDiscussionPostsQuery;
+
+	if (sortBy === sortValues.NEWEST)
+		postsQuery = useDiscussionPostsIdDescQuery;
+	else if (sortBy === sortValues.OLDEST) {
+		postsQuery = useDiscussionPostsIdAscQuery;
+	} else {
+		postsQuery = useLatestDiscussionPostsQuery;
+	}
+
+	const { data, error, loading, refetch } = postsQuery({ variables: { limit: LIMIT * page } });
 
 	useEffect(() => {
 		refetch();
@@ -28,6 +42,10 @@ const DiscussionsContainer = () => {
 	const loadMore = () => {
 		setPage(page + 1);
 	};
+
+	if (loading) {
+		return <Loader/>;
+	}
 
 	if (data) {
 		return <>
