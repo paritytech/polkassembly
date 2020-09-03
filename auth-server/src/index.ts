@@ -45,6 +45,9 @@ if (process.env.NODE_ENV === 'test') {
 	}
 }
 
+process.env.JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY.split('\\n').join('\n')
+process.env.JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY.split('\\n').join('\n')
+
 /**
  * Controllers (route handlers).
  */
