@@ -16,11 +16,11 @@ export default function verifyEnvVariables (): void {
 		'PORT',
 		'PROPOSAL_BOT_USER_ID',
 		'DOMAIN_PROTOCOL',
+		'JWT_PRIVATE_KEY',
+		'JWT_PUBLIC_KEY', // setting it as a secret because it's spamming otherwise
 		'DOMAIN_NAME'
 	];
 	const secrets = [
-		'JWT_PUBLIC_KEY', // setting it as a secret because it's spamming otherwise
-		'JWT_PRIVATE_KEY',
 		'JWT_KEY_PASSPHRASE',
 		'REDIS_URL',
 		'DATABASE_URL',
