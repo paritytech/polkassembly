@@ -839,6 +839,8 @@ export default class AuthService {
 			web3signup: web3signup || false
 		};
 
+		console.log(privateKey, passphrase);
+
 		return jwt.sign(
 			tokenContent,
 			{ key: privateKey, passphrase },
