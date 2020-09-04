@@ -2,12 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-dotenv.config();
-
-process.env.JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY.split('\\n').join('\n');
-process.env.JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY.split('\\n').join('\n');
-
-
 import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import chalk from 'chalk';
@@ -23,6 +17,7 @@ import schema from './schema';
 import { Context } from './types';
 import verifyEnvVariables from './utils/verifyEnvVariables';
 
+dotenv.config();
 
 if (process.env.NODE_ENV === 'test') {
 	if (!process.env.JWT_PRIVATE_KEY_TEST) {
