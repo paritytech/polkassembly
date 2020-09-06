@@ -2,7 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import { OnchainLinkTreasuryProposalFragment } from '../../../generated/graphql';
@@ -12,13 +14,14 @@ import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import getNetwork from '../../../util/getNetwork';
 import ExternalLinks from '../../ExternalLinks';
 
-interface Props{
+interface Props {
+	className?: string
 	onchainLink: OnchainLinkTreasuryProposalFragment
 }
 
 const currentNetwork = getNetwork();
 
-const PostTreasuryInfo = ({ onchainLink }: Props) => {
+const PostTreasuryInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -30,7 +33,7 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 	const bond = onchainTreasuryProposal?.[0]?.bond;
 
 	return (
-		<OnchainInfoWrapper>
+		<OnchainInfoWrapper className={className}>
 			<h4>On-chain info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -52,6 +55,11 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 					<h6>Value</h6>
 					{parseInt(value) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
+				{onchainLink.onchain_motion_id || onchainLink.onchain_motion_id === 0 ? (
+					<Grid.Column mobile={16} tablet={16} computer={16}>
+						<>{`This Treasury proposal #${onchainLink.onchain_treasury_proposal_id} is now `} <Link to={`/motion/${onchainLink.onchain_motion_id}`}>{`-> Motion #${onchainLink.onchain_motion_id}`}</Link></>
+					</Grid.Column>
+				) : null}
 				<Grid.Column mobile={16} tablet={16} computer={16}>
 					<ExternalLinks isTreasuryProposal={true} onchainId={onchainLink.onchain_treasury_proposal_id} />
 				</Grid.Column>
@@ -60,4 +68,9 @@ const PostTreasuryInfo = ({ onchainLink }: Props) => {
 	);
 };
 
-export default PostTreasuryInfo;
+export default styled(PostTreasuryInfo)`
+	a {
+		color: black_primary;
+		font-weight: bold;
+	}
+`;

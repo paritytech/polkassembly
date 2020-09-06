@@ -2,7 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
+import styled from '@xstyled/styled-components';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import { OnchainLinkMotionFragment, OnchainLinkMotionPreimageFragment, OnchainLinkMotionTreasuryFragment } from '../../../generated/graphql';
@@ -12,11 +14,12 @@ import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
 import getNetwork from '../../../util/getNetwork';
 import ExternalLinks from '../../ExternalLinks';
 
-interface Props{
+interface Props {
+	className?: string
 	onchainLink: OnchainLinkMotionFragment
 }
 
-const PostMotionInfo = ({ onchainLink }: Props) => {
+const PostMotionInfo = ({ className, onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -31,7 +34,7 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 	const { memberCount, method, motionProposalArguments, motionProposalHash, preimage, treasurySpendProposal } = onchainMotion[0];
 
 	return (
-		<OnchainInfoWrapper>
+		<OnchainInfoWrapper className={className}>
 			<h4>On-chain info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -66,6 +69,11 @@ const PostMotionInfo = ({ onchainLink }: Props) => {
 				</Grid.Row>
 				<ProposalInfo preimage={preimage}/>
 				<TreasuryInfo treasurySpendProposal={treasurySpendProposal}/>
+				{onchainLink.onchain_referendum_id || onchainLink.onchain_referendum_id === 0 ? (
+					<Grid.Column mobile={16} tablet={16} computer={16}>
+						<>{`This Motion #${onchainLink.onchain_motion_id} is now `} <Link to={`/referendum/${onchainLink.onchain_referendum_id}`}>{`-> Referendum #${onchainLink.onchain_referendum_id}`}</Link></>
+					</Grid.Column>
+				) : null}
 				<Grid.Column mobile={16} tablet={16} computer={16}>
 					<ExternalLinks isMotion={true} onchainId={onchainLink.onchain_motion_id} />
 				</Grid.Column>
@@ -153,4 +161,9 @@ const TreasuryInfo = ({ treasurySpendProposal }: {treasurySpendProposal?: Onchai
 	);
 };
 
-export default PostMotionInfo;
+export default styled(PostMotionInfo)`
+	a {
+		color: black_primary;
+		font-weight: bold;
+	}
+`;
