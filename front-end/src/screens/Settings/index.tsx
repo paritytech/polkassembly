@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { Divider,Grid } from 'semantic-ui-react';
+import getEncodedAddress from 'src/util/getEncodedAddress';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Address from './address';
@@ -19,7 +20,7 @@ interface Props {
 
 const Settings = ({ className }:Props): JSX.Element => {
 	const { web3signup } = useContext(UserDetailsContext);
-
+	const bla = getEncodedAddress('HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
 	return (
 		<Grid>
 			<Grid.Column className={className} mobile={16} tablet={12} computer={12} largeScreen={10} widescreen={10}>

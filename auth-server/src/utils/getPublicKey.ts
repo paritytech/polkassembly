@@ -2,11 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { Keyring } from '@polkadot/api';
+import { u8aToHex } from '@polkadot/util';
+import { decodeAddress } from '@polkadot/util-crypto';
 
 export default (address: string): string => {
-	const keyring = new Keyring({ type: 'sr25519' });
-	const publicKey = keyring.decodeAddress(address);
+	const publicKey = decodeAddress(address);
 
-	return Buffer.from(publicKey).toString('hex');
+	return u8aToHex(publicKey);
 };
