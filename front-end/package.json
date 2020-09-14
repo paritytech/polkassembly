@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@ardatan/graphql-tools": "^4.1.0",
-    "@polkadot/api": "^1.32.1",
+    "@polkadot/api": "^1.33.1",
     "@polkadot/extension-dapp": "^0.33.4",
     "@polkadot/extension-inject": "^0.33.4",
     "@polkadot/react-identicon": "^0.58.1",
