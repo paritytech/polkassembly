@@ -13,7 +13,7 @@ import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
-import getPublicKey from 'src/utils/getPublicKey';
+import getPublicKey from '../../../src/utils/getPublicKey';
 
 describe('addressUnlink mutation', () => {
 	let signupUserId = -1;
