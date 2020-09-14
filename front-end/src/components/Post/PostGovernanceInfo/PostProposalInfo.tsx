@@ -2,9 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import styled from '@xstyled/styled-components';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import { OnchainLinkProposalFragment } from '../../../generated/graphql';
@@ -15,13 +13,12 @@ import getNetwork from '../../../util/getNetwork';
 import ExternalLinks from '../../ExternalLinks';
 
 interface Props{
-	className?: string
 	onchainLink: OnchainLinkProposalFragment
 }
 
 const currentNetwork = getNetwork();
 
-const PostProposalInfo = ({ className, onchainLink }: Props) => {
+const PostProposalInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
 
 	const {
@@ -34,7 +31,7 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 	const { metaDescription, method, preimageArguments } = preimage || {};
 
 	return (
-		<OnchainInfoWrapper className={className}>
+		<OnchainInfoWrapper>
 			<h4>On-chain info</h4>
 			<Grid>
 				<Grid.Column mobile={16} tablet={8} computer={8}>
@@ -76,11 +73,6 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 						{metaDescription}
 					</>}
 				</Grid.Column>
-				{onchainLink.onchain_referendum_id || onchainLink.onchain_referendum_id === 0 ? (
-					<Grid.Column mobile={16} tablet={16} computer={16}>
-						<>{`This Proposal #${onchainLink.onchain_proposal_id} is now `} <Link to={`/referendum/${onchainLink.onchain_referendum_id}`}>{`-> Referendum #${onchainLink.onchain_referendum_id}`}</Link></>
-					</Grid.Column>
-				) : null}
 				<Grid.Column mobile={16} tablet={16} computer={16}>
 					<ExternalLinks isProposal={true} onchainId={onchainLink.onchain_proposal_id} />
 				</Grid.Column>
@@ -89,10 +81,4 @@ const PostProposalInfo = ({ className, onchainLink }: Props) => {
 	);
 };
 
-export default styled(PostProposalInfo)`
-	a {
-		color: black_primary;
-		font-weight: bold;
-	}
-`;
-
+export default PostProposalInfo;

@@ -5,6 +5,7 @@
 import styled from '@xstyled/styled-components';
 import { ApolloQueryResult } from 'apollo-client';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Grid, Icon, Responsive } from 'semantic-ui-react';
 
 import { MetaContext } from '../../context/MetaContext';
@@ -34,6 +35,7 @@ import {
 	TreasuryProposalPostAndCommentsQueryHookResult,
 	TreasuryProposalPostFragment } from '../../generated/graphql';
 import Button from '../../ui-components/Button';
+import Card from '../../ui-components/Card';
 import ScrollToTop from '../../ui-components/ScrollToTop';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
@@ -91,6 +93,9 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let tipPost: TipPostFragment | undefined;
 	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
+	let redirection: boolean = false;
+	let redirectionLink = '';
+	let redirectionTitle = '';
 
 	if (post && isReferendum) {
 		referendumPost = post as ReferendumPostFragment;
@@ -106,6 +111,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 		metaTitle = `Proposal #${onchainId}`;
+
+		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0) {
+			redirection = true;
+			redirectionLink = `/referendum/${definedOnchainLink.onchain_referendum_id}`;
+			redirectionTitle = `Referendum #${definedOnchainLink.onchain_referendum_id}`;
+		}
 	}
 
 	if (post && isMotion) {
@@ -114,6 +125,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_motion_id;
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
 		metaTitle = `Motion #${onchainId}`;
+
+		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0) {
+			redirection = true;
+			redirectionLink = `/referendum/${definedOnchainLink.onchain_referendum_id}`;
+			redirectionTitle = `Referendum #${definedOnchainLink.onchain_referendum_id}`;
+		}
 	}
 
 	if (post && isTreasuryProposal) {
@@ -122,6 +139,12 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 		metaTitle = `Treasury #${onchainId}`;
+
+		if (definedOnchainLink.onchain_motion_id || definedOnchainLink.onchain_motion_id === 0) {
+			redirection = true;
+			redirectionLink = `/motion/${definedOnchainLink.onchain_motion_id}`;
+			redirectionTitle = `Motion #${definedOnchainLink.onchain_motion_id}`;
+		}
 	}
 
 	if (post && isTipProposal) {
@@ -224,6 +247,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 					</div>
 				</div>
+				{redirection && <Link className='redirection' to={redirectionLink}>
+					<Card>
+						{`-> This is now ${redirectionTitle}`}
+					</Card>
+				</Link>}
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
@@ -316,5 +344,14 @@ export default styled(Post)`
 		i {
 			font-size: 1.5rem;
 		}
+	}
+
+	.redirection {
+		color: black_primary;
+		font-weight: bold;
+	}
+
+	.redirection:hover {
+		text-decoration: underline;
 	}
 `;
