@@ -76,6 +76,11 @@ interface Props {
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
+interface Redirection {
+	link?: string;
+	text?: string;
+}
+
 const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTipProposal = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post = data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
@@ -93,9 +98,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let tipPost: TipPostFragment | undefined;
 	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
-	let redirection: boolean = false;
-	let redirectionLink = '';
-	let redirectionTitle = '';
+	let redirection: Redirection = {};
 
 	if (post && isReferendum) {
 		referendumPost = post as ReferendumPostFragment;
@@ -111,11 +114,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 		metaTitle = `Proposal #${onchainId}`;
-
-		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0) {
-			redirection = true;
-			redirectionLink = `/referendum/${definedOnchainLink.onchain_referendum_id}`;
-			redirectionTitle = `Referendum #${definedOnchainLink.onchain_referendum_id}`;
+		if (definedOnchainLink.onchain_referendum_id !== undefined){
+			redirection = {
+				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
+				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
+			};
 		}
 	}
 
@@ -125,11 +128,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_motion_id;
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
 		metaTitle = `Motion #${onchainId}`;
-
-		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0) {
-			redirection = true;
-			redirectionLink = `/referendum/${definedOnchainLink.onchain_referendum_id}`;
-			redirectionTitle = `Referendum #${definedOnchainLink.onchain_referendum_id}`;
+		if (definedOnchainLink.onchain_referendum_id !== undefined){
+			redirection = {
+				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
+				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
+			};
 		}
 	}
 
@@ -139,11 +142,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 		metaTitle = `Treasury #${onchainId}`;
-
-		if (definedOnchainLink.onchain_motion_id || definedOnchainLink.onchain_motion_id === 0) {
-			redirection = true;
-			redirectionLink = `/motion/${definedOnchainLink.onchain_motion_id}`;
-			redirectionTitle = `Motion #${definedOnchainLink.onchain_motion_id}`;
+		if (definedOnchainLink.onchain_motion_id !== undefined){
+			redirection = {
+				link: `/motion/${definedOnchainLink.onchain_motion_id}`,
+				text: `Motion #${definedOnchainLink.onchain_motion_id}`
+			};
 		}
 	}
 
@@ -247,9 +250,9 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 					</div>
 				</div>
-				{redirection && <Link className='redirection' to={redirectionLink}>
+				{redirection.link && <Link className='redirection' to={redirection.link}>
 					<Card>
-						{`-> This is now ${redirectionTitle}`}
+						{`-> This is now ${redirection.text}`}
 					</Card>
 				</Link>}
 				{ isMotion &&
