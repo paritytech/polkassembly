@@ -114,7 +114,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 		metaTitle = `Proposal #${onchainId}`;
-		if (definedOnchainLink.onchain_referendum_id !== undefined){
+		if (definedOnchainLink.onchain_referendum_id && definedOnchainLink.onchain_referendum_id !== 0){
 			redirection = {
 				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
 				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
@@ -128,7 +128,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_motion_id;
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
 		metaTitle = `Motion #${onchainId}`;
-		if (definedOnchainLink.onchain_referendum_id !== undefined){
+		if (definedOnchainLink.onchain_referendum_id && definedOnchainLink.onchain_referendum_id !== 0){
 			redirection = {
 				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
 				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
@@ -142,7 +142,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 		metaTitle = `Treasury #${onchainId}`;
-		if (definedOnchainLink.onchain_motion_id !== undefined){
+		if (definedOnchainLink.onchain_motion_id && definedOnchainLink.onchain_motion_id !== 0){
 			redirection = {
 				link: `/motion/${definedOnchainLink.onchain_motion_id}`,
 				text: `Motion #${definedOnchainLink.onchain_motion_id}`
@@ -232,6 +232,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	return (
 		<Grid className={className}>
 			<Grid.Column mobile={16} tablet={16} computer={10} largeScreen={10}>
+				{redirection.link &&
+					<Link className='redirection' to={redirection.link}>
+						<Card className='redirectionCard'>
+							<Icon name='forward'/> This proposal has become <span className='redirectionText'>{redirection.text}</span>
+						</Card>
+					</Link>
+				}
 				<div className='post_content'>
 					<EditablePostContent
 						isEditing={isEditing}
@@ -250,11 +257,6 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 					</div>
 				</div>
-				{redirection.link && <Link className='redirection' to={redirection.link}>
-					<Card>
-						{`-> This is now ${redirection.text}`}
-					</Card>
-				</Link>}
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
@@ -349,12 +351,27 @@ export default styled(Post)`
 		}
 	}
 
-	.redirection {
-		color: black_primary;
-		font-weight: bold;
-	}
+	.redirectionCard {
+		color: black_text;
+		background-color: grey_border;
+		padding: 2rem 3rem 2rem 3rem;
+		border-radius: 3px;
+		font-size: md;
+		margin-bottom: 1rem;
+		text-align: center;
+		
+		@media only screen and (max-width: 768px) {
+			padding: 2rem;
+			font-size: sm;
+		}
 
-	.redirection:hover {
-		text-decoration: underline;
+		.redirectionText {
+			color: pink_primary;
+
+			&:hover {
+				text-decoration: none;
+				color: pink_secondary;
+			}
+		}
 	}
 `;
