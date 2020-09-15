@@ -92,4 +92,8 @@ export default styled(ExternalLinks)`
 		color: black_primary;
 		font-weight: bold;
 	}
+
+	a:hover {
+		text-decoration: underline;
+	}
 `;
