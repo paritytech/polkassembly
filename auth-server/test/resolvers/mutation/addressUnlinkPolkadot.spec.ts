@@ -3,7 +3,6 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import 'mocha';
 
-import { Keyring } from '@polkadot/api';
 import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import { expect } from 'chai';
 import { uuid } from 'uuidv4';
@@ -14,6 +13,7 @@ import addressUnlink from '../../../src/resolvers/mutation/addressUnlink';
 import { Context, NetworkEnum } from '../../../src/types';
 import messages from '../../../src/utils/messages';
 import { getNewUserCtx } from '../../helpers';
+import getPublicKey from '../../../src/utils/getPublicKey';
 
 describe('addressUnlink mutation', () => {
 	let signupUserId = -1;
@@ -28,9 +28,8 @@ describe('addressUnlink mutation', () => {
 		fakectx = result.ctx;
 		signupUserId = result.userId;
 
-		const keyring = new Keyring({ type: 'sr25519' });
 		const address = '15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5'; // Alice
-		const publicKey = keyring.decodeAddress(address);
+		const publicKey = getPublicKey(address);
 
 		dbAddress = await Address
 			.query()
@@ -39,7 +38,7 @@ describe('addressUnlink mutation', () => {
 				network: NetworkEnum.POLKADOT,
 				address,
 				user_id: signupUserId,
-				public_key: Buffer.from(publicKey).toString('hex'),
+				public_key: publicKey,
 				sign_message: uuid(),
 				verified: true
 			})
