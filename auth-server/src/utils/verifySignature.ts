@@ -2,12 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { schnorrkelVerify } from '@polkadot/util-crypto';
+import { signatureVerify } from '@polkadot/util-crypto';
 
 import getPublicKey from './getPublicKey';
 
 export default (message: string, address: string, signature: string): boolean => {
 	const publicKey = getPublicKey(address);
 
-	return schnorrkelVerify(message, signature, publicKey);
+	return signatureVerify(message, signature, publicKey).isValid;
 };
