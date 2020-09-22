@@ -34,12 +34,8 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 
 	let methodClass;
 
-	if (method === 'approveProposal') {
-		methodClass = 'green-text';
-	}
-
 	if (method === 'rejectProposal') {
-		methodClass =  'red-text';
+		methodClass =  'bold-red-text';
 	}
 	return (
 		<OnchainInfoWrapper className={className}>
@@ -165,11 +161,8 @@ const TreasuryInfo = ({ treasurySpendProposal }: {treasurySpendProposal?: Onchai
 };
 
 export default styled(PostMotionInfo)`
-	.green-text {
-		color: green_primary;
-	}
-
-	.red-text {
+	.bold-red-text {
 		color: red_primary;
+		font-weight: bold;
 	}
 `;
