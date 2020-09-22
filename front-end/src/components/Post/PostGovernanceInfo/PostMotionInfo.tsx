@@ -32,11 +32,6 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 
 	const { memberCount, method, motionProposalArguments, motionProposalHash, preimage, treasurySpendProposal } = onchainMotion[0];
 
-	let methodClass;
-
-	if (method === 'rejectProposal') {
-		methodClass =  'bold-red-text';
-	}
 	return (
 		<OnchainInfoWrapper className={className}>
 			<h4>On-chain info</h4>
