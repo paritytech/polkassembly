@@ -56,7 +56,7 @@ const PostMotionInfo = ({ className, onchainLink }: Props) => {
 				<Grid.Row>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						<h6>Motion&apos;s method</h6>
-						<span className={methodClass}>{method}</span>
+						<span className={method === 'rejectProposal' ? 'bold-red-text' : ''}>{method}</span>
 					</Grid.Column>
 					<Grid.Column mobile={16} tablet={8} computer={8}>
 						{motionProposalArguments && motionProposalArguments.length
