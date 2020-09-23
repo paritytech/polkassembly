@@ -236,6 +236,7 @@ dockerize:chain-db-open-server:
     - helm upgrade redis bitnami/redis
       --dry-run
       --install
+      --version 10.9.0
       --namespace ${KUBE_NAMESPACE}
       --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
       --set password=${REDIS_PASSWORD}
@@ -244,6 +245,7 @@ dockerize:chain-db-open-server:
     - helm upgrade redis bitnami/redis
       --install
       --namespace ${KUBE_NAMESPACE}
+      --version 10.9.0
       --values kubernetes/redis/values/${CI_ENVIRONMENT_NAME}.yaml
       --set password=${REDIS_PASSWORD}
 
