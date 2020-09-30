@@ -8,6 +8,7 @@ import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { NotificationContext } from 'src/context/NotificationContext';
+import { UserDetailsContext } from 'src/context/UserDetailsContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
 import { LoadingStatusType, NotificationStatus } from 'src/types';
 import AccountSelectionForm from 'src/ui-components/AccountSelectionForm';
@@ -44,20 +45,21 @@ const VoteMotion = ({
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const currentCouncil: string[] = [];
 	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { addresses } = useContext(UserDetailsContext);
 
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
 	useEffect( () => {
-		// it will iterate through all accounts
-		accounts.some(account => {
-			if (currentCouncil.includes(account.address)){
+		// it will iterate through all addresses
+		addresses && addresses.some(address => {
+			if (currentCouncil.includes(address)) {
 				setIsCouncil(true);
 				// this breaks the loop as soon as we find a matching address
 				return true;
 			}
 			return false;
 		});
-	}, [accounts, currentCouncil]);
+	}, [addresses, currentCouncil]);
 
 	const voteMotion = async (aye: boolean) => {
 		if (!motionId && motionId !== 0) {

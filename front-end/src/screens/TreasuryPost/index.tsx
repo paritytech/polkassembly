@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useRedirectGovernancePost from 'src/hooks/useRedirectGovernancePost';
 
 import Post from '../../components/Post/Post';
 import { useTreasuryProposalPostAndCommentsQuery } from '../../generated/graphql';
@@ -15,7 +14,6 @@ export default () => {
 	const { id } = useParams();
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useTreasuryProposalPostAndCommentsQuery({ variables: { 'id': idNumber } });
-	useRedirectGovernancePost({ from: 'treasury', onchainLink: data?.posts?.[0]?.onchain_link });
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

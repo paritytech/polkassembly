@@ -32,12 +32,12 @@
     "api:bump": "yarn add @polkadot/api @polkadot/dev"
   },
   "dependencies": {
-    "@polkadot/api": "^1.30.1",
+    "@polkadot/api": "^2.0.1",
     "p-retry": "^4.2.0",
     "prisma-client-lib": "1.34.10"
   },
   "devDependencies": {
-    "@polkadot/dev": "^0.55.43",
+    "@polkadot/dev": "^0.55.55",
     "@types/bn.js": "^4.11.6",
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-prettier": "^3.1.2",
