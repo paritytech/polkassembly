@@ -114,7 +114,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_proposal_id;
 		postStatus = proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.[0].status;
 		metaTitle = `Proposal #${onchainId}`;
-		if (definedOnchainLink.onchain_referendum_id && definedOnchainLink.onchain_referendum_id !== 0){
+		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0){
 			redirection = {
 				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
 				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
@@ -128,7 +128,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_motion_id;
 		postStatus = motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.[0].status;
 		metaTitle = `Motion #${onchainId}`;
-		if (definedOnchainLink.onchain_referendum_id && definedOnchainLink.onchain_referendum_id !== 0){
+		if (definedOnchainLink.onchain_referendum_id || definedOnchainLink.onchain_referendum_id === 0){
 			redirection = {
 				link: `/referendum/${definedOnchainLink.onchain_referendum_id}`,
 				text: `Referendum #${definedOnchainLink.onchain_referendum_id}`
@@ -142,7 +142,7 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		onchainId = definedOnchainLink.onchain_treasury_proposal_id;
 		postStatus = treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.[0].status;
 		metaTitle = `Treasury #${onchainId}`;
-		if (definedOnchainLink.onchain_motion_id && definedOnchainLink.onchain_motion_id !== 0){
+		if (definedOnchainLink.onchain_motion_id || definedOnchainLink.onchain_motion_id === 0){
 			redirection = {
 				link: `/motion/${definedOnchainLink.onchain_motion_id}`,
 				text: `Motion #${definedOnchainLink.onchain_motion_id}`
