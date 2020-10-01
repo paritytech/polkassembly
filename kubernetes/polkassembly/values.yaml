@@ -92,16 +92,16 @@ authServer:
     NODE_ENV: development
     DOMAIN_PROTOCOL: https://
     PORT: "8010"
-    DATABASE_URL: from-gtilab-vars
-    HASURA_EVENT_SECRET: from-gtilab-vars
-    HASURA_POST_SUBSCRIPTION_SECRET: from-gtilab-vars
-    JWT_KEY_PASSPHRASE: from-gtilab-vars
-    REDIS_URL: from-gtilab-vars
-    SENDGRID_API_KEY: from-gtilab-vars
+    DATABASE_URL: from-gitlab-vars
+    HASURA_EVENT_SECRET: from-gitlab-vars
+    HASURA_POST_SUBSCRIPTION_SECRET: from-gitlab-vars
+    JWT_KEY_PASSPHRASE: from-gitlab-vars
+    REDIS_URL: from-gitlab-vars
+    SENDGRID_API_KEY: from-gitlab-vars
 
   secret:
-    JWT_PRIVATE_KEY: from-gtilab-vars
-    JWT_PUBLIC_KEY: from-gtilab-vars
+    JWT_PRIVATE_KEY: from-gitlab-vars
+    JWT_PUBLIC_KEY: from-gitlab-vars
 
   image:
     repository: paritytech/polkassembly-auth-server
