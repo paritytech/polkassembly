@@ -7,7 +7,7 @@ import { PostType } from '../types';
 /**
  * Get Post link type from an event
  */
-export default (type: PostType, id: number): string => {
+export default (type: PostType, id: number | string): string => {
 	const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
 
 	return `${DOMAIN}/${type}/${id}`;
