@@ -37,7 +37,7 @@ const Bounties = ({ className, data }: Props) => {
 
 					return !!post?.author?.username && !!post.onchain_link?.onchain_bounty.length &&
 						<li key={post.id} className='bounties__item'>
-							{<Link to={`/motion/${onchainId}`}>
+							{<Link to={`/bounty/${onchainId}`}>
 								<GovernanceCard
 									address={post.onchain_link.proposer_address}
 									comments={post.comments_aggregate.aggregate?.count
