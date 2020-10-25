@@ -126,6 +126,36 @@ export const treasurySpendProposalSubscription = gql`
     }
 `;
 
+export const bountySubscription = gql`
+	subscription bountySubscription($startBlock: Int!) {
+        bounty (
+            where: {
+				node: {
+					bountyStatus_some: {
+						AND: [
+							{ status: "Proposed" },
+							{ blockNumber: { number_gte: $startBlock } }
+						]
+					}
+				}
+            }
+        ){
+            mutation
+            node {
+                id
+                proposer
+				bountyId
+                bountyStatus(orderBy: id_DESC) {
+                    blockNumber {
+                        number
+                    }
+                    status
+                }
+            }
+        }
+    }
+`;
+
 export const tipSubscription = gql`
 	subscription tipSubscription($startBlock: Int!) {
         tip (

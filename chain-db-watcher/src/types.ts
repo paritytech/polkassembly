@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment, OnchainTipFragment, OnchainTreasuryProposalFragment } from './generated/chain-db-graphql';
-import { DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment, DiscussionTipFragment, DiscussionTreasuryProposalFragment } from './generated/discussion-db-graphql';
+import { OnchainBountyFragment, OnchainMotionFragment, OnchainProposalFragment, OnchainReferendumFragment, OnchainTipFragment, OnchainTreasuryProposalFragment } from './generated/chain-db-graphql';
+import { DiscussionBountyFragment, DiscussionMotionFragment, DiscussionProposalFragment, DiscussionReferendumFragment, DiscussionTipFragment, DiscussionTreasuryProposalFragment } from './generated/discussion-db-graphql';
 
 export interface OnchainSyncData {
     motions?: Array<OnchainMotionFragment | null> | null;
@@ -11,6 +11,7 @@ export interface OnchainSyncData {
     referenda?: Array<OnchainReferendumFragment | null> | null;
     tips?: Array<OnchainTipFragment | null> | null;
     treasuryProposals?: Array<OnchainTreasuryProposalFragment | null> | null;
+    bounties?: Array<OnchainBountyFragment | null> | null;
 }
 
 export interface DiscussionSyncData {
@@ -19,6 +20,7 @@ export interface DiscussionSyncData {
     referenda?: Array<DiscussionReferendumFragment | null> | null;
     tips?: Array<DiscussionTipFragment | null> | null;
     treasuryProposals?: Array<DiscussionTreasuryProposalFragment | null> | null;
+    bounties?: Array<DiscussionBountyFragment | null> | null;
 }
 
 export interface SyncData {
@@ -36,6 +38,7 @@ export interface OnchainSyncMap {
     proposals?: ObjectMap;
     referenda?: ReferendumObjectMap;
     tips?: ObjectMap;
+    bounties?: ObjectMap;
     treasuryProposals?: ObjectMap;
 }
 
@@ -55,6 +58,7 @@ export interface DiscussionSyncMap {
     proposals?: ObjectMap;
     referenda?: ObjectMap;
     tips?: ObjectMap;
+    bounties?: ObjectMap;
     treasuryProposals?: ObjectMap;
 }
 

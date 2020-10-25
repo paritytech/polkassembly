@@ -154,8 +154,34 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 						}
 					}, {});
 
+	const discussionBountyMap = syncData?.discussion.bounties?.reduce(
+		(prev, curr) => {
+			// edgecase those id can be 0
+			if ((curr?.onchain_bounty_id || curr?.onchain_bounty_id === 0) && (curr?.id || curr?.id === 0)) {
+				return {
+					...prev,
+					[curr.onchain_bounty_id]: curr.proposer_address
+				};
+			} else {
+				return prev || {};
+			}
+		}, {});
+
+	const onchainBountyMap = syncData?.onchain.bounties?.reduce(
+		(prev, curr) => {
+			if ((curr?.bountyId || curr?.bountyId === 0) && (curr?.id || curr?.id === 0)) {
+				return {
+					...prev,
+					[curr.bountyId]: curr.proposer
+				};
+			} else {
+				return prev || {};
+			}
+		}, {});
+
 	return {
 		discussion: {
+			bounties: discussionBountyMap,
 			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
 			referenda: discussionReferendaMap,
@@ -163,6 +189,7 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 			treasuryProposals: discussionTreasuryProposalMap
 		},
 		onchain: {
+			bounties: onchainBountyMap,
 			motions: onchainMotionMap,
 			proposals: onchainProposalMap,
 			referenda: onchainReferendaMap,
