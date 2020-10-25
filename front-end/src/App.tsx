@@ -19,6 +19,8 @@ import { MetaProvider } from './context/MetaContext';
 import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
+import Bounties from './screens/Bounties';
+import PostBounty from './screens/BountyPost';
 import CreatePost from './screens/CreatePost';
 import PostDiscussion from './screens/DiscussionPost';
 import Discussions from './screens/Discussions';
@@ -89,6 +91,9 @@ const App = () => {
 														<Route path="/post/create">
 															<CreatePost/>
 														</Route>
+														<Route exact path="/bounty/:id">
+															<PostBounty/>
+														</Route>
 														<Route exact path="/motion/:id">
 															<PostMotion/>
 														</Route>
@@ -109,6 +114,9 @@ const App = () => {
 														</Route>
 														<Route path="/onchain">
 															<OnChain/>
+														</Route>
+														<Route path="/bounties">
+															<Bounties/>
 														</Route>
 														<Route path="/referenda">
 															<Referenda/>
