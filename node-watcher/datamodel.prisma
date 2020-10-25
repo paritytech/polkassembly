@@ -235,15 +235,6 @@ type TipStatus {
   uniqueStatus: String! @unique
 }
 
-// export interface Bounty extends Struct {
-//   readonly proposer: AccountId;
-//   readonly value: Balance;
-//   readonly fee: Balance;
-//   readonly curatorDeposit: Balance;
-//   readonly bond: Balance;
-//   readonly status: BountyStatus;
-// }
-
 type Bounty {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "BOUNTY_SEQUENCE" initialValue:1 allocationSize:1)
   proposer: String!
@@ -253,8 +244,8 @@ type Bounty {
   bond: String
   bountyId: Int! @unique
   bountyStatus: [BountyStatus]! @relation(name: "BountyStatusFromBounty")
-  curator: AccountId
-  beneficiary: AccountId;
+  curator: String
+  beneficiary: String
   updateDue: BlockNumber! @relation(name: "BountyUpdateDueAtBlockNumber", link: INLINE) @unique
   unlockAt: BlockNumber! @relation(name: "BountyUnlockAtBlockNumber", link: INLINE) @unique
 }

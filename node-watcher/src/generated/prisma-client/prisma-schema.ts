@@ -10,6 +10,14 @@ type AggregateBlockNumber {
   count: Int!
 }
 
+type AggregateBounty {
+  count: Int!
+}
+
+type AggregateBountyStatus {
+  count: Int!
+}
+
 type AggregateCouncil {
   count: Int!
 }
@@ -418,6 +426,521 @@ input BlockNumberWhereUniqueInput {
   id: ID
   number: Int
   hash: String
+}
+
+type Bounty {
+  id: Int!
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  bountyStatus(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus!]
+  curator: String
+  beneficiary: String
+  updateDue: BlockNumber!
+  unlockAt: BlockNumber!
+}
+
+type BountyConnection {
+  pageInfo: PageInfo!
+  edges: [BountyEdge]!
+  aggregate: AggregateBounty!
+}
+
+input BountyCreateInput {
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  bountyStatus: BountyStatusCreateManyWithoutBountyInput
+  curator: String
+  beneficiary: String
+  updateDue: BlockNumberCreateOneInput!
+  unlockAt: BlockNumberCreateOneInput!
+}
+
+input BountyCreateOneWithoutBountyStatusInput {
+  create: BountyCreateWithoutBountyStatusInput
+  connect: BountyWhereUniqueInput
+}
+
+input BountyCreateWithoutBountyStatusInput {
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  curator: String
+  beneficiary: String
+  updateDue: BlockNumberCreateOneInput!
+  unlockAt: BlockNumberCreateOneInput!
+}
+
+type BountyEdge {
+  node: Bounty!
+  cursor: String!
+}
+
+enum BountyOrderByInput {
+  id_ASC
+  id_DESC
+  proposer_ASC
+  proposer_DESC
+  value_ASC
+  value_DESC
+  fee_ASC
+  fee_DESC
+  curatorDeposit_ASC
+  curatorDeposit_DESC
+  bond_ASC
+  bond_DESC
+  bountyId_ASC
+  bountyId_DESC
+  curator_ASC
+  curator_DESC
+  beneficiary_ASC
+  beneficiary_DESC
+}
+
+type BountyPreviousValues {
+  id: Int!
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  curator: String
+  beneficiary: String
+}
+
+type BountyStatus {
+  id: ID!
+  blockNumber: BlockNumber!
+  bounty: Bounty!
+  status: String!
+  uniqueStatus: String!
+}
+
+type BountyStatusConnection {
+  pageInfo: PageInfo!
+  edges: [BountyStatusEdge]!
+  aggregate: AggregateBountyStatus!
+}
+
+input BountyStatusCreateInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  bounty: BountyCreateOneWithoutBountyStatusInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+input BountyStatusCreateManyWithoutBountyInput {
+  create: [BountyStatusCreateWithoutBountyInput!]
+  connect: [BountyStatusWhereUniqueInput!]
+}
+
+input BountyStatusCreateWithoutBountyInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+type BountyStatusEdge {
+  node: BountyStatus!
+  cursor: String!
+}
+
+enum BountyStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type BountyStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input BountyStatusScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [BountyStatusScalarWhereInput!]
+  OR: [BountyStatusScalarWhereInput!]
+  NOT: [BountyStatusScalarWhereInput!]
+}
+
+type BountyStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: BountyStatus
+  updatedFields: [String!]
+  previousValues: BountyStatusPreviousValues
+}
+
+input BountyStatusSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BountyStatusWhereInput
+  AND: [BountyStatusSubscriptionWhereInput!]
+  OR: [BountyStatusSubscriptionWhereInput!]
+  NOT: [BountyStatusSubscriptionWhereInput!]
+}
+
+input BountyStatusUpdateInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  bounty: BountyUpdateOneRequiredWithoutBountyStatusInput
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateManyWithoutBountyInput {
+  create: [BountyStatusCreateWithoutBountyInput!]
+  delete: [BountyStatusWhereUniqueInput!]
+  connect: [BountyStatusWhereUniqueInput!]
+  set: [BountyStatusWhereUniqueInput!]
+  disconnect: [BountyStatusWhereUniqueInput!]
+  update: [BountyStatusUpdateWithWhereUniqueWithoutBountyInput!]
+  upsert: [BountyStatusUpsertWithWhereUniqueWithoutBountyInput!]
+  deleteMany: [BountyStatusScalarWhereInput!]
+  updateMany: [BountyStatusUpdateManyWithWhereNestedInput!]
+}
+
+input BountyStatusUpdateManyWithWhereNestedInput {
+  where: BountyStatusScalarWhereInput!
+  data: BountyStatusUpdateManyDataInput!
+}
+
+input BountyStatusUpdateWithoutBountyDataInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput!
+  data: BountyStatusUpdateWithoutBountyDataInput!
+}
+
+input BountyStatusUpsertWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput!
+  update: BountyStatusUpdateWithoutBountyDataInput!
+  create: BountyStatusCreateWithoutBountyInput!
+}
+
+input BountyStatusWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  blockNumber: BlockNumberWhereInput
+  bounty: BountyWhereInput
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [BountyStatusWhereInput!]
+  OR: [BountyStatusWhereInput!]
+  NOT: [BountyStatusWhereInput!]
+}
+
+input BountyStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type BountySubscriptionPayload {
+  mutation: MutationType!
+  node: Bounty
+  updatedFields: [String!]
+  previousValues: BountyPreviousValues
+}
+
+input BountySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BountyWhereInput
+  AND: [BountySubscriptionWhereInput!]
+  OR: [BountySubscriptionWhereInput!]
+  NOT: [BountySubscriptionWhereInput!]
+}
+
+input BountyUpdateInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  bountyStatus: BountyStatusUpdateManyWithoutBountyInput
+  curator: String
+  beneficiary: String
+  updateDue: BlockNumberUpdateOneRequiredInput
+  unlockAt: BlockNumberUpdateOneRequiredInput
+}
+
+input BountyUpdateManyMutationInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  curator: String
+  beneficiary: String
+}
+
+input BountyUpdateOneRequiredWithoutBountyStatusInput {
+  create: BountyCreateWithoutBountyStatusInput
+  update: BountyUpdateWithoutBountyStatusDataInput
+  upsert: BountyUpsertWithoutBountyStatusInput
+  connect: BountyWhereUniqueInput
+}
+
+input BountyUpdateWithoutBountyStatusDataInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  curator: String
+  beneficiary: String
+  updateDue: BlockNumberUpdateOneRequiredInput
+  unlockAt: BlockNumberUpdateOneRequiredInput
+}
+
+input BountyUpsertWithoutBountyStatusInput {
+  update: BountyUpdateWithoutBountyStatusDataInput!
+  create: BountyCreateWithoutBountyStatusInput!
+}
+
+input BountyWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  proposer: String
+  proposer_not: String
+  proposer_in: [String!]
+  proposer_not_in: [String!]
+  proposer_lt: String
+  proposer_lte: String
+  proposer_gt: String
+  proposer_gte: String
+  proposer_contains: String
+  proposer_not_contains: String
+  proposer_starts_with: String
+  proposer_not_starts_with: String
+  proposer_ends_with: String
+  proposer_not_ends_with: String
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  fee: String
+  fee_not: String
+  fee_in: [String!]
+  fee_not_in: [String!]
+  fee_lt: String
+  fee_lte: String
+  fee_gt: String
+  fee_gte: String
+  fee_contains: String
+  fee_not_contains: String
+  fee_starts_with: String
+  fee_not_starts_with: String
+  fee_ends_with: String
+  fee_not_ends_with: String
+  curatorDeposit: String
+  curatorDeposit_not: String
+  curatorDeposit_in: [String!]
+  curatorDeposit_not_in: [String!]
+  curatorDeposit_lt: String
+  curatorDeposit_lte: String
+  curatorDeposit_gt: String
+  curatorDeposit_gte: String
+  curatorDeposit_contains: String
+  curatorDeposit_not_contains: String
+  curatorDeposit_starts_with: String
+  curatorDeposit_not_starts_with: String
+  curatorDeposit_ends_with: String
+  curatorDeposit_not_ends_with: String
+  bond: String
+  bond_not: String
+  bond_in: [String!]
+  bond_not_in: [String!]
+  bond_lt: String
+  bond_lte: String
+  bond_gt: String
+  bond_gte: String
+  bond_contains: String
+  bond_not_contains: String
+  bond_starts_with: String
+  bond_not_starts_with: String
+  bond_ends_with: String
+  bond_not_ends_with: String
+  bountyId: Int
+  bountyId_not: Int
+  bountyId_in: [Int!]
+  bountyId_not_in: [Int!]
+  bountyId_lt: Int
+  bountyId_lte: Int
+  bountyId_gt: Int
+  bountyId_gte: Int
+  bountyStatus_every: BountyStatusWhereInput
+  bountyStatus_some: BountyStatusWhereInput
+  bountyStatus_none: BountyStatusWhereInput
+  curator: String
+  curator_not: String
+  curator_in: [String!]
+  curator_not_in: [String!]
+  curator_lt: String
+  curator_lte: String
+  curator_gt: String
+  curator_gte: String
+  curator_contains: String
+  curator_not_contains: String
+  curator_starts_with: String
+  curator_not_starts_with: String
+  curator_ends_with: String
+  curator_not_ends_with: String
+  beneficiary: String
+  beneficiary_not: String
+  beneficiary_in: [String!]
+  beneficiary_not_in: [String!]
+  beneficiary_lt: String
+  beneficiary_lte: String
+  beneficiary_gt: String
+  beneficiary_gte: String
+  beneficiary_contains: String
+  beneficiary_not_contains: String
+  beneficiary_starts_with: String
+  beneficiary_not_starts_with: String
+  beneficiary_ends_with: String
+  beneficiary_not_ends_with: String
+  updateDue: BlockNumberWhereInput
+  unlockAt: BlockNumberWhereInput
+  AND: [BountyWhereInput!]
+  OR: [BountyWhereInput!]
+  NOT: [BountyWhereInput!]
+}
+
+input BountyWhereUniqueInput {
+  id: Int
+  bountyId: Int
 }
 
 type Council {
@@ -1868,6 +2391,18 @@ type Mutation {
   upsertBlockNumber(where: BlockNumberWhereUniqueInput!, create: BlockNumberCreateInput!, update: BlockNumberUpdateInput!): BlockNumber!
   deleteBlockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   deleteManyBlockNumbers(where: BlockNumberWhereInput): BatchPayload!
+  createBounty(data: BountyCreateInput!): Bounty!
+  updateBounty(data: BountyUpdateInput!, where: BountyWhereUniqueInput!): Bounty
+  updateManyBounties(data: BountyUpdateManyMutationInput!, where: BountyWhereInput): BatchPayload!
+  upsertBounty(where: BountyWhereUniqueInput!, create: BountyCreateInput!, update: BountyUpdateInput!): Bounty!
+  deleteBounty(where: BountyWhereUniqueInput!): Bounty
+  deleteManyBounties(where: BountyWhereInput): BatchPayload!
+  createBountyStatus(data: BountyStatusCreateInput!): BountyStatus!
+  updateBountyStatus(data: BountyStatusUpdateInput!, where: BountyStatusWhereUniqueInput!): BountyStatus
+  updateManyBountyStatuses(data: BountyStatusUpdateManyMutationInput!, where: BountyStatusWhereInput): BatchPayload!
+  upsertBountyStatus(where: BountyStatusWhereUniqueInput!, create: BountyStatusCreateInput!, update: BountyStatusUpdateInput!): BountyStatus!
+  deleteBountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
+  deleteManyBountyStatuses(where: BountyStatusWhereInput): BatchPayload!
   createCouncil(data: CouncilCreateInput!): Council!
   updateCouncil(data: CouncilUpdateInput!, where: CouncilWhereUniqueInput!): Council
   upsertCouncil(where: CouncilWhereUniqueInput!, create: CouncilCreateInput!, update: CouncilUpdateInput!): Council!
@@ -3700,6 +4235,12 @@ type Query {
   blockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   blockNumbers(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockNumber]!
   blockNumbersConnection(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockNumberConnection!
+  bounty(where: BountyWhereUniqueInput!): Bounty
+  bounties(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bounty]!
+  bountiesConnection(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyConnection!
+  bountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
+  bountyStatuses(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus]!
+  bountyStatusesConnection(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyStatusConnection!
   council(where: CouncilWhereUniqueInput!): Council
   councils(where: CouncilWhereInput, orderBy: CouncilOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Council]!
   councilsConnection(where: CouncilWhereInput, orderBy: CouncilOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CouncilConnection!
@@ -4717,6 +5258,8 @@ input StakeWhereUniqueInput {
 type Subscription {
   blockIndex(where: BlockIndexSubscriptionWhereInput): BlockIndexSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
+  bounty(where: BountySubscriptionWhereInput): BountySubscriptionPayload
+  bountyStatus(where: BountyStatusSubscriptionWhereInput): BountyStatusSubscriptionPayload
   council(where: CouncilSubscriptionWhereInput): CouncilSubscriptionPayload
   councilMember(where: CouncilMemberSubscriptionWhereInput): CouncilMemberSubscriptionPayload
   era(where: EraSubscriptionWhereInput): EraSubscriptionPayload

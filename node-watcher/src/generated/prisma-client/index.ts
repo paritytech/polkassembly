@@ -18,6 +18,8 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   blockIndex: (where?: BlockIndexWhereInput) => Promise<boolean>;
   blockNumber: (where?: BlockNumberWhereInput) => Promise<boolean>;
+  bounty: (where?: BountyWhereInput) => Promise<boolean>;
+  bountyStatus: (where?: BountyStatusWhereInput) => Promise<boolean>;
   council: (where?: CouncilWhereInput) => Promise<boolean>;
   councilMember: (where?: CouncilMemberWhereInput) => Promise<boolean>;
   era: (where?: EraWhereInput) => Promise<boolean>;
@@ -109,6 +111,46 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => BlockNumberConnectionPromise;
+  bounty: (where: BountyWhereUniqueInput) => BountyNullablePromise;
+  bounties: (args?: {
+    where?: BountyWhereInput;
+    orderBy?: BountyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Bounty>;
+  bountiesConnection: (args?: {
+    where?: BountyWhereInput;
+    orderBy?: BountyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => BountyConnectionPromise;
+  bountyStatus: (
+    where: BountyStatusWhereUniqueInput
+  ) => BountyStatusNullablePromise;
+  bountyStatuses: (args?: {
+    where?: BountyStatusWhereInput;
+    orderBy?: BountyStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<BountyStatus>;
+  bountyStatusesConnection: (args?: {
+    where?: BountyStatusWhereInput;
+    orderBy?: BountyStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => BountyStatusConnectionPromise;
   council: (where: CouncilWhereUniqueInput) => CouncilNullablePromise;
   councils: (args?: {
     where?: CouncilWhereInput;
@@ -665,6 +707,42 @@ export interface Prisma {
   deleteManyBlockNumbers: (
     where?: BlockNumberWhereInput
   ) => BatchPayloadPromise;
+  createBounty: (data: BountyCreateInput) => BountyPromise;
+  updateBounty: (args: {
+    data: BountyUpdateInput;
+    where: BountyWhereUniqueInput;
+  }) => BountyPromise;
+  updateManyBounties: (args: {
+    data: BountyUpdateManyMutationInput;
+    where?: BountyWhereInput;
+  }) => BatchPayloadPromise;
+  upsertBounty: (args: {
+    where: BountyWhereUniqueInput;
+    create: BountyCreateInput;
+    update: BountyUpdateInput;
+  }) => BountyPromise;
+  deleteBounty: (where: BountyWhereUniqueInput) => BountyPromise;
+  deleteManyBounties: (where?: BountyWhereInput) => BatchPayloadPromise;
+  createBountyStatus: (data: BountyStatusCreateInput) => BountyStatusPromise;
+  updateBountyStatus: (args: {
+    data: BountyStatusUpdateInput;
+    where: BountyStatusWhereUniqueInput;
+  }) => BountyStatusPromise;
+  updateManyBountyStatuses: (args: {
+    data: BountyStatusUpdateManyMutationInput;
+    where?: BountyStatusWhereInput;
+  }) => BatchPayloadPromise;
+  upsertBountyStatus: (args: {
+    where: BountyStatusWhereUniqueInput;
+    create: BountyStatusCreateInput;
+    update: BountyStatusUpdateInput;
+  }) => BountyStatusPromise;
+  deleteBountyStatus: (
+    where: BountyStatusWhereUniqueInput
+  ) => BountyStatusPromise;
+  deleteManyBountyStatuses: (
+    where?: BountyStatusWhereInput
+  ) => BatchPayloadPromise;
   createCouncil: (data: CouncilCreateInput) => CouncilPromise;
   updateCouncil: (args: {
     data: CouncilUpdateInput;
@@ -1152,6 +1230,12 @@ export interface Subscription {
   blockNumber: (
     where?: BlockNumberSubscriptionWhereInput
   ) => BlockNumberSubscriptionPayloadSubscription;
+  bounty: (
+    where?: BountySubscriptionWhereInput
+  ) => BountySubscriptionPayloadSubscription;
+  bountyStatus: (
+    where?: BountyStatusSubscriptionWhereInput
+  ) => BountyStatusSubscriptionPayloadSubscription;
   council: (
     where?: CouncilSubscriptionWhereInput
   ) => CouncilSubscriptionPayloadSubscription;
@@ -1261,6 +1345,34 @@ export type BlockNumberOrderByInput =
   | "startDateTime_DESC"
   | "hash_ASC"
   | "hash_DESC";
+
+export type BountyStatusOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "uniqueStatus_ASC"
+  | "uniqueStatus_DESC";
+
+export type BountyOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "proposer_ASC"
+  | "proposer_DESC"
+  | "value_ASC"
+  | "value_DESC"
+  | "fee_ASC"
+  | "fee_DESC"
+  | "curatorDeposit_ASC"
+  | "curatorDeposit_DESC"
+  | "bond_ASC"
+  | "bond_DESC"
+  | "bountyId_ASC"
+  | "bountyId_DESC"
+  | "curator_ASC"
+  | "curator_DESC"
+  | "beneficiary_ASC"
+  | "beneficiary_DESC";
 
 export type CouncilMemberOrderByInput =
   | "id_ASC"
@@ -1632,6 +1744,191 @@ export interface BlockNumberWhereInput {
   OR?: Maybe<BlockNumberWhereInput[] | BlockNumberWhereInput>;
   NOT?: Maybe<BlockNumberWhereInput[] | BlockNumberWhereInput>;
 }
+
+export type BountyWhereUniqueInput = AtLeastOne<{
+  id: Maybe<Int>;
+  bountyId?: Maybe<Int>;
+}>;
+
+export interface BountyStatusWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  blockNumber?: Maybe<BlockNumberWhereInput>;
+  bounty?: Maybe<BountyWhereInput>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<BountyStatusWhereInput[] | BountyStatusWhereInput>;
+  OR?: Maybe<BountyStatusWhereInput[] | BountyStatusWhereInput>;
+  NOT?: Maybe<BountyStatusWhereInput[] | BountyStatusWhereInput>;
+}
+
+export interface BountyWhereInput {
+  id?: Maybe<Int>;
+  id_not?: Maybe<Int>;
+  id_in?: Maybe<Int[] | Int>;
+  id_not_in?: Maybe<Int[] | Int>;
+  id_lt?: Maybe<Int>;
+  id_lte?: Maybe<Int>;
+  id_gt?: Maybe<Int>;
+  id_gte?: Maybe<Int>;
+  proposer?: Maybe<String>;
+  proposer_not?: Maybe<String>;
+  proposer_in?: Maybe<String[] | String>;
+  proposer_not_in?: Maybe<String[] | String>;
+  proposer_lt?: Maybe<String>;
+  proposer_lte?: Maybe<String>;
+  proposer_gt?: Maybe<String>;
+  proposer_gte?: Maybe<String>;
+  proposer_contains?: Maybe<String>;
+  proposer_not_contains?: Maybe<String>;
+  proposer_starts_with?: Maybe<String>;
+  proposer_not_starts_with?: Maybe<String>;
+  proposer_ends_with?: Maybe<String>;
+  proposer_not_ends_with?: Maybe<String>;
+  value?: Maybe<String>;
+  value_not?: Maybe<String>;
+  value_in?: Maybe<String[] | String>;
+  value_not_in?: Maybe<String[] | String>;
+  value_lt?: Maybe<String>;
+  value_lte?: Maybe<String>;
+  value_gt?: Maybe<String>;
+  value_gte?: Maybe<String>;
+  value_contains?: Maybe<String>;
+  value_not_contains?: Maybe<String>;
+  value_starts_with?: Maybe<String>;
+  value_not_starts_with?: Maybe<String>;
+  value_ends_with?: Maybe<String>;
+  value_not_ends_with?: Maybe<String>;
+  fee?: Maybe<String>;
+  fee_not?: Maybe<String>;
+  fee_in?: Maybe<String[] | String>;
+  fee_not_in?: Maybe<String[] | String>;
+  fee_lt?: Maybe<String>;
+  fee_lte?: Maybe<String>;
+  fee_gt?: Maybe<String>;
+  fee_gte?: Maybe<String>;
+  fee_contains?: Maybe<String>;
+  fee_not_contains?: Maybe<String>;
+  fee_starts_with?: Maybe<String>;
+  fee_not_starts_with?: Maybe<String>;
+  fee_ends_with?: Maybe<String>;
+  fee_not_ends_with?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  curatorDeposit_not?: Maybe<String>;
+  curatorDeposit_in?: Maybe<String[] | String>;
+  curatorDeposit_not_in?: Maybe<String[] | String>;
+  curatorDeposit_lt?: Maybe<String>;
+  curatorDeposit_lte?: Maybe<String>;
+  curatorDeposit_gt?: Maybe<String>;
+  curatorDeposit_gte?: Maybe<String>;
+  curatorDeposit_contains?: Maybe<String>;
+  curatorDeposit_not_contains?: Maybe<String>;
+  curatorDeposit_starts_with?: Maybe<String>;
+  curatorDeposit_not_starts_with?: Maybe<String>;
+  curatorDeposit_ends_with?: Maybe<String>;
+  curatorDeposit_not_ends_with?: Maybe<String>;
+  bond?: Maybe<String>;
+  bond_not?: Maybe<String>;
+  bond_in?: Maybe<String[] | String>;
+  bond_not_in?: Maybe<String[] | String>;
+  bond_lt?: Maybe<String>;
+  bond_lte?: Maybe<String>;
+  bond_gt?: Maybe<String>;
+  bond_gte?: Maybe<String>;
+  bond_contains?: Maybe<String>;
+  bond_not_contains?: Maybe<String>;
+  bond_starts_with?: Maybe<String>;
+  bond_not_starts_with?: Maybe<String>;
+  bond_ends_with?: Maybe<String>;
+  bond_not_ends_with?: Maybe<String>;
+  bountyId?: Maybe<Int>;
+  bountyId_not?: Maybe<Int>;
+  bountyId_in?: Maybe<Int[] | Int>;
+  bountyId_not_in?: Maybe<Int[] | Int>;
+  bountyId_lt?: Maybe<Int>;
+  bountyId_lte?: Maybe<Int>;
+  bountyId_gt?: Maybe<Int>;
+  bountyId_gte?: Maybe<Int>;
+  bountyStatus_every?: Maybe<BountyStatusWhereInput>;
+  bountyStatus_some?: Maybe<BountyStatusWhereInput>;
+  bountyStatus_none?: Maybe<BountyStatusWhereInput>;
+  curator?: Maybe<String>;
+  curator_not?: Maybe<String>;
+  curator_in?: Maybe<String[] | String>;
+  curator_not_in?: Maybe<String[] | String>;
+  curator_lt?: Maybe<String>;
+  curator_lte?: Maybe<String>;
+  curator_gt?: Maybe<String>;
+  curator_gte?: Maybe<String>;
+  curator_contains?: Maybe<String>;
+  curator_not_contains?: Maybe<String>;
+  curator_starts_with?: Maybe<String>;
+  curator_not_starts_with?: Maybe<String>;
+  curator_ends_with?: Maybe<String>;
+  curator_not_ends_with?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+  beneficiary_not?: Maybe<String>;
+  beneficiary_in?: Maybe<String[] | String>;
+  beneficiary_not_in?: Maybe<String[] | String>;
+  beneficiary_lt?: Maybe<String>;
+  beneficiary_lte?: Maybe<String>;
+  beneficiary_gt?: Maybe<String>;
+  beneficiary_gte?: Maybe<String>;
+  beneficiary_contains?: Maybe<String>;
+  beneficiary_not_contains?: Maybe<String>;
+  beneficiary_starts_with?: Maybe<String>;
+  beneficiary_not_starts_with?: Maybe<String>;
+  beneficiary_ends_with?: Maybe<String>;
+  beneficiary_not_ends_with?: Maybe<String>;
+  updateDue?: Maybe<BlockNumberWhereInput>;
+  unlockAt?: Maybe<BlockNumberWhereInput>;
+  AND?: Maybe<BountyWhereInput[] | BountyWhereInput>;
+  OR?: Maybe<BountyWhereInput[] | BountyWhereInput>;
+  NOT?: Maybe<BountyWhereInput[] | BountyWhereInput>;
+}
+
+export type BountyStatusWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  uniqueStatus?: Maybe<String>;
+}>;
 
 export type CouncilWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -3291,15 +3588,258 @@ export interface BlockNumberUpdateManyMutationInput {
   hash?: Maybe<String>;
 }
 
-export interface CouncilCreateInput {
+export interface BountyCreateInput {
+  proposer: String;
+  value: String;
+  fee?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  bond?: Maybe<String>;
+  bountyId: Int;
+  bountyStatus?: Maybe<BountyStatusCreateManyWithoutBountyInput>;
+  curator?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+  updateDue: BlockNumberCreateOneInput;
+  unlockAt: BlockNumberCreateOneInput;
+}
+
+export interface BountyStatusCreateManyWithoutBountyInput {
+  create?: Maybe<
+    | BountyStatusCreateWithoutBountyInput[]
+    | BountyStatusCreateWithoutBountyInput
+  >;
+  connect?: Maybe<
+    BountyStatusWhereUniqueInput[] | BountyStatusWhereUniqueInput
+  >;
+}
+
+export interface BountyStatusCreateWithoutBountyInput {
   id?: Maybe<ID_Input>;
   blockNumber: BlockNumberCreateOneInput;
-  members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>;
+  status: String;
+  uniqueStatus: String;
 }
 
 export interface BlockNumberCreateOneInput {
   create?: Maybe<BlockNumberCreateInput>;
   connect?: Maybe<BlockNumberWhereUniqueInput>;
+}
+
+export interface BountyUpdateInput {
+  proposer?: Maybe<String>;
+  value?: Maybe<String>;
+  fee?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  bond?: Maybe<String>;
+  bountyId?: Maybe<Int>;
+  bountyStatus?: Maybe<BountyStatusUpdateManyWithoutBountyInput>;
+  curator?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+  updateDue?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  unlockAt?: Maybe<BlockNumberUpdateOneRequiredInput>;
+}
+
+export interface BountyStatusUpdateManyWithoutBountyInput {
+  create?: Maybe<
+    | BountyStatusCreateWithoutBountyInput[]
+    | BountyStatusCreateWithoutBountyInput
+  >;
+  delete?: Maybe<BountyStatusWhereUniqueInput[] | BountyStatusWhereUniqueInput>;
+  connect?: Maybe<
+    BountyStatusWhereUniqueInput[] | BountyStatusWhereUniqueInput
+  >;
+  set?: Maybe<BountyStatusWhereUniqueInput[] | BountyStatusWhereUniqueInput>;
+  disconnect?: Maybe<
+    BountyStatusWhereUniqueInput[] | BountyStatusWhereUniqueInput
+  >;
+  update?: Maybe<
+    | BountyStatusUpdateWithWhereUniqueWithoutBountyInput[]
+    | BountyStatusUpdateWithWhereUniqueWithoutBountyInput
+  >;
+  upsert?: Maybe<
+    | BountyStatusUpsertWithWhereUniqueWithoutBountyInput[]
+    | BountyStatusUpsertWithWhereUniqueWithoutBountyInput
+  >;
+  deleteMany?: Maybe<
+    BountyStatusScalarWhereInput[] | BountyStatusScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | BountyStatusUpdateManyWithWhereNestedInput[]
+    | BountyStatusUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface BountyStatusUpdateWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput;
+  data: BountyStatusUpdateWithoutBountyDataInput;
+}
+
+export interface BountyStatusUpdateWithoutBountyDataInput {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface BlockNumberUpdateOneRequiredInput {
+  create?: Maybe<BlockNumberCreateInput>;
+  update?: Maybe<BlockNumberUpdateDataInput>;
+  upsert?: Maybe<BlockNumberUpsertNestedInput>;
+  connect?: Maybe<BlockNumberWhereUniqueInput>;
+}
+
+export interface BlockNumberUpdateDataInput {
+  number?: Maybe<Int>;
+  authoredBy?: Maybe<String>;
+  startDateTime?: Maybe<DateTimeInput>;
+  hash?: Maybe<String>;
+}
+
+export interface BlockNumberUpsertNestedInput {
+  update: BlockNumberUpdateDataInput;
+  create: BlockNumberCreateInput;
+}
+
+export interface BountyStatusUpsertWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput;
+  update: BountyStatusUpdateWithoutBountyDataInput;
+  create: BountyStatusCreateWithoutBountyInput;
+}
+
+export interface BountyStatusScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<BountyStatusScalarWhereInput[] | BountyStatusScalarWhereInput>;
+  OR?: Maybe<BountyStatusScalarWhereInput[] | BountyStatusScalarWhereInput>;
+  NOT?: Maybe<BountyStatusScalarWhereInput[] | BountyStatusScalarWhereInput>;
+}
+
+export interface BountyStatusUpdateManyWithWhereNestedInput {
+  where: BountyStatusScalarWhereInput;
+  data: BountyStatusUpdateManyDataInput;
+}
+
+export interface BountyStatusUpdateManyDataInput {
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface BountyUpdateManyMutationInput {
+  proposer?: Maybe<String>;
+  value?: Maybe<String>;
+  fee?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  bond?: Maybe<String>;
+  bountyId?: Maybe<Int>;
+  curator?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+}
+
+export interface BountyStatusCreateInput {
+  id?: Maybe<ID_Input>;
+  blockNumber: BlockNumberCreateOneInput;
+  bounty: BountyCreateOneWithoutBountyStatusInput;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface BountyCreateOneWithoutBountyStatusInput {
+  create?: Maybe<BountyCreateWithoutBountyStatusInput>;
+  connect?: Maybe<BountyWhereUniqueInput>;
+}
+
+export interface BountyCreateWithoutBountyStatusInput {
+  proposer: String;
+  value: String;
+  fee?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  bond?: Maybe<String>;
+  bountyId: Int;
+  curator?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+  updateDue: BlockNumberCreateOneInput;
+  unlockAt: BlockNumberCreateOneInput;
+}
+
+export interface BountyStatusUpdateInput {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  bounty?: Maybe<BountyUpdateOneRequiredWithoutBountyStatusInput>;
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface BountyUpdateOneRequiredWithoutBountyStatusInput {
+  create?: Maybe<BountyCreateWithoutBountyStatusInput>;
+  update?: Maybe<BountyUpdateWithoutBountyStatusDataInput>;
+  upsert?: Maybe<BountyUpsertWithoutBountyStatusInput>;
+  connect?: Maybe<BountyWhereUniqueInput>;
+}
+
+export interface BountyUpdateWithoutBountyStatusDataInput {
+  proposer?: Maybe<String>;
+  value?: Maybe<String>;
+  fee?: Maybe<String>;
+  curatorDeposit?: Maybe<String>;
+  bond?: Maybe<String>;
+  bountyId?: Maybe<Int>;
+  curator?: Maybe<String>;
+  beneficiary?: Maybe<String>;
+  updateDue?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  unlockAt?: Maybe<BlockNumberUpdateOneRequiredInput>;
+}
+
+export interface BountyUpsertWithoutBountyStatusInput {
+  update: BountyUpdateWithoutBountyStatusDataInput;
+  create: BountyCreateWithoutBountyStatusInput;
+}
+
+export interface BountyStatusUpdateManyMutationInput {
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface CouncilCreateInput {
+  id?: Maybe<ID_Input>;
+  blockNumber: BlockNumberCreateOneInput;
+  members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>;
 }
 
 export interface CouncilMemberCreateManyWithoutCouncilsInput {
@@ -3320,25 +3860,6 @@ export interface CouncilMemberCreateWithoutCouncilsInput {
 export interface CouncilUpdateInput {
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   members?: Maybe<CouncilMemberUpdateManyWithoutCouncilsInput>;
-}
-
-export interface BlockNumberUpdateOneRequiredInput {
-  create?: Maybe<BlockNumberCreateInput>;
-  update?: Maybe<BlockNumberUpdateDataInput>;
-  upsert?: Maybe<BlockNumberUpsertNestedInput>;
-  connect?: Maybe<BlockNumberWhereUniqueInput>;
-}
-
-export interface BlockNumberUpdateDataInput {
-  number?: Maybe<Int>;
-  authoredBy?: Maybe<String>;
-  startDateTime?: Maybe<DateTimeInput>;
-  hash?: Maybe<String>;
-}
-
-export interface BlockNumberUpsertNestedInput {
-  update: BlockNumberUpdateDataInput;
-  create: BlockNumberCreateInput;
 }
 
 export interface CouncilMemberUpdateManyWithoutCouncilsInput {
@@ -5824,6 +6345,34 @@ export interface BlockNumberSubscriptionWhereInput {
   >;
 }
 
+export interface BountySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BountyWhereInput>;
+  AND?: Maybe<BountySubscriptionWhereInput[] | BountySubscriptionWhereInput>;
+  OR?: Maybe<BountySubscriptionWhereInput[] | BountySubscriptionWhereInput>;
+  NOT?: Maybe<BountySubscriptionWhereInput[] | BountySubscriptionWhereInput>;
+}
+
+export interface BountyStatusSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BountyStatusWhereInput>;
+  AND?: Maybe<
+    BountyStatusSubscriptionWhereInput[] | BountyStatusSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    BountyStatusSubscriptionWhereInput[] | BountyStatusSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    BountyStatusSubscriptionWhereInput[] | BountyStatusSubscriptionWhereInput
+  >;
+}
+
 export interface CouncilSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -6445,6 +6994,237 @@ export interface AggregateBlockNumberPromise
 
 export interface AggregateBlockNumberSubscription
   extends Promise<AsyncIterator<AggregateBlockNumber>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Bounty {
+  id: Int;
+  proposer: String;
+  value: String;
+  fee?: String;
+  curatorDeposit?: String;
+  bond?: String;
+  bountyId: Int;
+  curator?: String;
+  beneficiary?: String;
+}
+
+export interface BountyPromise extends Promise<Bounty>, Fragmentable {
+  id: () => Promise<Int>;
+  proposer: () => Promise<String>;
+  value: () => Promise<String>;
+  fee: () => Promise<String>;
+  curatorDeposit: () => Promise<String>;
+  bond: () => Promise<String>;
+  bountyId: () => Promise<Int>;
+  bountyStatus: <T = FragmentableArray<BountyStatus>>(args?: {
+    where?: BountyStatusWhereInput;
+    orderBy?: BountyStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  curator: () => Promise<String>;
+  beneficiary: () => Promise<String>;
+  updateDue: <T = BlockNumberPromise>() => T;
+  unlockAt: <T = BlockNumberPromise>() => T;
+}
+
+export interface BountySubscription
+  extends Promise<AsyncIterator<Bounty>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<Int>>;
+  proposer: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+  fee: () => Promise<AsyncIterator<String>>;
+  curatorDeposit: () => Promise<AsyncIterator<String>>;
+  bond: () => Promise<AsyncIterator<String>>;
+  bountyId: () => Promise<AsyncIterator<Int>>;
+  bountyStatus: <T = Promise<AsyncIterator<BountyStatusSubscription>>>(args?: {
+    where?: BountyStatusWhereInput;
+    orderBy?: BountyStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  curator: () => Promise<AsyncIterator<String>>;
+  beneficiary: () => Promise<AsyncIterator<String>>;
+  updateDue: <T = BlockNumberSubscription>() => T;
+  unlockAt: <T = BlockNumberSubscription>() => T;
+}
+
+export interface BountyNullablePromise
+  extends Promise<Bounty | null>,
+    Fragmentable {
+  id: () => Promise<Int>;
+  proposer: () => Promise<String>;
+  value: () => Promise<String>;
+  fee: () => Promise<String>;
+  curatorDeposit: () => Promise<String>;
+  bond: () => Promise<String>;
+  bountyId: () => Promise<Int>;
+  bountyStatus: <T = FragmentableArray<BountyStatus>>(args?: {
+    where?: BountyStatusWhereInput;
+    orderBy?: BountyStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  curator: () => Promise<String>;
+  beneficiary: () => Promise<String>;
+  updateDue: <T = BlockNumberPromise>() => T;
+  unlockAt: <T = BlockNumberPromise>() => T;
+}
+
+export interface BountyStatus {
+  id: ID_Output;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface BountyStatusPromise
+  extends Promise<BountyStatus>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  bounty: <T = BountyPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface BountyStatusSubscription
+  extends Promise<AsyncIterator<BountyStatus>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  blockNumber: <T = BlockNumberSubscription>() => T;
+  bounty: <T = BountySubscription>() => T;
+  status: () => Promise<AsyncIterator<String>>;
+  uniqueStatus: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BountyStatusNullablePromise
+  extends Promise<BountyStatus | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  bounty: <T = BountyPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface BountyConnection {
+  pageInfo: PageInfo;
+  edges: BountyEdge[];
+}
+
+export interface BountyConnectionPromise
+  extends Promise<BountyConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BountyEdge>>() => T;
+  aggregate: <T = AggregateBountyPromise>() => T;
+}
+
+export interface BountyConnectionSubscription
+  extends Promise<AsyncIterator<BountyConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BountyEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBountySubscription>() => T;
+}
+
+export interface BountyEdge {
+  node: Bounty;
+  cursor: String;
+}
+
+export interface BountyEdgePromise extends Promise<BountyEdge>, Fragmentable {
+  node: <T = BountyPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BountyEdgeSubscription
+  extends Promise<AsyncIterator<BountyEdge>>,
+    Fragmentable {
+  node: <T = BountySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateBounty {
+  count: Int;
+}
+
+export interface AggregateBountyPromise
+  extends Promise<AggregateBounty>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBountySubscription
+  extends Promise<AsyncIterator<AggregateBounty>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BountyStatusConnection {
+  pageInfo: PageInfo;
+  edges: BountyStatusEdge[];
+}
+
+export interface BountyStatusConnectionPromise
+  extends Promise<BountyStatusConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BountyStatusEdge>>() => T;
+  aggregate: <T = AggregateBountyStatusPromise>() => T;
+}
+
+export interface BountyStatusConnectionSubscription
+  extends Promise<AsyncIterator<BountyStatusConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BountyStatusEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBountyStatusSubscription>() => T;
+}
+
+export interface BountyStatusEdge {
+  node: BountyStatus;
+  cursor: String;
+}
+
+export interface BountyStatusEdgePromise
+  extends Promise<BountyStatusEdge>,
+    Fragmentable {
+  node: <T = BountyStatusPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BountyStatusEdgeSubscription
+  extends Promise<AsyncIterator<BountyStatusEdge>>,
+    Fragmentable {
+  node: <T = BountyStatusSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateBountyStatus {
+  count: Int;
+}
+
+export interface AggregateBountyStatusPromise
+  extends Promise<AggregateBountyStatus>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBountyStatusSubscription
+  extends Promise<AsyncIterator<AggregateBountyStatus>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -9232,6 +10012,118 @@ export interface BlockNumberPreviousValuesSubscription
   hash: () => Promise<AsyncIterator<String>>;
 }
 
+export interface BountySubscriptionPayload {
+  mutation: MutationType;
+  node: Bounty;
+  updatedFields: String[];
+  previousValues: BountyPreviousValues;
+}
+
+export interface BountySubscriptionPayloadPromise
+  extends Promise<BountySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BountyPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BountyPreviousValuesPromise>() => T;
+}
+
+export interface BountySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BountySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BountySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BountyPreviousValuesSubscription>() => T;
+}
+
+export interface BountyPreviousValues {
+  id: Int;
+  proposer: String;
+  value: String;
+  fee?: String;
+  curatorDeposit?: String;
+  bond?: String;
+  bountyId: Int;
+  curator?: String;
+  beneficiary?: String;
+}
+
+export interface BountyPreviousValuesPromise
+  extends Promise<BountyPreviousValues>,
+    Fragmentable {
+  id: () => Promise<Int>;
+  proposer: () => Promise<String>;
+  value: () => Promise<String>;
+  fee: () => Promise<String>;
+  curatorDeposit: () => Promise<String>;
+  bond: () => Promise<String>;
+  bountyId: () => Promise<Int>;
+  curator: () => Promise<String>;
+  beneficiary: () => Promise<String>;
+}
+
+export interface BountyPreviousValuesSubscription
+  extends Promise<AsyncIterator<BountyPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<Int>>;
+  proposer: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+  fee: () => Promise<AsyncIterator<String>>;
+  curatorDeposit: () => Promise<AsyncIterator<String>>;
+  bond: () => Promise<AsyncIterator<String>>;
+  bountyId: () => Promise<AsyncIterator<Int>>;
+  curator: () => Promise<AsyncIterator<String>>;
+  beneficiary: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BountyStatusSubscriptionPayload {
+  mutation: MutationType;
+  node: BountyStatus;
+  updatedFields: String[];
+  previousValues: BountyStatusPreviousValues;
+}
+
+export interface BountyStatusSubscriptionPayloadPromise
+  extends Promise<BountyStatusSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BountyStatusPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BountyStatusPreviousValuesPromise>() => T;
+}
+
+export interface BountyStatusSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BountyStatusSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BountyStatusSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BountyStatusPreviousValuesSubscription>() => T;
+}
+
+export interface BountyStatusPreviousValues {
+  id: ID_Output;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface BountyStatusPreviousValuesPromise
+  extends Promise<BountyStatusPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface BountyStatusPreviousValuesSubscription
+  extends Promise<AsyncIterator<BountyStatusPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  status: () => Promise<AsyncIterator<String>>;
+  uniqueStatus: () => Promise<AsyncIterator<String>>;
+}
+
 export interface CouncilSubscriptionPayload {
   mutation: MutationType;
   node: Council;
@@ -10667,6 +11559,14 @@ export const models: Model[] = [
   },
   {
     name: "TipStatus",
+    embedded: false
+  },
+  {
+    name: "Bounty",
+    embedded: false
+  },
+  {
+    name: "BountyStatus",
     embedded: false
   }
 ];
