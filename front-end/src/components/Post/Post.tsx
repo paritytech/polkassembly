@@ -11,12 +11,16 @@ import { Grid, Icon, Responsive } from 'semantic-ui-react';
 import { MetaContext } from '../../context/MetaContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import {
+	BountyPostAndCommentsQuery,
+	BountyPostAndCommentsQueryHookResult,
+	BountyPostFragment,
 	DiscussionPostAndCommentsQuery,
 	DiscussionPostAndCommentsQueryHookResult,
 	DiscussionPostFragment,
 	MotionPostAndCommentsQuery,
 	MotionPostAndCommentsQueryHookResult,
 	MotionPostFragment,
+	OnchainLinkBountyFragment,
 	OnchainLinkMotionFragment,
 	OnchainLinkProposalFragment,
 	OnchainLinkReferendumFragment,
@@ -46,6 +50,7 @@ import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import GovenanceSideBar from './GovernanceSideBar';
 import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
+import PostBountyInfo from './PostGovernanceInfo/PostBountyInfo';
 import PostMotionInfo from './PostGovernanceInfo/PostMotionInfo';
 import PostProposalInfo from './PostGovernanceInfo/PostProposalInfo';
 import PostReferendumInfo from './PostGovernanceInfo/PostReferendumInfo';
@@ -60,8 +65,10 @@ interface Props {
 		ReferendumPostAndCommentsQueryHookResult['data'] |
 		MotionPostAndCommentsQueryHookResult['data'] |
 		TreasuryProposalPostAndCommentsQueryHookResult['data'] |
-		TipPostAndCommentsQueryHookResult['data' ]
+		TipPostAndCommentsQueryHookResult['data'] |
+		BountyPostAndCommentsQueryHookResult['data']
 	)
+	isBounty?: boolean
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
@@ -73,6 +80,7 @@ interface Props {
 		Promise<ApolloQueryResult<MotionPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<TreasuryProposalPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<TipPostAndCommentsQuery>> |
+		Promise<ApolloQueryResult<BountyPostAndCommentsQuery>> |
 		Promise<ApolloQueryResult<DiscussionPostAndCommentsQuery>>
 }
 
@@ -81,7 +89,7 @@ interface Redirection {
 	text?: string;
 }
 
-const Post = ( { className, data, isMotion = false, isProposal = false, isReferendum = false, isTipProposal = false, isTreasuryProposal = false, refetch }: Props ) => {
+const Post = ( { className, data, isBounty = false, isMotion = false, isProposal = false, isReferendum = false, isTipProposal = false, isTreasuryProposal = false, refetch }: Props ) => {
 	const post = data && data.posts && data.posts[0];
 	const { id, addresses } = useContext(UserDetailsContext);
 	const [isEditing, setIsEditing] = useState(false);
@@ -96,9 +104,18 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 	let motionPost: MotionPostFragment | undefined;
 	let treasuryPost: TreasuryProposalPostFragment | undefined;
 	let tipPost: TipPostFragment | undefined;
-	let definedOnchainLink : OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
+	let bountyPost: BountyPostFragment | undefined;
+	let definedOnchainLink : OnchainLinkBountyFragment | OnchainLinkMotionFragment | OnchainLinkReferendumFragment | OnchainLinkProposalFragment | OnchainLinkTipFragment | OnchainLinkTreasuryProposalFragment | undefined;
 	let postStatus: string | undefined;
 	let redirection: Redirection = {};
+
+	if (post && isBounty) {
+		bountyPost = post as BountyPostFragment;
+		definedOnchainLink = bountyPost.onchain_link as OnchainLinkBountyFragment;
+		onchainId = definedOnchainLink.onchain_bounty_id;
+		postStatus = bountyPost?.onchain_link?.onchain_bounty?.[0]?.bountyStatus?.[0].status;
+		metaTitle = `Bounty #${onchainId}`;
+	}
 
 	if (post && isReferendum) {
 		referendumPost = post as ReferendumPostFragment;
@@ -185,8 +202,8 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		global.window.localStorage.setItem('users', users.join(','));
 	}, [post]);
 
-	const isDiscussion = (post: TipPostFragment | TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
-		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal && !isTipProposal) {
+	const isDiscussion = (post: BountyPostFragment | TipPostFragment | TreasuryProposalPostFragment | MotionPostFragment | ProposalPostFragment | DiscussionPostFragment | ReferendumPostFragment): post is DiscussionPostFragment => {
+		if (!isReferendum && !isProposal && !isMotion && !isTreasuryProposal && !isTipProposal && !isBounty) {
 			return (post as DiscussionPostFragment) !== undefined;
 		}
 
@@ -199,8 +216,10 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isReferendum={isReferendum}
 		isTreasuryProposal={isTreasuryProposal}
 		isTipProposal={isTipProposal}
+		isBounty={isBounty}
 	/>;
 
+	const isBountyProposer = isBounty && bountyPost?.onchain_link?.proposer_address && addresses?.includes(bountyPost.onchain_link.proposer_address);
 	const isProposalProposer = isProposal && proposalPost?.onchain_link?.proposer_address && addresses?.includes(proposalPost.onchain_link.proposer_address);
 	const isReferendumProposer = isReferendum && referendumPost?.onchain_link?.proposer_address && addresses?.includes(referendumPost.onchain_link.proposer_address);
 	const isMotionProposer = isMotion && motionPost?.onchain_link?.proposer_address && addresses?.includes(motionPost.onchain_link.proposer_address);
@@ -212,11 +231,13 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 		isReferendumProposer ||
 		isMotionProposer ||
 		isTreasuryProposer ||
-		isTipProposer
+		isTipProposer ||
+		isBountyProposer
 	);
 
 	const Sidebar = () => <>
 		<GovenanceSideBar
+			isBounty={isBounty}
 			isMotion={isMotion}
 			isProposal={isProposal}
 			isReferendum={isReferendum}
@@ -257,6 +278,11 @@ const Post = ( { className, data, isMotion = false, isProposal = false, isRefere
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
 					</div>
 				</div>
+				{ isBounty &&
+					<PostBountyInfo
+						onchainLink={definedOnchainLink as OnchainLinkBountyFragment}
+					/>
+				}
 				{ isMotion &&
 					<PostMotionInfo
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
@@ -359,7 +385,7 @@ export default styled(Post)`
 		font-size: md;
 		margin-bottom: 1rem;
 		text-align: center;
-		
+
 		@media only screen and (max-width: 768px) {
 			padding: 2rem;
 			font-size: sm;

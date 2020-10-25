@@ -8,7 +8,7 @@ import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import { OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTipFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
+import { OnchainLinkBountyFragment, OnchainLinkMotionFragment, OnchainLinkProposalFragment, OnchainLinkReferendumFragment, OnchainLinkTipFragment, OnchainLinkTreasuryProposalFragment } from 'src/generated/graphql';
 import { APPNAME } from 'src/global/appName';
 import { motionStatus, proposalStatus, referendumStatus, tipStatus } from 'src/global/statuses';
 import { VoteThreshold } from 'src/types';
@@ -24,17 +24,18 @@ import VoteReferendum from './Referenda/VoteReferendum';
 
 interface Props {
 	className?: string
+	isBounty?: boolean
 	isMotion?: boolean
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
 	isTipProposal?: boolean
 	onchainId?: string | number | null
-	onchainLink?: OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment | OnchainLinkTipFragment
+	onchainLink?: OnchainLinkBountyFragment | OnchainLinkMotionFragment | OnchainLinkProposalFragment | OnchainLinkReferendumFragment | OnchainLinkTreasuryProposalFragment | OnchainLinkTipFragment
 	status?: string
 }
 
-const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
+const GovenanceSideBar = ({ className, isBounty, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
