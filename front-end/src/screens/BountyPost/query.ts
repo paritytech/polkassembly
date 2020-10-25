@@ -7,12 +7,12 @@ import { authorFields } from 'src/fragments/author';
 
 import { commentFields } from '../../fragments/comments';
 
-const onchainLinkTip = gql`
-    fragment onchainLinkTip on onchain_links {
+const onchainLinkBounty = gql`
+    fragment onchainLinkBounty on onchain_links {
         id,
         proposer_address,
-        onchain_tip_id,
-        onchain_tip(where: {}) {
+        onchain_bounty_id,
+        onchain_bounty(where: {}) {
             id
             hash
             reason
@@ -20,7 +20,7 @@ const onchainLinkTip = gql`
             finder
             finderFee
             closes
-            tipStatus(last: 1) {
+            bountyStatus(last: 1) {
                 id
                 status
                 blockNumber {
@@ -32,8 +32,8 @@ const onchainLinkTip = gql`
     }
 `;
 
-const tipPost = gql`
-    fragment tipPost on posts {
+const bountyPost = gql`
+    fragment bountyPost on posts {
         author {
             ...authorFields
         }
@@ -45,7 +45,7 @@ const tipPost = gql`
             ...commentFields
         }
         onchain_link{
-            ...onchainLinkTip
+            ...onchainLinkBounty
         }
         title
         topic {
@@ -59,15 +59,15 @@ const tipPost = gql`
     }
     ${authorFields}
     ${commentFields}
-    ${onchainLinkTip}
+    ${onchainLinkBounty}
 `;
 
-export const QUERY_TIP_POST_AND_COMMENTS = gql`
-    query TipPostAndComments ($hash:String!) {
-        posts(where: {onchain_link: {onchain_tip_id: {_eq: $hash}}}) {
-            ...tipPost
+export const QUERY_BOUNTY_POST_AND_COMMENTS = gql`
+    query BountyPostAndComments ($id: Int!) {
+        posts(where: {onchain_link: {onchain_bounty_id: {_eq: $id}}}) {
+            ...bountyPost
         }
     }
-    ${tipPost}
+    ${bountyPost}
 `;
 

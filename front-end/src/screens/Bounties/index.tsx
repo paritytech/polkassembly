@@ -7,7 +7,7 @@ import React from 'react';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 
 import InfoBox from '../../ui-components/InfoBox';
-import TipContainer from './BountyContainer';
+import BountyContainer from './BountyContainer';
 
 const OnchainBountyContainer = ({ className } : {className?: string}) => {
 
@@ -16,7 +16,7 @@ const OnchainBountyContainer = ({ className } : {className?: string}) => {
 			<h1>On-chain bounty</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
-					<TipContainer limit={25} />
+					<BountyContainer limit={25} />
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox

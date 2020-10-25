@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import BountyListing from '../../../components/Listings/BountyListing';
+import BountiesListing from '../../../components/Listings/BountiesListing';
 import { useAllTipPostsQuery } from '../../../generated/graphql';
 import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
@@ -38,7 +38,7 @@ const BountyContainer = ({ className, limit }:Props) => {
 
 	if (data) return (
 		<>
-			<BountyListing className={className} data={data}/>
+			<BountiesListing className={className} data={data}/>
 			{(loading || (data.posts.length === limit * page)) && <LoadMore onClick={loadMore} loading={loading} />}
 		</>
 	);

@@ -19,7 +19,7 @@ export const QUERY_LATEST_BOUNTY_PROPOSALS = gql`
                 }
             },
             onchain_link: {
-                onchain_tip_id: {
+                onchain_bounty_id: {
                     _is_null: false
                 }
             }
@@ -50,8 +50,8 @@ export const QUERY_LATEST_BOUNTY_PROPOSALS = gql`
             }
             onchain_link {
                 id
-                onchain_tip_id
-                onchain_tip(where: {}) {
+                onchain_bounty_id
+                onchain_bounty(where: {}) {
                     id
                     reason
                     tipStatus(last: 1) {
