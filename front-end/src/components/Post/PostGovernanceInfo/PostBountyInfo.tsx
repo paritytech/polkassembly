@@ -2,19 +2,20 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import * as moment from 'moment';
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import BlockCountdown from 'src/components/BlockCountdown';
-import { tipStatus as tipStatuses } from 'src/global/statuses';
 
 import { OnchainLinkBountyFragment } from '../../../generated/graphql';
+import { chainProperties } from '../../../global/networkConstants';
 import AddressComponent from '../../../ui-components/Address';
 import OnchainInfoWrapper from '../../../ui-components/OnchainInfoWrapper';
+import getNetwork from '../../../util/getNetwork';
 
 interface Props {
 	onchainLink: OnchainLinkBountyFragment
 }
+
+const currentNetwork = getNetwork();
 
 const PostBountyInfo = ({ onchainLink }: Props) => {
 	if (!onchainLink) return null;
@@ -24,8 +25,14 @@ const PostBountyInfo = ({ onchainLink }: Props) => {
 		proposer_address: proposerAddress
 	} = onchainLink;
 
-	const { closes, finder, hash, reason, who, bountyStatus  } = onchainBountyProposal?.[0] || { };
-	const { blockNumber, status } = bountyStatus?.[0] || {};
+	const {
+		value,
+		fee,
+		curatorDeposit,
+		bond,
+		curator,
+		beneficiary
+	} = onchainBountyProposal?.[0] || { };
 
 	return (
 		<OnchainInfoWrapper>
@@ -35,42 +42,35 @@ const PostBountyInfo = ({ onchainLink }: Props) => {
 					<h6>Proposer</h6>
 					<AddressComponent address={proposerAddress}/>
 				</Grid.Column>
-				{hash &&
+				{curator &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Hash</h6>
-					{hash}
+					<h6>Curator</h6>
+					<AddressComponent address={curator}/>
 				</Grid.Column>}
-				{reason &&
+				{beneficiary &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Reason</h6>
-					{reason}
+					<h6>Beneficiary</h6>
+					<AddressComponent address={beneficiary}/>
 				</Grid.Column>}
-				{who &&
+				{value &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Receiver</h6>
-					<AddressComponent address={who}/>
+					<h6>Value</h6>
+					{parseInt(value) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
-				{finder &&
+				{fee &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					<h6>Finder</h6>
-					<AddressComponent address={finder}/>
+					<h6>Fee</h6>
+					{parseInt(fee) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
-				{closes &&
+				{curatorDeposit &&
 				<Grid.Column mobile={16} tablet={8} computer={8}>
-					{status === tipStatuses.CLOSING
-						?
-						<>
-							<h6>Closing</h6>
-							<BlockCountdown endBlock={closes}/>
-						</>
-						:  status === tipStatuses.CLOSED
-							?
-							<>
-								<h6>Closed</h6>
-								<div>{moment.utc(blockNumber?.startDateTime).format('DD MMM YYYY, HH:mm:ss')}</div>
-							</>
-							: <span>#{closes}</span>
-					}
+					<h6>Curator Deposit</h6>
+					{parseInt(curatorDeposit) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
+				</Grid.Column>}
+				{bond &&
+				<Grid.Column mobile={16} tablet={8} computer={8}>
+					<h6>Bond</h6>
+					{parseInt(bond) / Math.pow(10, chainProperties[currentNetwork].tokenDecimals) + ' ' + chainProperties[currentNetwork].tokenSymbol}
 				</Grid.Column>}
 			</Grid>
 		</OnchainInfoWrapper>

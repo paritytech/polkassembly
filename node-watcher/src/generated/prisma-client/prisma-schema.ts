@@ -439,8 +439,8 @@ type Bounty {
   bountyStatus(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus!]
   curator: String
   beneficiary: String
-  updateDue: BlockNumber!
-  unlockAt: BlockNumber!
+  updateDue: Int
+  unlockAt: Int
 }
 
 type BountyConnection {
@@ -459,8 +459,8 @@ input BountyCreateInput {
   bountyStatus: BountyStatusCreateManyWithoutBountyInput
   curator: String
   beneficiary: String
-  updateDue: BlockNumberCreateOneInput!
-  unlockAt: BlockNumberCreateOneInput!
+  updateDue: Int
+  unlockAt: Int
 }
 
 input BountyCreateOneWithoutBountyStatusInput {
@@ -477,8 +477,8 @@ input BountyCreateWithoutBountyStatusInput {
   bountyId: Int!
   curator: String
   beneficiary: String
-  updateDue: BlockNumberCreateOneInput!
-  unlockAt: BlockNumberCreateOneInput!
+  updateDue: Int
+  unlockAt: Int
 }
 
 type BountyEdge {
@@ -505,6 +505,10 @@ enum BountyOrderByInput {
   curator_DESC
   beneficiary_ASC
   beneficiary_DESC
+  updateDue_ASC
+  updateDue_DESC
+  unlockAt_ASC
+  unlockAt_DESC
 }
 
 type BountyPreviousValues {
@@ -517,6 +521,8 @@ type BountyPreviousValues {
   bountyId: Int!
   curator: String
   beneficiary: String
+  updateDue: Int
+  unlockAt: Int
 }
 
 type BountyStatus {
@@ -773,8 +779,8 @@ input BountyUpdateInput {
   bountyStatus: BountyStatusUpdateManyWithoutBountyInput
   curator: String
   beneficiary: String
-  updateDue: BlockNumberUpdateOneRequiredInput
-  unlockAt: BlockNumberUpdateOneRequiredInput
+  updateDue: Int
+  unlockAt: Int
 }
 
 input BountyUpdateManyMutationInput {
@@ -786,6 +792,8 @@ input BountyUpdateManyMutationInput {
   bountyId: Int
   curator: String
   beneficiary: String
+  updateDue: Int
+  unlockAt: Int
 }
 
 input BountyUpdateOneRequiredWithoutBountyStatusInput {
@@ -804,8 +812,8 @@ input BountyUpdateWithoutBountyStatusDataInput {
   bountyId: Int
   curator: String
   beneficiary: String
-  updateDue: BlockNumberUpdateOneRequiredInput
-  unlockAt: BlockNumberUpdateOneRequiredInput
+  updateDue: Int
+  unlockAt: Int
 }
 
 input BountyUpsertWithoutBountyStatusInput {
@@ -931,8 +939,22 @@ input BountyWhereInput {
   beneficiary_not_starts_with: String
   beneficiary_ends_with: String
   beneficiary_not_ends_with: String
-  updateDue: BlockNumberWhereInput
-  unlockAt: BlockNumberWhereInput
+  updateDue: Int
+  updateDue_not: Int
+  updateDue_in: [Int!]
+  updateDue_not_in: [Int!]
+  updateDue_lt: Int
+  updateDue_lte: Int
+  updateDue_gt: Int
+  updateDue_gte: Int
+  unlockAt: Int
+  unlockAt_not: Int
+  unlockAt_in: [Int!]
+  unlockAt_not_in: [Int!]
+  unlockAt_lt: Int
+  unlockAt_lte: Int
+  unlockAt_gt: Int
+  unlockAt_gte: Int
   AND: [BountyWhereInput!]
   OR: [BountyWhereInput!]
   NOT: [BountyWhereInput!]

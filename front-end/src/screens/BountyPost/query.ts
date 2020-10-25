@@ -14,12 +14,16 @@ const onchainLinkBounty = gql`
         onchain_bounty_id,
         onchain_bounty(where: {}) {
             id
-            hash
-            reason
-            who
-            finder
-            finderFee
-            closes
+            proposer
+            value
+            fee
+            curatorDeposit
+            bond
+            bountyId
+            curator
+            beneficiary
+            updateDue
+            unlockAt
             bountyStatus(last: 1) {
                 id
                 status

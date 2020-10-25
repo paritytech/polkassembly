@@ -19,7 +19,7 @@ const Bounties = ({ className, data }: Props) => {
 
 	const noPost = !data.posts || !data.posts.length;
 	const atLeastOneCurrentBounty = data.posts.some((post) => {
-		if (post.onchain_link?.onchain_motion.length){
+		if (post.onchain_link?.onchain_bounty.length){
 			// this breaks the loop as soon as
 			// we find a post that has a bounty.
 			return true;
@@ -33,9 +33,9 @@ const Bounties = ({ className, data }: Props) => {
 		<ul className={`${className} bounties__list`}>
 			{data.posts.map(
 				(post) => {
-					const onchainId = post.onchain_link?.onchain_motion_id;
+					const onchainId = post.onchain_link?.onchain_bounty_id;
 
-					return !!post?.author?.username && !!post.onchain_link?.onchain_motion.length &&
+					return !!post?.author?.username && !!post.onchain_link?.onchain_bounty.length &&
 						<li key={post.id} className='bounties__item'>
 							{<Link to={`/motion/${onchainId}`}>
 								<GovernanceCard
@@ -43,7 +43,6 @@ const Bounties = ({ className, data }: Props) => {
 									comments={post.comments_aggregate.aggregate?.count
 										? post.comments_aggregate.aggregate.count.toString()
 										: 'no'}
-									method={post.onchain_link.onchain_bounty[0]?.preimage?.method}
 									onchainId={onchainId}
 									status={post.onchain_link.onchain_bounty[0]?.bountyStatus?.[0].status}
 									title={post.title}

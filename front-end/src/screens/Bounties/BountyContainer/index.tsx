@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 
 import BountiesListing from '../../../components/Listings/BountiesListing';
-import { useAllTipPostsQuery } from '../../../generated/graphql';
+import { useAllBountyPostsQuery } from '../../../generated/graphql';
 import { post_topic } from '../../../global/post_topics';
 import { post_type } from '../../../global/post_types';
 import FilteredError from '../../../ui-components/FilteredError';
@@ -20,7 +20,7 @@ interface Props {
 const BountyContainer = ({ className, limit }:Props) => {
 	const [page, setPage] = useState(1);
 
-	const { data, error, loading, refetch } = useAllTipPostsQuery({ variables: {
+	const { data, error, loading, refetch } = useAllBountyPostsQuery({ variables: {
 		limit,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN

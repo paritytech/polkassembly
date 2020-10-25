@@ -1372,7 +1372,11 @@ export type BountyOrderByInput =
   | "curator_ASC"
   | "curator_DESC"
   | "beneficiary_ASC"
-  | "beneficiary_DESC";
+  | "beneficiary_DESC"
+  | "updateDue_ASC"
+  | "updateDue_DESC"
+  | "unlockAt_ASC"
+  | "unlockAt_DESC";
 
 export type CouncilMemberOrderByInput =
   | "id_ASC"
@@ -1918,8 +1922,22 @@ export interface BountyWhereInput {
   beneficiary_not_starts_with?: Maybe<String>;
   beneficiary_ends_with?: Maybe<String>;
   beneficiary_not_ends_with?: Maybe<String>;
-  updateDue?: Maybe<BlockNumberWhereInput>;
-  unlockAt?: Maybe<BlockNumberWhereInput>;
+  updateDue?: Maybe<Int>;
+  updateDue_not?: Maybe<Int>;
+  updateDue_in?: Maybe<Int[] | Int>;
+  updateDue_not_in?: Maybe<Int[] | Int>;
+  updateDue_lt?: Maybe<Int>;
+  updateDue_lte?: Maybe<Int>;
+  updateDue_gt?: Maybe<Int>;
+  updateDue_gte?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
+  unlockAt_not?: Maybe<Int>;
+  unlockAt_in?: Maybe<Int[] | Int>;
+  unlockAt_not_in?: Maybe<Int[] | Int>;
+  unlockAt_lt?: Maybe<Int>;
+  unlockAt_lte?: Maybe<Int>;
+  unlockAt_gt?: Maybe<Int>;
+  unlockAt_gte?: Maybe<Int>;
   AND?: Maybe<BountyWhereInput[] | BountyWhereInput>;
   OR?: Maybe<BountyWhereInput[] | BountyWhereInput>;
   NOT?: Maybe<BountyWhereInput[] | BountyWhereInput>;
@@ -3598,8 +3616,8 @@ export interface BountyCreateInput {
   bountyStatus?: Maybe<BountyStatusCreateManyWithoutBountyInput>;
   curator?: Maybe<String>;
   beneficiary?: Maybe<String>;
-  updateDue: BlockNumberCreateOneInput;
-  unlockAt: BlockNumberCreateOneInput;
+  updateDue?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
 }
 
 export interface BountyStatusCreateManyWithoutBountyInput {
@@ -3634,8 +3652,8 @@ export interface BountyUpdateInput {
   bountyStatus?: Maybe<BountyStatusUpdateManyWithoutBountyInput>;
   curator?: Maybe<String>;
   beneficiary?: Maybe<String>;
-  updateDue?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  unlockAt?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  updateDue?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
 }
 
 export interface BountyStatusUpdateManyWithoutBountyInput {
@@ -3771,6 +3789,8 @@ export interface BountyUpdateManyMutationInput {
   bountyId?: Maybe<Int>;
   curator?: Maybe<String>;
   beneficiary?: Maybe<String>;
+  updateDue?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
 }
 
 export interface BountyStatusCreateInput {
@@ -3795,8 +3815,8 @@ export interface BountyCreateWithoutBountyStatusInput {
   bountyId: Int;
   curator?: Maybe<String>;
   beneficiary?: Maybe<String>;
-  updateDue: BlockNumberCreateOneInput;
-  unlockAt: BlockNumberCreateOneInput;
+  updateDue?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
 }
 
 export interface BountyStatusUpdateInput {
@@ -3822,8 +3842,8 @@ export interface BountyUpdateWithoutBountyStatusDataInput {
   bountyId?: Maybe<Int>;
   curator?: Maybe<String>;
   beneficiary?: Maybe<String>;
-  updateDue?: Maybe<BlockNumberUpdateOneRequiredInput>;
-  unlockAt?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  updateDue?: Maybe<Int>;
+  unlockAt?: Maybe<Int>;
 }
 
 export interface BountyUpsertWithoutBountyStatusInput {
@@ -7008,6 +7028,8 @@ export interface Bounty {
   bountyId: Int;
   curator?: String;
   beneficiary?: String;
+  updateDue?: Int;
+  unlockAt?: Int;
 }
 
 export interface BountyPromise extends Promise<Bounty>, Fragmentable {
@@ -7029,8 +7051,8 @@ export interface BountyPromise extends Promise<Bounty>, Fragmentable {
   }) => T;
   curator: () => Promise<String>;
   beneficiary: () => Promise<String>;
-  updateDue: <T = BlockNumberPromise>() => T;
-  unlockAt: <T = BlockNumberPromise>() => T;
+  updateDue: () => Promise<Int>;
+  unlockAt: () => Promise<Int>;
 }
 
 export interface BountySubscription
@@ -7054,8 +7076,8 @@ export interface BountySubscription
   }) => T;
   curator: () => Promise<AsyncIterator<String>>;
   beneficiary: () => Promise<AsyncIterator<String>>;
-  updateDue: <T = BlockNumberSubscription>() => T;
-  unlockAt: <T = BlockNumberSubscription>() => T;
+  updateDue: () => Promise<AsyncIterator<Int>>;
+  unlockAt: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BountyNullablePromise
@@ -7079,8 +7101,8 @@ export interface BountyNullablePromise
   }) => T;
   curator: () => Promise<String>;
   beneficiary: () => Promise<String>;
-  updateDue: <T = BlockNumberPromise>() => T;
-  unlockAt: <T = BlockNumberPromise>() => T;
+  updateDue: () => Promise<Int>;
+  unlockAt: () => Promise<Int>;
 }
 
 export interface BountyStatus {
@@ -10047,6 +10069,8 @@ export interface BountyPreviousValues {
   bountyId: Int;
   curator?: String;
   beneficiary?: String;
+  updateDue?: Int;
+  unlockAt?: Int;
 }
 
 export interface BountyPreviousValuesPromise
@@ -10061,6 +10085,8 @@ export interface BountyPreviousValuesPromise
   bountyId: () => Promise<Int>;
   curator: () => Promise<String>;
   beneficiary: () => Promise<String>;
+  updateDue: () => Promise<Int>;
+  unlockAt: () => Promise<Int>;
 }
 
 export interface BountyPreviousValuesSubscription
@@ -10075,6 +10101,8 @@ export interface BountyPreviousValuesSubscription
   bountyId: () => Promise<AsyncIterator<Int>>;
   curator: () => Promise<AsyncIterator<String>>;
   beneficiary: () => Promise<AsyncIterator<String>>;
+  updateDue: () => Promise<AsyncIterator<Int>>;
+  unlockAt: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BountyStatusSubscriptionPayload {

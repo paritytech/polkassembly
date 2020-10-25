@@ -11,8 +11,9 @@ import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
 export default () => {
-	const { hash } = useParams();
-	const { data, error, refetch } = useBountyPostAndCommentsQuery({ variables: { hash } });
+	const { id } = useParams();
+	const idNumber = Number(id) || 0;
+	const { data, error, refetch } = useBountyPostAndCommentsQuery({ variables: { 'id': idNumber } });
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

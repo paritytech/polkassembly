@@ -246,8 +246,8 @@ type Bounty {
   bountyStatus: [BountyStatus]! @relation(name: "BountyStatusFromBounty")
   curator: String
   beneficiary: String
-  updateDue: BlockNumber! @relation(name: "BountyUpdateDueAtBlockNumber", link: INLINE) @unique
-  unlockAt: BlockNumber! @relation(name: "BountyUnlockAtBlockNumber", link: INLINE) @unique
+  updateDue: Int
+  unlockAt: Int
 }
 
 type BountyStatus {

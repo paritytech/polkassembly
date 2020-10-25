@@ -5,17 +5,13 @@
 import gql from 'graphql-tag';
 import { authorFields } from 'src/fragments/author';
 
-export const QUERY_LATEST_BOUNTY_PROPOSALS = gql`
-    query AllBountyPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5 ) {
+// for bounties postType should be 2, postTopic should be 4
+export const QUERY_LATEST_BOUNTIES = gql`
+    query LatestBountyPosts($postType: Int!, $limit: Int! = 5 ) {
         posts(limit: $limit, where: {
             type: {
                 id: {
                     _eq: $postType
-                }
-            },
-            topic: {
-                id: {
-                    _eq: $postTopic
                 }
             },
             onchain_link: {
@@ -25,7 +21,7 @@ export const QUERY_LATEST_BOUNTY_PROPOSALS = gql`
             }
         }, order_by: {
             onchain_link: {
-                id: desc
+                onchain_bounty_id: desc
             }
         }) {
             id
@@ -53,7 +49,6 @@ export const QUERY_LATEST_BOUNTY_PROPOSALS = gql`
                 onchain_bounty_id
                 onchain_bounty(where: {}) {
                     id
-                    value
                     bountyStatus(last: 1) {
                         id
                         status
