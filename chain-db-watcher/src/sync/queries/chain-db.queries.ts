@@ -108,6 +108,27 @@ export const getOnchainTreasuryProposals = gql`
     }
 `;
 
+export const getOnchainBounties = gql`
+    query getOnchainBounties($startBlock: Int!) {
+        bounties (
+			where: {
+                bountyStatus_some: {
+                    AND: [
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+			}
+		){
+            ...onchainBounty
+        }
+    }
+    fragment onchainBounty on Bounty {
+        proposer
+        id
+        bountyId
+    }
+`;
+
 export const getOnchainTips = gql`
     query getOnchainTips($startBlock: Int!) {
         tips (

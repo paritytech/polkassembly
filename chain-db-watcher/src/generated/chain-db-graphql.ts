@@ -11233,6 +11233,24 @@ export type OnchainTreasuryProposalFragment = (
   & Pick<TreasurySpendProposal, 'proposer' | 'id' | 'treasuryProposalId'>
 );
 
+export type GetOnchainBountiesQueryVariables = {
+  startBlock: Scalars['Int'];
+};
+
+
+export type GetOnchainBountiesQuery = (
+  { __typename?: 'Query' }
+  & { bounties: Array<Maybe<(
+    { __typename?: 'Bounty' }
+    & OnchainBountyFragment
+  )>> }
+);
+
+export type OnchainBountyFragment = (
+  { __typename?: 'Bounty' }
+  & Pick<Bounty, 'proposer' | 'id' | 'bountyId'>
+);
+
 export type GetOnchainTipsQueryVariables = {
   startBlock: Scalars['Int'];
 };
@@ -11292,6 +11310,13 @@ export const OnchainTreasuryProposalFragmentDoc = gql`
   treasuryProposalId
 }
     `;
+export const OnchainBountyFragmentDoc = gql`
+    fragment onchainBounty on Bounty {
+  proposer
+  id
+  bountyId
+}
+    `;
 export const OnchainTipFragmentDoc = gql`
     fragment onchainTip on Tip {
   finder
@@ -11344,6 +11369,13 @@ export const GetOnchainTreasuryProposalsDocument = gql`
   }
 }
     ${OnchainTreasuryProposalFragmentDoc}`;
+export const GetOnchainBountiesDocument = gql`
+    query getOnchainBounties($startBlock: Int!) {
+  bounties(where: {bountyStatus_some: {AND: [{blockNumber: {number_gte: $startBlock}}]}}) {
+    ...onchainBounty
+  }
+}
+    ${OnchainBountyFragmentDoc}`;
 export const GetOnchainTipsDocument = gql`
     query getOnchainTips($startBlock: Int!) {
   tips(where: {tipStatus_some: {AND: [{status: "TipOpened"}, {blockNumber: {number_gte: $startBlock}}]}}) {
@@ -11375,6 +11407,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getOnchainTreasuryProposals(variables: GetOnchainTreasuryProposalsQueryVariables): Promise<GetOnchainTreasuryProposalsQuery> {
       return withWrapper(() => client.request<GetOnchainTreasuryProposalsQuery>(print(GetOnchainTreasuryProposalsDocument), variables));
+    },
+    getOnchainBounties(variables: GetOnchainBountiesQueryVariables): Promise<GetOnchainBountiesQuery> {
+      return withWrapper(() => client.request<GetOnchainBountiesQuery>(print(GetOnchainBountiesDocument), variables));
     },
     getOnchainTips(variables: GetOnchainTipsQueryVariables): Promise<GetOnchainTipsQuery> {
       return withWrapper(() => client.request<GetOnchainTipsQuery>(print(GetOnchainTipsDocument), variables));

@@ -17984,12 +17984,12 @@ export type GetDiscussionTreasurySpendProposalByIdQuery = (
   )> }
 );
 
-export type GetDiscussionBountylByIdQueryVariables = {
+export type GetDiscussionBountyByIdQueryVariables = {
   onchainBountyId: Scalars['Int'];
 };
 
 
-export type GetDiscussionBountylByIdQuery = (
+export type GetDiscussionBountyByIdQuery = (
   { __typename?: 'query_root' }
   & { onchain_links: Array<(
     { __typename?: 'onchain_links' }
@@ -18074,6 +18074,22 @@ export type DiscussionTreasuryProposalFragment = (
   & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
 );
 
+export type GetDiscussionBountiesQueryVariables = {};
+
+
+export type GetDiscussionBountiesQuery = (
+  { __typename?: 'query_root' }
+  & { onchain_links: Array<(
+    { __typename?: 'onchain_links' }
+    & DiscussionBountyFragment
+  )> }
+);
+
+export type DiscussionBountyFragment = (
+  { __typename?: 'onchain_links' }
+  & Pick<Onchain_Links, 'id' | 'onchain_bounty_id' | 'proposer_address'>
+);
+
 export type GetDiscussionTipsQueryVariables = {};
 
 
@@ -18114,6 +18130,13 @@ export const DiscussionTreasuryProposalFragmentDoc = gql`
     fragment discussionTreasuryProposal on onchain_links {
   id
   onchain_treasury_proposal_id
+  proposer_address
+}
+    `;
+export const DiscussionBountyFragmentDoc = gql`
+    fragment discussionBounty on onchain_links {
+  id
+  onchain_bounty_id
   proposer_address
 }
     `;
@@ -18237,8 +18260,8 @@ export const GetDiscussionTreasurySpendProposalByIdDocument = gql`
   }
 }
     `;
-export const GetDiscussionBountylByIdDocument = gql`
-    query getDiscussionBountylById($onchainBountyId: Int!) {
+export const GetDiscussionBountyByIdDocument = gql`
+    query getDiscussionBountyById($onchainBountyId: Int!) {
   onchain_links(where: {onchain_bounty_id: {_eq: $onchainBountyId}}) {
     id
   }
@@ -18279,6 +18302,13 @@ export const GetDiscussionTreasuryProposalsDocument = gql`
   }
 }
     ${DiscussionTreasuryProposalFragmentDoc}`;
+export const GetDiscussionBountiesDocument = gql`
+    query getDiscussionBounties {
+  onchain_links(where: {onchain_bounty_id: {_is_null: false}}) {
+    ...discussionBounty
+  }
+}
+    ${DiscussionBountyFragmentDoc}`;
 export const GetDiscussionTipsDocument = gql`
     query getDiscussionTips {
   onchain_links(where: {onchain_tip_id: {_is_null: false}}) {
@@ -18335,8 +18365,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getDiscussionTreasurySpendProposalById(variables: GetDiscussionTreasurySpendProposalByIdQueryVariables): Promise<GetDiscussionTreasurySpendProposalByIdQuery> {
       return withWrapper(() => client.request<GetDiscussionTreasurySpendProposalByIdQuery>(print(GetDiscussionTreasurySpendProposalByIdDocument), variables));
     },
-    getDiscussionBountylById(variables: GetDiscussionBountylByIdQueryVariables): Promise<GetDiscussionBountylByIdQuery> {
-      return withWrapper(() => client.request<GetDiscussionBountylByIdQuery>(print(GetDiscussionBountylByIdDocument), variables));
+    getDiscussionBountyById(variables: GetDiscussionBountyByIdQueryVariables): Promise<GetDiscussionBountyByIdQuery> {
+      return withWrapper(() => client.request<GetDiscussionBountyByIdQuery>(print(GetDiscussionBountyByIdDocument), variables));
     },
     getDiscussionTipById(variables: GetDiscussionTipByIdQueryVariables): Promise<GetDiscussionTipByIdQuery> {
       return withWrapper(() => client.request<GetDiscussionTipByIdQuery>(print(GetDiscussionTipByIdDocument), variables));
@@ -18352,6 +18382,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getDiscussionTreasuryProposals(variables?: GetDiscussionTreasuryProposalsQueryVariables): Promise<GetDiscussionTreasuryProposalsQuery> {
       return withWrapper(() => client.request<GetDiscussionTreasuryProposalsQuery>(print(GetDiscussionTreasuryProposalsDocument), variables));
+    },
+    getDiscussionBounties(variables?: GetDiscussionBountiesQueryVariables): Promise<GetDiscussionBountiesQuery> {
+      return withWrapper(() => client.request<GetDiscussionBountiesQuery>(print(GetDiscussionBountiesDocument), variables));
     },
     getDiscussionTips(variables?: GetDiscussionTipsQueryVariables): Promise<GetDiscussionTipsQuery> {
       return withWrapper(() => client.request<GetDiscussionTipsQuery>(print(GetDiscussionTipsDocument), variables));

@@ -239,7 +239,7 @@ export const getDiscussionTreasurySpendProposalById = gql`
 `;
 
 export const getDiscussionBountyById = gql`
-    query getDiscussionBountylById($onchainBountyId: Int!) {
+    query getDiscussionBountyById($onchainBountyId: Int!) {
         onchain_links(where: {onchain_bounty_id: {_eq: $onchainBountyId}}) {
             id
         }

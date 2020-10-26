@@ -17,6 +17,7 @@ import {
 	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
+	bountyDiscussionExists,
 	motionDiscussionExists,
 	proposalDiscussionExists,
 	tipDiscussionExists,
