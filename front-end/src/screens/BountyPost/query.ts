@@ -22,8 +22,6 @@ const onchainLinkBounty = gql`
             bountyId
             curator
             beneficiary
-            updateDue
-            unlockAt
             bountyStatus(last: 1) {
                 id
                 status

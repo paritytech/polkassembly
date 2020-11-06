@@ -647,8 +647,6 @@ export type Bounty = {
   fee?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   proposer: Scalars['String'];
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value: Scalars['String'];
 };
 
@@ -682,8 +680,6 @@ export type BountyCreateInput = {
   curatorDeposit?: Maybe<Scalars['String']>;
   fee?: Maybe<Scalars['String']>;
   proposer: Scalars['String'];
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value: Scalars['String'];
 };
 
@@ -700,8 +696,6 @@ export type BountyCreateWithoutBountyStatusInput = {
   curatorDeposit?: Maybe<Scalars['String']>;
   fee?: Maybe<Scalars['String']>;
   proposer: Scalars['String'];
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value: Scalars['String'];
 };
 
@@ -731,10 +725,6 @@ export enum BountyOrderByInput {
   IdDesc = 'id_DESC',
   ProposerAsc = 'proposer_ASC',
   ProposerDesc = 'proposer_DESC',
-  UnlockAtAsc = 'unlockAt_ASC',
-  UnlockAtDesc = 'unlockAt_DESC',
-  UpdateDueAsc = 'updateDue_ASC',
-  UpdateDueDesc = 'updateDue_DESC',
   ValueAsc = 'value_ASC',
   ValueDesc = 'value_DESC'
 }
@@ -749,8 +739,6 @@ export type BountyPreviousValues = {
   fee?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   proposer: Scalars['String'];
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value: Scalars['String'];
 };
 
@@ -1117,8 +1105,6 @@ export type BountyUpdateInput = {
   curatorDeposit?: Maybe<Scalars['String']>;
   fee?: Maybe<Scalars['String']>;
   proposer?: Maybe<Scalars['String']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1130,8 +1116,6 @@ export type BountyUpdateManyMutationInput = {
   curatorDeposit?: Maybe<Scalars['String']>;
   fee?: Maybe<Scalars['String']>;
   proposer?: Maybe<Scalars['String']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1150,8 +1134,6 @@ export type BountyUpdateWithoutBountyStatusDataInput = {
   curatorDeposit?: Maybe<Scalars['String']>;
   fee?: Maybe<Scalars['String']>;
   proposer?: Maybe<Scalars['String']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  updateDue?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1362,36 +1344,6 @@ export type BountyWhereInput = {
   proposer_not_starts_with?: Maybe<Scalars['String']>;
   /** All values starting with the given string. */
   proposer_starts_with?: Maybe<Scalars['String']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  unlockAt_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  unlockAt_gte?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  unlockAt_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  unlockAt_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  unlockAt_lte?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  unlockAt_not?: Maybe<Scalars['Int']>;
-  /** All values that are not contained in given list. */
-  unlockAt_not_in?: Maybe<Array<Scalars['Int']>>;
-  updateDue?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  updateDue_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  updateDue_gte?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  updateDue_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  updateDue_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  updateDue_lte?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  updateDue_not?: Maybe<Scalars['Int']>;
-  /** All values that are not contained in given list. */
-  updateDue_not_in?: Maybe<Array<Scalars['Int']>>;
   value?: Maybe<Scalars['String']>;
   /** All values containing the given string. */
   value_contains?: Maybe<Scalars['String']>;
@@ -1622,36 +1574,6 @@ export type BountyWhereInput_Remote_Rel_Public_Onchain_Linksonchain_Bounty = {
   proposer_not_starts_with?: Maybe<Scalars['String']>;
   /** All values starting with the given string. */
   proposer_starts_with?: Maybe<Scalars['String']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  unlockAt_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  unlockAt_gte?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  unlockAt_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  unlockAt_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  unlockAt_lte?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  unlockAt_not?: Maybe<Scalars['Int']>;
-  /** All values that are not contained in given list. */
-  unlockAt_not_in?: Maybe<Array<Scalars['Int']>>;
-  updateDue?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  updateDue_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  updateDue_gte?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  updateDue_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  updateDue_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  updateDue_lte?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  updateDue_not?: Maybe<Scalars['Int']>;
-  /** All values that are not contained in given list. */
-  updateDue_not_in?: Maybe<Array<Scalars['Int']>>;
   value?: Maybe<Scalars['String']>;
   /** All values containing the given string. */
   value_contains?: Maybe<Scalars['String']>;
@@ -18252,7 +18174,7 @@ export type OnchainLinkBountyFragment = (
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_bounty_id'>
   & { onchain_bounty: Array<Maybe<(
     { __typename?: 'Bounty' }
-    & Pick<Bounty, 'id' | 'proposer' | 'value' | 'fee' | 'curatorDeposit' | 'bond' | 'bountyId' | 'curator' | 'beneficiary' | 'updateDue' | 'unlockAt'>
+    & Pick<Bounty, 'id' | 'proposer' | 'value' | 'fee' | 'curatorDeposit' | 'bond' | 'bountyId' | 'curator' | 'beneficiary'>
     & { bountyStatus?: Maybe<Array<(
       { __typename?: 'BountyStatus' }
       & Pick<BountyStatus, 'id' | 'status'>
@@ -19502,8 +19424,6 @@ export const OnchainLinkBountyFragmentDoc = gql`
     bountyId
     curator
     beneficiary
-    updateDue
-    unlockAt
     bountyStatus(last: 1) {
       id
       status
