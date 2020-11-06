@@ -246,8 +246,6 @@ type Bounty {
   bountyStatus: [BountyStatus]! @relation(name: "BountyStatusFromBounty")
   curator: String
   beneficiary: String
-  updateDue: Int
-  unlockAt: Int
 }
 
 type BountyStatus {

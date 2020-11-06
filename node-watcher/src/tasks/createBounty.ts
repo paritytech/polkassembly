@@ -13,7 +13,7 @@ import { hexToString, logger } from '@polkadot/util';
 
 import { prisma } from '../generated/prisma-client';
 import { filterEvents } from '../util/filterEvents';
-import { tipStatus } from '../util/statuses';
+import { bountyStatus } from '../util/statuses';
 import {
   Cached,
   NomidotBounty,
@@ -80,11 +80,13 @@ const createBounty: Task<NomidotBounty[]> = {
 
 		const bounty = bountyRaw.unwrap();
 		const result: NomidotBounty = {
+			bountyId: bountyRawEvent.BountyIndex,
 			proposer: bounty.proposer,
 			value: bounty.value,
 			fee: bounty.fee,
 			curatorDeposit: bounty.curatorDeposit,
-			bond: bounty.bond
+			bond: bounty.bond,
+			status: bountyStatus.PROPOSED,
 		};
 
         l.log(`Nomidot Bounty: ${JSON.stringify(result)}`);
@@ -96,7 +98,39 @@ const createBounty: Task<NomidotBounty[]> = {
     return results;
   },
   write: async (blockNumber: BlockNumber, value: NomidotBounty[]) => {
+	await Promise.all(
+		value.map(async prop => {
+		  const {
+			bountyId,
+			proposer,
+			value,
+			fee,
+			curatorDeposit,
+			bond,
+			status,
+		  } = prop;
 
+		  await prisma.createBounty({
+			bountyId,
+			proposer: proposer.toString(),
+			value: value.toString(),
+			bond: bond.toString(),
+			fee: fee.toString(),
+			curatorDeposit: curatorDeposit.toString(),
+			bountyStatus: {
+			  create: {
+				blockNumber: {
+				  connect: {
+					number: blockNumber.toNumber(),
+				  },
+				},
+				status,
+				uniqueStatus: `${bountyId}_${status}`,
+			  },
+			},
+		  });
+		})
+	  );
   },
 };
 

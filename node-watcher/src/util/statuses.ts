@@ -44,3 +44,14 @@ export const tipStatus = {
   CLOSING: 'TipClosing',
   RETRACTED: 'TipRetracted'
 };
+
+export const bountyStatus = {
+  PROPOSED: 'BountyProposed',
+  BECAMEACTIVE: 'BountyBecameActive',
+  AWARDED: 'BountyAwarded',
+  CLAIMED: 'BountyClaimed',
+  CANCELED: 'BountyCanceled',
+  REJECTED: 'BountyRejected',
+  EXTENDED: 'BountyExtended'
+};
+

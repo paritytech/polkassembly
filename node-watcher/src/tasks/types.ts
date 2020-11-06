@@ -173,6 +173,7 @@ export interface NomidotRewardEvent extends EventRecord {
 }
 
 export interface NomidotBounty {
+  bountyId: number;
   proposer: AccountId;
   value: Balance;
   fee: Balance;
@@ -182,6 +183,7 @@ export interface NomidotBounty {
   beneficiary?: AccountId;
   updateDue?: number;
   unlockAt?: number;
+  status: string;
 }
 
 export interface NomidotBountyRawEvent {
