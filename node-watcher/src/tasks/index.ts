@@ -22,6 +22,7 @@ import createReferendumStatus from './createReferendumStatus';
 import createTip from './createTip';
 import createTipStatus from './createTipStatus';
 import createBounty from './createBounty';
+import createBountyStatus from './createBountyStatus';
 import createTreasury from './createTreasury';
 import { NomidotTask } from './types';
 
@@ -48,4 +49,5 @@ export const nomidotTasks: NomidotTask[] = [
   createTip,
   createTipStatus,
   createBounty,
+  createBountyStatus
 ];

@@ -121,7 +121,8 @@ export type Nomidot =
   | NomidotTreasury[]
   | NomidotTip[]
   | NomidotTipStatusUpdate[]
-  | NomidotBounty[];
+  | NomidotBounty[]
+  | NomidotBountyStatusUpdate[];
 
 export type NomidotTask = Task<Nomidot>;
 
@@ -181,8 +182,6 @@ export interface NomidotBounty {
   bond: Balance;
   curator?: AccountId;
   beneficiary?: AccountId;
-  updateDue?: number;
-  unlockAt?: number;
   status: string;
 }
 
@@ -277,4 +276,11 @@ export interface NomidotTipStatusUpdate {
   tipId: number;
   status: string;
   closes?: number;
+}
+
+export interface NomidotBountyStatusUpdate {
+  bountyId: number;
+  status: string;
+  curator?: string;
+  beneficiary?: string;
 }

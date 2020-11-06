@@ -47,7 +47,7 @@ export const tipStatus = {
 
 export const bountyStatus = {
   PROPOSED: 'BountyProposed',
-  BECAMEACTIVE: 'BountyBecameActive',
+  BECAME_ACTIVE: 'BountyBecameActive',
   AWARDED: 'BountyAwarded',
   CLAIMED: 'BountyClaimed',
   CANCELED: 'BountyCanceled',
