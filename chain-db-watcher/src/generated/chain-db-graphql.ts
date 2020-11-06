@@ -624,8 +624,6 @@ export type Bounty = {
   bountyStatus?: Maybe<Array<BountyStatus>>;
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
 };
 
 
@@ -658,8 +656,6 @@ export type BountyCreateInput = {
   bountyId: Scalars['Int'];
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
   bountyStatus?: Maybe<BountyStatusCreateManyWithoutBountyInput>;
 };
 
@@ -677,8 +673,6 @@ export type BountyCreateWithoutBountyStatusInput = {
   bountyId: Scalars['Int'];
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
 };
 
 /** An edge in a connection. */
@@ -708,11 +702,7 @@ export enum BountyOrderByInput {
   CuratorAsc = 'curator_ASC',
   CuratorDesc = 'curator_DESC',
   BeneficiaryAsc = 'beneficiary_ASC',
-  BeneficiaryDesc = 'beneficiary_DESC',
-  UpdateDueAsc = 'updateDue_ASC',
-  UpdateDueDesc = 'updateDue_DESC',
-  UnlockAtAsc = 'unlockAt_ASC',
-  UnlockAtDesc = 'unlockAt_DESC'
+  BeneficiaryDesc = 'beneficiary_DESC'
 }
 
 export type BountyPreviousValues = {
@@ -726,8 +716,6 @@ export type BountyPreviousValues = {
   bountyId: Scalars['Int'];
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
 };
 
 export type BountyStatus = Node & {
@@ -1093,8 +1081,6 @@ export type BountyUpdateInput = {
   bountyId?: Maybe<Scalars['Int']>;
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
   bountyStatus?: Maybe<BountyStatusUpdateManyWithoutBountyInput>;
 };
 
@@ -1107,8 +1093,6 @@ export type BountyUpdateManyMutationInput = {
   bountyId?: Maybe<Scalars['Int']>;
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
 };
 
 export type BountyUpdateOneRequiredWithoutBountyStatusInput = {
@@ -1127,8 +1111,6 @@ export type BountyUpdateWithoutBountyStatusDataInput = {
   bountyId?: Maybe<Scalars['Int']>;
   curator?: Maybe<Scalars['String']>;
   beneficiary?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
 };
 
 export type BountyUpsertWithoutBountyStatusInput = {
@@ -1362,36 +1344,6 @@ export type BountyWhereInput = {
   beneficiary_ends_with?: Maybe<Scalars['String']>;
   /** All values not ending with the given string. */
   beneficiary_not_ends_with?: Maybe<Scalars['String']>;
-  updateDue?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  updateDue_not?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  updateDue_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values that are not contained in given list. */
-  updateDue_not_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  updateDue_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  updateDue_lte?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  updateDue_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  updateDue_gte?: Maybe<Scalars['Int']>;
-  unlockAt?: Maybe<Scalars['Int']>;
-  /** All values that are not equal to given value. */
-  unlockAt_not?: Maybe<Scalars['Int']>;
-  /** All values that are contained in given list. */
-  unlockAt_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values that are not contained in given list. */
-  unlockAt_not_in?: Maybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  unlockAt_lt?: Maybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  unlockAt_lte?: Maybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  unlockAt_gt?: Maybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  unlockAt_gte?: Maybe<Scalars['Int']>;
   bountyStatus_every?: Maybe<BountyStatusWhereInput>;
   bountyStatus_some?: Maybe<BountyStatusWhereInput>;
   bountyStatus_none?: Maybe<BountyStatusWhereInput>;
