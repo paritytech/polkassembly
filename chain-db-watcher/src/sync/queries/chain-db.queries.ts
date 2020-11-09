@@ -114,6 +114,7 @@ export const getOnchainBounties = gql`
 			where: {
                 bountyStatus_some: {
                     AND: [
+                        { status: "BountyProposed" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }

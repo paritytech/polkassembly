@@ -133,7 +133,7 @@ export const bountySubscription = gql`
 				node: {
 					bountyStatus_some: {
 						AND: [
-							{ status: "Proposed" },
+							{ status: "BountyProposed" },
 							{ blockNumber: { number_gte: $startBlock } }
 						]
 					}
