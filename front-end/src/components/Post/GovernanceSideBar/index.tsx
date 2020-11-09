@@ -35,7 +35,7 @@ interface Props {
 	status?: string
 }
 
-const GovenanceSideBar = ({ className, isBounty, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
+const GovenanceSideBar = ({ className, isMotion, isProposal, isReferendum, isTipProposal, onchainId, onchainLink, status }: Props) => {
 	const [address, setAddress] = useState<string>('');
 	const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
 	const [extensionNotFound, setExtensionNotFound] = useState(false);
