@@ -60,7 +60,7 @@ const createBountyStatus: Task<NomidotBountyStatusUpdate[]> = {
           {}
         );
 
-        if (!bountyRawEvent.BountyIndex) {
+        if (!bountyRawEvent.BountyIndex && bountyRawEvent.BountyIndex !== 0) {
           l.error(
             `Expected Bounty index missing in the event: ${bountyRawEvent.BountyIndex}`
           );
@@ -106,7 +106,7 @@ const createBountyStatus: Task<NomidotBountyStatusUpdate[]> = {
             },
             bounty: {
               connect: {
-                id: bountyId,
+                bountyId
               },
             },
             status,
