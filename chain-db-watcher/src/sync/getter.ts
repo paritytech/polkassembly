@@ -14,7 +14,8 @@ import {
 	OnchainProposalFragment,
 	OnchainReferendumFragment,
 	OnchainTipFragment,
-	OnchainTreasuryProposalFragment} from '../generated/chain-db-graphql';
+	OnchainTreasuryProposalFragment
+} from '../generated/chain-db-graphql';
 import {
 	DiscussionBountyFragment,
 	DiscussionMotionFragment,
