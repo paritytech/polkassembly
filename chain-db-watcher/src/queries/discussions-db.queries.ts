@@ -58,6 +58,33 @@ export const addPostAndTreasurySpendProposalMutation = gql`
     }
 `;
 
+export const addPostAndBountyMutation = gql`
+    mutation addPostAndBountyMutation (
+        $onchainBountyId:Int!,
+        $authorId: Int!,
+        $proposerAddress: String!,
+        $content: String!,
+        $topicId: Int!,
+        $typeId: Int!
+        ){
+        __typename
+        insert_onchain_links(objects: {
+            onchain_bounty_id: $onchainBountyId,
+            proposer_address: $proposerAddress,
+            post: {data: {
+                author_id: $authorId,
+                content: $content,
+                topic_id: $topicId,
+                type_id: $typeId
+            }
+        }}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
 export const addPostAndTipMutation = gql`
     mutation addPostAndTipMutation (
         $onchainTipId:String!,
@@ -206,6 +233,14 @@ export const getDiscussionMotionProposalById = gql`
 export const getDiscussionTreasurySpendProposalById = gql`
     query getDiscussionTreasurySpendProposalById($onchainTreasuryProposalId: Int!) {
         onchain_links(where: {onchain_treasury_proposal_id: {_eq: $onchainTreasuryProposalId}}) {
+            id
+        }
+    }
+`;
+
+export const getDiscussionBountyById = gql`
+    query getDiscussionBountyById($onchainBountyId: Int!) {
+        onchain_links(where: {onchain_bounty_id: {_eq: $onchainBountyId}}) {
             id
         }
     }

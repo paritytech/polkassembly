@@ -41,3 +41,23 @@ export const tipStatusMap = {
 	[tipStatus.CLOSED]: 'Closed',
 	[tipStatus.RETRACTED]: 'Retracted'
 };
+
+export const bountyStatus = {
+	AWARDED: 'BountyAwarded',
+	BECAME_ACTIVE: 'BountyBecameActive',
+	CANCELED: 'BountyCanceled',
+	CLAIMED: 'BountyClaimed',
+	EXTENDED: 'BountyExtended',
+	PROPOSED: 'BountyProposed',
+	REJECTED: 'BountyRejected'
+};
+
+export const bountyStatusMap = {
+	[bountyStatus.AWARDED]: 'Awarded',
+	[bountyStatus.BECAME_ACTIVE]: 'BecameActive',
+	[bountyStatus.CANCELED]: 'Canceled',
+	[bountyStatus.CLAIMED]: 'Claimed',
+	[bountyStatus.EXTENDED]: 'Extended',
+	[bountyStatus.PROPOSED]: 'Proposed',
+	[bountyStatus.REJECTED]: 'Rejected'
+};

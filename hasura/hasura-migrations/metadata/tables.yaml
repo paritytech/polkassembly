@@ -210,11 +210,22 @@
       - onchain_tip_id
       remote_schema: chain-db
     name: onchain_tip
+  - definition:
+      remote_field:
+        bounties:
+          arguments:
+            where:
+              bountyId: $onchain_bounty_id
+      hasura_fields:
+      - onchain_bounty_id
+      remote_schema: chain-db
+    name: onchain_bounty
   insert_permissions:
   - role: proposal_bot
     permission:
       check: {}
       columns:
+      - onchain_bounty_id
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
@@ -228,6 +239,7 @@
       columns:
       - created_at
       - id
+      - onchain_bounty_id
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
@@ -242,6 +254,7 @@
       columns:
       - created_at
       - id
+      - onchain_bounty_id
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
@@ -255,6 +268,7 @@
       columns:
       - created_at
       - id
+      - onchain_bounty_id
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
@@ -268,6 +282,7 @@
   - role: proposal_bot
     permission:
       columns:
+      - onchain_bounty_id
       - onchain_motion_id
       - onchain_referendum_id
       filter: {}

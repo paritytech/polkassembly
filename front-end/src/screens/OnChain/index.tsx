@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Icon } from 'semantic-ui-react';
 
 import InfoBox from '../../ui-components/InfoBox';
+import BountyContainer from './Bounties';
 import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
@@ -38,6 +39,9 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<h3>Tips</h3>
 					<TipContainer className='tipContainer' limit={limit} />
 					<Link className='full-listing-link' to='tips'><Icon name='arrow right'/>See all tips</Link>
+					<h3>Bounties</h3>
+					<BountyContainer className='bountyContainer' limit={limit} />
+					<Link className='full-listing-link' to='bounties'><Icon name='arrow right'/>See all bounties</Link>
 				</Grid.Column>
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
@@ -57,7 +61,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 
-	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer, .tipContainer {
+	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer {
 		margin-bottom: 2rem;
 	}
 

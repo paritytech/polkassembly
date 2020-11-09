@@ -10,6 +10,7 @@ import DefaultAddressInfoBox from 'src/components/DefaultAddressInfoBox';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
+import BountyContainer from './LatestBounties';
 import DiscussionContainer from './LatestDiscussions';
 import MotionsContainer from './LatestMotions';
 import ProposalContainer from './LatestProposals';
@@ -43,6 +44,8 @@ const Home = ({ className }: Props) => {
 					<TreasuryContainer className='treasuryContainer' />
 					<h3>Latest tips</h3>
 					<TipContainer className='tipContainer' />
+					<h3>Latest Bounties</h3>
+					<BountyContainer className='bountyContainer' />
 					<h3>Latest discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
@@ -60,7 +63,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer, .tipContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer {
 		margin-bottom: 3rem;
 	}
 

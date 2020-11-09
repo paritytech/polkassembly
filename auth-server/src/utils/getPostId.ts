@@ -7,17 +7,18 @@ import { OnchainLinkType, PostType, PostTypeEnum } from '../types';
 /**
  * Get Post id from an event
  */
-export default (type: PostType, onchainLink: OnchainLinkType): number => {
+export default (type: PostType, onchainLink: OnchainLinkType): number | string => {
 	const {
 		post_id,
 		onchain_motion_id,
 		onchain_proposal_id,
 		onchain_referendum_id,
 		onchain_tip_id,
+		onchain_bounty_id,
 		onchain_treasury_proposal_id
 	} = onchainLink;
 
-	let id: number | undefined;
+	let id: number | string | undefined;
 
 	switch (type) {
 	case PostTypeEnum.PROPOSAL:
@@ -34,6 +35,9 @@ export default (type: PostType, onchainLink: OnchainLinkType): number => {
 		break;
 	case PostTypeEnum.TIP:
 		id = onchain_tip_id;
+		break;
+	case PostTypeEnum.BOUNTY:
+		id = onchain_bounty_id;
 		break;
 	default:
 		break;

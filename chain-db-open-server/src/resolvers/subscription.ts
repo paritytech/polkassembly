@@ -4,6 +4,8 @@
 
 import {
   BlockNumberSubscription,
+  BountySubscriptionPayloadSubscription,
+  BountySubscriptionWhereInput,
   EraSubscription,
   HeartBeatSubscription,
   MotionSubscriptionPayloadSubscription,
@@ -281,8 +283,22 @@ const tip = {
   },
 };
 
+const bounty = {
+  subscribe: (
+    parent: any,
+    { where }: { where: BountySubscriptionWhereInput },
+    context: Context
+  ): BountySubscriptionPayloadSubscription => {
+    return context.prisma.$subscribe.bounty(where);
+  },
+  resolve: (payload: any) => {
+    return payload;
+  },
+};
+
 export const Subscription = {
   blockNumber,
+  bounty,
   era,
   heartBeat,
   nomination,

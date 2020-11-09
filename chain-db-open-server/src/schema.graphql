@@ -8,6 +8,12 @@ type Query {
   blockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   blockNumbers(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockNumber]!
   blockNumbersConnection(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockNumberConnection!
+  bounty(where: BountyWhereUniqueInput!): Bounty
+  bounties(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bounty]!
+  bountiesConnection(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyConnection!
+  bountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
+  bountyStatuses(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus]!
+  bountyStatusesConnection(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyStatusConnection!
   council(where: CouncilWhereUniqueInput!): Council
   councils(where: CouncilWhereInput, orderBy: CouncilOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Council]!
   councilsConnection(where: CouncilWhereInput, orderBy: CouncilOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CouncilConnection!
@@ -92,6 +98,8 @@ type Query {
 type Subscription {
   blockIndex(where: BlockIndexSubscriptionWhereInput): BlockIndexSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
+  bounty(where: BountySubscriptionWhereInput): BountySubscriptionPayload
+  bountyStatus(where: BountyStatusSubscriptionWhereInput): BountyStatusSubscriptionPayload
   council(where: CouncilSubscriptionWhereInput): CouncilSubscriptionPayload
   councilMember(where: CouncilMemberSubscriptionWhereInput): CouncilMemberSubscriptionPayload
   era(where: EraSubscriptionWhereInput): EraSubscriptionPayload

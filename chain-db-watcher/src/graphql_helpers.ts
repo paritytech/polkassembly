@@ -134,6 +134,39 @@ export const treasuryProposalDiscussionExists = async (
 };
 
 /**
+ * Tells if there is already a bounty in the discussion DB matching the
+ * onchain bounty id passed as argument
+ *
+ * @param bountyId the bounty id that is on chain (not the Prisma db id)
+ */
+export const bountyDiscussionExists = async (
+	onchainBountyId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionBountyById({ onchainBountyId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`bountyDiscussionExists execution error with bountyId: ${onchainBountyId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
  * Tells if there is already a tip in the discussion DB matching the
  * onchain tip id passed as argument
  *
@@ -408,10 +441,85 @@ export const addDiscussionPostAndTreasuryProposal = async ({
 };
 
 /**
+ * Creates a generic post and the linked bounty in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal
+ * @param onchainBountyId the bounty id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndBounty = async ({
+	proposer,
+	onchainBountyId
+}: {
+	proposer: string;
+	onchainBountyId: number;
+}): Promise<void> => {
+	if (!treasuryTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the TREASURY_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
+		);
+	}
+
+	const proposalAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		content: getDescription('bounty proposal', proposer),
+		onchainBountyId,
+		proposerAddress: proposer,
+		topicId: Number(treasuryTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndBountyMutation(proposalAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} Bounty ${onchainBountyId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addPostAndBounty execution error, Bounty id ${onchainBountyId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
  * Creates a generic post and the linked tip in hasura discussion DB
  *
  * @param proposer address of the proposer of the tip
- * @param onchainTreasuryProposalId the tip id that is the Prisma db id
+ * @param onchainTipHash the tip hash that is the Prisma db hash
  */
 
 export const addDiscussionPostAndTip = async ({

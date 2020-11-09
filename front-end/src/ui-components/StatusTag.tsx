@@ -5,7 +5,7 @@
 import styled from '@xstyled/styled-components';
 import React, { ReactNode } from 'react';
 import { Label, SemanticICONS } from 'semantic-ui-react';
-import { motionStatus, proposalStatus, referendumStatus, tipStatus, tipStatusMap } from 'src/global/statuses';
+import { bountyStatus, bountyStatusMap, motionStatus, proposalStatus, referendumStatus, tipStatus, tipStatusMap } from 'src/global/statuses';
 
 interface Props{
 	children?: ReactNode,
@@ -25,7 +25,11 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		motionStatus.PROPOSED,
 		motionStatus.APPROVED,
 		tipStatus.OPENED,
-		tipStatus.CLOSING
+		tipStatus.CLOSING,
+		bountyStatus.PROPOSED,
+		bountyStatus.AWARDED,
+		bountyStatus.BECAME_ACTIVE,
+		bountyStatus.EXTENDED
 	].includes(status)){
 		icon = 'circle';
 	}
@@ -35,7 +39,9 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 		referendumStatus.NOTPASSED,
 		referendumStatus.VETOED,
 		motionStatus.DISAPPROVED,
-		tipStatus.RETRACTED
+		tipStatus.RETRACTED,
+		bountyStatus.CANCELED,
+		bountyStatus.REJECTED
 	].includes(status)){
 		icon = 'times';
 	}
@@ -43,13 +49,19 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 	if ([proposalStatus.TABLED,
 		referendumStatus.EXECUTED,
 		motionStatus.EXECUTED,
-		tipStatus.CLOSED
+		tipStatus.CLOSED,
+		bountyStatus.AWARDED,
+		bountyStatus.CLAIMED
 	].includes(status)){
 		icon = 'check';
 	}
 
 	if (content && tipStatusMap[content]) {
 		content = tipStatusMap[content];
+	}
+
+	if (content && bountyStatusMap[content]) {
+		content = bountyStatusMap[content];
 	}
 
 	return (
@@ -84,7 +96,12 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${proposalStatus.PROPOSED},
 		&.${motionStatus.PROPOSED},
 		&.${tipStatus.OPENED},
-		&.${tipStatus.CLOSING} {
+		&.${tipStatus.CLOSING},
+		&.${bountyStatus.PROPOSED},
+		&.${bountyStatus.AWARDED},
+		&.${bountyStatus.BECAME_ACTIVE},
+		&.${bountyStatus.EXTENDED}
+		 {
 			border-color: blue_primary;
 			color: blue_primary;
 		}
@@ -92,7 +109,9 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
 		&.${motionStatus.EXECUTED},
-		&.${tipStatus.CLOSED} {
+		&.${tipStatus.CLOSED},
+		&.${bountyStatus.AWARDED},
+		&.${bountyStatus.CLAIMED} {
 			border-color: green_primary;
 			color: green_primary;
 		}
@@ -101,7 +120,9 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${referendumStatus.NOTPASSED},
 		&.${referendumStatus.VETOED},
 		&.${motionStatus.DISAPPROVED},
-		&.${tipStatus.RETRACTED} {
+		&.${tipStatus.RETRACTED},
+		&.${bountyStatus.CANCELED},
+		&.${bountyStatus.REJECTED} {
 			border-color: red_primary;
 			color: red_primary;
 		}
