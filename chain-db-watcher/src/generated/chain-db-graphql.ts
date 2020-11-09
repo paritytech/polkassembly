@@ -11323,7 +11323,7 @@ export const GetOnchainTreasuryProposalsDocument = gql`
     ${OnchainTreasuryProposalFragmentDoc}`;
 export const GetOnchainBountiesDocument = gql`
     query getOnchainBounties($startBlock: Int!) {
-  bounties(where: {bountyStatus_some: {AND: [{blockNumber: {number_gte: $startBlock}}]}}) {
+  bounties(where: {bountyStatus_some: {AND: [{status: "BountyProposed"}, {blockNumber: {number_gte: $startBlock}}]}}) {
     ...onchainBounty
   }
 }
