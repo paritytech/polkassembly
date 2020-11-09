@@ -21291,7 +21291,7 @@ export const LatestBountyPostsDocument = gql`
     onchain_link {
       id
       onchain_bounty_id
-      onchain_bounty(where: {}) {
+      onchain_bounty(where: {NOT: {bountyStatus_some: {OR: [{status: "BountyCanceled"}, {status: "BountyRejected"}, {status: "BountyAwarded"}, {status: "BountyClaimed"}]}}}) {
         id
         bountyStatus(last: 1) {
           id
