@@ -1,11 +1,19 @@
 # source: http://127.0.0.1:4466
-# timestamp: Thu Jun 25 2020 14:09:51 GMT+0200 (Central European Summer Time)
+# timestamp: Mon Nov 09 2020 23:01:02 GMT+0530 (India Standard Time)
 
 type AggregateBlockIndex {
   count: Int!
 }
 
 type AggregateBlockNumber {
+  count: Int!
+}
+
+type AggregateBounty {
+  count: Int!
+}
+
+type AggregateBountyStatus {
   count: Int!
 }
 
@@ -668,6 +676,944 @@ input BlockNumberWhereUniqueInput {
   id: ID
   number: Int
   hash: String
+}
+
+type Bounty {
+  id: Int!
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  bountyStatus(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus!]
+  curator: String
+  beneficiary: String
+}
+
+"""A connection to a list of items."""
+type BountyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BountyEdge]!
+  aggregate: AggregateBounty!
+}
+
+input BountyCreateInput {
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  curator: String
+  beneficiary: String
+  bountyStatus: BountyStatusCreateManyWithoutBountyInput
+}
+
+input BountyCreateOneWithoutBountyStatusInput {
+  create: BountyCreateWithoutBountyStatusInput
+  connect: BountyWhereUniqueInput
+}
+
+input BountyCreateWithoutBountyStatusInput {
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  curator: String
+  beneficiary: String
+}
+
+"""An edge in a connection."""
+type BountyEdge {
+  """The item at the end of the edge."""
+  node: Bounty!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BountyOrderByInput {
+  id_ASC
+  id_DESC
+  proposer_ASC
+  proposer_DESC
+  value_ASC
+  value_DESC
+  fee_ASC
+  fee_DESC
+  curatorDeposit_ASC
+  curatorDeposit_DESC
+  bond_ASC
+  bond_DESC
+  bountyId_ASC
+  bountyId_DESC
+  curator_ASC
+  curator_DESC
+  beneficiary_ASC
+  beneficiary_DESC
+}
+
+type BountyPreviousValues {
+  id: Int!
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int!
+  curator: String
+  beneficiary: String
+}
+
+type BountyStatus implements Node {
+  id: ID!
+  blockNumber: BlockNumber!
+  bounty: Bounty!
+  status: String!
+  uniqueStatus: String!
+}
+
+"""A connection to a list of items."""
+type BountyStatusConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BountyStatusEdge]!
+  aggregate: AggregateBountyStatus!
+}
+
+input BountyStatusCreateInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+  bounty: BountyCreateOneWithoutBountyStatusInput!
+}
+
+input BountyStatusCreateManyWithoutBountyInput {
+  create: [BountyStatusCreateWithoutBountyInput!]
+  connect: [BountyStatusWhereUniqueInput!]
+}
+
+input BountyStatusCreateWithoutBountyInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+}
+
+"""An edge in a connection."""
+type BountyStatusEdge {
+  """The item at the end of the edge."""
+  node: BountyStatus!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BountyStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type BountyStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input BountyStatusScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BountyStatusScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BountyStatusScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BountyStatusScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+}
+
+type BountyStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: BountyStatus
+  updatedFields: [String!]
+  previousValues: BountyStatusPreviousValues
+}
+
+input BountyStatusSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BountyStatusSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BountyStatusSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BountyStatusSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BountyStatusWhereInput
+}
+
+input BountyStatusUpdateInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  bounty: BountyUpdateOneRequiredWithoutBountyStatusInput
+}
+
+input BountyStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input BountyStatusUpdateManyWithoutBountyInput {
+  create: [BountyStatusCreateWithoutBountyInput!]
+  connect: [BountyStatusWhereUniqueInput!]
+  set: [BountyStatusWhereUniqueInput!]
+  disconnect: [BountyStatusWhereUniqueInput!]
+  delete: [BountyStatusWhereUniqueInput!]
+  update: [BountyStatusUpdateWithWhereUniqueWithoutBountyInput!]
+  updateMany: [BountyStatusUpdateManyWithWhereNestedInput!]
+  deleteMany: [BountyStatusScalarWhereInput!]
+  upsert: [BountyStatusUpsertWithWhereUniqueWithoutBountyInput!]
+}
+
+input BountyStatusUpdateManyWithWhereNestedInput {
+  where: BountyStatusScalarWhereInput!
+  data: BountyStatusUpdateManyDataInput!
+}
+
+input BountyStatusUpdateWithoutBountyDataInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+}
+
+input BountyStatusUpdateWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput!
+  data: BountyStatusUpdateWithoutBountyDataInput!
+}
+
+input BountyStatusUpsertWithWhereUniqueWithoutBountyInput {
+  where: BountyStatusWhereUniqueInput!
+  update: BountyStatusUpdateWithoutBountyDataInput!
+  create: BountyStatusCreateWithoutBountyInput!
+}
+
+input BountyStatusWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BountyStatusWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BountyStatusWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BountyStatusWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+  blockNumber: BlockNumberWhereInput
+  bounty: BountyWhereInput
+}
+
+input BountyStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type BountySubscriptionPayload {
+  mutation: MutationType!
+  node: Bounty
+  updatedFields: [String!]
+  previousValues: BountyPreviousValues
+}
+
+input BountySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BountySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BountySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BountySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BountyWhereInput
+}
+
+input BountyUpdateInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  curator: String
+  beneficiary: String
+  bountyStatus: BountyStatusUpdateManyWithoutBountyInput
+}
+
+input BountyUpdateManyMutationInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  curator: String
+  beneficiary: String
+}
+
+input BountyUpdateOneRequiredWithoutBountyStatusInput {
+  create: BountyCreateWithoutBountyStatusInput
+  connect: BountyWhereUniqueInput
+  update: BountyUpdateWithoutBountyStatusDataInput
+  upsert: BountyUpsertWithoutBountyStatusInput
+}
+
+input BountyUpdateWithoutBountyStatusDataInput {
+  proposer: String
+  value: String
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int
+  curator: String
+  beneficiary: String
+}
+
+input BountyUpsertWithoutBountyStatusInput {
+  update: BountyUpdateWithoutBountyStatusDataInput!
+  create: BountyCreateWithoutBountyStatusInput!
+}
+
+input BountyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BountyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BountyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BountyWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  proposer: String
+
+  """All values that are not equal to given value."""
+  proposer_not: String
+
+  """All values that are contained in given list."""
+  proposer_in: [String!]
+
+  """All values that are not contained in given list."""
+  proposer_not_in: [String!]
+
+  """All values less than the given value."""
+  proposer_lt: String
+
+  """All values less than or equal the given value."""
+  proposer_lte: String
+
+  """All values greater than the given value."""
+  proposer_gt: String
+
+  """All values greater than or equal the given value."""
+  proposer_gte: String
+
+  """All values containing the given string."""
+  proposer_contains: String
+
+  """All values not containing the given string."""
+  proposer_not_contains: String
+
+  """All values starting with the given string."""
+  proposer_starts_with: String
+
+  """All values not starting with the given string."""
+  proposer_not_starts_with: String
+
+  """All values ending with the given string."""
+  proposer_ends_with: String
+
+  """All values not ending with the given string."""
+  proposer_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+  fee: String
+
+  """All values that are not equal to given value."""
+  fee_not: String
+
+  """All values that are contained in given list."""
+  fee_in: [String!]
+
+  """All values that are not contained in given list."""
+  fee_not_in: [String!]
+
+  """All values less than the given value."""
+  fee_lt: String
+
+  """All values less than or equal the given value."""
+  fee_lte: String
+
+  """All values greater than the given value."""
+  fee_gt: String
+
+  """All values greater than or equal the given value."""
+  fee_gte: String
+
+  """All values containing the given string."""
+  fee_contains: String
+
+  """All values not containing the given string."""
+  fee_not_contains: String
+
+  """All values starting with the given string."""
+  fee_starts_with: String
+
+  """All values not starting with the given string."""
+  fee_not_starts_with: String
+
+  """All values ending with the given string."""
+  fee_ends_with: String
+
+  """All values not ending with the given string."""
+  fee_not_ends_with: String
+  curatorDeposit: String
+
+  """All values that are not equal to given value."""
+  curatorDeposit_not: String
+
+  """All values that are contained in given list."""
+  curatorDeposit_in: [String!]
+
+  """All values that are not contained in given list."""
+  curatorDeposit_not_in: [String!]
+
+  """All values less than the given value."""
+  curatorDeposit_lt: String
+
+  """All values less than or equal the given value."""
+  curatorDeposit_lte: String
+
+  """All values greater than the given value."""
+  curatorDeposit_gt: String
+
+  """All values greater than or equal the given value."""
+  curatorDeposit_gte: String
+
+  """All values containing the given string."""
+  curatorDeposit_contains: String
+
+  """All values not containing the given string."""
+  curatorDeposit_not_contains: String
+
+  """All values starting with the given string."""
+  curatorDeposit_starts_with: String
+
+  """All values not starting with the given string."""
+  curatorDeposit_not_starts_with: String
+
+  """All values ending with the given string."""
+  curatorDeposit_ends_with: String
+
+  """All values not ending with the given string."""
+  curatorDeposit_not_ends_with: String
+  bond: String
+
+  """All values that are not equal to given value."""
+  bond_not: String
+
+  """All values that are contained in given list."""
+  bond_in: [String!]
+
+  """All values that are not contained in given list."""
+  bond_not_in: [String!]
+
+  """All values less than the given value."""
+  bond_lt: String
+
+  """All values less than or equal the given value."""
+  bond_lte: String
+
+  """All values greater than the given value."""
+  bond_gt: String
+
+  """All values greater than or equal the given value."""
+  bond_gte: String
+
+  """All values containing the given string."""
+  bond_contains: String
+
+  """All values not containing the given string."""
+  bond_not_contains: String
+
+  """All values starting with the given string."""
+  bond_starts_with: String
+
+  """All values not starting with the given string."""
+  bond_not_starts_with: String
+
+  """All values ending with the given string."""
+  bond_ends_with: String
+
+  """All values not ending with the given string."""
+  bond_not_ends_with: String
+  bountyId: Int
+
+  """All values that are not equal to given value."""
+  bountyId_not: Int
+
+  """All values that are contained in given list."""
+  bountyId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  bountyId_not_in: [Int!]
+
+  """All values less than the given value."""
+  bountyId_lt: Int
+
+  """All values less than or equal the given value."""
+  bountyId_lte: Int
+
+  """All values greater than the given value."""
+  bountyId_gt: Int
+
+  """All values greater than or equal the given value."""
+  bountyId_gte: Int
+  curator: String
+
+  """All values that are not equal to given value."""
+  curator_not: String
+
+  """All values that are contained in given list."""
+  curator_in: [String!]
+
+  """All values that are not contained in given list."""
+  curator_not_in: [String!]
+
+  """All values less than the given value."""
+  curator_lt: String
+
+  """All values less than or equal the given value."""
+  curator_lte: String
+
+  """All values greater than the given value."""
+  curator_gt: String
+
+  """All values greater than or equal the given value."""
+  curator_gte: String
+
+  """All values containing the given string."""
+  curator_contains: String
+
+  """All values not containing the given string."""
+  curator_not_contains: String
+
+  """All values starting with the given string."""
+  curator_starts_with: String
+
+  """All values not starting with the given string."""
+  curator_not_starts_with: String
+
+  """All values ending with the given string."""
+  curator_ends_with: String
+
+  """All values not ending with the given string."""
+  curator_not_ends_with: String
+  beneficiary: String
+
+  """All values that are not equal to given value."""
+  beneficiary_not: String
+
+  """All values that are contained in given list."""
+  beneficiary_in: [String!]
+
+  """All values that are not contained in given list."""
+  beneficiary_not_in: [String!]
+
+  """All values less than the given value."""
+  beneficiary_lt: String
+
+  """All values less than or equal the given value."""
+  beneficiary_lte: String
+
+  """All values greater than the given value."""
+  beneficiary_gt: String
+
+  """All values greater than or equal the given value."""
+  beneficiary_gte: String
+
+  """All values containing the given string."""
+  beneficiary_contains: String
+
+  """All values not containing the given string."""
+  beneficiary_not_contains: String
+
+  """All values starting with the given string."""
+  beneficiary_starts_with: String
+
+  """All values not starting with the given string."""
+  beneficiary_not_starts_with: String
+
+  """All values ending with the given string."""
+  beneficiary_ends_with: String
+
+  """All values not ending with the given string."""
+  beneficiary_not_ends_with: String
+  bountyStatus_every: BountyStatusWhereInput
+  bountyStatus_some: BountyStatusWhereInput
+  bountyStatus_none: BountyStatusWhereInput
+}
+
+input BountyWhereUniqueInput {
+  id: Int
+  bountyId: Int
 }
 
 type Council implements Node {
@@ -3165,6 +4111,8 @@ type Mutation {
   createTreasuryStatus(data: TreasuryStatusCreateInput!): TreasuryStatus!
   createTip(data: TipCreateInput!): Tip!
   createTipStatus(data: TipStatusCreateInput!): TipStatus!
+  createBounty(data: BountyCreateInput!): Bounty!
+  createBountyStatus(data: BountyStatusCreateInput!): BountyStatus!
   createBlockNumber(data: BlockNumberCreateInput!): BlockNumber!
   createSession(data: SessionCreateInput!): Session!
   updateHeartBeat(data: HeartBeatUpdateInput!, where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -3193,6 +4141,8 @@ type Mutation {
   updateTreasuryStatus(data: TreasuryStatusUpdateInput!, where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
   updateTip(data: TipUpdateInput!, where: TipWhereUniqueInput!): Tip
   updateTipStatus(data: TipStatusUpdateInput!, where: TipStatusWhereUniqueInput!): TipStatus
+  updateBounty(data: BountyUpdateInput!, where: BountyWhereUniqueInput!): Bounty
+  updateBountyStatus(data: BountyStatusUpdateInput!, where: BountyStatusWhereUniqueInput!): BountyStatus
   updateBlockNumber(data: BlockNumberUpdateInput!, where: BlockNumberWhereUniqueInput!): BlockNumber
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   deleteHeartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -3221,6 +4171,8 @@ type Mutation {
   deleteTreasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
   deleteTip(where: TipWhereUniqueInput!): Tip
   deleteTipStatus(where: TipStatusWhereUniqueInput!): TipStatus
+  deleteBounty(where: BountyWhereUniqueInput!): Bounty
+  deleteBountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
   deleteBlockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   deleteSession(where: SessionWhereUniqueInput!): Session
   upsertHeartBeat(where: HeartBeatWhereUniqueInput!, create: HeartBeatCreateInput!, update: HeartBeatUpdateInput!): HeartBeat!
@@ -3249,6 +4201,8 @@ type Mutation {
   upsertTreasuryStatus(where: TreasuryStatusWhereUniqueInput!, create: TreasuryStatusCreateInput!, update: TreasuryStatusUpdateInput!): TreasuryStatus!
   upsertTip(where: TipWhereUniqueInput!, create: TipCreateInput!, update: TipUpdateInput!): Tip!
   upsertTipStatus(where: TipStatusWhereUniqueInput!, create: TipStatusCreateInput!, update: TipStatusUpdateInput!): TipStatus!
+  upsertBounty(where: BountyWhereUniqueInput!, create: BountyCreateInput!, update: BountyUpdateInput!): Bounty!
+  upsertBountyStatus(where: BountyStatusWhereUniqueInput!, create: BountyStatusCreateInput!, update: BountyStatusUpdateInput!): BountyStatus!
   upsertBlockNumber(where: BlockNumberWhereUniqueInput!, create: BlockNumberCreateInput!, update: BlockNumberUpdateInput!): BlockNumber!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
   updateManyHeartBeats(data: HeartBeatUpdateManyMutationInput!, where: HeartBeatWhereInput): BatchPayload!
@@ -3276,6 +4230,8 @@ type Mutation {
   updateManyTreasuryStatuses(data: TreasuryStatusUpdateManyMutationInput!, where: TreasuryStatusWhereInput): BatchPayload!
   updateManyTips(data: TipUpdateManyMutationInput!, where: TipWhereInput): BatchPayload!
   updateManyTipStatuses(data: TipStatusUpdateManyMutationInput!, where: TipStatusWhereInput): BatchPayload!
+  updateManyBounties(data: BountyUpdateManyMutationInput!, where: BountyWhereInput): BatchPayload!
+  updateManyBountyStatuses(data: BountyStatusUpdateManyMutationInput!, where: BountyStatusWhereInput): BatchPayload!
   updateManyBlockNumbers(data: BlockNumberUpdateManyMutationInput!, where: BlockNumberWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   deleteManyHeartBeats(where: HeartBeatWhereInput): BatchPayload!
@@ -3304,6 +4260,8 @@ type Mutation {
   deleteManyTreasuryStatuses(where: TreasuryStatusWhereInput): BatchPayload!
   deleteManyTips(where: TipWhereInput): BatchPayload!
   deleteManyTipStatuses(where: TipStatusWhereInput): BatchPayload!
+  deleteManyBounties(where: BountyWhereInput): BatchPayload!
+  deleteManyBountyStatuses(where: BountyStatusWhereInput): BatchPayload!
   deleteManyBlockNumbers(where: BlockNumberWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
@@ -6221,6 +7179,8 @@ type Query {
   treasuryStatuses(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TreasuryStatus]!
   tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
   tipStatuses(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus]!
+  bounties(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bounty]!
+  bountyStatuses(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus]!
   blockNumbers(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockNumber]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
   heartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -6249,6 +7209,8 @@ type Query {
   treasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
   tip(where: TipWhereUniqueInput!): Tip
   tipStatus(where: TipStatusWhereUniqueInput!): TipStatus
+  bounty(where: BountyWhereUniqueInput!): Bounty
+  bountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
   blockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   session(where: SessionWhereUniqueInput!): Session
   heartBeatsConnection(where: HeartBeatWhereInput, orderBy: HeartBeatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HeartBeatConnection!
@@ -6277,6 +7239,8 @@ type Query {
   treasuryStatusesConnection(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TreasuryStatusConnection!
   tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
   tipStatusesConnection(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipStatusConnection!
+  bountiesConnection(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyConnection!
+  bountyStatusesConnection(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyStatusConnection!
   blockNumbersConnection(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockNumberConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
 
@@ -7956,6 +8920,8 @@ type Subscription {
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload
   tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
   tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
+  bounty(where: BountySubscriptionWhereInput): BountySubscriptionPayload
+  bountyStatus(where: BountyStatusSubscriptionWhereInput): BountyStatusSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
 }

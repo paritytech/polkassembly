@@ -234,3 +234,24 @@ type TipStatus {
   status: String!
   uniqueStatus: String! @unique
 }
+
+type Bounty {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "BOUNTY_SEQUENCE" initialValue:1 allocationSize:1)
+  proposer: String!
+  value: String!
+  fee: String
+  curatorDeposit: String
+  bond: String
+  bountyId: Int! @unique
+  bountyStatus: [BountyStatus]! @relation(name: "BountyStatusFromBounty")
+  curator: String
+  beneficiary: String
+}
+
+type BountyStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "BountyStatusAtBlockNumber", link: INLINE)
+  bounty: Bounty! @relation(name: "BountyStatusFromBounty", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}
