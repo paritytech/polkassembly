@@ -294,3 +294,7 @@ export interface ContextUserId {
 export interface ProfileArgs {
     username: string;
 }
+
+export interface DeleteAccountArgs {
+    password: string;
+}
