@@ -92,3 +92,11 @@ export const SET_CREDENTIALS_CONFIRM = gql`
 		}
 	}
 `;
+
+export const MUTATION_DELETE_ACCOUNT = gql`
+	mutation deleteAccount($password: String!){
+		deleteAccount(password: $password){
+			message
+		}
+	}
+`;

@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default {
+	ACCOUNT_DELETE_SUCCESSFUL: 'Your account has been deleted',
 	ADDRESS_ALREADY_EXISTS: 'This address is already linked with another account. Please choose another address.',
 	ADDRESS_DEFAULT_SUCCESS: 'Address has been successfully set as default',
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',

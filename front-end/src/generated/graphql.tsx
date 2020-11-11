@@ -3905,6 +3905,7 @@ export type Mutation = {
   changeNotificationPreference?: Maybe<ChangeResponse>;
   changePassword?: Maybe<Message>;
   changeUsername?: Maybe<ChangeResponse>;
+  deleteAccount?: Maybe<Message>;
   login?: Maybe<LoginResponse>;
   logout?: Maybe<Message>;
   postSubscribe?: Maybe<Message>;
@@ -3982,6 +3983,11 @@ export type MutationChangePasswordArgs = {
 export type MutationChangeUsernameArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+
+export type MutationDeleteAccountArgs = {
+  password: Scalars['String'];
 };
 
 
@@ -10855,6 +10861,7 @@ export type Mutation_Root = {
   createTreasurySpendProposal: TreasurySpendProposal;
   createTreasuryStatus: TreasuryStatus;
   createValidator: Validator;
+  deleteAccount?: Maybe<Message>;
   deleteBlockIndex?: Maybe<BlockIndex>;
   deleteBlockNumber?: Maybe<BlockNumber>;
   deleteBounty?: Maybe<Bounty>;
@@ -11381,6 +11388,12 @@ export type Mutation_RootCreateTreasuryStatusArgs = {
 /** mutation root */
 export type Mutation_RootCreateValidatorArgs = {
   data: ValidatorCreateInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteAccountArgs = {
+  password: Scalars['String'];
 };
 
 
@@ -19123,6 +19136,19 @@ export type SetCredentialsConfirmMutation = (
   )> }
 );
 
+export type DeleteAccountMutationVariables = {
+  password: Scalars['String'];
+};
+
+
+export type DeleteAccountMutation = (
+  { __typename?: 'mutation_root' }
+  & { deleteAccount?: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'message'>
+  )> }
+);
+
 export type OnchainLinkTipFragment = (
   { __typename?: 'onchain_links' }
   & Pick<Onchain_Links, 'id' | 'proposer_address' | 'onchain_tip_id'>
@@ -22281,6 +22307,38 @@ export function useSetCredentialsConfirmMutation(baseOptions?: ApolloReactHooks.
 export type SetCredentialsConfirmMutationHookResult = ReturnType<typeof useSetCredentialsConfirmMutation>;
 export type SetCredentialsConfirmMutationResult = ApolloReactCommon.MutationResult<SetCredentialsConfirmMutation>;
 export type SetCredentialsConfirmMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsConfirmMutation, SetCredentialsConfirmMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation deleteAccount($password: String!) {
+  deleteAccount(password: $password) {
+    message
+  }
+}
+    `;
+export type DeleteAccountMutationFn = ApolloReactCommon.MutationFunction<DeleteAccountMutation, DeleteAccountMutationVariables>;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, baseOptions);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = ApolloReactCommon.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
 export const TipPostAndCommentsDocument = gql`
     query TipPostAndComments($hash: String!) {
   posts(where: {onchain_link: {onchain_tip_id: {_eq: $hash}}}) {

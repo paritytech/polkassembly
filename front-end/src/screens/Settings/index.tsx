@@ -8,6 +8,7 @@ import { Divider,Grid } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import Address from './address';
+import DeleteAccount from './deleteAccount';
 import Email from './email';
 import Password from  './password';
 import SetCredentials from './setCredentials';
@@ -30,6 +31,8 @@ const Settings = ({ className }:Props): JSX.Element => {
 				{web3signup ? null : <><Email/><Divider/></>}
 				{web3signup ? null : <><Password/><Divider/></>}
 				<Address/>
+				<Divider/>
+				<DeleteAccount/>
 			</Grid.Column>
 			<Grid.Column only='computer' computer={4} largeScreen={6} widescreen={6}/>
 		</Grid>

@@ -12,6 +12,7 @@ import validator from 'validator';
 
 import Address from '../model/Address';
 import Notification from '../model/Notification';
+import PostSubscription from '../model/PostSubscription';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
@@ -137,6 +138,59 @@ export default class AuthService {
 			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user)
 		};
+	}
+
+	public async DeleteAccount (token: string, password: string): Promise<void> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
+		}
+
+		await Address
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await PostSubscription
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await RefreshToken
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await UndoEmailChangeToken
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		const username = `deleted-${uuid()}`;
+		const newPassword = uuid();
+		const hashedPassword = await this.getSaltAndHashedPassword(newPassword);
+
+		await User
+			.query()
+			.patch({
+				email: '',
+				email_verified: false,
+				password: hashedPassword.password,
+				salt: hashedPassword.salt,
+				username
+			})
+			.findById(userId);
 	}
 
 	public async SetDefaultAddress (token: string, address: string): Promise<string> {
