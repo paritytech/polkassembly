@@ -17,7 +17,7 @@ const ARCHIVE_NODE_ENDPOINT = envVars.ARCHIVE_NODE_ENDPOINT;
 const MAX_LAG = envVars.MAX_LAG;
 const BLOCK_IDENTIFIER = envVars.BLOCK_IDENTIFIER;
 const START_FROM = envVars.START_FROM;
-const LOOP_TIMEOUT = 60000;
+const LOOP_TIMEOUT = 300000;
 
 const l = logger('node-watcher');
 
