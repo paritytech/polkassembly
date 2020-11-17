@@ -61,12 +61,6 @@ function waitLagLimit(
   });
 }
 
-function noop() {}
-function exit() {
-  l.error('exiting due to timout expired');
-  process.exit(1);
-}
-
 export async function nodeWatcher(): Promise<unknown> {
   return new Promise((_, reject) => {
     let keepLooping = true;
