@@ -17,7 +17,6 @@ const ARCHIVE_NODE_ENDPOINT = envVars.ARCHIVE_NODE_ENDPOINT;
 const MAX_LAG = envVars.MAX_LAG;
 const BLOCK_IDENTIFIER = envVars.BLOCK_IDENTIFIER;
 const START_FROM = envVars.START_FROM;
-const LOOP_TIMEOUT = 300000;
 
 const l = logger('node-watcher');
 
@@ -60,12 +59,6 @@ function waitLagLimit(
 
     wait();
   });
-}
-
-function noop() {}
-function exit() {
-  l.error('exiting due to timout expired');
-  process.exit(1);
 }
 
 export async function nodeWatcher(): Promise<unknown> {
@@ -117,13 +110,8 @@ export async function nodeWatcher(): Promise<unknown> {
           blockIndex = existingBlockIndex[0].index;
         }
 
-        let timeout = setTimeout(noop, 0);
-
         /*eslint no-constant-condition: ["error", { "checkLoops": false }]*/
         while (keepLooping) {
-          clearTimeout(timeout);
-          timeout = setTimeout(exit, LOOP_TIMEOUT)
-
           if (MAX_LAG) {
             // if we reached the last finalized block
             // MAX_LAG is set but we haven't reached the lag limit yet, we need to wait
