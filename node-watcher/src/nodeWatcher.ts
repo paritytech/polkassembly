@@ -64,6 +64,7 @@ function waitLagLimit(
 export async function nodeWatcher(): Promise<unknown> {
   return new Promise((_, reject) => {
     let keepLooping = true;
+
     const provider = new WsProvider(ARCHIVE_NODE_ENDPOINT);
 
     ApiPromise.create({ provider })
