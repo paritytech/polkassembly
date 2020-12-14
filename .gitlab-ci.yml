@@ -100,7 +100,7 @@ lint-chain-db-watcher:
 .build_and_push:                   &build_and_push
   tags:
     - kubernetes-parity-build
-  image:                           docker:18-git
+  image:                           docker:git
   retry:
     max:                           2
     when:
