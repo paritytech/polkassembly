@@ -10,8 +10,6 @@ variables:
   SAST_DISABLE_DIND:               "true"
   SCAN_KUBERNETES_MANIFESTS:       "true"
   ANALYZER_TARGET_DIR:             "auth-server/"
-  # Variables for build_and_push without overriding any job variable
-  STORAGE_DRIVER: overlay2
 
 # Enable Gitlab's security scanning
 include:
@@ -119,8 +117,7 @@ lint-chain-db-watcher:
     # do: docker build
     - eval "buildah bud --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
     # do: docker push
-    - buildah push "$DOCKER_IMAGE:latest"
-    - buildah push "$DOCKER_IMAGE:$DOCKER_TAG"
+    - buildah push "$DOCKER_IMAGE:latest" "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:kusama-staging-front-end:
   stage:                           dockerize
