@@ -14,6 +14,7 @@ variables:
   # Variables for build_and_push without overriding any job variable
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://localhost:2375
+  DOCKER_TLS_CERTDIR: ""
 
 # Enable Gitlab's security scanning
 include:
@@ -100,7 +101,7 @@ lint-chain-db-watcher:
 .build_and_push:                   &build_and_push
   tags:
     - kubernetes-parity-build
-  image:                           docker:git
+  image:                           docker:19-git
   retry:
     max:                           2
     when:
@@ -109,7 +110,7 @@ lint-chain-db-watcher:
       - api_failure
   interruptible:                   true
   services:
-    - docker:dind
+    - docker:19-dind
   script:
     # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+://')
