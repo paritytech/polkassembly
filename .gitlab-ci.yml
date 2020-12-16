@@ -10,11 +10,8 @@ variables:
   SAST_DISABLE_DIND:               "true"
   SCAN_KUBERNETES_MANIFESTS:       "true"
   ANALYZER_TARGET_DIR:             "auth-server/"
-  DS_DISABLE_DIND:                 "true"
   # Variables for build_and_push without overriding any job variable
-  DOCKER_DRIVER: overlay2
-  DOCKER_HOST: tcp://localhost:2375
-  DOCKER_TLS_CERTDIR: ""
+  STORAGE_DRIVER: overlay2
 
 # Enable Gitlab's security scanning
 include:
@@ -101,7 +98,7 @@ lint-chain-db-watcher:
 .build_and_push:                   &build_and_push
   tags:
     - kubernetes-parity-build
-  image:                           docker:19-git
+  image:                           quay.io/buildah/stable
   retry:
     max:                           2
     when:
@@ -109,8 +106,6 @@ lint-chain-db-watcher:
       - unknown_failure
       - api_failure
   interruptible:                   true
-  services:
-    - docker:19-dind
   script:
     # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+://')
@@ -118,14 +113,14 @@ lint-chain-db-watcher:
     # set 'BUILDKIT_INLINE_CACHE' so generated images can be used for caching subsequently
     - export BUILD_ARGS="$BUILD_ARGS --build-arg BUILDKIT_INLINE_CACHE=1"
     # pull latest image used as cache to speed up the docker build process
-    - docker pull $DOCKER_IMAGE:latest || true
+    - buildah pull $DOCKER_IMAGE:latest || true
     # login to the docker registry
-    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
+    - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin
     # do: docker build
-    - eval "docker build --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
+    - eval "buildah bud --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
     # do: docker push
-    - docker push "$DOCKER_IMAGE:latest"
-    - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
+    - buildah push "$DOCKER_IMAGE:latest"
+    - buildah push "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:kusama-staging-front-end:
   stage:                           dockerize
