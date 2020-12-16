@@ -46,11 +46,11 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 /**
- * Controllers (route handlers).
+ * Controllers (route handlers)
  */
 
 /**
- * Create Express server.
+ * Create Express server
  */
 const app = express();
 const server = new ApolloServer({
@@ -60,7 +60,7 @@ const server = new ApolloServer({
 });
 
 /**
- * Express configuration.
+ * Express configuration
  */
 app.use(cors());
 app.set('host', '0.0.0.0');
