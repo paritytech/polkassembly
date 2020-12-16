@@ -1,8 +1,8 @@
-image:                             paritytech/kubetools:helm3
+image:                             docker.io/paritytech/kubetools:helm3
 
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
-  CI_REGISTRY:                     "paritytech"
+  CI_REGISTRY:                     "docker.io/paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       100
@@ -115,7 +115,7 @@ lint-chain-db-watcher:
     # pull latest image used as cache to speed up the docker build process
     - buildah pull $DOCKER_IMAGE:latest || true
     # login to the docker registry
-    - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin
+    - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin docker.io
     # do: docker build
     - eval "buildah bud --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
     # do: docker push
@@ -318,7 +318,7 @@ publish-draft-release:
   stage:                           publish
   environment:
     name:                          parity-prod
-  image:                           paritytech/tools:latest
+  image:                           docker.io/paritytech/tools:latest
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   script:
