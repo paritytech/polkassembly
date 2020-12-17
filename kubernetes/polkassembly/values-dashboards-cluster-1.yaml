@@ -7,7 +7,7 @@ nodeSelector: {}
 
 frontend:
   image:
-    repository: paritytech/polkassembly-kusama-staging-front-end
+    repository: docker.io/paritytech/polkassembly-kusama-staging-front-end
     pullPolicy: Always
 
   ingress:

@@ -16,9 +16,9 @@ harvester:
   name: harvester
 
   image:
-    repository: paritytech/polkassembly-node-watcher:latest
+    repository: docker.io/paritytech/polkassembly-node-watcher:latest
     pullPolicy: Always
-  
+
   config:
     PRISMA_ENDPOINT: http://node-watcher-service:4466
     BLOCK_IDENTIFIER: 'chain-tip'
@@ -62,7 +62,7 @@ chainDbOpenServer:
   replicaCount: 1
 
   image:
-    repository: paritytech/polkassembly-chain-db-open-server:latest
+    repository: docker.io/paritytech/polkassembly-chain-db-open-server:latest
     pullPolicy: Always
 
   service:
