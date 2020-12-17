@@ -115,9 +115,14 @@ lint-chain-db-watcher:
     # login to the docker registry
     - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin docker.io
     # do: docker build
-    - eval "buildah bud --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
+    - eval "buildah bud
+        --squash
+        --format=docker
+        --cache-from $DOCKER_IMAGE:latest 
+        -t" "$DOCKER_IMAGE:$DOCKER_TAG" "
+        -t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
     # do: docker push
-    - buildah push "$DOCKER_IMAGE:latest" "$DOCKER_IMAGE:$DOCKER_TAG"
+    - buildah push --format=v2s2 "$DOCKER_IMAGE:latest" "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:kusama-staging-front-end:
   stage:                           dockerize
