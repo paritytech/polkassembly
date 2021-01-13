@@ -43,11 +43,13 @@ const VoteMotion = ({
 	const [isCouncil, setIsCouncil] = useState(false);
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
-	const currentCouncil: string[] = [];
+	const [currentCouncil, setCurrentCouncil] = useState<string[]>([]);
 	const { api, isApiReady } = useContext(ApiPromiseContext);
 	const { addresses } = useContext(UserDetailsContext);
 
-	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
+	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {
+		setCurrentCouncil([...currentCouncil, member?.address]);
+	});
 
 	useEffect( () => {
 		// it will iterate through all addresses
