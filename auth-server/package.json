@@ -8,7 +8,7 @@
 		"start": "yarn tsc && yarn migrate && node build/src/index.js",
 		"lint": "npx eslint ./src/ --ext .js,.ts",
 		"lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
-		"tsc": "tsc",
+		"tsc": "tsc --resolveJsonModule",
 		"migrate": "knex migrate:latest",
 		"api:bump": "yarn add @polkadot/api @polkadot/util @polkadot/util-crypto @polkadot/types"
 	},
