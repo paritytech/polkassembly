@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "tsc": "tsc",
+    "tsc": "tsc --resolveJsonModule",
     "start:prod": "tsc && node build/index.js",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
