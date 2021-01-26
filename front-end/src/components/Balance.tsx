@@ -3,9 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { DeriveBalancesAccount } from '@polkadot/api-derive/types';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
+import { ApiContext } from 'src/context/ApiContext';
 import formatBnBalance from 'src/util/formatBnBalance';
 
 interface Props {
@@ -15,10 +15,18 @@ interface Props {
 
 const Balance = ({ address, className }: Props) => {
 	const [balance, setBalance] = useState<string>('0');
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
+			return;
+		}
+
+		if (!address) {
 			return;
 		}
 
@@ -31,7 +39,7 @@ const Balance = ({ address, className }: Props) => {
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, isApiReady]);
+	}, [address, api, apiReady]);
 
 	return (
 		<div className={className}>

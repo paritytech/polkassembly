@@ -49,7 +49,7 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "semi": [2, "always"],
-        "simple-import-sort/sort": "error",
+        "simple-import-sort/imports": "error",
         "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
         "switch-colon-spacing": ["error", {"after": true, "before": false}]
     }

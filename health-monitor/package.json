@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "tsc": "tsc",
+    "tsc": "tsc --resolveJsonModule",
     "start:prod": "tsc && node build/index.js",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "api:bump": "yarn add @polkadot/api"
   },
   "dependencies": {
-    "@polkadot/api": "^2.10.1",
+    "@polkadot/api": "^3.6.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",

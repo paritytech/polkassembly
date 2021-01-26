@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'src/hooks';
 
 import Post from '../../components/Post/Post';
 import { useTreasuryProposalPostAndCommentsQuery } from '../../generated/graphql';
@@ -11,7 +11,8 @@ import FilteredError from '../../ui-components/FilteredError';
 import Loader from '../../ui-components/Loader';
 
 export default () => {
-	const { id } = useParams();
+	const { query } = useRouter();
+	const id = query['id'] as string;
 	const idNumber = Number(id) || 0;
 	const { data, error, refetch } = useTreasuryProposalPostAndCommentsQuery({ variables: { 'id': idNumber } });
 

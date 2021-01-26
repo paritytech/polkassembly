@@ -7,7 +7,7 @@
   "private": true,
   "repository": "https://github.com/paritytech/Polkassembly",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --resolveJsonModule",
     "docker": "docker build -t nomidot-server:v0.6.2 . && docker tag nomidot-server:v0.6.2 eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2 && docker push eu.gcr.io/test-installations-222013/nomidot-server:v0.6.2",
     "start:local": "PRISMA_ENDPOINT=http://127.0.0.1:4466 ts-node src/index.ts",
     "start": "yarn build && node lib/index.js",

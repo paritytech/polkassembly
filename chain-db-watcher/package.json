@@ -22,7 +22,7 @@
     "start": "yarn tsc && ts-node ./src/index.ts",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
-    "tsc": "tsc",
+    "tsc": "tsc --resolveJsonModule",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
   "devDependencies": {
