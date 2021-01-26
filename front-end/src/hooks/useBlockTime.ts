@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import { useContext, useMemo } from 'react';
+import { ApiContext } from 'src/context/ApiContext';
 import { chainProperties } from 'src/global/networkConstants';
 import getNetwork from 'src/util/getNetwork';
 
@@ -11,10 +11,16 @@ const network = getNetwork();
 const DEFAULT_TIME = chainProperties?.[network]?.blockTime;
 
 export default function ()  {
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 
 	return useMemo(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return {
+				blocktime: DEFAULT_TIME
+			};
+		}
+
+		if (!apiReady) {
 			return {
 				blocktime: DEFAULT_TIME
 			};
@@ -23,5 +29,5 @@ export default function ()  {
 		return {
 			blocktime: api.consts.babe?.expectedBlockTime.toNumber()
 		};
-	}, [api, isApiReady]);
+	}, [api, apiReady]);
 }

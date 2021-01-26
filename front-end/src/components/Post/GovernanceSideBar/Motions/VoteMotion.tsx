@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { UserDetailsContext } from 'src/context/UserDetailsContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
@@ -44,7 +44,7 @@ const VoteMotion = ({
 	const [forceVote, setForceVote] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
 	const [currentCouncil, setCurrentCouncil] = useState<string[]>([]);
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const { addresses } = useContext(UserDetailsContext);
 
 	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {
@@ -74,7 +74,16 @@ const VoteMotion = ({
 			return;
 		}
 
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
+			return;
+		}
+
 		setLoadingStatus({ isLoading: true, message: 'Waiting for signature' });
+
 		const vote = api.tx.council.vote(motionProposalHash, motionId, aye);
 
 		vote.signAndSend(address, ({ status }) => {
@@ -139,7 +148,7 @@ const VoteMotion = ({
 							onAccountChange={onAccountChange}
 						/>
 						<AyeNayButtons
-							disabled={!isApiReady}
+							disabled={!apiReady}
 							onClickAye={() => voteMotion(true)}
 							onClickNay={() => voteMotion(false)}
 						/>

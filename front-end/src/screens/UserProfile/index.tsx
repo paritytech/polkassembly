@@ -3,10 +3,10 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { DeriveAccountFlags, DeriveAccountInfo, DeriveAccountRegistration } from '@polkadot/api-derive/types';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon, Table } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 
 import Balance from '../../components/Balance';
 import { useProfileQuery } from '../../generated/graphql';
@@ -27,7 +27,7 @@ const CouncilEmoji = () => <span aria-label="council member" className='councilM
 const UserProfile = ({ className }: Props): JSX.Element => {
 	const router = useRouter();
 
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const [identity, setIdentity] = useState<DeriveAccountRegistration | null>(null);
 	const [flags, setFlags] = useState<DeriveAccountFlags | undefined>(undefined);
 	const { data, error } = useProfileQuery({ variables: { username: router.query.username } });
@@ -36,7 +36,11 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 
 	useEffect(() => {
 
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -53,10 +57,14 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, isApiReady]);
+	}, [address, api, apiReady]);
 
 	useEffect(() => {
-		if (!isApiReady){
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -73,7 +81,7 @@ const UserProfile = ({ className }: Props): JSX.Element => {
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, isApiReady]);
+	}, [address, api, apiReady]);
 
 	if (error?.message) return <FilteredError text={error.message}/>;
 

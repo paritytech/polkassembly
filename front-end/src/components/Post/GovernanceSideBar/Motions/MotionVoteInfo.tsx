@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
 
 import { CouncilVote, Vote } from '../../../../types';
@@ -18,11 +18,15 @@ interface Props {
 }
 
 const MotionVoteInfo = ({ className, motionId }: Props) => {
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const [councilVotes, setCouncilVotes] = useState<CouncilVote[]>([]);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -56,7 +60,7 @@ const MotionVoteInfo = ({ className, motionId }: Props) => {
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady, motionId]);
+	}, [api, apiReady, motionId]);
 
 	if (!councilVotes.length) {
 		return null;
