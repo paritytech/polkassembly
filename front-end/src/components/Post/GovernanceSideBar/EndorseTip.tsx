@@ -48,10 +48,6 @@ const EndorseTip = ({
 	const { api, apiReady } = useContext(ApiContext);
 	const { addresses } = useContext(UserDetailsContext);
 
-	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {
-		setCurrentCouncil([...currentCouncil, member?.address]);
-	});
-
 	useEffect(() => {
 		// it will iterate through all addresses
 		addresses && addresses.some(address => {
@@ -63,6 +59,12 @@ const EndorseTip = ({
 			return false;
 		});
 	}, [addresses, currentCouncil]);
+
+	useEffect(() => {
+		councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {
+			setCurrentCouncil(currentCouncil => [...currentCouncil, member?.address]);
+		});
+	}, [councilQueryresult]);
 
 	const onValueChange = (balance: BN) => setEndorseValue(balance);
 
