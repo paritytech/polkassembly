@@ -2,6 +2,9 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -10934,6 +10937,14 @@ export type Mutation_Root = {
   delete_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
   /** delete single row from the table: "onchain_links" */
   delete_onchain_links_by_pk?: Maybe<Onchain_Links>;
+  /** delete data from the table: "option_poll" */
+  delete_option_poll?: Maybe<Option_Poll_Mutation_Response>;
+  /** delete single row from the table: "option_poll" */
+  delete_option_poll_by_pk?: Maybe<Option_Poll>;
+  /** delete data from the table: "option_poll_votes" */
+  delete_option_poll_votes?: Maybe<Option_Poll_Votes_Mutation_Response>;
+  /** delete single row from the table: "option_poll_votes" */
+  delete_option_poll_votes_by_pk?: Maybe<Option_Poll_Votes>;
   /** delete data from the table: "poll" */
   delete_poll?: Maybe<Poll_Mutation_Response>;
   /** delete single row from the table: "poll" */
@@ -10971,6 +10982,14 @@ export type Mutation_Root = {
   insert_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
   /** insert a single row into the table: "onchain_links" */
   insert_onchain_links_one?: Maybe<Onchain_Links>;
+  /** insert data into the table: "option_poll" */
+  insert_option_poll?: Maybe<Option_Poll_Mutation_Response>;
+  /** insert a single row into the table: "option_poll" */
+  insert_option_poll_one?: Maybe<Option_Poll>;
+  /** insert data into the table: "option_poll_votes" */
+  insert_option_poll_votes?: Maybe<Option_Poll_Votes_Mutation_Response>;
+  /** insert a single row into the table: "option_poll_votes" */
+  insert_option_poll_votes_one?: Maybe<Option_Poll_Votes>;
   /** insert data into the table: "poll" */
   insert_poll?: Maybe<Poll_Mutation_Response>;
   /** insert a single row into the table: "poll" */
@@ -11079,6 +11098,14 @@ export type Mutation_Root = {
   update_onchain_links?: Maybe<Onchain_Links_Mutation_Response>;
   /** update single row of the table: "onchain_links" */
   update_onchain_links_by_pk?: Maybe<Onchain_Links>;
+  /** update data of the table: "option_poll" */
+  update_option_poll?: Maybe<Option_Poll_Mutation_Response>;
+  /** update single row of the table: "option_poll" */
+  update_option_poll_by_pk?: Maybe<Option_Poll>;
+  /** update data of the table: "option_poll_votes" */
+  update_option_poll_votes?: Maybe<Option_Poll_Votes_Mutation_Response>;
+  /** update single row of the table: "option_poll_votes" */
+  update_option_poll_votes_by_pk?: Maybe<Option_Poll_Votes>;
   /** update data of the table: "poll" */
   update_poll?: Maybe<Poll_Mutation_Response>;
   /** update single row of the table: "poll" */
@@ -11794,6 +11821,30 @@ export type Mutation_RootDelete_Onchain_Links_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Option_PollArgs = {
+  where: Option_Poll_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Option_Poll_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Option_Poll_VotesArgs = {
+  where: Option_Poll_Votes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Option_Poll_Votes_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_PollArgs = {
   where: Poll_Bool_Exp;
 };
@@ -11911,6 +11962,34 @@ export type Mutation_RootInsert_Onchain_LinksArgs = {
 export type Mutation_RootInsert_Onchain_Links_OneArgs = {
   object: Onchain_Links_Insert_Input;
   on_conflict?: Maybe<Onchain_Links_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Option_PollArgs = {
+  objects: Array<Option_Poll_Insert_Input>;
+  on_conflict?: Maybe<Option_Poll_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Option_Poll_OneArgs = {
+  object: Option_Poll_Insert_Input;
+  on_conflict?: Maybe<Option_Poll_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Option_Poll_VotesArgs = {
+  objects: Array<Option_Poll_Votes_Insert_Input>;
+  on_conflict?: Maybe<Option_Poll_Votes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Option_Poll_Votes_OneArgs = {
+  object: Option_Poll_Votes_Insert_Input;
+  on_conflict?: Maybe<Option_Poll_Votes_On_Conflict>;
 };
 
 
@@ -12535,6 +12614,38 @@ export type Mutation_RootUpdate_Onchain_Links_By_PkArgs = {
   _inc?: Maybe<Onchain_Links_Inc_Input>;
   _set?: Maybe<Onchain_Links_Set_Input>;
   pk_columns: Onchain_Links_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Option_PollArgs = {
+  _inc?: Maybe<Option_Poll_Inc_Input>;
+  _set?: Maybe<Option_Poll_Set_Input>;
+  where: Option_Poll_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Option_Poll_By_PkArgs = {
+  _inc?: Maybe<Option_Poll_Inc_Input>;
+  _set?: Maybe<Option_Poll_Set_Input>;
+  pk_columns: Option_Poll_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Option_Poll_VotesArgs = {
+  _inc?: Maybe<Option_Poll_Votes_Inc_Input>;
+  _set?: Maybe<Option_Poll_Votes_Set_Input>;
+  where: Option_Poll_Votes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Option_Poll_Votes_By_PkArgs = {
+  _inc?: Maybe<Option_Poll_Votes_Inc_Input>;
+  _set?: Maybe<Option_Poll_Votes_Set_Input>;
+  pk_columns: Option_Poll_Votes_Pk_Columns_Input;
 };
 
 
@@ -13472,6 +13583,736 @@ export type Onchain_Links_Variance_Order_By = {
   onchain_referendum_id?: Maybe<Order_By>;
   onchain_treasury_proposal_id?: Maybe<Order_By>;
   post_id?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "option_poll" */
+export type Option_Poll = {
+  __typename?: 'option_poll';
+  created_at: Scalars['timestamptz'];
+  end_at?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  /** An object relationship */
+  option_poll_post: Posts;
+  /** An array relationship */
+  option_poll_votes: Array<Option_Poll_Votes>;
+  /** An aggregated array relationship */
+  option_poll_votes_aggregate: Option_Poll_Votes_Aggregate;
+  options: Scalars['String'];
+  post_id: Scalars['Int'];
+  question: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "option_poll" */
+export type Option_PollOption_Poll_VotesArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+
+/** columns and relationships of "option_poll" */
+export type Option_PollOption_Poll_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+/** aggregated selection of "option_poll" */
+export type Option_Poll_Aggregate = {
+  __typename?: 'option_poll_aggregate';
+  aggregate?: Maybe<Option_Poll_Aggregate_Fields>;
+  nodes: Array<Option_Poll>;
+};
+
+/** aggregate fields of "option_poll" */
+export type Option_Poll_Aggregate_Fields = {
+  __typename?: 'option_poll_aggregate_fields';
+  avg?: Maybe<Option_Poll_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Option_Poll_Max_Fields>;
+  min?: Maybe<Option_Poll_Min_Fields>;
+  stddev?: Maybe<Option_Poll_Stddev_Fields>;
+  stddev_pop?: Maybe<Option_Poll_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Option_Poll_Stddev_Samp_Fields>;
+  sum?: Maybe<Option_Poll_Sum_Fields>;
+  var_pop?: Maybe<Option_Poll_Var_Pop_Fields>;
+  var_samp?: Maybe<Option_Poll_Var_Samp_Fields>;
+  variance?: Maybe<Option_Poll_Variance_Fields>;
+};
+
+
+/** aggregate fields of "option_poll" */
+export type Option_Poll_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Option_Poll_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "option_poll" */
+export type Option_Poll_Aggregate_Order_By = {
+  avg?: Maybe<Option_Poll_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Option_Poll_Max_Order_By>;
+  min?: Maybe<Option_Poll_Min_Order_By>;
+  stddev?: Maybe<Option_Poll_Stddev_Order_By>;
+  stddev_pop?: Maybe<Option_Poll_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Option_Poll_Stddev_Samp_Order_By>;
+  sum?: Maybe<Option_Poll_Sum_Order_By>;
+  var_pop?: Maybe<Option_Poll_Var_Pop_Order_By>;
+  var_samp?: Maybe<Option_Poll_Var_Samp_Order_By>;
+  variance?: Maybe<Option_Poll_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "option_poll" */
+export type Option_Poll_Arr_Rel_Insert_Input = {
+  data: Array<Option_Poll_Insert_Input>;
+  on_conflict?: Maybe<Option_Poll_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Option_Poll_Avg_Fields = {
+  __typename?: 'option_poll_avg_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "option_poll" */
+export type Option_Poll_Avg_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "option_poll". All fields are combined with a logical 'AND'. */
+export type Option_Poll_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Option_Poll_Bool_Exp>>>;
+  _not?: Maybe<Option_Poll_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Option_Poll_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  end_at?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  option_poll_post?: Maybe<Posts_Bool_Exp>;
+  option_poll_votes?: Maybe<Option_Poll_Votes_Bool_Exp>;
+  options?: Maybe<String_Comparison_Exp>;
+  post_id?: Maybe<Int_Comparison_Exp>;
+  question?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "option_poll" */
+export enum Option_Poll_Constraint {
+  /** unique or primary key constraint */
+  OptionPollPkey = 'option_poll_pkey'
+}
+
+/** input type for incrementing integer column in table "option_poll" */
+export type Option_Poll_Inc_Input = {
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "option_poll" */
+export type Option_Poll_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  option_poll_post?: Maybe<Posts_Obj_Rel_Insert_Input>;
+  option_poll_votes?: Maybe<Option_Poll_Votes_Arr_Rel_Insert_Input>;
+  options?: Maybe<Scalars['String']>;
+  post_id?: Maybe<Scalars['Int']>;
+  question?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Option_Poll_Max_Fields = {
+  __typename?: 'option_poll_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  options?: Maybe<Scalars['String']>;
+  post_id?: Maybe<Scalars['Int']>;
+  question?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "option_poll" */
+export type Option_Poll_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  options?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  question?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Option_Poll_Min_Fields = {
+  __typename?: 'option_poll_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  options?: Maybe<Scalars['String']>;
+  post_id?: Maybe<Scalars['Int']>;
+  question?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "option_poll" */
+export type Option_Poll_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  options?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  question?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "option_poll" */
+export type Option_Poll_Mutation_Response = {
+  __typename?: 'option_poll_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Option_Poll>;
+};
+
+/** input type for inserting object relation for remote table "option_poll" */
+export type Option_Poll_Obj_Rel_Insert_Input = {
+  data: Option_Poll_Insert_Input;
+  on_conflict?: Maybe<Option_Poll_On_Conflict>;
+};
+
+/** on conflict condition type for table "option_poll" */
+export type Option_Poll_On_Conflict = {
+  constraint: Option_Poll_Constraint;
+  update_columns: Array<Option_Poll_Update_Column>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "option_poll" */
+export type Option_Poll_Order_By = {
+  created_at?: Maybe<Order_By>;
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  option_poll_post?: Maybe<Posts_Order_By>;
+  option_poll_votes_aggregate?: Maybe<Option_Poll_Votes_Aggregate_Order_By>;
+  options?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+  question?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "option_poll" */
+export type Option_Poll_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "option_poll" */
+export enum Option_Poll_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EndAt = 'end_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Options = 'options',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  Question = 'question',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "option_poll" */
+export type Option_Poll_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  options?: Maybe<Scalars['String']>;
+  post_id?: Maybe<Scalars['Int']>;
+  question?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Option_Poll_Stddev_Fields = {
+  __typename?: 'option_poll_stddev_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "option_poll" */
+export type Option_Poll_Stddev_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Option_Poll_Stddev_Pop_Fields = {
+  __typename?: 'option_poll_stddev_pop_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "option_poll" */
+export type Option_Poll_Stddev_Pop_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Option_Poll_Stddev_Samp_Fields = {
+  __typename?: 'option_poll_stddev_samp_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "option_poll" */
+export type Option_Poll_Stddev_Samp_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Option_Poll_Sum_Fields = {
+  __typename?: 'option_poll_sum_fields';
+  end_at?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  post_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "option_poll" */
+export type Option_Poll_Sum_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** update columns of table "option_poll" */
+export enum Option_Poll_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EndAt = 'end_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Options = 'options',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  Question = 'question',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Option_Poll_Var_Pop_Fields = {
+  __typename?: 'option_poll_var_pop_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "option_poll" */
+export type Option_Poll_Var_Pop_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Option_Poll_Var_Samp_Fields = {
+  __typename?: 'option_poll_var_samp_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "option_poll" */
+export type Option_Poll_Var_Samp_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Option_Poll_Variance_Fields = {
+  __typename?: 'option_poll_variance_fields';
+  end_at?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  post_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "option_poll" */
+export type Option_Poll_Variance_Order_By = {
+  end_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post_id?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "option_poll_votes" */
+export type Option_Poll_Votes = {
+  __typename?: 'option_poll_votes';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  option: Scalars['String'];
+  /** An object relationship */
+  option_poll: Option_Poll;
+  option_poll_id: Scalars['Int'];
+  /** Remote relationship field */
+  option_poll_voter?: Maybe<User>;
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['Int'];
+};
+
+/** aggregated selection of "option_poll_votes" */
+export type Option_Poll_Votes_Aggregate = {
+  __typename?: 'option_poll_votes_aggregate';
+  aggregate?: Maybe<Option_Poll_Votes_Aggregate_Fields>;
+  nodes: Array<Option_Poll_Votes>;
+};
+
+/** aggregate fields of "option_poll_votes" */
+export type Option_Poll_Votes_Aggregate_Fields = {
+  __typename?: 'option_poll_votes_aggregate_fields';
+  avg?: Maybe<Option_Poll_Votes_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Option_Poll_Votes_Max_Fields>;
+  min?: Maybe<Option_Poll_Votes_Min_Fields>;
+  stddev?: Maybe<Option_Poll_Votes_Stddev_Fields>;
+  stddev_pop?: Maybe<Option_Poll_Votes_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Option_Poll_Votes_Stddev_Samp_Fields>;
+  sum?: Maybe<Option_Poll_Votes_Sum_Fields>;
+  var_pop?: Maybe<Option_Poll_Votes_Var_Pop_Fields>;
+  var_samp?: Maybe<Option_Poll_Votes_Var_Samp_Fields>;
+  variance?: Maybe<Option_Poll_Votes_Variance_Fields>;
+};
+
+
+/** aggregate fields of "option_poll_votes" */
+export type Option_Poll_Votes_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "option_poll_votes" */
+export type Option_Poll_Votes_Aggregate_Order_By = {
+  avg?: Maybe<Option_Poll_Votes_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Option_Poll_Votes_Max_Order_By>;
+  min?: Maybe<Option_Poll_Votes_Min_Order_By>;
+  stddev?: Maybe<Option_Poll_Votes_Stddev_Order_By>;
+  stddev_pop?: Maybe<Option_Poll_Votes_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Option_Poll_Votes_Stddev_Samp_Order_By>;
+  sum?: Maybe<Option_Poll_Votes_Sum_Order_By>;
+  var_pop?: Maybe<Option_Poll_Votes_Var_Pop_Order_By>;
+  var_samp?: Maybe<Option_Poll_Votes_Var_Samp_Order_By>;
+  variance?: Maybe<Option_Poll_Votes_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "option_poll_votes" */
+export type Option_Poll_Votes_Arr_Rel_Insert_Input = {
+  data: Array<Option_Poll_Votes_Insert_Input>;
+  on_conflict?: Maybe<Option_Poll_Votes_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Option_Poll_Votes_Avg_Fields = {
+  __typename?: 'option_poll_votes_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "option_poll_votes". All fields are combined with a logical 'AND'. */
+export type Option_Poll_Votes_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Option_Poll_Votes_Bool_Exp>>>;
+  _not?: Maybe<Option_Poll_Votes_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Option_Poll_Votes_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  option?: Maybe<String_Comparison_Exp>;
+  option_poll?: Maybe<Option_Poll_Bool_Exp>;
+  option_poll_id?: Maybe<Int_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "option_poll_votes" */
+export enum Option_Poll_Votes_Constraint {
+  /** unique or primary key constraint */
+  OptionPollVotesPkey = 'option_poll_votes_pkey'
+}
+
+/** input type for incrementing integer column in table "option_poll_votes" */
+export type Option_Poll_Votes_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "option_poll_votes" */
+export type Option_Poll_Votes_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  option?: Maybe<Scalars['String']>;
+  option_poll?: Maybe<Option_Poll_Obj_Rel_Insert_Input>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Option_Poll_Votes_Max_Fields = {
+  __typename?: 'option_poll_votes_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  option?: Maybe<Scalars['String']>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  option?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Option_Poll_Votes_Min_Fields = {
+  __typename?: 'option_poll_votes_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  option?: Maybe<Scalars['String']>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  option?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "option_poll_votes" */
+export type Option_Poll_Votes_Mutation_Response = {
+  __typename?: 'option_poll_votes_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Option_Poll_Votes>;
+};
+
+/** input type for inserting object relation for remote table "option_poll_votes" */
+export type Option_Poll_Votes_Obj_Rel_Insert_Input = {
+  data: Option_Poll_Votes_Insert_Input;
+  on_conflict?: Maybe<Option_Poll_Votes_On_Conflict>;
+};
+
+/** on conflict condition type for table "option_poll_votes" */
+export type Option_Poll_Votes_On_Conflict = {
+  constraint: Option_Poll_Votes_Constraint;
+  update_columns: Array<Option_Poll_Votes_Update_Column>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "option_poll_votes" */
+export type Option_Poll_Votes_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  option?: Maybe<Order_By>;
+  option_poll?: Maybe<Option_Poll_Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "option_poll_votes" */
+export type Option_Poll_Votes_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "option_poll_votes" */
+export enum Option_Poll_Votes_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Option = 'option',
+  /** column name */
+  OptionPollId = 'option_poll_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "option_poll_votes" */
+export type Option_Poll_Votes_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  option?: Maybe<Scalars['String']>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Option_Poll_Votes_Stddev_Fields = {
+  __typename?: 'option_poll_votes_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Option_Poll_Votes_Stddev_Pop_Fields = {
+  __typename?: 'option_poll_votes_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Option_Poll_Votes_Stddev_Samp_Fields = {
+  __typename?: 'option_poll_votes_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Option_Poll_Votes_Sum_Fields = {
+  __typename?: 'option_poll_votes_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+  option_poll_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** update columns of table "option_poll_votes" */
+export enum Option_Poll_Votes_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Option = 'option',
+  /** column name */
+  OptionPollId = 'option_poll_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** aggregate var_pop on columns */
+export type Option_Poll_Votes_Var_Pop_Fields = {
+  __typename?: 'option_poll_votes_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Option_Poll_Votes_Var_Samp_Fields = {
+  __typename?: 'option_poll_votes_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Option_Poll_Votes_Variance_Fields = {
+  __typename?: 'option_poll_votes_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+  option_poll_id?: Maybe<Scalars['Float']>;
+  user_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "option_poll_votes" */
+export type Option_Poll_Votes_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  option_poll_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
 /** column ordering options */
@@ -15316,6 +16157,10 @@ export type Posts = {
   /** An object relationship */
   onchain_link?: Maybe<Onchain_Links>;
   /** An array relationship */
+  option_polls: Array<Option_Poll>;
+  /** An aggregated array relationship */
+  option_polls_aggregate: Option_Poll_Aggregate;
+  /** An array relationship */
   polls: Array<Poll>;
   /** An aggregated array relationship */
   polls_aggregate: Poll_Aggregate;
@@ -15352,6 +16197,26 @@ export type PostsComments_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Comments_Order_By>>;
   where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsOption_PollsArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsOption_Polls_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
 };
 
 
@@ -15474,6 +16339,7 @@ export type Posts_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>;
   last_update?: Maybe<Post_Last_Update_Bool_Exp>;
   onchain_link?: Maybe<Onchain_Links_Bool_Exp>;
+  option_polls?: Maybe<Option_Poll_Bool_Exp>;
   polls?: Maybe<Poll_Bool_Exp>;
   post_reactions?: Maybe<Post_Reactions_Bool_Exp>;
   title?: Maybe<String_Comparison_Exp>;
@@ -15506,6 +16372,7 @@ export type Posts_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   onchain_link?: Maybe<Onchain_Links_Obj_Rel_Insert_Input>;
+  option_polls?: Maybe<Option_Poll_Arr_Rel_Insert_Input>;
   polls?: Maybe<Poll_Arr_Rel_Insert_Input>;
   post_reactions?: Maybe<Post_Reactions_Arr_Rel_Insert_Input>;
   title?: Maybe<Scalars['String']>;
@@ -15597,6 +16464,7 @@ export type Posts_Order_By = {
   id?: Maybe<Order_By>;
   last_update?: Maybe<Post_Last_Update_Order_By>;
   onchain_link?: Maybe<Onchain_Links_Order_By>;
+  option_polls_aggregate?: Maybe<Option_Poll_Aggregate_Order_By>;
   polls_aggregate?: Maybe<Poll_Aggregate_Order_By>;
   post_reactions_aggregate?: Maybe<Post_Reactions_Aggregate_Order_By>;
   title?: Maybe<Order_By>;
@@ -15845,6 +16713,18 @@ export type Query_Root = {
   onchain_links_aggregate: Onchain_Links_Aggregate;
   /** fetch data from the table: "onchain_links" using primary key columns */
   onchain_links_by_pk?: Maybe<Onchain_Links>;
+  /** fetch data from the table: "option_poll" */
+  option_poll: Array<Option_Poll>;
+  /** fetch aggregated fields from the table: "option_poll" */
+  option_poll_aggregate: Option_Poll_Aggregate;
+  /** fetch data from the table: "option_poll" using primary key columns */
+  option_poll_by_pk?: Maybe<Option_Poll>;
+  /** fetch data from the table: "option_poll_votes" */
+  option_poll_votes: Array<Option_Poll_Votes>;
+  /** fetch aggregated fields from the table: "option_poll_votes" */
+  option_poll_votes_aggregate: Option_Poll_Votes_Aggregate;
+  /** fetch data from the table: "option_poll_votes" using primary key columns */
+  option_poll_votes_by_pk?: Maybe<Option_Poll_Votes>;
   /** fetch data from the table: "poll" */
   poll: Array<Poll>;
   /** fetch aggregated fields from the table: "poll" */
@@ -16413,6 +17293,58 @@ export type Query_RootOnchain_Links_AggregateArgs = {
 
 /** query root */
 export type Query_RootOnchain_Links_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootOption_PollArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootOption_Poll_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootOption_Poll_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootOption_Poll_VotesArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootOption_Poll_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootOption_Poll_Votes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -17154,6 +18086,18 @@ export type Subscription_Root = {
   onchain_links_aggregate: Onchain_Links_Aggregate;
   /** fetch data from the table: "onchain_links" using primary key columns */
   onchain_links_by_pk?: Maybe<Onchain_Links>;
+  /** fetch data from the table: "option_poll" */
+  option_poll: Array<Option_Poll>;
+  /** fetch aggregated fields from the table: "option_poll" */
+  option_poll_aggregate: Option_Poll_Aggregate;
+  /** fetch data from the table: "option_poll" using primary key columns */
+  option_poll_by_pk?: Maybe<Option_Poll>;
+  /** fetch data from the table: "option_poll_votes" */
+  option_poll_votes: Array<Option_Poll_Votes>;
+  /** fetch aggregated fields from the table: "option_poll_votes" */
+  option_poll_votes_aggregate: Option_Poll_Votes_Aggregate;
+  /** fetch data from the table: "option_poll_votes" using primary key columns */
+  option_poll_votes_by_pk?: Maybe<Option_Poll_Votes>;
   /** fetch data from the table: "poll" */
   poll: Array<Poll>;
   /** fetch aggregated fields from the table: "poll" */
@@ -17367,6 +18311,58 @@ export type Subscription_RootOnchain_Links_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootOnchain_Links_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_PollArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_Poll_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Order_By>>;
+  where?: Maybe<Option_Poll_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_Poll_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_Poll_VotesArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_Poll_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Option_Poll_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Option_Poll_Votes_Order_By>>;
+  where?: Maybe<Option_Poll_Votes_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootOption_Poll_Votes_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -17690,10 +18686,10 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type EditCommentMutationVariables = {
+export type EditCommentMutationVariables = Exact<{
   id: Scalars['uuid'];
   content: Scalars['String'];
-};
+}>;
 
 
 export type EditCommentMutation = (
@@ -17704,9 +18700,9 @@ export type EditCommentMutation = (
   )> }
 );
 
-export type DeleteCommentMutationVariables = {
+export type DeleteCommentMutationVariables = Exact<{
   id: Scalars['uuid'];
-};
+}>;
 
 
 export type DeleteCommentMutation = (
@@ -17717,10 +18713,10 @@ export type DeleteCommentMutation = (
   )> }
 );
 
-export type LoginMutationVariables = {
+export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
   username: Scalars['String'];
-};
+}>;
 
 
 export type LoginMutation = (
@@ -17731,9 +18727,9 @@ export type LoginMutation = (
   )> }
 );
 
-export type AddressLoginStartMutationVariables = {
+export type AddressLoginStartMutationVariables = Exact<{
   address: Scalars['String'];
-};
+}>;
 
 
 export type AddressLoginStartMutation = (
@@ -17744,10 +18740,10 @@ export type AddressLoginStartMutation = (
   )> }
 );
 
-export type AddressLoginMutationVariables = {
+export type AddressLoginMutationVariables = Exact<{
   address: Scalars['String'];
   signature: Scalars['String'];
-};
+}>;
 
 
 export type AddressLoginMutation = (
@@ -17758,7 +18754,7 @@ export type AddressLoginMutation = (
   )> }
 );
 
-export type LogoutMutationVariables = {};
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = (
@@ -17769,7 +18765,92 @@ export type LogoutMutation = (
   )> }
 );
 
-export type GetCouncilMembersQueryVariables = {};
+export type CreateOptionPollMutationVariables = Exact<{
+  postId: Scalars['Int'];
+  question: Scalars['String'];
+  options: Scalars['String'];
+  endAt: Scalars['Int'];
+}>;
+
+
+export type CreateOptionPollMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_option_poll?: Maybe<(
+    { __typename?: 'option_poll_mutation_response' }
+    & Pick<Option_Poll_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type OptionPollFieldsFragment = (
+  { __typename?: 'option_poll' }
+  & Pick<Option_Poll, 'id' | 'post_id' | 'question' | 'options' | 'end_at' | 'created_at' | 'updated_at'>
+);
+
+export type OptionPollQueryVariables = Exact<{
+  postId: Scalars['Int'];
+}>;
+
+
+export type OptionPollQuery = (
+  { __typename?: 'query_root' }
+  & { option_poll: Array<(
+    { __typename?: 'option_poll' }
+    & OptionPollFieldsFragment
+  )> }
+);
+
+export type OptionPollVotesFieldsFragment = (
+  { __typename?: 'option_poll_votes' }
+  & Pick<Option_Poll_Votes, 'id' | 'option' | 'created_at' | 'updated_at'>
+  & { option_poll_voter?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username'>
+  )> }
+);
+
+export type OptionPollVotesQueryVariables = Exact<{
+  optionPollId: Scalars['Int'];
+}>;
+
+
+export type OptionPollVotesQuery = (
+  { __typename?: 'query_root' }
+  & { option_poll_votes: Array<(
+    { __typename?: 'option_poll_votes' }
+    & OptionPollVotesFieldsFragment
+  )> }
+);
+
+export type AddOptionPollVoteMutationVariables = Exact<{
+  optionPollId: Scalars['Int'];
+  userId: Scalars['Int'];
+  option: Scalars['String'];
+}>;
+
+
+export type AddOptionPollVoteMutation = (
+  { __typename: 'mutation_root' }
+  & { insert_option_poll_votes_one?: Maybe<(
+    { __typename?: 'option_poll_votes' }
+    & Pick<Option_Poll_Votes, 'id'>
+  )> }
+);
+
+export type DeleteOptionPollVoteMutationVariables = Exact<{
+  optionPollId: Scalars['Int'];
+  userId: Scalars['Int'];
+}>;
+
+
+export type DeleteOptionPollVoteMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_option_poll_votes?: Maybe<(
+    { __typename?: 'option_poll_votes_mutation_response' }
+    & Pick<Option_Poll_Votes_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type GetCouncilMembersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCouncilMembersQuery = (
@@ -17788,9 +18869,9 @@ export type PollFieldsFragment = (
   & Pick<Poll, 'id' | 'block_end' | 'created_at' | 'updated_at'>
 );
 
-export type PollQueryVariables = {
+export type PollQueryVariables = Exact<{
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type PollQuery = (
@@ -17810,9 +18891,9 @@ export type PollVotesFieldsFragment = (
   )> }
 );
 
-export type PollVotesQueryVariables = {
+export type PollVotesQueryVariables = Exact<{
   pollId: Scalars['Int'];
-};
+}>;
 
 
 export type PollVotesQuery = (
@@ -17823,11 +18904,11 @@ export type PollVotesQuery = (
   )> }
 );
 
-export type AddPollVoteMutationVariables = {
+export type AddPollVoteMutationVariables = Exact<{
   pollId: Scalars['Int'];
   userId: Scalars['Int'];
   vote: Scalars['bpchar'];
-};
+}>;
 
 
 export type AddPollVoteMutation = (
@@ -17838,10 +18919,10 @@ export type AddPollVoteMutation = (
   )> }
 );
 
-export type DeleteVoteMutationVariables = {
+export type DeleteVoteMutationVariables = Exact<{
   pollId: Scalars['Int'];
   userId: Scalars['Int'];
-};
+}>;
 
 
 export type DeleteVoteMutation = (
@@ -17852,9 +18933,9 @@ export type DeleteVoteMutation = (
   )> }
 );
 
-export type CouncilAtBlockNumberQueryVariables = {
+export type CouncilAtBlockNumberQueryVariables = Exact<{
   blockNumber: Scalars['Int'];
-};
+}>;
 
 
 export type CouncilAtBlockNumberQuery = (
@@ -17868,10 +18949,10 @@ export type CouncilAtBlockNumberQuery = (
   )>> }
 );
 
-export type EditPollMutationVariables = {
+export type EditPollMutationVariables = Exact<{
   id: Scalars['Int'];
   blockEnd: Scalars['Int'];
-};
+}>;
 
 
 export type EditPollMutation = (
@@ -17882,11 +18963,11 @@ export type EditPollMutation = (
   )> }
 );
 
-export type EditPostMutationVariables = {
+export type EditPostMutationVariables = Exact<{
   id: Scalars['Int'];
   content: Scalars['String'];
   title: Scalars['String'];
-};
+}>;
 
 
 export type EditPostMutation = (
@@ -17897,11 +18978,11 @@ export type EditPostMutation = (
   )> }
 );
 
-export type AddPostCommentMutationVariables = {
+export type AddPostCommentMutationVariables = Exact<{
   authorId: Scalars['Int'];
   content: Scalars['String'];
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type AddPostCommentMutation = (
@@ -17921,9 +19002,9 @@ export type PostReactionFieldsFragment = (
   )> }
 );
 
-export type PostReactionsQueryVariables = {
+export type PostReactionsQueryVariables = Exact<{
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type PostReactionsQuery = (
@@ -17943,9 +19024,9 @@ export type CommentReactionFieldsFragment = (
   )> }
 );
 
-export type CommentReactionsQueryVariables = {
+export type CommentReactionsQueryVariables = Exact<{
   commentId: Scalars['uuid'];
-};
+}>;
 
 
 export type CommentReactionsQuery = (
@@ -17956,11 +19037,11 @@ export type CommentReactionsQuery = (
   )> }
 );
 
-export type AddPostReactionMutationVariables = {
+export type AddPostReactionMutationVariables = Exact<{
   postId: Scalars['Int'];
   userId: Scalars['Int'];
   reaction: Scalars['bpchar'];
-};
+}>;
 
 
 export type AddPostReactionMutation = (
@@ -17971,11 +19052,11 @@ export type AddPostReactionMutation = (
   )> }
 );
 
-export type AddCommentReactionMutationVariables = {
+export type AddCommentReactionMutationVariables = Exact<{
   commentId: Scalars['uuid'];
   userId: Scalars['Int'];
   reaction: Scalars['bpchar'];
-};
+}>;
 
 
 export type AddCommentReactionMutation = (
@@ -17986,11 +19067,11 @@ export type AddCommentReactionMutation = (
   )> }
 );
 
-export type DeletePostReactionMutationVariables = {
+export type DeletePostReactionMutationVariables = Exact<{
   postId: Scalars['Int'];
   userId: Scalars['Int'];
   reaction: Scalars['bpchar'];
-};
+}>;
 
 
 export type DeletePostReactionMutation = (
@@ -18001,11 +19082,11 @@ export type DeletePostReactionMutation = (
   )> }
 );
 
-export type DeleteCommentReactionMutationVariables = {
+export type DeleteCommentReactionMutationVariables = Exact<{
   commentId: Scalars['uuid'];
   userId: Scalars['Int'];
   reaction: Scalars['bpchar'];
-};
+}>;
 
 
 export type DeleteCommentReactionMutation = (
@@ -18016,13 +19097,13 @@ export type DeleteCommentReactionMutation = (
   )> }
 );
 
-export type ReportContentMutationVariables = {
+export type ReportContentMutationVariables = Exact<{
   network: Scalars['String'];
   type: Scalars['String'];
   content_id: Scalars['String'];
   reason: Scalars['String'];
   comments: Scalars['String'];
-};
+}>;
 
 
 export type ReportContentMutation = (
@@ -18033,11 +19114,11 @@ export type ReportContentMutation = (
   )> }
 );
 
-export type SignupMutationVariables = {
+export type SignupMutationVariables = Exact<{
   email?: Maybe<Scalars['String']>;
   password: Scalars['String'];
   username: Scalars['String'];
-};
+}>;
 
 
 export type SignupMutation = (
@@ -18048,9 +19129,9 @@ export type SignupMutation = (
   )> }
 );
 
-export type AddressSignupStartMutationVariables = {
+export type AddressSignupStartMutationVariables = Exact<{
   address: Scalars['String'];
-};
+}>;
 
 
 export type AddressSignupStartMutation = (
@@ -18061,11 +19142,11 @@ export type AddressSignupStartMutation = (
   )> }
 );
 
-export type AddressSignupConfirmMutationVariables = {
+export type AddressSignupConfirmMutationVariables = Exact<{
   network: Scalars['String'];
   address: Scalars['String'];
   signature: Scalars['String'];
-};
+}>;
 
 
 export type AddressSignupConfirmMutation = (
@@ -18076,9 +19157,9 @@ export type AddressSignupConfirmMutation = (
   )> }
 );
 
-export type PostSubscribeMutationVariables = {
+export type PostSubscribeMutationVariables = Exact<{
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type PostSubscribeMutation = (
@@ -18089,9 +19170,9 @@ export type PostSubscribeMutation = (
   )> }
 );
 
-export type PostUnsubscribeMutationVariables = {
+export type PostUnsubscribeMutationVariables = Exact<{
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type PostUnsubscribeMutation = (
@@ -18102,9 +19183,9 @@ export type PostUnsubscribeMutation = (
   )> }
 );
 
-export type SubscriptionQueryVariables = {
+export type SubscriptionQueryVariables = Exact<{
   postId: Scalars['Int'];
-};
+}>;
 
 
 export type SubscriptionQuery = (
@@ -18115,7 +19196,7 @@ export type SubscriptionQuery = (
   )> }
 );
 
-export type Get_Refresh_TokenQueryVariables = {};
+export type Get_Refresh_TokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type Get_Refresh_TokenQuery = (
@@ -18140,11 +19221,11 @@ export type CommentFieldsFragment = (
   )> }
 );
 
-export type AllBountyPostsQueryVariables = {
+export type AllBountyPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllBountyPostsQuery = (
@@ -18220,9 +19301,9 @@ export type BountyPostFragment = (
   ) }
 );
 
-export type BountyPostAndCommentsQueryVariables = {
+export type BountyPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type BountyPostAndCommentsQuery = (
@@ -18233,12 +19314,12 @@ export type BountyPostAndCommentsQuery = (
   )> }
 );
 
-export type CreatePostMutationVariables = {
+export type CreatePostMutationVariables = Exact<{
   userId: Scalars['Int'];
   content: Scalars['String'];
   topicId: Scalars['Int'];
   title: Scalars['String'];
-};
+}>;
 
 
 export type CreatePostMutation = (
@@ -18253,10 +19334,10 @@ export type CreatePostMutation = (
   )> }
 );
 
-export type CreatePollMutationVariables = {
+export type CreatePollMutationVariables = Exact<{
   postId: Scalars['Int'];
   blockEnd: Scalars['Int'];
-};
+}>;
 
 
 export type CreatePollMutation = (
@@ -18272,7 +19353,7 @@ export type TopicFragment = (
   & Pick<Post_Topics, 'id' | 'name'>
 );
 
-export type Post_TopicsQueryVariables = {};
+export type Post_TopicsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type Post_TopicsQuery = (
@@ -18309,9 +19390,9 @@ export type DiscussionPostFragment = (
   ) }
 );
 
-export type DiscussionPostAndCommentsQueryVariables = {
+export type DiscussionPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type DiscussionPostAndCommentsQuery = (
@@ -18343,9 +19424,9 @@ export type PostFieldsFragment = (
   )> }
 );
 
-export type LatestDiscussionPostsQueryVariables = {
+export type LatestDiscussionPostsQueryVariables = Exact<{
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestDiscussionPostsQuery = (
@@ -18356,9 +19437,9 @@ export type LatestDiscussionPostsQuery = (
   )> }
 );
 
-export type DiscussionPostsIdDescQueryVariables = {
+export type DiscussionPostsIdDescQueryVariables = Exact<{
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type DiscussionPostsIdDescQuery = (
@@ -18369,9 +19450,9 @@ export type DiscussionPostsIdDescQuery = (
   )> }
 );
 
-export type DiscussionPostsIdAscQueryVariables = {
+export type DiscussionPostsIdAscQueryVariables = Exact<{
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type DiscussionPostsIdAscQuery = (
@@ -18439,9 +19520,9 @@ export type MotionPostFragment = (
   ) }
 );
 
-export type MotionPostAndCommentsQueryVariables = {
+export type MotionPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type MotionPostAndCommentsQuery = (
@@ -18452,10 +19533,10 @@ export type MotionPostAndCommentsQuery = (
   )> }
 );
 
-export type AllMotionPostsQueryVariables = {
+export type AllMotionPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllMotionPostsQuery = (
@@ -18496,12 +19577,12 @@ export type AllMotionPostsQuery = (
   )> }
 );
 
-export type ChangeNotificationPreferenceMutationVariables = {
+export type ChangeNotificationPreferenceMutationVariables = Exact<{
   postParticipated?: Maybe<Scalars['Boolean']>;
   postCreated?: Maybe<Scalars['Boolean']>;
   newProposal?: Maybe<Scalars['Boolean']>;
   ownProposal?: Maybe<Scalars['Boolean']>;
-};
+}>;
 
 
 export type ChangeNotificationPreferenceMutation = (
@@ -18512,10 +19593,10 @@ export type ChangeNotificationPreferenceMutation = (
   )> }
 );
 
-export type LatestBountyPostsQueryVariables = {
+export type LatestBountyPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestBountyPostsQuery = (
@@ -18553,10 +19634,10 @@ export type LatestBountyPostsQuery = (
   )> }
 );
 
-export type LatestMotionPostsQueryVariables = {
+export type LatestMotionPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestMotionPostsQuery = (
@@ -18597,11 +19678,11 @@ export type LatestMotionPostsQuery = (
   )> }
 );
 
-export type LatestDemocracyProposalPostsQueryVariables = {
+export type LatestDemocracyProposalPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestDemocracyProposalPostsQuery = (
@@ -18642,10 +19723,10 @@ export type LatestDemocracyProposalPostsQuery = (
   )> }
 );
 
-export type LatestReferendaPostsQueryVariables = {
+export type LatestReferendaPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestReferendaPostsQuery = (
@@ -18686,11 +19767,11 @@ export type LatestReferendaPostsQuery = (
   )> }
 );
 
-export type LatestTipPostsQueryVariables = {
+export type LatestTipPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestTipPostsQuery = (
@@ -18728,11 +19809,11 @@ export type LatestTipPostsQuery = (
   )> }
 );
 
-export type LatestDemocracyTreasuryProposalPostsQueryVariables = {
+export type LatestDemocracyTreasuryProposalPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type LatestDemocracyTreasuryProposalPostsQuery = (
@@ -18811,9 +19892,9 @@ export type ProposalPostFragment = (
   ) }
 );
 
-export type ProposalPostAndCommentsQueryVariables = {
+export type ProposalPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type ProposalPostAndCommentsQuery = (
@@ -18824,11 +19905,11 @@ export type ProposalPostAndCommentsQuery = (
   )> }
 );
 
-export type AllDemocracyProposalPostsQueryVariables = {
+export type AllDemocracyProposalPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllDemocracyProposalPostsQuery = (
@@ -18869,10 +19950,10 @@ export type AllDemocracyProposalPostsQuery = (
   )> }
 );
 
-export type AllReferendaPostsQueryVariables = {
+export type AllReferendaPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllReferendaPostsQuery = (
@@ -18958,9 +20039,9 @@ export type ReferendumPostFragment = (
   ) }
 );
 
-export type ReferendumPostAndCommentsQueryVariables = {
+export type ReferendumPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type ReferendumPostAndCommentsQuery = (
@@ -18971,9 +20052,9 @@ export type ReferendumPostAndCommentsQuery = (
   )> }
 );
 
-export type RequestResetPasswordMutationVariables = {
+export type RequestResetPasswordMutationVariables = Exact<{
   email: Scalars['String'];
-};
+}>;
 
 
 export type RequestResetPasswordMutation = (
@@ -18984,11 +20065,11 @@ export type RequestResetPasswordMutation = (
   )> }
 );
 
-export type ResetPasswordMutationVariables = {
+export type ResetPasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
   userId: Scalars['Int'];
   token: Scalars['String'];
-};
+}>;
 
 
 export type ResetPasswordMutation = (
@@ -18999,10 +20080,10 @@ export type ResetPasswordMutation = (
   )> }
 );
 
-export type ChangeUsernameMutationVariables = {
+export type ChangeUsernameMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
-};
+}>;
 
 
 export type ChangeUsernameMutation = (
@@ -19013,10 +20094,10 @@ export type ChangeUsernameMutation = (
   )> }
 );
 
-export type ChangeEmailMutationVariables = {
+export type ChangeEmailMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
-};
+}>;
 
 
 export type ChangeEmailMutation = (
@@ -19027,10 +20108,10 @@ export type ChangeEmailMutation = (
   )> }
 );
 
-export type ChangePasswordMutationVariables = {
+export type ChangePasswordMutationVariables = Exact<{
   oldPassword: Scalars['String'];
   newPassword: Scalars['String'];
-};
+}>;
 
 
 export type ChangePasswordMutation = (
@@ -19041,10 +20122,10 @@ export type ChangePasswordMutation = (
   )> }
 );
 
-export type AddressLinkStartMutationVariables = {
+export type AddressLinkStartMutationVariables = Exact<{
   network: Scalars['String'];
   address: Scalars['String'];
-};
+}>;
 
 
 export type AddressLinkStartMutation = (
@@ -19055,10 +20136,10 @@ export type AddressLinkStartMutation = (
   )> }
 );
 
-export type AddressLinkConfirmMutationVariables = {
+export type AddressLinkConfirmMutationVariables = Exact<{
   address_id: Scalars['Int'];
   signature: Scalars['String'];
-};
+}>;
 
 
 export type AddressLinkConfirmMutation = (
@@ -19069,9 +20150,9 @@ export type AddressLinkConfirmMutation = (
   )> }
 );
 
-export type AddressUnlinkMutationVariables = {
+export type AddressUnlinkMutationVariables = Exact<{
   address: Scalars['String'];
-};
+}>;
 
 
 export type AddressUnlinkMutation = (
@@ -19082,7 +20163,7 @@ export type AddressUnlinkMutation = (
   )> }
 );
 
-export type ResendVerifyEmailTokenMutationVariables = {};
+export type ResendVerifyEmailTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ResendVerifyEmailTokenMutation = (
@@ -19093,9 +20174,9 @@ export type ResendVerifyEmailTokenMutation = (
   )> }
 );
 
-export type SetDefaultAddressMutationVariables = {
+export type SetDefaultAddressMutationVariables = Exact<{
   address: Scalars['String'];
-};
+}>;
 
 
 export type SetDefaultAddressMutation = (
@@ -19106,9 +20187,9 @@ export type SetDefaultAddressMutation = (
   )> }
 );
 
-export type SetCredentialsStartMutationVariables = {
+export type SetCredentialsStartMutationVariables = Exact<{
   address: Scalars['String'];
-};
+}>;
 
 
 export type SetCredentialsStartMutation = (
@@ -19119,13 +20200,13 @@ export type SetCredentialsStartMutation = (
   )> }
 );
 
-export type SetCredentialsConfirmMutationVariables = {
+export type SetCredentialsConfirmMutationVariables = Exact<{
   address: Scalars['String'];
   email?: Maybe<Scalars['String']>;
   signature: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
-};
+}>;
 
 
 export type SetCredentialsConfirmMutation = (
@@ -19136,9 +20217,9 @@ export type SetCredentialsConfirmMutation = (
   )> }
 );
 
-export type DeleteAccountMutationVariables = {
+export type DeleteAccountMutationVariables = Exact<{
   password: Scalars['String'];
-};
+}>;
 
 
 export type DeleteAccountMutation = (
@@ -19187,9 +20268,9 @@ export type TipPostFragment = (
   ) }
 );
 
-export type TipPostAndCommentsQueryVariables = {
+export type TipPostAndCommentsQueryVariables = Exact<{
   hash: Scalars['String'];
-};
+}>;
 
 
 export type TipPostAndCommentsQuery = (
@@ -19200,11 +20281,11 @@ export type TipPostAndCommentsQuery = (
   )> }
 );
 
-export type AllTipPostsQueryVariables = {
+export type AllTipPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllTipPostsQuery = (
@@ -19242,11 +20323,11 @@ export type AllTipPostsQuery = (
   )> }
 );
 
-export type AllDemocracyTreasuryProposalPostsQueryVariables = {
+export type AllDemocracyTreasuryProposalPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
   limit?: Scalars['Int'];
-};
+}>;
 
 
 export type AllDemocracyTreasuryProposalPostsQuery = (
@@ -19318,9 +20399,9 @@ export type TreasuryProposalPostFragment = (
   ) }
 );
 
-export type TreasuryProposalPostAndCommentsQueryVariables = {
+export type TreasuryProposalPostAndCommentsQueryVariables = Exact<{
   id: Scalars['Int'];
-};
+}>;
 
 
 export type TreasuryProposalPostAndCommentsQuery = (
@@ -19331,9 +20412,9 @@ export type TreasuryProposalPostAndCommentsQuery = (
   )> }
 );
 
-export type UndoEmailChangeMutationVariables = {
+export type UndoEmailChangeMutationVariables = Exact<{
   token: Scalars['String'];
-};
+}>;
 
 
 export type UndoEmailChangeMutation = (
@@ -19344,9 +20425,9 @@ export type UndoEmailChangeMutation = (
   )> }
 );
 
-export type ProfileQueryVariables = {
+export type ProfileQueryVariables = Exact<{
   username: Scalars['String'];
-};
+}>;
 
 
 export type ProfileQuery = (
@@ -19357,9 +20438,9 @@ export type ProfileQuery = (
   )> }
 );
 
-export type VerifyEmailMutationVariables = {
+export type VerifyEmailMutationVariables = Exact<{
   token: Scalars['String'];
-};
+}>;
 
 
 export type VerifyEmailMutation = (
@@ -19370,6 +20451,29 @@ export type VerifyEmailMutation = (
   )> }
 );
 
+export const OptionPollFieldsFragmentDoc = gql`
+    fragment optionPollFields on option_poll {
+  id
+  post_id
+  question
+  options
+  end_at
+  created_at
+  updated_at
+}
+    `;
+export const OptionPollVotesFieldsFragmentDoc = gql`
+    fragment optionPollVotesFields on option_poll_votes {
+  id
+  option_poll_voter {
+    id
+    username
+  }
+  option
+  created_at
+  updated_at
+}
+    `;
 export const PollFieldsFragmentDoc = gql`
     fragment pollFields on poll {
   id
@@ -20040,6 +21144,182 @@ export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const CreateOptionPollDocument = gql`
+    mutation createOptionPoll($postId: Int!, $question: String!, $options: String!, $endAt: Int!) {
+  __typename
+  insert_option_poll(
+    objects: {post_id: $postId, question: $question, options: $options, end_at: $endAt}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type CreateOptionPollMutationFn = ApolloReactCommon.MutationFunction<CreateOptionPollMutation, CreateOptionPollMutationVariables>;
+
+/**
+ * __useCreateOptionPollMutation__
+ *
+ * To run a mutation, you first call `useCreateOptionPollMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOptionPollMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOptionPollMutation, { data, loading, error }] = useCreateOptionPollMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      question: // value for 'question'
+ *      options: // value for 'options'
+ *      endAt: // value for 'endAt'
+ *   },
+ * });
+ */
+export function useCreateOptionPollMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateOptionPollMutation, CreateOptionPollMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateOptionPollMutation, CreateOptionPollMutationVariables>(CreateOptionPollDocument, baseOptions);
+      }
+export type CreateOptionPollMutationHookResult = ReturnType<typeof useCreateOptionPollMutation>;
+export type CreateOptionPollMutationResult = ApolloReactCommon.MutationResult<CreateOptionPollMutation>;
+export type CreateOptionPollMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOptionPollMutation, CreateOptionPollMutationVariables>;
+export const OptionPollDocument = gql`
+    query OptionPoll($postId: Int!) {
+  option_poll(where: {post_id: {_eq: $postId}}) {
+    ...optionPollFields
+  }
+}
+    ${OptionPollFieldsFragmentDoc}`;
+
+/**
+ * __useOptionPollQuery__
+ *
+ * To run a query within a React component, call `useOptionPollQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOptionPollQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOptionPollQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useOptionPollQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<OptionPollQuery, OptionPollQueryVariables>) {
+        return ApolloReactHooks.useQuery<OptionPollQuery, OptionPollQueryVariables>(OptionPollDocument, baseOptions);
+      }
+export function useOptionPollLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<OptionPollQuery, OptionPollQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<OptionPollQuery, OptionPollQueryVariables>(OptionPollDocument, baseOptions);
+        }
+export type OptionPollQueryHookResult = ReturnType<typeof useOptionPollQuery>;
+export type OptionPollLazyQueryHookResult = ReturnType<typeof useOptionPollLazyQuery>;
+export type OptionPollQueryResult = ApolloReactCommon.QueryResult<OptionPollQuery, OptionPollQueryVariables>;
+export const OptionPollVotesDocument = gql`
+    query OptionPollVotes($optionPollId: Int!) {
+  option_poll_votes(where: {option_poll_id: {_eq: $optionPollId}}) {
+    ...optionPollVotesFields
+  }
+}
+    ${OptionPollVotesFieldsFragmentDoc}`;
+
+/**
+ * __useOptionPollVotesQuery__
+ *
+ * To run a query within a React component, call `useOptionPollVotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOptionPollVotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOptionPollVotesQuery({
+ *   variables: {
+ *      optionPollId: // value for 'optionPollId'
+ *   },
+ * });
+ */
+export function useOptionPollVotesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<OptionPollVotesQuery, OptionPollVotesQueryVariables>) {
+        return ApolloReactHooks.useQuery<OptionPollVotesQuery, OptionPollVotesQueryVariables>(OptionPollVotesDocument, baseOptions);
+      }
+export function useOptionPollVotesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<OptionPollVotesQuery, OptionPollVotesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<OptionPollVotesQuery, OptionPollVotesQueryVariables>(OptionPollVotesDocument, baseOptions);
+        }
+export type OptionPollVotesQueryHookResult = ReturnType<typeof useOptionPollVotesQuery>;
+export type OptionPollVotesLazyQueryHookResult = ReturnType<typeof useOptionPollVotesLazyQuery>;
+export type OptionPollVotesQueryResult = ApolloReactCommon.QueryResult<OptionPollVotesQuery, OptionPollVotesQueryVariables>;
+export const AddOptionPollVoteDocument = gql`
+    mutation AddOptionPollVote($optionPollId: Int!, $userId: Int!, $option: String!) {
+  __typename
+  insert_option_poll_votes_one(
+    object: {option_poll_id: $optionPollId, user_id: $userId, option: $option}
+  ) {
+    id
+  }
+}
+    `;
+export type AddOptionPollVoteMutationFn = ApolloReactCommon.MutationFunction<AddOptionPollVoteMutation, AddOptionPollVoteMutationVariables>;
+
+/**
+ * __useAddOptionPollVoteMutation__
+ *
+ * To run a mutation, you first call `useAddOptionPollVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddOptionPollVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addOptionPollVoteMutation, { data, loading, error }] = useAddOptionPollVoteMutation({
+ *   variables: {
+ *      optionPollId: // value for 'optionPollId'
+ *      userId: // value for 'userId'
+ *      option: // value for 'option'
+ *   },
+ * });
+ */
+export function useAddOptionPollVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddOptionPollVoteMutation, AddOptionPollVoteMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddOptionPollVoteMutation, AddOptionPollVoteMutationVariables>(AddOptionPollVoteDocument, baseOptions);
+      }
+export type AddOptionPollVoteMutationHookResult = ReturnType<typeof useAddOptionPollVoteMutation>;
+export type AddOptionPollVoteMutationResult = ApolloReactCommon.MutationResult<AddOptionPollVoteMutation>;
+export type AddOptionPollVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<AddOptionPollVoteMutation, AddOptionPollVoteMutationVariables>;
+export const DeleteOptionPollVoteDocument = gql`
+    mutation DeleteOptionPollVote($optionPollId: Int!, $userId: Int!) {
+  delete_option_poll_votes(
+    where: {_and: [{option_poll_id: {_eq: $optionPollId}}, {user_id: {_eq: $userId}}]}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteOptionPollVoteMutationFn = ApolloReactCommon.MutationFunction<DeleteOptionPollVoteMutation, DeleteOptionPollVoteMutationVariables>;
+
+/**
+ * __useDeleteOptionPollVoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteOptionPollVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOptionPollVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOptionPollVoteMutation, { data, loading, error }] = useDeleteOptionPollVoteMutation({
+ *   variables: {
+ *      optionPollId: // value for 'optionPollId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useDeleteOptionPollVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteOptionPollVoteMutation, DeleteOptionPollVoteMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteOptionPollVoteMutation, DeleteOptionPollVoteMutationVariables>(DeleteOptionPollVoteDocument, baseOptions);
+      }
+export type DeleteOptionPollVoteMutationHookResult = ReturnType<typeof useDeleteOptionPollVoteMutation>;
+export type DeleteOptionPollVoteMutationResult = ApolloReactCommon.MutationResult<DeleteOptionPollVoteMutation>;
+export type DeleteOptionPollVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOptionPollVoteMutation, DeleteOptionPollVoteMutationVariables>;
 export const GetCouncilMembersDocument = gql`
     query getCouncilMembers {
   councils(last: 1) {
@@ -20178,7 +21458,9 @@ export type AddPollVoteMutationResult = ApolloReactCommon.MutationResult<AddPoll
 export type AddPollVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPollVoteMutation, AddPollVoteMutationVariables>;
 export const DeleteVoteDocument = gql`
     mutation DeleteVote($pollId: Int!, $userId: Int!) {
-  delete_poll_votes(where: {_and: [{poll_id: {_eq: $pollId}}, {user_id: {_eq: $userId}}]}) {
+  delete_poll_votes(
+    where: {_and: [{poll_id: {_eq: $pollId}}, {user_id: {_eq: $userId}}]}
+  ) {
     affected_rows
   }
 }
@@ -20211,7 +21493,11 @@ export type DeleteVoteMutationResult = ApolloReactCommon.MutationResult<DeleteVo
 export type DeleteVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteVoteMutation, DeleteVoteMutationVariables>;
 export const CouncilAtBlockNumberDocument = gql`
     query councilAtBlockNumber($blockNumber: Int!) {
-  councils(where: {blockNumber: {number_lte: $blockNumber}}, orderBy: id_DESC, first: 1) {
+  councils(
+    where: {blockNumber: {number_lte: $blockNumber}}
+    orderBy: id_DESC
+    first: 1
+  ) {
     members {
       address
     }
@@ -20314,7 +21600,9 @@ export type EditPostMutationOptions = ApolloReactCommon.BaseMutationOptions<Edit
 export const AddPostCommentDocument = gql`
     mutation AddPostComment($authorId: Int!, $content: String!, $postId: Int!) {
   __typename
-  insert_comments(objects: {author_id: $authorId, content: $content, post_id: $postId}) {
+  insert_comments(
+    objects: {author_id: $authorId, content: $content, post_id: $postId}
+  ) {
     affected_rows
   }
 }
@@ -20415,7 +21703,9 @@ export type CommentReactionsQueryResult = ApolloReactCommon.QueryResult<CommentR
 export const AddPostReactionDocument = gql`
     mutation AddPostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
   __typename
-  insert_post_reactions(objects: {post_id: $postId, user_id: $userId, reaction: $reaction}) {
+  insert_post_reactions(
+    objects: {post_id: $postId, user_id: $userId, reaction: $reaction}
+  ) {
     affected_rows
   }
 }
@@ -20450,7 +21740,9 @@ export type AddPostReactionMutationOptions = ApolloReactCommon.BaseMutationOptio
 export const AddCommentReactionDocument = gql`
     mutation AddCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
   __typename
-  insert_comment_reactions(objects: {comment_id: $commentId, user_id: $userId, reaction: $reaction}) {
+  insert_comment_reactions(
+    objects: {comment_id: $commentId, user_id: $userId, reaction: $reaction}
+  ) {
     affected_rows
   }
 }
@@ -20484,7 +21776,9 @@ export type AddCommentReactionMutationResult = ApolloReactCommon.MutationResult<
 export type AddCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCommentReactionMutation, AddCommentReactionMutationVariables>;
 export const DeletePostReactionDocument = gql`
     mutation DeletePostReaction($postId: Int!, $userId: Int!, $reaction: bpchar!) {
-  delete_post_reactions(where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
+  delete_post_reactions(
+    where: {_and: [{post_id: {_eq: $postId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}
+  ) {
     affected_rows
   }
 }
@@ -20518,7 +21812,9 @@ export type DeletePostReactionMutationResult = ApolloReactCommon.MutationResult<
 export type DeletePostReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostReactionMutation, DeletePostReactionMutationVariables>;
 export const DeleteCommentReactionDocument = gql`
     mutation DeleteCommentReaction($commentId: uuid!, $userId: Int!, $reaction: bpchar!) {
-  delete_comment_reactions(where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}) {
+  delete_comment_reactions(
+    where: {_and: [{comment_id: {_eq: $commentId}}, {user_id: {_eq: $userId}}, {reaction: {_eq: $reaction}}]}
+  ) {
     affected_rows
   }
 }
@@ -20552,7 +21848,13 @@ export type DeleteCommentReactionMutationResult = ApolloReactCommon.MutationResu
 export type DeleteCommentReactionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCommentReactionMutation, DeleteCommentReactionMutationVariables>;
 export const ReportContentDocument = gql`
     mutation ReportContent($network: String!, $type: String!, $content_id: String!, $reason: String!, $comments: String!) {
-  reportContent(network: $network, type: $type, content_id: $content_id, reason: $reason, comments: $comments) {
+  reportContent(
+    network: $network
+    type: $type
+    content_id: $content_id
+    reason: $reason
+    comments: $comments
+  ) {
     message
   }
 }
@@ -20655,7 +21957,11 @@ export type AddressSignupStartMutationResult = ApolloReactCommon.MutationResult<
 export type AddressSignupStartMutationOptions = ApolloReactCommon.BaseMutationOptions<AddressSignupStartMutation, AddressSignupStartMutationVariables>;
 export const AddressSignupConfirmDocument = gql`
     mutation AddressSignupConfirm($network: String!, $address: String!, $signature: String!) {
-  addressSignupConfirm(network: $network, address: $address, signature: $signature) {
+  addressSignupConfirm(
+    network: $network
+    address: $address
+    signature: $signature
+  ) {
     token
   }
 }
@@ -20818,7 +22124,11 @@ export type Get_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useGet_Refr
 export type Get_Refresh_TokenQueryResult = ApolloReactCommon.QueryResult<Get_Refresh_TokenQuery, Get_Refresh_TokenQueryVariables>;
 export const AllBountyPostsDocument = gql`
     query AllBountyPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_bounty_id: {_is_null: false}}}, order_by: {onchain_link: {id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_bounty_id: {_is_null: false}}}
+    order_by: {onchain_link: {id: desc}}
+  ) {
     id
     title
     author {
@@ -20919,7 +22229,9 @@ export type BountyPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<Bou
 export const CreatePostDocument = gql`
     mutation createPost($userId: Int!, $content: String!, $topicId: Int!, $title: String!) {
   __typename
-  insert_posts(objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}) {
+  insert_posts(
+    objects: {author_id: $userId, content: $content, title: $title, topic_id: $topicId}
+  ) {
     affected_rows
     returning {
       id
@@ -21056,7 +22368,11 @@ export type DiscussionPostAndCommentsLazyQueryHookResult = ReturnType<typeof use
 export type DiscussionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<DiscussionPostAndCommentsQuery, DiscussionPostAndCommentsQueryVariables>;
 export const LatestDiscussionPostsDocument = gql`
     query LatestDiscussionPosts($limit: Int! = 20) {
-  posts(order_by: {last_update: {last_update: desc}}, limit: $limit, where: {type: {id: {_eq: 1}}}) {
+  posts(
+    order_by: {last_update: {last_update: desc}}
+    limit: $limit
+    where: {type: {id: {_eq: 1}}}
+  ) {
     ...postFields
   }
 }
@@ -21188,7 +22504,11 @@ export type MotionPostAndCommentsLazyQueryHookResult = ReturnType<typeof useMoti
 export type MotionPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<MotionPostAndCommentsQuery, MotionPostAndCommentsQueryVariables>;
 export const AllMotionPostsDocument = gql`
     query AllMotionPosts($postType: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_motion_id: desc}}
+  ) {
     id
     title
     author {
@@ -21257,7 +22577,9 @@ export type AllMotionPostsLazyQueryHookResult = ReturnType<typeof useAllMotionPo
 export type AllMotionPostsQueryResult = ApolloReactCommon.QueryResult<AllMotionPostsQuery, AllMotionPostsQueryVariables>;
 export const ChangeNotificationPreferenceDocument = gql`
     mutation changeNotificationPreference($postParticipated: Boolean, $postCreated: Boolean, $newProposal: Boolean, $ownProposal: Boolean) {
-  changeNotificationPreference(notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}) {
+  changeNotificationPreference(
+    notificationPreferences: {postParticipated: $postParticipated, postCreated: $postCreated, newProposal: $newProposal, ownProposal: $ownProposal}
+  ) {
     message
     token
   }
@@ -21293,7 +22615,11 @@ export type ChangeNotificationPreferenceMutationResult = ApolloReactCommon.Mutat
 export type ChangeNotificationPreferenceMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeNotificationPreferenceMutation, ChangeNotificationPreferenceMutationVariables>;
 export const LatestBountyPostsDocument = gql`
     query LatestBountyPosts($postType: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_bounty_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_bounty_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_bounty_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_bounty_id: desc}}
+  ) {
     id
     title
     author {
@@ -21317,7 +22643,9 @@ export const LatestBountyPostsDocument = gql`
     onchain_link {
       id
       onchain_bounty_id
-      onchain_bounty(where: {NOT: {bountyStatus_some: {OR: [{status: "BountyCanceled"}, {status: "BountyRejected"}, {status: "BountyAwarded"}, {status: "BountyClaimed"}]}}}) {
+      onchain_bounty(
+        where: {NOT: {bountyStatus_some: {OR: [{status: "BountyCanceled"}, {status: "BountyRejected"}, {status: "BountyAwarded"}, {status: "BountyClaimed"}]}}}
+      ) {
         id
         bountyStatus(last: 1) {
           id
@@ -21358,7 +22686,11 @@ export type LatestBountyPostsLazyQueryHookResult = ReturnType<typeof useLatestBo
 export type LatestBountyPostsQueryResult = ApolloReactCommon.QueryResult<LatestBountyPostsQuery, LatestBountyPostsQueryVariables>;
 export const LatestMotionPostsDocument = gql`
     query LatestMotionPosts($postType: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_motion_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}
+    order_by: {onchain_link: {onchain_motion_id: desc}}
+  ) {
     id
     title
     author {
@@ -21382,7 +22714,9 @@ export const LatestMotionPostsDocument = gql`
     onchain_link {
       id
       onchain_motion_id
-      onchain_motion(where: {NOT: {motionStatus_some: {OR: [{status: "Executed"}, {status: "Disapproved"}]}}}) {
+      onchain_motion(
+        where: {NOT: {motionStatus_some: {OR: [{status: "Executed"}, {status: "Disapproved"}]}}}
+      ) {
         id
         motionStatus(last: 1) {
           id
@@ -21427,7 +22761,11 @@ export type LatestMotionPostsLazyQueryHookResult = ReturnType<typeof useLatestMo
 export type LatestMotionPostsQueryResult = ApolloReactCommon.QueryResult<LatestMotionPostsQuery, LatestMotionPostsQueryVariables>;
 export const LatestDemocracyProposalPostsDocument = gql`
     query LatestDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}, onchain_referendum_id: {_is_null: true}}}
+    order_by: {onchain_link: {onchain_proposal_id: desc}}
+  ) {
     id
     title
     author {
@@ -21451,7 +22789,9 @@ export const LatestDemocracyProposalPostsDocument = gql`
     onchain_link {
       id
       onchain_proposal_id
-      onchain_proposal(where: {NOT: {proposalStatus_some: {OR: [{status: "Tabled"}, {status: "Cleared"}]}}}) {
+      onchain_proposal(
+        where: {NOT: {proposalStatus_some: {OR: [{status: "Tabled"}, {status: "Cleared"}]}}}
+      ) {
         id
         proposalStatus(last: 1) {
           id
@@ -21497,7 +22837,11 @@ export type LatestDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof 
 export type LatestDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<LatestDemocracyProposalPostsQuery, LatestDemocracyProposalPostsQueryVariables>;
 export const LatestReferendaPostsDocument = gql`
     query LatestReferendaPosts($postType: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_referendum_id: desc}}
+  ) {
     id
     title
     author {
@@ -21521,7 +22865,9 @@ export const LatestReferendaPostsDocument = gql`
     onchain_link {
       id
       onchain_referendum_id
-      onchain_referendum(where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Cancelled"}, {status: "Vetoed"}]}}}) {
+      onchain_referendum(
+        where: {NOT: {referendumStatus_some: {OR: [{status: "Passed"}, {status: "Executed"}, {status: "NotPassed"}, {status: "Cancelled"}, {status: "Vetoed"}]}}}
+      ) {
         id
         end
         referendumStatus(last: 1) {
@@ -21567,7 +22913,11 @@ export type LatestReferendaPostsLazyQueryHookResult = ReturnType<typeof useLates
 export type LatestReferendaPostsQueryResult = ApolloReactCommon.QueryResult<LatestReferendaPostsQuery, LatestReferendaPostsQueryVariables>;
 export const LatestTipPostsDocument = gql`
     query LatestTipPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}
+    order_by: {onchain_link: {id: desc}}
+  ) {
     id
     title
     author {
@@ -21591,7 +22941,9 @@ export const LatestTipPostsDocument = gql`
     onchain_link {
       id
       onchain_tip_id
-      onchain_tip(where: {NOT: {tipStatus_some: {OR: [{status: "TipClosed"}, {status: "TipClosing"}, {status: "TipRetracted"}]}}}) {
+      onchain_tip(
+        where: {NOT: {tipStatus_some: {OR: [{status: "TipClosed"}, {status: "TipClosing"}, {status: "TipRetracted"}]}}}
+      ) {
         id
         reason
         tipStatus(last: 1) {
@@ -21634,7 +22986,11 @@ export type LatestTipPostsLazyQueryHookResult = ReturnType<typeof useLatestTipPo
 export type LatestTipPostsQueryResult = ApolloReactCommon.QueryResult<LatestTipPostsQuery, LatestTipPostsQueryVariables>;
 export const LatestDemocracyTreasuryProposalPostsDocument = gql`
     query LatestDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_motion_id: {_is_null: true}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}, onchain_motion_id: {_is_null: true}}}
+    order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}
+  ) {
     id
     title
     author {
@@ -21733,7 +23089,11 @@ export type ProposalPostAndCommentsLazyQueryHookResult = ReturnType<typeof usePr
 export type ProposalPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<ProposalPostAndCommentsQuery, ProposalPostAndCommentsQueryVariables>;
 export const AllDemocracyProposalPostsDocument = gql`
     query AllDemocracyProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_proposal_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_proposal_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_proposal_id: desc}}
+  ) {
     id
     title
     author {
@@ -21803,7 +23163,11 @@ export type AllDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof use
 export type AllDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<AllDemocracyProposalPostsQuery, AllDemocracyProposalPostsQueryVariables>;
 export const AllReferendaPostsDocument = gql`
     query AllReferendaPosts($postType: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_referendum_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_referendum_id: desc}}
+  ) {
     id
     title
     author {
@@ -22272,7 +23636,13 @@ export type SetCredentialsStartMutationResult = ApolloReactCommon.MutationResult
 export type SetCredentialsStartMutationOptions = ApolloReactCommon.BaseMutationOptions<SetCredentialsStartMutation, SetCredentialsStartMutationVariables>;
 export const SetCredentialsConfirmDocument = gql`
     mutation setCredentialsConfirm($address: String!, $email: String, $signature: String!, $username: String!, $password: String!) {
-  setCredentialsConfirm(address: $address, email: $email, signature: $signature, username: $username, password: $password) {
+  setCredentialsConfirm(
+    address: $address
+    email: $email
+    signature: $signature
+    username: $username
+    password: $password
+  ) {
     message
     token
   }
@@ -22374,7 +23744,11 @@ export type TipPostAndCommentsLazyQueryHookResult = ReturnType<typeof useTipPost
 export type TipPostAndCommentsQueryResult = ApolloReactCommon.QueryResult<TipPostAndCommentsQuery, TipPostAndCommentsQueryVariables>;
 export const AllTipPostsDocument = gql`
     query AllTipPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}, order_by: {onchain_link: {id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_tip_id: {_is_null: false}}}
+    order_by: {onchain_link: {id: desc}}
+  ) {
     id
     title
     author {
@@ -22441,7 +23815,11 @@ export type AllTipPostsLazyQueryHookResult = ReturnType<typeof useAllTipPostsLaz
 export type AllTipPostsQueryResult = ApolloReactCommon.QueryResult<AllTipPostsQuery, AllTipPostsQueryVariables>;
 export const AllDemocracyTreasuryProposalPostsDocument = gql`
     query AllDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
-  posts(limit: $limit, where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}}}, order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}) {
+  posts(
+    limit: $limit
+    where: {type: {id: {_eq: $postType}}, topic: {id: {_eq: $postTopic}}, onchain_link: {onchain_treasury_proposal_id: {_is_null: false}}}
+    order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}
+  ) {
     id
     title
     author {

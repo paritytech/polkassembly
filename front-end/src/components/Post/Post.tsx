@@ -44,6 +44,8 @@ import ScrollToTop from '../../ui-components/ScrollToTop';
 import Comments from '../Comment/Comments';
 import EditablePostContent from '../EditablePostContent';
 import NoPostFound from '../NoPostFound';
+import OptionPoll from '../OptionPoll';
+import CreateOptionPoll from '../OptionPoll/CreateOptionPoll';
 import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
@@ -248,6 +250,7 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 			status={postStatus}
 		/>
 		{isDiscussion(post) && <Poll postId={post.id} canEdit={post.author?.id === id} />}
+		<OptionPoll postId={post.id} canEdit={post.author?.id === id} />
 	</>;
 
 	return (
@@ -276,6 +279,7 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
+						{id && !isEditing && <CreateOptionPoll postId={post.id} />}
 					</div>
 				</div>
 				{ isBounty &&
