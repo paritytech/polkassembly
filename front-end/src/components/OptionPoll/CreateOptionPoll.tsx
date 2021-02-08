@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext, useState } from 'react';
-import { Icon, Input, InputOnChangeData } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, Icon, Input, InputOnChangeData } from 'semantic-ui-react';
 
 import { NotificationContext } from '../../context/NotificationContext';
 import { useCreateOptionPollMutation } from '../../generated/graphql';
@@ -17,9 +17,48 @@ interface CreateOptionPollProps {
 	postId: number
 }
 
+interface DropdownOptions {
+	key: string
+	text: string
+	value: number
+}
+
+const daysOptions: DropdownOptions[] = [];
+
+for (let i = 0; i < 10; i++) {
+	daysOptions.push({
+		key: `${i + 1}`,
+		text: `${i + 1}`,
+		value: i + 1
+	});
+}
+
+const hoursOptions: DropdownOptions[] = [];
+
+for (let i = 0; i < 23; i++) {
+	hoursOptions.push({
+		key: `${i + 1}`,
+		text: `${i + 1}`,
+		value: i + 1
+	});
+}
+
+const minutesOptions: DropdownOptions[] = [];
+
+for (let i = 0; i < 59; i++) {
+	minutesOptions.push({
+		key: `${i + 1}`,
+		text: `${i + 1}`,
+		value: i + 1
+	});
+}
+
 const CreatePoll = function ({ postId }: CreateOptionPollProps) {
 	const [showModal, setShowModal] = useState(false);
 	const [question, setQuestion] = useState('');
+	const [days, setDays] = useState(1);
+	const [hours, setHours] = useState(0);
+	const [minutes, setMinutes] = useState(0);
 	const [inputs, setInputs] = useState<number[]>([1, 2]);
 	const [options, setOptions] = useState<string[]>(['', '']);
 	const [validationError, setValidationError] = useState('');
@@ -38,27 +77,30 @@ const CreatePoll = function ({ postId }: CreateOptionPollProps) {
 			return;
 		}
 
+		const endAt = Math.round(Date.now()/1000) + (days*24*60*60) + (hours*60*60) + (minutes*60);
+
 		createOptionPollMutation({
 			variables: {
-				endAt: Math.round(Date.now()/1000),
+				endAt,
 				options: JSON.stringify(options),
 				postId,
 				question
 			}
 		})
 			.then(({ data }) => {
+				setShowModal(false);
+				setQuestion('');
+				setInputs([1, 2]);
+				setOptions(['', '']);
+				setValidationError('');
 				if (data?.insert_option_poll?.affected_rows) {
 					queueNotification({
 						header: 'Success!',
 						message: 'Poll Created',
 						status: NotificationStatus.SUCCESS
 					});
+					window.location.reload(false);
 				}
-				setShowModal(false);
-				setQuestion('');
-				setInputs([1, 2]);
-				setOptions(['', '']);
-				setValidationError('');
 			})
 			.catch((e) => {
 				console.error('Error creating poll', e);
@@ -93,6 +135,21 @@ const CreatePoll = function ({ postId }: CreateOptionPollProps) {
 
 	const addInput = () => {
 		setInputs([...inputs, inputs.length + 1]);
+	};
+
+	const onDaysChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		const days = data.value as number;
+		setDays(days);
+	};
+
+	const onHoursChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		const hours = data.value as number;
+		setHours(hours);
+	};
+
+	const onMinutesChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+		const minutes = data.value as number;
+		setMinutes(minutes);
 	};
 
 	return (
@@ -149,6 +206,38 @@ const CreatePoll = function ({ postId }: CreateOptionPollProps) {
 									icon='add'
 									secondary
 									onClick={addInput}
+								/>
+							</Form.Field>
+						</Form.Group>
+						<Form.Group>
+							<label>Poll length</label>
+						</Form.Group>
+						<Form.Group widths='equal'>
+							<Form.Field>
+								<Dropdown
+									placeholder='Days'
+									fluid
+									selection
+									options={daysOptions}
+									onChange={onDaysChange}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<Dropdown
+									placeholder='Hours'
+									fluid
+									selection
+									options={hoursOptions}
+									onChange={onHoursChange}
+								/>
+							</Form.Field>
+							<Form.Field>
+								<Dropdown
+									placeholder='Minutes'
+									fluid
+									selection
+									options={minutesOptions}
+									onChange={onMinutesChange}
 								/>
 							</Form.Field>
 						</Form.Group>

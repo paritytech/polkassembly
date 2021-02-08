@@ -21,7 +21,7 @@ interface Props {
 	canEdit: boolean
 }
 
-const OptionPoll = ({ className, optionPollId, question, options }: Props) => {
+const OptionPoll = ({ className, optionPollId, question, options, endAt }: Props) => {
 	const [err, setErr] = useState<Error | null>(null);
 	const { id } = useContext(UserDetailsContext);
 	const { data, error, refetch } = useOptionPollVotesQuery({ variables: { optionPollId } });
@@ -97,7 +97,10 @@ const OptionPoll = ({ className, optionPollId, question, options }: Props) => {
 					</Progress>
 				))}
 			</div>
-			<div>{totalVotes} votes</div>
+			<div>
+				<span>{totalVotes} votes.</span>
+				<span>{endAt && Math.round(Date.now()/1000) > endAt ? 'Poll Ended': ''}</span>
+			</div>
 		</Card>
 	);
 };
