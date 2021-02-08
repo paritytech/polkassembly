@@ -279,7 +279,7 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
-						{id && !isEditing && <CreateOptionPoll postId={post.id} />}
+						{id && post.author?.id === id && !isEditing && <CreateOptionPoll postId={post.id} />}
 					</div>
 				</div>
 				{ isBounty &&
