@@ -313,6 +313,152 @@
       value_from_env: HASURA_EVENT_SECRET
 - table:
     schema: public
+    name: option_poll
+  object_relationships:
+  - name: option_poll_post
+    using:
+      foreign_key_constraint_on: post_id
+  array_relationships:
+  - name: option_poll_votes
+    using:
+      foreign_key_constraint_on:
+        column: option_poll_id
+        table:
+          schema: public
+          name: option_poll_votes
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        option_poll_post:
+          author_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - end_at
+      - options
+      - post_id
+      - question
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - created_at
+      - end_at
+      - id
+      - options
+      - post_id
+      - question
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - end_at
+      - id
+      - options
+      - post_id
+      - question
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - end_at
+      - options
+      - post_id
+      - question
+      filter:
+        option_poll_post:
+          author_id:
+            _eq: X-Hasura-User-Id
+      check:
+        option_poll_post:
+          author_id:
+            _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        option_poll_post:
+          author_id:
+            _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: option_poll_votes
+  object_relationships:
+  - name: option_poll
+    using:
+      foreign_key_constraint_on: option_poll_id
+  remote_relationships:
+  - definition:
+      remote_field:
+        user:
+          arguments:
+            id: $user_id
+      hasura_fields:
+      - user_id
+      remote_schema: auth
+    name: option_poll_voter
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - option
+      - option_poll_id
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - option_poll_id
+      - user_id
+      - option
+      - created_at
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - id
+      - option_poll_id
+      - user_id
+      - option
+      - created_at
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - option
+      - option_poll_id
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
     name: poll
   object_relationships:
   - name: post
@@ -602,6 +748,13 @@
         table:
           schema: public
           name: comments
+  - name: option_polls
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          schema: public
+          name: option_poll
   - name: polls
     using:
       foreign_key_constraint_on:
