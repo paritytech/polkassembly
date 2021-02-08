@@ -20080,6 +20080,40 @@ export type ResetPasswordMutation = (
   )> }
 );
 
+export type SearchPostFieldsFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+  & { author?: Maybe<(
+    { __typename?: 'User' }
+    & AuthorFieldsFragment
+  )>, comments_aggregate: (
+    { __typename?: 'comments_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'comments_aggregate_fields' }
+      & Pick<Comments_Aggregate_Fields, 'count'>
+    )> }
+  ), type: (
+    { __typename?: 'post_types' }
+    & Pick<Post_Types, 'name' | 'id'>
+  ), last_update?: Maybe<(
+    { __typename?: 'post_last_update' }
+    & Pick<Post_Last_Update, 'last_update'>
+  )> }
+);
+
+export type SearchPostsQueryVariables = Exact<{
+  term: Scalars['String'];
+}>;
+
+
+export type SearchPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & SearchPostFieldsFragment
+  )> }
+);
+
 export type ChangeUsernameMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -20851,6 +20885,29 @@ export const ReferendumPostFragmentDoc = gql`
     ${AuthorFieldsFragmentDoc}
 ${CommentFieldsFragmentDoc}
 ${OnchainLinkReferendumFragmentDoc}`;
+export const SearchPostFieldsFragmentDoc = gql`
+    fragment searchPostFields on posts {
+  id
+  title
+  author {
+    ...authorFields
+  }
+  created_at
+  updated_at
+  comments_aggregate {
+    aggregate {
+      count
+    }
+  }
+  type {
+    name
+    id
+  }
+  last_update {
+    last_update
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
 export const OnchainLinkTipFragmentDoc = gql`
     fragment onchainLinkTip on onchain_links {
   id
@@ -23334,6 +23391,43 @@ export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.Mutation
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SearchPostsDocument = gql`
+    query SearchPosts($term: String!) {
+  posts(
+    order_by: {id: desc}
+    limit: 20
+    where: {_or: [{title: {_ilike: $term}}, {content: {_ilike: $term}}]}
+  ) {
+    ...searchPostFields
+  }
+}
+    ${SearchPostFieldsFragmentDoc}`;
+
+/**
+ * __useSearchPostsQuery__
+ *
+ * To run a query within a React component, call `useSearchPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPostsQuery({
+ *   variables: {
+ *      term: // value for 'term'
+ *   },
+ * });
+ */
+export function useSearchPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SearchPostsQuery, SearchPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<SearchPostsQuery, SearchPostsQueryVariables>(SearchPostsDocument, baseOptions);
+      }
+export function useSearchPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchPostsQuery, SearchPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SearchPostsQuery, SearchPostsQueryVariables>(SearchPostsDocument, baseOptions);
+        }
+export type SearchPostsQueryHookResult = ReturnType<typeof useSearchPostsQuery>;
+export type SearchPostsLazyQueryHookResult = ReturnType<typeof useSearchPostsLazyQuery>;
+export type SearchPostsQueryResult = ApolloReactCommon.QueryResult<SearchPostsQuery, SearchPostsQueryVariables>;
 export const ChangeUsernameDocument = gql`
     mutation changeUsername($username: String!, $password: String!) {
   changeUsername(username: $username, password: $password) {

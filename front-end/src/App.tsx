@@ -37,6 +37,7 @@ import Referenda from './screens/Referenda';
 import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/ResetPassword';
+import Search from './screens/Search';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import PostTip from './screens/TipPost';
@@ -154,6 +155,9 @@ const App = () => {
 														</Route>
 														<Route path="/user/:username">
 															<UserProfile/>
+														</Route>
+														<Route path="/search">
+															<Search/>
 														</Route>
 														<Route path="*">
 															<NotFound/>
