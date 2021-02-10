@@ -20,6 +20,7 @@ import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
 import Bounties from './screens/Bounties';
 import PostBounty from './screens/BountyPost';
+import BrandVote from './screens/BrandVote';
 import CreatePost from './screens/CreatePost';
 import PostDiscussion from './screens/DiscussionPost';
 import Discussions from './screens/Discussions';
@@ -158,6 +159,9 @@ const App = () => {
 														</Route>
 														<Route path="/search">
 															<Search/>
+														</Route>
+														<Route path="/brand-vote">
+															<BrandVote/>
 														</Route>
 														<Route path="*">
 															<NotFound/>
