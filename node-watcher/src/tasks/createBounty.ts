@@ -37,7 +37,7 @@ const createBounty: Task<NomidotBounty[]> = {
 
     const bountyEvents = filterEvents(
       events,
-      'treasury',
+      'bounties',
       'BountyProposed'
     );
 
@@ -68,7 +68,7 @@ const createBounty: Task<NomidotBounty[]> = {
 			return null;
 		}
 
-		const bountyRaw: Option<Bounty> = await api.query.treasury.bounties.at(
+		const bountyRaw: Option<Bounty> = await api.query.bounties.bounties.at(
 			blockHash,
 			bountyRawEvent.BountyIndex
 		);
