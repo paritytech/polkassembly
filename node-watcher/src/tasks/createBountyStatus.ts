@@ -31,7 +31,7 @@ const createBountyStatus: Task<NomidotBountyStatusUpdate[]> = {
 
     const filteredEvents = events.filter(
     ({ event: { method, section } }) =>
-      section === 'treasury' &&	[
+      section === 'bounties' &&	[
         bountyStatus.BECAME_ACTIVE,
         bountyStatus.AWARDED,
         bountyStatus.CLAIMED,
