@@ -7,7 +7,7 @@ This service is listening to a graphQL based chain DB and creates new on-chain p
 # auth credentials for this user to create on-chain posts
 PROPOSAL_BOT_USERNAME=bot
 PROPOSAL_BOT_PASSWORD=<create a password>
-PROPOSAL_BOT_USER_ID=6
+PROPOSAL_BOT_USER_ID=<your bot user id>
 REACT_APP_HASURA_GRAPHQL_URL="http://localhost:8080/v1/graphql"
 CHAIN_DB_GRAPHQL_URL="http://localhost:4466/"
 HASURA_PROPOSAL_POST_TYPE_ID=2
@@ -20,6 +20,7 @@ HEALTH_PORT=8019
 ```
 ## Run
 - `yarn`
-- `yarn start`
+- `yarn start`  
+
 ## Docker build
 docker build -t paritytech/polkassembly-chain-db-watcher:master .

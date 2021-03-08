@@ -2,7 +2,7 @@ version: "3.6"
 services:
   redis:
     image: redis
-    command: redis-server --requirepass redis
+    command: redis-server --requirepass <redis secret>
     ports:
       - "6379:6379"
   postgres:

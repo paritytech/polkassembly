@@ -44,12 +44,12 @@ create index "onchain_links_post_id_index" on "onchain_links" ("post_id");
 ### Remote schema
 We are using auth server from Polkassembly as auth remote schema and chain-db as another remote schema. Both should be running for hasura migrations to work.
 
-They are configured as http://auth-server-service:8010/auth/graphql and http://nodewatcher.nodewatcher:4466 in hasura migrations yaml files. This is done for kubernetes to work.
+They are configured as http://auth-server-service:8010/auth/graphql and http://chain-db-open-server-service:4000 in hasura migrations yaml files. This is done for kubernetes to work.
 So add these entries in /etc/hosts
 
 ```
 127.0.0.1       auth-server-service
-127.0.0.1       nodewatcher.nodewatcher
+127.0.0.1       chain-db-open-server-service
 ```
 
 As Docker only supports host networking on Linux, Mac users need to replace the host names in the hasura migrations yaml files with `http://host.docker.internal`.
