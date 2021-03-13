@@ -33,7 +33,7 @@
     "api:bump": "yarn add @polkadot/api @polkadot/dev"
   },
   "dependencies": {
-    "@polkadot/api": "^4.0.2",
+    "@polkadot/api": "^4.0.3",
     "p-retry": "^4.2.0",
     "prisma-client-lib": "1.34.10"
   },
