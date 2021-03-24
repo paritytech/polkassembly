@@ -28,7 +28,7 @@
 	},
 	"homepage": "http://polkassembly.io/",
 	"dependencies": {
-		"@polkadot/api": "^4.0.3",
+		"@polkadot/api": "^4.1.1",
 		"@polkadot/util": "^6.0.5",
 		"@polkadot/util-crypto": "^6.0.5",
 		"@sendgrid/mail": "^6.5.5",
@@ -61,7 +61,7 @@
 		"validator": "^12.2.0"
 	},
 	"devDependencies": {
-		"@polkadot/types": "^4.0.3",
+		"@polkadot/types": "^4.1.1",
 		"@types/chai": "^4.2.11",
 		"@types/cookie-parser": "^1.4.2",
 		"@types/dotenv": "^8.2.0",
