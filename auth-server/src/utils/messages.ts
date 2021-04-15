@@ -80,6 +80,7 @@ export default {
 	SUCCESS: 'Success.',
 	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
+	USERNAME_BANNED: 'Username is banned. Please use a different username.',
 	USERNAME_CHANGE_SUCCESSFUL: 'Username successfully changed.',
 	USERNAME_INVALID_ERROR: 'Username must be between 3 and 30 characters long, using letters, numbers, and the following characters ._-',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',
