@@ -10,6 +10,9 @@ export default [
 	'polkadot',
 	'kusama',
 	'polkassembly',
-	'staff'
+	'staff',
+	'gavinwood',
+	'gavwood',
+	'gavofyork'
 ];
 
