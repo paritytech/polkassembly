@@ -120,6 +120,28 @@ describe('signup mutation', () => {
 		}
 	});
 
+	it('should throw an error if one of the blacklist words is substring of username', async () => {
+		let username = 'parity01';
+
+		try {
+			await signup(undefined, { email, password, username }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.USERNAME_BANNED);
+		}
+
+		username = 'Administrator01';
+
+		try {
+			await signup(undefined, { email, password, username }, fakectx);
+		} catch (error) {
+			expect(error).to.exist;
+			expect(error).to.be.an.instanceof(ForbiddenError);
+			expect(error.message).to.eq(messages.USERNAME_BANNED);
+		}
+	});
+
 	it('should throw an error if username contains whitespace', async () => {
 		const username = 'user name';
 
