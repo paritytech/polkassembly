@@ -121,8 +121,10 @@ export default class AuthService {
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
-		if (nameBlacklist.includes(username.toLowerCase())) {
-			throw new ForbiddenError(messages.USERNAME_BANNED);
+		for (let i = 0; i < nameBlacklist.length; i++) {
+			if (username.toLowerCase().includes(nameBlacklist[i])) {
+				throw new ForbiddenError(messages.USERNAME_BANNED);
+			}
 		}
 
 		const user = await User
@@ -373,8 +375,10 @@ export default class AuthService {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
 		}
 
-		if (nameBlacklist.includes(username.toLowerCase())) {
-			throw new ForbiddenError(messages.USERNAME_BANNED);
+		for (let i = 0; i < nameBlacklist.length; i++) {
+			if (username.toLowerCase().includes(nameBlacklist[i])) {
+				throw new ForbiddenError(messages.USERNAME_BANNED);
+			}
 		}
 
 		if (email) {
