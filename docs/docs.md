@@ -1,6 +1,6 @@
 # Polkassembly documentation
 
-Polkassembly is a platform for anyone to discover and participate in Polkadot and Kusama governance. You can browse proposals made on chain, discuss with the community and vote directly from the website using a browser extension. Proposal authors are the only one able to edit the proposal post and description. You don't have to, but adding an email may help to recover your account, also you can get notifications for discussions of interest or when a new proposal appears on-chain. A presentation on polkassembly can be seen here https://github.com/Premiurly/polkassembly/blob/master/docs/Polkassembly%20Governance%20Platform.pptx
+Polkassembly is a platform for anyone to discover and participate in Polkadot https://polkadot.polkassembly.io and Kusama https://kusama.polkassembly.io governance. You can browse proposals made on chain, discuss with the community and vote directly from the website using a browser extension. Proposal authors are the only one able to edit the proposal post and description. You don't have to, but adding an email may help to recover your account, also you can get notifications for discussions of interest or when a new proposal appears on-chain. A presentation on polkassembly can be seen here https://github.com/Premiurly/polkassembly/blob/master/docs/Polkassembly%20Governance%20Platform.pptx
 
 ## Architecture
 
