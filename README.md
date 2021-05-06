@@ -15,4 +15,5 @@ This repo hosts
 
 ## Architecture
 
-[Architecture](docs/architecture.md)
+- [Polkassembly architecture](docs/architecture.md)
+- [API](docs/auth_schema.md)
