@@ -1,5 +1,7 @@
 # Polkassembly documentation
 
+## Architecture
+
 Polkassembly follows microservices architecture. Main technologies used are typescript, node.js, react.js, postgres, redis, graphql, polkadot.js, hasura, prisma. It multiple node.js servers, react application, hasura and prisma server. Architecture diagram is shown here:
 
 ![polkassembly](https://user-images.githubusercontent.com/874046/117366012-c7eaee80-aedd-11eb-88e3-02cbb3a21634.png)
