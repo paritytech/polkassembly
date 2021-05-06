@@ -7,7 +7,7 @@ nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
   image:
-    repository: paritytech/polkassembly-kusama-production-front-end
+    repository: docker.io/paritytech/polkassembly-kusama-production-front-end
     pullPolicy: Always
 
   ingress:
@@ -48,4 +48,4 @@ healthMonitor:
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.c.parity-prod.internal:9944"
+    ARCHIVE_NODE_ENDPOINT: "wss://kusama-rpc.polkadot.io"

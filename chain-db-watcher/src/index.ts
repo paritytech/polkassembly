@@ -11,18 +11,20 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ws from 'ws';
 
 import {
+	addDiscussionPostAndBounty,
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
 	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
+	bountyDiscussionExists,
 	motionDiscussionExists,
 	proposalDiscussionExists,
 	tipDiscussionExists,
 	treasuryProposalDiscussionExists,
 	updateTreasuryProposalWithMotion
 } from './graphql_helpers';
-import { motionSubscription, proposalSubscription, referendumSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
+import { bountySubscription, motionSubscription, proposalSubscription, referendumSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
 import { getMotionTreasuryProposalId } from './sync/utils';
 
@@ -89,6 +91,31 @@ const startSubscriptions = (client: SubscriptionClient): void => {
 		error: error => { throw new Error(`Subscription (treasury) error: ${error}`); },
 		complete: () => {
 			console.log('Subscription (treasury) completed');
+			process.exit(1);
+		}
+	});
+
+	execute(link, {
+		query: bountySubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
+			console.log('Bounty data received', JSON.stringify(data, null, 2));
+
+			if (data?.bounty.mutation === subscriptionMutation.Created) {
+				const { bountyId, proposer } = data.bounty.node;
+				bountyDiscussionExists(bountyId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndBounty({ onchainBountyId: Number(bountyId), proposer });
+					} else {
+						console.error(chalk.red(`✖︎ Bounty id ${bountyId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		error: error => { throw new Error(`Subscription (bounty) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (bounty) completed');
 			process.exit(1);
 		}
 	});

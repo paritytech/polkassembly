@@ -7,7 +7,7 @@ nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
 
 frontend:
   image:
-    repository: paritytech/polkassembly-polkadot-production-front-end
+    repository: docker.io/paritytech/polkassembly-polkadot-production-front-end
     pullPolicy: Always
 
   ingress:

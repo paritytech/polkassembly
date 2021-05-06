@@ -4,11 +4,11 @@
 
 import { DeriveReferendumVote } from '@polkadot/api-derive/types';
 import { getFailingThreshold, getPassingThreshold } from '@polkassembly/util';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect, useMemo,useState } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 import { LoadingStatusType, VoteThreshold } from 'src/types';
 import Card from 'src/ui-components/Card';
 import HelperTooltip from 'src/ui-components/HelperTooltip';
@@ -26,7 +26,7 @@ interface Props {
 const ZERO = new BN(0);
 
 const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const [turnout, setTurnout] = useState(ZERO);
 	const [totalIssuance, setTotalIssuance] = useState(ZERO);
 	const [ayeVotes, setAyeVotes] = useState(ZERO);
@@ -61,7 +61,11 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 	);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -87,10 +91,14 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady, referendumId]);
+	}, [api, apiReady, referendumId]);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -111,10 +119,14 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady, referendumId]);
+	}, [api, apiReady, referendumId]);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -127,7 +139,7 @@ const ReferendumVoteInfo = ({ className, referendumId, threshold }: Props) => {
 			.catch(console.error);
 
 		return () => unsubscribe && unsubscribe();
-	},[api, isApiReady]);
+	},[api, apiReady]);
 
 	return (
 		<>

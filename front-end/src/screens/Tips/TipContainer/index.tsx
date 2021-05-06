@@ -21,7 +21,7 @@ const TipContainer = ({ className, limit }:Props) => {
 	const [page, setPage] = useState(1);
 
 	const { data, error, loading, refetch } = useAllTipPostsQuery({ variables: {
-		limit,
+		limit: limit * page,
 		postTopic: post_topic.TREASURY,
 		postType: post_type.ON_CHAIN
 	} });

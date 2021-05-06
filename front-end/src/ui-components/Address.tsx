@@ -4,10 +4,10 @@
 
 import { DeriveAccountFlags, DeriveAccountInfo, DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import Identicon from '@polkadot/react-identicon';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 
 import shortenAddress from '../util/shortenAddress';
 import IdentityBadge from './IdentityBadge';
@@ -21,15 +21,18 @@ interface Props {
 }
 
 const Address = ({ address, className, displayInline, extensionName, popupContent }: Props): JSX.Element => {
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const [mainDisplay, setMainDisplay] = useState<string>('');
 	const [sub, setSub] = useState<string | null>(null);
 	const [identity, setIdentity] = useState<DeriveAccountRegistration | null>(null);
 	const [flags, setFlags] = useState<DeriveAccountFlags | undefined>(undefined);
 
 	useEffect(() => {
+		if (!api){
+			return;
+		}
 
-		if (!isApiReady){
+		if (!apiReady){
 			return;
 		}
 
@@ -53,10 +56,14 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, isApiReady]);
+	}, [address, api, apiReady]);
 
 	useEffect(() => {
-		if (!isApiReady){
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -69,7 +76,7 @@ const Address = ({ address, className, displayInline, extensionName, popupConten
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [address, api, isApiReady]);
+	}, [address, api, apiReady]);
 
 	return (
 		<div className={displayInline ? `${className} inline`: className}>

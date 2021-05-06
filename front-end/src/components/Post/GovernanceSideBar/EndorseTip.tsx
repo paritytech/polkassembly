@@ -3,11 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { ApiPromiseContext } from '@substrate/context';
 import styled from '@xstyled/styled-components';
 import BN from 'bn.js';
 import React, { useContext, useEffect,useState } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
+import { ApiContext } from 'src/context/ApiContext';
 import { NotificationContext } from 'src/context/NotificationContext';
 import { UserDetailsContext } from 'src/context/UserDetailsContext';
 import { useGetCouncilMembersQuery } from 'src/generated/graphql';
@@ -44,11 +44,9 @@ const EndorseTip = ({
 	const [isCouncil, setIsCouncil] = useState(false);
 	const [forceEndorse, setForceEndorse] = useState(false);
 	const councilQueryresult = useGetCouncilMembersQuery();
-	const currentCouncil: string[] = [];
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const [currentCouncil, setCurrentCouncil] = useState<string[]>([]);
+	const { api, apiReady } = useContext(ApiContext);
 	const { addresses } = useContext(UserDetailsContext);
-
-	councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {currentCouncil.push(member?.address);});
 
 	useEffect(() => {
 		// it will iterate through all addresses
@@ -62,11 +60,25 @@ const EndorseTip = ({
 		});
 	}, [addresses, currentCouncil]);
 
+	useEffect(() => {
+		councilQueryresult.data?.councils?.[0]?.members?.forEach( member => {
+			setCurrentCouncil(currentCouncil => [...currentCouncil, member?.address]);
+		});
+	}, [councilQueryresult]);
+
 	const onValueChange = (balance: BN) => setEndorseValue(balance);
 
 	const handleEndorse = async () => {
 		if (!tipHash) {
 			console.error('tipHash not set');
+			return;
+		}
+
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -137,7 +149,7 @@ const EndorseTip = ({
 				/>
 				<Button
 					primary
-					disabled={!isApiReady}
+					disabled={!apiReady}
 					onClick={handleEndorse}
 				>
 					Endorse

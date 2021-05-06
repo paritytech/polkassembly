@@ -9,6 +9,7 @@ import { GraphQLClient } from 'graphql-request';
 
 import {
 	getSdk as getOnchainSdk,
+	OnchainBountyFragment,
 	OnchainMotionFragment,
 	OnchainProposalFragment,
 	OnchainReferendumFragment,
@@ -16,6 +17,7 @@ import {
 	OnchainTreasuryProposalFragment
 } from '../generated/chain-db-graphql';
 import {
+	DiscussionBountyFragment,
 	DiscussionMotionFragment,
 	DiscussionProposalFragment,
 	DiscussionReferendumFragment,
@@ -115,6 +117,29 @@ export const getDiscussionTreasuryProposals = async (): Promise<Array<Discussion
 		return data?.onchain_links;
 	} catch (err) {
 		console.error(chalk.red('getDiscussionTreasury execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+export const getDiscussionBounties = async (): Promise<Array<DiscussionBountyFragment> | null | undefined> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionBounties();
+
+		return data?.onchain_links;
+	} catch (err) {
+		console.error(chalk.red('getDiscussionBounties execution'), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
@@ -230,6 +255,29 @@ export const getOnChainTreasuryProposals = async (): Promise<Array<OnchainTreasu
 		return data?.treasurySpendProposals;
 	} catch (err) {
 		console.error(chalk.red('getOnChainTreasuryProposals execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+export const getOnChainBounties = async (): Promise<Array<OnchainBountyFragment | null> | undefined> => {
+	if (!onchainGraphqlServerUrl) {
+		throw new Error(
+			'Environment variable for the CHAIN_DB_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
+
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getOnchainBounties({ startBlock });
+
+		return data?.bounties;
+	} catch (err) {
+		console.error(chalk.red('getOnChainBounties execution'), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&

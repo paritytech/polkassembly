@@ -1,8 +1,9 @@
 // Copyright 2019-2020 @paritytech/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { ApiPromiseContext } from '@substrate/context';
+
 import React, { useContext, useEffect, useState } from 'react';
+import { ApiContext } from 'src/context/ApiContext';
 import { LoadingStatusType } from 'src/types';
 import formatBnBalance from 'src/util/formatBnBalance';
 
@@ -14,13 +15,17 @@ type Props = SecondProposalProps & {
 }
 
 const ProposalDisplay = ({ proposalId, accounts, address, canVote, getAccounts, onAccountChange }: Props) => {
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 	const [seconds, setSeconds] = useState(0);
 	const [deposit, setDeposit] = useState('');
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>({ isLoading: true, message:'Loading proposal info' });
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -40,7 +45,7 @@ const ProposalDisplay = ({ proposalId, accounts, address, canVote, getAccounts, 
 
 		return () => unsubscribe && unsubscribe();
 
-	}, [api, isApiReady, proposalId]);
+	}, [api, apiReady, proposalId]);
 
 	return (
 		<>

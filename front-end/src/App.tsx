@@ -2,8 +2,6 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { WsProvider } from '@polkadot/api';
-import { ApiPromiseContextProvider } from '@substrate/context';
 import { ThemeProvider } from '@xstyled/styled-components';
 import React from 'react';
 import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
@@ -15,10 +13,13 @@ import Head from './components/Head';
 import MenuBar from './components/MenuBar';
 import Modal from './components/Modal';
 import Notifications from './components/Notifications';
+import { ApiContextProvider } from './context/ApiContext';
 import { MetaProvider } from './context/MetaContext';
 import { ModalProvider } from './context/ModalContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { UserDetailsProvider } from './context/UserDetailsContext';
+import Bounties from './screens/Bounties';
+import PostBounty from './screens/BountyPost';
 import CreatePost from './screens/CreatePost';
 import PostDiscussion from './screens/DiscussionPost';
 import Discussions from './screens/Discussions';
@@ -36,6 +37,7 @@ import Referenda from './screens/Referenda';
 import PostReferendum from './screens/ReferendumPost';
 import RequestResetPassword from './screens/RequestResetPassword';
 import ResetPassword from './screens/ResetPassword';
+import Search from './screens/Search';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
 import PostTip from './screens/TipPost';
@@ -49,16 +51,6 @@ import { theme } from './themes/theme';
 import { GlobalStyle } from './ui-components/GlobalStyle';
 
 const App = () => {
-
-	const WS_PROVIDER = process.env.REACT_APP_WS_PROVIDER;
-
-	if (!WS_PROVIDER) {
-		console.error('REACT_APP_WS_PROVIDER not set');
-		return null;
-	}
-
-	const provider = new WsProvider(WS_PROVIDER);
-
 	return (
 		<>
 			<Router>
@@ -72,7 +64,7 @@ const App = () => {
 										<GlobalStyle />
 										<Notifications/>
 										<Modal/>
-										<ApiPromiseContextProvider provider={provider}>
+										<ApiContextProvider>
 											<div id='page-container'>
 												<MenuBar />
 												<Container>
@@ -88,6 +80,9 @@ const App = () => {
 														</Route>
 														<Route path="/post/create">
 															<CreatePost/>
+														</Route>
+														<Route exact path="/bounty/:id">
+															<PostBounty/>
 														</Route>
 														<Route exact path="/motion/:id">
 															<PostMotion/>
@@ -109,6 +104,9 @@ const App = () => {
 														</Route>
 														<Route path="/onchain">
 															<OnChain/>
+														</Route>
+														<Route path="/bounties">
+															<Bounties/>
 														</Route>
 														<Route path="/referenda">
 															<Referenda/>
@@ -158,6 +156,9 @@ const App = () => {
 														<Route path="/user/:username">
 															<UserProfile/>
 														</Route>
+														<Route path="/search">
+															<Search/>
+														</Route>
 														<Route path="*">
 															<NotFound/>
 														</Route>
@@ -165,7 +166,7 @@ const App = () => {
 												</Container>
 												<Footer />
 											</div>
-										</ApiPromiseContextProvider>
+										</ApiContextProvider>
 									</Apollo>
 								</MetaProvider>
 							</UserDetailsProvider>

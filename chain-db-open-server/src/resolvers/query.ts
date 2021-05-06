@@ -583,6 +583,50 @@ const Query = {
   ) {
     return prisma.tipStatus(TipStatusWhereUniqueInput);
   },
+  bounties(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.bounties({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  bounty(
+    _parent: any,
+    { BountyWhereUniqueInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.bounty(BountyWhereUniqueInput);
+  },
+  bountyStatuses(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.bountyStatuses({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  bountyStatus(
+    _parent: any,
+    { BountyStatusWhereUniqueInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.bountyStatus(BountyStatusWhereUniqueInput);
+  },
 };
 
 export { Query };

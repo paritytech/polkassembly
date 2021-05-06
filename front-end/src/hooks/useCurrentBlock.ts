@@ -2,16 +2,20 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import { ApiPromiseContext } from '@substrate/context';
 import BN from 'bn.js';
 import { useContext, useEffect,useMemo, useState } from 'react';
+import { ApiContext } from 'src/context/ApiContext';
 
 export default function ()  {
 	const [currentBlock, setCurrentBlock] = useState<BN | undefined>(undefined);
-	const { api, isApiReady } = useContext(ApiPromiseContext);
+	const { api, apiReady } = useContext(ApiContext);
 
 	useEffect(() => {
-		if (!isApiReady) {
+		if (!api) {
+			return;
+		}
+
+		if (!apiReady) {
 			return;
 		}
 
@@ -24,7 +28,7 @@ export default function ()  {
 			.catch(e => console.error(e));
 
 		return () => unsubscribe && unsubscribe();
-	}, [api, isApiReady]);
+	}, [api, apiReady]);
 
 	return useMemo(() => {
 		return currentBlock;

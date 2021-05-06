@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { ApiPromise } from '@polkadot/api';
-import { Option } from '@polkadot/types';
+import { Bytes, Option } from '@polkadot/types';
 import {
   BlockNumber,
   Hash,
@@ -37,7 +37,7 @@ const createTip: Task<NomidotTip[]> = {
 
     const tipEvents = filterEvents(
       events,
-      'treasury',
+      'tips',
       'NewTip'
     );
 
@@ -65,7 +65,7 @@ const createTip: Task<NomidotTip[]> = {
           return null;
         }
 
-        const tipInfoRaw: Option<OpenTip>  = await api.query.treasury.tips.at(
+        const tipInfoRaw: Option<OpenTip>  = await api.query.tips.tips.at(
           blockHash,
           tipRawEvent.Hash
         );
@@ -77,10 +77,10 @@ const createTip: Task<NomidotTip[]> = {
 
         const tip = tipInfoRaw.unwrap();
 
-        const reason = await api.query.treasury.reasons.at(
+        const reason: Option<Bytes> = await api.query.tips.reasons.at(
           blockHash,
           tip.reason
-        )
+        );
 
         const reasonText = reason.isSome ? hexToString(reason.unwrap().toHex()) : '';
 

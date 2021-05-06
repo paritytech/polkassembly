@@ -208,6 +208,21 @@ const resolvers = {
       return prisma.tipStatus({ id: parent.id }).blockNumber();
     },
   },
+  Bounty: {
+    bountyStatus(
+      parent: any,
+      { where, orderBy, skip, after, before, first, last }: Selectors
+    ) {
+      return prisma
+        .bounty({ id: parent.id })
+        .bountyStatus({ where, orderBy, skip, after, before, first, last });
+    },
+  },
+  BountyStatus: {
+    blockNumber(parent: any) {
+      return prisma.bountyStatus({ id: parent.id }).blockNumber();
+    },
+  },
   TreasurySpendProposal: {
     treasuryStatus(
       parent: any,

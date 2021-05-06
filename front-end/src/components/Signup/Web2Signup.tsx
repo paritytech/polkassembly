@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Divider, Responsive } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
 
 import { ModalContext } from '../../context/ModalContext';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
@@ -136,18 +136,16 @@ const SignupForm = ({ className, toggleWeb2Signup }:Props): JSX.Element => {
 				</Button>
 				{error?.message && <FilteredError text={error.message}/>}
 			</div>
-			<Responsive minWidth='992'>
-				<Divider horizontal>Or</Divider>
-				<div className={'mainButtonContainer'}>
-					<Button
-						secondary
-						disabled={loading}
-						onClick={handleToggle}
-					>
-						Sign-up with Web3 address
-					</Button>
-				</div>
-			</Responsive>
+			<Divider horizontal>Or</Divider>
+			<div className={'mainButtonContainer'}>
+				<Button
+					secondary
+					disabled={loading}
+					onClick={handleToggle}
+				>
+					Sign-up with Web3 address
+				</Button>
+			</div>
 		</Form>
 	);
 };

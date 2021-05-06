@@ -120,7 +120,9 @@ export type Nomidot =
   | NomidotTotalIssuance
   | NomidotTreasury[]
   | NomidotTip[]
-  | NomidotTipStatusUpdate[];
+  | NomidotTipStatusUpdate[]
+  | NomidotBounty[]
+  | NomidotBountyStatusUpdate[];
 
 export type NomidotTask = Task<Nomidot>;
 
@@ -169,6 +171,22 @@ export interface NomidotTreasuryRawEvent {
 export interface NomidotRewardEvent extends EventRecord {
   treasuryReward: Balance;
   validatorReward: Balance;
+}
+
+export interface NomidotBounty {
+  bountyId: number;
+  proposer: AccountId;
+  value: Balance;
+  fee: Balance;
+  curatorDeposit: Balance;
+  bond: Balance;
+  curator?: AccountId;
+  beneficiary?: AccountId;
+  status: string;
+}
+
+export interface NomidotBountyRawEvent {
+  BountyIndex?: number;
 }
 
 export interface NomidotMotion {
@@ -258,4 +276,11 @@ export interface NomidotTipStatusUpdate {
   tipId: number;
   status: string;
   closes?: number;
+}
+
+export interface NomidotBountyStatusUpdate {
+  bountyId: number;
+  status: string;
+  curator?: string;
+  beneficiary?: string;
 }

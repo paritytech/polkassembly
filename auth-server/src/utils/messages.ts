@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 export default {
+	ACCOUNT_DELETE_SUCCESSFUL: 'Your account has been deleted',
 	ADDRESS_ALREADY_EXISTS: 'This address is already linked with another account. Please choose another address.',
 	ADDRESS_DEFAULT_SUCCESS: 'Address has been successfully set as default',
 	ADDRESS_LINKING_FAILED: 'Address linking failed. Signature invalid.',
@@ -79,6 +80,7 @@ export default {
 	SUCCESS: 'Success.',
 	UNAUTHORISED: 'Unauthorised.',
 	USERNAME_ALREADY_EXISTS: 'Username already exists. Please choose a different username.',
+	USERNAME_BANNED: 'Username is banned. Please use a different username.',
 	USERNAME_CHANGE_SUCCESSFUL: 'Username successfully changed.',
 	USERNAME_INVALID_ERROR: 'Username must be between 3 and 30 characters long, using letters, numbers, and the following characters ._-',
 	USER_EMAIL_ALREADY_EXISTS: 'A user with this email already exists.',

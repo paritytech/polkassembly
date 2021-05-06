@@ -1,8 +1,8 @@
-image:                             paritytech/kubetools:helm3
+image:                             docker.io/paritytech/kubetools:helm3
 
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
-  CI_REGISTRY:                     "paritytech"
+  CI_REGISTRY:                     "docker.io/paritytech"
   DOCKER_TAG:                      '$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA'
   GIT_STRATEGY:                    fetch
   GIT_DEPTH:                       100
@@ -10,10 +10,6 @@ variables:
   SAST_DISABLE_DIND:               "true"
   SCAN_KUBERNETES_MANIFESTS:       "true"
   ANALYZER_TARGET_DIR:             "auth-server/"
-  DS_DISABLE_DIND:                 "true"
-  # Variables for build_and_push without overriding any job variable
-  DOCKER_DRIVER: overlay2
-  DOCKER_HOST: tcp://localhost:2375
 
 # Enable Gitlab's security scanning
 include:
@@ -100,7 +96,7 @@ lint-chain-db-watcher:
 .build_and_push:                   &build_and_push
   tags:
     - kubernetes-parity-build
-  image:                           docker:18-git
+  image:                           quay.io/buildah/stable
   retry:
     max:                           2
     when:
@@ -108,8 +104,6 @@ lint-chain-db-watcher:
       - unknown_failure
       - api_failure
   interruptible:                   true
-  services:
-    - docker:dind
   script:
     # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+://')
@@ -117,14 +111,18 @@ lint-chain-db-watcher:
     # set 'BUILDKIT_INLINE_CACHE' so generated images can be used for caching subsequently
     - export BUILD_ARGS="$BUILD_ARGS --build-arg BUILDKIT_INLINE_CACHE=1"
     # pull latest image used as cache to speed up the docker build process
-    - docker pull $DOCKER_IMAGE:latest || true
+    - buildah pull $DOCKER_IMAGE:latest || true
     # login to the docker registry
-    - echo "$Docker_Hub_Pass_Parity" | docker login -u "$Docker_Hub_User_Parity" --password-stdin
+    - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin docker.io
     # do: docker build
-    - eval "docker build --cache-from $DOCKER_IMAGE:latest -t" "$DOCKER_IMAGE:$DOCKER_TAG" "-t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
+    - eval "buildah bud
+        --format=docker
+        --cache-from $DOCKER_IMAGE:latest
+        -t" "$DOCKER_IMAGE:$DOCKER_TAG" "
+        -t $DOCKER_IMAGE:latest" "$BUILD_ARGS" "$POD_NAME"
     # do: docker push
-    - docker push "$DOCKER_IMAGE:latest"
-    - docker push "$DOCKER_IMAGE:$DOCKER_TAG"
+    - buildah push --format=v2s2 "$DOCKER_IMAGE:latest"
+    - buildah push --format=v2s2 "$DOCKER_IMAGE:$DOCKER_TAG"
 
 dockerize:kusama-staging-front-end:
   stage:                           dockerize
@@ -322,7 +320,7 @@ publish-draft-release:
   stage:                           publish
   environment:
     name:                          parity-prod
-  image:                           paritytech/tools:latest
+  image:                           docker.io/paritytech/tools:latest
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   script:

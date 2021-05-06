@@ -12,6 +12,7 @@ import validator from 'validator';
 
 import Address from '../model/Address';
 import Notification from '../model/Notification';
+import PostSubscription from '../model/PostSubscription';
 import RefreshToken from '../model/RefreshToken';
 import UndoEmailChangeToken from '../model/UndoEmailChangeToken';
 import User from '../model/User';
@@ -23,6 +24,7 @@ import getPublicKey from '../utils/getPublicKey';
 import getUserFromUserId from '../utils/getUserFromUserId';
 import getUserIdFromJWT from '../utils/getUserIdFromJWT';
 import messages from '../utils/messages';
+import nameBlacklist from '../utils/nameBlacklist';
 import verifySignature from '../utils/verifySignature';
 import {
 	sendResetPasswordEmail,
@@ -122,6 +124,12 @@ export default class AuthService {
 	}
 
 	public async Login (username: string, password: string): Promise<AuthObjectType> {
+		for (let i = 0; i < nameBlacklist.length; i++) {
+			if (username.toLowerCase().includes(nameBlacklist[i])) {
+				throw new ForbiddenError(messages.USERNAME_BANNED);
+			}
+		}
+
 		const user = await User
 			.query()
 			.where('username', username.toLowerCase())
@@ -140,6 +148,59 @@ export default class AuthService {
 			refreshToken: await this.getRefreshToken(user),
 			token: await this.getSignedToken(user)
 		};
+	}
+
+	public async DeleteAccount (token: string, password: string): Promise<void> {
+		const userId = getUserIdFromJWT(token, jwtPublicKey);
+		const user = await getUserFromUserId(userId);
+
+		const correctPassword = await user.verifyPassword(password);
+		if (!correctPassword) {
+			throw new AuthenticationError(messages.INCORRECT_PASSWORD);
+		}
+
+		await Address
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await PostSubscription
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await RefreshToken
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		await UndoEmailChangeToken
+			.query()
+			.where({
+				user_id: user.id
+			})
+			.del();
+
+		const username = `deleted-${uuid()}`;
+		const newPassword = uuid();
+		const hashedPassword = await this.getSaltAndHashedPassword(newPassword);
+
+		await User
+			.query()
+			.patch({
+				email: '',
+				email_verified: false,
+				password: hashedPassword.password,
+				salt: hashedPassword.salt,
+				username
+			})
+			.findById(userId);
 	}
 
 	public async SetDefaultAddress (token: string, address: string): Promise<string> {
@@ -315,6 +376,12 @@ export default class AuthService {
 
 		if (existing) {
 			throw new ForbiddenError(messages.USERNAME_ALREADY_EXISTS);
+		}
+
+		for (let i = 0; i < nameBlacklist.length; i++) {
+			if (username.toLowerCase().includes(nameBlacklist[i])) {
+				throw new ForbiddenError(messages.USERNAME_BANNED);
+			}
 		}
 
 		if (email) {

@@ -5,6 +5,7 @@
 import chalk from 'chalk';
 
 import {
+	addDiscussionPostAndBounty,
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
 	addDiscussionPostAndTip,
@@ -14,11 +15,13 @@ import {
 } from '../graphql_helpers';
 import { MotionObjectMap, ObjectMap, OnchainMotionSyncType, ReferendumObjectMap, SyncData, TreasuryDeduplicateMotionMap } from '../types';
 import {
+	getDiscussionBounties,
 	getDiscussionMotions,
 	getDiscussionProposals,
 	getDiscussionReferenda,
 	getDiscussionTips,
 	getDiscussionTreasuryProposals,
+	getOnChainBounties,
 	getOnChainMotions,
 	getOnChainProposals,
 	getOnchainReferenda,
@@ -34,15 +37,18 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 		const discussionReferenda = await getDiscussionReferenda();
 		const discussionTreasuryProposals = await getDiscussionTreasuryProposals();
 		const discussionTips = await getDiscussionTips();
+		const discussionBounties = await getDiscussionBounties();
 
 		const onChainMotions = await getOnChainMotions();
 		const onChainProposals = await getOnChainProposals();
 		const onchainReferenda = await getOnchainReferenda();
 		const onChainTreasuryProposals = await getOnChainTreasuryProposals();
 		const onChainTips = await getOnChainTips();
+		const onChainBounties = await getOnChainBounties();
 
 		return {
 			discussion: {
+				bounties: discussionBounties,
 				motions: discussionMotions,
 				proposals: discussionProposals,
 				referenda: discussionReferenda,
@@ -50,6 +56,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 				treasuryProposals: discussionTreasuryProposals
 			},
 			onchain: {
+				bounties: onChainBounties,
 				motions: onChainMotions,
 				proposals: onChainProposals,
 				referenda: onchainReferenda,
@@ -67,6 +74,15 @@ const syncTips = async (onChainTips: ObjectMap, discussionTips: ObjectMap): Prom
 		// if this tip doesn't exist in the discussion DB
 		if (!discussionTips[key]) {
 			await addDiscussionPostAndTip({ onchainTipHash: key, proposer: author });
+		}
+	}));
+};
+
+const syncBounties = async (onChainBounties: ObjectMap, discussionBounties: ObjectMap): Promise<void[]> => {
+	return Promise.all(Object.entries(onChainBounties).map(async ([key, author]) => {
+		// if this bounty doesn't exist in the discussion DB
+		if (!discussionBounties[key]) {
+			await addDiscussionPostAndBounty({ onchainBountyId: Number(key), proposer: author });
 		}
 	}));
 };
@@ -171,6 +187,10 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.onchain?.tips &&
 		syncMaps?.discussion?.tips &&
 		await syncTips(syncMaps.onchain.tips, syncMaps.discussion.tips);
+
+		syncMaps?.onchain?.bounties &&
+		syncMaps?.discussion?.bounties &&
+		await syncBounties(syncMaps.onchain.bounties, syncMaps.discussion.bounties);
 
 		if (syncMaps?.onchain?.motions && syncMaps?.discussion?.motions) {
 			const treasuryDeduplicatedMotionsMap = getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);

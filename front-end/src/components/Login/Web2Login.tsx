@@ -6,7 +6,7 @@ import styled from '@xstyled/styled-components';
 import React, { useContext } from 'react';
 import { FieldError,useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Divider, Responsive } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
 
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useLoginMutation } from '../../generated/graphql';
@@ -101,18 +101,16 @@ const LoginForm = ({ className, toggleWeb2Login }:Props): JSX.Element => {
 			<div>
 				{error?.message && <FilteredError text={error.message}/>}
 			</div>
-			<Responsive minWidth='992'>
-				<Divider horizontal>Or</Divider>
-				<div className={'mainButtonContainer'}>
-					<Button
-						secondary
-						disabled={loading}
-						onClick={handleToggle}
-					>
-						Login with web3 address
-					</Button>
-				</div>
-			</Responsive>
+			<Divider horizontal>Or</Divider>
+			<div className={'mainButtonContainer'}>
+				<Button
+					secondary
+					disabled={loading}
+					onClick={handleToggle}
+				>
+					Login with web3 address
+				</Button>
+			</div>
 		</Form>
 	);
 };
