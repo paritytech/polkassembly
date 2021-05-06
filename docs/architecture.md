@@ -4,6 +4,23 @@ Polkassembly follows microservices architecture. Main technologies used are type
 
 ![polkassembly](https://user-images.githubusercontent.com/874046/117366012-c7eaee80-aedd-11eb-88e3-02cbb3a21634.png)
 
+# Setup
+
+Polkassembly contains multiple servers and applications. Prerequisite for running polkassembly locally:
+
+- node.js
+- docker
+- docker-compose
+- redis
+- postgres
+
+To run the complete application run launch.sh which will start all the application:
+
+```
+> sh launch.sh
+```
+Main frontend application will be shown at http://localhost:3000
+
 List of Applications:
 --
 
