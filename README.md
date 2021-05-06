@@ -13,7 +13,6 @@ This repo hosts
 
 `launch.sh` is a script that helps (first stop and then) launch the dockers and servers in the right order as well as applying the migrations for the different db.
 
-## Architecture
+## Documentation
 
-- [Polkassembly architecture](docs/architecture.md)
-- [API](docs/auth_schema.md)
+- [Polkassembly documentation](docs/docs.md)
