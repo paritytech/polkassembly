@@ -12,3 +12,7 @@ This repo hosts
 - front-end: the React front-end application available on https://polkassembly.io.
 
 `launch.sh` is a script that helps (first stop and then) launch the dockers and servers in the right order as well as applying the migrations for the different db.
+
+## Architecture
+
+[Architecture](docs/architecture.md)
