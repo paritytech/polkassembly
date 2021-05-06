@@ -4,7 +4,7 @@ Polkassembly follows microservices architecture. Main technologies used are type
 
 ![polkassembly](https://user-images.githubusercontent.com/874046/117366012-c7eaee80-aedd-11eb-88e3-02cbb3a21634.png)
 
-# Setup
+## Setup
 
 Polkassembly contains multiple servers and applications. Prerequisite for running polkassembly locally:
 
@@ -21,8 +21,8 @@ To run the complete application run launch.sh which will start all the applicati
 ```
 Main frontend application will be shown at http://localhost:3000
 
-List of Applications:
---
+## List of Applications:
+
 
 - auth-server
 - hasura
@@ -49,11 +49,8 @@ chain-db-watcher
 
 chain-db-watcher is a application monitoring node-watcher prisma server for onchain events like proposals, referendum, tips, treasuryProposal etc and load them to hasura server. It contains a botuser which create posts for governance events. These posts then can be edited by proposers of those posts.
 
-API
--- 
-You can check the api docs [here](auth_schema.md) and [here](schema.md)
-
-graphql
---
+## API
+ 
+You can check the api docs [here](auth_schema.md) and [here](schema.md).
 
 To checkout api intereactively with graphiql tools got to https://lucasconstantino.github.io/graphiql-online/ and change endpoint to https://kusama.polkassembly.io/v1/graphql
