@@ -31,3 +31,8 @@ chain-db-watcher
 --
 
 chain-db-watcher is a application monitoring node-watcher prisma server for onchain events like proposals, referendum, tips, treasuryProposal etc and load them to hasura server. It contains a botuser which create posts for governance events. These posts then can be edited by proposers of those posts.
+
+graphql schema and apis
+--
+
+To checkout api intereactively with graphiql tools got to https://lucasconstantino.github.io/graphiql-online/ and change endpoint to https://kusama.polkassembly.io/v1/graphql
