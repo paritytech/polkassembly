@@ -25,12 +25,12 @@ cd $DIR/auth-server && docker-compose --file docker-compose.yaml up -d;
 
 sleep 5
 
-printf "\n\n-- launching auth-server\n" 
+printf "\n\n-- launching auth-server\n"
 cd $DIR/auth-server && yarn && yarn start &> auth.log &
 
 sleep 5
 
-printf "\n\n-- migrating auth-server\n" 
+printf "\n\n-- migrating auth-server\n"
 cd $DIR/auth-server && yarn migrate &> auth-migration.log &
 
 sleep 5
@@ -39,7 +39,7 @@ while getopts "fr" args; do
 	case $args in
 		f) 	printf "\n\n-- stoping node watcher docker\n"
 			docker stop node-watcher_postgres_1 node_watcher_postgres_1 node-watcher_prisma_1
-			
+
 			printf "\n\n-- launching chain-db-watcher"
 			cd $DIR/chain-db-watcher && yarn start &> chain-db-watcher.log &
 
@@ -72,10 +72,10 @@ cd $DIR/hasura && docker-compose up -d;
 sleep 10
 
 printf "\n\n-- hasura migration\n"
-cd $DIR/hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-secret ip7itpC5L6R3RbNE4vkdZfsN;
+cd $DIR/hasura/hasura-migrations/migrations && hasura-dev migrate apply --admin-secret supersecret;
 
 # printf "\n\n-- hasura reload metadata\n"
-# cd $DIR/hasura/hasura-migrations && hasura-dev metadata reload --admin-secret ip7itpC5L6R3RbNE4vkdZfsN;
+# cd $DIR/hasura/hasura-migrations && hasura-dev metadata reload --admin-secret supersecret;
 
 printf "\n\n-- launching front-end\n"
 cd $DIR/front-end && yarn && yarn start
