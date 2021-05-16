@@ -1,5 +1,5 @@
 # Stage 1 - the build process
-FROM node:12 as build-deps
+FROM node:14 as build-deps
 
 ARG REACT_APP_HASURA_GRAPHQL_URL
 ARG REACT_APP_JWT_PUBLIC_KEY

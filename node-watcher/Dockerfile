@@ -1,4 +1,4 @@
-FROM node:12.20.0-alpine
+FROM node:14
 
 # ENV PRISMA_ENDPOINT http://prisma:4466
 
