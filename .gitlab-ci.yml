@@ -39,7 +39,7 @@ cache:
 
 lint-front-end:
   stage:                           test
-  image:                           node:12
+  image:                           node:14
   interruptible:                   true
   dependencies:                    []
   script:
@@ -57,7 +57,7 @@ lint-front-end:
 
 lint-back-end:
   stage:                           test
-  image:                           node:12
+  image:                           node:14
   interruptible:                   true
   dependencies:                    []
   script:
