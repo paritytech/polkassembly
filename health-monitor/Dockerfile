@@ -1,4 +1,4 @@
-FROM node:14
+FROM docker.io/node:14
 
 RUN mkdir -p /opt/app
 

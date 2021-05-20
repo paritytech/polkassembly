@@ -1,4 +1,4 @@
-FROM node:14
+FROM docker.io/node:14
 
 # ENV PRISMA_ENDPOINT http://prisma:4466
 
