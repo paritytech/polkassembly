@@ -1,4 +1,8 @@
-image:                             docker.io/paritytech/kubetools:helm3
+stages:
+  - test
+  - dockerize
+  - deploy
+  - publish
 
 variables:
   KUBE_NAMESPACE:                  "polkassembly"
@@ -11,35 +15,31 @@ variables:
   SCAN_KUBERNETES_MANIFESTS:       "true"
   ANALYZER_TARGET_DIR:             "auth-server/"
 
+default:
+  image:                             docker.io/paritytech/kubetools:helm3
+  cache:
+    key:                             '${CI_JOB_NAME}'
+    paths:
+      - node_modules/
+      - packages/*/node_modules/
+  tags:
+    -  kubernetes-parity-build
+
 # Enable Gitlab's security scanning
 include:
   - template: SAST.gitlab-ci.yml
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: License-Scanning.gitlab-ci.yml
 
+#### stage:                        test
+
 kubesec-sast:
   variables:
     ANALYZER_TARGET_DIR:           "kubernetes/"
 
-stages:
-  - test
-  - dockerize
-  - deploy
-  - publish
-
-cache:
-  key:                             '${CI_JOB_NAME}'
-  paths:
-    - node_modules/
-    - packages/*/node_modules/
-
-
-
-#### stage:                        test
-
 lint-front-end:
   stage:                           test
-  image:                           node:12
+  image:                           node:14
   interruptible:                   true
   dependencies:                    []
   script:
@@ -57,7 +57,7 @@ lint-front-end:
 
 lint-back-end:
   stage:                           test
-  image:                           node:12
+  image:                           node:14
   interruptible:                   true
   dependencies:                    []
   script:
@@ -94,8 +94,6 @@ lint-chain-db-watcher:
 #### stage:                        dockerize
 
 .build_and_push:                   &build_and_push
-  tags:
-    - kubernetes-parity-build
   image:                           quay.io/buildah/stable
   retry:
     max:                           2
@@ -288,8 +286,6 @@ deploy-kusama-staging:
   stage:                           deploy
   environment:
     name:                          dashboards-cluster-1
-  tags:
-    - kubernetes-parity-build
   only:
     - master
   <<:                              *deploy-k8s
@@ -298,8 +294,6 @@ deploy-kusama-production:
   stage:                           deploy
   environment:
     name:                          parity-prod
-  tags:
-    - kubernetes-parity-build
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<:                              *deploy-k8s
@@ -310,8 +304,6 @@ deploy-polkadot-production:
   stage:                           deploy
   environment:
     name:                          polkadot-prod
-  tags:
-    - kubernetes-parity-build
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
   <<:                              *deploy-k8s

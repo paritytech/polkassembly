@@ -2,6 +2,10 @@
 	"name": "auth-server",
 	"version": "1.0.0",
 	"description": "oauth 2.0 server for polkassembly",
+	"engines": {
+		"node": ">=12.16.0",
+		"npm": ">=6.0.0"
+	},
 	"scripts": {
 		"test": "docker build -f test.Dockerfile -t paritytech/polkassembly-auth-test . && docker-compose -f docker-compose-test.yaml up --renew-anon-volumes --abort-on-container-exit --exit-code-from auth-test",
 		"test:dangerous": "yarn migrate && mocha -r ts-node/register test/**/*.spec.ts --exit",
@@ -28,9 +32,8 @@
 	},
 	"homepage": "http://polkassembly.io/",
 	"dependencies": {
-		"@polkadot/api": "^4.9.2",
-		"@polkadot/util": "^6.3.1",
-		"@polkadot/util-crypto": "^6.3.1",
+		"@polkadot/util": "6.0.5",
+		"@polkadot/util-crypto": "6.0.5",
 		"@sendgrid/mail": "^6.5.5",
 		"apollo-server": "^2.14.2",
 		"apollo-server-express": "^2.14.2",
@@ -46,22 +49,22 @@
 		"express-validator": "^5.3.1",
 		"graphql": "^14.6.0",
 		"jsonwebtoken": "^8.5.1",
-		"knex": "^0.20.15",
+		"knex": "<0.21.1",
 		"markdown-it": "^11.0.0",
 		"moment": "^2.26.0",
 		"objection": "^1.6.11",
 		"objection-db-errors": "^1.1.2",
 		"passport": "^0.4.1",
 		"passport-local": "^1.0.0",
-		"pg": "^7.18.2",
-		"redis": "^3.0.2",
+		"pg": "^8.0.3",
+		"redis": "3.0.2",
 		"tmp": "^0.1.0",
 		"typescript": "^3.9.3",
 		"uuidv4": "^6.1.0",
 		"validator": "^12.2.0"
 	},
 	"devDependencies": {
-		"@polkadot/types": "^4.9.2",
+		"@polkadot/types": "4.1.1",
 		"@types/chai": "^4.2.11",
 		"@types/cookie-parser": "^1.4.2",
 		"@types/dotenv": "^8.2.0",
@@ -73,7 +76,7 @@
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.12.42",
 		"@types/node-fetch": "^2.5.7",
-		"@types/redis": "^2.8.21",
+		"@types/redis": "2.8.21",
 		"@types/uuid": "^7.0.4",
 		"@types/validator": "^13.0.0",
 		"@typescript-eslint/eslint-plugin": "^2.34.0",
@@ -96,6 +99,12 @@
 		"ts-node": "^8.10.1"
 	},
 	"resolutions": {
+		"redis": "3.0.2",
+		"@types/redis": "2.8.21",
+		"@polkadot/networks": "6.0.5",
+		"@polkadot/util": "6.0.5",
+		"@polkadot/util-crypto": "6.0.5",
+		"@polkadot/x-rxjs": "6.0.5",
 		"kind-of": ">=6.0.3",
 		"minimist": ">1.2.3"
 	}
