@@ -1,4 +1,4 @@
-// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// Copyright 2019-2020 @Premiurly/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
@@ -63,7 +63,7 @@ const StyledForm = styled(SUIForm)`
 	&.ui.form {
 
 		font-size: sm;
-		
+
 		.field {
 			> label {
 				font-size: input_text_size;
@@ -81,8 +81,8 @@ const StyledForm = styled(SUIForm)`
 			}
 		}
 
-		input:not([type]), input[type=date], input[type=datetime-local], input[type=email], 
-		input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel], 
+		input:not([type]), input[type=date], input[type=datetime-local], input[type=email],
+		input[type=file], input[type=number], input[type=password], input[type=search], input[type=tel],
 		input[type=text], input[type=time], input[type=url] {
 			font-family: font_default;
 			font-size: input_text_size;

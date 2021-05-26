@@ -1,4 +1,4 @@
-// Copyright 2019-2020 @paritytech/polkassembly authors & contributors
+// Copyright 2019-2020 @Premiurly/polkassembly authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
@@ -9,7 +9,7 @@ const NETWORK = getNetwork();
 export default `Polkassembly end user agreement
 ====================
 
-Parity Technologies Limited is a company registered in England and Wales under company number 09760015 with its registered office at Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://${NETWORK}.polkassembly.io (the "**Website**").  
+Parity Technologies Limited is a company registered in England and Wales under company number 09760015 with its registered office at Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://${NETWORK}.polkassembly.io (the "**Website**").
 
 ## 1. Understanding these terms
   1.  This end user agreement (the "**Terms**") describes how you may access and use the Forum and any services made available through the Forum via the Website, any mobile applications made available by the Company and any other distribution channels made available by the Company (the "**Services**"). By accessing the Forum, these Terms will apply to you and you agree to the Terms. You should therefore read the terms carefully before using the forum.
