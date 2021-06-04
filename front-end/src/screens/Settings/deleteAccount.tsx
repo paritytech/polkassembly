@@ -119,7 +119,7 @@ const DeleteAccount = (): JSX.Element => {
 				</Modal>
 				: null
 			}
-			<Form standalone={false}>
+			<Form standalone={false} id='deleteAccount'>
 				<Form.Group>
 					<Form.Field width={16}>
 						<label>Delete Account</label>
