@@ -24,6 +24,7 @@ import createTipStatus from './createTipStatus';
 import createBounty from './createBounty';
 import createBountyStatus from './createBountyStatus';
 import createTreasury from './createTreasury';
+import createTechCommitteeProposal from './createTechCommitteeProposal';
 import { NomidotTask } from './types';
 
 // N.B. Order of tasks matters here
@@ -49,5 +50,6 @@ export const nomidotTasks: NomidotTask[] = [
   createTip,
   createTipStatus,
   createBounty,
-  createBountyStatus
+  createBountyStatus,
+  createTechCommitteeProposal
 ];

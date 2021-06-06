@@ -55,3 +55,11 @@ export const bountyStatus = {
   EXTENDED: 'BountyExtended'
 };
 
+export const techCommitteeStatus = {
+  APPROVED: 'Approved',
+  CLOSED: 'Closed',
+  DISAPPROVED: 'Disapproved',
+  EXECUTED: 'Executed',
+  PROPOSED: 'Proposed'
+}
+
