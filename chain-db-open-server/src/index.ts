@@ -194,11 +194,11 @@ const resolvers = {
     },
   },
   TechCommitteeProposal: {
-    techCommitteeProposalArguments(
+    proposalArguments(
       parent: any,
       { where, orderBy, skip, after, before, first, last }: Selectors
     ) {
-      return prisma.techCommitteeProposal({ id: parent.id }).techCommitteeProposalArguments({
+      return prisma.techCommitteeProposal({ id: parent.id }).proposalArguments({
         where,
         orderBy,
         skip,
@@ -208,16 +208,16 @@ const resolvers = {
         last,
       });
     },
-    techCommitteeProposalStatus(
+    status(
       parent: any,
       { where, orderBy, skip, after, before, first, last }: Selectors
     ) {
       return prisma
         .techCommitteeProposal({ id: parent.id })
-        .techCommitteeProposalStatus({ where, orderBy, skip, after, before, first, last });
+        .status({ where, orderBy, skip, after, before, first, last });
     },
     preimage(parent: any) {
-      return prisma.motion({ id: parent.id }).preimage();
+      return prisma.techCommitteeProposal({ id: parent.id }).preimage();
     },
   },
   TechCommitteeProposalStatus: {

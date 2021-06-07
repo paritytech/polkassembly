@@ -1,6 +1,3 @@
-# source: http://127.0.0.1:4466
-# timestamp: Mon Nov 09 2020 23:01:02 GMT+0530 (India Standard Time)
-
 type AggregateBlockIndex {
   count: Int!
 }
@@ -94,6 +91,18 @@ type AggregateSlashing {
 }
 
 type AggregateStake {
+  count: Int!
+}
+
+type AggregateTechCommitteeProposal {
+  count: Int!
+}
+
+type AggregateTechCommitteeProposalArgument {
+  count: Int!
+}
+
+type AggregateTechCommitteeProposalStatus {
   count: Int!
 }
 
@@ -4101,7 +4110,6 @@ type Mutation {
   createMotionStatus(data: MotionStatusCreateInput!): MotionStatus!
   createProposal(data: ProposalCreateInput!): Proposal!
   createProposalStatus(data: ProposalStatusCreateInput!): ProposalStatus!
-  createPreimage(data: PreimageCreateInput!): Preimage!
   createPreimageStatus(data: PreimageStatusCreateInput!): PreimageStatus!
   createPreimageArgument(data: PreimageArgumentCreateInput!): PreimageArgument!
   createReferendum(data: ReferendumCreateInput!): Referendum!
@@ -4113,6 +4121,10 @@ type Mutation {
   createTipStatus(data: TipStatusCreateInput!): TipStatus!
   createBounty(data: BountyCreateInput!): Bounty!
   createBountyStatus(data: BountyStatusCreateInput!): BountyStatus!
+  createTechCommitteeProposal(data: TechCommitteeProposalCreateInput!): TechCommitteeProposal!
+  createTechCommitteeProposalArgument(data: TechCommitteeProposalArgumentCreateInput!): TechCommitteeProposalArgument!
+  createTechCommitteeProposalStatus(data: TechCommitteeProposalStatusCreateInput!): TechCommitteeProposalStatus!
+  createPreimage(data: PreimageCreateInput!): Preimage!
   createBlockNumber(data: BlockNumberCreateInput!): BlockNumber!
   createSession(data: SessionCreateInput!): Session!
   updateHeartBeat(data: HeartBeatUpdateInput!, where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -4131,7 +4143,6 @@ type Mutation {
   updateMotionStatus(data: MotionStatusUpdateInput!, where: MotionStatusWhereUniqueInput!): MotionStatus
   updateProposal(data: ProposalUpdateInput!, where: ProposalWhereUniqueInput!): Proposal
   updateProposalStatus(data: ProposalStatusUpdateInput!, where: ProposalStatusWhereUniqueInput!): ProposalStatus
-  updatePreimage(data: PreimageUpdateInput!, where: PreimageWhereUniqueInput!): Preimage
   updatePreimageStatus(data: PreimageStatusUpdateInput!, where: PreimageStatusWhereUniqueInput!): PreimageStatus
   updatePreimageArgument(data: PreimageArgumentUpdateInput!, where: PreimageArgumentWhereUniqueInput!): PreimageArgument
   updateReferendum(data: ReferendumUpdateInput!, where: ReferendumWhereUniqueInput!): Referendum
@@ -4143,6 +4154,10 @@ type Mutation {
   updateTipStatus(data: TipStatusUpdateInput!, where: TipStatusWhereUniqueInput!): TipStatus
   updateBounty(data: BountyUpdateInput!, where: BountyWhereUniqueInput!): Bounty
   updateBountyStatus(data: BountyStatusUpdateInput!, where: BountyStatusWhereUniqueInput!): BountyStatus
+  updateTechCommitteeProposal(data: TechCommitteeProposalUpdateInput!, where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  updateTechCommitteeProposalArgument(data: TechCommitteeProposalArgumentUpdateInput!, where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  updateTechCommitteeProposalStatus(data: TechCommitteeProposalStatusUpdateInput!, where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  updatePreimage(data: PreimageUpdateInput!, where: PreimageWhereUniqueInput!): Preimage
   updateBlockNumber(data: BlockNumberUpdateInput!, where: BlockNumberWhereUniqueInput!): BlockNumber
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   deleteHeartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -4161,7 +4176,6 @@ type Mutation {
   deleteMotionStatus(where: MotionStatusWhereUniqueInput!): MotionStatus
   deleteProposal(where: ProposalWhereUniqueInput!): Proposal
   deleteProposalStatus(where: ProposalStatusWhereUniqueInput!): ProposalStatus
-  deletePreimage(where: PreimageWhereUniqueInput!): Preimage
   deletePreimageStatus(where: PreimageStatusWhereUniqueInput!): PreimageStatus
   deletePreimageArgument(where: PreimageArgumentWhereUniqueInput!): PreimageArgument
   deleteReferendum(where: ReferendumWhereUniqueInput!): Referendum
@@ -4173,6 +4187,10 @@ type Mutation {
   deleteTipStatus(where: TipStatusWhereUniqueInput!): TipStatus
   deleteBounty(where: BountyWhereUniqueInput!): Bounty
   deleteBountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
+  deleteTechCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  deleteTechCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  deleteTechCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  deletePreimage(where: PreimageWhereUniqueInput!): Preimage
   deleteBlockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   deleteSession(where: SessionWhereUniqueInput!): Session
   upsertHeartBeat(where: HeartBeatWhereUniqueInput!, create: HeartBeatCreateInput!, update: HeartBeatUpdateInput!): HeartBeat!
@@ -4191,7 +4209,6 @@ type Mutation {
   upsertMotionStatus(where: MotionStatusWhereUniqueInput!, create: MotionStatusCreateInput!, update: MotionStatusUpdateInput!): MotionStatus!
   upsertProposal(where: ProposalWhereUniqueInput!, create: ProposalCreateInput!, update: ProposalUpdateInput!): Proposal!
   upsertProposalStatus(where: ProposalStatusWhereUniqueInput!, create: ProposalStatusCreateInput!, update: ProposalStatusUpdateInput!): ProposalStatus!
-  upsertPreimage(where: PreimageWhereUniqueInput!, create: PreimageCreateInput!, update: PreimageUpdateInput!): Preimage!
   upsertPreimageStatus(where: PreimageStatusWhereUniqueInput!, create: PreimageStatusCreateInput!, update: PreimageStatusUpdateInput!): PreimageStatus!
   upsertPreimageArgument(where: PreimageArgumentWhereUniqueInput!, create: PreimageArgumentCreateInput!, update: PreimageArgumentUpdateInput!): PreimageArgument!
   upsertReferendum(where: ReferendumWhereUniqueInput!, create: ReferendumCreateInput!, update: ReferendumUpdateInput!): Referendum!
@@ -4203,6 +4220,10 @@ type Mutation {
   upsertTipStatus(where: TipStatusWhereUniqueInput!, create: TipStatusCreateInput!, update: TipStatusUpdateInput!): TipStatus!
   upsertBounty(where: BountyWhereUniqueInput!, create: BountyCreateInput!, update: BountyUpdateInput!): Bounty!
   upsertBountyStatus(where: BountyStatusWhereUniqueInput!, create: BountyStatusCreateInput!, update: BountyStatusUpdateInput!): BountyStatus!
+  upsertTechCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!, create: TechCommitteeProposalCreateInput!, update: TechCommitteeProposalUpdateInput!): TechCommitteeProposal!
+  upsertTechCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!, create: TechCommitteeProposalArgumentCreateInput!, update: TechCommitteeProposalArgumentUpdateInput!): TechCommitteeProposalArgument!
+  upsertTechCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!, create: TechCommitteeProposalStatusCreateInput!, update: TechCommitteeProposalStatusUpdateInput!): TechCommitteeProposalStatus!
+  upsertPreimage(where: PreimageWhereUniqueInput!, create: PreimageCreateInput!, update: PreimageUpdateInput!): Preimage!
   upsertBlockNumber(where: BlockNumberWhereUniqueInput!, create: BlockNumberCreateInput!, update: BlockNumberUpdateInput!): BlockNumber!
   upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
   updateManyHeartBeats(data: HeartBeatUpdateManyMutationInput!, where: HeartBeatWhereInput): BatchPayload!
@@ -4220,7 +4241,6 @@ type Mutation {
   updateManyMotionStatuses(data: MotionStatusUpdateManyMutationInput!, where: MotionStatusWhereInput): BatchPayload!
   updateManyProposals(data: ProposalUpdateManyMutationInput!, where: ProposalWhereInput): BatchPayload!
   updateManyProposalStatuses(data: ProposalStatusUpdateManyMutationInput!, where: ProposalStatusWhereInput): BatchPayload!
-  updateManyPreimages(data: PreimageUpdateManyMutationInput!, where: PreimageWhereInput): BatchPayload!
   updateManyPreimageStatuses(data: PreimageStatusUpdateManyMutationInput!, where: PreimageStatusWhereInput): BatchPayload!
   updateManyPreimageArguments(data: PreimageArgumentUpdateManyMutationInput!, where: PreimageArgumentWhereInput): BatchPayload!
   updateManyReferendums(data: ReferendumUpdateManyMutationInput!, where: ReferendumWhereInput): BatchPayload!
@@ -4232,6 +4252,10 @@ type Mutation {
   updateManyTipStatuses(data: TipStatusUpdateManyMutationInput!, where: TipStatusWhereInput): BatchPayload!
   updateManyBounties(data: BountyUpdateManyMutationInput!, where: BountyWhereInput): BatchPayload!
   updateManyBountyStatuses(data: BountyStatusUpdateManyMutationInput!, where: BountyStatusWhereInput): BatchPayload!
+  updateManyTechCommitteeProposals(data: TechCommitteeProposalUpdateManyMutationInput!, where: TechCommitteeProposalWhereInput): BatchPayload!
+  updateManyTechCommitteeProposalArguments(data: TechCommitteeProposalArgumentUpdateManyMutationInput!, where: TechCommitteeProposalArgumentWhereInput): BatchPayload!
+  updateManyTechCommitteeProposalStatuses(data: TechCommitteeProposalStatusUpdateManyMutationInput!, where: TechCommitteeProposalStatusWhereInput): BatchPayload!
+  updateManyPreimages(data: PreimageUpdateManyMutationInput!, where: PreimageWhereInput): BatchPayload!
   updateManyBlockNumbers(data: BlockNumberUpdateManyMutationInput!, where: BlockNumberWhereInput): BatchPayload!
   updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   deleteManyHeartBeats(where: HeartBeatWhereInput): BatchPayload!
@@ -4250,7 +4274,6 @@ type Mutation {
   deleteManyMotionStatuses(where: MotionStatusWhereInput): BatchPayload!
   deleteManyProposals(where: ProposalWhereInput): BatchPayload!
   deleteManyProposalStatuses(where: ProposalStatusWhereInput): BatchPayload!
-  deleteManyPreimages(where: PreimageWhereInput): BatchPayload!
   deleteManyPreimageStatuses(where: PreimageStatusWhereInput): BatchPayload!
   deleteManyPreimageArguments(where: PreimageArgumentWhereInput): BatchPayload!
   deleteManyReferendums(where: ReferendumWhereInput): BatchPayload!
@@ -4262,6 +4285,10 @@ type Mutation {
   deleteManyTipStatuses(where: TipStatusWhereInput): BatchPayload!
   deleteManyBounties(where: BountyWhereInput): BatchPayload!
   deleteManyBountyStatuses(where: BountyStatusWhereInput): BatchPayload!
+  deleteManyTechCommitteeProposals(where: TechCommitteeProposalWhereInput): BatchPayload!
+  deleteManyTechCommitteeProposalArguments(where: TechCommitteeProposalArgumentWhereInput): BatchPayload!
+  deleteManyTechCommitteeProposalStatuses(where: TechCommitteeProposalStatusWhereInput): BatchPayload!
+  deleteManyPreimages(where: PreimageWhereInput): BatchPayload!
   deleteManyBlockNumbers(where: BlockNumberWhereInput): BatchPayload!
   deleteManySessions(where: SessionWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
@@ -5411,6 +5438,11 @@ input PreimageCreateInput {
   referendum: ReferendumCreateOneWithoutPreimageInput
 }
 
+input PreimageCreateOneInput {
+  create: PreimageCreateInput
+  connect: PreimageWhereUniqueInput
+}
+
 input PreimageCreateOneWithoutMotionInput {
   create: PreimageCreateWithoutMotionInput
   connect: PreimageWhereUniqueInput
@@ -5907,6 +5939,20 @@ input PreimageSubscriptionWhereInput {
   node: PreimageWhereInput
 }
 
+input PreimageUpdateDataInput {
+  author: String
+  depositAmount: String
+  hash: String
+  metaDescription: String
+  method: String
+  section: String
+  motion: MotionUpdateOneWithoutPreimageInput
+  proposal: ProposalUpdateOneWithoutPreimageInput
+  preimageArguments: PreimageArgumentUpdateManyWithoutPreimageInput
+  preimageStatus: PreimageStatusUpdateManyWithoutPreimageInput
+  referendum: ReferendumUpdateOneWithoutPreimageInput
+}
+
 input PreimageUpdateInput {
   author: String
   depositAmount: String
@@ -5928,6 +5974,15 @@ input PreimageUpdateManyMutationInput {
   metaDescription: String
   method: String
   section: String
+}
+
+input PreimageUpdateOneInput {
+  create: PreimageCreateInput
+  connect: PreimageWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PreimageUpdateDataInput
+  upsert: PreimageUpsertNestedInput
 }
 
 input PreimageUpdateOneRequiredWithoutPreimageArgumentsInput {
@@ -6034,6 +6089,11 @@ input PreimageUpdateWithoutReferendumDataInput {
   proposal: ProposalUpdateOneWithoutPreimageInput
   preimageArguments: PreimageArgumentUpdateManyWithoutPreimageInput
   preimageStatus: PreimageStatusUpdateManyWithoutPreimageInput
+}
+
+input PreimageUpsertNestedInput {
+  update: PreimageUpdateDataInput!
+  create: PreimageCreateInput!
 }
 
 input PreimageUpsertWithoutMotionInput {
@@ -7169,7 +7229,6 @@ type Query {
   motionStatuses(where: MotionStatusWhereInput, orderBy: MotionStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MotionStatus]!
   proposals(where: ProposalWhereInput, orderBy: ProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Proposal]!
   proposalStatuses(where: ProposalStatusWhereInput, orderBy: ProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProposalStatus]!
-  preimages(where: PreimageWhereInput, orderBy: PreimageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Preimage]!
   preimageStatuses(where: PreimageStatusWhereInput, orderBy: PreimageStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PreimageStatus]!
   preimageArguments(where: PreimageArgumentWhereInput, orderBy: PreimageArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PreimageArgument]!
   referendums(where: ReferendumWhereInput, orderBy: ReferendumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Referendum]!
@@ -7181,6 +7240,10 @@ type Query {
   tipStatuses(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TipStatus]!
   bounties(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bounty]!
   bountyStatuses(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BountyStatus]!
+  techCommitteeProposals(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposal]!
+  techCommitteeProposalArguments(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalArgument]!
+  techCommitteeProposalStatuses(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalStatus]!
+  preimages(where: PreimageWhereInput, orderBy: PreimageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Preimage]!
   blockNumbers(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockNumber]!
   sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
   heartBeat(where: HeartBeatWhereUniqueInput!): HeartBeat
@@ -7199,7 +7262,6 @@ type Query {
   motionStatus(where: MotionStatusWhereUniqueInput!): MotionStatus
   proposal(where: ProposalWhereUniqueInput!): Proposal
   proposalStatus(where: ProposalStatusWhereUniqueInput!): ProposalStatus
-  preimage(where: PreimageWhereUniqueInput!): Preimage
   preimageStatus(where: PreimageStatusWhereUniqueInput!): PreimageStatus
   preimageArgument(where: PreimageArgumentWhereUniqueInput!): PreimageArgument
   referendum(where: ReferendumWhereUniqueInput!): Referendum
@@ -7211,6 +7273,10 @@ type Query {
   tipStatus(where: TipStatusWhereUniqueInput!): TipStatus
   bounty(where: BountyWhereUniqueInput!): Bounty
   bountyStatus(where: BountyStatusWhereUniqueInput!): BountyStatus
+  techCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  preimage(where: PreimageWhereUniqueInput!): Preimage
   blockNumber(where: BlockNumberWhereUniqueInput!): BlockNumber
   session(where: SessionWhereUniqueInput!): Session
   heartBeatsConnection(where: HeartBeatWhereInput, orderBy: HeartBeatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HeartBeatConnection!
@@ -7229,7 +7295,6 @@ type Query {
   motionStatusesConnection(where: MotionStatusWhereInput, orderBy: MotionStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MotionStatusConnection!
   proposalsConnection(where: ProposalWhereInput, orderBy: ProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProposalConnection!
   proposalStatusesConnection(where: ProposalStatusWhereInput, orderBy: ProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProposalStatusConnection!
-  preimagesConnection(where: PreimageWhereInput, orderBy: PreimageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreimageConnection!
   preimageStatusesConnection(where: PreimageStatusWhereInput, orderBy: PreimageStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreimageStatusConnection!
   preimageArgumentsConnection(where: PreimageArgumentWhereInput, orderBy: PreimageArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreimageArgumentConnection!
   referendumsConnection(where: ReferendumWhereInput, orderBy: ReferendumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReferendumConnection!
@@ -7241,6 +7306,10 @@ type Query {
   tipStatusesConnection(where: TipStatusWhereInput, orderBy: TipStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipStatusConnection!
   bountiesConnection(where: BountyWhereInput, orderBy: BountyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyConnection!
   bountyStatusesConnection(where: BountyStatusWhereInput, orderBy: BountyStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BountyStatusConnection!
+  techCommitteeProposalsConnection(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalConnection!
+  techCommitteeProposalArgumentsConnection(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalArgumentConnection!
+  techCommitteeProposalStatusesConnection(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalStatusConnection!
+  preimagesConnection(where: PreimageWhereInput, orderBy: PreimageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreimageConnection!
   blockNumbersConnection(where: BlockNumberWhereInput, orderBy: BlockNumberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockNumberConnection!
   sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
 
@@ -8910,7 +8979,6 @@ type Subscription {
   motionStatus(where: MotionStatusSubscriptionWhereInput): MotionStatusSubscriptionPayload
   proposal(where: ProposalSubscriptionWhereInput): ProposalSubscriptionPayload
   proposalStatus(where: ProposalStatusSubscriptionWhereInput): ProposalStatusSubscriptionPayload
-  preimage(where: PreimageSubscriptionWhereInput): PreimageSubscriptionPayload
   preimageStatus(where: PreimageStatusSubscriptionWhereInput): PreimageStatusSubscriptionPayload
   preimageArgument(where: PreimageArgumentSubscriptionWhereInput): PreimageArgumentSubscriptionPayload
   referendum(where: ReferendumSubscriptionWhereInput): ReferendumSubscriptionPayload
@@ -8922,8 +8990,1401 @@ type Subscription {
   tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   bounty(where: BountySubscriptionWhereInput): BountySubscriptionPayload
   bountyStatus(where: BountyStatusSubscriptionWhereInput): BountyStatusSubscriptionPayload
+  techCommitteeProposal(where: TechCommitteeProposalSubscriptionWhereInput): TechCommitteeProposalSubscriptionPayload
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentSubscriptionWhereInput): TechCommitteeProposalArgumentSubscriptionPayload
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusSubscriptionWhereInput): TechCommitteeProposalStatusSubscriptionPayload
+  preimage(where: PreimageSubscriptionWhereInput): PreimageSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
+}
+
+type TechCommitteeProposal {
+  id: Int!
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalArgument!]
+  proposalHash: String!
+  proposalId: Int!
+  status(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalStatus!]
+  preimage: Preimage
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalArgument implements Node {
+  id: ID!
+  name: String!
+  proposal: TechCommitteeProposal!
+  value: String!
+}
+
+"""A connection to a list of items."""
+type TechCommitteeProposalArgumentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TechCommitteeProposalArgumentEdge]!
+  aggregate: AggregateTechCommitteeProposalArgument!
+}
+
+input TechCommitteeProposalArgumentCreateInput {
+  id: ID
+  name: String!
+  value: String!
+  proposal: TechCommitteeProposalCreateOneWithoutProposalArgumentsInput!
+}
+
+input TechCommitteeProposalArgumentCreateManyWithoutProposalInput {
+  create: [TechCommitteeProposalArgumentCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+}
+
+input TechCommitteeProposalArgumentCreateWithoutProposalInput {
+  id: ID
+  name: String!
+  value: String!
+}
+
+"""An edge in a connection."""
+type TechCommitteeProposalArgumentEdge {
+  """The item at the end of the edge."""
+  node: TechCommitteeProposalArgument!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TechCommitteeProposalArgumentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  value_ASC
+  value_DESC
+}
+
+type TechCommitteeProposalArgumentPreviousValues {
+  id: ID!
+  name: String!
+  value: String!
+}
+
+input TechCommitteeProposalArgumentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalArgumentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalArgumentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalArgumentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+type TechCommitteeProposalArgumentSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposalArgument
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalArgumentPreviousValues
+}
+
+input TechCommitteeProposalArgumentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalArgumentWhereInput
+}
+
+input TechCommitteeProposalArgumentUpdateInput {
+  name: String
+  value: String
+  proposal: TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput
+}
+
+input TechCommitteeProposalArgumentUpdateManyDataInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateManyMutationInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateManyWithoutProposalInput {
+  create: [TechCommitteeProposalArgumentCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  set: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  disconnect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  delete: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  update: [TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput!]
+  updateMany: [TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput!]
+  deleteMany: [TechCommitteeProposalArgumentScalarWhereInput!]
+  upsert: [TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput!]
+}
+
+input TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalArgumentScalarWhereInput!
+  data: TechCommitteeProposalArgumentUpdateManyDataInput!
+}
+
+input TechCommitteeProposalArgumentUpdateWithoutProposalDataInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput!
+  data: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput!
+}
+
+input TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput!
+  update: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput!
+  create: TechCommitteeProposalArgumentCreateWithoutProposalInput!
+}
+
+input TechCommitteeProposalArgumentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalArgumentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalArgumentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalArgumentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+  proposal: TechCommitteeProposalWhereInput
+}
+
+input TechCommitteeProposalArgumentWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type TechCommitteeProposalConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TechCommitteeProposalEdge]!
+  aggregate: AggregateTechCommitteeProposal!
+}
+
+input TechCommitteeProposalCreateInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  preimageHash: String
+  section: String
+  proposalArguments: TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  status: TechCommitteeProposalStatusCreateManyWithoutProposalInput
+  preimage: PreimageCreateOneInput
+}
+
+input TechCommitteeProposalCreateOneWithoutProposalArgumentsInput {
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalCreateOneWithoutStatusInput {
+  create: TechCommitteeProposalCreateWithoutStatusInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalCreateWithoutProposalArgumentsInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  preimageHash: String
+  section: String
+  status: TechCommitteeProposalStatusCreateManyWithoutProposalInput
+  preimage: PreimageCreateOneInput
+}
+
+input TechCommitteeProposalCreateWithoutStatusInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  preimageHash: String
+  section: String
+  proposalArguments: TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  preimage: PreimageCreateOneInput
+}
+
+"""An edge in a connection."""
+type TechCommitteeProposalEdge {
+  """The item at the end of the edge."""
+  node: TechCommitteeProposal!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TechCommitteeProposalOrderByInput {
+  id_ASC
+  id_DESC
+  author_ASC
+  author_DESC
+  memberCount_ASC
+  memberCount_DESC
+  metaDescription_ASC
+  metaDescription_DESC
+  method_ASC
+  method_DESC
+  proposalHash_ASC
+  proposalHash_DESC
+  proposalId_ASC
+  proposalId_DESC
+  preimageHash_ASC
+  preimageHash_DESC
+  section_ASC
+  section_DESC
+}
+
+type TechCommitteeProposalPreviousValues {
+  id: Int!
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalStatus implements Node {
+  id: ID!
+  blockNumber: BlockNumber!
+  proposal: TechCommitteeProposal!
+  status: String!
+  uniqueStatus: String!
+}
+
+"""A connection to a list of items."""
+type TechCommitteeProposalStatusConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TechCommitteeProposalStatusEdge]!
+  aggregate: AggregateTechCommitteeProposalStatus!
+}
+
+input TechCommitteeProposalStatusCreateInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+  proposal: TechCommitteeProposalCreateOneWithoutStatusInput!
+}
+
+input TechCommitteeProposalStatusCreateManyWithoutProposalInput {
+  create: [TechCommitteeProposalStatusCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalStatusWhereUniqueInput!]
+}
+
+input TechCommitteeProposalStatusCreateWithoutProposalInput {
+  id: ID
+  status: String!
+  uniqueStatus: String!
+  blockNumber: BlockNumberCreateOneInput!
+}
+
+"""An edge in a connection."""
+type TechCommitteeProposalStatusEdge {
+  """The item at the end of the edge."""
+  node: TechCommitteeProposalStatus!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TechCommitteeProposalStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type TechCommitteeProposalStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TechCommitteeProposalStatusScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalStatusScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalStatusScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalStatusScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+}
+
+type TechCommitteeProposalStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposalStatus
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalStatusPreviousValues
+}
+
+input TechCommitteeProposalStatusSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalStatusWhereInput
+}
+
+input TechCommitteeProposalStatusUpdateInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  proposal: TechCommitteeProposalUpdateOneRequiredWithoutStatusInput
+}
+
+input TechCommitteeProposalStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateManyWithoutProposalInput {
+  create: [TechCommitteeProposalStatusCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalStatusWhereUniqueInput!]
+  set: [TechCommitteeProposalStatusWhereUniqueInput!]
+  disconnect: [TechCommitteeProposalStatusWhereUniqueInput!]
+  delete: [TechCommitteeProposalStatusWhereUniqueInput!]
+  update: [TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput!]
+  updateMany: [TechCommitteeProposalStatusUpdateManyWithWhereNestedInput!]
+  deleteMany: [TechCommitteeProposalStatusScalarWhereInput!]
+  upsert: [TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput!]
+}
+
+input TechCommitteeProposalStatusUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalStatusScalarWhereInput!
+  data: TechCommitteeProposalStatusUpdateManyDataInput!
+}
+
+input TechCommitteeProposalStatusUpdateWithoutProposalDataInput {
+  status: String
+  uniqueStatus: String
+  blockNumber: BlockNumberUpdateOneRequiredInput
+}
+
+input TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput!
+  data: TechCommitteeProposalStatusUpdateWithoutProposalDataInput!
+}
+
+input TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput!
+  update: TechCommitteeProposalStatusUpdateWithoutProposalDataInput!
+  create: TechCommitteeProposalStatusCreateWithoutProposalInput!
+}
+
+input TechCommitteeProposalStatusWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalStatusWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalStatusWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalStatusWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  uniqueStatus: String
+
+  """All values that are not equal to given value."""
+  uniqueStatus_not: String
+
+  """All values that are contained in given list."""
+  uniqueStatus_in: [String!]
+
+  """All values that are not contained in given list."""
+  uniqueStatus_not_in: [String!]
+
+  """All values less than the given value."""
+  uniqueStatus_lt: String
+
+  """All values less than or equal the given value."""
+  uniqueStatus_lte: String
+
+  """All values greater than the given value."""
+  uniqueStatus_gt: String
+
+  """All values greater than or equal the given value."""
+  uniqueStatus_gte: String
+
+  """All values containing the given string."""
+  uniqueStatus_contains: String
+
+  """All values not containing the given string."""
+  uniqueStatus_not_contains: String
+
+  """All values starting with the given string."""
+  uniqueStatus_starts_with: String
+
+  """All values not starting with the given string."""
+  uniqueStatus_not_starts_with: String
+
+  """All values ending with the given string."""
+  uniqueStatus_ends_with: String
+
+  """All values not ending with the given string."""
+  uniqueStatus_not_ends_with: String
+  blockNumber: BlockNumberWhereInput
+  proposal: TechCommitteeProposalWhereInput
+}
+
+input TechCommitteeProposalStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type TechCommitteeProposalSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposal
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalPreviousValues
+}
+
+input TechCommitteeProposalSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalWhereInput
+}
+
+input TechCommitteeProposalUpdateInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  preimageHash: String
+  section: String
+  proposalArguments: TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  status: TechCommitteeProposalStatusUpdateManyWithoutProposalInput
+  preimage: PreimageUpdateOneInput
+}
+
+input TechCommitteeProposalUpdateManyMutationInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput {
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput
+  connect: TechCommitteeProposalWhereUniqueInput
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput
+  upsert: TechCommitteeProposalUpsertWithoutProposalArgumentsInput
+}
+
+input TechCommitteeProposalUpdateOneRequiredWithoutStatusInput {
+  create: TechCommitteeProposalCreateWithoutStatusInput
+  connect: TechCommitteeProposalWhereUniqueInput
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput
+  upsert: TechCommitteeProposalUpsertWithoutStatusInput
+}
+
+input TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  preimageHash: String
+  section: String
+  status: TechCommitteeProposalStatusUpdateManyWithoutProposalInput
+  preimage: PreimageUpdateOneInput
+}
+
+input TechCommitteeProposalUpdateWithoutStatusDataInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  preimageHash: String
+  section: String
+  proposalArguments: TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  preimage: PreimageUpdateOneInput
+}
+
+input TechCommitteeProposalUpsertWithoutProposalArgumentsInput {
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput!
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput!
+}
+
+input TechCommitteeProposalUpsertWithoutStatusInput {
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput!
+  create: TechCommitteeProposalCreateWithoutStatusInput!
+}
+
+input TechCommitteeProposalWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TechCommitteeProposalWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TechCommitteeProposalWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TechCommitteeProposalWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  author: String
+
+  """All values that are not equal to given value."""
+  author_not: String
+
+  """All values that are contained in given list."""
+  author_in: [String!]
+
+  """All values that are not contained in given list."""
+  author_not_in: [String!]
+
+  """All values less than the given value."""
+  author_lt: String
+
+  """All values less than or equal the given value."""
+  author_lte: String
+
+  """All values greater than the given value."""
+  author_gt: String
+
+  """All values greater than or equal the given value."""
+  author_gte: String
+
+  """All values containing the given string."""
+  author_contains: String
+
+  """All values not containing the given string."""
+  author_not_contains: String
+
+  """All values starting with the given string."""
+  author_starts_with: String
+
+  """All values not starting with the given string."""
+  author_not_starts_with: String
+
+  """All values ending with the given string."""
+  author_ends_with: String
+
+  """All values not ending with the given string."""
+  author_not_ends_with: String
+  memberCount: Int
+
+  """All values that are not equal to given value."""
+  memberCount_not: Int
+
+  """All values that are contained in given list."""
+  memberCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  memberCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  memberCount_lt: Int
+
+  """All values less than or equal the given value."""
+  memberCount_lte: Int
+
+  """All values greater than the given value."""
+  memberCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  memberCount_gte: Int
+  metaDescription: String
+
+  """All values that are not equal to given value."""
+  metaDescription_not: String
+
+  """All values that are contained in given list."""
+  metaDescription_in: [String!]
+
+  """All values that are not contained in given list."""
+  metaDescription_not_in: [String!]
+
+  """All values less than the given value."""
+  metaDescription_lt: String
+
+  """All values less than or equal the given value."""
+  metaDescription_lte: String
+
+  """All values greater than the given value."""
+  metaDescription_gt: String
+
+  """All values greater than or equal the given value."""
+  metaDescription_gte: String
+
+  """All values containing the given string."""
+  metaDescription_contains: String
+
+  """All values not containing the given string."""
+  metaDescription_not_contains: String
+
+  """All values starting with the given string."""
+  metaDescription_starts_with: String
+
+  """All values not starting with the given string."""
+  metaDescription_not_starts_with: String
+
+  """All values ending with the given string."""
+  metaDescription_ends_with: String
+
+  """All values not ending with the given string."""
+  metaDescription_not_ends_with: String
+  method: String
+
+  """All values that are not equal to given value."""
+  method_not: String
+
+  """All values that are contained in given list."""
+  method_in: [String!]
+
+  """All values that are not contained in given list."""
+  method_not_in: [String!]
+
+  """All values less than the given value."""
+  method_lt: String
+
+  """All values less than or equal the given value."""
+  method_lte: String
+
+  """All values greater than the given value."""
+  method_gt: String
+
+  """All values greater than or equal the given value."""
+  method_gte: String
+
+  """All values containing the given string."""
+  method_contains: String
+
+  """All values not containing the given string."""
+  method_not_contains: String
+
+  """All values starting with the given string."""
+  method_starts_with: String
+
+  """All values not starting with the given string."""
+  method_not_starts_with: String
+
+  """All values ending with the given string."""
+  method_ends_with: String
+
+  """All values not ending with the given string."""
+  method_not_ends_with: String
+  proposalHash: String
+
+  """All values that are not equal to given value."""
+  proposalHash_not: String
+
+  """All values that are contained in given list."""
+  proposalHash_in: [String!]
+
+  """All values that are not contained in given list."""
+  proposalHash_not_in: [String!]
+
+  """All values less than the given value."""
+  proposalHash_lt: String
+
+  """All values less than or equal the given value."""
+  proposalHash_lte: String
+
+  """All values greater than the given value."""
+  proposalHash_gt: String
+
+  """All values greater than or equal the given value."""
+  proposalHash_gte: String
+
+  """All values containing the given string."""
+  proposalHash_contains: String
+
+  """All values not containing the given string."""
+  proposalHash_not_contains: String
+
+  """All values starting with the given string."""
+  proposalHash_starts_with: String
+
+  """All values not starting with the given string."""
+  proposalHash_not_starts_with: String
+
+  """All values ending with the given string."""
+  proposalHash_ends_with: String
+
+  """All values not ending with the given string."""
+  proposalHash_not_ends_with: String
+  proposalId: Int
+
+  """All values that are not equal to given value."""
+  proposalId_not: Int
+
+  """All values that are contained in given list."""
+  proposalId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  proposalId_not_in: [Int!]
+
+  """All values less than the given value."""
+  proposalId_lt: Int
+
+  """All values less than or equal the given value."""
+  proposalId_lte: Int
+
+  """All values greater than the given value."""
+  proposalId_gt: Int
+
+  """All values greater than or equal the given value."""
+  proposalId_gte: Int
+  preimageHash: String
+
+  """All values that are not equal to given value."""
+  preimageHash_not: String
+
+  """All values that are contained in given list."""
+  preimageHash_in: [String!]
+
+  """All values that are not contained in given list."""
+  preimageHash_not_in: [String!]
+
+  """All values less than the given value."""
+  preimageHash_lt: String
+
+  """All values less than or equal the given value."""
+  preimageHash_lte: String
+
+  """All values greater than the given value."""
+  preimageHash_gt: String
+
+  """All values greater than or equal the given value."""
+  preimageHash_gte: String
+
+  """All values containing the given string."""
+  preimageHash_contains: String
+
+  """All values not containing the given string."""
+  preimageHash_not_contains: String
+
+  """All values starting with the given string."""
+  preimageHash_starts_with: String
+
+  """All values not starting with the given string."""
+  preimageHash_not_starts_with: String
+
+  """All values ending with the given string."""
+  preimageHash_ends_with: String
+
+  """All values not ending with the given string."""
+  preimageHash_not_ends_with: String
+  section: String
+
+  """All values that are not equal to given value."""
+  section_not: String
+
+  """All values that are contained in given list."""
+  section_in: [String!]
+
+  """All values that are not contained in given list."""
+  section_not_in: [String!]
+
+  """All values less than the given value."""
+  section_lt: String
+
+  """All values less than or equal the given value."""
+  section_lte: String
+
+  """All values greater than the given value."""
+  section_gt: String
+
+  """All values greater than or equal the given value."""
+  section_gte: String
+
+  """All values containing the given string."""
+  section_contains: String
+
+  """All values not containing the given string."""
+  section_not_contains: String
+
+  """All values starting with the given string."""
+  section_starts_with: String
+
+  """All values not starting with the given string."""
+  section_not_starts_with: String
+
+  """All values ending with the given string."""
+  section_ends_with: String
+
+  """All values not ending with the given string."""
+  section_not_ends_with: String
+  proposalArguments_every: TechCommitteeProposalArgumentWhereInput
+  proposalArguments_some: TechCommitteeProposalArgumentWhereInput
+  proposalArguments_none: TechCommitteeProposalArgumentWhereInput
+  status_every: TechCommitteeProposalStatusWhereInput
+  status_some: TechCommitteeProposalStatusWhereInput
+  status_none: TechCommitteeProposalStatusWhereInput
+  preimage: PreimageWhereInput
+}
+
+input TechCommitteeProposalWhereUniqueInput {
+  id: Int
+  proposalId: Int
 }
 
 type Tip {
@@ -11062,3 +12523,4 @@ input ValidatorWhereInput {
 input ValidatorWhereUniqueInput {
   id: ID
 }
+
