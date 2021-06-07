@@ -16,7 +16,6 @@ import { filterEvents } from '../util/filterEvents';
 import { preimageStatus, techCommitteeStatus } from '../util/statuses';
 import {
   Cached,
-  NomidotProposal,
   NomidotArgument,
   NomidotTechCommitteeProposal,
   NomidotTechCommitteeProposalRawEvent,
