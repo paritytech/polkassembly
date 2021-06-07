@@ -117,12 +117,37 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 						}
 					}, {});
 
+	const discussionTechCommitteeProposalMap = syncData?.discussion.techCommitteeProposals?.reduce(
+					(prev, curr) => {
+						// edgecase those id can be 0
+						if ((curr?.onchain_tech_committee_proposal_id || curr?.onchain_tech_committee_proposal_id === 0) && (curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.onchain_tech_committee_proposal_id]: curr.proposer_address
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
 	const onchainTreasuryProposalMap = syncData?.onchain.treasuryProposals?.reduce(
 					(prev, curr) => {
 						if ((curr?.treasuryProposalId || curr?.treasuryProposalId === 0) && (curr?.id || curr?.id === 0)) {
 							return {
 								...prev,
 								[curr.treasuryProposalId]: curr.proposer
+							};
+						} else {
+							return prev || {};
+						}
+					}, {});
+
+	const onchainTechCommitteeProposalsProposalMap = syncData?.onchain.techCommitteeProposals?.reduce(
+					(prev, curr) => {
+						if ((curr?.proposalId || curr?.proposalId === 0) && (curr?.id || curr?.id === 0)) {
+							return {
+								...prev,
+								[curr.proposalId]: curr.author
 							};
 						} else {
 							return prev || {};
@@ -185,6 +210,7 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 			motions: discussionMotionMap,
 			proposals: discussionProposalMap,
 			referenda: discussionReferendaMap,
+			techCommitteeProposals: discussionTechCommitteeProposalMap,
 			tips: discussionTipMap,
 			treasuryProposals: discussionTreasuryProposalMap
 		},
@@ -193,6 +219,7 @@ export const getMaps = (syncData: SyncData): SyncMap => {
 			motions: onchainMotionMap,
 			proposals: onchainProposalMap,
 			referenda: onchainReferendaMap,
+			techCommitteeProposals: onchainTechCommitteeProposalsProposalMap,
 			tips: onchainTipMap,
 			treasuryProposals: onchainTreasuryProposalMap
 		}
