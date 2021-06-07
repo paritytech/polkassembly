@@ -60,6 +60,8 @@ export const techCommitteeStatus = {
   CLOSED: 'Closed',
   DISAPPROVED: 'Disapproved',
   EXECUTED: 'Executed',
-  PROPOSED: 'Proposed'
+  PROPOSED: 'Proposed',
+  MEMBER_EXECUTED: 'MemberExecuted',
+  VOTED: 'Voted'
 }
 

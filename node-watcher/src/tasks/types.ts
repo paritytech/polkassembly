@@ -123,7 +123,9 @@ export type Nomidot =
   | NomidotTip[]
   | NomidotTipStatusUpdate[]
   | NomidotBounty[]
-  | NomidotBountyStatusUpdate[];
+  | NomidotBountyStatusUpdate[]
+  | NomidotTechCommitteeProposal[]
+  | NomidotTechCommitteeProposalStatusUpdate[];
 
 export type NomidotTask = Task<Nomidot>;
 
@@ -291,6 +293,11 @@ export interface NomidotMotionStatusUpdate {
 export interface NomidotReferendumStatusUpdate {
   referendumId: number;
   status: string;
+}
+
+export interface NomidotTechCommitteeProposalStatusUpdate {
+  proposalId: number;
+  status: TechCommitteeStatus;
 }
 
 export type NomidotCouncil = AccountId[];
