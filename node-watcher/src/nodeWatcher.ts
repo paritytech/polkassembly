@@ -11,6 +11,7 @@ import { prisma } from './generated/prisma-client';
 import { nomidotTasks } from './tasks';
 import { Cached } from './tasks/types';
 import getEnvVars from './util/getEnvVars';
+import {waitFinalized, reachedLimitLag, waitLagLimit} from './util/wait';
 
 const envVars = getEnvVars();
 const ARCHIVE_NODE_ENDPOINT = envVars.ARCHIVE_NODE_ENDPOINT;
@@ -19,47 +20,6 @@ const BLOCK_IDENTIFIER = envVars.BLOCK_IDENTIFIER;
 const START_FROM = envVars.START_FROM;
 
 const l = logger('node-watcher');
-
-function waitFinalized(
-  api: ApiPromise,
-  lastKnownBestFinalized: number
-): Promise<{ unsub: () => void; bestFinalizedBlock: number }> {
-  return new Promise(resolve => {
-    async function wait(): Promise<void> {
-      const unsub = await api.derive.chain.bestNumberFinalized(best => {
-        if (best.toNumber() > lastKnownBestFinalized) {
-          resolve({ unsub, bestFinalizedBlock: best.toNumber() });
-        }
-      });
-    }
-
-    wait();
-  });
-}
-
-function reachedLimitLag(
-  blockIndex: number,
-  lastKnownBestBlock: number
-): boolean {
-  return MAX_LAG ? lastKnownBestBlock - blockIndex > MAX_LAG : false;
-}
-
-function waitLagLimit(
-  api: ApiPromise,
-  blockIndex: number
-): Promise<{ unsub: () => void; bestBlock: number }> {
-  return new Promise(resolve => {
-    async function wait(): Promise<void> {
-      const unsub = await api.derive.chain.bestNumber(bestBlock => {
-        if (reachedLimitLag(blockIndex, bestBlock.toNumber())) {
-          resolve({ unsub, bestBlock: bestBlock.toNumber() });
-        }
-      });
-    }
-
-    wait();
-  });
-}
 
 export async function nodeWatcher(): Promise<unknown> {
   return new Promise((_, reject) => {
