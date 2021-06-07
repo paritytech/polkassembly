@@ -15,7 +15,8 @@ export default (type: PostType, onchainLink: OnchainLinkType): number | string =
 		onchain_referendum_id,
 		onchain_tip_id,
 		onchain_bounty_id,
-		onchain_treasury_proposal_id
+		onchain_treasury_proposal_id,
+		onchain_tech_committee_proposal_id
 	} = onchainLink;
 
 	let id: number | string | undefined;
@@ -38,6 +39,9 @@ export default (type: PostType, onchainLink: OnchainLinkType): number | string =
 		break;
 	case PostTypeEnum.BOUNTY:
 		id = onchain_bounty_id;
+		break;
+	case PostTypeEnum.TECH:
+		id = onchain_tech_committee_proposal_id;
 		break;
 	default:
 		break;

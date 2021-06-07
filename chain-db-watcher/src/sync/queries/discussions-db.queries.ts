@@ -81,3 +81,16 @@ export const getDiscussionTips = gql`
     }
 `;
 
+export const getDiscussionTechCommitteeProposals = gql`
+    query getDiscussionTechCommitteeProposals {
+        onchain_links(where: {onchain_tech_committee_proposal_id: {_is_null: false}}){
+            ...discussionTechCommitteeProposal
+        }
+    }
+    fragment discussionTechCommitteeProposal on onchain_links {
+        id
+        onchain_tech_committee_proposal_id
+        proposer_address
+    }
+`;
+

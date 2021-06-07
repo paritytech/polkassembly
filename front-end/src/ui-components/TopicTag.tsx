@@ -50,4 +50,8 @@ export default styled(TopicTag)`
 		background-color: pink_primary !important;
 		color: white;
 	}
+	&.Tech {
+		background-color: pink_primary !important;
+		color: white;
+	}
 `;

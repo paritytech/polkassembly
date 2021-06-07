@@ -627,6 +627,50 @@ const Query = {
   ) {
     return prisma.bountyStatus(BountyStatusWhereUniqueInput);
   },
+  techCommitteeProposals(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.techCommitteeProposals({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  techCommitteeProposal(
+    _parent: any,
+    { TechCommitteeProposalWhereUniqueInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.techCommitteeProposal(TechCommitteeProposalWhereUniqueInput);
+  },
+  techCommitteeProposalStatuses(
+    _parent: any,
+    { where, orderBy, skip, after, before, first, last }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.techCommitteeProposalStatuses({
+      where,
+      orderBy,
+      skip,
+      after,
+      before,
+      first,
+      last,
+    });
+  },
+  techCommitteeProposalStatus(
+    _parent: any,
+    { TechCommitteeProposalStatusWhereInput }: Selectors,
+    { prisma }: Context
+  ) {
+    return prisma.techCommitteeProposalStatus(TechCommitteeProposalStatusWhereInput);
+  },
 };
 
 export { Query };

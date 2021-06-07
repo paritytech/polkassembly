@@ -74,6 +74,15 @@ type Query {
   stake(where: StakeWhereUniqueInput!): Stake
   stakes(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stake]!
   stakesConnection(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StakeConnection!
+  techCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  techCommitteeProposals(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposal]!
+  techCommitteeProposalsConnection(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalConnection!
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  techCommitteeProposalArguments(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalArgument]!
+  techCommitteeProposalArgumentsConnection(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalArgumentConnection!
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  techCommitteeProposalStatuses(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalStatus]!
+  techCommitteeProposalStatusesConnection(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalStatusConnection!
   tip(where: TipWhereUniqueInput!): Tip
   tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
   tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
@@ -120,6 +129,9 @@ type Subscription {
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   slashing(where: SlashingSubscriptionWhereInput): SlashingSubscriptionPayload
   stake(where: StakeSubscriptionWhereInput): StakeSubscriptionPayload
+  techCommitteeProposal(where: TechCommitteeProposalSubscriptionWhereInput): TechCommitteeProposalSubscriptionPayload
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentSubscriptionWhereInput): TechCommitteeProposalArgumentSubscriptionPayload
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusSubscriptionWhereInput): TechCommitteeProposalStatusSubscriptionPayload
   tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
   tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   totalIssuance(where: TotalIssuanceSubscriptionWhereInput): TotalIssuanceSubscriptionPayload

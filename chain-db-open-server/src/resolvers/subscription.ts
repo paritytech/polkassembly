@@ -20,6 +20,8 @@ import {
   SessionSubscription,
   SlashingSubscription,
   StakeSubscription,
+  TechCommitteeProposalSubscriptionPayloadSubscription,
+  TechCommitteeProposalSubscriptionWhereInput,
   TipSubscriptionPayloadSubscription,
   TipSubscriptionWhereInput,
   TreasurySpendProposalSubscriptionPayloadSubscription,
@@ -296,6 +298,19 @@ const bounty = {
   },
 };
 
+const techCommitteeProposal = {
+  subscribe: (
+    parent: any,
+    { where }: { where: TechCommitteeProposalSubscriptionWhereInput },
+    context: Context
+  ): TechCommitteeProposalSubscriptionPayloadSubscription => {
+    return context.prisma.$subscribe.techCommitteeProposal(where);
+  },
+  resolve: (payload: any) => {
+    return payload;
+  },
+};
+
 export const Subscription = {
   blockNumber,
   bounty,
@@ -310,6 +325,7 @@ export const Subscription = {
   validator,
   motion,
   proposal,
+  techCommitteeProposal,
   tip,
   treasurySpendProposal,
   referendum,

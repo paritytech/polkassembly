@@ -98,6 +98,18 @@ type AggregateStake {
   count: Int!
 }
 
+type AggregateTechCommitteeProposal {
+  count: Int!
+}
+
+type AggregateTechCommitteeProposalArgument {
+  count: Int!
+}
+
+type AggregateTechCommitteeProposalStatus {
+  count: Int!
+}
+
 type AggregateTip {
   count: Int!
 }
@@ -2510,6 +2522,24 @@ type Mutation {
   upsertStake(where: StakeWhereUniqueInput!, create: StakeCreateInput!, update: StakeUpdateInput!): Stake!
   deleteStake(where: StakeWhereUniqueInput!): Stake
   deleteManyStakes(where: StakeWhereInput): BatchPayload!
+  createTechCommitteeProposal(data: TechCommitteeProposalCreateInput!): TechCommitteeProposal!
+  updateTechCommitteeProposal(data: TechCommitteeProposalUpdateInput!, where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  updateManyTechCommitteeProposals(data: TechCommitteeProposalUpdateManyMutationInput!, where: TechCommitteeProposalWhereInput): BatchPayload!
+  upsertTechCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!, create: TechCommitteeProposalCreateInput!, update: TechCommitteeProposalUpdateInput!): TechCommitteeProposal!
+  deleteTechCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  deleteManyTechCommitteeProposals(where: TechCommitteeProposalWhereInput): BatchPayload!
+  createTechCommitteeProposalArgument(data: TechCommitteeProposalArgumentCreateInput!): TechCommitteeProposalArgument!
+  updateTechCommitteeProposalArgument(data: TechCommitteeProposalArgumentUpdateInput!, where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  updateManyTechCommitteeProposalArguments(data: TechCommitteeProposalArgumentUpdateManyMutationInput!, where: TechCommitteeProposalArgumentWhereInput): BatchPayload!
+  upsertTechCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!, create: TechCommitteeProposalArgumentCreateInput!, update: TechCommitteeProposalArgumentUpdateInput!): TechCommitteeProposalArgument!
+  deleteTechCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  deleteManyTechCommitteeProposalArguments(where: TechCommitteeProposalArgumentWhereInput): BatchPayload!
+  createTechCommitteeProposalStatus(data: TechCommitteeProposalStatusCreateInput!): TechCommitteeProposalStatus!
+  updateTechCommitteeProposalStatus(data: TechCommitteeProposalStatusUpdateInput!, where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  updateManyTechCommitteeProposalStatuses(data: TechCommitteeProposalStatusUpdateManyMutationInput!, where: TechCommitteeProposalStatusWhereInput): BatchPayload!
+  upsertTechCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!, create: TechCommitteeProposalStatusCreateInput!, update: TechCommitteeProposalStatusUpdateInput!): TechCommitteeProposalStatus!
+  deleteTechCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  deleteManyTechCommitteeProposalStatuses(where: TechCommitteeProposalStatusWhereInput): BatchPayload!
   createTip(data: TipCreateInput!): Tip!
   updateTip(data: TipUpdateInput!, where: TipWhereUniqueInput!): Tip
   updateManyTips(data: TipUpdateManyMutationInput!, where: TipWhereInput): BatchPayload!
@@ -3161,6 +3191,11 @@ input PreimageCreateInput {
   section: String!
 }
 
+input PreimageCreateOneInput {
+  create: PreimageCreateInput
+  connect: PreimageWhereUniqueInput
+}
+
 input PreimageCreateOneWithoutMotionInput {
   create: PreimageCreateWithoutMotionInput
   connect: PreimageWhereUniqueInput
@@ -3493,6 +3528,20 @@ input PreimageSubscriptionWhereInput {
   NOT: [PreimageSubscriptionWhereInput!]
 }
 
+input PreimageUpdateDataInput {
+  author: String
+  depositAmount: String
+  hash: String
+  metaDescription: String
+  method: String
+  motion: MotionUpdateOneWithoutPreimageInput
+  proposal: ProposalUpdateOneWithoutPreimageInput
+  preimageArguments: PreimageArgumentUpdateManyWithoutPreimageInput
+  preimageStatus: PreimageStatusUpdateManyWithoutPreimageInput
+  referendum: ReferendumUpdateOneWithoutPreimageInput
+  section: String
+}
+
 input PreimageUpdateInput {
   author: String
   depositAmount: String
@@ -3514,6 +3563,15 @@ input PreimageUpdateManyMutationInput {
   metaDescription: String
   method: String
   section: String
+}
+
+input PreimageUpdateOneInput {
+  create: PreimageCreateInput
+  update: PreimageUpdateDataInput
+  upsert: PreimageUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PreimageWhereUniqueInput
 }
 
 input PreimageUpdateOneRequiredWithoutPreimageArgumentsInput {
@@ -3620,6 +3678,11 @@ input PreimageUpdateWithoutReferendumDataInput {
   preimageArguments: PreimageArgumentUpdateManyWithoutPreimageInput
   preimageStatus: PreimageStatusUpdateManyWithoutPreimageInput
   section: String
+}
+
+input PreimageUpsertNestedInput {
+  update: PreimageUpdateDataInput!
+  create: PreimageCreateInput!
 }
 
 input PreimageUpsertWithoutMotionInput {
@@ -4289,6 +4352,15 @@ type Query {
   stake(where: StakeWhereUniqueInput!): Stake
   stakes(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stake]!
   stakesConnection(where: StakeWhereInput, orderBy: StakeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StakeConnection!
+  techCommitteeProposal(where: TechCommitteeProposalWhereUniqueInput!): TechCommitteeProposal
+  techCommitteeProposals(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposal]!
+  techCommitteeProposalsConnection(where: TechCommitteeProposalWhereInput, orderBy: TechCommitteeProposalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalConnection!
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentWhereUniqueInput!): TechCommitteeProposalArgument
+  techCommitteeProposalArguments(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalArgument]!
+  techCommitteeProposalArgumentsConnection(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalArgumentConnection!
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusWhereUniqueInput!): TechCommitteeProposalStatus
+  techCommitteeProposalStatuses(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalStatus]!
+  techCommitteeProposalStatusesConnection(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TechCommitteeProposalStatusConnection!
   tip(where: TipWhereUniqueInput!): Tip
   tips(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tip]!
   tipsConnection(where: TipWhereInput, orderBy: TipOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TipConnection!
@@ -5268,12 +5340,788 @@ type Subscription {
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   slashing(where: SlashingSubscriptionWhereInput): SlashingSubscriptionPayload
   stake(where: StakeSubscriptionWhereInput): StakeSubscriptionPayload
+  techCommitteeProposal(where: TechCommitteeProposalSubscriptionWhereInput): TechCommitteeProposalSubscriptionPayload
+  techCommitteeProposalArgument(where: TechCommitteeProposalArgumentSubscriptionWhereInput): TechCommitteeProposalArgumentSubscriptionPayload
+  techCommitteeProposalStatus(where: TechCommitteeProposalStatusSubscriptionWhereInput): TechCommitteeProposalStatusSubscriptionPayload
   tip(where: TipSubscriptionWhereInput): TipSubscriptionPayload
   tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   totalIssuance(where: TotalIssuanceSubscriptionWhereInput): TotalIssuanceSubscriptionPayload
   treasurySpendProposal(where: TreasurySpendProposalSubscriptionWhereInput): TreasurySpendProposalSubscriptionPayload
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload
   validator(where: ValidatorSubscriptionWhereInput): ValidatorSubscriptionPayload
+}
+
+type TechCommitteeProposal {
+  id: Int!
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments(where: TechCommitteeProposalArgumentWhereInput, orderBy: TechCommitteeProposalArgumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalArgument!]
+  proposalHash: String!
+  proposalId: Int!
+  status(where: TechCommitteeProposalStatusWhereInput, orderBy: TechCommitteeProposalStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TechCommitteeProposalStatus!]
+  preimage: Preimage
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalArgument {
+  id: ID!
+  name: String!
+  proposal: TechCommitteeProposal!
+  value: String!
+}
+
+type TechCommitteeProposalArgumentConnection {
+  pageInfo: PageInfo!
+  edges: [TechCommitteeProposalArgumentEdge]!
+  aggregate: AggregateTechCommitteeProposalArgument!
+}
+
+input TechCommitteeProposalArgumentCreateInput {
+  id: ID
+  name: String!
+  proposal: TechCommitteeProposalCreateOneWithoutProposalArgumentsInput!
+  value: String!
+}
+
+input TechCommitteeProposalArgumentCreateManyWithoutProposalInput {
+  create: [TechCommitteeProposalArgumentCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+}
+
+input TechCommitteeProposalArgumentCreateWithoutProposalInput {
+  id: ID
+  name: String!
+  value: String!
+}
+
+type TechCommitteeProposalArgumentEdge {
+  node: TechCommitteeProposalArgument!
+  cursor: String!
+}
+
+enum TechCommitteeProposalArgumentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  value_ASC
+  value_DESC
+}
+
+type TechCommitteeProposalArgumentPreviousValues {
+  id: ID!
+  name: String!
+  value: String!
+}
+
+input TechCommitteeProposalArgumentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [TechCommitteeProposalArgumentScalarWhereInput!]
+  OR: [TechCommitteeProposalArgumentScalarWhereInput!]
+  NOT: [TechCommitteeProposalArgumentScalarWhereInput!]
+}
+
+type TechCommitteeProposalArgumentSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposalArgument
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalArgumentPreviousValues
+}
+
+input TechCommitteeProposalArgumentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalArgumentWhereInput
+  AND: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+  OR: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+  NOT: [TechCommitteeProposalArgumentSubscriptionWhereInput!]
+}
+
+input TechCommitteeProposalArgumentUpdateInput {
+  name: String
+  proposal: TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateManyDataInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateManyMutationInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateManyWithoutProposalInput {
+  create: [TechCommitteeProposalArgumentCreateWithoutProposalInput!]
+  delete: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  connect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  set: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  disconnect: [TechCommitteeProposalArgumentWhereUniqueInput!]
+  update: [TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput!]
+  upsert: [TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput!]
+  deleteMany: [TechCommitteeProposalArgumentScalarWhereInput!]
+  updateMany: [TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput!]
+}
+
+input TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalArgumentScalarWhereInput!
+  data: TechCommitteeProposalArgumentUpdateManyDataInput!
+}
+
+input TechCommitteeProposalArgumentUpdateWithoutProposalDataInput {
+  name: String
+  value: String
+}
+
+input TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput!
+  data: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput!
+}
+
+input TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput!
+  update: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput!
+  create: TechCommitteeProposalArgumentCreateWithoutProposalInput!
+}
+
+input TechCommitteeProposalArgumentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  proposal: TechCommitteeProposalWhereInput
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [TechCommitteeProposalArgumentWhereInput!]
+  OR: [TechCommitteeProposalArgumentWhereInput!]
+  NOT: [TechCommitteeProposalArgumentWhereInput!]
+}
+
+input TechCommitteeProposalArgumentWhereUniqueInput {
+  id: ID
+}
+
+type TechCommitteeProposalConnection {
+  pageInfo: PageInfo!
+  edges: [TechCommitteeProposalEdge]!
+  aggregate: AggregateTechCommitteeProposal!
+}
+
+input TechCommitteeProposalCreateInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments: TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  proposalHash: String!
+  proposalId: Int!
+  status: TechCommitteeProposalStatusCreateManyWithoutProposalInput
+  preimage: PreimageCreateOneInput
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalCreateOneWithoutProposalArgumentsInput {
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalCreateOneWithoutStatusInput {
+  create: TechCommitteeProposalCreateWithoutStatusInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalCreateWithoutProposalArgumentsInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  status: TechCommitteeProposalStatusCreateManyWithoutProposalInput
+  preimage: PreimageCreateOneInput
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalCreateWithoutStatusInput {
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments: TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  proposalHash: String!
+  proposalId: Int!
+  preimage: PreimageCreateOneInput
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalEdge {
+  node: TechCommitteeProposal!
+  cursor: String!
+}
+
+enum TechCommitteeProposalOrderByInput {
+  id_ASC
+  id_DESC
+  author_ASC
+  author_DESC
+  memberCount_ASC
+  memberCount_DESC
+  metaDescription_ASC
+  metaDescription_DESC
+  method_ASC
+  method_DESC
+  proposalHash_ASC
+  proposalHash_DESC
+  proposalId_ASC
+  proposalId_DESC
+  preimageHash_ASC
+  preimageHash_DESC
+  section_ASC
+  section_DESC
+}
+
+type TechCommitteeProposalPreviousValues {
+  id: Int!
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String!
+  proposalId: Int!
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalStatus {
+  id: ID!
+  blockNumber: BlockNumber!
+  proposal: TechCommitteeProposal!
+  status: String!
+  uniqueStatus: String!
+}
+
+type TechCommitteeProposalStatusConnection {
+  pageInfo: PageInfo!
+  edges: [TechCommitteeProposalStatusEdge]!
+  aggregate: AggregateTechCommitteeProposalStatus!
+}
+
+input TechCommitteeProposalStatusCreateInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  proposal: TechCommitteeProposalCreateOneWithoutStatusInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TechCommitteeProposalStatusCreateManyWithoutProposalInput {
+  create: [TechCommitteeProposalStatusCreateWithoutProposalInput!]
+  connect: [TechCommitteeProposalStatusWhereUniqueInput!]
+}
+
+input TechCommitteeProposalStatusCreateWithoutProposalInput {
+  id: ID
+  blockNumber: BlockNumberCreateOneInput!
+  status: String!
+  uniqueStatus: String!
+}
+
+type TechCommitteeProposalStatusEdge {
+  node: TechCommitteeProposalStatus!
+  cursor: String!
+}
+
+enum TechCommitteeProposalStatusOrderByInput {
+  id_ASC
+  id_DESC
+  status_ASC
+  status_DESC
+  uniqueStatus_ASC
+  uniqueStatus_DESC
+}
+
+type TechCommitteeProposalStatusPreviousValues {
+  id: ID!
+  status: String!
+  uniqueStatus: String!
+}
+
+input TechCommitteeProposalStatusScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [TechCommitteeProposalStatusScalarWhereInput!]
+  OR: [TechCommitteeProposalStatusScalarWhereInput!]
+  NOT: [TechCommitteeProposalStatusScalarWhereInput!]
+}
+
+type TechCommitteeProposalStatusSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposalStatus
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalStatusPreviousValues
+}
+
+input TechCommitteeProposalStatusSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalStatusWhereInput
+  AND: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+  OR: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+  NOT: [TechCommitteeProposalStatusSubscriptionWhereInput!]
+}
+
+input TechCommitteeProposalStatusUpdateInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  proposal: TechCommitteeProposalUpdateOneRequiredWithoutStatusInput
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateManyDataInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateManyMutationInput {
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateManyWithoutProposalInput {
+  create: [TechCommitteeProposalStatusCreateWithoutProposalInput!]
+  delete: [TechCommitteeProposalStatusWhereUniqueInput!]
+  connect: [TechCommitteeProposalStatusWhereUniqueInput!]
+  set: [TechCommitteeProposalStatusWhereUniqueInput!]
+  disconnect: [TechCommitteeProposalStatusWhereUniqueInput!]
+  update: [TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput!]
+  upsert: [TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput!]
+  deleteMany: [TechCommitteeProposalStatusScalarWhereInput!]
+  updateMany: [TechCommitteeProposalStatusUpdateManyWithWhereNestedInput!]
+}
+
+input TechCommitteeProposalStatusUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalStatusScalarWhereInput!
+  data: TechCommitteeProposalStatusUpdateManyDataInput!
+}
+
+input TechCommitteeProposalStatusUpdateWithoutProposalDataInput {
+  blockNumber: BlockNumberUpdateOneRequiredInput
+  status: String
+  uniqueStatus: String
+}
+
+input TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput!
+  data: TechCommitteeProposalStatusUpdateWithoutProposalDataInput!
+}
+
+input TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput!
+  update: TechCommitteeProposalStatusUpdateWithoutProposalDataInput!
+  create: TechCommitteeProposalStatusCreateWithoutProposalInput!
+}
+
+input TechCommitteeProposalStatusWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  blockNumber: BlockNumberWhereInput
+  proposal: TechCommitteeProposalWhereInput
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  uniqueStatus: String
+  uniqueStatus_not: String
+  uniqueStatus_in: [String!]
+  uniqueStatus_not_in: [String!]
+  uniqueStatus_lt: String
+  uniqueStatus_lte: String
+  uniqueStatus_gt: String
+  uniqueStatus_gte: String
+  uniqueStatus_contains: String
+  uniqueStatus_not_contains: String
+  uniqueStatus_starts_with: String
+  uniqueStatus_not_starts_with: String
+  uniqueStatus_ends_with: String
+  uniqueStatus_not_ends_with: String
+  AND: [TechCommitteeProposalStatusWhereInput!]
+  OR: [TechCommitteeProposalStatusWhereInput!]
+  NOT: [TechCommitteeProposalStatusWhereInput!]
+}
+
+input TechCommitteeProposalStatusWhereUniqueInput {
+  id: ID
+  uniqueStatus: String
+}
+
+type TechCommitteeProposalSubscriptionPayload {
+  mutation: MutationType!
+  node: TechCommitteeProposal
+  updatedFields: [String!]
+  previousValues: TechCommitteeProposalPreviousValues
+}
+
+input TechCommitteeProposalSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TechCommitteeProposalWhereInput
+  AND: [TechCommitteeProposalSubscriptionWhereInput!]
+  OR: [TechCommitteeProposalSubscriptionWhereInput!]
+  NOT: [TechCommitteeProposalSubscriptionWhereInput!]
+}
+
+input TechCommitteeProposalUpdateInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments: TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  proposalHash: String
+  proposalId: Int
+  status: TechCommitteeProposalStatusUpdateManyWithoutProposalInput
+  preimage: PreimageUpdateOneInput
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalUpdateManyMutationInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput {
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput
+  upsert: TechCommitteeProposalUpsertWithoutProposalArgumentsInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalUpdateOneRequiredWithoutStatusInput {
+  create: TechCommitteeProposalCreateWithoutStatusInput
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput
+  upsert: TechCommitteeProposalUpsertWithoutStatusInput
+  connect: TechCommitteeProposalWhereUniqueInput
+}
+
+input TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalHash: String
+  proposalId: Int
+  status: TechCommitteeProposalStatusUpdateManyWithoutProposalInput
+  preimage: PreimageUpdateOneInput
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalUpdateWithoutStatusDataInput {
+  author: String
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments: TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  proposalHash: String
+  proposalId: Int
+  preimage: PreimageUpdateOneInput
+  preimageHash: String
+  section: String
+}
+
+input TechCommitteeProposalUpsertWithoutProposalArgumentsInput {
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput!
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput!
+}
+
+input TechCommitteeProposalUpsertWithoutStatusInput {
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput!
+  create: TechCommitteeProposalCreateWithoutStatusInput!
+}
+
+input TechCommitteeProposalWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  author: String
+  author_not: String
+  author_in: [String!]
+  author_not_in: [String!]
+  author_lt: String
+  author_lte: String
+  author_gt: String
+  author_gte: String
+  author_contains: String
+  author_not_contains: String
+  author_starts_with: String
+  author_not_starts_with: String
+  author_ends_with: String
+  author_not_ends_with: String
+  memberCount: Int
+  memberCount_not: Int
+  memberCount_in: [Int!]
+  memberCount_not_in: [Int!]
+  memberCount_lt: Int
+  memberCount_lte: Int
+  memberCount_gt: Int
+  memberCount_gte: Int
+  metaDescription: String
+  metaDescription_not: String
+  metaDescription_in: [String!]
+  metaDescription_not_in: [String!]
+  metaDescription_lt: String
+  metaDescription_lte: String
+  metaDescription_gt: String
+  metaDescription_gte: String
+  metaDescription_contains: String
+  metaDescription_not_contains: String
+  metaDescription_starts_with: String
+  metaDescription_not_starts_with: String
+  metaDescription_ends_with: String
+  metaDescription_not_ends_with: String
+  method: String
+  method_not: String
+  method_in: [String!]
+  method_not_in: [String!]
+  method_lt: String
+  method_lte: String
+  method_gt: String
+  method_gte: String
+  method_contains: String
+  method_not_contains: String
+  method_starts_with: String
+  method_not_starts_with: String
+  method_ends_with: String
+  method_not_ends_with: String
+  proposalArguments_every: TechCommitteeProposalArgumentWhereInput
+  proposalArguments_some: TechCommitteeProposalArgumentWhereInput
+  proposalArguments_none: TechCommitteeProposalArgumentWhereInput
+  proposalHash: String
+  proposalHash_not: String
+  proposalHash_in: [String!]
+  proposalHash_not_in: [String!]
+  proposalHash_lt: String
+  proposalHash_lte: String
+  proposalHash_gt: String
+  proposalHash_gte: String
+  proposalHash_contains: String
+  proposalHash_not_contains: String
+  proposalHash_starts_with: String
+  proposalHash_not_starts_with: String
+  proposalHash_ends_with: String
+  proposalHash_not_ends_with: String
+  proposalId: Int
+  proposalId_not: Int
+  proposalId_in: [Int!]
+  proposalId_not_in: [Int!]
+  proposalId_lt: Int
+  proposalId_lte: Int
+  proposalId_gt: Int
+  proposalId_gte: Int
+  status_every: TechCommitteeProposalStatusWhereInput
+  status_some: TechCommitteeProposalStatusWhereInput
+  status_none: TechCommitteeProposalStatusWhereInput
+  preimage: PreimageWhereInput
+  preimageHash: String
+  preimageHash_not: String
+  preimageHash_in: [String!]
+  preimageHash_not_in: [String!]
+  preimageHash_lt: String
+  preimageHash_lte: String
+  preimageHash_gt: String
+  preimageHash_gte: String
+  preimageHash_contains: String
+  preimageHash_not_contains: String
+  preimageHash_starts_with: String
+  preimageHash_not_starts_with: String
+  preimageHash_ends_with: String
+  preimageHash_not_ends_with: String
+  section: String
+  section_not: String
+  section_in: [String!]
+  section_not_in: [String!]
+  section_lt: String
+  section_lte: String
+  section_gt: String
+  section_gte: String
+  section_contains: String
+  section_not_contains: String
+  section_starts_with: String
+  section_not_starts_with: String
+  section_ends_with: String
+  section_not_ends_with: String
+  AND: [TechCommitteeProposalWhereInput!]
+  OR: [TechCommitteeProposalWhereInput!]
+  NOT: [TechCommitteeProposalWhereInput!]
+}
+
+input TechCommitteeProposalWhereUniqueInput {
+  id: Int
+  proposalId: Int
 }
 
 type Tip {
