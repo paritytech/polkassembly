@@ -15,6 +15,7 @@ import DiscussionContainer from './LatestDiscussions';
 import MotionsContainer from './LatestMotions';
 import ProposalContainer from './LatestProposals';
 import ReferendaContainer from './LatestReferenda';
+import TechCommitteeProposals from './LatestTechCommitteeProposals';
 import TipContainer from './LatestTips';
 import TreasuryContainer from './LatestTreasury';
 
@@ -46,6 +47,8 @@ const Home = ({ className }: Props) => {
 					<TipContainer className='tipContainer' />
 					<h3>Latest Bounties</h3>
 					<BountyContainer className='bountyContainer' />
+					<h3>Latest Technical committee proposals</h3>
+					<TechCommitteeProposals className='techCommitteeProposalContainer' />
 					<h3>Latest discussions</h3>
 					<DiscussionContainer className='discussionContainer'/>
 				</Grid.Column>
@@ -63,7 +66,7 @@ const Home = ({ className }: Props) => {
 
 export default styled(Home)`
 
-	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer {
+	.referendumContainer, .proposalContainer, .discussionContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer, .techCommitteeProposalContainer {
 		margin-bottom: 3rem;
 	}
 

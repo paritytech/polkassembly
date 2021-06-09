@@ -40,8 +40,11 @@ import ResetPassword from './screens/ResetPassword';
 import Search from './screens/Search';
 import Settings from './screens/Settings';
 import SignupForm from './screens/SignupForm';
+import PostTechCommitteeProposal from './screens/TechCommitteeProposalPost';
+import TechCommitteeProposals from './screens/TechCommitteeProposals';
 import PostTip from './screens/TipPost';
 import Tips from './screens/Tips';
+import Tracker from './screens/Tracker';
 import Treasury from './screens/Treasury';
 import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
@@ -96,6 +99,9 @@ const App = () => {
 														<Route exact path="/treasury/:id">
 															<PostTreasury/>
 														</Route>
+														<Route exact path="/tech/:id">
+															<PostTechCommitteeProposal/>
+														</Route>
 														<Route exact path="/tip/:hash">
 															<PostTip/>
 														</Route>
@@ -119,6 +125,9 @@ const App = () => {
 														</Route>
 														<Route path="/treasury-proposals">
 															<Treasury/>
+														</Route>
+														<Route path="/tech-comm-proposals">
+															<TechCommitteeProposals/>
 														</Route>
 														<Route path="/tips">
 															<Tips/>
@@ -158,6 +167,9 @@ const App = () => {
 														</Route>
 														<Route path="/search">
 															<Search/>
+														</Route>
+														<Route path="/tracker">
+															<Tracker/>
 														</Route>
 														<Route path="*">
 															<NotFound/>

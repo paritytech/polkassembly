@@ -12,6 +12,7 @@ interface Props {
 	isProposal?: boolean
 	isReferendum?: boolean
 	isTreasuryProposal?: boolean
+	isTechCommitteeProposal?: boolean;
 	onchainId?: string | number | null | undefined
 }
 
@@ -26,6 +27,7 @@ const ExternalLinks = ({
 	isProposal,
 	isReferendum,
 	isTreasuryProposal,
+	isTechCommitteeProposal,
 	onchainId
 }: Props) => {
 	const network = getNetwork();
@@ -47,6 +49,9 @@ const ExternalLinks = ({
 			if (isTreasuryProposal) {
 				url = `${host}/treasury/proposal/${onchainId}`;
 			}
+			if (isTechCommitteeProposal) {
+				url = `${host}/techcomm/proposal/${onchainId}`;
+			}
 
 			return url;
 		},
@@ -65,6 +70,9 @@ const ExternalLinks = ({
 			}
 			if (isTreasuryProposal) {
 				url = `${host}/treasury/${onchainId}`;
+			}
+			if (isTechCommitteeProposal) {
+				url = `${host}/tech/${onchainId}`;
 			}
 
 			return url;

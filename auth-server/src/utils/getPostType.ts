@@ -14,7 +14,8 @@ export default (onchainLink: OnchainLinkType): PostType => {
 		onchain_referendum_id,
 		onchain_tip_id,
 		onchain_bounty_id,
-		onchain_treasury_proposal_id
+		onchain_treasury_proposal_id,
+		onchain_tech_committee_proposal_id
 	} = onchainLink;
 
 	let type = PostTypeEnum.POST;
@@ -41,6 +42,10 @@ export default (onchainLink: OnchainLinkType): PostType => {
 
 	if (onchain_referendum_id === 0 || onchain_referendum_id) {
 		type = PostTypeEnum.REFERENDUM;
+	}
+
+	if (onchain_tech_committee_proposal_id === 0 || onchain_tech_committee_proposal_id) {
+		type = PostTypeEnum.TECH;
 	}
 
 	return type;

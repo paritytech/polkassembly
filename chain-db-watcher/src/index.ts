@@ -14,17 +14,19 @@ import {
 	addDiscussionPostAndBounty,
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTechCommitteeProposal,
 	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
 	bountyDiscussionExists,
 	motionDiscussionExists,
 	proposalDiscussionExists,
+	techCommitteeProposalDiscussionExists,
 	tipDiscussionExists,
 	treasuryProposalDiscussionExists,
 	updateTreasuryProposalWithMotion
 } from './graphql_helpers';
-import { bountySubscription, motionSubscription, proposalSubscription, referendumSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
+import { bountySubscription, motionSubscription, proposalSubscription, referendumSubscription, techCommitteeProposalSubscription, tipSubscription, treasurySpendProposalSubscription } from './queries';
 import { syncDBs } from './sync';
 import { getMotionTreasuryProposalId } from './sync/utils';
 
@@ -116,6 +118,31 @@ const startSubscriptions = (client: SubscriptionClient): void => {
 		error: error => { throw new Error(`Subscription (bounty) error: ${error}`); },
 		complete: () => {
 			console.log('Subscription (bounty) completed');
+			process.exit(1);
+		}
+	});
+
+	execute(link, {
+		query: techCommitteeProposalSubscription,
+		variables: { startBlock }
+	}).subscribe({
+		next: ({ data }): void => {
+			console.log('TechCommitteeProposal data received', JSON.stringify(data, null, 2));
+
+			if (data?.techCommitteeProposal.mutation === subscriptionMutation.Created) {
+				const { proposalId, author } = data.techCommitteeProposal.node;
+				techCommitteeProposalDiscussionExists(proposalId).then(alreadyExist => {
+					if (!alreadyExist) {
+						addDiscussionPostAndTechCommitteeProposal({ onchainTechCommitteeProposalId: Number(proposalId), proposer: author });
+					} else {
+						console.error(chalk.red(`✖︎ tech committee proposal id ${proposalId.toString()} already exists in the discsussion db. Not inserted.`));
+					}
+				}).catch(error => console.error(chalk.red(error)));
+			}
+		},
+		error: error => { throw new Error(`Subscription (techCommitteeProposal) error: ${error}`); },
+		complete: () => {
+			console.log('Subscription (techCommitteeProposal) completed');
 			process.exit(1);
 		}
 	});
@@ -295,6 +322,7 @@ function verifyEnvVariables (): void {
 	const envs = [
 		'REACT_APP_HASURA_GRAPHQL_URL',
 		'TREASURY_TOPIC_ID',
+		'TECH_COMMITTEE_PROPOSAL_TOPIC_ID',
 		'DEMOCRACY_TOPIC_ID',
 		'HASURA_PROPOSAL_POST_TYPE_ID',
 		'PROPOSAL_BOT_USER_ID',

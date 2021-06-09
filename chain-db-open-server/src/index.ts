@@ -193,6 +193,38 @@ const resolvers = {
       return prisma.proposalStatus({ id: parent.id }).blockNumber();
     },
   },
+  TechCommitteeProposal: {
+    proposalArguments(
+      parent: any,
+      { where, orderBy, skip, after, before, first, last }: Selectors
+    ) {
+      return prisma.techCommitteeProposal({ id: parent.id }).proposalArguments({
+        where,
+        orderBy,
+        skip,
+        after,
+        before,
+        first,
+        last,
+      });
+    },
+    status(
+      parent: any,
+      { where, orderBy, skip, after, before, first, last }: Selectors
+    ) {
+      return prisma
+        .techCommitteeProposal({ id: parent.id })
+        .status({ where, orderBy, skip, after, before, first, last });
+    },
+    preimage(parent: any) {
+      return prisma.techCommitteeProposal({ id: parent.id }).preimage();
+    },
+  },
+  TechCommitteeProposalStatus: {
+    blockNumber(parent: any) {
+      return prisma.techCommitteeProposalStatus({ id: parent.id }).blockNumber();
+    },
+  },
   Tip: {
     tipStatus(
       parent: any,

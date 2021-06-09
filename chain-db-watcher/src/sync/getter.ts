@@ -13,6 +13,7 @@ import {
 	OnchainMotionFragment,
 	OnchainProposalFragment,
 	OnchainReferendumFragment,
+	OnchainTechCommitteeProposalFragment,
 	OnchainTipFragment,
 	OnchainTreasuryProposalFragment
 } from '../generated/chain-db-graphql';
@@ -21,6 +22,7 @@ import {
 	DiscussionMotionFragment,
 	DiscussionProposalFragment,
 	DiscussionReferendumFragment,
+	DiscussionTechCommitteeProposalFragment,
 	DiscussionTipFragment,
 	DiscussionTreasuryProposalFragment,
 	getSdk as getDiscussionSdk
@@ -140,6 +142,29 @@ export const getDiscussionBounties = async (): Promise<Array<DiscussionBountyFra
 		return data?.onchain_links;
 	} catch (err) {
 		console.error(chalk.red('getDiscussionBounties execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+export const getDiscussionTechCommitteeProposals = async (): Promise<Array<DiscussionTechCommitteeProposalFragment> | null | undefined> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, { headers: {} });
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionTechCommitteeProposals();
+
+		return data?.onchain_links;
+	} catch (err) {
+		console.error(chalk.red('getDiscussionTechCommitteeProposals execution'), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&
@@ -301,6 +326,29 @@ export const getOnChainTips = async (): Promise<Array<OnchainTipFragment | null>
 		return data?.tips;
 	} catch (err) {
 		console.error(chalk.red('getOnchainTips execution'), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors', err.response.errors));
+		err.response?.data &&
+			console.error(chalk.red('Response data if available', err.response.data));
+	}
+};
+
+export const getOnChainTechCommitteeProposals = async (): Promise<Array<OnchainTechCommitteeProposalFragment | null> | undefined> => {
+	if (!onchainGraphqlServerUrl) {
+		throw new Error(
+			'Environment variable for the CHAIN_DB_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(onchainGraphqlServerUrl, { headers: {} });
+
+		const onchainSdk = getOnchainSdk(client);
+		const data = await onchainSdk.getOnchainTechCommitteeProposals({ startBlock });
+
+		return data?.techCommitteeProposals;
+	} catch (err) {
+		console.error(chalk.red('getOnChainTechCommitteeProposals execution'), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors', err.response.errors));
 		err.response?.data &&

@@ -22,7 +22,7 @@ const onchainLinkBounty = gql`
             bountyId
             curator
             beneficiary
-            bountyStatus(last: 1) {
+            bountyStatus(orderBy: id_DESC) {
                 id
                 status
                 blockNumber {

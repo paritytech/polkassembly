@@ -13,6 +13,7 @@ CHAIN_DB_GRAPHQL_URL="http://localhost:4000/"
 HASURA_PROPOSAL_POST_TYPE_ID=2
 DEMOCRACY_TOPIC_ID=1
 COUNCIL_TOPIC_ID=2
+TECH_COMMITTEE_PROPOSAL_TOPIC_ID=3
 TREASURY_TOPIC_ID=4
 HASURA_GRAPHQL_ADMIN_SECRET=<your admin secret>
 START_FROM=0
@@ -20,7 +21,7 @@ HEALTH_PORT=8019
 ```
 ## Run
 - `yarn`
-- `yarn start`  
+- `yarn start`
 
 ## Docker build
 docker build -t paritytech/polkassembly-chain-db-watcher:master .

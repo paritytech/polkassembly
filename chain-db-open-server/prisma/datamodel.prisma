@@ -255,3 +255,33 @@ type BountyStatus {
   status: String!
   uniqueStatus: String! @unique
 }
+
+type TechCommitteeProposal {
+  id: Int! @id(strategy: SEQUENCE) @sequence(name: "TECH_COMMITTEE_PROPOSAL_SEQUENCE" initialValue:1 allocationSize:1)
+  author: String!
+  memberCount: Int
+  metaDescription: String
+  method: String
+  proposalArguments: [TechCommitteeProposalArgument] @relation(name: "ArgumentForTechCommitteeProposal")
+  proposalHash: String!
+  proposalId: Int! @unique
+  status: [TechCommitteeProposalStatus]! @relation(name: "TechCommitteeProposalStatusFromTechCommitteeProposal")
+  preimage: Preimage @relation(name: "PreimageForTechCommitteeProposal")
+  preimageHash: String
+  section: String
+}
+
+type TechCommitteeProposalArgument {
+  id: ID! @id
+  name: String!
+  proposal: TechCommitteeProposal! @relation(name: "ArgumentForTechCommitteeProposal", link: INLINE)
+  value: String!
+}
+
+type TechCommitteeProposalStatus {
+  id: ID! @id
+  blockNumber: BlockNumber! @relation(name: "TechCommitteeProposalStatusAtBlockNumber", link: INLINE)
+  proposal: TechCommitteeProposal! @relation(name: "TechCommitteeProposalStatusFromTechCommitteeProposal", link: INLINE)
+  status: String!
+  uniqueStatus: String! @unique
+}

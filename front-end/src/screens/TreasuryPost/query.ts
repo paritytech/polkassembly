@@ -18,9 +18,12 @@ const onchainLinkTreasuryProposal = gql`
             beneficiary
             value
             bond
-            treasuryStatus(last: 1) {
+            treasuryStatus(orderBy: id_DESC) {
                 id
                 status
+                blockNumber {
+                  number
+                }
             }
         }
     }

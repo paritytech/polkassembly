@@ -8,15 +8,15 @@ import gql from 'graphql-tag';
 export const getOnchainReferenda = gql`
     query getOnchainReferenda($startBlock: Int!) {
         referendums (
-			where: {
+            where: {
                 referendumStatus_some: {
                     AND: [
                         { status: "Started" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainReferendum
         }
     }
@@ -40,15 +40,15 @@ export const getOnchainReferenda = gql`
 export const getOnchainProposals = gql`
     query getOnchainProposals($startBlock: Int!) {
         proposals (
-			where: {
+            where: {
                 proposalStatus_some: {
                     AND: [
                         { status: "Proposed" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainProposal
         }
     }
@@ -62,15 +62,15 @@ export const getOnchainProposals = gql`
 export const getOnchainMotions = gql`
     query getOnchainMotions($startBlock: Int!) {
         motions (
-			where: {
+            where: {
                 motionStatus_some: {
                     AND: [
                         { status: "Proposed" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainMotion
         }
     }
@@ -89,15 +89,15 @@ export const getOnchainMotions = gql`
 export const getOnchainTreasuryProposals = gql`
     query getOnchainTreasuryProposals($startBlock: Int!) {
         treasurySpendProposals (
-			where: {
+            where: {
                 treasuryStatus_some: {
                     AND: [
                         { status: "Proposed" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainTreasuryProposal
         }
     }
@@ -111,15 +111,15 @@ export const getOnchainTreasuryProposals = gql`
 export const getOnchainBounties = gql`
     query getOnchainBounties($startBlock: Int!) {
         bounties (
-			where: {
+            where: {
                 bountyStatus_some: {
                     AND: [
                         { status: "BountyProposed" }
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainBounty
         }
     }
@@ -127,6 +127,28 @@ export const getOnchainBounties = gql`
         proposer
         id
         bountyId
+    }
+`;
+
+export const getOnchainTechCommitteeProposals = gql`
+    query getOnchainTechCommitteeProposals($startBlock: Int!) {
+        techCommitteeProposals (
+            where: {
+                status_some: {
+                    AND: [
+                        { status: "Proposed" }
+                        { blockNumber: { number_gte: $startBlock } }
+                    ]
+                }
+            }
+        ){
+            ...onchainTechCommitteeProposal
+        }
+    }
+    fragment onchainTechCommitteeProposal on TechCommitteeProposal {
+        author
+        id
+        proposalId
     }
 `;
 
@@ -140,8 +162,8 @@ export const getOnchainTips = gql`
                         { blockNumber: { number_gte: $startBlock } }
                     ]
                 }
-			}
-		){
+            }
+        ){
             ...onchainTip
         }
     }

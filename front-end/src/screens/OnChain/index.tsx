@@ -12,6 +12,7 @@ import BountyContainer from './Bounties';
 import MotionContainer from './Motions';
 import ProposalContainer from './Proposals';
 import ReferendaContainer from './Referenda';
+import TechCommitteeProposalsContainer from './TechCommitteeProposals';
 import TipContainer from './Tips';
 import TreasuryContainer from './Treasury';
 
@@ -36,6 +37,9 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 					<h3>Treasury proposals</h3>
 					<TreasuryContainer className='treasuryContainer' limit={limit} />
 					<Link className='full-listing-link' to='treasury-proposals'><Icon name='arrow right'/>See all treasury proposals</Link>
+					<h3>Technical Committee Proposals</h3>
+					<TechCommitteeProposalsContainer className='techCommitteeProposalsContainer' limit={limit} />
+					<Link className='full-listing-link' to='tech-comm-proposals'><Icon name='arrow right'/>See all technical committee proposals proposals</Link>
 					<h3>Tips</h3>
 					<TipContainer className='tipContainer' limit={limit} />
 					<Link className='full-listing-link' to='tips'><Icon name='arrow right'/>See all tips</Link>
@@ -46,7 +50,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 				<Grid.Column mobile={16} tablet={16} computer={6}>
 					<InfoBox
 						dismissable={true}
-						content='This is the place to discuss on-chain proposals, referenda, motions and treasury.
+						content='This is the place to discuss on-chain proposals, referenda, motions, tips, bounties, treasury proposals and technical committee proposals.
 						On-chain posts are automatically generated as soon as they are created on the chain.
 						Only the proposer is able to edit them.'
 						name='onchainInfo'
@@ -61,7 +65,7 @@ const OnchainPostsContainer = ({ className } : {className?: string}) => {
 
 export default styled(OnchainPostsContainer)`
 
-	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer {
+	.referendaContainer, .proposalContainer, .motionContainer, .treasuryContainer, .tipContainer, .bountyContainer, .techCommitteeProposalsContainer {
 		margin-bottom: 2rem;
 	}
 

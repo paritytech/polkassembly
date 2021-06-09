@@ -220,6 +220,16 @@
       - onchain_bounty_id
       remote_schema: chain-db
     name: onchain_bounty
+  - definition:
+      remote_field:
+        techCommitteeProposals:
+          arguments:
+            where:
+              proposalId: $onchain_tech_committee_proposal_id
+      hasura_fields:
+      - onchain_tech_committee_proposal_id
+      remote_schema: chain-db
+    name: onchain_tech_committee_proposal
   insert_permissions:
   - role: proposal_bot
     permission:
@@ -229,6 +239,7 @@
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
+      - onchain_tech_committee_proposal_id
       - onchain_tip_id
       - onchain_treasury_proposal_id
       - post_id
@@ -237,31 +248,33 @@
   - role: anonymous
     permission:
       columns:
-      - created_at
       - id
-      - onchain_bounty_id
-      - onchain_motion_id
-      - onchain_proposal_id
-      - onchain_referendum_id
-      - onchain_tip_id
-      - onchain_treasury_proposal_id
+      - created_at
       - post_id
+      - onchain_proposal_id
       - proposer_address
+      - onchain_referendum_id
+      - onchain_motion_id
+      - onchain_treasury_proposal_id
+      - onchain_tip_id
+      - onchain_bounty_id
+      - onchain_tech_committee_proposal_id
       filter: {}
       allow_aggregations: true
   - role: proposal_bot
     permission:
       columns:
-      - created_at
       - id
       - onchain_bounty_id
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
-      - onchain_tip_id
+      - onchain_tech_committee_proposal_id
       - onchain_treasury_proposal_id
       - post_id
+      - onchain_tip_id
       - proposer_address
+      - created_at
       filter: {}
   - role: user
     permission:
@@ -272,6 +285,7 @@
       - onchain_motion_id
       - onchain_proposal_id
       - onchain_referendum_id
+      - onchain_tech_committee_proposal_id
       - onchain_tip_id
       - onchain_treasury_proposal_id
       - post_id
@@ -284,7 +298,13 @@
       columns:
       - onchain_bounty_id
       - onchain_motion_id
+      - onchain_proposal_id
       - onchain_referendum_id
+      - onchain_tech_committee_proposal_id
+      - onchain_tip_id
+      - onchain_treasury_proposal_id
+      - post_id
+      - proposer_address
       filter: {}
       check: null
   event_triggers:

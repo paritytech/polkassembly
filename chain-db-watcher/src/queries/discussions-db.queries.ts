@@ -85,6 +85,33 @@ export const addPostAndBountyMutation = gql`
     }
 `;
 
+export const addPostAndTechCommitteeProposalMutation = gql`
+    mutation addPostAndTechCommitteeProposalMutation (
+        $onchainTechCommitteeProposalId: Int!,
+        $authorId: Int!,
+        $proposerAddress: String!,
+        $content: String!,
+        $topicId: Int!,
+        $typeId: Int!
+        ){
+        __typename
+        insert_onchain_links(objects: {
+            onchain_tech_committee_proposal_id: $onchainTechCommitteeProposalId,
+            proposer_address: $proposerAddress,
+            post: {data: {
+                author_id: $authorId,
+                content: $content,
+                topic_id: $topicId,
+                type_id: $typeId
+            }
+        }}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
 export const addPostAndTipMutation = gql`
     mutation addPostAndTipMutation (
         $onchainTipId:String!,

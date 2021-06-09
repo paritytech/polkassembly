@@ -20,7 +20,7 @@ const onchainLinkTip = gql`
             finder
             finderFee
             closes
-            tipStatus(last: 1) {
+            tipStatus(orderBy: id_DESC) {
                 id
                 status
                 blockNumber {

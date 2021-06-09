@@ -17,7 +17,7 @@ const onchainLinkReferendum = gql`
             delay
             end
             voteThreshold
-            referendumStatus(last: 1) {
+            referendumStatus(orderBy: id_DESC) {
                 blockNumber {
                     startDateTime
                     number

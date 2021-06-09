@@ -8,6 +8,7 @@ import {
 	addDiscussionPostAndBounty,
 	addDiscussionPostAndMotion,
 	addDiscussionPostAndProposal,
+	addDiscussionPostAndTechCommitteeProposal,
 	addDiscussionPostAndTip,
 	addDiscussionPostAndTreasuryProposal,
 	addDiscussionReferendum,
@@ -19,12 +20,14 @@ import {
 	getDiscussionMotions,
 	getDiscussionProposals,
 	getDiscussionReferenda,
+	getDiscussionTechCommitteeProposals,
 	getDiscussionTips,
 	getDiscussionTreasuryProposals,
 	getOnChainBounties,
 	getOnChainMotions,
 	getOnChainProposals,
 	getOnchainReferenda,
+	getOnChainTechCommitteeProposals,
 	getOnChainTips,
 	getOnChainTreasuryProposals
 } from './getter';
@@ -38,6 +41,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 		const discussionTreasuryProposals = await getDiscussionTreasuryProposals();
 		const discussionTips = await getDiscussionTips();
 		const discussionBounties = await getDiscussionBounties();
+		const discussionTechCommitteeProposals = await getDiscussionTechCommitteeProposals();
 
 		const onChainMotions = await getOnChainMotions();
 		const onChainProposals = await getOnChainProposals();
@@ -45,6 +49,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 		const onChainTreasuryProposals = await getOnChainTreasuryProposals();
 		const onChainTips = await getOnChainTips();
 		const onChainBounties = await getOnChainBounties();
+		const onChainTechCommitteeProposals = await getOnChainTechCommitteeProposals();
 
 		return {
 			discussion: {
@@ -52,6 +57,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 				motions: discussionMotions,
 				proposals: discussionProposals,
 				referenda: discussionReferenda,
+				techCommitteeProposals: discussionTechCommitteeProposals,
 				tips: discussionTips,
 				treasuryProposals: discussionTreasuryProposals
 			},
@@ -60,6 +66,7 @@ const getSyncData = async (): Promise<SyncData | undefined> => {
 				motions: onChainMotions,
 				proposals: onChainProposals,
 				referenda: onchainReferenda,
+				techCommitteeProposals: onChainTechCommitteeProposals,
 				tips: onChainTips,
 				treasuryProposals: onChainTreasuryProposals
 			}
@@ -92,6 +99,15 @@ const syncTreasuryProposals = async (onchainTreasuryProposals: ObjectMap, discus
 		// if this treasuryproposal doesn't exist in the discussion DB
 		if (!discussionTreasuryProposals[key]) {
 			await addDiscussionPostAndTreasuryProposal({ onchainTreasuryProposalId: Number(key), proposer: author });
+		}
+	}));
+};
+
+const syncTechCommitteeProposals = async (onChainTechCommitteeProposals: ObjectMap, discussionTechCommitteeProposals: ObjectMap): Promise<void[]> => {
+	return Promise.all(Object.entries(onChainTechCommitteeProposals).map(async ([key, author]) => {
+		// if this techCommitteeProposal doesn't exist in the discussion DB
+		if (!discussionTechCommitteeProposals[key]) {
+			await addDiscussionPostAndTechCommitteeProposal({ onchainTechCommitteeProposalId: Number(key), proposer: author });
 		}
 	}));
 };
@@ -191,6 +207,10 @@ export const syncDBs = async (): Promise<void> => {
 		syncMaps?.onchain?.bounties &&
 		syncMaps?.discussion?.bounties &&
 		await syncBounties(syncMaps.onchain.bounties, syncMaps.discussion.bounties);
+
+		syncMaps?.onchain?.techCommitteeProposals &&
+		syncMaps?.discussion?.techCommitteeProposals &&
+		await syncTechCommitteeProposals(syncMaps.onchain.techCommitteeProposals, syncMaps.discussion.techCommitteeProposals);
 
 		if (syncMaps?.onchain?.motions && syncMaps?.discussion?.motions) {
 			const treasuryDeduplicatedMotionsMap = getTreasuryDeduplicatedMotionsMap(syncMaps.onchain.motions);

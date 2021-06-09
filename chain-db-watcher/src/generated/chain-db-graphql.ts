@@ -139,6 +139,21 @@ export type AggregateStake = {
   count: Scalars['Int'];
 };
 
+export type AggregateTechCommitteeProposal = {
+  __typename?: 'AggregateTechCommitteeProposal';
+  count: Scalars['Int'];
+};
+
+export type AggregateTechCommitteeProposalArgument = {
+  __typename?: 'AggregateTechCommitteeProposalArgument';
+  count: Scalars['Int'];
+};
+
+export type AggregateTechCommitteeProposalStatus = {
+  __typename?: 'AggregateTechCommitteeProposalStatus';
+  count: Scalars['Int'];
+};
+
 export type AggregateTip = {
   __typename?: 'AggregateTip';
   count: Scalars['Int'];
@@ -3399,7 +3414,6 @@ export type Mutation = {
   createMotionStatus: MotionStatus;
   createProposal: Proposal;
   createProposalStatus: ProposalStatus;
-  createPreimage: Preimage;
   createPreimageStatus: PreimageStatus;
   createPreimageArgument: PreimageArgument;
   createReferendum: Referendum;
@@ -3411,6 +3425,10 @@ export type Mutation = {
   createTipStatus: TipStatus;
   createBounty: Bounty;
   createBountyStatus: BountyStatus;
+  createTechCommitteeProposal: TechCommitteeProposal;
+  createTechCommitteeProposalArgument: TechCommitteeProposalArgument;
+  createTechCommitteeProposalStatus: TechCommitteeProposalStatus;
+  createPreimage: Preimage;
   createBlockNumber: BlockNumber;
   createSession: Session;
   updateHeartBeat?: Maybe<HeartBeat>;
@@ -3429,7 +3447,6 @@ export type Mutation = {
   updateMotionStatus?: Maybe<MotionStatus>;
   updateProposal?: Maybe<Proposal>;
   updateProposalStatus?: Maybe<ProposalStatus>;
-  updatePreimage?: Maybe<Preimage>;
   updatePreimageStatus?: Maybe<PreimageStatus>;
   updatePreimageArgument?: Maybe<PreimageArgument>;
   updateReferendum?: Maybe<Referendum>;
@@ -3441,6 +3458,10 @@ export type Mutation = {
   updateTipStatus?: Maybe<TipStatus>;
   updateBounty?: Maybe<Bounty>;
   updateBountyStatus?: Maybe<BountyStatus>;
+  updateTechCommitteeProposal?: Maybe<TechCommitteeProposal>;
+  updateTechCommitteeProposalArgument?: Maybe<TechCommitteeProposalArgument>;
+  updateTechCommitteeProposalStatus?: Maybe<TechCommitteeProposalStatus>;
+  updatePreimage?: Maybe<Preimage>;
   updateBlockNumber?: Maybe<BlockNumber>;
   updateSession?: Maybe<Session>;
   deleteHeartBeat?: Maybe<HeartBeat>;
@@ -3459,7 +3480,6 @@ export type Mutation = {
   deleteMotionStatus?: Maybe<MotionStatus>;
   deleteProposal?: Maybe<Proposal>;
   deleteProposalStatus?: Maybe<ProposalStatus>;
-  deletePreimage?: Maybe<Preimage>;
   deletePreimageStatus?: Maybe<PreimageStatus>;
   deletePreimageArgument?: Maybe<PreimageArgument>;
   deleteReferendum?: Maybe<Referendum>;
@@ -3471,6 +3491,10 @@ export type Mutation = {
   deleteTipStatus?: Maybe<TipStatus>;
   deleteBounty?: Maybe<Bounty>;
   deleteBountyStatus?: Maybe<BountyStatus>;
+  deleteTechCommitteeProposal?: Maybe<TechCommitteeProposal>;
+  deleteTechCommitteeProposalArgument?: Maybe<TechCommitteeProposalArgument>;
+  deleteTechCommitteeProposalStatus?: Maybe<TechCommitteeProposalStatus>;
+  deletePreimage?: Maybe<Preimage>;
   deleteBlockNumber?: Maybe<BlockNumber>;
   deleteSession?: Maybe<Session>;
   upsertHeartBeat: HeartBeat;
@@ -3489,7 +3513,6 @@ export type Mutation = {
   upsertMotionStatus: MotionStatus;
   upsertProposal: Proposal;
   upsertProposalStatus: ProposalStatus;
-  upsertPreimage: Preimage;
   upsertPreimageStatus: PreimageStatus;
   upsertPreimageArgument: PreimageArgument;
   upsertReferendum: Referendum;
@@ -3501,6 +3524,10 @@ export type Mutation = {
   upsertTipStatus: TipStatus;
   upsertBounty: Bounty;
   upsertBountyStatus: BountyStatus;
+  upsertTechCommitteeProposal: TechCommitteeProposal;
+  upsertTechCommitteeProposalArgument: TechCommitteeProposalArgument;
+  upsertTechCommitteeProposalStatus: TechCommitteeProposalStatus;
+  upsertPreimage: Preimage;
   upsertBlockNumber: BlockNumber;
   upsertSession: Session;
   updateManyHeartBeats: BatchPayload;
@@ -3518,7 +3545,6 @@ export type Mutation = {
   updateManyMotionStatuses: BatchPayload;
   updateManyProposals: BatchPayload;
   updateManyProposalStatuses: BatchPayload;
-  updateManyPreimages: BatchPayload;
   updateManyPreimageStatuses: BatchPayload;
   updateManyPreimageArguments: BatchPayload;
   updateManyReferendums: BatchPayload;
@@ -3530,6 +3556,10 @@ export type Mutation = {
   updateManyTipStatuses: BatchPayload;
   updateManyBounties: BatchPayload;
   updateManyBountyStatuses: BatchPayload;
+  updateManyTechCommitteeProposals: BatchPayload;
+  updateManyTechCommitteeProposalArguments: BatchPayload;
+  updateManyTechCommitteeProposalStatuses: BatchPayload;
+  updateManyPreimages: BatchPayload;
   updateManyBlockNumbers: BatchPayload;
   updateManySessions: BatchPayload;
   deleteManyHeartBeats: BatchPayload;
@@ -3548,7 +3578,6 @@ export type Mutation = {
   deleteManyMotionStatuses: BatchPayload;
   deleteManyProposals: BatchPayload;
   deleteManyProposalStatuses: BatchPayload;
-  deleteManyPreimages: BatchPayload;
   deleteManyPreimageStatuses: BatchPayload;
   deleteManyPreimageArguments: BatchPayload;
   deleteManyReferendums: BatchPayload;
@@ -3560,6 +3589,10 @@ export type Mutation = {
   deleteManyTipStatuses: BatchPayload;
   deleteManyBounties: BatchPayload;
   deleteManyBountyStatuses: BatchPayload;
+  deleteManyTechCommitteeProposals: BatchPayload;
+  deleteManyTechCommitteeProposalArguments: BatchPayload;
+  deleteManyTechCommitteeProposalStatuses: BatchPayload;
+  deleteManyPreimages: BatchPayload;
   deleteManyBlockNumbers: BatchPayload;
   deleteManySessions: BatchPayload;
   executeRaw: Scalars['Json'];
@@ -3646,11 +3679,6 @@ export type MutationCreateProposalStatusArgs = {
 };
 
 
-export type MutationCreatePreimageArgs = {
-  data: PreimageCreateInput;
-};
-
-
 export type MutationCreatePreimageStatusArgs = {
   data: PreimageStatusCreateInput;
 };
@@ -3703,6 +3731,26 @@ export type MutationCreateBountyArgs = {
 
 export type MutationCreateBountyStatusArgs = {
   data: BountyStatusCreateInput;
+};
+
+
+export type MutationCreateTechCommitteeProposalArgs = {
+  data: TechCommitteeProposalCreateInput;
+};
+
+
+export type MutationCreateTechCommitteeProposalArgumentArgs = {
+  data: TechCommitteeProposalArgumentCreateInput;
+};
+
+
+export type MutationCreateTechCommitteeProposalStatusArgs = {
+  data: TechCommitteeProposalStatusCreateInput;
+};
+
+
+export type MutationCreatePreimageArgs = {
+  data: PreimageCreateInput;
 };
 
 
@@ -3812,12 +3860,6 @@ export type MutationUpdateProposalStatusArgs = {
 };
 
 
-export type MutationUpdatePreimageArgs = {
-  data: PreimageUpdateInput;
-  where: PreimageWhereUniqueInput;
-};
-
-
 export type MutationUpdatePreimageStatusArgs = {
   data: PreimageStatusUpdateInput;
   where: PreimageStatusWhereUniqueInput;
@@ -3881,6 +3923,30 @@ export type MutationUpdateBountyArgs = {
 export type MutationUpdateBountyStatusArgs = {
   data: BountyStatusUpdateInput;
   where: BountyStatusWhereUniqueInput;
+};
+
+
+export type MutationUpdateTechCommitteeProposalArgs = {
+  data: TechCommitteeProposalUpdateInput;
+  where: TechCommitteeProposalWhereUniqueInput;
+};
+
+
+export type MutationUpdateTechCommitteeProposalArgumentArgs = {
+  data: TechCommitteeProposalArgumentUpdateInput;
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+};
+
+
+export type MutationUpdateTechCommitteeProposalStatusArgs = {
+  data: TechCommitteeProposalStatusUpdateInput;
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+};
+
+
+export type MutationUpdatePreimageArgs = {
+  data: PreimageUpdateInput;
+  where: PreimageWhereUniqueInput;
 };
 
 
@@ -3976,11 +4042,6 @@ export type MutationDeleteProposalStatusArgs = {
 };
 
 
-export type MutationDeletePreimageArgs = {
-  where: PreimageWhereUniqueInput;
-};
-
-
 export type MutationDeletePreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
 };
@@ -4033,6 +4094,26 @@ export type MutationDeleteBountyArgs = {
 
 export type MutationDeleteBountyStatusArgs = {
   where: BountyStatusWhereUniqueInput;
+};
+
+
+export type MutationDeleteTechCommitteeProposalArgs = {
+  where: TechCommitteeProposalWhereUniqueInput;
+};
+
+
+export type MutationDeleteTechCommitteeProposalArgumentArgs = {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+};
+
+
+export type MutationDeleteTechCommitteeProposalStatusArgs = {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+};
+
+
+export type MutationDeletePreimageArgs = {
+  where: PreimageWhereUniqueInput;
 };
 
 
@@ -4158,13 +4239,6 @@ export type MutationUpsertProposalStatusArgs = {
 };
 
 
-export type MutationUpsertPreimageArgs = {
-  where: PreimageWhereUniqueInput;
-  create: PreimageCreateInput;
-  update: PreimageUpdateInput;
-};
-
-
 export type MutationUpsertPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
   create: PreimageStatusCreateInput;
@@ -4239,6 +4313,34 @@ export type MutationUpsertBountyStatusArgs = {
   where: BountyStatusWhereUniqueInput;
   create: BountyStatusCreateInput;
   update: BountyStatusUpdateInput;
+};
+
+
+export type MutationUpsertTechCommitteeProposalArgs = {
+  where: TechCommitteeProposalWhereUniqueInput;
+  create: TechCommitteeProposalCreateInput;
+  update: TechCommitteeProposalUpdateInput;
+};
+
+
+export type MutationUpsertTechCommitteeProposalArgumentArgs = {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+  create: TechCommitteeProposalArgumentCreateInput;
+  update: TechCommitteeProposalArgumentUpdateInput;
+};
+
+
+export type MutationUpsertTechCommitteeProposalStatusArgs = {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+  create: TechCommitteeProposalStatusCreateInput;
+  update: TechCommitteeProposalStatusUpdateInput;
+};
+
+
+export type MutationUpsertPreimageArgs = {
+  where: PreimageWhereUniqueInput;
+  create: PreimageCreateInput;
+  update: PreimageUpdateInput;
 };
 
 
@@ -4346,12 +4448,6 @@ export type MutationUpdateManyProposalStatusesArgs = {
 };
 
 
-export type MutationUpdateManyPreimagesArgs = {
-  data: PreimageUpdateManyMutationInput;
-  where?: Maybe<PreimageWhereInput>;
-};
-
-
 export type MutationUpdateManyPreimageStatusesArgs = {
   data: PreimageStatusUpdateManyMutationInput;
   where?: Maybe<PreimageStatusWhereInput>;
@@ -4415,6 +4511,30 @@ export type MutationUpdateManyBountiesArgs = {
 export type MutationUpdateManyBountyStatusesArgs = {
   data: BountyStatusUpdateManyMutationInput;
   where?: Maybe<BountyStatusWhereInput>;
+};
+
+
+export type MutationUpdateManyTechCommitteeProposalsArgs = {
+  data: TechCommitteeProposalUpdateManyMutationInput;
+  where?: Maybe<TechCommitteeProposalWhereInput>;
+};
+
+
+export type MutationUpdateManyTechCommitteeProposalArgumentsArgs = {
+  data: TechCommitteeProposalArgumentUpdateManyMutationInput;
+  where?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+};
+
+
+export type MutationUpdateManyTechCommitteeProposalStatusesArgs = {
+  data: TechCommitteeProposalStatusUpdateManyMutationInput;
+  where?: Maybe<TechCommitteeProposalStatusWhereInput>;
+};
+
+
+export type MutationUpdateManyPreimagesArgs = {
+  data: PreimageUpdateManyMutationInput;
+  where?: Maybe<PreimageWhereInput>;
 };
 
 
@@ -4510,11 +4630,6 @@ export type MutationDeleteManyProposalStatusesArgs = {
 };
 
 
-export type MutationDeleteManyPreimagesArgs = {
-  where?: Maybe<PreimageWhereInput>;
-};
-
-
 export type MutationDeleteManyPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
 };
@@ -4567,6 +4682,26 @@ export type MutationDeleteManyBountiesArgs = {
 
 export type MutationDeleteManyBountyStatusesArgs = {
   where?: Maybe<BountyStatusWhereInput>;
+};
+
+
+export type MutationDeleteManyTechCommitteeProposalsArgs = {
+  where?: Maybe<TechCommitteeProposalWhereInput>;
+};
+
+
+export type MutationDeleteManyTechCommitteeProposalArgumentsArgs = {
+  where?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+};
+
+
+export type MutationDeleteManyTechCommitteeProposalStatusesArgs = {
+  where?: Maybe<TechCommitteeProposalStatusWhereInput>;
+};
+
+
+export type MutationDeleteManyPreimagesArgs = {
+  where?: Maybe<PreimageWhereInput>;
 };
 
 
@@ -5507,6 +5642,11 @@ export type PreimageCreateInput = {
   referendum?: Maybe<ReferendumCreateOneWithoutPreimageInput>;
 };
 
+export type PreimageCreateOneInput = {
+  create?: Maybe<PreimageCreateInput>;
+  connect?: Maybe<PreimageWhereUniqueInput>;
+};
+
 export type PreimageCreateOneWithoutMotionInput = {
   create?: Maybe<PreimageCreateWithoutMotionInput>;
   connect?: Maybe<PreimageWhereUniqueInput>;
@@ -5928,6 +6068,20 @@ export type PreimageSubscriptionWhereInput = {
   node?: Maybe<PreimageWhereInput>;
 };
 
+export type PreimageUpdateDataInput = {
+  author?: Maybe<Scalars['String']>;
+  depositAmount?: Maybe<Scalars['String']>;
+  hash?: Maybe<Scalars['String']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
+};
+
 export type PreimageUpdateInput = {
   author?: Maybe<Scalars['String']>;
   depositAmount?: Maybe<Scalars['String']>;
@@ -5949,6 +6103,15 @@ export type PreimageUpdateManyMutationInput = {
   metaDescription?: Maybe<Scalars['String']>;
   method?: Maybe<Scalars['String']>;
   section?: Maybe<Scalars['String']>;
+};
+
+export type PreimageUpdateOneInput = {
+  create?: Maybe<PreimageCreateInput>;
+  connect?: Maybe<PreimageWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<PreimageUpdateDataInput>;
+  upsert?: Maybe<PreimageUpsertNestedInput>;
 };
 
 export type PreimageUpdateOneRequiredWithoutPreimageArgumentsInput = {
@@ -6055,6 +6218,11 @@ export type PreimageUpdateWithoutReferendumDataInput = {
   proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
   preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
   preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
+};
+
+export type PreimageUpsertNestedInput = {
+  update: PreimageUpdateDataInput;
+  create: PreimageCreateInput;
 };
 
 export type PreimageUpsertWithoutMotionInput = {
@@ -6954,7 +7122,6 @@ export type Query = {
   motionStatuses: Array<Maybe<MotionStatus>>;
   proposals: Array<Maybe<Proposal>>;
   proposalStatuses: Array<Maybe<ProposalStatus>>;
-  preimages: Array<Maybe<Preimage>>;
   preimageStatuses: Array<Maybe<PreimageStatus>>;
   preimageArguments: Array<Maybe<PreimageArgument>>;
   referendums: Array<Maybe<Referendum>>;
@@ -6966,6 +7133,10 @@ export type Query = {
   tipStatuses: Array<Maybe<TipStatus>>;
   bounties: Array<Maybe<Bounty>>;
   bountyStatuses: Array<Maybe<BountyStatus>>;
+  techCommitteeProposals: Array<Maybe<TechCommitteeProposal>>;
+  techCommitteeProposalArguments: Array<Maybe<TechCommitteeProposalArgument>>;
+  techCommitteeProposalStatuses: Array<Maybe<TechCommitteeProposalStatus>>;
+  preimages: Array<Maybe<Preimage>>;
   blockNumbers: Array<Maybe<BlockNumber>>;
   sessions: Array<Maybe<Session>>;
   heartBeat?: Maybe<HeartBeat>;
@@ -6984,7 +7155,6 @@ export type Query = {
   motionStatus?: Maybe<MotionStatus>;
   proposal?: Maybe<Proposal>;
   proposalStatus?: Maybe<ProposalStatus>;
-  preimage?: Maybe<Preimage>;
   preimageStatus?: Maybe<PreimageStatus>;
   preimageArgument?: Maybe<PreimageArgument>;
   referendum?: Maybe<Referendum>;
@@ -6996,6 +7166,10 @@ export type Query = {
   tipStatus?: Maybe<TipStatus>;
   bounty?: Maybe<Bounty>;
   bountyStatus?: Maybe<BountyStatus>;
+  techCommitteeProposal?: Maybe<TechCommitteeProposal>;
+  techCommitteeProposalArgument?: Maybe<TechCommitteeProposalArgument>;
+  techCommitteeProposalStatus?: Maybe<TechCommitteeProposalStatus>;
+  preimage?: Maybe<Preimage>;
   blockNumber?: Maybe<BlockNumber>;
   session?: Maybe<Session>;
   heartBeatsConnection: HeartBeatConnection;
@@ -7014,7 +7188,6 @@ export type Query = {
   motionStatusesConnection: MotionStatusConnection;
   proposalsConnection: ProposalConnection;
   proposalStatusesConnection: ProposalStatusConnection;
-  preimagesConnection: PreimageConnection;
   preimageStatusesConnection: PreimageStatusConnection;
   preimageArgumentsConnection: PreimageArgumentConnection;
   referendumsConnection: ReferendumConnection;
@@ -7026,6 +7199,10 @@ export type Query = {
   tipStatusesConnection: TipStatusConnection;
   bountiesConnection: BountyConnection;
   bountyStatusesConnection: BountyStatusConnection;
+  techCommitteeProposalsConnection: TechCommitteeProposalConnection;
+  techCommitteeProposalArgumentsConnection: TechCommitteeProposalArgumentConnection;
+  techCommitteeProposalStatusesConnection: TechCommitteeProposalStatusConnection;
+  preimagesConnection: PreimageConnection;
   blockNumbersConnection: BlockNumberConnection;
   sessionsConnection: SessionConnection;
   /** Fetches an object given its ID */
@@ -7209,17 +7386,6 @@ export type QueryProposalStatusesArgs = {
 };
 
 
-export type QueryPreimagesArgs = {
-  where?: Maybe<PreimageWhereInput>;
-  orderBy?: Maybe<PreimageOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryPreimageStatusesArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
   orderBy?: Maybe<PreimageStatusOrderByInput>;
@@ -7341,6 +7507,50 @@ export type QueryBountyStatusesArgs = {
 };
 
 
+export type QueryTechCommitteeProposalsArgs = {
+  where?: Maybe<TechCommitteeProposalWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTechCommitteeProposalArgumentsArgs = {
+  where?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalArgumentOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTechCommitteeProposalStatusesArgs = {
+  where?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalStatusOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPreimagesArgs = {
+  where?: Maybe<PreimageWhereInput>;
+  orderBy?: Maybe<PreimageOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryBlockNumbersArgs = {
   where?: Maybe<BlockNumberWhereInput>;
   orderBy?: Maybe<BlockNumberOrderByInput>;
@@ -7443,11 +7653,6 @@ export type QueryProposalStatusArgs = {
 };
 
 
-export type QueryPreimageArgs = {
-  where: PreimageWhereUniqueInput;
-};
-
-
 export type QueryPreimageStatusArgs = {
   where: PreimageStatusWhereUniqueInput;
 };
@@ -7500,6 +7705,26 @@ export type QueryBountyArgs = {
 
 export type QueryBountyStatusArgs = {
   where: BountyStatusWhereUniqueInput;
+};
+
+
+export type QueryTechCommitteeProposalArgs = {
+  where: TechCommitteeProposalWhereUniqueInput;
+};
+
+
+export type QueryTechCommitteeProposalArgumentArgs = {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+};
+
+
+export type QueryTechCommitteeProposalStatusArgs = {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+};
+
+
+export type QueryPreimageArgs = {
+  where: PreimageWhereUniqueInput;
 };
 
 
@@ -7689,17 +7914,6 @@ export type QueryProposalStatusesConnectionArgs = {
 };
 
 
-export type QueryPreimagesConnectionArgs = {
-  where?: Maybe<PreimageWhereInput>;
-  orderBy?: Maybe<PreimageOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryPreimageStatusesConnectionArgs = {
   where?: Maybe<PreimageStatusWhereInput>;
   orderBy?: Maybe<PreimageStatusOrderByInput>;
@@ -7813,6 +8027,50 @@ export type QueryBountiesConnectionArgs = {
 export type QueryBountyStatusesConnectionArgs = {
   where?: Maybe<BountyStatusWhereInput>;
   orderBy?: Maybe<BountyStatusOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTechCommitteeProposalsConnectionArgs = {
+  where?: Maybe<TechCommitteeProposalWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTechCommitteeProposalArgumentsConnectionArgs = {
+  where?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalArgumentOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTechCommitteeProposalStatusesConnectionArgs = {
+  where?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalStatusOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPreimagesConnectionArgs = {
+  where?: Maybe<PreimageWhereInput>;
+  orderBy?: Maybe<PreimageOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -9194,7 +9452,6 @@ export type Subscription = {
   motionStatus?: Maybe<MotionStatusSubscriptionPayload>;
   proposal?: Maybe<ProposalSubscriptionPayload>;
   proposalStatus?: Maybe<ProposalStatusSubscriptionPayload>;
-  preimage?: Maybe<PreimageSubscriptionPayload>;
   preimageStatus?: Maybe<PreimageStatusSubscriptionPayload>;
   preimageArgument?: Maybe<PreimageArgumentSubscriptionPayload>;
   referendum?: Maybe<ReferendumSubscriptionPayload>;
@@ -9206,6 +9463,10 @@ export type Subscription = {
   tipStatus?: Maybe<TipStatusSubscriptionPayload>;
   bounty?: Maybe<BountySubscriptionPayload>;
   bountyStatus?: Maybe<BountyStatusSubscriptionPayload>;
+  techCommitteeProposal?: Maybe<TechCommitteeProposalSubscriptionPayload>;
+  techCommitteeProposalArgument?: Maybe<TechCommitteeProposalArgumentSubscriptionPayload>;
+  techCommitteeProposalStatus?: Maybe<TechCommitteeProposalStatusSubscriptionPayload>;
+  preimage?: Maybe<PreimageSubscriptionPayload>;
   blockNumber?: Maybe<BlockNumberSubscriptionPayload>;
   session?: Maybe<SessionSubscriptionPayload>;
 };
@@ -9291,11 +9552,6 @@ export type SubscriptionProposalStatusArgs = {
 };
 
 
-export type SubscriptionPreimageArgs = {
-  where?: Maybe<PreimageSubscriptionWhereInput>;
-};
-
-
 export type SubscriptionPreimageStatusArgs = {
   where?: Maybe<PreimageStatusSubscriptionWhereInput>;
 };
@@ -9351,6 +9607,26 @@ export type SubscriptionBountyStatusArgs = {
 };
 
 
+export type SubscriptionTechCommitteeProposalArgs = {
+  where?: Maybe<TechCommitteeProposalSubscriptionWhereInput>;
+};
+
+
+export type SubscriptionTechCommitteeProposalArgumentArgs = {
+  where?: Maybe<TechCommitteeProposalArgumentSubscriptionWhereInput>;
+};
+
+
+export type SubscriptionTechCommitteeProposalStatusArgs = {
+  where?: Maybe<TechCommitteeProposalStatusSubscriptionWhereInput>;
+};
+
+
+export type SubscriptionPreimageArgs = {
+  where?: Maybe<PreimageSubscriptionWhereInput>;
+};
+
+
 export type SubscriptionBlockNumberArgs = {
   where?: Maybe<BlockNumberSubscriptionWhereInput>;
 };
@@ -9358,6 +9634,1125 @@ export type SubscriptionBlockNumberArgs = {
 
 export type SubscriptionSessionArgs = {
   where?: Maybe<SessionSubscriptionWhereInput>;
+};
+
+export type TechCommitteeProposal = {
+  __typename?: 'TechCommitteeProposal';
+  id: Scalars['Int'];
+  author: Scalars['String'];
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalArguments?: Maybe<Array<TechCommitteeProposalArgument>>;
+  proposalHash: Scalars['String'];
+  proposalId: Scalars['Int'];
+  status?: Maybe<Array<TechCommitteeProposalStatus>>;
+  preimage?: Maybe<Preimage>;
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+};
+
+
+export type TechCommitteeProposalProposalArgumentsArgs = {
+  where?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalArgumentOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type TechCommitteeProposalStatusArgs = {
+  where?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  orderBy?: Maybe<TechCommitteeProposalStatusOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+export type TechCommitteeProposalArgument = Node & {
+  __typename?: 'TechCommitteeProposalArgument';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  proposal: TechCommitteeProposal;
+  value: Scalars['String'];
+};
+
+/** A connection to a list of items. */
+export type TechCommitteeProposalArgumentConnection = {
+  __typename?: 'TechCommitteeProposalArgumentConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<Maybe<TechCommitteeProposalArgumentEdge>>;
+  aggregate: AggregateTechCommitteeProposalArgument;
+};
+
+export type TechCommitteeProposalArgumentCreateInput = {
+  id?: Maybe<Scalars['ID']>;
+  name: Scalars['String'];
+  value: Scalars['String'];
+  proposal: TechCommitteeProposalCreateOneWithoutProposalArgumentsInput;
+};
+
+export type TechCommitteeProposalArgumentCreateManyWithoutProposalInput = {
+  create?: Maybe<Array<TechCommitteeProposalArgumentCreateWithoutProposalInput>>;
+  connect?: Maybe<Array<TechCommitteeProposalArgumentWhereUniqueInput>>;
+};
+
+export type TechCommitteeProposalArgumentCreateWithoutProposalInput = {
+  id?: Maybe<Scalars['ID']>;
+  name: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** An edge in a connection. */
+export type TechCommitteeProposalArgumentEdge = {
+  __typename?: 'TechCommitteeProposalArgumentEdge';
+  /** The item at the end of the edge. */
+  node: TechCommitteeProposalArgument;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+export enum TechCommitteeProposalArgumentOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type TechCommitteeProposalArgumentPreviousValues = {
+  __typename?: 'TechCommitteeProposalArgumentPreviousValues';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type TechCommitteeProposalArgumentScalarWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalArgumentScalarWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalArgumentScalarWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalArgumentScalarWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>;
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>;
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>;
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  name_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  name_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  name_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  name_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  name_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  name_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  name_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  name_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  name_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  name_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  name_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  name_not_ends_with?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  value_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  value_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  value_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  value_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  value_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  value_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  value_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  value_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  value_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  value_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  value_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  value_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  value_not_ends_with?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalArgumentSubscriptionPayload = {
+  __typename?: 'TechCommitteeProposalArgumentSubscriptionPayload';
+  mutation: MutationType;
+  node?: Maybe<TechCommitteeProposalArgument>;
+  updatedFields?: Maybe<Array<Scalars['String']>>;
+  previousValues?: Maybe<TechCommitteeProposalArgumentPreviousValues>;
+};
+
+export type TechCommitteeProposalArgumentSubscriptionWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalArgumentSubscriptionWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalArgumentSubscriptionWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalArgumentSubscriptionWhereInput>>;
+  /** The subscription event gets dispatched when it's listed in mutation_in */
+  mutation_in?: Maybe<Array<MutationType>>;
+  /** The subscription event gets only dispatched when one of the updated fields names is included in this list */
+  updatedFields_contains?: Maybe<Scalars['String']>;
+  /** The subscription event gets only dispatched when all of the field names included in this list have been updated */
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
+  /** The subscription event gets only dispatched when some of the field names included in this list have been updated */
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
+  node?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+};
+
+export type TechCommitteeProposalArgumentUpdateInput = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  proposal?: Maybe<TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput>;
+};
+
+export type TechCommitteeProposalArgumentUpdateManyDataInput = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalArgumentUpdateManyMutationInput = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalArgumentUpdateManyWithoutProposalInput = {
+  create?: Maybe<Array<TechCommitteeProposalArgumentCreateWithoutProposalInput>>;
+  connect?: Maybe<Array<TechCommitteeProposalArgumentWhereUniqueInput>>;
+  set?: Maybe<Array<TechCommitteeProposalArgumentWhereUniqueInput>>;
+  disconnect?: Maybe<Array<TechCommitteeProposalArgumentWhereUniqueInput>>;
+  delete?: Maybe<Array<TechCommitteeProposalArgumentWhereUniqueInput>>;
+  update?: Maybe<Array<TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput>>;
+  updateMany?: Maybe<Array<TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput>>;
+  deleteMany?: Maybe<Array<TechCommitteeProposalArgumentScalarWhereInput>>;
+  upsert?: Maybe<Array<TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput>>;
+};
+
+export type TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput = {
+  where: TechCommitteeProposalArgumentScalarWhereInput;
+  data: TechCommitteeProposalArgumentUpdateManyDataInput;
+};
+
+export type TechCommitteeProposalArgumentUpdateWithoutProposalDataInput = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput = {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+  data: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput;
+};
+
+export type TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput = {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+  update: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput;
+  create: TechCommitteeProposalArgumentCreateWithoutProposalInput;
+};
+
+export type TechCommitteeProposalArgumentWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalArgumentWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalArgumentWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalArgumentWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>;
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>;
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>;
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  name_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  name_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  name_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  name_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  name_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  name_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  name_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  name_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  name_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  name_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  name_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  name_not_ends_with?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  value_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  value_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  value_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  value_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  value_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  value_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  value_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  value_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  value_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  value_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  value_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  value_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  value_not_ends_with?: Maybe<Scalars['String']>;
+  proposal?: Maybe<TechCommitteeProposalWhereInput>;
+};
+
+export type TechCommitteeProposalArgumentWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+/** A connection to a list of items. */
+export type TechCommitteeProposalConnection = {
+  __typename?: 'TechCommitteeProposalConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<Maybe<TechCommitteeProposalEdge>>;
+  aggregate: AggregateTechCommitteeProposal;
+};
+
+export type TechCommitteeProposalCreateInput = {
+  author: Scalars['String'];
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash: Scalars['String'];
+  proposalId: Scalars['Int'];
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  proposalArguments?: Maybe<TechCommitteeProposalArgumentCreateManyWithoutProposalInput>;
+  status?: Maybe<TechCommitteeProposalStatusCreateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageCreateOneInput>;
+};
+
+export type TechCommitteeProposalCreateOneWithoutProposalArgumentsInput = {
+  create?: Maybe<TechCommitteeProposalCreateWithoutProposalArgumentsInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+};
+
+export type TechCommitteeProposalCreateOneWithoutStatusInput = {
+  create?: Maybe<TechCommitteeProposalCreateWithoutStatusInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+};
+
+export type TechCommitteeProposalCreateWithoutProposalArgumentsInput = {
+  author: Scalars['String'];
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash: Scalars['String'];
+  proposalId: Scalars['Int'];
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  status?: Maybe<TechCommitteeProposalStatusCreateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageCreateOneInput>;
+};
+
+export type TechCommitteeProposalCreateWithoutStatusInput = {
+  author: Scalars['String'];
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash: Scalars['String'];
+  proposalId: Scalars['Int'];
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  proposalArguments?: Maybe<TechCommitteeProposalArgumentCreateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageCreateOneInput>;
+};
+
+/** An edge in a connection. */
+export type TechCommitteeProposalEdge = {
+  __typename?: 'TechCommitteeProposalEdge';
+  /** The item at the end of the edge. */
+  node: TechCommitteeProposal;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+export enum TechCommitteeProposalOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  AuthorAsc = 'author_ASC',
+  AuthorDesc = 'author_DESC',
+  MemberCountAsc = 'memberCount_ASC',
+  MemberCountDesc = 'memberCount_DESC',
+  MetaDescriptionAsc = 'metaDescription_ASC',
+  MetaDescriptionDesc = 'metaDescription_DESC',
+  MethodAsc = 'method_ASC',
+  MethodDesc = 'method_DESC',
+  ProposalHashAsc = 'proposalHash_ASC',
+  ProposalHashDesc = 'proposalHash_DESC',
+  ProposalIdAsc = 'proposalId_ASC',
+  ProposalIdDesc = 'proposalId_DESC',
+  PreimageHashAsc = 'preimageHash_ASC',
+  PreimageHashDesc = 'preimageHash_DESC',
+  SectionAsc = 'section_ASC',
+  SectionDesc = 'section_DESC'
+}
+
+export type TechCommitteeProposalPreviousValues = {
+  __typename?: 'TechCommitteeProposalPreviousValues';
+  id: Scalars['Int'];
+  author: Scalars['String'];
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash: Scalars['String'];
+  proposalId: Scalars['Int'];
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalStatus = Node & {
+  __typename?: 'TechCommitteeProposalStatus';
+  id: Scalars['ID'];
+  blockNumber: BlockNumber;
+  proposal: TechCommitteeProposal;
+  status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
+};
+
+/** A connection to a list of items. */
+export type TechCommitteeProposalStatusConnection = {
+  __typename?: 'TechCommitteeProposalStatusConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<Maybe<TechCommitteeProposalStatusEdge>>;
+  aggregate: AggregateTechCommitteeProposalStatus;
+};
+
+export type TechCommitteeProposalStatusCreateInput = {
+  id?: Maybe<Scalars['ID']>;
+  status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
+  blockNumber: BlockNumberCreateOneInput;
+  proposal: TechCommitteeProposalCreateOneWithoutStatusInput;
+};
+
+export type TechCommitteeProposalStatusCreateManyWithoutProposalInput = {
+  create?: Maybe<Array<TechCommitteeProposalStatusCreateWithoutProposalInput>>;
+  connect?: Maybe<Array<TechCommitteeProposalStatusWhereUniqueInput>>;
+};
+
+export type TechCommitteeProposalStatusCreateWithoutProposalInput = {
+  id?: Maybe<Scalars['ID']>;
+  status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
+  blockNumber: BlockNumberCreateOneInput;
+};
+
+/** An edge in a connection. */
+export type TechCommitteeProposalStatusEdge = {
+  __typename?: 'TechCommitteeProposalStatusEdge';
+  /** The item at the end of the edge. */
+  node: TechCommitteeProposalStatus;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+export enum TechCommitteeProposalStatusOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC',
+  UniqueStatusAsc = 'uniqueStatus_ASC',
+  UniqueStatusDesc = 'uniqueStatus_DESC'
+}
+
+export type TechCommitteeProposalStatusPreviousValues = {
+  __typename?: 'TechCommitteeProposalStatusPreviousValues';
+  id: Scalars['ID'];
+  status: Scalars['String'];
+  uniqueStatus: Scalars['String'];
+};
+
+export type TechCommitteeProposalStatusScalarWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalStatusScalarWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalStatusScalarWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalStatusScalarWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>;
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>;
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>;
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  status?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  status_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  status_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  status_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  status_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  status_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  status_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  status_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  status_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  status_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  status_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  status_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  status_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  status_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalStatusSubscriptionPayload = {
+  __typename?: 'TechCommitteeProposalStatusSubscriptionPayload';
+  mutation: MutationType;
+  node?: Maybe<TechCommitteeProposalStatus>;
+  updatedFields?: Maybe<Array<Scalars['String']>>;
+  previousValues?: Maybe<TechCommitteeProposalStatusPreviousValues>;
+};
+
+export type TechCommitteeProposalStatusSubscriptionWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalStatusSubscriptionWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalStatusSubscriptionWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalStatusSubscriptionWhereInput>>;
+  /** The subscription event gets dispatched when it's listed in mutation_in */
+  mutation_in?: Maybe<Array<MutationType>>;
+  /** The subscription event gets only dispatched when one of the updated fields names is included in this list */
+  updatedFields_contains?: Maybe<Scalars['String']>;
+  /** The subscription event gets only dispatched when all of the field names included in this list have been updated */
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
+  /** The subscription event gets only dispatched when some of the field names included in this list have been updated */
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
+  node?: Maybe<TechCommitteeProposalStatusWhereInput>;
+};
+
+export type TechCommitteeProposalStatusUpdateInput = {
+  status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  proposal?: Maybe<TechCommitteeProposalUpdateOneRequiredWithoutStatusInput>;
+};
+
+export type TechCommitteeProposalStatusUpdateManyDataInput = {
+  status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalStatusUpdateManyMutationInput = {
+  status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalStatusUpdateManyWithoutProposalInput = {
+  create?: Maybe<Array<TechCommitteeProposalStatusCreateWithoutProposalInput>>;
+  connect?: Maybe<Array<TechCommitteeProposalStatusWhereUniqueInput>>;
+  set?: Maybe<Array<TechCommitteeProposalStatusWhereUniqueInput>>;
+  disconnect?: Maybe<Array<TechCommitteeProposalStatusWhereUniqueInput>>;
+  delete?: Maybe<Array<TechCommitteeProposalStatusWhereUniqueInput>>;
+  update?: Maybe<Array<TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput>>;
+  updateMany?: Maybe<Array<TechCommitteeProposalStatusUpdateManyWithWhereNestedInput>>;
+  deleteMany?: Maybe<Array<TechCommitteeProposalStatusScalarWhereInput>>;
+  upsert?: Maybe<Array<TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput>>;
+};
+
+export type TechCommitteeProposalStatusUpdateManyWithWhereNestedInput = {
+  where: TechCommitteeProposalStatusScalarWhereInput;
+  data: TechCommitteeProposalStatusUpdateManyDataInput;
+};
+
+export type TechCommitteeProposalStatusUpdateWithoutProposalDataInput = {
+  status?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+};
+
+export type TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput = {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+  data: TechCommitteeProposalStatusUpdateWithoutProposalDataInput;
+};
+
+export type TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput = {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+  update: TechCommitteeProposalStatusUpdateWithoutProposalDataInput;
+  create: TechCommitteeProposalStatusCreateWithoutProposalInput;
+};
+
+export type TechCommitteeProposalStatusWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalStatusWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalStatusWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalStatusWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>;
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>;
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>;
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  status?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  status_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  status_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  status_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  status_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  status_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  status_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  status_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  status_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  status_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  status_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  status_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  status_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  status_not_ends_with?: Maybe<Scalars['String']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  uniqueStatus_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  uniqueStatus_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  uniqueStatus_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  uniqueStatus_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  uniqueStatus_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  uniqueStatus_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  uniqueStatus_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  uniqueStatus_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  uniqueStatus_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  uniqueStatus_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  uniqueStatus_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  uniqueStatus_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  uniqueStatus_not_ends_with?: Maybe<Scalars['String']>;
+  blockNumber?: Maybe<BlockNumberWhereInput>;
+  proposal?: Maybe<TechCommitteeProposalWhereInput>;
+};
+
+export type TechCommitteeProposalStatusWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>;
+  uniqueStatus?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalSubscriptionPayload = {
+  __typename?: 'TechCommitteeProposalSubscriptionPayload';
+  mutation: MutationType;
+  node?: Maybe<TechCommitteeProposal>;
+  updatedFields?: Maybe<Array<Scalars['String']>>;
+  previousValues?: Maybe<TechCommitteeProposalPreviousValues>;
+};
+
+export type TechCommitteeProposalSubscriptionWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalSubscriptionWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalSubscriptionWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalSubscriptionWhereInput>>;
+  /** The subscription event gets dispatched when it's listed in mutation_in */
+  mutation_in?: Maybe<Array<MutationType>>;
+  /** The subscription event gets only dispatched when one of the updated fields names is included in this list */
+  updatedFields_contains?: Maybe<Scalars['String']>;
+  /** The subscription event gets only dispatched when all of the field names included in this list have been updated */
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>;
+  /** The subscription event gets only dispatched when some of the field names included in this list have been updated */
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>;
+  node?: Maybe<TechCommitteeProposalWhereInput>;
+};
+
+export type TechCommitteeProposalUpdateInput = {
+  author?: Maybe<Scalars['String']>;
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash?: Maybe<Scalars['String']>;
+  proposalId?: Maybe<Scalars['Int']>;
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  proposalArguments?: Maybe<TechCommitteeProposalArgumentUpdateManyWithoutProposalInput>;
+  status?: Maybe<TechCommitteeProposalStatusUpdateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+};
+
+export type TechCommitteeProposalUpdateManyMutationInput = {
+  author?: Maybe<Scalars['String']>;
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash?: Maybe<Scalars['String']>;
+  proposalId?: Maybe<Scalars['Int']>;
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+};
+
+export type TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput = {
+  create?: Maybe<TechCommitteeProposalCreateWithoutProposalArgumentsInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+  update?: Maybe<TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput>;
+  upsert?: Maybe<TechCommitteeProposalUpsertWithoutProposalArgumentsInput>;
+};
+
+export type TechCommitteeProposalUpdateOneRequiredWithoutStatusInput = {
+  create?: Maybe<TechCommitteeProposalCreateWithoutStatusInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+  update?: Maybe<TechCommitteeProposalUpdateWithoutStatusDataInput>;
+  upsert?: Maybe<TechCommitteeProposalUpsertWithoutStatusInput>;
+};
+
+export type TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput = {
+  author?: Maybe<Scalars['String']>;
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash?: Maybe<Scalars['String']>;
+  proposalId?: Maybe<Scalars['Int']>;
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  status?: Maybe<TechCommitteeProposalStatusUpdateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+};
+
+export type TechCommitteeProposalUpdateWithoutStatusDataInput = {
+  author?: Maybe<Scalars['String']>;
+  memberCount?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  proposalHash?: Maybe<Scalars['String']>;
+  proposalId?: Maybe<Scalars['Int']>;
+  preimageHash?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  proposalArguments?: Maybe<TechCommitteeProposalArgumentUpdateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+};
+
+export type TechCommitteeProposalUpsertWithoutProposalArgumentsInput = {
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput;
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput;
+};
+
+export type TechCommitteeProposalUpsertWithoutStatusInput = {
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput;
+  create: TechCommitteeProposalCreateWithoutStatusInput;
+};
+
+export type TechCommitteeProposalWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<TechCommitteeProposalWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<TechCommitteeProposalWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<TechCommitteeProposalWhereInput>>;
+  id?: Maybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['Int']>;
+  author?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  author_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  author_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  author_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  author_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  author_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  author_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  author_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  author_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  author_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  author_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  author_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  author_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  author_not_ends_with?: Maybe<Scalars['String']>;
+  memberCount?: Maybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  memberCount_not?: Maybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  memberCount_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values that are not contained in given list. */
+  memberCount_not_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  memberCount_lt?: Maybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  memberCount_lte?: Maybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  memberCount_gt?: Maybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  memberCount_gte?: Maybe<Scalars['Int']>;
+  metaDescription?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  metaDescription_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  metaDescription_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  metaDescription_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  metaDescription_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  metaDescription_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  metaDescription_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  metaDescription_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  metaDescription_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  metaDescription_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  metaDescription_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  metaDescription_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  metaDescription_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  metaDescription_not_ends_with?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  method_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  method_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  method_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  method_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  method_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  method_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  method_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  method_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  method_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  method_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  method_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  method_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  method_not_ends_with?: Maybe<Scalars['String']>;
+  proposalHash?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  proposalHash_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  proposalHash_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  proposalHash_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  proposalHash_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  proposalHash_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  proposalHash_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  proposalHash_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  proposalHash_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  proposalHash_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  proposalHash_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  proposalHash_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  proposalHash_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  proposalHash_not_ends_with?: Maybe<Scalars['String']>;
+  proposalId?: Maybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  proposalId_not?: Maybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  proposalId_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values that are not contained in given list. */
+  proposalId_not_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  proposalId_lt?: Maybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  proposalId_lte?: Maybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  proposalId_gt?: Maybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  proposalId_gte?: Maybe<Scalars['Int']>;
+  preimageHash?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  preimageHash_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  preimageHash_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  preimageHash_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  preimageHash_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  preimageHash_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  preimageHash_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  preimageHash_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  preimageHash_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  preimageHash_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  preimageHash_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  preimageHash_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  preimageHash_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  preimageHash_not_ends_with?: Maybe<Scalars['String']>;
+  section?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  section_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  section_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  section_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values less than the given value. */
+  section_lt?: Maybe<Scalars['String']>;
+  /** All values less than or equal the given value. */
+  section_lte?: Maybe<Scalars['String']>;
+  /** All values greater than the given value. */
+  section_gt?: Maybe<Scalars['String']>;
+  /** All values greater than or equal the given value. */
+  section_gte?: Maybe<Scalars['String']>;
+  /** All values containing the given string. */
+  section_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  section_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  section_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  section_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  section_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string. */
+  section_not_ends_with?: Maybe<Scalars['String']>;
+  proposalArguments_every?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  proposalArguments_some?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  proposalArguments_none?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  status_every?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  status_some?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  status_none?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  preimage?: Maybe<PreimageWhereInput>;
+};
+
+export type TechCommitteeProposalWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
+  proposalId?: Maybe<Scalars['Int']>;
 };
 
 export type Tip = {
@@ -11203,6 +12598,24 @@ export type OnchainBountyFragment = (
   & Pick<Bounty, 'proposer' | 'id' | 'bountyId'>
 );
 
+export type GetOnchainTechCommitteeProposalsQueryVariables = {
+  startBlock: Scalars['Int'];
+};
+
+
+export type GetOnchainTechCommitteeProposalsQuery = (
+  { __typename?: 'Query' }
+  & { techCommitteeProposals: Array<Maybe<(
+    { __typename?: 'TechCommitteeProposal' }
+    & OnchainTechCommitteeProposalFragment
+  )>> }
+);
+
+export type OnchainTechCommitteeProposalFragment = (
+  { __typename?: 'TechCommitteeProposal' }
+  & Pick<TechCommitteeProposal, 'author' | 'id' | 'proposalId'>
+);
+
 export type GetOnchainTipsQueryVariables = {
   startBlock: Scalars['Int'];
 };
@@ -11269,6 +12682,13 @@ export const OnchainBountyFragmentDoc = gql`
   bountyId
 }
     `;
+export const OnchainTechCommitteeProposalFragmentDoc = gql`
+    fragment onchainTechCommitteeProposal on TechCommitteeProposal {
+  author
+  id
+  proposalId
+}
+    `;
 export const OnchainTipFragmentDoc = gql`
     fragment onchainTip on Tip {
   finder
@@ -11328,6 +12748,13 @@ export const GetOnchainBountiesDocument = gql`
   }
 }
     ${OnchainBountyFragmentDoc}`;
+export const GetOnchainTechCommitteeProposalsDocument = gql`
+    query getOnchainTechCommitteeProposals($startBlock: Int!) {
+  techCommitteeProposals(where: {status_some: {AND: [{status: "Proposed"}, {blockNumber: {number_gte: $startBlock}}]}}) {
+    ...onchainTechCommitteeProposal
+  }
+}
+    ${OnchainTechCommitteeProposalFragmentDoc}`;
 export const GetOnchainTipsDocument = gql`
     query getOnchainTips($startBlock: Int!) {
   tips(where: {tipStatus_some: {AND: [{status: "TipOpened"}, {blockNumber: {number_gte: $startBlock}}]}}) {
@@ -11362,6 +12789,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getOnchainBounties(variables: GetOnchainBountiesQueryVariables): Promise<GetOnchainBountiesQuery> {
       return withWrapper(() => client.request<GetOnchainBountiesQuery>(print(GetOnchainBountiesDocument), variables));
+    },
+    getOnchainTechCommitteeProposals(variables: GetOnchainTechCommitteeProposalsQueryVariables): Promise<GetOnchainTechCommitteeProposalsQuery> {
+      return withWrapper(() => client.request<GetOnchainTechCommitteeProposalsQuery>(print(GetOnchainTechCommitteeProposalsDocument), variables));
     },
     getOnchainTips(variables: GetOnchainTipsQueryVariables): Promise<GetOnchainTipsQuery> {
       return withWrapper(() => client.request<GetOnchainTipsQuery>(print(GetOnchainTipsDocument), variables));

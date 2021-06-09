@@ -42,6 +42,15 @@ export interface Exists {
   session: (where?: SessionWhereInput) => Promise<boolean>;
   slashing: (where?: SlashingWhereInput) => Promise<boolean>;
   stake: (where?: StakeWhereInput) => Promise<boolean>;
+  techCommitteeProposal: (
+    where?: TechCommitteeProposalWhereInput
+  ) => Promise<boolean>;
+  techCommitteeProposalArgument: (
+    where?: TechCommitteeProposalArgumentWhereInput
+  ) => Promise<boolean>;
+  techCommitteeProposalStatus: (
+    where?: TechCommitteeProposalStatusWhereInput
+  ) => Promise<boolean>;
   tip: (where?: TipWhereInput) => Promise<boolean>;
   tipStatus: (where?: TipStatusWhereInput) => Promise<boolean>;
   totalIssuance: (where?: TotalIssuanceWhereInput) => Promise<boolean>;
@@ -547,6 +556,69 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StakeConnectionPromise;
+  techCommitteeProposal: (
+    where: TechCommitteeProposalWhereUniqueInput
+  ) => TechCommitteeProposalNullablePromise;
+  techCommitteeProposals: (args?: {
+    where?: TechCommitteeProposalWhereInput;
+    orderBy?: TechCommitteeProposalOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TechCommitteeProposal>;
+  techCommitteeProposalsConnection: (args?: {
+    where?: TechCommitteeProposalWhereInput;
+    orderBy?: TechCommitteeProposalOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TechCommitteeProposalConnectionPromise;
+  techCommitteeProposalArgument: (
+    where: TechCommitteeProposalArgumentWhereUniqueInput
+  ) => TechCommitteeProposalArgumentNullablePromise;
+  techCommitteeProposalArguments: (args?: {
+    where?: TechCommitteeProposalArgumentWhereInput;
+    orderBy?: TechCommitteeProposalArgumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TechCommitteeProposalArgument>;
+  techCommitteeProposalArgumentsConnection: (args?: {
+    where?: TechCommitteeProposalArgumentWhereInput;
+    orderBy?: TechCommitteeProposalArgumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TechCommitteeProposalArgumentConnectionPromise;
+  techCommitteeProposalStatus: (
+    where: TechCommitteeProposalStatusWhereUniqueInput
+  ) => TechCommitteeProposalStatusNullablePromise;
+  techCommitteeProposalStatuses: (args?: {
+    where?: TechCommitteeProposalStatusWhereInput;
+    orderBy?: TechCommitteeProposalStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<TechCommitteeProposalStatus>;
+  techCommitteeProposalStatusesConnection: (args?: {
+    where?: TechCommitteeProposalStatusWhereInput;
+    orderBy?: TechCommitteeProposalStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TechCommitteeProposalStatusConnectionPromise;
   tip: (where: TipWhereUniqueInput) => TipNullablePromise;
   tips: (args?: {
     where?: TipWhereInput;
@@ -1103,6 +1175,72 @@ export interface Prisma {
   }) => StakePromise;
   deleteStake: (where: StakeWhereUniqueInput) => StakePromise;
   deleteManyStakes: (where?: StakeWhereInput) => BatchPayloadPromise;
+  createTechCommitteeProposal: (
+    data: TechCommitteeProposalCreateInput
+  ) => TechCommitteeProposalPromise;
+  updateTechCommitteeProposal: (args: {
+    data: TechCommitteeProposalUpdateInput;
+    where: TechCommitteeProposalWhereUniqueInput;
+  }) => TechCommitteeProposalPromise;
+  updateManyTechCommitteeProposals: (args: {
+    data: TechCommitteeProposalUpdateManyMutationInput;
+    where?: TechCommitteeProposalWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTechCommitteeProposal: (args: {
+    where: TechCommitteeProposalWhereUniqueInput;
+    create: TechCommitteeProposalCreateInput;
+    update: TechCommitteeProposalUpdateInput;
+  }) => TechCommitteeProposalPromise;
+  deleteTechCommitteeProposal: (
+    where: TechCommitteeProposalWhereUniqueInput
+  ) => TechCommitteeProposalPromise;
+  deleteManyTechCommitteeProposals: (
+    where?: TechCommitteeProposalWhereInput
+  ) => BatchPayloadPromise;
+  createTechCommitteeProposalArgument: (
+    data: TechCommitteeProposalArgumentCreateInput
+  ) => TechCommitteeProposalArgumentPromise;
+  updateTechCommitteeProposalArgument: (args: {
+    data: TechCommitteeProposalArgumentUpdateInput;
+    where: TechCommitteeProposalArgumentWhereUniqueInput;
+  }) => TechCommitteeProposalArgumentPromise;
+  updateManyTechCommitteeProposalArguments: (args: {
+    data: TechCommitteeProposalArgumentUpdateManyMutationInput;
+    where?: TechCommitteeProposalArgumentWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTechCommitteeProposalArgument: (args: {
+    where: TechCommitteeProposalArgumentWhereUniqueInput;
+    create: TechCommitteeProposalArgumentCreateInput;
+    update: TechCommitteeProposalArgumentUpdateInput;
+  }) => TechCommitteeProposalArgumentPromise;
+  deleteTechCommitteeProposalArgument: (
+    where: TechCommitteeProposalArgumentWhereUniqueInput
+  ) => TechCommitteeProposalArgumentPromise;
+  deleteManyTechCommitteeProposalArguments: (
+    where?: TechCommitteeProposalArgumentWhereInput
+  ) => BatchPayloadPromise;
+  createTechCommitteeProposalStatus: (
+    data: TechCommitteeProposalStatusCreateInput
+  ) => TechCommitteeProposalStatusPromise;
+  updateTechCommitteeProposalStatus: (args: {
+    data: TechCommitteeProposalStatusUpdateInput;
+    where: TechCommitteeProposalStatusWhereUniqueInput;
+  }) => TechCommitteeProposalStatusPromise;
+  updateManyTechCommitteeProposalStatuses: (args: {
+    data: TechCommitteeProposalStatusUpdateManyMutationInput;
+    where?: TechCommitteeProposalStatusWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTechCommitteeProposalStatus: (args: {
+    where: TechCommitteeProposalStatusWhereUniqueInput;
+    create: TechCommitteeProposalStatusCreateInput;
+    update: TechCommitteeProposalStatusUpdateInput;
+  }) => TechCommitteeProposalStatusPromise;
+  deleteTechCommitteeProposalStatus: (
+    where: TechCommitteeProposalStatusWhereUniqueInput
+  ) => TechCommitteeProposalStatusPromise;
+  deleteManyTechCommitteeProposalStatuses: (
+    where?: TechCommitteeProposalStatusWhereInput
+  ) => BatchPayloadPromise;
   createTip: (data: TipCreateInput) => TipPromise;
   updateTip: (args: {
     data: TipUpdateInput;
@@ -1296,6 +1434,15 @@ export interface Subscription {
   stake: (
     where?: StakeSubscriptionWhereInput
   ) => StakeSubscriptionPayloadSubscription;
+  techCommitteeProposal: (
+    where?: TechCommitteeProposalSubscriptionWhereInput
+  ) => TechCommitteeProposalSubscriptionPayloadSubscription;
+  techCommitteeProposalArgument: (
+    where?: TechCommitteeProposalArgumentSubscriptionWhereInput
+  ) => TechCommitteeProposalArgumentSubscriptionPayloadSubscription;
+  techCommitteeProposalStatus: (
+    where?: TechCommitteeProposalStatusSubscriptionWhereInput
+  ) => TechCommitteeProposalStatusSubscriptionPayloadSubscription;
   tip: (
     where?: TipSubscriptionWhereInput
   ) => TipSubscriptionPayloadSubscription;
@@ -1563,6 +1710,42 @@ export type StakeOrderByInput =
   | "id_DESC"
   | "totalStake_ASC"
   | "totalStake_DESC";
+
+export type TechCommitteeProposalArgumentOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "value_ASC"
+  | "value_DESC";
+
+export type TechCommitteeProposalStatusOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "uniqueStatus_ASC"
+  | "uniqueStatus_DESC";
+
+export type TechCommitteeProposalOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "author_ASC"
+  | "author_DESC"
+  | "memberCount_ASC"
+  | "memberCount_DESC"
+  | "metaDescription_ASC"
+  | "metaDescription_DESC"
+  | "method_ASC"
+  | "method_DESC"
+  | "proposalHash_ASC"
+  | "proposalHash_DESC"
+  | "proposalId_ASC"
+  | "proposalId_DESC"
+  | "preimageHash_ASC"
+  | "preimageHash_DESC"
+  | "section_ASC"
+  | "section_DESC";
 
 export type TipStatusOrderByInput =
   | "id_ASC"
@@ -3274,6 +3457,264 @@ export interface StakeWhereInput {
   OR?: Maybe<StakeWhereInput[] | StakeWhereInput>;
   NOT?: Maybe<StakeWhereInput[] | StakeWhereInput>;
 }
+
+export type TechCommitteeProposalWhereUniqueInput = AtLeastOne<{
+  id: Maybe<Int>;
+  proposalId?: Maybe<Int>;
+}>;
+
+export interface TechCommitteeProposalArgumentWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  proposal?: Maybe<TechCommitteeProposalWhereInput>;
+  value?: Maybe<String>;
+  value_not?: Maybe<String>;
+  value_in?: Maybe<String[] | String>;
+  value_not_in?: Maybe<String[] | String>;
+  value_lt?: Maybe<String>;
+  value_lte?: Maybe<String>;
+  value_gt?: Maybe<String>;
+  value_gte?: Maybe<String>;
+  value_contains?: Maybe<String>;
+  value_not_contains?: Maybe<String>;
+  value_starts_with?: Maybe<String>;
+  value_not_starts_with?: Maybe<String>;
+  value_ends_with?: Maybe<String>;
+  value_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    | TechCommitteeProposalArgumentWhereInput[]
+    | TechCommitteeProposalArgumentWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalArgumentWhereInput[]
+    | TechCommitteeProposalArgumentWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalArgumentWhereInput[]
+    | TechCommitteeProposalArgumentWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalWhereInput {
+  id?: Maybe<Int>;
+  id_not?: Maybe<Int>;
+  id_in?: Maybe<Int[] | Int>;
+  id_not_in?: Maybe<Int[] | Int>;
+  id_lt?: Maybe<Int>;
+  id_lte?: Maybe<Int>;
+  id_gt?: Maybe<Int>;
+  id_gte?: Maybe<Int>;
+  author?: Maybe<String>;
+  author_not?: Maybe<String>;
+  author_in?: Maybe<String[] | String>;
+  author_not_in?: Maybe<String[] | String>;
+  author_lt?: Maybe<String>;
+  author_lte?: Maybe<String>;
+  author_gt?: Maybe<String>;
+  author_gte?: Maybe<String>;
+  author_contains?: Maybe<String>;
+  author_not_contains?: Maybe<String>;
+  author_starts_with?: Maybe<String>;
+  author_not_starts_with?: Maybe<String>;
+  author_ends_with?: Maybe<String>;
+  author_not_ends_with?: Maybe<String>;
+  memberCount?: Maybe<Int>;
+  memberCount_not?: Maybe<Int>;
+  memberCount_in?: Maybe<Int[] | Int>;
+  memberCount_not_in?: Maybe<Int[] | Int>;
+  memberCount_lt?: Maybe<Int>;
+  memberCount_lte?: Maybe<Int>;
+  memberCount_gt?: Maybe<Int>;
+  memberCount_gte?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  metaDescription_not?: Maybe<String>;
+  metaDescription_in?: Maybe<String[] | String>;
+  metaDescription_not_in?: Maybe<String[] | String>;
+  metaDescription_lt?: Maybe<String>;
+  metaDescription_lte?: Maybe<String>;
+  metaDescription_gt?: Maybe<String>;
+  metaDescription_gte?: Maybe<String>;
+  metaDescription_contains?: Maybe<String>;
+  metaDescription_not_contains?: Maybe<String>;
+  metaDescription_starts_with?: Maybe<String>;
+  metaDescription_not_starts_with?: Maybe<String>;
+  metaDescription_ends_with?: Maybe<String>;
+  metaDescription_not_ends_with?: Maybe<String>;
+  method?: Maybe<String>;
+  method_not?: Maybe<String>;
+  method_in?: Maybe<String[] | String>;
+  method_not_in?: Maybe<String[] | String>;
+  method_lt?: Maybe<String>;
+  method_lte?: Maybe<String>;
+  method_gt?: Maybe<String>;
+  method_gte?: Maybe<String>;
+  method_contains?: Maybe<String>;
+  method_not_contains?: Maybe<String>;
+  method_starts_with?: Maybe<String>;
+  method_not_starts_with?: Maybe<String>;
+  method_ends_with?: Maybe<String>;
+  method_not_ends_with?: Maybe<String>;
+  proposalArguments_every?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  proposalArguments_some?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  proposalArguments_none?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  proposalHash?: Maybe<String>;
+  proposalHash_not?: Maybe<String>;
+  proposalHash_in?: Maybe<String[] | String>;
+  proposalHash_not_in?: Maybe<String[] | String>;
+  proposalHash_lt?: Maybe<String>;
+  proposalHash_lte?: Maybe<String>;
+  proposalHash_gt?: Maybe<String>;
+  proposalHash_gte?: Maybe<String>;
+  proposalHash_contains?: Maybe<String>;
+  proposalHash_not_contains?: Maybe<String>;
+  proposalHash_starts_with?: Maybe<String>;
+  proposalHash_not_starts_with?: Maybe<String>;
+  proposalHash_ends_with?: Maybe<String>;
+  proposalHash_not_ends_with?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  proposalId_not?: Maybe<Int>;
+  proposalId_in?: Maybe<Int[] | Int>;
+  proposalId_not_in?: Maybe<Int[] | Int>;
+  proposalId_lt?: Maybe<Int>;
+  proposalId_lte?: Maybe<Int>;
+  proposalId_gt?: Maybe<Int>;
+  proposalId_gte?: Maybe<Int>;
+  status_every?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  status_some?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  status_none?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  preimage?: Maybe<PreimageWhereInput>;
+  preimageHash?: Maybe<String>;
+  preimageHash_not?: Maybe<String>;
+  preimageHash_in?: Maybe<String[] | String>;
+  preimageHash_not_in?: Maybe<String[] | String>;
+  preimageHash_lt?: Maybe<String>;
+  preimageHash_lte?: Maybe<String>;
+  preimageHash_gt?: Maybe<String>;
+  preimageHash_gte?: Maybe<String>;
+  preimageHash_contains?: Maybe<String>;
+  preimageHash_not_contains?: Maybe<String>;
+  preimageHash_starts_with?: Maybe<String>;
+  preimageHash_not_starts_with?: Maybe<String>;
+  preimageHash_ends_with?: Maybe<String>;
+  preimageHash_not_ends_with?: Maybe<String>;
+  section?: Maybe<String>;
+  section_not?: Maybe<String>;
+  section_in?: Maybe<String[] | String>;
+  section_not_in?: Maybe<String[] | String>;
+  section_lt?: Maybe<String>;
+  section_lte?: Maybe<String>;
+  section_gt?: Maybe<String>;
+  section_gte?: Maybe<String>;
+  section_contains?: Maybe<String>;
+  section_not_contains?: Maybe<String>;
+  section_starts_with?: Maybe<String>;
+  section_not_starts_with?: Maybe<String>;
+  section_ends_with?: Maybe<String>;
+  section_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    TechCommitteeProposalWhereInput[] | TechCommitteeProposalWhereInput
+  >;
+  OR?: Maybe<
+    TechCommitteeProposalWhereInput[] | TechCommitteeProposalWhereInput
+  >;
+  NOT?: Maybe<
+    TechCommitteeProposalWhereInput[] | TechCommitteeProposalWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalStatusWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  blockNumber?: Maybe<BlockNumberWhereInput>;
+  proposal?: Maybe<TechCommitteeProposalWhereInput>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    | TechCommitteeProposalStatusWhereInput[]
+    | TechCommitteeProposalStatusWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalStatusWhereInput[]
+    | TechCommitteeProposalStatusWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalStatusWhereInput[]
+    | TechCommitteeProposalStatusWhereInput
+  >;
+}
+
+export type TechCommitteeProposalArgumentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type TechCommitteeProposalStatusWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  uniqueStatus?: Maybe<String>;
+}>;
 
 export type TipWhereUniqueInput = AtLeastOne<{
   id: Maybe<Int>;
@@ -5929,6 +6370,492 @@ export interface StakeUpdateManyMutationInput {
   totalStake?: Maybe<String>;
 }
 
+export interface TechCommitteeProposalCreateInput {
+  author: String;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalArguments?: Maybe<
+    TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  >;
+  proposalHash: String;
+  proposalId: Int;
+  status?: Maybe<TechCommitteeProposalStatusCreateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageCreateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalArgumentCreateManyWithoutProposalInput {
+  create?: Maybe<
+    | TechCommitteeProposalArgumentCreateWithoutProposalInput[]
+    | TechCommitteeProposalArgumentCreateWithoutProposalInput
+  >;
+  connect?: Maybe<
+    | TechCommitteeProposalArgumentWhereUniqueInput[]
+    | TechCommitteeProposalArgumentWhereUniqueInput
+  >;
+}
+
+export interface TechCommitteeProposalArgumentCreateWithoutProposalInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  value: String;
+}
+
+export interface TechCommitteeProposalStatusCreateManyWithoutProposalInput {
+  create?: Maybe<
+    | TechCommitteeProposalStatusCreateWithoutProposalInput[]
+    | TechCommitteeProposalStatusCreateWithoutProposalInput
+  >;
+  connect?: Maybe<
+    | TechCommitteeProposalStatusWhereUniqueInput[]
+    | TechCommitteeProposalStatusWhereUniqueInput
+  >;
+}
+
+export interface TechCommitteeProposalStatusCreateWithoutProposalInput {
+  id?: Maybe<ID_Input>;
+  blockNumber: BlockNumberCreateOneInput;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface PreimageCreateOneInput {
+  create?: Maybe<PreimageCreateInput>;
+  connect?: Maybe<PreimageWhereUniqueInput>;
+}
+
+export interface TechCommitteeProposalUpdateInput {
+  author?: Maybe<String>;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalArguments?: Maybe<
+    TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  >;
+  proposalHash?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  status?: Maybe<TechCommitteeProposalStatusUpdateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalArgumentUpdateManyWithoutProposalInput {
+  create?: Maybe<
+    | TechCommitteeProposalArgumentCreateWithoutProposalInput[]
+    | TechCommitteeProposalArgumentCreateWithoutProposalInput
+  >;
+  delete?: Maybe<
+    | TechCommitteeProposalArgumentWhereUniqueInput[]
+    | TechCommitteeProposalArgumentWhereUniqueInput
+  >;
+  connect?: Maybe<
+    | TechCommitteeProposalArgumentWhereUniqueInput[]
+    | TechCommitteeProposalArgumentWhereUniqueInput
+  >;
+  set?: Maybe<
+    | TechCommitteeProposalArgumentWhereUniqueInput[]
+    | TechCommitteeProposalArgumentWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    | TechCommitteeProposalArgumentWhereUniqueInput[]
+    | TechCommitteeProposalArgumentWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput[]
+    | TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput
+  >;
+  upsert?: Maybe<
+    | TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput[]
+    | TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput
+  >;
+  deleteMany?: Maybe<
+    | TechCommitteeProposalArgumentScalarWhereInput[]
+    | TechCommitteeProposalArgumentScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput[]
+    | TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TechCommitteeProposalArgumentUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+  data: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput;
+}
+
+export interface TechCommitteeProposalArgumentUpdateWithoutProposalDataInput {
+  name?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalArgumentUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalArgumentWhereUniqueInput;
+  update: TechCommitteeProposalArgumentUpdateWithoutProposalDataInput;
+  create: TechCommitteeProposalArgumentCreateWithoutProposalInput;
+}
+
+export interface TechCommitteeProposalArgumentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  value?: Maybe<String>;
+  value_not?: Maybe<String>;
+  value_in?: Maybe<String[] | String>;
+  value_not_in?: Maybe<String[] | String>;
+  value_lt?: Maybe<String>;
+  value_lte?: Maybe<String>;
+  value_gt?: Maybe<String>;
+  value_gte?: Maybe<String>;
+  value_contains?: Maybe<String>;
+  value_not_contains?: Maybe<String>;
+  value_starts_with?: Maybe<String>;
+  value_not_starts_with?: Maybe<String>;
+  value_ends_with?: Maybe<String>;
+  value_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    | TechCommitteeProposalArgumentScalarWhereInput[]
+    | TechCommitteeProposalArgumentScalarWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalArgumentScalarWhereInput[]
+    | TechCommitteeProposalArgumentScalarWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalArgumentScalarWhereInput[]
+    | TechCommitteeProposalArgumentScalarWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalArgumentUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalArgumentScalarWhereInput;
+  data: TechCommitteeProposalArgumentUpdateManyDataInput;
+}
+
+export interface TechCommitteeProposalArgumentUpdateManyDataInput {
+  name?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalStatusUpdateManyWithoutProposalInput {
+  create?: Maybe<
+    | TechCommitteeProposalStatusCreateWithoutProposalInput[]
+    | TechCommitteeProposalStatusCreateWithoutProposalInput
+  >;
+  delete?: Maybe<
+    | TechCommitteeProposalStatusWhereUniqueInput[]
+    | TechCommitteeProposalStatusWhereUniqueInput
+  >;
+  connect?: Maybe<
+    | TechCommitteeProposalStatusWhereUniqueInput[]
+    | TechCommitteeProposalStatusWhereUniqueInput
+  >;
+  set?: Maybe<
+    | TechCommitteeProposalStatusWhereUniqueInput[]
+    | TechCommitteeProposalStatusWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    | TechCommitteeProposalStatusWhereUniqueInput[]
+    | TechCommitteeProposalStatusWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput[]
+    | TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput
+  >;
+  upsert?: Maybe<
+    | TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput[]
+    | TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput
+  >;
+  deleteMany?: Maybe<
+    | TechCommitteeProposalStatusScalarWhereInput[]
+    | TechCommitteeProposalStatusScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TechCommitteeProposalStatusUpdateManyWithWhereNestedInput[]
+    | TechCommitteeProposalStatusUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TechCommitteeProposalStatusUpdateWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+  data: TechCommitteeProposalStatusUpdateWithoutProposalDataInput;
+}
+
+export interface TechCommitteeProposalStatusUpdateWithoutProposalDataInput {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalStatusUpsertWithWhereUniqueWithoutProposalInput {
+  where: TechCommitteeProposalStatusWhereUniqueInput;
+  update: TechCommitteeProposalStatusUpdateWithoutProposalDataInput;
+  create: TechCommitteeProposalStatusCreateWithoutProposalInput;
+}
+
+export interface TechCommitteeProposalStatusScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+  uniqueStatus_not?: Maybe<String>;
+  uniqueStatus_in?: Maybe<String[] | String>;
+  uniqueStatus_not_in?: Maybe<String[] | String>;
+  uniqueStatus_lt?: Maybe<String>;
+  uniqueStatus_lte?: Maybe<String>;
+  uniqueStatus_gt?: Maybe<String>;
+  uniqueStatus_gte?: Maybe<String>;
+  uniqueStatus_contains?: Maybe<String>;
+  uniqueStatus_not_contains?: Maybe<String>;
+  uniqueStatus_starts_with?: Maybe<String>;
+  uniqueStatus_not_starts_with?: Maybe<String>;
+  uniqueStatus_ends_with?: Maybe<String>;
+  uniqueStatus_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    | TechCommitteeProposalStatusScalarWhereInput[]
+    | TechCommitteeProposalStatusScalarWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalStatusScalarWhereInput[]
+    | TechCommitteeProposalStatusScalarWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalStatusScalarWhereInput[]
+    | TechCommitteeProposalStatusScalarWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalStatusUpdateManyWithWhereNestedInput {
+  where: TechCommitteeProposalStatusScalarWhereInput;
+  data: TechCommitteeProposalStatusUpdateManyDataInput;
+}
+
+export interface TechCommitteeProposalStatusUpdateManyDataInput {
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface PreimageUpdateOneInput {
+  create?: Maybe<PreimageCreateInput>;
+  update?: Maybe<PreimageUpdateDataInput>;
+  upsert?: Maybe<PreimageUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PreimageWhereUniqueInput>;
+}
+
+export interface PreimageUpdateDataInput {
+  author?: Maybe<String>;
+  depositAmount?: Maybe<String>;
+  hash?: Maybe<String>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  motion?: Maybe<MotionUpdateOneWithoutPreimageInput>;
+  proposal?: Maybe<ProposalUpdateOneWithoutPreimageInput>;
+  preimageArguments?: Maybe<PreimageArgumentUpdateManyWithoutPreimageInput>;
+  preimageStatus?: Maybe<PreimageStatusUpdateManyWithoutPreimageInput>;
+  referendum?: Maybe<ReferendumUpdateOneWithoutPreimageInput>;
+  section?: Maybe<String>;
+}
+
+export interface PreimageUpsertNestedInput {
+  update: PreimageUpdateDataInput;
+  create: PreimageCreateInput;
+}
+
+export interface TechCommitteeProposalUpdateManyMutationInput {
+  author?: Maybe<String>;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalHash?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalArgumentCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  proposal: TechCommitteeProposalCreateOneWithoutProposalArgumentsInput;
+  value: String;
+}
+
+export interface TechCommitteeProposalCreateOneWithoutProposalArgumentsInput {
+  create?: Maybe<TechCommitteeProposalCreateWithoutProposalArgumentsInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+}
+
+export interface TechCommitteeProposalCreateWithoutProposalArgumentsInput {
+  author: String;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalHash: String;
+  proposalId: Int;
+  status?: Maybe<TechCommitteeProposalStatusCreateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageCreateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalArgumentUpdateInput {
+  name?: Maybe<String>;
+  proposal?: Maybe<
+    TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput
+  >;
+  value?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalUpdateOneRequiredWithoutProposalArgumentsInput {
+  create?: Maybe<TechCommitteeProposalCreateWithoutProposalArgumentsInput>;
+  update?: Maybe<TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput>;
+  upsert?: Maybe<TechCommitteeProposalUpsertWithoutProposalArgumentsInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+}
+
+export interface TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput {
+  author?: Maybe<String>;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalHash?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  status?: Maybe<TechCommitteeProposalStatusUpdateManyWithoutProposalInput>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalUpsertWithoutProposalArgumentsInput {
+  update: TechCommitteeProposalUpdateWithoutProposalArgumentsDataInput;
+  create: TechCommitteeProposalCreateWithoutProposalArgumentsInput;
+}
+
+export interface TechCommitteeProposalArgumentUpdateManyMutationInput {
+  name?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalStatusCreateInput {
+  id?: Maybe<ID_Input>;
+  blockNumber: BlockNumberCreateOneInput;
+  proposal: TechCommitteeProposalCreateOneWithoutStatusInput;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface TechCommitteeProposalCreateOneWithoutStatusInput {
+  create?: Maybe<TechCommitteeProposalCreateWithoutStatusInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+}
+
+export interface TechCommitteeProposalCreateWithoutStatusInput {
+  author: String;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalArguments?: Maybe<
+    TechCommitteeProposalArgumentCreateManyWithoutProposalInput
+  >;
+  proposalHash: String;
+  proposalId: Int;
+  preimage?: Maybe<PreimageCreateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalStatusUpdateInput {
+  blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
+  proposal?: Maybe<TechCommitteeProposalUpdateOneRequiredWithoutStatusInput>;
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalUpdateOneRequiredWithoutStatusInput {
+  create?: Maybe<TechCommitteeProposalCreateWithoutStatusInput>;
+  update?: Maybe<TechCommitteeProposalUpdateWithoutStatusDataInput>;
+  upsert?: Maybe<TechCommitteeProposalUpsertWithoutStatusInput>;
+  connect?: Maybe<TechCommitteeProposalWhereUniqueInput>;
+}
+
+export interface TechCommitteeProposalUpdateWithoutStatusDataInput {
+  author?: Maybe<String>;
+  memberCount?: Maybe<Int>;
+  metaDescription?: Maybe<String>;
+  method?: Maybe<String>;
+  proposalArguments?: Maybe<
+    TechCommitteeProposalArgumentUpdateManyWithoutProposalInput
+  >;
+  proposalHash?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  preimage?: Maybe<PreimageUpdateOneInput>;
+  preimageHash?: Maybe<String>;
+  section?: Maybe<String>;
+}
+
+export interface TechCommitteeProposalUpsertWithoutStatusInput {
+  update: TechCommitteeProposalUpdateWithoutStatusDataInput;
+  create: TechCommitteeProposalCreateWithoutStatusInput;
+}
+
+export interface TechCommitteeProposalStatusUpdateManyMutationInput {
+  status?: Maybe<String>;
+  uniqueStatus?: Maybe<String>;
+}
+
 export interface TipCreateInput {
   hash: String;
   reason: String;
@@ -6677,6 +7604,66 @@ export interface StakeSubscriptionWhereInput {
   AND?: Maybe<StakeSubscriptionWhereInput[] | StakeSubscriptionWhereInput>;
   OR?: Maybe<StakeSubscriptionWhereInput[] | StakeSubscriptionWhereInput>;
   NOT?: Maybe<StakeSubscriptionWhereInput[] | StakeSubscriptionWhereInput>;
+}
+
+export interface TechCommitteeProposalSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TechCommitteeProposalWhereInput>;
+  AND?: Maybe<
+    | TechCommitteeProposalSubscriptionWhereInput[]
+    | TechCommitteeProposalSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalSubscriptionWhereInput[]
+    | TechCommitteeProposalSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalSubscriptionWhereInput[]
+    | TechCommitteeProposalSubscriptionWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalArgumentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TechCommitteeProposalArgumentWhereInput>;
+  AND?: Maybe<
+    | TechCommitteeProposalArgumentSubscriptionWhereInput[]
+    | TechCommitteeProposalArgumentSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalArgumentSubscriptionWhereInput[]
+    | TechCommitteeProposalArgumentSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalArgumentSubscriptionWhereInput[]
+    | TechCommitteeProposalArgumentSubscriptionWhereInput
+  >;
+}
+
+export interface TechCommitteeProposalStatusSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TechCommitteeProposalStatusWhereInput>;
+  AND?: Maybe<
+    | TechCommitteeProposalStatusSubscriptionWhereInput[]
+    | TechCommitteeProposalStatusSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | TechCommitteeProposalStatusSubscriptionWhereInput[]
+    | TechCommitteeProposalStatusSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | TechCommitteeProposalStatusSubscriptionWhereInput[]
+    | TechCommitteeProposalStatusSubscriptionWhereInput
+  >;
 }
 
 export interface TipSubscriptionWhereInput {
@@ -9374,6 +10361,368 @@ export interface AggregateStakeSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface TechCommitteeProposal {
+  id: Int;
+  author: String;
+  memberCount?: Int;
+  metaDescription?: String;
+  method?: String;
+  proposalHash: String;
+  proposalId: Int;
+  preimageHash?: String;
+  section?: String;
+}
+
+export interface TechCommitteeProposalPromise
+  extends Promise<TechCommitteeProposal>,
+    Fragmentable {
+  id: () => Promise<Int>;
+  author: () => Promise<String>;
+  memberCount: () => Promise<Int>;
+  metaDescription: () => Promise<String>;
+  method: () => Promise<String>;
+  proposalArguments: <
+    T = FragmentableArray<TechCommitteeProposalArgument>
+  >(args?: {
+    where?: TechCommitteeProposalArgumentWhereInput;
+    orderBy?: TechCommitteeProposalArgumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  proposalHash: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  status: <T = FragmentableArray<TechCommitteeProposalStatus>>(args?: {
+    where?: TechCommitteeProposalStatusWhereInput;
+    orderBy?: TechCommitteeProposalStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preimage: <T = PreimagePromise>() => T;
+  preimageHash: () => Promise<String>;
+  section: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposal>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<Int>>;
+  author: () => Promise<AsyncIterator<String>>;
+  memberCount: () => Promise<AsyncIterator<Int>>;
+  metaDescription: () => Promise<AsyncIterator<String>>;
+  method: () => Promise<AsyncIterator<String>>;
+  proposalArguments: <
+    T = Promise<AsyncIterator<TechCommitteeProposalArgumentSubscription>>
+  >(args?: {
+    where?: TechCommitteeProposalArgumentWhereInput;
+    orderBy?: TechCommitteeProposalArgumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  proposalHash: () => Promise<AsyncIterator<String>>;
+  proposalId: () => Promise<AsyncIterator<Int>>;
+  status: <
+    T = Promise<AsyncIterator<TechCommitteeProposalStatusSubscription>>
+  >(args?: {
+    where?: TechCommitteeProposalStatusWhereInput;
+    orderBy?: TechCommitteeProposalStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preimage: <T = PreimageSubscription>() => T;
+  preimageHash: () => Promise<AsyncIterator<String>>;
+  section: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TechCommitteeProposalNullablePromise
+  extends Promise<TechCommitteeProposal | null>,
+    Fragmentable {
+  id: () => Promise<Int>;
+  author: () => Promise<String>;
+  memberCount: () => Promise<Int>;
+  metaDescription: () => Promise<String>;
+  method: () => Promise<String>;
+  proposalArguments: <
+    T = FragmentableArray<TechCommitteeProposalArgument>
+  >(args?: {
+    where?: TechCommitteeProposalArgumentWhereInput;
+    orderBy?: TechCommitteeProposalArgumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  proposalHash: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  status: <T = FragmentableArray<TechCommitteeProposalStatus>>(args?: {
+    where?: TechCommitteeProposalStatusWhereInput;
+    orderBy?: TechCommitteeProposalStatusOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preimage: <T = PreimagePromise>() => T;
+  preimageHash: () => Promise<String>;
+  section: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalArgument {
+  id: ID_Output;
+  name: String;
+  value: String;
+}
+
+export interface TechCommitteeProposalArgumentPromise
+  extends Promise<TechCommitteeProposalArgument>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  proposal: <T = TechCommitteeProposalPromise>() => T;
+  value: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalArgumentSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalArgument>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  proposal: <T = TechCommitteeProposalSubscription>() => T;
+  value: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TechCommitteeProposalArgumentNullablePromise
+  extends Promise<TechCommitteeProposalArgument | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  proposal: <T = TechCommitteeProposalPromise>() => T;
+  value: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalStatus {
+  id: ID_Output;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface TechCommitteeProposalStatusPromise
+  extends Promise<TechCommitteeProposalStatus>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  proposal: <T = TechCommitteeProposalPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalStatusSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalStatus>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  blockNumber: <T = BlockNumberSubscription>() => T;
+  proposal: <T = TechCommitteeProposalSubscription>() => T;
+  status: () => Promise<AsyncIterator<String>>;
+  uniqueStatus: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TechCommitteeProposalStatusNullablePromise
+  extends Promise<TechCommitteeProposalStatus | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  blockNumber: <T = BlockNumberPromise>() => T;
+  proposal: <T = TechCommitteeProposalPromise>() => T;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalConnection {
+  pageInfo: PageInfo;
+  edges: TechCommitteeProposalEdge[];
+}
+
+export interface TechCommitteeProposalConnectionPromise
+  extends Promise<TechCommitteeProposalConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TechCommitteeProposalEdge>>() => T;
+  aggregate: <T = AggregateTechCommitteeProposalPromise>() => T;
+}
+
+export interface TechCommitteeProposalConnectionSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<TechCommitteeProposalEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateTechCommitteeProposalSubscription>() => T;
+}
+
+export interface TechCommitteeProposalEdge {
+  node: TechCommitteeProposal;
+  cursor: String;
+}
+
+export interface TechCommitteeProposalEdgePromise
+  extends Promise<TechCommitteeProposalEdge>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalEdgeSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalEdge>>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTechCommitteeProposal {
+  count: Int;
+}
+
+export interface AggregateTechCommitteeProposalPromise
+  extends Promise<AggregateTechCommitteeProposal>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTechCommitteeProposalSubscription
+  extends Promise<AsyncIterator<AggregateTechCommitteeProposal>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TechCommitteeProposalArgumentConnection {
+  pageInfo: PageInfo;
+  edges: TechCommitteeProposalArgumentEdge[];
+}
+
+export interface TechCommitteeProposalArgumentConnectionPromise
+  extends Promise<TechCommitteeProposalArgumentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TechCommitteeProposalArgumentEdge>>() => T;
+  aggregate: <T = AggregateTechCommitteeProposalArgumentPromise>() => T;
+}
+
+export interface TechCommitteeProposalArgumentConnectionSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalArgumentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<TechCommitteeProposalArgumentEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateTechCommitteeProposalArgumentSubscription>() => T;
+}
+
+export interface TechCommitteeProposalArgumentEdge {
+  node: TechCommitteeProposalArgument;
+  cursor: String;
+}
+
+export interface TechCommitteeProposalArgumentEdgePromise
+  extends Promise<TechCommitteeProposalArgumentEdge>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalArgumentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalArgumentEdgeSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalArgumentEdge>>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalArgumentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTechCommitteeProposalArgument {
+  count: Int;
+}
+
+export interface AggregateTechCommitteeProposalArgumentPromise
+  extends Promise<AggregateTechCommitteeProposalArgument>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTechCommitteeProposalArgumentSubscription
+  extends Promise<AsyncIterator<AggregateTechCommitteeProposalArgument>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TechCommitteeProposalStatusConnection {
+  pageInfo: PageInfo;
+  edges: TechCommitteeProposalStatusEdge[];
+}
+
+export interface TechCommitteeProposalStatusConnectionPromise
+  extends Promise<TechCommitteeProposalStatusConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TechCommitteeProposalStatusEdge>>() => T;
+  aggregate: <T = AggregateTechCommitteeProposalStatusPromise>() => T;
+}
+
+export interface TechCommitteeProposalStatusConnectionSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalStatusConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<TechCommitteeProposalStatusEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateTechCommitteeProposalStatusSubscription>() => T;
+}
+
+export interface TechCommitteeProposalStatusEdge {
+  node: TechCommitteeProposalStatus;
+  cursor: String;
+}
+
+export interface TechCommitteeProposalStatusEdgePromise
+  extends Promise<TechCommitteeProposalStatusEdge>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalStatusPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalStatusEdgeSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalStatusEdge>>,
+    Fragmentable {
+  node: <T = TechCommitteeProposalStatusSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTechCommitteeProposalStatus {
+  count: Int;
+}
+
+export interface AggregateTechCommitteeProposalStatusPromise
+  extends Promise<AggregateTechCommitteeProposalStatus>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTechCommitteeProposalStatusSubscription
+  extends Promise<AsyncIterator<AggregateTechCommitteeProposalStatus>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface Tip {
   id: Int;
   hash: String;
@@ -11090,6 +12439,175 @@ export interface StakePreviousValuesSubscription
   totalStake: () => Promise<AsyncIterator<String>>;
 }
 
+export interface TechCommitteeProposalSubscriptionPayload {
+  mutation: MutationType;
+  node: TechCommitteeProposal;
+  updatedFields: String[];
+  previousValues: TechCommitteeProposalPreviousValues;
+}
+
+export interface TechCommitteeProposalSubscriptionPayloadPromise
+  extends Promise<TechCommitteeProposalSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TechCommitteeProposalPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TechCommitteeProposalPreviousValuesPromise>() => T;
+}
+
+export interface TechCommitteeProposalSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TechCommitteeProposalSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TechCommitteeProposalPreviousValuesSubscription>() => T;
+}
+
+export interface TechCommitteeProposalPreviousValues {
+  id: Int;
+  author: String;
+  memberCount?: Int;
+  metaDescription?: String;
+  method?: String;
+  proposalHash: String;
+  proposalId: Int;
+  preimageHash?: String;
+  section?: String;
+}
+
+export interface TechCommitteeProposalPreviousValuesPromise
+  extends Promise<TechCommitteeProposalPreviousValues>,
+    Fragmentable {
+  id: () => Promise<Int>;
+  author: () => Promise<String>;
+  memberCount: () => Promise<Int>;
+  metaDescription: () => Promise<String>;
+  method: () => Promise<String>;
+  proposalHash: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  preimageHash: () => Promise<String>;
+  section: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalPreviousValuesSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<Int>>;
+  author: () => Promise<AsyncIterator<String>>;
+  memberCount: () => Promise<AsyncIterator<Int>>;
+  metaDescription: () => Promise<AsyncIterator<String>>;
+  method: () => Promise<AsyncIterator<String>>;
+  proposalHash: () => Promise<AsyncIterator<String>>;
+  proposalId: () => Promise<AsyncIterator<Int>>;
+  preimageHash: () => Promise<AsyncIterator<String>>;
+  section: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TechCommitteeProposalArgumentSubscriptionPayload {
+  mutation: MutationType;
+  node: TechCommitteeProposalArgument;
+  updatedFields: String[];
+  previousValues: TechCommitteeProposalArgumentPreviousValues;
+}
+
+export interface TechCommitteeProposalArgumentSubscriptionPayloadPromise
+  extends Promise<TechCommitteeProposalArgumentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TechCommitteeProposalArgumentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <
+    T = TechCommitteeProposalArgumentPreviousValuesPromise
+  >() => T;
+}
+
+export interface TechCommitteeProposalArgumentSubscriptionPayloadSubscription
+  extends Promise<
+      AsyncIterator<TechCommitteeProposalArgumentSubscriptionPayload>
+    >,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TechCommitteeProposalArgumentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <
+    T = TechCommitteeProposalArgumentPreviousValuesSubscription
+  >() => T;
+}
+
+export interface TechCommitteeProposalArgumentPreviousValues {
+  id: ID_Output;
+  name: String;
+  value: String;
+}
+
+export interface TechCommitteeProposalArgumentPreviousValuesPromise
+  extends Promise<TechCommitteeProposalArgumentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  value: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalArgumentPreviousValuesSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalArgumentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TechCommitteeProposalStatusSubscriptionPayload {
+  mutation: MutationType;
+  node: TechCommitteeProposalStatus;
+  updatedFields: String[];
+  previousValues: TechCommitteeProposalStatusPreviousValues;
+}
+
+export interface TechCommitteeProposalStatusSubscriptionPayloadPromise
+  extends Promise<TechCommitteeProposalStatusSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TechCommitteeProposalStatusPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TechCommitteeProposalStatusPreviousValuesPromise>() => T;
+}
+
+export interface TechCommitteeProposalStatusSubscriptionPayloadSubscription
+  extends Promise<
+      AsyncIterator<TechCommitteeProposalStatusSubscriptionPayload>
+    >,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TechCommitteeProposalStatusSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <
+    T = TechCommitteeProposalStatusPreviousValuesSubscription
+  >() => T;
+}
+
+export interface TechCommitteeProposalStatusPreviousValues {
+  id: ID_Output;
+  status: String;
+  uniqueStatus: String;
+}
+
+export interface TechCommitteeProposalStatusPreviousValuesPromise
+  extends Promise<TechCommitteeProposalStatusPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  status: () => Promise<String>;
+  uniqueStatus: () => Promise<String>;
+}
+
+export interface TechCommitteeProposalStatusPreviousValuesSubscription
+  extends Promise<AsyncIterator<TechCommitteeProposalStatusPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  status: () => Promise<AsyncIterator<String>>;
+  uniqueStatus: () => Promise<AsyncIterator<String>>;
+}
+
 export interface TipSubscriptionPayload {
   mutation: MutationType;
   node: Tip;
@@ -11551,6 +13069,18 @@ export const models: Model[] = [
   },
   {
     name: "BountyStatus",
+    embedded: false
+  },
+  {
+    name: "TechCommitteeProposal",
+    embedded: false
+  },
+  {
+    name: "TechCommitteeProposalArgument",
+    embedded: false
+  },
+  {
+    name: "TechCommitteeProposalStatus",
     embedded: false
   }
 ];

@@ -15,6 +15,7 @@ dotenv.config();
 
 const discussionGraphqlUrl = process.env.REACT_APP_HASURA_GRAPHQL_URL;
 const treasuryTopicId = process.env.TREASURY_TOPIC_ID;
+const techCommitteeProposalTopicId = process.env.TECH_COMMITTEE_PROPOSAL_TOPIC_ID;
 const democracyTopicId = process.env.DEMOCRACY_TOPIC_ID;
 const proposalPostTypeId = process.env.HASURA_PROPOSAL_POST_TYPE_ID;
 const proposalBotUserId = process.env.PROPOSAL_BOT_USER_ID;
@@ -126,6 +127,39 @@ export const treasuryProposalDiscussionExists = async (
 		return !!data.onchain_links?.length;
 	} catch (err) {
 		console.error(chalk.red(`treasuryProposalDiscussionExists execution error with treasuryProposalId: ${onchainTreasuryProposalId}`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Tells if there is already a tech_committee_proposal in the discussion DB matching the
+ * onchain techCommitteeProposalId passed as argument
+ *
+ * @param techCommitteeProposalId the tech_committee_proposal id that is on chain (not the Prisma db id)
+ */
+export const techCommitteeProposalDiscussionExists = async (
+	onchainTechCommitteeProposalId: number
+): Promise<boolean | void> => {
+	if (!discussionGraphqlUrl) {
+		throw new Error(
+			'Environment variable for the REACT_APP_HASURA_GRAPHQL_URL not set'
+		);
+	}
+
+	try {
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.getDiscussionTechCommitteeProposals({ onchainTechCommitteeProposalId });
+
+		return !!data.onchain_links?.length;
+	} catch (err) {
+		console.error(chalk.red(`techCommitteeProposalDiscussionExists execution error with bountyId: ${onchainTechCommitteeProposalId}`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&
@@ -508,6 +542,81 @@ export const addDiscussionPostAndBounty = async ({
 		}
 	} catch (err) {
 		console.error(chalk.red(`addPostAndBounty execution error, Bounty id ${onchainBountyId}\n`), err);
+		err.response?.errors &&
+			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
+		err.response?.data &&
+			console.error(chalk.red('Response data if available\n'), err.response.data);
+	}
+};
+
+/**
+ * Creates a generic post and the linked bounty in hasura discussion DB
+ *
+ * @param proposer address of the proposer of the proposal
+ * @param onchainBountyId the bounty id that is on chain (not the Prisma db id)
+ */
+
+export const addDiscussionPostAndTechCommitteeProposal = async ({
+	proposer,
+	onchainTechCommitteeProposalId
+}: {
+	proposer: string;
+	onchainTechCommitteeProposalId: number;
+}): Promise<void> => {
+	if (!techCommitteeProposalTopicId) {
+		throw new Error(
+			'Please specify an environment variable for the TECH_COMMITTEE_PROPOSAL_TOPIC_ID.'
+		);
+	}
+	if (!proposalPostTypeId) {
+		throw new Error(
+			'Please specify an environment variable for the HASURA_PROPOSAL_POST_TYPE_ID.'
+		);
+	}
+	if (!proposalBotUserId) {
+		throw new Error(
+			'Please specify an environment variable for the PROPOSAL_BOT_USER_ID.'
+		);
+	}
+
+	const proposalAndPostVariables = {
+		authorId: Number(proposalBotUserId),
+		content: getDescription('techincal committee proposal', proposer),
+		onchainTechCommitteeProposalId,
+		proposerAddress: proposer,
+		topicId: Number(techCommitteeProposalTopicId),
+		typeId: Number(proposalPostTypeId)
+	};
+
+	try {
+		const token = await getToken();
+
+		if (!token) {
+			throw new Error(
+				'No authorization token found for the chain-db-watcher.'
+			);
+		}
+		if (!discussionGraphqlUrl) {
+			throw new Error(
+				'Please specify an environment variable for the REACT_APP_SERVER_URL.'
+			);
+		}
+
+		const client = new GraphQLClient(discussionGraphqlUrl, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const discussionSdk = getDiscussionSdk(client);
+		const data = await discussionSdk.addPostAndTechCommitteeProposalMutation(proposalAndPostVariables);
+		const addedId = data?.insert_onchain_links?.returning[0]?.id;
+
+		if (addedId || addedId === 0) {
+			console.log(`${chalk.green('✔︎')} TechCommitteeProposal ${onchainTechCommitteeProposalId} added to the database.`);
+		}
+	} catch (err) {
+		console.error(chalk.red(`addDiscussionPostAndTechCommitteeProposal execution error, Bounty id ${onchainTechCommitteeProposalId}\n`), err);
 		err.response?.errors &&
 			console.error(chalk.red('GraphQL response errors\n'), err.response.errors);
 		err.response?.data &&

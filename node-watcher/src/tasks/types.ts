@@ -26,6 +26,7 @@ import {
   preimageStatus,
   proposalStatus,
   referendumStatus,
+  techCommitteeStatus,
 } from '../util/statuses';
 
 export interface Task<T> {
@@ -122,7 +123,9 @@ export type Nomidot =
   | NomidotTip[]
   | NomidotTipStatusUpdate[]
   | NomidotBounty[]
-  | NomidotBountyStatusUpdate[];
+  | NomidotBountyStatusUpdate[]
+  | NomidotTechCommitteeProposal[]
+  | NomidotTechCommitteeProposalStatusUpdate[];
 
 export type NomidotTask = Task<Nomidot>;
 
@@ -140,6 +143,26 @@ export interface NomidotProposalEvent {
 export interface NomidotProposalRawEvent {
   PropIndex?: number;
   Balance?: Balance;
+}
+
+export interface NomidotTechCommitteeProposal {
+  author: AccountId;
+  memberCount?: number;
+  metaDescription: string;
+  method: string;
+  proposalArguments: NomidotArgument[];
+  proposalHash: Hash;
+  proposalId: number;
+  preimageHash?: string;
+  section: string;
+  status: TechCommitteeStatus;
+}
+
+export interface NomidotTechCommitteeProposalRawEvent {
+  AccountId?: AccountId,
+  ProposalIndex?: number,
+  Hash?: Hash,
+  MemberCount?: number
 }
 
 export interface NomidotTip {
@@ -235,6 +258,8 @@ type PreimageStatus = typeof preimageStatus[keyof typeof preimageStatus];
 
 type ReferendumStatus = typeof referendumStatus[keyof typeof referendumStatus];
 
+type TechCommitteeStatus = typeof techCommitteeStatus[keyof typeof techCommitteeStatus];
+
 export interface NomidotPreimage extends NomidotPreimageEvent {
   preImageArguments: NomidotArgument[];
   metaDescription: string;
@@ -268,6 +293,11 @@ export interface NomidotMotionStatusUpdate {
 export interface NomidotReferendumStatusUpdate {
   referendumId: number;
   status: string;
+}
+
+export interface NomidotTechCommitteeProposalStatusUpdate {
+  proposalId: number;
+  status: TechCommitteeStatus;
 }
 
 export type NomidotCouncil = AccountId[];
