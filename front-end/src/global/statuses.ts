@@ -22,6 +22,7 @@ export const referendumStatus = {
 
 export const motionStatus = {
 	APPROVED: 'Approved',
+	CLOSED: 'Closed',
 	DISAPPROVED: 'Disapproved',
 	EXECUTED: 'Executed',
 	PROPOSED: 'Proposed',

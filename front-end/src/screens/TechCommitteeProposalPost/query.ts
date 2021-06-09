@@ -28,9 +28,12 @@ const onchainLinkTechCommitteeProposal = gql`
         onchain_tech_committee_proposal_id,
         onchain_tech_committee_proposal(where: {}) {
             id
-            status(last: 1) {
+            status(orderBy: id_DESC) {
                 id
                 status
+                blockNumber {
+                  number
+                }
             }
             metaDescription
             memberCount
