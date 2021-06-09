@@ -66,16 +66,20 @@ const PostProposalInfo = ({ onchainLink }: Props) => {
 							: null}
 					</Grid.Column>
 				</Grid.Row>}
-				<Grid.Column mobile={16} tablet={16} computer={16}>
-					{ metaDescription &&
-					<>
-						<h6>Description</h6>
-						{metaDescription}
-					</>}
-				</Grid.Column>
-				<Grid.Column mobile={16} tablet={16} computer={16}>
-					<ExternalLinks isProposal={true} onchainId={onchainLink.onchain_proposal_id} />
-				</Grid.Column>
+				<Grid.Row>
+					<Grid.Column mobile={16} tablet={16} computer={16}>
+						{ metaDescription &&
+						<>
+							<h6>Description</h6>
+							{metaDescription}
+						</>}
+					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+					<Grid.Column mobile={16} tablet={16} computer={16}>
+						<ExternalLinks isProposal={true} onchainId={onchainLink.onchain_proposal_id} />
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		</OnchainInfoWrapper>
 	);

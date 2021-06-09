@@ -48,7 +48,9 @@ const StatusTag = ({ children, className, content, status }: Props) => {
 
 	if ([proposalStatus.TABLED,
 		referendumStatus.EXECUTED,
+		motionStatus.APPROVED,
 		motionStatus.EXECUTED,
+		motionStatus.CLOSED,
 		tipStatus.CLOSED,
 		bountyStatus.AWARDED,
 		bountyStatus.CLAIMED
@@ -109,6 +111,8 @@ export default styled(StatusTag).attrs(( { status }: Props) => ({
 		&.${referendumStatus.PASSED},
 		&.${referendumStatus.EXECUTED},
 		&.${motionStatus.EXECUTED},
+		&.${motionStatus.APPROVED},
+		&.${motionStatus.CLOSED},
 		&.${tipStatus.CLOSED},
 		&.${bountyStatus.AWARDED},
 		&.${bountyStatus.CLAIMED} {

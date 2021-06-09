@@ -53,6 +53,7 @@ import CreateOptionPoll from '../OptionPoll/CreateOptionPoll';
 import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
+import Timeline from '../Timeline';
 import GovenanceSideBar from './GovernanceSideBar';
 import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
@@ -294,40 +295,96 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						{canEdit && <CreateOptionPoll postId={post.id} />}
 					</div>
 				</div>
-				{ isTechCommitteeProposal &&
-					<PostTechCommitteeProposalInfo
-						onchainLink={definedOnchainLink as OnchainLinkTechCommitteeProposalFragment}
-					/>
+				{ isTechCommitteeProposal && (
+					<>
+						<PostTechCommitteeProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkTechCommitteeProposalFragment}
+						/>
+						<Timeline
+							statuses={techCommitteeProposalPost?.onchain_link?.onchain_tech_committee_proposal?.[0]?.status?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isBounty &&
-					<PostBountyInfo
-						onchainLink={definedOnchainLink as OnchainLinkBountyFragment}
-					/>
+				{ isBounty && (
+					<>
+						<PostBountyInfo
+							onchainLink={definedOnchainLink as OnchainLinkBountyFragment}
+						/>
+						<Timeline
+							statuses={bountyPost?.onchain_link?.onchain_bounty?.[0]?.bountyStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isMotion &&
-					<PostMotionInfo
-						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
-					/>
+				{ isMotion && (
+					<>
+						<PostMotionInfo
+							onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
+						/>
+						<Timeline
+							statuses={motionPost?.onchain_link?.onchain_motion?.[0]?.motionStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isProposal &&
-					<PostProposalInfo
-						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-					/>
+				{ isProposal && (
+					<>
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+						<Timeline
+							statuses={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isReferendum &&
-					<PostReferendumInfo
-						onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
-					/>
+				{ isReferendum && (
+					<>
+						<PostReferendumInfo
+							onchainLink={definedOnchainLink as OnchainLinkReferendumFragment}
+						/>
+						<Timeline
+							statuses={referendumPost?.onchain_link?.onchain_referendum?.[0]?.referendumStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isTreasuryProposal &&
-					<PostTreasuryInfo
-						onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
-					/>
+				{ isTreasuryProposal && (
+					<>
+						<PostTreasuryInfo
+							onchainLink={definedOnchainLink as OnchainLinkTreasuryProposalFragment}
+						/>
+						<Timeline
+							statuses={treasuryPost?.onchain_link?.onchain_treasury_spend_proposal?.[0]?.treasuryStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
-				{ isTipProposal &&
-					<PostTipInfo
-						onchainLink={definedOnchainLink as OnchainLinkTipFragment}
-					/>
+				{ isTipProposal && (
+					<>
+						<PostTipInfo
+							onchainLink={definedOnchainLink as OnchainLinkTipFragment}
+						/>
+						<Timeline
+							statuses={tipPost?.onchain_link?.onchain_tip?.[0]?.tipStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
 				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 					<Sidebar />

@@ -37,9 +37,12 @@ const onchainLinkMotion = gql`
         onchain_motion_id,
         onchain_motion(where: {}) {
             id
-            motionStatus(last: 1) {
+            motionStatus(orderBy: id_DESC) {
                 id
                 status
+                blockNumber {
+                  number
+                }
             }
             memberCount
             method

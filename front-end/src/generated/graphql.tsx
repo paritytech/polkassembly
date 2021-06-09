@@ -21184,6 +21184,10 @@ export type OnchainLinkMotionFragment = (
     & { motionStatus?: Maybe<Array<(
       { __typename?: 'MotionStatus' }
       & Pick<MotionStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'number'>
+      ) }
     )>>, motionProposalArguments?: Maybe<Array<(
       { __typename?: 'MotionProposalArgument' }
       & Pick<MotionProposalArgument, 'name' | 'value'>
@@ -21602,6 +21606,10 @@ export type OnchainLinkProposalFragment = (
     & { proposalStatus?: Maybe<Array<(
       { __typename?: 'ProposalStatus' }
       & Pick<ProposalStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'number'>
+      ) }
     )>>, preimage?: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -22024,6 +22032,10 @@ export type OnchainLinkTechCommitteeProposalFragment = (
     & { status?: Maybe<Array<(
       { __typename?: 'TechCommitteeProposalStatus' }
       & Pick<TechCommitteeProposalStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'number'>
+      ) }
     )>>, proposalArguments?: Maybe<Array<(
       { __typename?: 'TechCommitteeProposalArgument' }
       & Pick<TechCommitteeProposalArgument, 'name' | 'value'>
@@ -22256,6 +22268,10 @@ export type OnchainLinkTreasuryProposalFragment = (
     & { treasuryStatus?: Maybe<Array<(
       { __typename?: 'TreasuryStatus' }
       & Pick<TreasuryStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'number'>
+      ) }
     )>> }
   )>> }
 );
@@ -22436,7 +22452,7 @@ export const OnchainLinkBountyFragmentDoc = gql`
     bountyId
     curator
     beneficiary
-    bountyStatus(last: 1) {
+    bountyStatus(orderBy: id_DESC) {
       id
       status
       blockNumber {
@@ -22569,9 +22585,12 @@ export const OnchainLinkMotionFragmentDoc = gql`
   onchain_motion_id
   onchain_motion(where: {}) {
     id
-    motionStatus(last: 1) {
+    motionStatus(orderBy: id_DESC) {
       id
       status
+      blockNumber {
+        number
+      }
     }
     memberCount
     method
@@ -22627,9 +22646,12 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_proposal(where: {}) {
     id
     depositAmount
-    proposalStatus(last: 1) {
+    proposalStatus(orderBy: id_DESC) {
       id
       status
+      blockNumber {
+        number
+      }
     }
     preimage {
       hash
@@ -22683,7 +22705,7 @@ export const OnchainLinkReferendumFragmentDoc = gql`
     delay
     end
     voteThreshold
-    referendumStatus(last: 1) {
+    referendumStatus(orderBy: id_DESC) {
       blockNumber {
         startDateTime
         number
@@ -22776,9 +22798,12 @@ export const OnchainLinkTechCommitteeProposalFragmentDoc = gql`
   onchain_tech_committee_proposal_id
   onchain_tech_committee_proposal(where: {}) {
     id
-    status(last: 1) {
+    status(orderBy: id_DESC) {
       id
       status
+      blockNumber {
+        number
+      }
     }
     metaDescription
     memberCount
@@ -22835,7 +22860,7 @@ export const OnchainLinkTipFragmentDoc = gql`
     finder
     finderFee
     closes
-    tipStatus(last: 1) {
+    tipStatus(orderBy: id_DESC) {
       id
       status
       blockNumber {
@@ -22885,9 +22910,12 @@ export const OnchainLinkTreasuryProposalFragmentDoc = gql`
     beneficiary
     value
     bond
-    treasuryStatus(last: 1) {
+    treasuryStatus(orderBy: id_DESC) {
       id
       status
+      blockNumber {
+        number
+      }
     }
   }
 }
