@@ -53,6 +53,7 @@ import CreateOptionPoll from '../OptionPoll/CreateOptionPoll';
 import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
+import Timeline from '../Timeline';
 import GovenanceSideBar from './GovernanceSideBar';
 import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
@@ -309,10 +310,18 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						onchainLink={definedOnchainLink as OnchainLinkMotionFragment}
 					/>
 				}
-				{ isProposal &&
-					<PostProposalInfo
-						onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
-					/>
+				{ isProposal && (
+					<>
+						<PostProposalInfo
+							onchainLink={definedOnchainLink as OnchainLinkProposalFragment}
+						/>
+						<Timeline
+							statuses={proposalPost?.onchain_link?.onchain_proposal?.[0]?.proposalStatus?.map(s => ({
+								blockNumber: s.blockNumber?.number || 0,
+								status: s.status || ''
+							})) || []}
+						/>
+					</>)
 				}
 				{ isReferendum &&
 					<PostReferendumInfo

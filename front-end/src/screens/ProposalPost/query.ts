@@ -16,9 +16,12 @@ const onchainLinkProposal = gql`
         onchain_proposal(where: {}) {
             id
             depositAmount
-            proposalStatus(last: 1) {
+            proposalStatus(orderBy: id_DESC) {
                 id
                 status
+                blockNumber {
+                  number
+                }
             }
             preimage {
                 hash

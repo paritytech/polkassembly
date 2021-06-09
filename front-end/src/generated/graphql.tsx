@@ -21602,6 +21602,10 @@ export type OnchainLinkProposalFragment = (
     & { proposalStatus?: Maybe<Array<(
       { __typename?: 'ProposalStatus' }
       & Pick<ProposalStatus, 'id' | 'status'>
+      & { blockNumber: (
+        { __typename?: 'BlockNumber' }
+        & Pick<BlockNumber, 'number'>
+      ) }
     )>>, preimage?: Maybe<(
       { __typename?: 'Preimage' }
       & Pick<Preimage, 'hash' | 'id' | 'metaDescription' | 'method'>
@@ -22627,9 +22631,12 @@ export const OnchainLinkProposalFragmentDoc = gql`
   onchain_proposal(where: {}) {
     id
     depositAmount
-    proposalStatus(last: 1) {
+    proposalStatus(orderBy: id_DESC) {
       id
       status
+      blockNumber {
+        number
+      }
     }
     preimage {
       hash
