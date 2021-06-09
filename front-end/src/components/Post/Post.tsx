@@ -386,6 +386,11 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						/>
 					</>)
 				}
+				{redirection.link &&
+					<Card className='timelineCard'>
+						<Icon name='forward'/> Became <Link className='redirection' to={redirection.link}><span className='redirectionText'>{redirection.text}</span></Link>
+					</Card>
+				}
 				<Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
 					<Sidebar />
 				</Responsive>
@@ -475,6 +480,17 @@ export default styled(Post)`
 			&:hover {
 				text-decoration: none;
 				color: pink_secondary;
+			}
+		}
+	}
+
+	.timelineCard {
+		a {
+			color: pink_secondary;
+			font-size: 1.3rem;
+
+			i {
+				font-size: 1.5rem;
 			}
 		}
 	}

@@ -12,6 +12,9 @@ import useCurrentBlock from '../hooks/useCurrentBlock';
 import Card from '../ui-components/Card';
 import StatusTag from '../ui-components/StatusTag';
 import blockToTime from '../util/blockToTime';
+import getNetwork from '../util/getNetwork';
+
+const NETWORK = getNetwork();
 
 interface BlockStatus {
 	blockNumber: number
@@ -41,7 +44,7 @@ const Timeline = ({ className, statuses }: Props) => {
 						<Card key={status} className='timelineCard'>
 							<StatusTag className='post_tags' status={status}/>
 							<span>
-								{' at block'} <a href={`https://polkadot.subscan.io/block/${blockNumber}`}>#{`${blockNumber} `}</a>
+								{' at block'} <a href={`https://${NETWORK}.subscan.io/block/${blockNumber}`}>#{`${blockNumber} `}</a>
 								{currentBlock.toNumber()
 									? <span className='padl'><Icon name='clock'/>{blockToTime(currentBlock.toNumber() - blockNumber, blocktime)} ago</span>
 									: null
@@ -58,9 +61,8 @@ const Timeline = ({ className, statuses }: Props) => {
 export default styled(Timeline)`
 	.timelineCard {
 		a {
-			color: grey_primary;
+			color: pink_secondary;
 			font-size: 1.3rem;
-			font-weight: bold;
 
 			i {
 				font-size: 1.5rem;
