@@ -22217,6 +22217,305 @@ export type AllTipPostsQuery = (
   )> }
 );
 
+export type TrackerBountyPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainBountyIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerBountyPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_bounty_id' | 'proposer_address'>
+      & { onchain_bounty: Array<Maybe<(
+        { __typename?: 'Bounty' }
+        & Pick<Bounty, 'id'>
+        & { bountyStatus?: Maybe<Array<(
+          { __typename?: 'BountyStatus' }
+          & Pick<BountyStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerMotionPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainMotionIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerMotionPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_motion_id' | 'proposer_address'>
+      & { onchain_motion: Array<Maybe<(
+        { __typename?: 'Motion' }
+        & Pick<Motion, 'id'>
+        & { motionStatus?: Maybe<Array<(
+          { __typename?: 'MotionStatus' }
+          & Pick<MotionStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerDemocracyProposalPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainProposalIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerDemocracyProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_proposal_id' | 'proposer_address'>
+      & { onchain_proposal: Array<Maybe<(
+        { __typename?: 'Proposal' }
+        & Pick<Proposal, 'id'>
+        & { proposalStatus?: Maybe<Array<(
+          { __typename?: 'ProposalStatus' }
+          & Pick<ProposalStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerReferendaPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainReferendumIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerReferendaPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_referendum_id' | 'proposer_address'>
+      & { onchain_referendum: Array<Maybe<(
+        { __typename?: 'Referendum' }
+        & Pick<Referendum, 'id' | 'end'>
+        & { referendumStatus?: Maybe<Array<(
+          { __typename?: 'ReferendumStatus' }
+          & Pick<ReferendumStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerTechCommitteeProposalPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainTechCommitteeProposalIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerTechCommitteeProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_tech_committee_proposal_id' | 'proposer_address'>
+      & { onchain_tech_committee_proposal: Array<Maybe<(
+        { __typename?: 'TechCommitteeProposal' }
+        & Pick<TechCommitteeProposal, 'id'>
+        & { status?: Maybe<Array<(
+          { __typename?: 'TechCommitteeProposalStatus' }
+          & Pick<TechCommitteeProposalStatus, 'id' | 'status'>
+        )>>, preimage?: Maybe<(
+          { __typename?: 'Preimage' }
+          & Pick<Preimage, 'id' | 'method'>
+        )> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerTipPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainTipIds: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type TrackerTipPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_tip_id' | 'proposer_address'>
+      & { onchain_tip: Array<Maybe<(
+        { __typename?: 'Tip' }
+        & Pick<Tip, 'id' | 'reason'>
+        & { tipStatus?: Maybe<Array<(
+          { __typename?: 'TipStatus' }
+          & Pick<TipStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
+export type TrackerDemocracyTreasuryProposalPostsQueryVariables = Exact<{
+  postType: Scalars['Int'];
+  onchainTreasuryProposalIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type TrackerDemocracyTreasuryProposalPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'title' | 'created_at' | 'updated_at'>
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & AuthorFieldsFragment
+    )>, comments_aggregate: (
+      { __typename?: 'comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'comments_aggregate_fields' }
+        & Pick<Comments_Aggregate_Fields, 'count'>
+      )> }
+    ), type: (
+      { __typename?: 'post_types' }
+      & Pick<Post_Types, 'name' | 'id'>
+    ), topic: (
+      { __typename?: 'post_topics' }
+      & Pick<Post_Topics, 'id' | 'name'>
+    ), onchain_link?: Maybe<(
+      { __typename?: 'onchain_links' }
+      & Pick<Onchain_Links, 'id' | 'onchain_treasury_proposal_id' | 'proposer_address'>
+      & { onchain_treasury_spend_proposal: Array<Maybe<(
+        { __typename?: 'TreasurySpendProposal' }
+        & Pick<TreasurySpendProposal, 'id'>
+        & { treasuryStatus?: Maybe<Array<(
+          { __typename?: 'TreasuryStatus' }
+          & Pick<TreasuryStatus, 'id' | 'status'>
+        )>> }
+      )>> }
+    )> }
+  )> }
+);
+
 export type AllDemocracyTreasuryProposalPostsQueryVariables = Exact<{
   postType: Scalars['Int'];
   postTopic: Scalars['Int'];
@@ -26031,6 +26330,500 @@ export function useAllTipPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type AllTipPostsQueryHookResult = ReturnType<typeof useAllTipPostsQuery>;
 export type AllTipPostsLazyQueryHookResult = ReturnType<typeof useAllTipPostsLazyQuery>;
 export type AllTipPostsQueryResult = ApolloReactCommon.QueryResult<AllTipPostsQuery, AllTipPostsQueryVariables>;
+export const TrackerBountyPostsDocument = gql`
+    query TrackerBountyPosts($postType: Int!, $onchainBountyIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_bounty_id: {_in: $onchainBountyIds}}}
+    order_by: {onchain_link: {onchain_bounty_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_bounty_id
+      onchain_bounty(where: {}) {
+        id
+        bountyStatus(last: 1) {
+          id
+          status
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerBountyPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerBountyPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerBountyPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerBountyPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainBountyIds: // value for 'onchainBountyIds'
+ *   },
+ * });
+ */
+export function useTrackerBountyPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerBountyPostsQuery, TrackerBountyPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerBountyPostsQuery, TrackerBountyPostsQueryVariables>(TrackerBountyPostsDocument, baseOptions);
+      }
+export function useTrackerBountyPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerBountyPostsQuery, TrackerBountyPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerBountyPostsQuery, TrackerBountyPostsQueryVariables>(TrackerBountyPostsDocument, baseOptions);
+        }
+export type TrackerBountyPostsQueryHookResult = ReturnType<typeof useTrackerBountyPostsQuery>;
+export type TrackerBountyPostsLazyQueryHookResult = ReturnType<typeof useTrackerBountyPostsLazyQuery>;
+export type TrackerBountyPostsQueryResult = ApolloReactCommon.QueryResult<TrackerBountyPostsQuery, TrackerBountyPostsQueryVariables>;
+export const TrackerMotionPostsDocument = gql`
+    query TrackerMotionPosts($postType: Int!, $onchainMotionIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_motion_id: {_in: $onchainMotionIds}}}
+    order_by: {onchain_link: {onchain_motion_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_motion_id
+      onchain_motion(where: {}) {
+        id
+        motionStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerMotionPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerMotionPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerMotionPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerMotionPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainMotionIds: // value for 'onchainMotionIds'
+ *   },
+ * });
+ */
+export function useTrackerMotionPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerMotionPostsQuery, TrackerMotionPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerMotionPostsQuery, TrackerMotionPostsQueryVariables>(TrackerMotionPostsDocument, baseOptions);
+      }
+export function useTrackerMotionPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerMotionPostsQuery, TrackerMotionPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerMotionPostsQuery, TrackerMotionPostsQueryVariables>(TrackerMotionPostsDocument, baseOptions);
+        }
+export type TrackerMotionPostsQueryHookResult = ReturnType<typeof useTrackerMotionPostsQuery>;
+export type TrackerMotionPostsLazyQueryHookResult = ReturnType<typeof useTrackerMotionPostsLazyQuery>;
+export type TrackerMotionPostsQueryResult = ApolloReactCommon.QueryResult<TrackerMotionPostsQuery, TrackerMotionPostsQueryVariables>;
+export const TrackerDemocracyProposalPostsDocument = gql`
+    query TrackerDemocracyProposalPosts($postType: Int!, $onchainProposalIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_proposal_id: {_in: $onchainProposalIds}}}
+    order_by: {onchain_link: {onchain_proposal_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_proposal_id
+      onchain_proposal(where: {}) {
+        id
+        proposalStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerDemocracyProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerDemocracyProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerDemocracyProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerDemocracyProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainProposalIds: // value for 'onchainProposalIds'
+ *   },
+ * });
+ */
+export function useTrackerDemocracyProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerDemocracyProposalPostsQuery, TrackerDemocracyProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerDemocracyProposalPostsQuery, TrackerDemocracyProposalPostsQueryVariables>(TrackerDemocracyProposalPostsDocument, baseOptions);
+      }
+export function useTrackerDemocracyProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerDemocracyProposalPostsQuery, TrackerDemocracyProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerDemocracyProposalPostsQuery, TrackerDemocracyProposalPostsQueryVariables>(TrackerDemocracyProposalPostsDocument, baseOptions);
+        }
+export type TrackerDemocracyProposalPostsQueryHookResult = ReturnType<typeof useTrackerDemocracyProposalPostsQuery>;
+export type TrackerDemocracyProposalPostsLazyQueryHookResult = ReturnType<typeof useTrackerDemocracyProposalPostsLazyQuery>;
+export type TrackerDemocracyProposalPostsQueryResult = ApolloReactCommon.QueryResult<TrackerDemocracyProposalPostsQuery, TrackerDemocracyProposalPostsQueryVariables>;
+export const TrackerReferendaPostsDocument = gql`
+    query TrackerReferendaPosts($postType: Int!, $onchainReferendumIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_referendum_id: {_in: $onchainReferendumIds}}}
+    order_by: {onchain_link: {onchain_referendum_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_referendum_id
+      onchain_referendum(where: {}) {
+        id
+        end
+        referendumStatus(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerReferendaPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerReferendaPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerReferendaPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerReferendaPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainReferendumIds: // value for 'onchainReferendumIds'
+ *   },
+ * });
+ */
+export function useTrackerReferendaPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerReferendaPostsQuery, TrackerReferendaPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerReferendaPostsQuery, TrackerReferendaPostsQueryVariables>(TrackerReferendaPostsDocument, baseOptions);
+      }
+export function useTrackerReferendaPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerReferendaPostsQuery, TrackerReferendaPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerReferendaPostsQuery, TrackerReferendaPostsQueryVariables>(TrackerReferendaPostsDocument, baseOptions);
+        }
+export type TrackerReferendaPostsQueryHookResult = ReturnType<typeof useTrackerReferendaPostsQuery>;
+export type TrackerReferendaPostsLazyQueryHookResult = ReturnType<typeof useTrackerReferendaPostsLazyQuery>;
+export type TrackerReferendaPostsQueryResult = ApolloReactCommon.QueryResult<TrackerReferendaPostsQuery, TrackerReferendaPostsQueryVariables>;
+export const TrackerTechCommitteeProposalPostsDocument = gql`
+    query TrackerTechCommitteeProposalPosts($postType: Int!, $onchainTechCommitteeProposalIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_tech_committee_proposal_id: {_in: $onchainTechCommitteeProposalIds}}}
+    order_by: {onchain_link: {onchain_tech_committee_proposal_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_tech_committee_proposal_id
+      onchain_tech_committee_proposal(where: {}) {
+        id
+        status(last: 1) {
+          id
+          status
+        }
+        preimage {
+          id
+          method
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerTechCommitteeProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerTechCommitteeProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerTechCommitteeProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerTechCommitteeProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainTechCommitteeProposalIds: // value for 'onchainTechCommitteeProposalIds'
+ *   },
+ * });
+ */
+export function useTrackerTechCommitteeProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerTechCommitteeProposalPostsQuery, TrackerTechCommitteeProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerTechCommitteeProposalPostsQuery, TrackerTechCommitteeProposalPostsQueryVariables>(TrackerTechCommitteeProposalPostsDocument, baseOptions);
+      }
+export function useTrackerTechCommitteeProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerTechCommitteeProposalPostsQuery, TrackerTechCommitteeProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerTechCommitteeProposalPostsQuery, TrackerTechCommitteeProposalPostsQueryVariables>(TrackerTechCommitteeProposalPostsDocument, baseOptions);
+        }
+export type TrackerTechCommitteeProposalPostsQueryHookResult = ReturnType<typeof useTrackerTechCommitteeProposalPostsQuery>;
+export type TrackerTechCommitteeProposalPostsLazyQueryHookResult = ReturnType<typeof useTrackerTechCommitteeProposalPostsLazyQuery>;
+export type TrackerTechCommitteeProposalPostsQueryResult = ApolloReactCommon.QueryResult<TrackerTechCommitteeProposalPostsQuery, TrackerTechCommitteeProposalPostsQueryVariables>;
+export const TrackerTipPostsDocument = gql`
+    query TrackerTipPosts($postType: Int!, $onchainTipIds: [String!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_tip_id: {_in: $onchainTipIds}}}
+    order_by: {onchain_link: {id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_tip_id
+      onchain_tip(where: {}) {
+        id
+        reason
+        tipStatus(last: 1) {
+          id
+          status
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerTipPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerTipPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerTipPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerTipPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainTipIds: // value for 'onchainTipIds'
+ *   },
+ * });
+ */
+export function useTrackerTipPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerTipPostsQuery, TrackerTipPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerTipPostsQuery, TrackerTipPostsQueryVariables>(TrackerTipPostsDocument, baseOptions);
+      }
+export function useTrackerTipPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerTipPostsQuery, TrackerTipPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerTipPostsQuery, TrackerTipPostsQueryVariables>(TrackerTipPostsDocument, baseOptions);
+        }
+export type TrackerTipPostsQueryHookResult = ReturnType<typeof useTrackerTipPostsQuery>;
+export type TrackerTipPostsLazyQueryHookResult = ReturnType<typeof useTrackerTipPostsLazyQuery>;
+export type TrackerTipPostsQueryResult = ApolloReactCommon.QueryResult<TrackerTipPostsQuery, TrackerTipPostsQueryVariables>;
+export const TrackerDemocracyTreasuryProposalPostsDocument = gql`
+    query TrackerDemocracyTreasuryProposalPosts($postType: Int!, $onchainTreasuryProposalIds: [Int!]!) {
+  posts(
+    where: {type: {id: {_eq: $postType}}, onchain_link: {onchain_treasury_proposal_id: {_in: $onchainTreasuryProposalIds}}}
+    order_by: {onchain_link: {onchain_treasury_proposal_id: desc}}
+  ) {
+    id
+    title
+    author {
+      ...authorFields
+    }
+    created_at
+    updated_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    type {
+      name
+      id
+    }
+    topic {
+      id
+      name
+    }
+    onchain_link {
+      id
+      onchain_treasury_proposal_id
+      onchain_treasury_spend_proposal(where: {}) {
+        id
+        treasuryStatus(last: 1) {
+          id
+          status
+        }
+      }
+      proposer_address
+    }
+  }
+}
+    ${AuthorFieldsFragmentDoc}`;
+
+/**
+ * __useTrackerDemocracyTreasuryProposalPostsQuery__
+ *
+ * To run a query within a React component, call `useTrackerDemocracyTreasuryProposalPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTrackerDemocracyTreasuryProposalPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTrackerDemocracyTreasuryProposalPostsQuery({
+ *   variables: {
+ *      postType: // value for 'postType'
+ *      onchainTreasuryProposalIds: // value for 'onchainTreasuryProposalIds'
+ *   },
+ * });
+ */
+export function useTrackerDemocracyTreasuryProposalPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TrackerDemocracyTreasuryProposalPostsQuery, TrackerDemocracyTreasuryProposalPostsQueryVariables>) {
+        return ApolloReactHooks.useQuery<TrackerDemocracyTreasuryProposalPostsQuery, TrackerDemocracyTreasuryProposalPostsQueryVariables>(TrackerDemocracyTreasuryProposalPostsDocument, baseOptions);
+      }
+export function useTrackerDemocracyTreasuryProposalPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TrackerDemocracyTreasuryProposalPostsQuery, TrackerDemocracyTreasuryProposalPostsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TrackerDemocracyTreasuryProposalPostsQuery, TrackerDemocracyTreasuryProposalPostsQueryVariables>(TrackerDemocracyTreasuryProposalPostsDocument, baseOptions);
+        }
+export type TrackerDemocracyTreasuryProposalPostsQueryHookResult = ReturnType<typeof useTrackerDemocracyTreasuryProposalPostsQuery>;
+export type TrackerDemocracyTreasuryProposalPostsLazyQueryHookResult = ReturnType<typeof useTrackerDemocracyTreasuryProposalPostsLazyQuery>;
+export type TrackerDemocracyTreasuryProposalPostsQueryResult = ApolloReactCommon.QueryResult<TrackerDemocracyTreasuryProposalPostsQuery, TrackerDemocracyTreasuryProposalPostsQueryVariables>;
 export const AllDemocracyTreasuryProposalPostsDocument = gql`
     query AllDemocracyTreasuryProposalPosts($postType: Int!, $postTopic: Int!, $limit: Int! = 5) {
   posts(

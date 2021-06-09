@@ -44,6 +44,7 @@ import PostTechCommitteeProposal from './screens/TechCommitteeProposalPost';
 import TechCommitteeProposals from './screens/TechCommitteeProposals';
 import PostTip from './screens/TipPost';
 import Tips from './screens/Tips';
+import Tracker from './screens/Tracker';
 import Treasury from './screens/Treasury';
 import PostTreasury from './screens/TreasuryPost';
 import UndoEmailChange from './screens/UndoEmailChange';
@@ -166,6 +167,9 @@ const App = () => {
 														</Route>
 														<Route path="/search">
 															<Search/>
+														</Route>
+														<Route path="/tracker">
+															<Tracker/>
 														</Route>
 														<Route path="*">
 															<NotFound/>

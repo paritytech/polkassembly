@@ -54,6 +54,7 @@ import PostReactionBar from '../Reactionbar/PostReactionBar';
 import ReportButton from '../ReportButton';
 import SubscriptionButton from '../SubscriptionButton/SubscriptionButton';
 import Timeline from '../Timeline';
+import TrackerButton from '../TrackerButton';
 import GovenanceSideBar from './GovernanceSideBar';
 import Poll from './Poll';
 import CreatePostComment from './PostCommentForm';
@@ -132,7 +133,7 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 		});
 	}, [post, setMetaContextState]);
 
-	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal || isBounty || isTechCommitteeProposal;
+	const isOnchainPost = isMotion || isProposal || isReferendum || isTreasuryProposal || isBounty || isTechCommitteeProposal || isTipProposal;
 
 	let onchainId: string | number | null | undefined;
 	let referendumPost: ReferendumPostFragment | undefined;
@@ -292,7 +293,19 @@ const Post = ( { className, data, isBounty = false, isMotion = false, isProposal
 						{id && !isEditing && <SubscriptionButton postId={post.id}/>}
 						{canEdit && <Button className={'social'} onClick={toggleEdit}><Icon name='edit' className='icon'/>Edit</Button>}
 						{id && !isEditing && !isOnchainPost && <ReportButton type='post' contentId={`${post.id}`} />}
-						{canEdit && <CreateOptionPoll postId={post.id} />}
+						{canEdit && !isEditing && <CreateOptionPoll postId={post.id} />}
+						{id && onchainId && isOnchainPost && !isEditing && (
+							<TrackerButton
+								onchainId={onchainId}
+								isBounty={isBounty}
+								isMotion={isMotion}
+								isProposal={isProposal}
+								isReferendum={isReferendum}
+								isTipProposal={isTipProposal}
+								isTreasuryProposal={isTreasuryProposal}
+								isTechCommitteeProposal={isTechCommitteeProposal}
+							/>)
+						}
 					</div>
 				</div>
 				{ isTechCommitteeProposal && (

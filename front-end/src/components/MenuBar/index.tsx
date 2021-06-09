@@ -67,7 +67,8 @@ const MenuBar = ({ className } : Props): JSX.Element => {
 	const loggedInItems = [
 		{ content:'Notifications', icon:'bell', to:'/notification-settings' },
 		{ content:'Settings', icon:'cog', to:'/settings' },
-		{ content: 'Logout', icon:'sign-out', onClick: handleLogout, to:'/' }
+		{ content:'Tracker', icon:'bookmark', to:'/tracker' },
+		{ content:'Logout', icon:'sign-out', onClick: handleLogout, to:'/' }
 	];
 
 	const userMenu = currentUser.web3signup && currentUser.defaultAddress
