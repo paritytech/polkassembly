@@ -34,7 +34,7 @@ export default async (parent: void, { network, address }: AddressLinkStartArgs, 
 		.insert({
 			address,
 			network,
-			sign_message: uuid(),
+			sign_message: `<Bytes>${uuid()}</Bytes>`,
 			user_id: user.id,
 			verified: false
 		});
