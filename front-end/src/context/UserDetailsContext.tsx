@@ -8,6 +8,9 @@ import React, { createContext, useState } from 'react';
 import { getLocalStorageToken } from '../services/auth.service';
 import { JWTPayploadType, UserDetailsContextType } from '../types';
 import { decodePostgresArray } from '../util/decodePostgressArray';
+import getNetwork from '../util/getNetwork';
+
+const NETWORK = getNetwork();
 
 const initialUserDetailsContext : UserDetailsContextType = {
 	addresses: [],
@@ -57,8 +60,9 @@ try {
 			initialUserDetailsContext.notification = notification;
 		}
 		initialUserDetailsContext.email_verified = email_verified || false;
-		initialUserDetailsContext.addresses = decodePostgresArray(claims['x-hasura-kusama']);
-		initialUserDetailsContext.defaultAddress = claims['x-hasura-kusama-default'];
+
+		initialUserDetailsContext.addresses = decodePostgresArray((claims as any)[`x-hasura-${NETWORK}`]);
+		initialUserDetailsContext.defaultAddress = (claims as any)[`x-hasura-${NETWORK}-default`];
 		initialUserDetailsContext.web3signup = web3signup || false;
 	}
 } catch {
