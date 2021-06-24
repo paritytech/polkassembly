@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "tsc": "tsc --resolveJsonModule",
-    "start:prod": "tsc --resolveJsonModule && node build/index.js",
+    "start:prod": "ts-node src/index.ts",
     "lint": "npx eslint ./src/ --ext .js,.ts",
     "lint:fix": "npx eslint ./src/ --ext .js,.ts --fix",
     "api:bump": "yarn add @polkadot/api"
