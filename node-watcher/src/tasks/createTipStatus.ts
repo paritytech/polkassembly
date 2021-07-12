@@ -32,7 +32,7 @@ const createTipStatus: Task<NomidotTipStatusUpdate[]> = {
 
     const filteredEvents = events.filter(
     ({ event: { method, section } }) =>
-      section === 'treasury' &&
+      section === 'tips' &&
       [tipStatus.CLOSED, tipStatus.CLOSING, tipStatus.RETRACTED].includes(method)
     );
 
