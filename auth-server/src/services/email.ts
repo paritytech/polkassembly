@@ -16,6 +16,7 @@ import {
 	postSubscriptionMailTemplate,
 	reportContentEmailTemplate,
 	resetPasswordEmailTemplate,
+	transferNoticeEmailTemplate,
 	undoEmailChangeEmailTemplate,
 	verificationEmailTemplate
 } from '../utils/emailTemplates';
@@ -248,4 +249,28 @@ export const sendReportContentEmail = (username: string, network: string, report
 
 	sgMail.send(msg).catch(e =>
 		console.error('Report Content Email not sent', e));
+};
+
+export const sendTransferNoticeEmail = (network: string | undefined, email: string): void => {
+	if (!apiKey) {
+		console.warn('Report Content Email not sent due to missing API key');
+		return;
+	}
+
+	const text = ejs.render(transferNoticeEmailTemplate, {
+		email,
+		network
+	});
+
+	const msg = {
+		from: FROM,
+		html: text,
+		reply_to: REPORT,
+		subject: 'Polkassembly Acquisition Notice',
+		text,
+		to: email
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Polkassembly Acquisition Notice Email not sent', e));
 };
