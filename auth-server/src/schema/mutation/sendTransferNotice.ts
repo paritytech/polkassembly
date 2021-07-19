@@ -5,5 +5,6 @@
 export default `
 	sendTransferNotice(
         secret: String!
+        mistake: Boolean
     ): Message
 `;
