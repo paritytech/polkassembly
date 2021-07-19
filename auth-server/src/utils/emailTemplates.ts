@@ -155,7 +155,7 @@ export const transferNoticeEmailTemplate = container(`
 
     As part of this change your details will be shared with Premiurly OÜ.<br /><br />
 
-    If you would like information on how Premiurly OÜ will process your personal data, you can find this in their Privacy and Personal Data Policy <a href="https://premiurly.in/policy/privacy-policy/">here</a>. If you do not consent to the transfer of your personal data as part of this migration, you have until August 20th, 2021 to delete your Polkassembly account by going to https://<%= network %>.polkassembly.io/settings#deleteAccount and pressing the "Delete My Account" button, thereby ensuring that your data will not be transferred.<br /><br />
+    If you would like information on how Premiurly OÜ will process your personal data, you can find this in their Privacy and Personal Data Policy <a href="https://premiurly.in/policy/privacy-policy/">here</a>. If you do not consent to the transfer of your personal data as part of this migration, you have until August 20th, 2021 to delete your Polkassembly account by going to https://polkadot.polkassembly.io/settings#deleteAccount and pressing the "Delete My Account" button, thereby ensuring that your data will not be transferred.<br /><br />
 
     Why is this change taking place?<br /><br />
 
