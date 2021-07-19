@@ -17,6 +17,7 @@ import {
 	reportContentEmailTemplate,
 	resetPasswordEmailTemplate,
 	transferNoticeEmailTemplate,
+	transferNoticeMistakeEmailTemplate,
 	undoEmailChangeEmailTemplate,
 	verificationEmailTemplate
 } from '../utils/emailTemplates';
@@ -251,13 +252,13 @@ export const sendReportContentEmail = (username: string, network: string, report
 		console.error('Report Content Email not sent', e));
 };
 
-export const sendTransferNoticeEmail = (network: string | undefined, email: string): void => {
+export const sendTransferNoticeEmail = (network: string | undefined, email: string, mistake: boolean): void => {
 	if (!apiKey) {
 		console.warn('Report Content Email not sent due to missing API key');
 		return;
 	}
 
-	const text = ejs.render(transferNoticeEmailTemplate, {
+	const text = ejs.render(mistake ? transferNoticeMistakeEmailTemplate : transferNoticeEmailTemplate, {
 		email,
 		network
 	});

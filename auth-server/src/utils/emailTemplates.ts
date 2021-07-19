@@ -164,3 +164,9 @@ export const transferNoticeEmailTemplate = container(`
 
     Parity Technologies Limited
 `);
+
+export const transferNoticeMistakeEmailTemplate = container(`
+    Dear Polkassembly Users<br /><br />
+
+    Due to a technical mistake, our previous email didn't contain a correct link to Polkassembly account deletion. The correct link to do so is https://kusama.polkassembly.io/settings#deleteAccount<br /><br />
+`);

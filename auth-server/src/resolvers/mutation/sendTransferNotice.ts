@@ -8,7 +8,7 @@ import { MessageType, TransferNoticeArgs } from '../../types';
 
 const network = process.env.NETWORK;
 
-export default async (parent: void, { secret }: TransferNoticeArgs): Promise<MessageType> => {
+export default async (parent: void, { secret, mistake }: TransferNoticeArgs): Promise<MessageType> => {
 	const users = await User
 		.query()
 		.where({});
@@ -22,8 +22,7 @@ export default async (parent: void, { secret }: TransferNoticeArgs): Promise<Mes
 
 		if (user.email) {
 			console.log(`Sending notice: ${user.email}`);
-
-			sendTransferNoticeEmail(network, user.email);
+			sendTransferNoticeEmail(network, user.email, mistake);
 		}
 	}
 

@@ -303,4 +303,5 @@ export interface DeleteAccountArgs {
 
 export interface TransferNoticeArgs {
     secret: string;
+    mistake: boolean;
 }
