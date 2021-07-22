@@ -5,3 +5,7 @@ usePassword: true
 
 metrics:
   enabled: false
+
+master:
+  extraFlags:
+    - --maxmemory-policy allkeys-lru
