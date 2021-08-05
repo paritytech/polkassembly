@@ -13,12 +13,17 @@ frontend:
   ingress:
     enabled: true
     annotations:
-      traefik.ingress.kubernetes.io/redirect-entry-point: https
-
+      kubernetes.io/ingress.class: traefik-external
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      cert-manager.io/cluster-issuer: letsencrypt-http01
+      traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:
       - host: test.polkassembly.io
         paths: []
-    tls: []
+    tls:
+      - hosts:
+        - test.polkassembly.io
+        secretName: test.polkassembly.io
 
 authServer:
   config:
