@@ -164,7 +164,7 @@ const createPreimage: Task<NomidotPreimage[]> = {
           author: preimageArguments.author,
           depositAmount: preimageArguments.depositAmount,
           hash: preimageArguments.hash,
-          metaDescription: meta.documentation.toString(),
+          metaDescription: meta.docs.toString(),
           method,
           preImageArguments,
           section,

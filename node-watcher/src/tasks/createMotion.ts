@@ -121,7 +121,7 @@ const createMotion: Task<NomidotMotion[]> = {
         const result: NomidotMotion = {
           author: motionRawEvent.AccountId,
           memberCount: motionRawEvent.MemberCount,
-          metaDescription: meta.documentation.toString(),
+          metaDescription: meta.docs.toString(),
           method,
           motionProposalHash: motionRawEvent.Hash,
           motionProposalId: motionRawEvent.ProposalIndex,
