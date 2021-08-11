@@ -91,6 +91,72 @@ lint-chain-db-watcher:
   tags:
     - linux-docker
 
+#### vault-secrets for dockerize, deploy and publish stages
+
+.vault-secrets:                    &vault-secrets
+  variables:
+    VAULT_SERVER_URL:              "https://vault.parity-mgmt-vault.parity.io"
+    VAULT_AUTH_PATH:               "gitlab-parity-io-jwt"
+    VAULT_AUTH_ROLE:               "cicd_gitlab_parity_${CI_PROJECT_NAME}"
+  secrets:
+    DOCKER_HUB_USER:
+      vault:                       cicd/gitlab/parity/DOCKER_HUB_USER@kv
+      file:                        false
+    DOCKER_HUB_PASS:
+      vault:                       cicd/gitlab/parity/DOCKER_HUB_PASS@kv
+      file:                        false
+    DOCKER_REGISTRY_JSON:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/DOCKER_REGISTRY_JSON@kv
+      file:                        false
+    GITHUB_RELEASE_TOKEN:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/GITHUB_RELEASE_TOKEN@kv
+      file:                        false
+    SENDGRID_API_KEY:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/SENDGRID_API_KEY@kv
+      file:                        false
+    AUTH_SERVER_JWT_PRIVATE_KEY:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/AUTH_SERVER_JWT_PRIVATE_KEY@kv
+      file:                        false
+    AUTH_SERVER_JWT_PUBLIC_KEY:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/AUTH_SERVER_JWT_PUBLIC_KEY@kv
+      file:                        false
+    CHAIN_DB_PASSWORD:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/CHAIN_DB_PASSWORD@kv
+      file:                        false
+    CLOUDSQL_INSTANCE_CONNECTION_NAME:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/CLOUDSQL_INSTANCE_CONNECTION_NAME@kv
+      file:                        false
+    CLOUDSQL_INSTANCE_CREDENTIALS:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/CLOUDSQL_INSTANCE_CREDENTIALS@kv
+      file:                        false
+    DATABASE_URL:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/DATABASE_URL@kv
+      file:                        false
+    HASURA_EVENT_SECRET:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/HASURA_EVENT_SECRET@kv
+      file:                        false
+    HASURA_GRAPHQL_ADMIN_SECRET:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/HASURA_GRAPHQL_ADMIN_SECRET@kv
+      file:                        false
+    HASURA_GRAPHQL_DATABASE_URL:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/HASURA_GRAPHQL_DATABASE_URL@kv
+      file:                        false
+    HASURA_GRAPHQL_JWT_SECRET:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/HASURA_GRAPHQL_JWT_SECRET@kv
+      file:                        false
+    HASURA_POST_SUBSCRIPTION_SECRET:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/HASURA_POST_SUBSCRIPTION_SECRET@kv
+      file:                        false
+    JWT_KEY_PASSPHRASE:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/JWT_KEY_PASSPHRASE@kv
+      file:                        false
+    PROPOSAL_BOT_PASSWORD:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/PROPOSAL_BOT_PASSWORD@kv
+      file:                        false
+    REDIS_URL:
+      vault:                       cicd/gitlab/$CI_PROJECT_PATH/$CI_ENVIRONMENT_NAME/REDIS_URL@kv
+      file:                        false
+
 #### stage:                        dockerize
 
 .build_and_push:                   &build_and_push
@@ -102,6 +168,7 @@ lint-chain-db-watcher:
       - unknown_failure
       - api_failure
   interruptible:                   true
+  <<:                              *vault-secrets
   script:
     # create the docker image name
     - POD_NAME=$(echo ${CI_JOB_NAME} | sed -E 's/^[[:alnum:]]+://')
@@ -219,6 +286,7 @@ dockerize:chain-db-open-server:
 #### stage:                        deploy
 
 .deploy-k8s:                       &deploy-k8s
+  <<:                              *vault-secrets
   script:
     - echo ${KUBE_NAMESPACE}
     - echo ${CI_ENVIRONMENT_NAME}
@@ -315,6 +383,7 @@ publish-draft-release:
   image:                           docker.io/paritytech/tools:latest
   only:
     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+  <<:                              *vault-secrets
   script:
     - ./.maintain/publish_draft_release.sh
   interruptible:                   true
