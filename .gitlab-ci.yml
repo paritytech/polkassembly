@@ -178,7 +178,7 @@ lint-chain-db-watcher:
     # pull latest image used as cache to speed up the docker build process
     - buildah pull $DOCKER_IMAGE:latest || true
     # login to the docker registry
-    - echo "$Docker_Hub_Pass_Parity" | buildah login -u "$Docker_Hub_User_Parity" --password-stdin docker.io
+    - echo "$DOCKER_HUB_PASS" | buildah login -u "$DOCKER_HUB_USER" --password-stdin docker.io
     # do: docker build
     - eval "buildah bud
         --format=docker
