@@ -57,7 +57,7 @@
 		"passport": "^0.4.1",
 		"passport-local": "^1.0.0",
 		"pg": "^8.0.3",
-		"redis": "3.0.2",
+		"redis": "3.1.1",
 		"tmp": "^0.1.0",
 		"typescript": "^3.9.3",
 		"uuidv4": "^6.1.0",
@@ -99,7 +99,7 @@
 		"ts-node": "^8.10.1"
 	},
 	"resolutions": {
-		"redis": "3.0.2",
+		"redis": "3.1.1",
 		"@types/redis": "2.8.21",
 		"@polkadot/networks": "6.0.5",
 		"@polkadot/util": "6.0.5",
