@@ -164,7 +164,7 @@ jobs:
         # Always attempt to pull a newer version of the image
         always_pull: true # optional
         # Comma-delimited list of build-time variables
-        build_args: REACT_APP_ENV=production,REACT_APP_HASURA_GRAPHQL_URL=https://kusama.polkassembly.network/v1/graphql,REACT_APP_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvXn1fzBBAYNfIdPoRZer\n04XNn42QpVYBeSscsQlHSahqnQce4BqPqKD7MKMBy0Aw/EQio+eiQkD2nWhi0daK\n2uJ7bQnAaAn144vFQEIFFzKxR10WliJceEpoL5IoA2X6jdhF5fvCqALURg5i4Y9A\naRquoUSko0pIkSHhf2DbDcACVoSDGMlkGAU9bRXkwZ3Lpqot6r28g9U/T929zVpu\n+T00yyIctT5JJalbD0YTnUkOLa2WBxmmqIEu3xPIVx9a8zG1K/oxdjS0roGc8Ai+\niCWp7WqWk88fINitN6v7Mfp4+ITCwEXHLH48Qj/+YXTFPQSg6lVmmrPfX61F6rGX\nwQIDAQAB\n-----END PUBLIC KEY-----",REACT_APP_NETWORK=kusama,REACT_APP_WS_PROVIDER=wss://kusama-rpc.polkadot.io
+        build_args: REACT_APP_ENV=production,REACT_APP_HASURA_GRAPHQL_URL=https://kusama.polkassembly.network/v1/graphql,REACT_APP_JWT_PUBLIC_KEY=${{ secrets.KUSAMA_JWT_PUBLIC_KEY }},REACT_APP_NETWORK=kusama,REACT_APP_WS_PROVIDER=wss://kusama-rpc.polkadot.io
         # Comma-delimited list of images to consider as cache sources
         # cache_froms: # optional
         # Comma-delimited list of labels to add to the built image
