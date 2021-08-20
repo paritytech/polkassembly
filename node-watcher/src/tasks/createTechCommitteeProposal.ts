@@ -118,7 +118,7 @@ const createTechCommitteeProposal: Task<NomidotTechCommitteeProposal[]> = {
         const result: NomidotTechCommitteeProposal = {
           author: proposalRawEvent.AccountId,
           memberCount: proposalRawEvent.MemberCount,
-          metaDescription: meta.documentation.toString(),
+          metaDescription: meta.docs.toString(),
           method,
           proposalHash: proposalRawEvent.Hash,
           proposalId: proposalRawEvent.ProposalIndex,

@@ -22,7 +22,7 @@ const createBlockNumber: Task<NomidotBlock> = {
     cached: Cached,
     api: ApiPromise
   ): Promise<NomidotBlock> => {
-    const [author] = await api.derive.chain.getHeader(blockHash);
+    const [author] = await api.rpc.chain.getHeader(blockHash);
 
     const startDateTime: Moment = await api.query.timestamp.now.at(blockHash);
 

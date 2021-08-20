@@ -243,7 +243,7 @@ export default class AuthService {
 	}
 
 	public async AddressLoginStart (address: string): Promise<string> {
-		const signMessage = uuid();
+		const signMessage = `<Bytes>${uuid()}</Bytes>`;
 
 		await redisSetex(getAddressLoginKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
@@ -298,7 +298,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_SIGNUP_ALREADY_EXISTS);
 		}
 
-		const signMessage = uuid();
+		const signMessage = `<Bytes>${uuid()}</Bytes>`;
 
 		await redisSetex(getAddressSignupKey(address), ADDRESS_LOGIN_TTL, signMessage);
 
@@ -618,7 +618,7 @@ export default class AuthService {
 			throw new ForbiddenError(messages.ADDRESS_NOT_FOUND);
 		}
 
-		const signMessage = uuid();
+		const signMessage = `<Bytes>${uuid()}</Bytes>`;
 
 		await redisSetex(getSetCredentialsKey(address), ADDRESS_LOGIN_TTL, signMessage);
 

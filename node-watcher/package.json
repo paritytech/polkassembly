@@ -33,20 +33,18 @@
     "api:bump": "yarn add @polkadot/api @polkadot/dev"
   },
   "dependencies": {
-    "@polkadot/api": "^4.13.1",
-    "p-retry": "^4.2.0",
-    "prisma-client-lib": "1.34.10"
-  },
-  "devDependencies": {
-    "@polkadot/dev": "^0.62.40",
+    "@polkadot/api": "^5.2.1",
+    "@polkadot/dev": "^0.62.57",
     "@types/bn.js": "^4.11.6",
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-simple-import-sort": "^5.0.0",
+    "p-retry": "^4.2.0",
     "prettier": "1.19.1",
+    "prisma-client-lib": "1.34.10",
     "prisma1": "^1.34.11",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.2"
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
   },
   "resolutions": {
     "kind-of": ">=6.0.3"

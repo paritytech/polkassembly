@@ -300,3 +300,8 @@ export interface ProfileArgs {
 export interface DeleteAccountArgs {
     password: string;
 }
+
+export interface TransferNoticeArgs {
+    secret: string;
+    mistake: boolean;
+}

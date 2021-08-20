@@ -16,6 +16,8 @@ import {
 	postSubscriptionMailTemplate,
 	reportContentEmailTemplate,
 	resetPasswordEmailTemplate,
+	transferNoticeEmailTemplate,
+	transferNoticeMistakeEmailTemplate,
 	undoEmailChangeEmailTemplate,
 	verificationEmailTemplate
 } from '../utils/emailTemplates';
@@ -23,7 +25,7 @@ import shortenHash from '../utils/shortenHash';
 
 const apiKey = process.env.SENDGRID_API_KEY;
 const FROM = 'noreply@polkassembly.io';
-const REPORT = 'polkassembly@parity.io';
+const REPORT = 'nikhil@parity.io';
 const DOMAIN = process.env.DOMAIN_NAME && process.env.DOMAIN_PROTOCOL ? `${process.env.DOMAIN_PROTOCOL}${process.env.DOMAIN_NAME}` : 'https://test.polkassembly.io';
 
 if (apiKey) {
@@ -93,7 +95,7 @@ export const sendPostSubscriptionMail = (user: User, author: User, comment: Comm
 	const msg = {
 		from: FROM,
 		html: text,
-		subject: `Update on post #${comment.post_id} you are subscribed to`,
+		subject: `Update on post #${comment.post_id}: ${comment.content.substring(0, 40)} ...`,
 		text,
 		to: user.email
 	};
@@ -248,4 +250,28 @@ export const sendReportContentEmail = (username: string, network: string, report
 
 	sgMail.send(msg).catch(e =>
 		console.error('Report Content Email not sent', e));
+};
+
+export const sendTransferNoticeEmail = (network: string | undefined, email: string, mistake: boolean): void => {
+	if (!apiKey) {
+		console.warn('Report Content Email not sent due to missing API key');
+		return;
+	}
+
+	const text = ejs.render(mistake ? transferNoticeMistakeEmailTemplate : transferNoticeEmailTemplate, {
+		email,
+		network
+	});
+
+	const msg = {
+		from: FROM,
+		html: text,
+		reply_to: REPORT,
+		subject: 'Polkassembly Acquisition Notice',
+		text,
+		to: email
+	};
+
+	sgMail.send(msg).catch(e =>
+		console.error('Polkassembly Acquisition Notice Email not sent', e));
 };

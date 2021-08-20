@@ -147,3 +147,26 @@ export const reportContentEmailTemplate = container(`
         id: <%= contentId %> <br />
     </p>
 `);
+
+export const transferNoticeEmailTemplate = container(`
+    Dear Polkassembly User<br /><br />
+
+    Polkassembly is to be acquired by Premiurly OÜ on 20 July 2021 and as of that date the Polkassembly database will be migrated from Parity Technologies to Premiurly OÜ. Premiurly OÜ is an independent organization that received a Web3 Foundation grant to improve and maintain Polkassembly.<br /><br />
+
+    As part of this change your details will be shared with Premiurly OÜ.<br /><br />
+
+    If you would like information on how Premiurly OÜ will process your personal data, you can find this in their Privacy and Personal Data Policy <a href="https://premiurly.in/policy/privacy-policy/">here</a>. If you do not consent to the transfer of your personal data as part of this migration, you have until August 20th, 2021 to delete your Polkassembly account by going to https://polkadot.polkassembly.io/settings#deleteAccount and pressing the "Delete My Account" button, thereby ensuring that your data will not be transferred.<br /><br />
+
+    Why is this change taking place?<br /><br />
+
+    As Parity Technologies is a software engineering company, maintaining a forum is not part of its core business. Additionally, in the interest of decentralization, and given that Parity Technologies developed the initial implementation of Polkadot and Kusama, the community will be better served with an independent entity stewarding this vital resource. Premiurly OÜ received a Web3 Foundation grant specifically for this purpose, including the deployment of Polkassembly to their own infrastructure.<br />
+    For details on your data protection rights see the <a href="https://premiurly.in/policy/privacy-policy/">Polkassembly Privacy Notice</a>. Should you have any queries, please contact polkassembly@parity.io.<br /><br />
+
+    Parity Technologies Limited
+`);
+
+export const transferNoticeMistakeEmailTemplate = container(`
+    Dear Polkassembly Users<br /><br />
+
+    Due to a technical mistake, our previous email didn't contain a correct link to Polkassembly account deletion. The correct link to do so is https://kusama.polkassembly.io/settings#deleteAccount<br /><br />
+`);
