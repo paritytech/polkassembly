@@ -33,7 +33,7 @@ jobs:
         yarn install
         yarn lint
         yarn tsc
-        
+
   lint-chain-db-watcher:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
         yarn install
         yarn lint
         yarn tsc
-        
+
   lint-front-end:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
         yarn install
         yarn lint
         yarn tsc
- 
+
   build-auth-server:
     needs: [lint-auth-server]
     # The type of runner that the job will run on
@@ -92,7 +92,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build and push auth server
+    - name: Build and push auth-server
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
@@ -127,7 +127,7 @@ jobs:
         # add_git_labels: # optional
         # Whether to push the image
         # push: # optional, default is true
-  
+
   build-chain-db-open-server:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -137,7 +137,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build and push chain-db open server
+    - name: Build and push chain-db-open-server
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
@@ -181,7 +181,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build and push auth server
+    - name: Build and push chain-db-watcher
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
@@ -225,7 +225,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build and push auth server
+    - name: Build and push health-monitor
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
@@ -269,7 +269,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build and push auth server
+    - name: Build and push node-watcher
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
@@ -304,4 +304,4 @@ jobs:
         # add_git_labels: # optional
         # Whether to push the image
         # push: # optional, default is true
-  
+
