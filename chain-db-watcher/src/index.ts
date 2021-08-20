@@ -104,7 +104,7 @@ const startSubscriptions = (client: SubscriptionClient): void => {
 		next: ({ data }): void => {
 			console.log('Bounty data received', JSON.stringify(data, null, 2));
 
-			if (data?.bounty.mutation === subscriptionMutation.Created) {
+			if (data?.bounty?.mutation === subscriptionMutation.Created) {
 				const { bountyId, proposer } = data.bounty.node;
 				bountyDiscussionExists(bountyId).then(alreadyExist => {
 					if (!alreadyExist) {
