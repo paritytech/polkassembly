@@ -174,6 +174,53 @@ jobs:
         # Whether to push the image
         # push: # optional, default is true
 
+  build-polkadot-production-front-end:
+    needs: []
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build and push polkadot-production-front-end
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
+        username: niklabh # optional
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }} # optional
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        # registry: # optional
+        # Docker repository to tag the image with
+        repository: niklabh/polkassembly-polkadot-production-front-end
+        # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+        tags: latest # optional
+        # Automatically tags the built image with the git reference as per the readme
+        tag_with_ref: true # optional
+        # Automatically tags the built image with the git short SHA as per the readme
+        tag_with_sha: true # optional
+        # Path to the build context
+        path: front-end
+        # Path to the Dockerfile (Default is '{path}/Dockerfile')
+        # dockerfile: # optional
+        # Sets the target stage to build
+        # target: # optional
+        # Always attempt to pull a newer version of the image
+        always_pull: true # optional
+        # Comma-delimited list of build-time variables
+        build_args: REACT_APP_ENV=production,REACT_APP_HASURA_GRAPHQL_URL=http://polkadot.polkassembly.network/v1/graphql,REACT_APP_JWT_PUBLIC_KEY=${{ secrets.KUSAMA_JWT_PUBLIC_KEY }},REACT_APP_NETWORK=polkadot,REACT_APP_WS_PROVIDER=wss://rpc.polkadot.io
+        # Comma-delimited list of images to consider as cache sources
+        # cache_froms: # optional
+        # Comma-delimited list of labels to add to the built image
+        # labels: # optional
+        # Adds labels with git repository information to the built image
+        # add_git_labels: # optional
+        # Whether to push the image
+        # push: # optional, default is true
+
+
   build-chain-db-open-server:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
