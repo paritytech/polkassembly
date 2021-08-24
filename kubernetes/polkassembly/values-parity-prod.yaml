@@ -36,16 +36,13 @@ frontend:
       - host: kusama.polkassembly.network
         path: /
         pathType: Prefix
+        serviceName: https
       #- host: kusama.polkassembly.io
       #  path: /
       #- host: polkassembly.io
       #  path: /
-    # tls:
-    #   - hosts:
-    #     - polkassembly.io
-    #     - kusama.polkassembly.io
-    #     - kusama.polkassembly.network
-    #     secretName: polkassembly.io
+    tls:
+      secretName: frontend-service
 
 authServer:
   config:
