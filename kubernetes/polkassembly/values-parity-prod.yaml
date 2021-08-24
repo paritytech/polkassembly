@@ -26,7 +26,7 @@ frontend:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: "gce"
-      kubernetes.io/ingress.global-static-ip-name: polkassembly-polkadot
+      kubernetes.io/ingress.global-static-ip-name: kusama-ip
       # kubernetes.io/ingress.class: traefik-external
       # traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       # cert-manager.io/cluster-issuer: letsencrypt-http01

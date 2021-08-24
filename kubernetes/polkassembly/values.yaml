@@ -29,6 +29,7 @@ frontend:
   service:
     type: ClusterIP
     annotations:
+    port: 80
     ports:
     - name: http
       port: 80
