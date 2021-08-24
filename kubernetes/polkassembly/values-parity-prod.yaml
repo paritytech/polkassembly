@@ -35,7 +35,7 @@ frontend:
 
     hosts:
       - host: kusama.polkassembly.network
-        path: /
+        path: /*
         pathType: ImplementationSpecific
         serviceName: https
       #- host: kusama.polkassembly.io

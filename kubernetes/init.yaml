@@ -28,6 +28,7 @@ apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
   name: kusama-polkassembly
+  namespace: polkassembly
 spec:
   domains:
     - kusama.polkassembly.network

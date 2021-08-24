@@ -10,8 +10,8 @@ metadata:
 spec:
   type: {{ .Values.frontend.service.type }}
   ports:
-    {{- with .Values.frontend.service.ports }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+    - port: {{ .Values.frontend.service.port }}
+      protocol: TCP
+      name: http
   selector:
     {{- include "polkassembly.frontend.selectorLabels" . | nindent 4 }}
