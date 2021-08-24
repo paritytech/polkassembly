@@ -10,6 +10,18 @@ frontend:
     repository: docker.io/niklabh/polkassembly-kusama-production-front-end
     pullPolicy: Always
 
+  service:
+    type: NodePort
+    annotations:
+      cloud.google.com/app-protocols: '{"http":"HTTP", "https": "HTTPS"}'
+    ports:
+    - name: https
+      port: 443
+      targetPort: 80
+    - name: http
+      port: 80
+      targetPort: 80
+
   ingress:
     enabled: true
     annotations:
@@ -23,10 +35,11 @@ frontend:
     hosts:
       - host: kusama.polkassembly.network
         path: /
-      - host: kusama.polkassembly.io
-        path: /
-      - host: polkassembly.io
-        path: /
+        pathType: Prefix
+      #- host: kusama.polkassembly.io
+      #  path: /
+      #- host: polkassembly.io
+      #  path: /
     # tls:
     #   - hosts:
     #     - polkassembly.io
