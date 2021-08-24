@@ -1,11 +1,7 @@
 {{- if .Values.frontend.ingress.enabled -}}
 {{- $svcName := printf "%s-service" .Values.frontend.name -}}
 {{- $svcPort := .Values.frontend.service.port -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.frontend.name }}-ingress
@@ -32,9 +28,10 @@ spec:
       http:
         paths:
           - path: {{ .path }}
-            pathPrefix: {{ .pathPrefix }}
+            pathType: {{ .pathType }}
             backend:
-              serviceName: {{ $svcName }}
-              servicePort: {{ $svcPort }}
+              service:
+                name: {{ $svcName }}
+                port: {{ $svcPort }}
   {{- end }}
 {{- end }}
