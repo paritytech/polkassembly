@@ -4,11 +4,14 @@ metadata:
   name: {{ .Values.frontend.name }}-service
   labels:
     {{- include "polkassembly.frontend.labels" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.frontend.service.annotations | nindent 4 }}
+
 spec:
   type: {{ .Values.frontend.service.type }}
   ports:
-    - port: {{ .Values.frontend.service.port }}
-      protocol: TCP
-      name: http
+    {{- with .Values.frontend.service.ports }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   selector:
     {{- include "polkassembly.frontend.selectorLabels" . | nindent 4 }}
