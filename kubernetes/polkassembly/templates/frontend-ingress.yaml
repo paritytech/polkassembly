@@ -14,13 +14,11 @@ metadata:
 spec:
 {{- if .Values.frontend.ingress.tls }}
   tls:
-  {{- range .Values.frontend.ingress.tls }}
     - hosts:
-      {{- range .hosts }}
+      {{- range .Values.frontend.ingress.tls.hosts }}
         - {{ . | quote }}
       {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
+      secretName: {{  .Values.frontend.ingress.tls.secretName }}
 {{- end }}
   rules:
   {{- range .Values.frontend.ingress.hosts }}
