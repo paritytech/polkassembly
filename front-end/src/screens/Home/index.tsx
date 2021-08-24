@@ -33,7 +33,7 @@ const Home = ({ className }: Props) => {
 
 	return (
 		<div className={className}>
-			<h1>Latest activity</h1>
+			<h1>Latest activity.</h1>
 			<Grid stackable reversed='mobile tablet'>
 				<Grid.Column mobile={16} tablet={16} computer={10}>
 					<h3>Current referenda</h3>
