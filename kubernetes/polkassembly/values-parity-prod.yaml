@@ -27,6 +27,7 @@ frontend:
     annotations:
       kubernetes.io/ingress.class: "gce"
       kubernetes.io/ingress.global-static-ip-name: kusama-ip
+      networking.gke.io/managed-certificates: kusama-polkassembly
       # kubernetes.io/ingress.class: traefik-external
       # traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       # cert-manager.io/cluster-issuer: letsencrypt-http01
@@ -35,14 +36,16 @@ frontend:
     hosts:
       - host: kusama.polkassembly.network
         path: /
-        pathType: Prefix
+        pathType: ImplementationSpecific
         serviceName: https
       #- host: kusama.polkassembly.io
       #  path: /
       #- host: polkassembly.io
       #  path: /
-    tls:
-      secretName: frontend-service
+    #tls:
+    #  hosts:
+    #    - kusama.polkassembly.network
+    #  secretName: frontend-service
 
 authServer:
   config:
