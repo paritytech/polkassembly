@@ -17,7 +17,7 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: docker.io/paritytech/polkassembly-front-end
+    repository: docker.io/niklabh/polkassembly-kusama-production-front-end
     pullPolicy: Always
 
   nameOverride: ""
@@ -104,7 +104,7 @@ authServer:
     JWT_PUBLIC_KEY: from-gitlab-vars
 
   image:
-    repository: docker.io/paritytech/polkassembly-auth-server
+    repository: docker.io/niklabh/polkassembly-auth-server
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -139,7 +139,7 @@ chainDbWatcher:
     HEALTH_PORT: "8019"
 
   image:
-    repository: docker.io/paritytech/polkassembly-chain-db-watcher
+    repository: docker.io/niklabh/polkassembly-chain-db-watcher
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -172,10 +172,10 @@ healthMonitor:
     # polkassembly frontend-service
     REACT_SERVER: "http://frontend-service:80"
     # polkadot rpc node
-    ARCHIVE_NODE_ENDPOINT: "ws://polkassembly-rpc-internal-0.parity-prod.parity.io:9944"
+    ARCHIVE_NODE_ENDPOINT: "wss://kusama-rpc.polkadot.io"
 
   image:
-    repository: docker.io/paritytech/polkassembly-health-monitor
+    repository: docker.io/niklabh/polkassembly-health-monitor
     pullPolicy: IfNotPresent
 
   nameOverride: ""

@@ -3,18 +3,19 @@
 # Declare variables to be passed into your templates.
 
 chainName: kusama
-nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
+nodeSelector: {}
 
 cloudsql:
   commandline:
-    args: "-instances=parity-prod:europe-west3:polkassembly11=tcp:5432"
+    args: "-instances=premiurly-284711:europe-west1:polkassembly=tcp:5432"
 
 nodeWatcher:
-  dbName: "chain-db"
+  dbName: "kusama-chain-db"
   dbUser: "chain-db"
   dbPassword: from-gitlab-vars
 
 harvester:
   config:
     ARCHIVE_NODE_ENDPOINT: wss://kusama-rpc.polkadot.io
-    START_FROM: '2504500'
+    START_FROM: '8894306'
+    BLOCK_IDENTIFIER: kusama-8894306

@@ -3,11 +3,11 @@
 # Declare variables to be passed into your templates.
 
 chainName: polkadot
-nodeSelector: { cloud.google.com/gke-nodepool: apps-pool }
+nodeSelector: {}
 
 frontend:
   image:
-    repository: docker.io/paritytech/polkassembly-polkadot-production-front-end
+    repository: docker.io/niklabh/polkassembly-polkadot-production-front-end
     pullPolicy: Always
 
   ingress:
@@ -20,9 +20,12 @@ frontend:
     hosts:
       - host: polkadot.polkassembly.io
         path: /
+      - host: polkadot.polkassembly.network
+        path: /
     tls:
       - hosts:
         - polkadot.polkassembly.io
+        - polkadot.polkassembly.network
         secretName: polkadot.polkassembly.io
 
 authServer:

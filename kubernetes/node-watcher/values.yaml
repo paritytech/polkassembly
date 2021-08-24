@@ -14,15 +14,17 @@ cloudsql:
 
 harvester:
   name: harvester
+  replicaCount: 1
 
   image:
-    repository: docker.io/paritytech/polkassembly-node-watcher:latest
+    repository: docker.io/niklabh/polkassembly-node-watcher:latest
     pullPolicy: Always
 
   config:
     PRISMA_ENDPOINT: http://node-watcher-service:4466
     BLOCK_IDENTIFIER: 'chain-tip'
     MAX_LAG: '10'
+    START_FROM: '8894305'
 
 nodeWatcher:
   name: node-watcher
@@ -62,7 +64,7 @@ chainDbOpenServer:
   replicaCount: 1
 
   image:
-    repository: docker.io/paritytech/polkassembly-chain-db-open-server:latest
+    repository: docker.io/niklabh/polkassembly-chain-db-open-server:latest
     pullPolicy: Always
 
   service:
