@@ -914,7 +914,7 @@ export default class AuthService {
 		return jwt.sign(
 			tokenContent,
 			{ key: privateKey, passphrase },
-			{ algorithm: 'RS256', expiresIn: '5000' }
+			{ algorithm: 'RS256', expiresIn: '1h' }
 		);
 	}
 

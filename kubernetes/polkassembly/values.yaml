@@ -38,8 +38,7 @@ frontend:
   ingress:
     enabled: false
     annotations:
-      kubernetes.io/ingress.class: traefik
-      traefik.frontend.entryPoints: "https,http"
+      kubernetes.io/ingress.class: gce
     hosts:
       - host: chart-example.local
         path: []
@@ -110,7 +109,7 @@ authServer:
 
   image:
     repository: docker.io/niklabh/polkassembly-auth-server
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   nameOverride: ""
   fullnameOverride: ""
@@ -145,7 +144,7 @@ chainDbWatcher:
 
   image:
     repository: docker.io/niklabh/polkassembly-chain-db-watcher
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   nameOverride: ""
   fullnameOverride: ""
