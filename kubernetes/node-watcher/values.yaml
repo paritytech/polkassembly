@@ -24,7 +24,7 @@ harvester:
     PRISMA_ENDPOINT: http://node-watcher-service:4466
     BLOCK_IDENTIFIER: 'chain-tip'
     MAX_LAG: '10'
-    START_FROM: '8894305'
+    START_FROM: '8933439'
 
 nodeWatcher:
   name: node-watcher

@@ -16,4 +16,5 @@ nodeWatcher:
 harvester:
   config:
     ARCHIVE_NODE_ENDPOINT: wss://rpc.polkadot.io
-    START_FROM: '0'
+    START_FROM: '6535965'
+    BLOCK_IDENTIFIER: chain-tip-6535965

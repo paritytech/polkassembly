@@ -28,6 +28,7 @@ apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
   name: polkadot-polkassembly
+  namespace: polkadot-polkassembly
 spec:
   domains:
     - polkadot.polkassembly.network
