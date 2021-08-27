@@ -7,7 +7,6 @@ import React, { useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import DefaultAddressInfoBox from '../../components/DefaultAddressInfoBox';
-import TransferNoticeInfoBox from '../../components/TransferNoticeInfoBox';
 import { UserDetailsContext } from '../../context/UserDetailsContext';
 import { useRouter } from '../../hooks';
 import Button from '../../ui-components/Button';
@@ -57,7 +56,6 @@ const Home = ({ className }: Props) => {
 					{currentUser.id && <div className='mainButtonContainer'>
 						<Button primary className={'newPostButton'} onClick={handleCreatePost}>New post</Button>
 					</div>}
-					<TransferNoticeInfoBox />
 					{currentUser.id && currentUser.addresses?.length !== 0 && !currentUser.defaultAddress &&
 						<DefaultAddressInfoBox />}
 				</Grid.Column>
