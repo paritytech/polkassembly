@@ -27,14 +27,14 @@ frontend:
     annotations:
       kubernetes.io/ingress.class: "gce"
       kubernetes.io/ingress.global-static-ip-name: polkadot-ip
-      networking.gke.io/managed-certificates: polkadot-polkassembly
+      networking.gke.io/managed-certificates: polkadot-polkassembly-io
       # kubernetes.io/ingress.class: traefik-external
       # traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       # cert-manager.io/cluster-issuer: letsencrypt-http01
       # traefik.ingress.kubernetes.io/router.tls: "true"
 
     hosts:
-      - host: polkadot.polkassembly.network
+      - host: polkadot.polkassembly.io
         path: /*
         pathType: ImplementationSpecific
         serviceName: https
