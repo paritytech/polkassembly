@@ -30,7 +30,7 @@ const Footer = ({ className }:Props ): JSX.Element => {
 					Privacy policy
 				</Menu.Item>
 				<Menu.Item>
-					<a href='https://github.com/paritytech/polkassembly/issues' target='blank'>
+					<a href='https://github.com/premiurly/polkassembly/issues' target='blank'>
 						Report an issue
 					</a>
 				</Menu.Item>
