@@ -9,7 +9,7 @@ const NETWORK = getNetwork();
 export default `Polkassembly end user agreement
 ====================
 
-Parity Technologies Limited is a company registered in England and Wales under company number 09760015 with its registered office at Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://${NETWORK}.polkassembly.io (the "**Website**").
+Premiurly OÜ is a company registered in Estonia under company number 16162207 with its registered office at Tornimäe tn 7, Kesklinna linnaosa, Tallinn, Harju maakond, 10145 (the "**Company**"). The Company operates Polkassembly (the "**Forum**") on https://${NETWORK}.polkassembly.io (the "**Website**").
 
 ## 1. Understanding these terms
   1.  This end user agreement (the "**Terms**") describes how you may access and use the Forum and any services made available through the Forum via the Website, any mobile applications made available by the Company and any other distribution channels made available by the Company (the "**Services**"). By accessing the Forum, these Terms will apply to you and you agree to the Terms. You should therefore read the terms carefully before using the forum.
@@ -17,7 +17,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
   3.  In this document, when we refer to "we", "us" or "our", we mean the Company; and when we refer to "you" or "your" we mean the person accessing or using the person accessing or using the Forum.
   4.  Please note that:
     1.  your use of the Website is governed by our website terms of use (available https://${NETWORK}.polkassembly.io/terms-and-conditions), in the case of any inconsistency between any provisions of those website terms of use and any of the clauses of this end user agreement, the clauses of this end user agreement shall prevail;
-    2.  the Website uses cookies, the use of which are governed by our cookies policy (available https://www.parity.io/privacy);
+    2.  the Website uses cookies, the use of which are governed by our cookies policy (available https://premiurly.in/policy/);
     3.  we only use your personal information in accordance with our privacy notice (available https://${NETWORK}.polkassembly.io/privacy).
 
 ## 2.  The Forum
@@ -29,7 +29,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
 ## 3.  Your account and password
   1.  You will need to register an account with us on the Website in order to use the Services and gain access to the Forum ("**Account**"). You can register via our official website (at https://${NETWORK}.polkassembly.io/signup). In order to register for an Account, you must be aged 18 or over. If you register an Account, you will be asked to provide certain information (such as your user name) and to create a password, as part of our security procedures. You must treat such password as confidential and you must not disclose it to any third party.
   2.  We have the right to disable any Accounts and/or passwords, at any time, if in our reasonable opinion you have failed to comply with any of the provisions of these Terms.
-  3.  If you know or suspect that anyone other than you knows your Account login details, you must immediately notify us at polkassembly@parity.io.
+  3.  If you know or suspect that anyone other than you knows your Account login details, you must immediately notify us at contact@premiurly.in.
   4.  You are responsible for any unauthorised use of your Account login details.
   5.  If you are accepting these Terms on behalf of another legal entity, including a business or government, you represent that you have full legal authority to bind such entity to these Terms.
 
@@ -63,11 +63,11 @@ Parity Technologies Limited is a company registered in England and Wales under c
   10. it must not be harmful to minors in any way;
   11. it must not promote any illegal activity or otherwise be unlawful;
   12. it must not impersonate any person, or misrepresent your identity or affiliation with any person; and
-  13. it must not give the impression that it emanates from or is endorsed by Parity, if this is not the case.
+  13. it must not give the impression that it emanates from or is endorsed by Premiurly, if this is not the case.
 
 2.  We reserve the right to refuse to accept or refuse or cease to use any User Generated Content supplied by any person that we think contravenes these Terms or otherwise may create liability for us.
 3.  We take no responsibility for, and we do not expressly or implicitly endorse, any User Generated Content. By submitting your User Generated Content, you represent and warrant that you have all rights, power and authority necessary to grant the rights to such User Generated Content as set out in these Terms. As you alone are responsible for your User Generated Content, you may expose yourself to liability if you post or share User Generated Content without all necessary rights.
-4.  We do not oversee, monitor or moderate any User Generated Content which is uploaded to the Forum. If you become aware of any User Generated Content that breaches clause 4.2 above, please use the report button or contact us on polkassembly@parity.io, providing details of: (i) the date on which it was posted and where it can be found on the Forum; (ii) the name and surname of the author or, if the author is a legal person, the author's business name; (iii) reasons why the content should be deleted; and (vi) copies of any communication with the author (if any).
+4.  We do not oversee, monitor or moderate any User Generated Content which is uploaded to the Forum. If you become aware of any User Generated Content that breaches clause 4.2 above, please use the report button or contact us on contact@premiurly.in, providing details of: (i) the date on which it was posted and where it can be found on the Forum; (ii) the name and surname of the author or, if the author is a legal person, the author's business name; (iii) reasons why the content should be deleted; and (vi) copies of any communication with the author (if any).
 
 *Viruses*
 
@@ -78,7 +78,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
 
 ## 5.  Intellectual property
   1.  We grant to you a non-transferable, non-exclusive, revocable licence to use the Forum provided that you comply with these Terms and the documents referred to in it. We reserve all other rights.
-  2.  We are the owner or licensee of all intellectual property rights in the Forum and its content (other than the User Generated Content), including the Parity name and mark. Those works are protected by intellectual property laws and treaties around the world. All such rights are reserved.
+  2.  We are the owner or licensee of all intellectual property rights in the Forum and its content (other than the User Generated Content), including the Premiurly name and mark. Those works are protected by intellectual property laws and treaties around the world. All such rights are reserved.
   3.  You are not granted any right to use, and may not use, any of our intellectual property rights other than as set out in these Terms. You must not commercially exploit the Forum (or any part of it or its content); however, you may download material from the Forum solely for internal, non-commercial, personal use by you.
   4.  Save as required by applicable law, you shall not copy, reproduce, republish, upload, re-post, modify, transmit, distribute or otherwise use in any way for any non-personal, public or commercial purpose any part of the Forum including (without limitation) the text, designs, graphics, photographs, images and User Generated Content of other users without our prior written consent and (in the case of User Generated Content of a different user) the prior written consent of that user.
   5.  You retain all ownership rights you have in the User Generated Content, but you hereby grant to us a perpetual, transferable, royalty-free license, irrevocable, worldwide, sub-licensable license to use, copy, modify, adapt, prepare derivative works from, distribute, perform and display your User Generated Content and any name, username, voice or likeness provided in connection with your User Generated Content in all media formats and channels now known or later developed. This license includes the right for us to make your User Generated Content available for syndication, broadcast, distribution or publication by other companies, organisations or individuals who partner with us. You also agree that we may remove metadata associated with your User Generated Content, and you irrevocable waive any claims and assertions of moral rights or attribution with respect to your User Generated Content.
@@ -97,7 +97,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
 
 1.  If you are acting for purposes relating to your trade, business, craft or profession, then subject to clause 6.1:
   1.  you agree to use the Forum for internal purposes only and in no event shall we be liable to you for any loss of profits, loss of revenue, loss of contracts, failure to realise anticipated savings or for any indirect or consequential loss, whether arising from negligence, breach of contract or otherwise; and
-  2.  our total liability to you for any loss or damage arising out of or in connection with these Terms, whether in contract (including under any indemnity), tort (including negligence) or otherwise shall be limited to £100.
+  2.  our total liability to you for any loss or damage arising out of or in connection with these Terms, whether in contract (including under any indemnity), tort (including negligence) or otherwise shall be limited to EUR 100.
 
 2.  You shall indemnify and hold us harmless against any losses, costs, liabilities and expenses suffered or incurred by us and/or our affiliates as a result of any breach of these Terms.
 
@@ -105,7 +105,7 @@ Parity Technologies Limited is a company registered in England and Wales under c
 
 1.  If you are acting for purposes that are wholly or mainly outside your trade, business, craft or profession then, save as set out in clause 6.1, the following sub-clauses apply.
   1.  If we fail to comply with these Terms, we are responsible for loss or damage you suffer that is a foreseeable result of our breach of these Terms or our negligence, but we are not responsible for any loss or damage that is not foreseeable. Loss or damage is foreseeable if it was an obvious consequence of our breach or if it was contemplated by you and us at the time that you accessed the Forum.
-  2.  Our total liability to you for any loss or damage arising out of or in connection with these Terms, whether in contract (including under any indemnity), tort (including negligence) or otherwise shall be limited to £100.
+  2.  Our total liability to you for any loss or damage arising out of or in connection with these Terms, whether in contract (including under any indemnity), tort (including negligence) or otherwise shall be limited to EUR 100.
   3.  Nothing in these Terms affects your statutory rights. Advice about your statutory rights is available from your local Citizens' Advice Bureau or Trading Standards Office.
   4.  You agree not to use the Forum, or any content on the Forum, for any commercial or business purposes and we have no liability to you for any loss of profit, loss of business, business interruption, or loss of business opportunity.
 
@@ -140,13 +140,13 @@ Parity Technologies Limited is a company registered in England and Wales under c
 
 **If you are a business**
 
-1.  These Terms are governed by English law. This means that your access to and use of the Forum, and any dispute or claim arising out of or in connection therewith will be governed by English law.
-2.  The courts of England and Wales will have non-exclusive jurisdiction over any disputes between us and you (including non-contractual disputes or claims).
+1.  These Terms are governed by Estonian law. This means that your access to and use of the Forum, and any dispute or claim arising out of or in connection therewith will be governed by Estonian law.
+2.  The courts of Estonia will have non-exclusive jurisdiction over any disputes between us and you (including non-contractual disputes or claims).
 
 **If you are a consumer**
 
-1.  These Terms are governed by the laws of England and Wales. This means that your access to and use of the Forum, and any dispute or claim arising out or in connection therewith (including non-contractual disputes or claims), will be governed by English law.
-2.  You may bring any dispute which may arise under these Terms to – at your discretion - either the competent court of England, or to the competent court of your country of habitual residence if this country of habitual residence is an EU Member State, which courts are – with the exclusion of any other court - competent to settle any of such a dispute. We shall bring any dispute which may arise under these Terms to the competent court of your country of habitual residence if this is in an EU Member State, or otherwise the competent court of England.
+1.  These Terms are governed by the laws of Estonia. This means that your access to and use of the Forum, and any dispute or claim arising out or in connection therewith (including non-contractual disputes or claims), will be governed by Estonian law.
+2.  You may bring any dispute which may arise under these Terms to – at your discretion - either the competent court of Estonia, or to the competent court of your country of habitual residence if this country of habitual residence is an EU Member State, which courts are – with the exclusion of any other court - competent to settle any of such a dispute. We shall bring any dispute which may arise under these Terms to the competent court of your country of habitual residence if this is in an EU Member State, or otherwise the competent court of Estonia.
 3.  As a consumer, if you are resident in the European Union and we direct the Forum to (and/or pursue our commercial or professional activities in relation to the Forum in) the EU Member State in which you are resident, you will benefit from any mandatory provisions of the law of the country in which you are resident. Nothing in these Terms, including clause 10.3, affects your rights as a consumer to rely on such mandatory provisions of local law.
 
 
@@ -154,11 +154,11 @@ Parity Technologies Limited is a company registered in England and Wales under c
 
 > Should you have any reasons for a complaint, we will endeavour to resolve the issue and avoid any re-occurrence in the future. You can always contact us by using the following details:
 >
-> Address: Ignition Law, Moray House 23 - 31, Great Titchfield Street, London, England, W1W 7PA
+> Address: Tornimäe tn 7, Kesklinna linnaosa, Tallinn, Harju maakond, 10145
 >
-> Email address: polkassembly@parity.io
+> Email address: contact@premiurly.in
 
 Thank you.
 
-Terms last updated 19th February 2020
+Terms last updated 27th August 2020
 `;

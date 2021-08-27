@@ -6,12 +6,12 @@
   "homepage": "http://polkassembly.io/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paritytech/polkassembly.git"
+    "url": "git+https://github.com/premiurly/polkassembly.git"
   },
   "bugs": {
-    "url": "https://github.com/paritytech/polkassembly/issues"
+    "url": "https://github.com/premiurly/polkassembly/issues"
   },
-  "author": "Parity Team <admin@parity.io>",
+  "author": "Premiurly <contact@premiurly.in>",
   "maintainers": [
     "Michel Erler",
     "Nikhil Rajan",

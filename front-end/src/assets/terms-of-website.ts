@@ -27,7 +27,7 @@ These terms of use refer to the following additional terms, which also apply to 
 
 ### Information about us
 
-polkassembly.io is a site operated by Parity Technologies Limited ("We"). We are registered in England and Wales under company number 09760015 and have our registered office at IGNITION LAW Moray House, Floor 1, Moray House, 23-31 Great Titchfield Street, London, United Kingdom, WC1W 7PA.
+polkassembly.io is a site operated by Premiurly OÜ ("We"). We are registered in Estonia under company number 16162207 and have our registered office at Tornimäe tn 7, Kesklinna linnaosa, Tallinn, Harju maakond, 10145.
 
 ### Changes to these terms
 
@@ -49,7 +49,7 @@ You are also responsible for ensuring that all persons who access our site throu
 
 ### Intellectual property rights
 
-We are the owner or licensee of all intellectual property rights in our site and its content including the Parity Technologies name and mark. Those works are protected by intellectual property laws and treaties around the world. All such rights are reserved.
+We are the owner or licensee of all intellectual property rights in our site and its content including the Premiurly OÜ name and mark. Those works are protected by intellectual property laws and treaties around the world. All such rights are reserved.
 
 You are not granted any right to use, and may not use, any of our intellectual property rights other than as set out in these terms. You must not commercially exploit our site (or any part of it or its content); however, you may download material from our site solely for internal, non-commercial, personal use by you.
 
@@ -67,7 +67,7 @@ Although we make reasonable efforts to update the information on our site, we ma
 
 ### Limitation of our liability
 
-Nothing in these terms of use excludes or limits our liability for death or personal injury arising from our negligence, or our fraud or fraudulent misrepresentation, or any other liability that cannot be excluded or limited by English law.
+Nothing in these terms of use excludes or limits our liability for death or personal injury arising from our negligence, or our fraud or fraudulent misrepresentation, or any other liability that cannot be excluded or limited by Estonian law.
 
 To the extent permitted by law, we exclude all conditions, warranties, representations or other terms which may apply to our site or any content on it, whether express or implied.
 
@@ -125,9 +125,9 @@ We do not oversee, monitor or moderate any User Generated Content which is uploa
 
 -   impersonates any person, or misrepresents your identity or affiliation with any person; and
 
--   gives the impression that it emanates from or is endorsed by Parity Technologies, if this is not the case,
+-   gives the impression that it emanates from or is endorsed by Premiurly OÜ, if this is not the case,
 
-then please contact us on polkassembly@parity.io, providing details of: (i) the date on which it was posted and where it can be found on our site; (ii) the name and surname of the author or, if the author is a legal person, the author's business name; (iii) reasons why the content should be deleted; and (vi) copies of any communication with the author (if any).
+then please contact us on contact@premiurly.in, providing details of: (i) the date on which it was posted and where it can be found on our site; (ii) the name and surname of the author or, if the author is a legal person, the author's business name; (iii) reasons why the content should be deleted; and (vi) copies of any communication with the author (if any).
 
 ### Viruses
 
@@ -145,7 +145,7 @@ You must not establish a link in such a way as to suggest any form of associatio
 
 We reserve the right to withdraw linking permission without notice.
 
-If you wish to make any use of content on our site other than that set out above, please contact admin@parity.io.
+If you wish to make any use of content on our site other than that set out above, please contact contact@premiurly.in.
 
 ### Third party links and resources in our site
 
@@ -155,14 +155,14 @@ We have no control over the contents of those sites or resources.
 
 ### Applicable law
 
-If you are a consumer, please note that these terms of use, its subject matter and its formation, are governed by the law of England and Wales. You and we both agree that the courts of England and Wales will have non-exclusive jurisdiction. However, if you are a resident of Northern Ireland you may also bring proceedings in Northern Ireland, and if you are resident of Scotland, you may also bring proceedings in Scotland.
+If you are a consumer, please note that these terms of use, its subject matter and its formation, are governed by the law of Estonia. You and we both agree that the courts of Estonia will have non-exclusive jurisdiction.
 
-If you are a business, these terms of use, its subject matter and its formation (and any non-contractual disputes or claims) are governed by the law of England and Wales. We both agree to the exclusive jurisdiction of the courts of England and Wales.
+If you are a business, these terms of use, its subject matter and its formation (and any non-contractual disputes or claims) are governed by the law of Estonia. We both agree to the exclusive jurisdiction of the courts of Estonia.
 
 Terms and conditions of use of materials
 ========================================
 
-We, Parity Technologies Limited (the "Company"), may provide publications, briefings, newsletters and presentations (the "Materials") on our site or via email and other channels. Access to the Materials is provided on the basis of the terms and conditions set out below. Please read these terms carefully before accessing the Materials.
+We, Premiurly OÜ (the "Company"), may provide publications, briefings, newsletters and presentations (the "Materials") on our site or via email and other channels. Access to the Materials is provided on the basis of the terms and conditions set out below. Please read these terms carefully before accessing the Materials.
 
 The Materials are for general information only and are not intended to provide advice.
 
@@ -176,22 +176,22 @@ You agree not to use or permit the use of the Materials for any illegal purpose 
 
 Nothing in these terms shall operate to exclude or restrict liability based on fraud or reckless disregard of professional obligations or any other liability that cannot be excluded or restricted by applicable laws or regulations.
 
-These terms shall be construed in accordance with the laws of England and Wales.
+These terms shall be construed in accordance with the laws of Estonia.
 
 ### Contact us
 
-To contact us, please email admin@parity.io.
+To contact us, please email contact@premiurly.in.
 
 Statutory information
 ---------------------
 
-Statutory information about Parity Technologies Limited:
+Statutory information about Premiurly OÜ:
 
--   Registered in England and Wales
+-   Registered in Estonia
 
--   Registered Number: 09760015
+-   Registered Number: 16162207
 
--   Registered Office: Ignition Law, Moray House Floor 1, 23-31 Great Titchfield Street, London, United Kingdom, WC1W 7PA.
+-   Registered Office: Tornimäe tn 7, Kesklinna linnaosa, Tallinn, Harju maakond, 10145.
 
 Thank you for visiting our site.
 `;
