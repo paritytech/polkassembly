@@ -13,7 +13,6 @@ spec:
     metadata:
       labels:
         {{- include "polkassembly.authServer.matchLabels" . | nindent 8 }}
-        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: {{ .Values.authServer.name }}

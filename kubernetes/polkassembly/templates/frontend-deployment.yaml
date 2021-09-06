@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         {{- include "polkassembly.frontend.matchLabels" . | nindent 8 }}
+        date: "{{ now | unixEpoch }}"
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
